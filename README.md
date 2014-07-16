@@ -20,6 +20,5 @@ version 2005/12/01 or later.
 
 This work has the LPPL maintenance status `author-maintained'.
 
-This work consists of all files listed in README
-a
+This work consists of all files listed in doc/latex/tcolorbox/README.
 ```
