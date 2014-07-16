@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -544,4 +544,14 @@ version 3.05 (2014/05/28)
 - library 'skins':
   * new options:
   'lifted shadow', 'drop small lifted shadow', 'drop lifted shadow', 'drop large lifted shadow'
+
+version 3.10 (2014/xx/xx)
+- The upper total height limit for breakable boxes is extended from
+  about 16384pt to about 65536pt
+- experimental code added (breakable=unlimited) for breakable boxes
+  without height limit besides memory
+- pictures 'blueshade.png', 'crinklepaper.png', 'goldshade.png', 'pink_marble.png'
+  moved to package folder
+
+
 

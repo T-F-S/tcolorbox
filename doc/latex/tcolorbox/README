@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -41,6 +41,10 @@ Contents of the package
   'tcbskinsjigsaw.code.tex'   LaTeX package file (library of tcolorbox)
   'tcbtheorems.code.tex'      LaTeX package file (library of tcolorbox)
   'tcbxparse.code.tex'        LaTeX package file (library of tcolorbox)
+  'blueshade.png'             Picture (package)
+  'crinklepaper.png'          Picture (package)
+  'goldshade.png'             Picture (package)
+  'pink_marble.png'           Picture (package)
   'tcolorbox.pdf'             Documentation for tcolorbox
   'tcolorbox.tex'             Source code of the documentation (main file)
   '*.doc.*'                   Source code of the documentation (include files)
@@ -48,10 +52,6 @@ Contents of the package
   'tcolorbox-example.pdf'     Compiled example
   'Basilica_5.png'            Example picture
   'lichtspiel.jpg'            Example picture
-  'blueshade.png'             Example picture
-  'crinklepaper.png'          Example picture
-  'goldshade.png'             Example picture
-  'pink_marble.png'           Example picture
 
 Installation
 ============
@@ -71,4 +71,8 @@ Alternatively, put the files to their respective locations within the TeX instal
   'tcbskins.code.tex'         ->  /tex/latex/tcolorbox
   'tcbskinsjigsaw.code.tex'   ->  /tex/latex/tcolorbox
   'tcbxparse.code.tex'        ->  /tex/latex/tcolorbox
+  'blueshade.png'             ->  /tex/latex/tcolorbox
+  'crinklepaper.png'          ->  /tex/latex/tcolorbox
+  'goldshade.png'             ->  /tex/latex/tcolorbox
+  'pink_marble.png'           ->  /tex/latex/tcolorbox
   all other files             ->  /doc/latex/tcolorbox

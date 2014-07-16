@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/05/28 version 3.05 text color boxes]
-\def\tcb@version{3.05}
+\ProvidesPackage{tcolorbox}[2014/07/16 version 3.10pre1 text color boxes]
+\def\tcb@version{3.10pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -52,6 +52,9 @@
 
 \def\tcb@dim@to#1#2{\def#1{\the\dimexpr#2\relax}}
 \def\tcbdimto#1#2{\edef#1{\the\dimexpr#2\relax}}
+
+\def\tcb@defToTotalHeightStandard#1#2#3{\tcbdimto#1{\ht#2+\dp#2}}
+
 
 \def\tcb@zpt{0pt}
 
@@ -376,6 +379,7 @@
   breakable@false/.code={%
     \let\tcb@savebox=\tcb@lrbox%
     \let\endtcb@savebox=\endtcb@lrbox%
+    \let\tcb@defToTotalHeight=\tcb@defToTotalHeightStandard%
     \let\tcb@drawcolorbox=\tcb@drawcolorbox@standalone},
   code/.code={#1},
   capture/.store in=\kvtcb@capture,%
@@ -986,14 +990,14 @@
     \let\tcb@h@padtitle=\tcb@zpt%
   \fi%
   %
-  \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
+  \tcb@defToTotalHeight\tcb@h@upper{\tcb@upperbox}{\kvtcb@fontupper}%
   %
   \iftcb@hasLower%
   \iftcb@lowerignored\tcb@lowerspacefalse\else\tcb@lowerspacetrue\fi%
   \else\tcb@lowerspacefalse\fi%
   \iftcb@lowerspace%
     \tcbdimto\tcb@h@segment{\kvtcb@boxsep*2+\kvtcb@middle*2}%
-    \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
+    \tcb@defToTotalHeight\tcb@h@lower{\tcb@lowerbox}{\kvtcb@fontlower}%
   \else
     \let\tcb@h@segment=\tcb@zpt%
     \let\tcb@h@lower=\tcb@zpt%

@@ -83,9 +83,19 @@ parameters. The differences are:
 
 \subsection{Limitations and Known Bugs}
 \begin{itemize}
-\item The box content is a \TeX\ |\vbox| register which has a
-  restricted capacity. Therefore, you cannot place hundreds of pages
-  inside a |tcolorbox|.
+\item  The maximal total height of the upper and of the lower part
+  of normal breakable |tcolorbox|es is about 65536pt (ca.\,2300cm)
+  apiece. If such a part gets longer, the output will get buggy
+  without warning.
+  For very oversized boxes which are longer than 65536pt, use
+  the \docValue{unlimited} value for  \refKey{/tcb/breakable}.
+  With the \docValue{unlimited} setting,
+  the applied algorithm has (virtually) no height limit for boxes, but
+  very likely the compiler memory will have to be increased for boxes longer
+  than 300 pages (depending on compiler settings and box content).
+  But it is recommended to use \docValue{unlimited} for critical large boxes only
+  since there \emph{may} be a single interline space deviation around
+  every 2300cm.
 \item You can nest an unbreakable |tcolorbox| inside another |tcolorbox|,
   even inside a breakable one.
   But you cannot not nest a breakable box inside a breakable box.
@@ -105,7 +115,7 @@ parameters. The differences are:
 
 \clearpage
 \subsection{Main Option Keys}
-\begin{docTcbKey}{breakable}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+\begin{docTcbKey}{breakable}{\colOpt{=true\textbar false\textbar unlimited}}{default |true|, initially |false|}
   Allows the |tcolorbox| to be breakable. If the box is larger than the
   available space at the current page, the box is automatically broken
   and continued to the next next page. All sorts of |tcolorbox| can be made
@@ -113,16 +123,27 @@ parameters. The differences are:
   If you do not know better, use \refKey{/tcb/enhanced} for breaking a box.
   The parts of the \emph{break sequence} are numbered
   by the counter |tcbbreakpart|.
-  \begin{dispListing}
-  % \usepackage{lipsum}  % preamble
-  \tcbset{enhanced jigsaw,colback=red!5!white,colframe=red!75!black,
-    watermark color=yellow!25!white,watermark text=\arabic{tcbbreakpart},
-    fonttitle=\bfseries}
+  \begin{itemize}
+  \item\docValue{false}: Sets the |tcolorbox| to be unbreakable.
+  \item\docValue{true}: Breaks the |tcolorbox| from one page to another.
+    The maximal total height of the upper and of the lower part is
+    about 65536pt (ca.\,2300cm or ca.\,90 pages) apiece.
+  \item\docValue{unlimited}: Experimental code for unlimited total height of
+    breakable boxes. There \emph{may} be a single interline space deviation around
+    every 2300cm. For boxes longer than 300 pages (or even shorter ones) the
+    compiler memory will have to be increased.
+  \end{itemize}
 
-  \begin{tcolorbox}[breakable,title=My breakable box]
-  \lipsum[1-6]
-  \end{tcolorbox}
-  \end{dispListing}
+\begin{dispListing}
+% \usepackage{lipsum}  % preamble
+\tcbset{enhanced jigsaw,colback=red!5!white,colframe=red!75!black,
+  watermark color=yellow!25!white,watermark text=\arabic{tcbbreakpart},
+  fonttitle=\bfseries}
+
+\begin{tcolorbox}[breakable,title=My breakable box]
+\lipsum[1-6]
+\end{tcolorbox}
+\end{dispListing}
 \end{docTcbKey}
 {\tcbusetemp}
 

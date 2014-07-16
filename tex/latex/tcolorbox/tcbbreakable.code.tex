@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,10 +17,56 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.05}
+\tcb@set@library@version{3.10pre1}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
+
+% total height for boxes smaller than 0.4375\maxdimen and 0.4375\maxdimen else (ca 2.5m)
+\def\tcb@defToTotalHeightBreakable#1#2#3{%
+  \ifnum\ht#2<0 %
+    \edef#1{7168pt}%
+  \else\ifnum\ht#2<469762048 %
+    \tcbdimto#1{\ht#2+\dp#2}%
+  \else%
+    \edef#1{7168pt}%
+  \fi\fi%
+}
+
+\newbox\tcb@testbox
+
+% for oversized boxes height is detected as \textheight or larger
+\def\tcb@defToTotalHeightUnlimited#1#2#3{%
+  \tcb@defToTotalHeightBreakable#1#2#3%
+  \ifdim\dimexpr#1<\textheight\relax%
+    \edef\tcb@thevfuzz{\the\vfuzz}%
+    \edef\tcb@thevbadness{\the\vbadness}%
+    \vfuzz=\maxdimen\vbadness=10000%
+    \splittopskip=0pt%
+    \splitmaxdepth=0pt%
+    \setbox\tcb@testbox=\vsplit#2 to \textheight%
+    \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
+    \ifdim\wd#2=0pt\relax%
+      \tcb@swap{#2}{\tcb@testbox}%
+      \tcbdimto#1{\ht#2+\dp#2}%
+    \else%
+      %\showthe\c@page\relax
+      \setbox#2=\vbox{%
+        \unvbox\tcb@testbox%
+        \begingroup%
+          #3%
+          \dimen@-\f@size \p@%
+          \dimen@0.888888\dimen@%
+          \advance\dimen@ by \f@baselineskip%
+          \vskip\dimen@%
+          %\color{red}\rule{1cm}{\dimen@}%
+        \endgroup%
+        \unvbox#2}%
+      \edef#1{7168pt}%
+    \fi%
+  \fi%
+}
+
 
 \def\tcb@vbox#1#2{%
   \edef\reserved@a{%
@@ -42,7 +88,7 @@
   \@setminipage\tcb@hyph@fix%
   \ignorespaces%
   \let\tcb@drawcolorbox=\tcb@drawcolorbox@standalone%
-  }
+}
 
 \def\endtcb@vbox{%
   \par%
@@ -341,7 +387,7 @@
   \stepcounter{tcbbreakpart}%
   \tcb@following@title%
   \tcb@comp@h@page%
-  \tcbdimto\tcb@h@upper{\ht\tcb@totalupperbox+\dp\tcb@totalupperbox}%
+  \tcb@defToTotalHeight\tcb@h@upper{\tcb@totalupperbox}{\kvtcb@fontupper}%
   \tcbdimto\tcb@h@total{\tcb@h@after+\tcb@h@padding@last+\tcb@h@padtitle+\tcb@h@upper+\tcb@h@segment+\tcb@h@lower}%
   %
   \let\tcb@split@next=\relax%
@@ -403,7 +449,7 @@
   \tcb@following@title%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
-  \tcbdimto\tcb@h@lower{\ht\tcb@totallowerbox+\dp\tcb@totallowerbox}%
+  \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}{\kvtcb@fontlower}%
   \tcbdimto\tcb@h@total{\tcb@h@after+\tcb@h@padding@last-\kvtcb@top-\kvtcb@boxsep+\tcb@h@padtitle+\tcb@h@segment+\tcb@h@lower}%
   %
   \let\tcb@split@next=\relax%
@@ -432,7 +478,7 @@
   \tcb@following@title%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
-  \tcbdimto\tcb@h@lower{\ht\tcb@totallowerbox+\dp\tcb@totallowerbox}%
+  \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}{\kvtcb@fontflower}%
   \tcbdimto\tcb@h@total{\tcb@h@after+\tcb@h@padding@last+\tcb@h@padtitle+\tcb@h@lower}%
   %
   \let\tcb@split@next=\relax%
@@ -552,6 +598,12 @@
   breakable@true/.code={%
     \let\tcb@savebox=\tcb@vbox%
     \let\endtcb@savebox=\endtcb@vbox%
+    \let\tcb@defToTotalHeight=\tcb@defToTotalHeightBreakable%
+    \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable},
+  breakable@unlimited/.code={%
+    \let\tcb@savebox=\tcb@vbox%
+    \let\endtcb@savebox=\endtcb@vbox%
+    \let\tcb@defToTotalHeight=\tcb@defToTotalHeightUnlimited%
     \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable},
   breakable/.style={breakable@#1},
   breakable/.default=true,%
@@ -559,6 +611,7 @@
   enforce breakable/.code={%
     \let\tcb@savebox=\tcb@vbox%
     \let\endtcb@savebox=\endtcb@vbox%
+    \let\tcb@defToTotalHeight=\tcb@defToTotalHeightBreakable%
     \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable},
   title after break/.store in=\kvtcb@followingtitle,%
   notitle after break/.style={title after break=},%
