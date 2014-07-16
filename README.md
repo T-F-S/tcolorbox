@@ -22,5 +22,5 @@ version 2005/12/01 or later.
 This work has the LPPL maintenance status `author-maintained'.
 
 This work consists of all files listed in 
-[README](http://github.com/T-F-S/tcolorbox/blob/master/doc/latex/tcolorbox/README)
+[README](blob/master/doc/latex/tcolorbox/README)
 ```
