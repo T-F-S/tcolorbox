@@ -1,0 +1,191 @@
+%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% tcolorbox-example.tex: an example for tcolorbox
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+\documentclass{article}
+\usepackage{tikz,lipsum,lmodern}
+\usepackage[most]{tcolorbox}
+
+\begin{document}
+
+%----------------------------------------------------------
+\section{Colored boxes}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black]
+  My box.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=My title]
+  My box with my title.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black]
+  Upper part of my box.
+  \tcblower
+  Lower part of my box.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!5!white,colframe=yellow!50!black,
+  colbacktitle=yellow!75!black,title=My title]
+  I can do this also with a title.
+  \tcblower
+  Lower part of my box.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=red!75!black,lowerbox=invisible,
+  savelowerto=\jobname_ex.tex]
+  Now, we play hide and seek. Where is the lower part?
+  \tcblower
+  I'm invisible until you find me.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=red!75!black,title=Here I am]
+  \input{\jobname_ex.tex}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colback=blue!50!white,colframe=blue!25!black,coltext=yellow,
+    fontupper=\Large\bfseries,arc=6mm,boxrule=2mm,boxsep=5mm]
+  Funny settings.
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[enhanced,frame style image=blueshade.png,
+  opacityback=0.75,opacitybacktitle=0.25,
+  colback=blue!5!white,colframe=blue!75!black,
+  title=My title]
+  This box is filled with an external image.\par
+  Title and interior are made partly transparent to show the image.
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[enhanced,attach boxed title to top center={yshift=-3mm,yshifttext=-1mm},
+  colback=blue!5!white,colframe=blue!75!black,colbacktitle=red!80!black,
+  title=My title,fonttitle=\bfseries,
+  boxed title style={size=small,colframe=red!50!black} ]
+  This box uses a \textit{boxed title}. The box of the title can
+  be formatted independently from the main box.
+\end{tcolorbox}
+
+
+\clearpage
+%----------------------------------------------------------
+\section{\LaTeX-Examples}
+
+\begin{tcblisting}{colback=red!5!white,colframe=red!75!black}
+This is a \LaTeX\ example:
+\begin{equation}
+\sum\limits_{i=1}^n i = \frac{n(n+1)}{2}.
+\end{equation}
+\end{tcblisting}
+
+
+\begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing side text,
+  title=Side by side,fonttitle=\bfseries}
+This is a \LaTeX\ example:
+\begin{equation}
+\sum\limits_{i=1}^n i = \frac{n(n+1)}{2}.
+\end{equation}
+\end{tcblisting}
+
+
+%----------------------------------------------------------
+\section{Theorems}
+
+\newtcbtheorem[auto counter,number within=section]{theo}%
+  {Theorem}{fonttitle=\bfseries\upshape, fontupper=\slshape,
+     arc=0mm, colback=blue!5!white,colframe=blue!75!black}{theorem}
+
+\begin{theo}{Summation of Numbers}{summation}
+  For all natural number $n$ it holds:
+  \begin{equation}
+  \tcbhighmath{\sum\limits_{i=1}^n i = \frac{n(n+1)}{2}.}
+  \end{equation}
+\end{theo}
+
+We have given Theorem \ref{theorem:summation} on page \pageref{theorem:summation}.
+
+\newtcbtheorem[use counter from=theo]{antheo}%
+  {Theorem}{theorem style=change,oversize,enlarge top by=1mm,enlarge bottom by=1mm,
+    enhanced jigsaw,interior hidden,fuzzy halo=1mm with green,
+     fonttitle=\bfseries\upshape,fontupper=\slshape,
+     colframe=green!75!black,coltitle=green!50!blue!75!black}{antheorem}
+
+\begin{antheo}{Summation of Numbers}{summation}
+  For all natural number $n$ it holds:
+  \begin{equation}
+  \tcbhighmath{\sum\limits_{i=1}^n i = \frac{n(n+1)}{2}.}
+  \end{equation}
+\end{antheo}
+
+%----------------------------------------------------------
+\section{Watermarks}
+
+\begin{tcolorbox}[enhanced,watermark graphics=Basilica_5.png,
+  watermark opacity=0.3,watermark zoom=0.9,
+  colback=green!5!white,colframe=green!75!black,
+  fonttitle=\bfseries, title=Box with a watermark picture]
+  Here, you see my nice box with a picture as a watermark.
+  This picture is automatically resized to fit the dimensions
+  of my box. Instead of a picure, some text could be used or
+  arbitrary graphical code. See the documentation for more options.
+\end{tcolorbox}
+
+%----------------------------------------------------------
+\section{Boxes in boxes}
+\begin{tcolorbox}[colback=yellow!10!white,colframe=yellow!50!black,
+  every box/.style={fonttitle=\bfseries},title=Box]
+  \begin{tcolorbox}[enhanced,colback=red!10!white,colframe=red!50!black,
+    colbacktitle=red!85!black,
+    title=Box inside box,drop fuzzy shadow]
+    \begin{tcolorbox}[beamer,colframe=blue!50!black,title=Box inside box inside box]
+      And now for something completely different: Boxes!\par\medskip
+      \newtcbox{\mybox}{nobeforeafter,tcbox raise base,colframe=green!50!black,colback=green!10!white,arc=0pt}
+      \mybox{This} \mybox{is} \mybox{another} \mybox{box.}
+    \end{tcolorbox}
+  \end{tcolorbox}
+\end{tcolorbox}
+
+
+
+%----------------------------------------------------------
+\section{Breakable Boxes}
+\begin{tcolorbox}[enhanced jigsaw,breakable,pad at break=1mm,
+  colback=blue!5!white,colframe=blue!75!black,title=Breakable box,
+  watermark color=white,watermark text=\Roman{tcbbreakpart}]
+  \lipsum[1-12]
+\end{tcolorbox}
+
+%----------------------------------------------------------
+\clearpage
+\section{Fit Boxes}
+
+\begin{tcolorbox}[enhanced,fit to height=10cm,
+  colback=green!25!black!10!white,colframe=green!75!black,title=Fit box (10cm),
+  drop fuzzy shadow,watermark color=white,watermark text=Fit]
+  \lipsum[1-4]
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced,fit to height=5cm,
+  colback=green!25!black!10!white,colframe=green!75!black,title=Fit box (5cm),
+  drop fuzzy shadow,watermark color=white,watermark text=Fit]
+  \lipsum[1-4]
+\end{tcolorbox}
+
+\end{document}
+

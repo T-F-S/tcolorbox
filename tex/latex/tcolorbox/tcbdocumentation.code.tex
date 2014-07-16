@@ -1,0 +1,405 @@
+%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% tcbdocumentation.code.tex: Code for LaTeX documentations
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+\tcb@set@library@version{3.05}
+
+\tcbuselibrary{listings,skins}
+
+\RequirePackage{doc}[2010/02/04]
+\RequirePackage{pifont}[2005/04/12]
+\RequirePackage{marvosym}[2011/07/20]
+\ifdefined\printindex\else\RequirePackage{makeidx}[2000/03/29]\fi
+\RequirePackage{refcount}[2011/10/16]
+\RequirePackage{hyperref}[2012/02/06]
+
+\definecolor{Option}{rgb}{0.118,0.546,0.222}
+\definecolor{Definition}{rgb}{0.784,0.06,0.176}
+\definecolor{ExampleFrame}{rgb}{0.628,0.705,0.942}
+\definecolor{ExampleBack}{rgb}{0.963,0.971,0.994}
+\definecolor{Hyperlink}{rgb}{0.281,0.275,0.485}
+
+\def\colDef#1{\textcolor{\kvtcb@col@command}{#1}}
+\def\colOpt#1{\textcolor{\kvtcb@col@opt}{#1}}
+
+\lstdefinestyle{tcbdocumentation}{language={[LaTeX]TeX},
+    aboveskip={0\p@ \@plus 6\p@},
+    belowskip={0\p@ \@plus 6\p@},
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    prebreak={\Righttorque},
+    postbreak={\space\Lefttorque},
+    breakatwhitespace=true,
+    basicstyle=\ttfamily\footnotesize,
+    extendedchars=true,
+    moredelim={[is][\itshape\rmfamily]{§}{§}},
+    nolol,inputencoding=\kvtcb@listingencoding}
+
+% The following macros are taken from ltxdoc
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+\let\tcb@doc@org@meta\meta%
+\def\meta#1{{\rmfamily\tcb@doc@org@meta{#1}}}
+\def\marg#1{%
+  {\ttfamily\char`\{}\meta{#1}{\ttfamily\char`\}}}
+\def\oarg#1{%
+  \colOpt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
+
+\newif\iftcb@doc@toindex
+\newif\iftcb@doc@colorize
+\newif\iftcb@doc@annotate
+
+% language specific texts
+\tcbset{
+  doclang/.cd,
+  color/.store in=\kvtcb@text@color,
+  colors/.store in=\kvtcb@text@colors,
+  environment content/.store in=\kvtcb@text@envcontent,
+  environment/.store in=\kvtcb@text@env,
+  environments/.store in=\kvtcb@text@envs,
+  key/.store in=\kvtcb@text@key,
+  keys/.store in=\kvtcb@text@keys,
+  index/.store in=\kvtcb@text@index,
+  pageshort/.store in=\kvtcb@text@pageshort,
+  value/.store in=\kvtcb@text@value,
+  values/.store in=\kvtcb@text@values,
+}
+
+% documentation options
+\tcbset{
+  documentation listing options/.store in=\kvtcb@doclistingoptions,%
+  documentation listing style/.style={documentation listing options={style=#1}},%
+  documentation minted style/.store in=\kvtcb@docmintstyle,
+  documentation minted options/.store in=\kvtcb@docmintoptions,
+  color command/.store in=\kvtcb@col@command,
+  color environment/.store in=\kvtcb@col@environment,
+  color key/.store in=\kvtcb@col@key,
+  color value/.store in=\kvtcb@col@value,
+  color color/.store in=\kvtcb@col@color,
+  color definition/.style={color command={#1},color environment={#1},color key={#1},color value={#1},color color={#1}},
+  color option/.store in=\kvtcb@col@opt,
+  color hyperlink/.store in=\kvtcb@colhyper,
+  color frame/.store in=\kvtcb@colhyper,
+  before example/.store in=\kvtcb@beforeexample,
+  after example/.store in=\kvtcb@afterexample,
+  index actual/.store in=\idx@actual,
+  index quote/.store in=\idx@quote,
+  index level/.store in=\idx@level,
+  index format/.store in=\idx@format,
+  index colorize/.is if=tcb@doc@colorize,%
+  index annotate/.is if=tcb@doc@annotate,%
+  doc left/.dimstore in=\kvtcb@doc@left,
+  doc right/.dimstore in=\kvtcb@doc@right,
+  doc left indent/.dimstore in=\kvtcb@doc@indentleft,
+  doc right indent/.dimstore in=\kvtcb@doc@indentright,
+  doc head command/.style={doc@head@command/.style={#1}},
+  doc head environment/.style={doc@head@environment/.style={#1}},
+  doc head key/.style={doc@head@key/.style={#1}},
+  doc head/.style={doc head command={#1},doc head environment={#1},doc head key={#1}},
+  doc description/.store in=\kvtcb@doc@description,%
+  doc into index/.is if=tcb@doc@toindex,%
+}
+
+
+% styles
+\tcbset{
+  docexample/.style={colframe=ExampleFrame,colback=ExampleBack,fontlower=\footnotesize},
+  documentation minted style=,
+  documentation minted options={tabsize=2,fontsize=\small},
+  index default settings/.style={index actual={@},index quote={"},index level={!}},
+  index german settings/.style={index actual={=},index quote={!},index level={>}},
+  english language/.code={\tcbset{doclang/.cd,
+    color=color,colors=Colors,
+    environment content=environment content,
+    environment=environment,environments=Environments,
+    key=key,keys=Keys,
+    index=Index,
+    pageshort={P.},
+    value=value,values=Values}},
+}
+
+\AtBeginDocument{%
+  \csname tcb@doc@index@\idx@format\endcsname%
+  \hypersetup{
+  citecolor=\kvtcb@colhyper,
+  linkcolor=\kvtcb@colhyper,
+  urlcolor=\kvtcb@colhyper,
+  filecolor=\kvtcb@colhyper,
+  menucolor=\kvtcb@colhyper
+}}
+
+
+\def\dispExample{\tcbset{docexample}\tcbwritetemp}
+
+\def\enddispExample{%
+  \endtcbwritetemp%
+  \kvtcb@beforeexample\begin{tcolorbox}%
+  \tcb@doc@usetemplisting%
+  \tcblower%
+  \tcbusetemp%
+  \end{tcolorbox}\kvtcb@afterexample%
+}
+
+\newenvironment{dispExample*}[1]{%
+  \tcbset{docexample,#1}\tcbwritetemp%
+  }{\enddispExample}
+
+\def\dispListing{\tcb@layer@pushup\tcbset{docexample}\tcbwritetemp}
+
+\def\enddispListing{%
+  \endtcbwritetemp%
+  \kvtcb@beforeexample\begin{tcolorbox}%
+  \tcb@doc@usetemplisting%
+  \end{tcolorbox}\kvtcb@afterexample%
+}
+
+\newenvironment{dispListing*}[1]{%
+  \tcb@layer@pushup\tcbset{docexample,#1}\tcbwritetemp%
+  }{\enddispListing}
+
+% index auxiliary macros
+\def\tcb@Index@Print@CA#1#2#3{%
+  \iftcb@doc@colorize\textcolor{#2}{\texttt{#1}}\else\texttt{#1}\fi%
+  \iftcb@doc@annotate\ #3\fi%
+}
+
+\def\tcb@Index@Print@C#1#2{%
+  \iftcb@doc@colorize\textcolor{#2}{\texttt{#1}}\else\texttt{#1}\fi%
+}
+
+\newrobustcmd{\tcbIndexPrintComC}[1]{\tcb@Index@Print@C{\cs{#1}}{\kvtcb@col@command}}
+\def\tcb@Print@Com#1{\textcolor{\kvtcb@col@command}{\ttfamily\bfseries\cs{#1}}}
+
+\newrobustcmd{\tcbIndexPrintEnvCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@environment}{\kvtcb@text@env}}
+\newrobustcmd{\tcbIndexPrintEnvC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@environment}}
+\def\tcb@Print@Env#1{\textcolor{\kvtcb@col@environment}{\ttfamily\bfseries#1}}
+
+\newrobustcmd{\tcbIndexPrintKeyCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{\kvtcb@text@key}}
+\newrobustcmd{\tcbIndexPrintKeyC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
+\def\tcb@Print@Key#1{\textcolor{\kvtcb@col@key}{\ttfamily\bfseries#1}}
+
+\newrobustcmd{\tcbIndexPrintValCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{\kvtcb@text@value}}
+\newrobustcmd{\tcbIndexPrintValC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
+\def\tcb@Print@Val#1{\textcolor{\kvtcb@col@value}{\ttfamily\bfseries#1}}
+
+\newrobustcmd{\tcbIndexPrintColCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@color}{\kvtcb@text@color}}
+\newrobustcmd{\tcbIndexPrintColC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@color}}
+\def\tcb@Print@Col#1{\textcolor{\kvtcb@col@color}{\ttfamily\bfseries#1}}
+
+\def\tcb@index@Com#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintComC{#1}}\fi}
+\def\tcb@index@Env#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintEnvCA{#1}}\index{\kvtcb@text@envs\idx@level#1\idx@actual\tcbIndexPrintEnvC{#1}}\fi}
+\def\tcb@index@Key#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintKeyCA{#1}}\index{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{#1}}\fi}%
+\def\tcb@index@KeyPath#1#2{\iftcb@doc@toindex\index{#2\idx@actual\tcbIndexPrintKeyCA{#2}}\index{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{/#1/}\idx@level#2\idx@actual\tcbIndexPrintKeyC{#2}}\fi}%
+\def\tcb@index@Val#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintValCA{#1}}\index{\kvtcb@text@values\idx@level#1\idx@actual\tcbIndexPrintValC{#1}}\fi}
+\def\tcb@index@Col#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintColCA{#1}}\index{\kvtcb@text@colors\idx@level#1\idx@actual\tcbIndexPrintColC{#1}}\fi}
+
+\def\brackets#1{{\ttfamily\char`\{}#1{\ttfamily\char`\}}}
+
+\newenvironment{tcb@manual@entry}{\begin{list}{}{%
+  \setlength{\leftmargin}{\kvtcb@doc@left}%
+  \setlength{\itemindent}{0pt}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\rightmargin}{\kvtcb@doc@right}%
+  }\item}{\end{list}}
+
+\def\tcb@manual@top#1{\itemsep=0pt\parskip=0pt\item\strut{#1}\par\topsep=0pt}
+
+\def\tcb@doc@do@description{%
+  \ifx\kvtcb@doc@description\@empty\else\tcblower\raggedleft(\kvtcb@doc@description)\fi%
+}
+
+\newtcolorbox{tcb@doc@head}[1]{blank,colback=white,colframe=white,
+  code={\tcbdimto\tcb@temp@grow@left{-\kvtcb@doc@indentleft}%
+        \tcbdimto\tcb@temp@grow@right{-\kvtcb@doc@indentright}},
+  grow to left by=\tcb@temp@grow@left,%
+  grow to right by=\tcb@temp@grow@right,
+  sidebyside,sidebyside align=top,
+  sidebyside gap=-\tcb@w@upper@real,
+  phantom=\phantomsection,%
+  enlarge bottom by=-0.2\baselineskip,#1}
+
+% main documentation environments
+\newenvironment{docCommand}[3][]{\tcbset{#1}%
+  \begin{tcb@manual@entry}%
+  \begin{tcb@doc@head}{doc@head@command}%
+  \tcb@Print@Com{#2}\tcb@index@Com{#2}\protected@edef\@currentlabel{\noexpand\cs{#2}}\label{com:#2}{\ttfamily #3}%
+  \tcb@doc@do@description%
+  \end{tcb@doc@head}}%
+  {\end{tcb@manual@entry}}
+
+\newenvironment{docCommand*}{\bgroup\tcb@doc@toindexfalse\begin{docCommand}}{\end{docCommand}\egroup}
+
+\newenvironment{docEnvironment}[3][]{\tcbset{#1}%
+  \begin{tcb@manual@entry}%
+  \begin{tcb@doc@head}{doc@head@environment}%
+  \strut\cs{begin}\brackets{\tcb@Print@Env{#2}}\tcb@index@Env{#2}\protected@edef\@currentlabel{#2}\label{env:#2}{\ttfamily #3}\par%
+  \strut~~\meta{\kvtcb@text@envcontent}\par%
+  \strut\cs{end}\brackets{\tcb@Print@Env{#2}}%
+  \tcb@doc@do@description%
+  \end{tcb@doc@head}}%
+  {\end{tcb@manual@entry}}
+
+\newenvironment{docEnvironment*}{\bgroup\tcb@doc@toindexfalse\begin{docEnvironment}}{\end{docEnvironment}\egroup}
+
+\newenvironment{docKey}[4][\@empty]{\begin{tcb@manual@entry}%
+  \tcbset{doc description={#4}}%
+  \begin{tcb@doc@head}{doc@head@key}%
+  \ifx#1\@empty%
+  \tcb@Print@Key{#2}\tcb@index@Key{#2}\protected@edef\@currentlabel{#2}\label{key:#2}{\ttfamily #3}%
+  \else\tcb@Print@Key{/#1/#2}\tcb@index@KeyPath{#1}{#2}\protected@edef\@currentlabel{/#1/#2}\label{key:/#1/#2}{\ttfamily #3}%
+  \fi%
+  \tcb@doc@do@description%
+  \end{tcb@doc@head}}%
+  {\end{tcb@manual@entry}}
+
+\newenvironment{docKey*}{\bgroup\tcb@doc@toindexfalse\begin{docKey}}{\end{docKey}\egroup}
+
+\def\tcbmakedocSubKey#1#2{%
+  \newenvironment{#1}[4][\@empty]{%
+    \ifx##1\@empty\def\tcb@key@path{#2}\else\def\tcb@key@path{#2/##1}\fi%
+    \begin{docKey}[\tcb@key@path]{##2}{##3}{##4}}%
+      {\end{docKey}}%
+  \newenvironment{#1*}{\bgroup\tcb@doc@toindexfalse\begin{#1}}{\end{#1}\egroup}%
+}
+
+\def\docAuxCommand@#1{\tcbIndexPrintComC{#1}\tcb@index@Com{#1}}%
+\def\docAuxCommand@star#1{\tcbIndexPrintComC{#1}}%
+\def\docAuxCommand{\@ifstar\docAuxCommand@star\docAuxCommand@}
+
+\def\docAuxEnvironment@#1{\tcb@Print@Env{#1}\tcb@index@Env{#1}}%
+\def\docAuxEnvironment@star#1{\tcb@Print@Env{#1}}%
+\def\docAuxEnvironment{\@ifstar\docAuxEnvironment@star\docAuxEnvironment@}
+
+\newcommand{\docAuxKey@}[2][\@empty]{%
+  \ifx#1\@empty%
+    \tcb@Print@Key{#2}\tcb@index@Key{#2}%
+  \else%
+    \tcb@Print@Key{/#1/#2}\tcb@index@KeyPath{#1}{#2}%
+  \fi}%
+
+\newcommand{\docAuxKey@star}[2][\@empty]{%
+  \ifx#1\@empty%
+    \tcb@Print@Key{#2}%
+  \else%
+    \tcb@Print@Key{/#1/#2}%
+  \fi}%
+\def\docAuxKey{\@ifstar\docAuxKey@star\docAuxKey@}
+
+\def\docColor@#1{\tcb@Print@Col{#1}\tcb@index@Col{#1}}%
+\def\docColor@star#1{\tcb@Print@Col{#1}}%
+\def\docColor{\@ifstar\docColor@star\docColor@}
+
+\def\docValue@#1{\tcb@Print@Val{#1}\tcb@index@Val{#1}}%
+\def\docValue@star#1{\tcb@Print@Val{#1}}%
+\def\docValue{\@ifstar\docValue@star\docValue@}
+
+\setrefcountdefault{-1}
+\def\tcb@ref@doc#1{\hyperref[#1]{\texttt{\ref*{#1}}%
+  \ifnum\getpagerefnumber{#1}=\thepage\else%
+  \textsuperscript{\ding{213}\,\kvtcb@text@pageshort\,\pageref*{#1}}\fi}}
+
+\def\tcb@ref@doc@star#1{\hyperref[#1]{\texttt{\ref*{#1}}}}
+
+\def\refCom@#1{\tcb@ref@doc{com:#1}}
+\def\refCom@star#1{\tcb@ref@doc@star{com:#1}}
+\def\refCom{\@ifstar\refCom@star\refCom@}
+
+\def\refEnv@#1{\tcb@ref@doc{env:#1}}
+\def\refEnv@star#1{\tcb@ref@doc@star{env:#1}}
+\def\refEnv{\@ifstar\refEnv@star\refEnv@}
+
+\def\refKey@#1{\tcb@ref@doc{key:#1}}
+\def\refKey@star#1{\tcb@ref@doc@star{key:#1}}
+\def\refKey{\@ifstar\refKey@star\refKey@}
+
+\def\refAux#1{\textcolor{\kvtcb@colhyper}{\ttfamily #1}}
+\def\refAuxcs#1{\textcolor{\kvtcb@colhyper}{\cs{#1}}}
+
+\newenvironment{absquote}
+               {\list{}{\leftmargin2cm\rightmargin\leftmargin}%
+                \item\relax\footnotesize}
+               {\endlist}
+
+%--- index macros taken from pgfmanual-en-macros
+\def\tcb@doc@index@pgf@{%
+  \c@IndexColumns=2%
+  \def\theindex{\@restonecoltrue
+    \columnseprule \z@  \columnsep 29\p@
+    \twocolumn[\index@prologue]%
+    \parindent -30pt%
+    \columnsep 15pt%
+    \parskip 0pt plus 1pt%
+    \leftskip 30pt%
+    \rightskip 0pt plus 2cm%
+    \small%
+    \def\@idxitem{\par}%
+    \let\item\@idxitem\ignorespaces}
+  \def\endtheindex{\onecolumn}%
+  \def\noindexing{\let\index=\@gobble}%
+}
+
+\def\tcb@doc@index@pgfsection{%
+  \def\index@prologue{\section*{\kvtcb@text@index}\addcontentsline{toc}{section}{\kvtcb@text@index}%
+    \par\noindent%
+  }%
+  \tcb@doc@index@pgf@%
+}
+
+\def\tcb@doc@index@pgfchapter{%
+  \def\index@prologue{\ifdefined\phantomsection\phantomsection\fi\@makeschapterhead{\kvtcb@text@index}\addcontentsline{toc}{chapter}{\kvtcb@text@index}}%
+  \tcb@doc@index@pgf@%
+}
+
+\let\tcb@doc@index@pgf=\tcb@doc@index@pgfsection%
+
+\def\tcb@doc@index@doc{%
+  \let\tcb@index@Com=\SpecialMainIndex%%
+  \let\tcb@index@Env=\SpecialMainEnvIndex%
+  \tcbset{index german settings}%
+  \EnableCrossrefs%
+  \PageIndex%
+}
+
+\def\tcb@doc@index@off{}%
+
+\tcbset{%
+  reset@documentation/.style={%
+    index format=pgf,
+    english language,
+    documentation listing style=tcbdocumentation,
+    index default settings,
+    color option=Option,
+    color definition=Definition,
+    color hyperlink=Hyperlink,
+    before example=\par\smallskip,
+    after example=,
+    doc left=2em,
+    doc right=0pt,
+    doc left indent=-2em,
+    doc right indent=0pt,
+    doc head=,
+    doc description=,
+    doc into index=true,
+    index colorize=false,
+    index annotate=true,
+    },
+  initialize@reset=reset@documentation,
+}
+
+

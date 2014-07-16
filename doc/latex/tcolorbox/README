@@ -1,0 +1,74 @@
+%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+
+tcolorbox provides an environment for colored and framed text boxes with a
+heading line. Optionally, such a box can be split in an upper and a lower
+part. The package tcolorbox can be used for the setting of LaTeX examples where
+one part of the box displays the source code and the other part shows the
+output. Another common use case is the setting of theorems. The package supports
+saving and reuse of source code and text parts.
+
+Contents of the package
+=======================
+  'README'                    this file
+  'CHANGES'                   log of changes (history)
+  'tcolorbox.sty'             LaTeX package file (style file)
+  'tcbbreakable.code.tex'     LaTeX package file (library of tcolorbox)
+  'tcbdocumenation.code.tex'  LaTeX package file (library of tcolorbox)
+  'tcbfitting.code.tex'       LaTeX package file (library of tcolorbox)
+  'tcbhooks.code.tex'         LaTeX package file (library of tcolorbox)
+  'tcblistings.code.tex'      LaTeX package file (library of tcolorbox)
+  'tcblistingscore.code.tex'  LaTeX package file (library of tcolorbox)
+  'tcblistingsutf8.code.tex'  LaTeX package file (library of tcolorbox)
+  'tcbminted.code.tex'        LaTeX package file (library of tcolorbox)
+  'tcbskins.code.tex'         LaTeX package file (library of tcolorbox)
+  'tcbskinsjigsaw.code.tex'   LaTeX package file (library of tcolorbox)
+  'tcbtheorems.code.tex'      LaTeX package file (library of tcolorbox)
+  'tcbxparse.code.tex'        LaTeX package file (library of tcolorbox)
+  'tcolorbox.pdf'             Documentation for tcolorbox
+  'tcolorbox.tex'             Source code of the documentation (main file)
+  '*.doc.*'                   Source code of the documentation (include files)
+  'tcolorbox-example.tex'     Example file for package usage
+  'tcolorbox-example.pdf'     Compiled example
+  'Basilica_5.png'            Example picture
+  'lichtspiel.jpg'            Example picture
+  'blueshade.png'             Example picture
+  'crinklepaper.png'          Example picture
+  'goldshade.png'             Example picture
+  'pink_marble.png'           Example picture
+
+Installation
+============
+Copy the contents of the 'tcolorbox.tds.zip' from CTAN to your local TeX file tree.
+
+Alternatively, put the files to their respective locations within the TeX installation:
+  'tcolorbox.sty'             ->  /tex/latex/tcolorbox
+  'tcbbreakable.code.tex'     ->  /tex/latex/tcolorbox
+  'tcbdocumenation.code.tex'  ->  /tex/latex/tcolorbox
+  'tcbfitting.code.tex'       ->  /tex/latex/tcolorbox
+  'tcbhooks.code.tex'         ->  /tex/latex/tcolorbox
+  'tcblistings.code.tex'      ->  /tex/latex/tcolorbox
+  'tcblistingscore.code.tex'  ->  /tex/latex/tcolorbox
+  'tcblistingsutf8.code.tex'  ->  /tex/latex/tcolorbox
+  'tcbminted.code.tex'        ->  /tex/latex/tcolorbox
+  'tcbtheorems.code.tex'      ->  /tex/latex/tcolorbox
+  'tcbskins.code.tex'         ->  /tex/latex/tcolorbox
+  'tcbskinsjigsaw.code.tex'   ->  /tex/latex/tcolorbox
+  'tcbxparse.code.tex'        ->  /tex/latex/tcolorbox
+  all other files             ->  /doc/latex/tcolorbox

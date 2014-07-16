@@ -1,0 +1,547 @@
+%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+
+(2006-2011): pre publication usage
+
+version 1.00 (2011/12/08): initial public release
+
+version 1.01 (2012/01/26):
+- dates amended to \RequirePackage(s)
+- provision of the tcolorbox.tds.zip file for easier installation
+
+version 1.02 (2012/02/15)
+- documentation language changed from German to English
+- small correction of the theorem title line appearance
+
+version 1.10 (2012/03/01)
+- tcblatex style for listings changed (nolol added)
+- improved hyperref support
+- new keys parskip and noparskip
+- source code of the documentation added
+- new library 'documentation' to support LaTeX documentations
+  with several library commands, environments and keys (see documentation)
+
+version 1.20 (2012/03/16)
+- new geometry keys:
+  'lefttitle', 'leftupper', 'leftlower', 'righttitle', 'rightupper', 'rightlower'
+  and implementation changed for 'left' and 'right'
+- implementation for tcolorbox changed (adaption to height options)
+- new fixed height option keys:
+  'natural height', 'height', 'equal height group', 'minimum for equal height group',
+  'space', 'space to upper', 'space to lower', 'space to both', 'split',
+  'valign', 'valign lower',
+  'adjusted title'
+- new bounding box option keys:
+  'enlarge top by', 'enlarge bottom by', 'enlarge left by', 'enlarge right by',
+  'toggle enlargement'
+- preparations for a future skin changing option implemented
+- commands \brackets and \docAuxCommand added to the documentation library
+- documentation rearranged
+
+version 1.30 (2012/04/20)
+- several internal code changes to provide a 'skin' exchange mechanism
+- new keys for the core package:
+  'frame engine', 'interior titled engine', 'interior engine', 'segmentation engine'
+  'skin', 'graphical environment', 'geometry nodes', 'colupper', 'collower'
+- tcolorbox now defined as 'long' macro
+- new keys for the library 'listings':
+  'comment', 'listing and comment', 'comment and listing'
+- new library 'skins' with the skins
+  'standard', 'enhanced', 'freelance', 'bicolor', 'beamer', 'widget'
+- keys for the library 'skins':
+  'frame style', 'interior style', 'segmentation style'
+  'frame code', 'interior titled code', 'interior code', 'segmentation code',
+  'colbacklower'
+
+version 2.00 (2013/03/01)
+- breaking news: the new library 'breakable' adds breaking support to tcolorbox.
+- e-TeX now used instead of calc
+- new key 'adjust text' and new implementation for 'adjusted title'
+- new geometry keys:
+  'toprule', 'toprule at break', 'bottomrule', 'bottomrule at break',
+  'leftrule', 'rightrule', 'titlerule', 'outer arc', 'auto outer arc',
+  'toptitle', 'bottomtitle'
+- new bounding box keys:
+  'enlarge top at break by', 'enlarge bottom at break by'
+- new overlay keys:
+  'overlay', 'no overlay', 'overlay broken', 'overlay unbroken',
+  'overlay first', 'overlay middle', 'overlay last',
+  'overlay unbroken and first', 'overlay middle and last'
+- new key: 'parbox' to change text behaviour
+- new library 'breakable' for breakable boxes with the new keys:
+  'breakable', 'unbreakable', 'title after break', 'notitle after break',
+  'adjusted title after break', 'lines before break', 'shrink break goal'
+- new keys for the 'skins' library
+  'skin first', 'skin middle', 'skin last', 'title engine', 'pathfirst',
+  'pathmiddle', 'pathlast', 'title style', 'title code', 'enhancedfirst',
+  'enhancedmiddle', 'enhancedlast', 'enhanced', 'marker', 'bicolor',
+  'bicolorfirst', 'bicolormiddle', 'bicolorlast', 'beamer',
+  'beamerfirst', 'beamermiddle', 'beamerlast', 'draft', 'freelance', 'standard'
+- NOTE: skins 'beamer' and 'widget' changed
+  use the new style options 'beamer' and 'widget' to get the old appearance
+- new watermark keys:
+  'watermark text', 'watermark text on', 'watermark graphics',
+  'watermark graphics on', 'watermark tikz', 'watermark tikz on',
+  'no watermark', 'watermark opacity', 'watermark color',
+  'watermark zoom', 'watermark stretch'
+
+version 2.01 (2013/03/07)
+- bug fix: superfluous vertical space for a breakable box which appeared after a page break
+- bug fix: height computation error when a broken boxed starts with a segmentation line
+- new key for the 'listings' library:
+  'listing inputencoding'
+- new library 'listingsutf8' as variant of 'listings' with new key
+  'listing utf8'
+- keys 'toprule at break', 'bottomrule at break',
+  'enlarge top at break by', 'enlarge bottom at break by'
+  moved from core package to 'breakable' library.
+- new keys for the 'breakable' library:
+  'topsep at break', 'bottomsep at break', 'pad before break',
+  'pad after break', 'pad at break'
+
+version 2.02 (2013/03/13)
+- minor bug fix: segmentation line of 'enhanced' now matches 'standard'
+- new macro '\tcbox' to draw a colorbox fitted to the content width
+- new key 'autoparskip' to detect usage of package parskip automatically
+- new key 'nobeforeafter'
+- new macro '\tcbline' in the 'skins' library to draw 'just lines'
+- new key 'colbacktitle' for the 'skins' library
+
+version 2.10 (2013/04/09)
+- bug fix: \tcbox ignored font settings
+- outdated documentation in German removed from package
+- new core package keys:
+  'oversize', 'tcbox raise', 'tcbox raise base',
+  'before title', 'after title', 'before upper', 'after upper', 'before lower',
+  'after lower', 'center title', 'center upper', 'center lower',
+  'tabularx*', 'tabularx', 'tikz upper', 'tikz lower',
+  'shrink tight', 'extrude left by', 'extrude right by', 'extrude top by',
+  'extrude bottom by', 'extrude by'
+- the 'theorems' library now loads 'amsmath'
+- new macros for the 'theorems' library:
+  '\tcboxmath', '\tcbhighmath'
+- new keys for the 'theorems' library:
+  'math upper', 'math lower', 'math', 'highlight math', 'highlight math style',
+  'ams equation upper', 'ams equation lower', 'ams equation', 'ams equation* upper',
+  'ams equation* lower', 'ams equation*', 'ams align upper', 'ams align lower',
+  'ams align', 'ams align* upper', 'ams align* lower', 'ams align*',
+  'ams gather upper', 'ams gather lower', 'ams gather', 'ams gather* upper',
+  'ams gather* lower', 'ams gather*',
+  'ams nodisplayskip upper', 'ams nodisplayskip lower', 'ams nodisplayskip'
+- new library 'hooks' for hook options with the new keys:
+  'before upper app', 'before upper pre', 'after upper app', 'after upper pre',
+  'before lower app', 'before lower pre', 'after lower app', 'after lower pre',
+  'before title app', 'before title pre', 'after title app', 'after title pre',
+  'before app', 'before pre', 'after app', 'after pre',
+  'overlay unbroken app', 'overlay unbroken pre', 'overlay first app', 'overlay first pre',
+  'overlay middle app', 'overlay middle pre', 'overlay last app', 'overlay last pre',
+  'overlay app', 'overlay pre', 'overlay broken app', 'overlay broken pre',
+  'overlay unbroken and first app', 'overlay unbroken and first pre',
+  'overlay middle and last app', 'overlay middle and last pre',
+  'watermark tikz app', 'watermark tikz pre', 'watermark tikz app on', 'watermark tikz pre on',
+  'watermark graphics app', 'watermark graphics pre', 'watermark graphics app on', 'watermark graphics pre on',
+  'watermark text app', 'watermark text pre', 'watermark text app on', 'watermark text pre on',
+  'frame code app', 'frame code pre', 'interior titled code app', 'interior titled code pre',
+  'interior code app', 'interior code pre', 'segmentation code app', 'segmentation code pre',
+  'title code app', 'title code pre'
+- colorization of source code snippets in the documentation
+
+version 2.20 (2013/04/17)
+- bug fix: problem with breaking boxes after headings
+- new feature: support for boxes with side by side content
+- new keys:
+  'sidebyside', 'sidebyside align', 'sidebyside gap',
+  'lefthand width', 'righthand width', 'lefthand ratio', 'righthand ratio'
+- key 'nofloat' documented
+- new keys for the 'listings' library:
+  'listing side text', 'text side listing'
+  'listing outside text', 'text outside listing'
+- new keys for the 'skins' library:
+  'frame hidden', 'interior hidden', 'segmentation hidden', 'title hidden'
+- new environments for the 'documentation' library:
+  'dispExample*', 'dispListing*'
+- the default style for 'highlight math' is changed to have no title
+- minor change of internal width computation
+- minor internal fixes
+- slight overhaul of the documentation
+
+version 2.21 (2013/04/23)
+- bug fix: \tcbox and 'sidebyside' needed 'breakable' library
+- bug fix: library 'tcbhooks' relied on etoolbox package
+- bug fix: breaking boxes between upper part and box frame
+- new macro '\newtcolorbox'
+- new macro '\newtcblisting' for the 'listings' library
+- new key 'code'
+- documentation corrections and extensions
+
+version 2.22 (2013/05/15)
+- bug fix: text color bleeded out of the box in some cases
+- bug fix: breakable boxes were too large in some cases (leading to blank pages)
+- bug fix: breaking boxes produced empty boxes in some cases
+- documentation forgot naming package 'colortbl' for the 'tabularx' option
+- new feature: breakable boxes allow footnotes now (like minipages)
+- new macro '\newtcbox'
+
+version 2.30 (2013/06/04)
+- bug fix: handling of 'before' and 'after' for \tcbox corrected
+- \tcbline now also works for centered environments
+- implementation for \tcbox made more efficient
+- new capture mode for automated content fit by font size adjustment
+  with the new macros '\tcboxfit' and '\newtcboxfit'
+  and the new keys 'fit', 'fit to', 'fit to height', 'fit basedim', 'fit skip',
+  'fit maxstep'
+- new keys 'baseline', 'capture', 'hbox', 'minipage'
+- new stackable borderlines with the 'skins' library:
+  'borderline', 'no borderline'
+- new keys for the 'skins' library:
+  'enhanced standard', 'blank'
+- new key 'index format' for the 'documentation' library
+
+version 2.31 (2013/06/18)
+- several internal changes
+- library loading mechanism revisited
+- internal label change for '\tcbmaketheorem'
+- new library options 'most' and 'all'
+- \tcbline now also works for ragged environments
+- new keys:
+  'flushleft title', 'flushleft upper', 'flushleft lower',
+  'flushright title', 'flushright upper', 'flushright lower'
+- new key 'no listing options' for the 'listings' library
+- new shadow features for the 'skins' library with the options:
+  'shadow', 'fuzzy shadow', 'drop shadow', 'drop fuzzy shadow', 'halo', 'fuzzy halo'
+- shadows for the 'beamer' skin changed to fuzzy
+- new library 'fitting' for the content fit operations.
+  NOTE: '\tcboxfit' and the fit options introduced in version 2.30 are moved
+        to this new library
+- the fit algorithm is completey revisited and extended
+- new macro '\tcbfontsize' ('fitting library') for relative font sizes
+- new keys for the 'fitting' library:
+  'fit fontsize macros', 'fit height plus', 'fit width plus',
+  'fit width from', 'fit height from'
+
+version 2.32 (2013/06/23)
+- bug fix: 'ams nodisplayskip lower' was applied to upper.
+- new option 'check odd page'
+- new environments for the 'skins' library:
+  'tcbclipinterior', 'tcbclipframe', 'tcbcliptitle'
+- new keys for the 'skins' library:
+  'watermark overzoom', 'clip watermark'
+  'clip title', 'clip upper', 'clip lower'
+- NOTE: watermarks are now clipped by default.
+  To get the old behaviour add the option 'clip watermark=false'
+
+version 2.33 (2013/07/04)
+- new options 'phantom', 'step and label', 'nophantom',
+  'lower separated', 'reset', 'toggle left and right'
+- 'highlight math' sets 'notitle,nophantom' automatically
+- hyper anchor setting for theorems and LaTeX examples improved
+- new key 'shield externalize' for externalization
+- additional empty-first-box test for breakable boxes
+- new key 'enlargepage' for fine-tuning breakable boxes
+- parameter added to option 'oversize'
+- option 'toggle enlargement' has a default value 'evenpage' now
+
+version 2.40 (2013/07/15)
+- bug fix: wrong footnote text width for breakable boxes
+- bug fix: watermarks were influenced by baseline settings
+- package etoolbox is now loaded by default
+- 'phantom' changed to be stackable (!)
+- introducing the new initialization option type for easy
+  numbering and list generation. New options:
+  'use counter', 'auto counter', 'use counter from',
+  'no counter', 'number within', 'number format', 'number freestyle',
+  'list inside', 'list type'
+- '\newtcolorbox' and 'newtcbox' take initialization options now
+- new macros '\tcblistof', '\tcbsetmanagedlayers'
+- introducing the layered box concept for boxes in boxes improvement:
+  * boxes inside boxes are automatically reset to default values
+  * new option 'every box', 'every box on layer x', 'every box on higher layers'
+  * support for footnotes for boxes in boxes (default: up to layer 4)
+- new options 'step', 'label', 'list entry', 'add to list'
+- library 'listings':
+  * '\newtcblisting' takes initialization options now
+  * new macro '\newtcbinputlisting'
+- library 'theorems':
+  * '\tcbmaketheorem' takes initialization options now
+  * new macro '\newtcbtheorem'
+- library 'fitting':
+  * 'newtcboxfit' takes initialization options now
+- library 'documentation':
+  * the \ref... macros suppress the page numbers now if on the same page
+  * new macros '\refCom*', '\refEnv*', '\refKey*'
+  * docCommand and docEnvironment take options now
+
+version 2.41 (2013/07/23)
+- NOTE: The deprecated macro '\tcbmaketheorem' is redefined to its signature
+  of v2.33 and before to ensure backward compatibility. This may break code
+  written with v2.40 using '\tcbmaketheorem'.
+- minor internal improvements
+- support for the cleveref package with
+  * new initialization options 'crefname', 'Crefname'
+  * new options 'label type', 'no label type'
+- library 'theorems':
+  * new options: 'separator sign', 'separator sign colon', 'separator sign dash'
+- library 'listings':
+  * capture mode can be changed for 'tcblisting' and '\tcbinputlisting'
+  * new option: 'listing remove caption'
+
+version 2.50 (2013/07/29)
+- first line indent corrected for 'parbox=false'
+- minor internal improvements
+- new option keys
+  'height plus', 'height from'
+- new library 'minted' with support for the minted package (Pygments support)
+  * new options 'minted language', 'minted options', 'minted style'
+- new library option 'many'
+- new common listings options:
+  'listing engine'
+- library 'documentation':
+  * new options 'documentation minted style', 'documentation minted options'
+
+version 2.51 (2013/09/16)
+- bug fix: processing of 'initialization option keys' fixed
+  for \newtcbox, \newtcbinputlisting, and \newtcboxfit
+- bug fix: disturbing horizontal space in \tcboxfix removed
+- new macros '\renewtcolorbox', '\renewtcbox'
+- library 'skins':
+  * implementation for the skin families 'enhanced', 'beamer', and 'bicolor' changed
+  * break sequence changed for skin 'freelance'
+  * new skins: 'freelancefirst', 'freelancemiddle', 'freelancelast'
+  * new options: 'extend freelance', 'extend freelancefirst',
+    'extend freelancemiddle', 'extend freelancelast',
+    'drop midday shadow', 'drop fuzzy midday shadow'
+  * new environment 'tcbinvclipframe'
+- library 'listings':
+  * new macros '\renewtcblisting', '\renewtcbinputlisting'
+- library 'theorems':
+  * new macro '\renewtcbtheorem'
+- library 'fitting':
+  * new macro '\renewtcboxfit'
+- library 'documentation':
+  * new option 'documentation listing options'
+
+version 2.60 (2013/12/17)
+- new 'jigsaw' variants for the skins 'standard' and 'enhanced' for
+  advanced transparency and similar effects.
+- new package core skin 'standard jigsaw'
+- 'tabularx' and 'tabularx*' reset the arrayrulecolor to black after the table now.
+- option 'colbacktitle' moved from library 'skins' to package core
+- new options:
+  'title filled', 'opacityupper', 'opacitylower', 'opacitytitle', 'opacityframe',
+  'opacityback', 'opacitybacktitle', 'opacityfill', 'opacitytext','hyphenationfix',
+  'standard jigsaw', 'enlarge by', 'grow to left by', 'grow to right by'
+- library 'skins':
+  * new skin: 'enhanced jigsaw', 'enhancedfirst jigsaw', 'enhancedmidle jigsaw',
+    'enhancedlast jigsaw'
+  * marker style now based on 'enhancedmiddle jigsaw'
+  * new options:
+  'enhanced jigsaw', 'tikz', 'tikz reset', 'show bounding box',
+  'at begin tikz', 'at begin tikz reset', 'at end tikz', 'at end tikz reset',
+  'rotate', 'scale', 'remember', 'remember as',
+  'drop shadow southeast', 'drop shadow south', 'drop shadow southwest', 'drop shadow west',
+  'drop shadow northwest', 'drop shadow north', 'drop shadow northeast', 'drop shadow east',
+  'drop fuzzy shadow southeast', 'drop fuzzy shadow south', 'drop fuzzy shadow southwest',
+  'drop fuzzy shadow west', 'drop fuzzy shadow northwest', 'drop fuzzy shadow north',
+  'drop fuzzy shadow northeast','drop fuzzy shadow east',
+- library 'listings':
+  new options 'text above listing' and 'listing above text'
+- library 'theorems':
+  \newtcbtheorem creates an additional starred theorem environment
+- library 'fitting':
+  fit algorithm warning switched off by default.
+  new options:
+  'fit warning'
+- library 'documentation': more values for 'index format'
+- documentation extended
+- major internal implementation changes and optimizations
+
+version 2.61 (2014/01/10)
+- bug fix: '@' was set as letter in some situations
+- typing error corrections
+- new macro \tcbsetforeverylayer
+- library 'skins':
+  * new macros and environments:
+    '\tcbstartdraftmode', '\tcbstopdraftmode', '\tcbinterruptdraftmode', '\tcbcontinuedraftmode'
+  * new skin: 'spartan'
+  * new options: 'spartan', 'draftmode'
+- library 'fitting':
+  * alternative fitting algorithms implemented (fontsize, areasize, hybrid, squeeze)
+  * new option: 'fit algorithm'
+
+version 2.70 (2014/02/06)
+- bug fix: global setting of 'before' or 'after' may produce errors or
+           side effects for layered boxes.
+- compatibility issue with TikZ 3.00 solved
+- new options:
+  'detach title', 'attach title', 'attach title to upper',
+  'tikznode upper', 'tikznode lower', 'tikznode'
+- library 'theorems':
+  * new options:
+  'separator sign none', 'terminator sign', 'terminator sign colon',
+  'terminator sign dash', 'terminator sign none', 'description delimiters',
+  'description delimiters parenthesis', 'description delimiters none',
+  'theorem name and number', 'theorem number and name', 'theorem name',
+  'theorem style'
+- library 'documentation':
+  * re-implementation of the documenting environments
+    (may alter existing documents slightly)
+  * new environments:
+    'docCommand*', 'docEnvironment*', 'docKey*'
+  * new commands:
+    '\docAuxCommand*', '\docAuxEnvironment', '\docAuxEnvironment*',
+    '\docValue', '\docValue*', '\docAuxKey', '\docAuxKey*',
+    '\docColor*', '\refAux', '\refAuxcs'
+  * new options:
+    'doc left', 'doc right', 'doc left indent', 'doc right indent',
+    'doc head', 'doc head command', 'doc head environment', 'doc head key',
+    'doc description', 'doc into index', 'value', 'values'
+
+version 2.71 (2014/02/21)
+- bug fix: sidebyside setting with empty left hand side caused false positioning
+- new options:
+  'external', 'remake'
+- library 'listings':
+  * new options:
+    'comment side listing', 'listing side comment', 'comment above listing',
+    'listing above comment', 'comment outside listing', 'listing outside comment',
+    'image comment',
+- library 'documentation':
+  * automatic inclusion of the 'skins' library
+  * inclusion of 'makeidx' made dependent on the existence of '\printindex'
+  * new options:
+    'keys', 'index colorize', 'index annotate',
+    'color command', 'color environment', 'color key', 'color value', 'color color'
+
+version 2.72 (2014/03/18)
+- bug fix: mixing \newtcblisting with 'ams align' and similar options was not possíble
+- bug fix: footnotes lost for 'listing outside text' and similar options
+- sidebyside and outside implementation slightly changed for beamer usage
+- bicolor skin respects 'opacityback' for the upper part now
+- new TikZ options:
+  'fill image opacity', 'fill image options',
+  'fill plain image', 'fill plain image*', 'fill stretch image', 'fill stretch image*',
+  'fill overzoom image', 'fill overzoom image*', 'fill zoom image', 'fill zoom image*',
+  'fill shrink image', 'fill shrink image*', 'fill tile image', 'fill tile image*'
+- library 'skins':
+  * new options:
+    'frame style image', 'frame style tile', 'interior style image', 'interior style tile',
+    'title style image', 'title style tile'
+- library 'listings':
+  * new options:
+    'every listing line', 'every listing line*'
+
+version 2.80 (2014/03/31)
+- implementation changed for all '\newtcolorbox', '\newtcbox', etc., macros.
+- new option:
+  'float*'
+- new TikZ option:
+  'fill image scale'
+- library 'skins' new option:
+  'watermark shrink'
+- new library 'xparse' with new commands:
+  '\DeclareTColorBox', '\NewTColorBox', '\RenewTColorBox', '\ProvideTColorBox',
+  '\DeclareTotalTColorBox', '\NewTotalTColorBox', '\RenewTotalTColorBox', '\ProvideTotalTColorBox',
+  '\DeclareTCBox', '\NewTCBox', '\RenewTCBox', '\ProvideTCBox',
+  '\DeclareTotalTCBox', '\NewTotalTCBox', '\RenewTotalTCBox', '\ProvideTotalTCBox',
+  '\DeclareTCBListing', '\NewTCBListing', '\RenewTCBListing', '\ProvideTCBListing',
+  '\DeclareTCBInputListing', '\NewTCBInputListing', '\RenewTCBInputListing', '\ProvideTCBInputListing',
+  '\DeclareTCBoxFit', '\NewTCBoxFit', '\RenewTCBoxFit', '\ProvideTCBoxFit',
+  '\DeclareTotalTCBoxFit', '\NewTotalTCBoxFit', '\RenewTotalTCBoxFit', '\ProvideTotalTCBoxFit',
+  '\tcboxverb'
+
+version 3.00 (2014/05/08)
+- bug fix: 'title code app', 'title code pre' changed wrong code
+- documentation corrections
+- implementation of graphical engines changed (!)
+- note: optical backward compatibility issues with breakable 'freelance' boxes possible
+- 'frame code' and similar options are moved from the 'skins' library to the core package
+- 'enlarge top at break by' and 'enlarge bottom at break by' moved from 'breakable' library to the core package
+- new macros:
+  '\tcbnewsubskin'
+- new options:
+  'skin first is subskin of', 'skin middle is subskin of', 'skin last is subskin of',
+  'enlarge top initially by', 'enlarge finally last by', 'overlay unbroken and last'
+  'size', 'on line', 'varwidth upper',
+  'frame empty', 'interior empty', 'interior titled empty', 'segmentation empty', 'title empty'
+- new TikZ options:
+  'tcb fill frame', 'tcb fill interior', 'tcb fill title'
+  'fill plain picture', 'fill stretch picture', 'fill overzoom picture',
+  'fill zoom picture', 'fill shrink picture', 'fill tile picture', 'fill tile picture*'
+- library 'skins' new options (concerning 'underlay', 'finish' and 'boxed title'):
+  'underlay unbroken', 'underlay first', 'underlay middle', 'underlay last',
+  'underlay', 'underlay broken', 'underlay unbroken and first',
+  'underlay middle and last', 'underlay unbroken and last',
+  'no underlay unbroken', 'no underlay first',
+  'no underlay middle', 'no underlay last', 'no underlay',
+  'finish unbroken', 'finish first', 'finish middle', 'finish last',
+  'finish', 'finish broken', 'finish unbroken and first',
+  'finish middle and last', 'finish unbroken and last',
+  'no finish unbroken', 'no finish first',
+  'no finish middle', 'no finish last', 'no finish',
+  'empty', 'blanker',
+  'boxed title style', 'varwidth boxed title', 'varwidth boxed title*',
+  'minipage boxed title', 'minipage boxed title*', 'tikznode boxed title',
+  'hbox boxed title', 'boxtitle/xshift', 'boxtitle/yshift', 'boxtitle/yshifttext',
+  'boxtitle/yshift*', 'attach boxed title to top left', 'attach boxed title to top center',
+  'attach boxed title to top right', 'attach boxed title to bottom left',
+  'attach boxed title to bottom center', 'attach boxed title to bottom right',
+- new engine and skin 'empty'
+- implementation of 'show bounding box' changed to be a border line.
+- library 'hooks' new options:
+  'underlay unbroken pre', 'underlay first pre', 'underlay middle pre',
+  'underlay last pre', 'underlay pre', 'underlay broken pre',
+  'underlay unbroken and first pre', 'underlay middle and last pre',
+  'underlay unbroken and last pre'
+  'finish unbroken pre', 'finish first pre', 'finish middle pre',
+  'finish last pre', 'finish pre', 'finish broken pre',
+  'finish unbroken and first pre', 'finish middle and last pre',
+  'finish unbroken and last pre'
+  'overlay unbroken and last app', 'overlay unbroken and last pre'
+- library 'theorems':
+  * new options:
+  'description color', 'description font', 'description formatter'
+
+version 3.01 (2014/05/13)
+- bug fix: 'parbox=false' plus 'breakable' had an unwanted indent
+- compatibility fix for tabularx 2014/04/22 v2.09
+
+version 3.02 (2014/05/13)
+- compatibility fix for tabularx 2014/04/22 v2.09 (again)
+
+version 3.03 (2014/05/16)
+- bug fix: some initialization option keys for \newtcblisting did not operate correctly
+- bug fix: boxed title shape 'title' was unknown in underlays
+- more boxed title example documented
+
+version 3.04 (2014/05/18)
+- compatibility fix for tabularx removed; compatible with tabularx 2014/05/13 v2.10
+- boxed title improvements:
+  * the 'title' node is accessible now from inside 'frame code' and 'interior code'
+  * new keys 'underlay boxed title', 'no underlay boxed title', 'underlay boxed title pre'
+  * documentation example updated
+
+version 3.05 (2014/05/28)
+- compatibility fix for the upcoming version 2.0 of the package minted
+- inner boxes are enforced to be unbreakable now
+- library 'breakable':
+  new key 'enforce breakable' (for breaking inner boxed deliberately)
+- library 'skins':
+  * new options:
+  'lifted shadow', 'drop small lifted shadow', 'drop lifted shadow', 'drop large lifted shadow'
+

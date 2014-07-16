@@ -1,0 +1,36 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Picture Credits}
+The following pictures were used inside this documentation.
+
+\def\parorfillfill{\hfill\global\let\parorfill\parorfillpar}
+\def\parorfillpar{\par\global\let\parorfill\parorfillfill}
+\let\parorfill\parorfillfill
+
+\DeclareTotalTColorBox{\diabox}{ O{} v  m }
+  { bicolor,before=,after=\parorfill,equal height group=diabox,width=7.9cm,
+    fonttitle=\bfseries\ttfamily,adjusted title={#2},center title,
+    colframe=blue!20!black,leftupper=0mm,rightupper=0mm,colback=black!75!white,#1}
+  { \tikz\path[fill zoom image={#2}] (0,0) rectangle (\linewidth,4cm);%
+    \tcblower#3}
+
+
+\diabox[before=]{Basilica_5.png}{
+  \url{http://commons.wikimedia.org/wiki/File:Basilica_5.png}}
+\diabox{lichtspiel.jpg}{
+  Photograph taken by Thomas F.~Sturm.}
+\diabox{crinklepaper.png}{%
+  Created with |GIMP|.\\
+  \url{http://www.gimp.org}}
+\diabox{pink_marble.png}{%
+  Created with |GIMP|.\\
+  \url{http://www.gimp.org}}
+\diabox{blueshade.png}{%
+  Created with |GIMP|.\\
+  \url{http://www.gimp.org}}
+\diabox{goldshade.png}{%
+  Created with |GIMP|.\\
+  \url{http://www.gimp.org}}
+
+

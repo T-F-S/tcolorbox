@@ -1,0 +1,201 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Introduction}
+The package originates from the first edition of my book
+\flqq{\citetitle{sturm:2014g}\frqq~\cite{sturm:2014g}
+in about 2006.
+For the \LaTeX\ examples and tutorials given there, I wanted to have
+accentuated and colored boxes to display source code and
+compiled text in combination.
+Since, in my opinion, this type of boxes is also quite useful to highlight definitions
+and theorems, I applied them for my lecture notes in
+mathematics \cite{sturm:2007b,sturm:2008b,sturm:2010a}
+as well.
+With this package, you are invited to apply these boxes for similar projects.
+
+Starting with version 2.00, for all internal calculations
+$\varepsilon$-\TeX\ \cite{breitenlohner:1998a} expressions are used
+in replacement of the package |calc| \cite{thorub:2007a}.
+The breaking news for version 2.00 is the support for breakable boxes.
+This new feature allows new applications of the package without
+affecting the core package too much if you do not need boxes to break automatically.
+With version 2.20, the often requested 'side by side' mode for listings has been added.
+With version 3.00, boxed titles are introduced together with improved
+customization options for overlays, underlays, finishes, and own code extensions.
+
+\begin{tcolorbox}[enhanced,boxrule=0mm,boxsep=0mm,frame hidden,interior hidden,
+  left=0mm,right=0mm,top=0mm,bottom=0mm,watermark opacity=0.25,watermark zoom=1.2,before=\par\smallskip,
+  clip watermark=false,
+  watermark tikz={%
+    \path[fill=yellow,draw=yellow!75!red] (0,0) circle (1cm);
+    \fill[red] (45:5mm) circle (1mm);
+    \fill[red] (135:5mm) circle (1mm);
+    \draw[line width=1mm,red] (215:5mm) arc (215:325:5mm);}]
+Since the first public release in 2011, I received a lot of feedback from all over the world.
+I want to thank all who wrote me for supporting this package by sending bug reports
+and ideas for new or better features.
+\end{tcolorbox}
+
+
+\subsection{Installation}
+Typically, |tcolorbox| will be installed as part of a major \LaTeX\ distribution
+and there is nothing special to do for a user.
+
+If you intend to make a local
+installation \emph{by hand}, see the |README| file of the |tcolorbox| package
+for some hints. The short story is: you have to install not only
+|tcolorbox.sty|, but also all |*.code.tex| files in the local |texmf| tree.
+
+
+\subsection{Loading the Package}
+The base package |tcolorbox| loads the packages
+|pgf| \cite{tantau:2013a}, |verbatim| \cite{schoepf:2001a},
+|etoolbox| \cite{lehmann:2011a},
+and |environ| \cite{robertson:2013a}.
+|tcolorbox| itself is loaded in the usual manner in the preamble:
+\begin{dispListing}
+\usepackage{tcolorbox}
+\end{dispListing}
+The package takes option keys in the key-value syntax.
+Alternatively, you may use these keys later in the preamble with
+\refCom{tcbuselibrary} (see there).
+For example, the key to typeset listings is:
+\begin{dispListing}
+\usepackage[listings]{tcolorbox}
+\end{dispListing}
+
+
+\clearpage
+\subsection{Libraries}\label{sec:bibliothek}
+The base package |tcolorbox| is extendable by program libraries.
+This is done by using option keys while loading the package or inside
+the preamble by applying the following macro with the same set of keys.
+
+\begin{docCommand}{tcbuselibrary}{\marg{key list}}
+  Loads the libraries given by the \meta{key list}.
+\begin{dispListing}
+\tcbuselibrary{listings,theorems}
+\end{dispListing}
+\end{docCommand}
+
+The following keys are used inside |\tcbuselibrary| respectively
+|\usepackage| without the key tree path |/tcb/library/|.
+
+\begin{docTcbKey}[library]{skins}{}{\mylib{skins}}
+  Loads the package |tikz| \cite{tantau:2013a} and provides additional
+  styles (skins) for the appearance of the colored boxes; see
+  Section \ref{sec:skins} from page \pageref{sec:skins}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{listings}{}{\mylib{listings}}
+  Loads the package |listings| \cite{heinz:2013a} and provides additional
+  macros for typesetting listings which are described in Section \ref{sec:listings}
+  from page \pageref{sec:listings}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{listingsutf8}{}{\mylib{listingsutf8}}
+  Loads the packages |listings| \cite{heinz:2013a} and
+  |listingsutf8| \cite{oberdiek:2011a} for UTF-8 support.
+  This is a variant of the library \mylib{listings}
+  and is described in Section \ref{sec:listings}
+  from page \pageref{sec:listings}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{minted}{}{\mylib{minted}}
+  Loads the package |minted| \cite{rudolph:2011a} to
+  typeset listings with the |Pygments| \cite{pygments:2013} tool,
+  also see \Vref{sec:listings}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{theorems}{}{\mylib{theorems}}
+  Provides additional
+  macros for typesetting theorems which are described in Section \ref{sec:theorems}
+  from page \pageref{sec:theorems}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[library]{breakable}{}{\mylib{breakable}}
+  Provides support for automatic box breaking from one page to another;
+  see Section \ref{sec:breakable} from page \pageref{sec:breakable}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{fitting}{}{\mylib{fitting}}
+  Provides support for font size adaption of the box content to
+  the box dimensions;
+  see Section \ref{sec:fitting} from page \pageref{sec:fitting}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{hooks}{}{\mylib{hooks}}
+  Extends several option keys to 'hookable' keys;
+  see Section \ref{sec:hooks} from page \pageref{sec:hooks}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{xparse}{}{\mylib{xparse}}
+  Provides document command production with |xparse| for |tcolorbox|;
+  see Section \ref{sec:xparse} from page \pageref{sec:xparse}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[library]{documentation}{}{\mylib{documentation}}
+  Provides additional
+  macros for typesetting \LaTeX\ documentations
+  which are described in Section \ref{sec:documentation}
+  from page \pageref{sec:documentation}.
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[library]{many}{}{style, no value}
+  Loads the libraries \mylib{skins}, \mylib{breakable}, \mylib{hooks},
+  \mylib{theorems}, \mylib{fitting}, and \mylib{xparse}.
+  Use this shortcut, if you want to use all features of |tcolorbox|
+  with exception of typesetting listings and using
+  the specialized \mylib{documentation} library.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{most}{}{style, no value}
+  Loads all libraries except \mylib{minted} and \mylib{documentation}.
+  Use this shortcut, if you want to use all features of |tcolorbox|
+  with exception of using the |minted| package and using
+  the specialized \mylib{documentation} library.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{all}{}{style, no value}
+  Loads all libraries. Use this shortcut only, if you indend to use the
+  \mylib{documentation} library.
+\end{docTcbKey}
+
+
+\begin{tcolorbox}[title={Package \texttt{tcolorbox}},center title,fonttitle=\bfseries,arc=0pt,
+  colback=red!10!white,
+  interior style={fill tile image*={width=2cm}{pink_marble.png},fill image opacity=0.5},
+  colframe=red!50!black]
+  \begin{tcolorbox}[beamer,adjusted title=Basic Features,colframe=blue!50!black,colback=blue!10!white]
+  Base package
+  \end{tcolorbox}
+  \tcbset{every box on layer 2/.style={reset,nobeforeafter,width=\linewidth/3-2mm,
+    equal height group=packageoverview,beamer,colframe=blue!50!black,colback=blue!10!white}}
+  \vspace{2mm}
+  \begin{tcolorbox}[adjusted title=Advanced Features]
+    \mylib{skins}\\
+    \mylib{breakable}\\
+    \mylib{theorems}\\
+    \mylib{fitting}\\
+    \mylib{hooks}\\
+    \mylib{xparse}
+  \end{tcolorbox}
+  \hfill
+  \begin{tcolorbox}[adjusted title=Listings]
+    \mylib{listings}\\
+    \mylib{listingsutf8}
+    \tcblower
+    \mylib{minted}
+  \end{tcolorbox}
+  \hfill
+  \begin{tcolorbox}[adjusted title=Documentation]
+    \mylib{documentation}
+  \end{tcolorbox}
+\end{tcolorbox}
+
+
+

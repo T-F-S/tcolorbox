@@ -1,0 +1,491 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{fitting}}\label{sec:fitting}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{fitting}
+\end{dispListing}
+
+\subsection{Macros of the Library}
+
+\begin{docCommand}{tcboxfit}{\oarg{options}\marg{box content}}
+  Creates a colored box where the given \meta{box content} is fitted to
+  the width and height of the box. A |tcboxfit| has to have a fixed height.
+  If no fixed height is given, a square box is constructed.
+  In principal, most \meta{options} for a \refEnv{tcolorbox}
+  can be used for |\tcboxfit| with some restrictions. A |\tcboxfit| cannot have
+  a lower part and cannot be broken.
+
+\enlargethispage*{1cm}
+\begin{dispExample}
+% \usepackage{lipsum}
+\tcbset{colframe=blue!50!black,colback=red!10!white,
+        boxsep=0pt,top=1mm,bottom=1mm,left=1mm,right=1mm,
+        nobeforeafter,width=(\linewidth-2mm)/3}
+
+\tcboxfit[height=8cm]{\lipsum[1]}\hfill
+\tcboxfit[height=4cm]{\lipsum[1]}\hfill
+\tcboxfit[height=2cm]{\lipsum[1]}
+
+\medskip
+\tcbset{width=(\linewidth-2mm)/2,colback=green!10!white,boxsep=1mm}
+\tcboxfit[height=4cm]{\lipsum[2]}\hfill
+\tcboxfit[height=4cm,title=With a title]{\lipsum[2]}
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{marker}
+See \Vref{subsec:xparse_tcboxfit} for more
+elaborate methods to create new commands.
+\end{marker}
+
+\enlargethispage*{2cm}
+
+\begin{docCommand}{newtcboxfit}{\oarg{init options}\brackets{\texttt{\textbackslash}\rmfamily\meta{name}}\oarg{number}\oarg{default}\marg{options}}
+  Creates a new macro \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
+  Basically, |\newtcboxfit| operates like |\newcommand|.
+  The new macro \texttt{\textbackslash}\meta{name} optionally takes \meta{number}$+1$ arguments, where
+  \meta{default} is the default value for the optional first argument.
+  The \meta{options} are given to the underlying |tcboxfit|.
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\newtcboxfit{\mybox}{colback=red!5!white,
+  colframe=red!75!black,width=4cm,
+  height=1.5cm,center upper}
+
+\mybox{This is my own box.}\par
+\mybox{This is my own box with more text
+       to be written.}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+% \usepackage{lipsum}
+\newtcboxfit{\mybox}[2]{colback=red!5!white,
+  colframe=red!75!black,fonttitle=\bfseries,
+  boxsep=1mm,left=0mm,right=0mm,top=0mm,
+  bottom=0mm,center upper,valign=center,
+  nobeforeafter,width=#1,height=#2}
+
+\mybox{2.5cm}{1cm}{First box}%
+\mybox{2.5cm}{1cm}{Second box with more text}\\
+\mybox{5cm}{2cm}{Third box with text}\\
+\mybox{5cm}{3cm}{\lipsum[1]}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+% \usepackage{lipsum}
+\newtcboxfit{\mybox}[2][]{colback=red!5!white,
+  colframe=red!75!black,
+  width=#2,height=#2/3*2,#1}
+
+\mybox[colback=yellow]{5cm}%
+  {\lipsum[2]}
+\end{dispExample*}
+\end{docCommand}
+
+
+\begin{docCommand}{renewtcboxfit}{\oarg{init options}\brackets{\texttt{\textbackslash}\rmfamily\meta{name}}\oarg{number}\oarg{default}\marg{options}}
+  Operates like \refCom{newtcboxfit}, but based on |\renewcommand| instead of |\newcommand|.
+  An existing macro is redefined.
+\end{docCommand}
+
+\enlargethispage*{1cm}
+\begin{docCommand}{tcbfontsize}{\marg{factor}}
+  Selects a font size inside a tcolorbox which is scaled with the given
+  \meta{factor} relative to \docAuxCommand{tcbfitdim}.%
+  %, see Subsection \ref{subsec:fit} from page \pageref{subsec:fit}.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+\begin{tcolorbox}[fit basedim=10pt]
+  {\tcbfontsize{0.25} Very tiny,}\\
+  {\tcbfontsize{0.5} Small,}\\
+  {\tcbfontsize{1} Normal,}\\
+  {\tcbfontsize{2} Large,}\\
+  {\tcbfontsize{4} Huge.}
+\end{tcolorbox}
+\end{dispExample*}
+\end{docCommand}
+
+
+\clearpage
+\subsection{Option Keys of the Library}\label{subsec:fit}
+
+The font size for the content of a box with fixed width and fixed height
+can be adjusted automatically. This is called the \emph{fitbox capture mode}.
+Note that the fit control algorithm
+constructs a series of versions for the box and selects the 'best'.
+Therefore, the compilation time is quite longer than for a normal box.
+The algorithm will fail, if a different selected font size does not change the
+overall size of the box content.
+The \refCom{tcboxfit} macro uses this algorithm by default.
+
+\medskip
+\begin{marker}
+  The fit control keys are only applicable to unbreakable boxes without
+  a lower part.
+  The box content should not change counters.
+\end{marker}
+\medskip
+
+\enlargethispage*{5mm}
+\begin{docTcbKey}{fit}{}{style, initially unset}
+  Sets the \refKey{/tcb/capture} mode to |fitbox|, i.\,e.\ enables the
+  font size adjustment algorithm. Thereby, a \refEnv{tcolorbox} acts
+  like \refCom{tcboxfit} where the given \meta{box content} is fitted to
+  the width and height of the box. Therefore, the box has to have a fixed height.
+  If no fixed height is given, a square box is constructed.
+  The font dimension \docAuxCommand{tcbfitdim} can also be used to adjust
+  the margins of the box since a box with a tiny font may not need large
+  margins. The number of constructed boxes is saved to the macro \docAuxCommand{tcbfitsteps}
+  for analysis.
+
+\begin{dispExample}
+% \usepackage{lipsum}
+% \tcbuselibrary{skins}
+\newtcolorbox{fitting}[2][]{fit,height=#2,boxsep=1pt,valign=center,opacityupper=0.5,
+  top=0.4\tcbfitdim,bottom=0.4\tcbfitdim,left=0.75\tcbfitdim,right=0.75\tcbfitdim,
+  enhanced,watermark text={\tcbfitsteps},colframe=blue!75!black,colback=white,#1}
+
+\begin{fitting}{4cm}
+\lipsum[1]
+\end{fitting}
+
+\begin{fitting}{2cm}
+\lipsum[2]
+\end{fitting}
+
+\begin{fitting}{1cm}
+\lipsum[3]
+\end{fitting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{fit to}{=\meta{width} and \meta{height}}{style, initially unset}
+  Shortcut for using \refKey{/tcb/fit} and setting the \meta{width} and \meta{height} values
+  separately.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+\begin{tcolorbox}[fit to=3cm and 2cm]
+  This box content is fitted to the given
+  dimensions.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit to height}{=\meta{height}}{style, initially unset}
+  Shortcut for using \refKey{/tcb/fit} and setting the \meta{height} value separately.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+\begin{tcolorbox}[fit to height=2cm]
+  This box content is fitted to the given
+  height.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}{fit basedim}{=\meta{length}}{no default, initially |10pt|}
+  Sets the starting font dimension for the font size adjustment algorithm
+  to \meta{length}. The algorithm never enlarges this dimension.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+\begin{tcolorbox}[fit to=4cm and 2cm]
+  Too few words for the box.
+\end{tcolorbox}
+
+\begin{tcolorbox}[fit to=4cm and 2cm,
+  fit basedim=50pt]
+  Enough words for the box.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit skip}{=\meta{real value}}{no default, initially |1.2|}
+  Sets the skip value of the selected font to \meta{real value} times \docAuxCommand{tcbfitdim}.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+% \usepackage{lipsum}
+\tcbset{colback=red!5!white,
+  colframe=red!75!black,left=1mm,
+  right=1mm,boxsep=0mm}
+
+\begin{tcolorbox}[fit to=5cm and 4cm,
+  fit skip=1.0  ]
+  \lipsum[1]
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+
+
+\clearpage
+\begin{docTcbKey}{fit fontsize macros}{}{style, initially unset}
+  Redefines the standard \LaTeX\ font size macros
+  |\tiny|, |\scriptsize|, |\footnotesize|, |\small|, |\normalsize|,
+  |\large|, |\Large|, |\LARGE|, |\huge|, and |\Huge|,
+  to set font sizes relative to
+  the current \docAuxCommand{tcbfitdim}. Note that the display skip values for
+  mathematical formulas are respected by the redefined macros.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+% \usepackage{lipsum}
+\tcbset{colback=red!5!white,
+  colframe=red!75!black,left=1mm,
+  right=1mm,boxsep=0mm}
+
+\begin{tcolorbox}[fit to height=4cm]
+  {\Large\bfseries This text is
+             not adapted:\par}
+  \lipsum[2]
+\end{tcolorbox}
+
+\begin{tcolorbox}[fit to height=4cm,
+  fit fontsize macros ]
+  {\Large\bfseries This text is adapted:\par}
+  \lipsum[2]
+\end{tcolorbox}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,
+  colframe=red!75!black,left=1mm,
+  right=1mm,boxsep=0mm}
+
+\let\realHuge=\Huge
+
+\begin{tcolorbox}[fit basedim=7pt,
+  fontupper=\normalsize,
+  fit fontsize macros]
+The relative relative font size macros
+are also usable without the
+\textit{fit} algorithm.\par
+{\Huge Adapted Huge} ---
+{\realHuge Original Huge}
+\end{tcolorbox}
+
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{fit height plus}{=\meta{dimension}}{no default, initially |0pt|}
+  The box is allowed to enlarge the fixed height up to the given \meta{dimension},
+  before a font size fit is applied. An optional \refKey{/tcb/fit width plus}
+  is tried after the height adaption.
+\begin{dispExample}
+% \usepackage{lipsum}
+\tcbset{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,bottom=1mm,
+  right=1mm,boxsep=0mm,width=3cm,height=3cm,nobeforeafter}
+
+\begin{tcolorbox}[fit]
+This is a tcolorbox.
+\end{tcolorbox}
+\begin{tcolorbox}[fit,fit height plus=1cm]
+This is a tcolorbox.
+\end{tcolorbox}
+\begin{tcolorbox}[fit]
+\lipsum[2]
+\end{tcolorbox}
+\begin{tcolorbox}[fit,fit height plus=1cm]
+\lipsum[2]
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit width plus}{=\meta{dimension}}{no default, initially |0pt|}
+  The box is allowed to enlarge the fixed width up to the given \meta{dimension},
+  before a font size fit is applied. An optional \refKey{/tcb/fit height plus}
+  is tried before the width adaption.
+  \enlargethispage*{1cm}
+\begin{dispExample}
+% \usepackage{lipsum}
+\tcbset{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,bottom=1mm,
+  right=1mm,boxsep=0mm,width=3cm,height=3cm,nobeforeafter}
+
+\begin{tcolorbox}[fit]
+This is a tcolorbox.
+\end{tcolorbox}
+\begin{tcolorbox}[fit,fit width plus=1cm]
+This is a tcolorbox.
+\end{tcolorbox}
+\begin{tcolorbox}[fit]
+\lipsum[2]
+\end{tcolorbox}
+\begin{tcolorbox}[fit,fit width plus=1cm]
+\lipsum[2]
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{marker}
+Typically, the optional title of a |tcolorbox| is not part of the fit operation.
+If a \refKey{/tcb/fit width plus} is applied, the title is also adapted to
+the new width. If counters are increased inside the title text, they may be
+increased more than one time.
+To avoid this, you are encouraged to use \refKey{/tcb/phantom} or \refKey{/tcb/step and label}
+to set counters or use automatic numbering, see Subsection \ref{sec:numberedboxes}
+from page \pageref{sec:numberedboxes}.
+\end{marker}
+
+
+\begin{docTcbKey}{fit width from}{=\meta{min} \texttt{to} \meta{max}}{style, no default}
+  Sets the box width to \meta{min} and allows the width to grow up to \meta{max}.
+\begin{dispExample}
+% \usepackage{lipsum}
+\tcbset{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,bottom=1mm,
+  right=1mm,boxsep=0mm,height=4cm}
+
+\begin{tcolorbox}[fit,width=\linewidth/2]
+\lipsum[2]
+\end{tcolorbox}\par
+\begin{tcolorbox}[fit width from=\linewidth/2 to \linewidth]
+\lipsum[2]
+\end{tcolorbox}\par
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{fit height from}{=\meta{min} \texttt{to} \meta{max}}{style, no default}
+  Sets the box height to \meta{min} and allows the height to grow up to \meta{max}.
+\begin{dispExample}
+% \usepackage{lipsum}
+\newtcolorbox{mybox}{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
+  bottom=1mm,right=1mm,boxsep=0mm,width=4cm,nobeforeafter,
+  fit height from=1cm to 8cm}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+\begin{mybox}
+This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
+\end{mybox}
+\begin{mybox}
+\lipsum[2]
+\end{mybox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{fit algorithm}{=\meta{name}}{no default, initially |fontsize|}
+Sets the algorithm for the fitting process \emph{after} optionally width and height
+are adapted.
+  Feasible values for \meta{name} are:
+  \begin{itemize}
+  \item\docValue{fontsize} (initial):
+    The algorithm is a bisection method that adapts the font size until
+    certain stop conditions are fulfilled. This is the most time-consuming
+    method but it is robust and gives pleasant results.
+    \begin{marker}
+    The used font has to be freely scalable for this method!
+    Other content than text is not scaled down.
+    The aspect ratio is fully garanteed.
+    \end{marker}
+  \item\docValue{areasize}:
+    The algorithm calculates the area size for the text without scaling the font.
+    The text box is shaped for the needed aspect ratio in one or two
+    steps. Finally, it is scaled down with a standard |\resizebox| macro.
+    \begin{marker}
+    The used font has not to be scalable. Every box content is scaled down.
+    The aspect ratio cannot be fully garanteed.
+    \end{marker}
+  \item\docValue{hybrid}:
+    First, this algorithm estimates the needed font size in one or two steps.
+    Then an |areasize| fitting as above is a applied.
+    \begin{marker}
+    The used font has to be freely scalable for this method!
+    Other content than text may be slightly rescaled.
+    The aspect ratio cannot be fully garanteed.
+    \end{marker}
+  \item\docValue{squeeze}:
+    The text box is brutally scaled down to fit.
+    \begin{marker}
+    The aspect ratio is very likely to be horrible.
+    You should not use this method for final documents.
+    \end{marker}
+\end{itemize}
+
+\begin{dispExample}
+% \usepackage{lipsum}
+\newtcboxfit{mybox}[1]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
+  bottom=1mm,right=1mm,boxsep=0mm,width=3.5cm,height=7cm,nobeforeafter,
+  before upper=\textcolor{blue}{\rule{5mm}{5mm}}\ ,
+  enhanced,watermark text={\tcbfitsteps},
+  fonttitle=\bfseries,adjusted title=#1,fit algorithm=#1}
+
+\mybox{fontsize}{\lipsum[2]}\hfill
+\mybox{hybrid}{\lipsum[2]}\hfill
+\mybox{areasize}{\lipsum[2]}\hfill
+\mybox{squeeze}{\lipsum[2]}
+
+Quality \dotfill versus \dotfill Speed
+\end{dispExample}
+
+\end{docTcbKey}
+
+
+\clearpage
+\begin{marker}
+The following options set control parameters for the fit algorithm.
+Mainly, they apply to the |fontsize| variant, see \refKey{/tcb/fit algorithm}.
+The options should be seen as experimental and are likely to change in future versions,
+if necessary.
+\end{marker}
+
+\begin{docTcbKey}{fit maxstep}{=\meta{number}}{no default, initially |20|}
+  Sets the maximal step size for the font size adjustment algorithm.
+  In normal situations, the algorithm stops before reaching the intial value of 20 steps.
+  If the box content does not shrink, this value prevents an endless loop.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit maxfontdiff}{=\meta{dimension}}{no default, initially |0.1pt|}
+  The algorithm stops, if the font size is determined within a deviation of
+  \meta{dimension}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit maxfontdiffgap}{=\meta{dimension}}{no default, initially |1pt|}
+  The algorithm stops, if the number of lines is determined and the font size is
+  determined within a deviation of \meta{dimension}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit maxwidthdiff}{=\meta{dimension}}{no default, initially |1pt|}
+  The algorithm stops, if the (optionally) flexible box width
+  is determined within a deviation of \meta{dimension}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit maxwidthdiffgap}{=\meta{dimension}}{no default, initially |10pt|}
+  The algorithm stops, if the number of lines is determined and the (optionally) flexible box width
+  is determined within a deviation of \meta{dimension}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fit warning}{=\meta{value}}{no default, initially |off|}
+  Typically, the fit control algorithm constructs several auxiliary boxes
+  to determine the optimal one. If not switched off, the construction of
+  the auxiliary boxes may produce many |hbox| warnings. This option key
+  changes the |\hbadness| value.
+  \begin{itemize}
+  \item\docValue{off}: Most of |'Underfull \hbox'| and |'Overfull \hbox'| warnings are
+    switched off (including the ones for the finally used box).
+  \item\docValue{on}: All warnings for all auxiliary boxes are displayed.
+  \item\docValue{final}: Only warnings for the finally used box are displayed.
+    Note that an additional box has to be contructed for theses messages.
+  \end{itemize}
+\end{docTcbKey}
+

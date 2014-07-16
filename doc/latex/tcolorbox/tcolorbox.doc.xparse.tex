@@ -1,0 +1,567 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{xparse}}\label{sec:xparse}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{xparse}
+\end{dispListing}
+This also loads the package |xparse| \cite{latexproject:2013a}.
+
+The purpose of this library is to give comfortable access to the
+powerful document command production with |xparse| for |tcolorbox|.
+See the |xparse| package documentation \cite{latexproject:2013a}
+for details about the argument \meta{specification} used in this section.
+
+%\subsection{Producing Document Commands With \texttt{xparse}}
+
+
+\subsection{Option Keys}\label{subsec:xparse_options}
+
+\begin{docTcbKey}{verbatim}{}{style, no value}
+  Sets options for a \textit{verbatim} style \refCom{tcbox}.
+  Since the indented boxes may contain only very few words, the
+  dimensions are made smaller and \refKey{/tcb/nobeforeafter}
+  and \refKey{/tcb/tcbox raise base} are set.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\DeclareTotalTCBox{\myverb}{ v }{verbatim,
+  colframe=red!75!black,colupper=blue}{#1}
+
+\myverb{\textbf} is a \myverb{\LaTeX} command.
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{IfNoValueTF}{=\marg{argument}\marg{true options}\marg{false options}}{no default}
+  Wraps the |\IfNoValueTF| command of |xparse| for option setting.
+  If the \meta{argument} has no value, the \meta{true options} are set.
+  Otherwise, the \meta{false options} are set.
+\begin{dispExample}
+\DeclareTColorBox{mybox}{ o }{colframe=red!75!black,
+  IfNoValueTF={#1}{colback=red!5!white}{enhanced,interior style image=#1}}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[goldshade.png]
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{IfValueTF}{=\marg{argument}\marg{true options}\marg{false options}}{no default}
+  Wraps the |\IfValueTF| command of |xparse| for option setting.
+  If the \meta{argument} has a value, the \meta{true options} are set.
+  Otherwise, the \meta{false options} are set.
+\begin{dispExample}
+\DeclareTColorBox{mybox}{ o }{colframe=red!75!black,colback=red!5!white,
+  IfValueTF={#1}{title={\flqq #1\frqq},fonttitle=\bfseries}{}}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[My title]
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{IfBooleanTF}{=\marg{argument}\marg{true options}\marg{false options}}{no default}
+  Wraps the |\IfBooleanTF| command of |xparse| for option setting.
+  If the \meta{argument} is |\BooleanTue|, the \meta{true options} are set.
+  If the \meta{argument} is |\BooleanFalse|, the \meta{false options} are set.
+
+\begin{dispExample}
+\DeclareTColorBox{mybox}{ s }{colframe=red!75!black,
+  IfBooleanTF={#1}{colback=yellow!50!red}{colback=red!5!white}}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}*
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\clearpage
+\subsection{Producing \texttt{tcolorbox} Environments and Commands}\label{subsec:xparse_tcolorbox}
+
+\begin{docCommand}{DeclareTColorBox}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Creates a new environment \meta{name} based on \refEnv{tcolorbox}.\\
+  Basically, |\DeclareTColorBox| operates like |\DeclareDocumentEnvironment|. This means,
+  the new environment \meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refEnv{tcolorbox}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new environment is always created, irrespective of an already existing
+  environment with the same name.
+
+\begin{dispExample}
+% counter from previous example
+\DeclareTColorBox[use counter from=pabox]{mybox}{ O{red} m d"" O{} }
+  {enhanced,colframe=#1!75!black,colback=#1!5!white,
+   fonttitle=\bfseries,title={\thetcbcounter~#2},
+   IfValueTF={#3}{watermark text={#3}}{},#4}
+
+\begin{mybox}{My title}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[blue]{My title}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[green]{My title}"My Watermark"
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[yellow]{My title}[colbacktitle=yellow!50!white,coltitle=black]
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[purple]{My title}"All together"[coltitle=yellow]
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}{NewTColorBox}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTColorBox}, but based on |\NewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  An error is issued if \meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTColorBox}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTColorBox}, but based on |\RenewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  An existing environment is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTColorBox}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTColorBox}, but based on |\ProvideDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  The environment \meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
+\clearpage
+
+\begin{docCommand}{DeclareTotalTColorBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refEnv{tcolorbox}.
+  In contrast to \refCom{DeclareTColorBox}, also the \meta{content} of the |tcolorbox| is specified.\\
+  Basically, |\DeclareTotalTColorBox| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refEnv{tcolorbox} which is filled with
+  the specified \meta{content}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+\DeclareTotalTColorBox{\diabox}{ O{} v  m }
+  { bicolor,nobeforeafter,equal height group=diabox,width=5.7cm,
+    fonttitle=\bfseries\ttfamily,adjusted title={#2},center title,
+    colframe=blue!20!black,leftupper=0mm,rightupper=0mm,colback=black!75!white,#1}
+  { \tikz\path[fill zoom image={#2}] (0,0) rectangle (\linewidth,4cm);%
+    \tcblower#3}
+
+\diabox{blueshade.png}{Created with |GIMP|.\\\url{http://www.gimp.org}}
+\diabox{goldshade.png}{Created with |GIMP|.\\\url{http://www.gimp.org}}
+
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{NewTotalTColorBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTColorBox}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTotalTColorBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTColorBox}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTotalTColorBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTColorBox}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
+\clearpage
+\subsection{Producing \texttt{tcbox} Commands}\label{subsec:xparse_tcbox}
+
+
+\begin{docCommand}{DeclareTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbox}.
+  Basically, |\DeclareTCBox| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcbox}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+% counter from previous example
+\DeclareTCBox[use counter from=pabox]{\mybox}{ s m s }
+{ nobeforeafter,colback=red!5!white,colframe=red!75!black,
+  title={#2 (Box \thetcbcounter)},fonttitle=\bfseries,
+  IfBooleanTF={#1}{enhanced,drop shadow}{},
+  IfBooleanTF={#3}{colbacktitle=red!50!white}{}  }
+
+\mybox{Bird}{This is my first box.}
+  \hfill
+\mybox*{Tree}{This is my second box.}
+  \par\bigskip
+\mybox{Bike}*{This is my third box.}
+  \hfill
+\mybox*{City}*{This is my fourth box.}
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{NewTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBox}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBox}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBox}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
+
+\clearpage
+
+\begin{docCommand}{DeclareTotalTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbox}.
+  In contrast to \refCom{DeclareTCBox}, also the \meta{content} of the |tcbox| is specified.\\
+  Basically, |\DeclareTotalTCBox| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcbox} which is filled with
+  the specified \meta{content}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+\DeclareTotalTCBox{\myverb}{ O{red} v O{} }
+{ fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
+  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  leftrule=0pt,rightrule=0pt,toprule=0.3mm,bottomrule=0.3mm,boxsep=0.5mm,
+  colback=#1!10!white,colframe=#1!50!black,#3}{#2}
+
+To set a word \textbf{bold} in \myverb{\LaTeX}, one uses
+\myverb[green]{\textbf{bold}}. Alternatively, write
+\myverb[yellow]{{\bfseries bold}}.
+In \myverb[blue]{\LaTeX}[enhanced,fuzzy halo], other font settings are
+done in the same way, e.\,g. \myverb{\textit}, \myverb{\itshape}\\
+or \myverb[brown]{\texttt}, \myverb[brown]{\ttfamily}.
+\end{dispExample}
+
+The next example uses |\lstinline| from the |listings| package to
+typeset the verbatim content.
+
+\begin{dispExample}
+% \usepackage{listings} or \tcbuselibrary{listings}
+\DeclareTotalTCBox{\commandbox}{ s v }
+{verbatim,colupper=white,colback=black!75!white,colframe=black}
+{\IfBooleanTF{#1}{\textcolor{red}{\ttfamily\bfseries > }}{}%
+  \lstinline[language=command.com,keywordstyle=\color{blue!35!white}\bfseries]^#2^}
+
+\commandbox*{cd "My Documents"} changes to directory \commandbox{My Documents}.
+
+\commandbox*{dir /A} lists the directory content.
+
+\commandbox*{copy example.txt d:\target} copies \commandbox{example.txt} to
+  \commandbox{d:\target}.
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}{NewTotalTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBox}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTotalTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBox}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTotalTCBox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBox}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
+\begin{docCommand}{tcboxverb}{\oarg{options}\marg{verbatim box content}}
+  Creates a colored box based on \refCom{tcbox} which is fitted to the width of the given
+  \meta{verbatim box content}.
+  The underlying \refCom{tcbox} is styled with
+  \refKey{/tcb/verbatim} plus the given \meta{options}.
+  The difference to \refCom{tcbox} is that the \meta{verbatim box content} is
+  interpreted \textit{verbatim}. Therefore, |\tcboxverb| acts similar to |\verb|.
+
+\begin{dispExample}
+\tcboxverb{\LaTeX}, \tcboxverb[colback=blue!10!white,colupper=blue]{\LaTeX},
+\tcboxverb[blank,fuzzy halo]{\LaTeX}, \tcboxverb[beamer]{\LaTeX},
+\tcboxverb[enhanced,skin=enhancedmiddle jigsaw,colframe=red]{\LaTeX}.
+\end{dispExample}
+\end{docCommand}
+
+
+
+
+\clearpage
+\subsection{Producing \texttt{tcblisting} Environments}\label{subsec:xparse_listing}
+\begin{marker}
+The following commands need the \mylib{listings} library to be included.
+\end{marker}
+
+\begin{docCommand}{DeclareTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Creates a new environment \meta{name} based on \refEnv{tcblisting}.\\
+  Basically, |\DeclareTCBListing| operates like |\DeclareDocumentEnvironment|. This means,
+  the new environment \meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refEnv{tcblisting}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new environment is always created, irrespective of an already existing
+  environment with the same name.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.5}
+\DeclareTCBListing{mybox}{ s O{} m }{%
+  colback=red!5!white,
+  colframe=red!75!black,
+  fonttitle=\bfseries,
+  IfBooleanTF={#1}
+    {listing side text}
+    {text side listing},
+  title=#3,#2}
+
+\begin{mybox}{Listing Box}
+This is my
+\LaTeX\ box.
+\end{mybox}
+\bigskip
+
+\begin{mybox}*{Listing Box}
+This is my
+\LaTeX\ box.
+\end{mybox}
+\bigskip
+
+\begin{mybox}[colback=yellow]
+  {Listing Box}
+This is my
+\LaTeX\ box.
+\end{mybox}
+\end{dispExample*}
+\end{docCommand}
+
+
+
+\begin{docCommand}{NewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBListing}, but based on |\NewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  An error is issued if \meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBListing}, but based on |\RenewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  An existing environment is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBListing}, but based on |\ProvideDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  The environment \meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
+\begin{dispListing*}{title={Caveats of using an environment ending with an
+  optional argument},fonttitle=\bfseries}
+\DeclareTCBListing{mybox}{ O{} }{listing only,#1}
+
+\begin{mybox}[colframe=red]
+\good
+\end{mybox}
+
+\begin{mybox}[colframe=red]\good\end{mybox}
+
+\begin{mybox}
+\good
+\end{mybox}
+
+\begin{mybox} \good\end{mybox}
+
+\begin{mybox}\bad!\end{mybox}
+
+\begin{mybox}
+[\good]
+\end{mybox}
+
+\begin{mybox} [\good]\end{mybox}
+
+\begin{mybox}[\bad!]\end{mybox}
+\end{dispListing*}
+
+\clearpage
+\subsection{Producing \texttt{tcbinputlisting} Commands}\label{subsec:xparse_inputlisting}
+\begin{marker}
+The following commands need the \mylib{listings} library to be included.
+\end{marker}
+
+
+\begin{docCommand}{DeclareTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbinputlisting}.
+  Basically, |\DeclareTCBInputListing| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcbinputlisting}.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+% counter from previous example
+\DeclareTCBInputListing[use counter from=pabox]{\mylisting}{ O{} O{red} m }{%
+  listing file={#3},title=Listing~\thetcbcounter,
+  colback=#2!5!white,colframe=#2!50!black,colbacktitle=#2!75!black,
+  fonttitle=\bfseries,listing only,#1}
+
+\mylisting[before upper=\textit{This is the included file content:}]
+  [blue]{\jobname.tcbtemp}
+\end{dispExample}
+  \end{docCommand}
+
+\begin{docCommand}{NewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBInputListing}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBInputListing}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBInputListing}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
+\clearpage
+\subsection{Producing \texttt{tboxfit} Commands}\label{subsec:xparse_tcboxfit}
+\begin{marker}
+The following commands need the \mylib{fitting} library to be included.
+\end{marker}
+
+\begin{docCommand}{DeclareTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
+  Basically, |\DeclareTCBoxFit| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcboxfit}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+% \usepackage{lipsum}
+
+\DeclareTCBoxFit{\mybox}{ O{} m o }
+ {colback=red!5!white,
+  colframe=red!75!black,
+  width=#2,height=#2/3*2,
+  IfValueTF={#3}{height=#3}{},
+  #1}
+
+\mybox[colback=yellow]{5cm}%
+  {\lipsum[2]}
+
+\mybox[colback=yellow]{5cm}[4cm]{\lipsum[2]}
+\end{dispExample*}
+\end{docCommand}
+
+\begin{docCommand}{NewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBoxFit}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\clearpage
+
+\begin{docCommand}{DeclareTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
+  In contrast to \refCom{DeclareTCBoxFit}, also the \meta{content} of the |tcboxfit| is specified.\\
+  Basically, |\DeclareTotalTCBoxFit| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcboxfit} which is filled with
+  the specified \meta{content}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+% \usepackage{lipsum}
+
+\DeclareTotalTCBoxFit{\multibox}{ O{} m O{10} m }
+ {nobeforeafter,colback=red!5!white,colframe=red!75!black,width=#2,height=#2/3*2,
+  valign=center,#1}
+ { \foreach \n in {1,...,#3} { #4} }
+
+\multibox{5cm}{I shall not repeat.}
+\multibox[colframe=blue!75!white]{5cm}[20]{I shall not repeat.}\\
+\multibox[colback=yellow,height=5cm]{14cm}[100]{I shall not repeat.}
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{NewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}

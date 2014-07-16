@@ -1,0 +1,86 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\begin{tcboutputlisting}
+% \usepackage{incgraph}
+\begin{inctext}
+\begin{tikzpicture}
+\definecolorseries{boxcol}{rgb}{last}{red}{blue}
+\resetcolorseries[24]{boxcol}
+\coordinate (A) at (0,0); \coordinate (B) at (21,29.7);
+\path[use as bounding box,top color=Goldenrod!25!white,bottom color=Navy!25!white]
+  (A) rectangle coordinate (C) (B);
+\foreach \w in {-15,-30,...,-360}
+{\node[below right,rotate around={\w:(C)}] at ([xshift=1cm]C) {%
+  \begin{tcolorbox}[width=8cm,title=tcolorbox \version,
+    fontupper=\scriptsize,fonttitle=\small\bfseries,
+    colback=boxcol!25!white,colbacktitle=boxcol!!+!50!black,colframe=boxcol,
+    enhanced jigsaw,opacityback=0.5,opacitybacktitle=0.75]
+    \lipsum[2]
+  \end{tcolorbox}};
+}
+\node[font=\Huge\bfseries] at ([yshift=12cm]C) {|tcolorbox|};
+\node[font=\large\bfseries] at ([yshift=-12cm]C)
+  {Manual for version \version\ (\datum)};
+\end{tikzpicture}
+\end{inctext}
+\end{tcboutputlisting}
+\tcbuselistingtext
+\tcbinputlisting{title=Cover code,
+  base example,coltitle=black,fonttitle=\itshape,titlerule=0pt,
+  colbacktitle=Navy!15!ExampleBack,top=0mm,before=\par\smallskip,%
+  listing style=mydocumentation,listing only}
+
+\bigskip
+
+\begin{marker}
+If you have trouble printing this document, the reason is quite likely the
+cover page. Printing the pages starting with page 2 or page 3 should work.
+\end{marker}
+
+\clearpage
+\begin{center}
+\begin{tcolorbox}[enhanced,hbox,tikznode,left=8mm,right=8mm,boxrule=0.4pt,
+  colback=white,colframe=black!50!yellow,
+  %drop fuzzy midday shadow=black!50!yellow,
+  drop lifted shadow=black!50!yellow,
+  before=\par\vspace*{5mm},after=\par\bigskip]
+{\bfseries\LARGE The \texttt{tcolorbox} package}\\[3mm]
+{\large Manual for version \version\ (\datum)}
+\end{tcolorbox}
+{\large Thomas F.~Sturm%
+  \footnote{Prof.~Dr.~Dr.~Thomas F.~Sturm, Institut f\"{u}r Mathematik und Informatik,
+    Universit\"{a}t der Bundeswehr M\"{u}nchen, D-85577 Neubiberg, Germany;
+     email: \href{mailto:thomas.sturm@unibw.de}{thomas.sturm@unibw.de}} }
+\end{center}
+\bigskip
+\begin{absquote}
+  \begin{center}\bfseries Abstract\end{center}
+  |tcolorbox| provides an environment for colored and framed text boxes with a
+  heading line. Optionally, such a box can be split in an upper and a lower
+  part. The package |tcolorbox| can be used for the setting of \LaTeX\ examples where
+  one part of the box displays the source code and the other part shows the
+  output. Another common use case is the setting of theorems. The package supports
+  saving and reuse of source code and text parts.
+\end{absquote}
+
+\begin{tcolorbox}[breakable,enhanced jigsaw,title={Contents},fonttitle=\bfseries\Large,
+  colback=yellow!10!white,colframe=red!50!black,before=\par\bigskip\noindent,
+  interior style={fill overzoom image=goldshade.png,fill image opacity=0.25},
+  colbacktitle=red!50!yellow!75!black,
+  watermark color=yellow!75!red!25!white,pad at break=3mm,
+  watermark text={\bfseries\Large Contents},
+  attach boxed title to top center={yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2},
+  boxed title style={enhanced,boxrule=0.5mm,
+    frame code={ \path[tcb fill frame] ([xshift=-4mm]frame.west) -- (frame.north west)
+    -- (frame.north east) -- ([xshift=4mm]frame.east)
+    -- (frame.south east) -- (frame.south west) -- cycle; },
+    interior code={ \path[tcb fill interior] ([xshift=-2mm]interior.west)
+    -- (interior.north west) -- (interior.north east)
+    -- ([xshift=2mm]interior.east) -- (interior.south east) -- (interior.south west)
+    -- cycle;}  },
+  %enlargepage=2\baselineskip,
+  drop fuzzy shadow]
+\makeatletter
+\@starttoc{toc}
+\makeatother
+\end{tcolorbox}

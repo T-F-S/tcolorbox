@@ -1,0 +1,72 @@
+%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% tcbminted.code.tex: Code for colorboxes with listings
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+%\makeatletter
+\tcb@set@library@version{3.05}
+
+\RequirePackage{minted}[2011/09/17]
+
+\tcbuselibrary{listings@core}
+
+\def\tcb@minted@input@listing#1#2#3#4{%
+  \edef\temp@a{#4}%
+  \ifx\temp@a\@empty%
+  \else
+    %\usemintedstyle{\temp@a}%
+    \toks@=\expandafter{#4}%
+    \edef\tcb@temp{\noexpand\usemintedstyle{\the\toks@}}%
+    \tcb@temp%
+  \fi%
+  \toks@=\expandafter{#1}%
+  \edef\tcb@temp{\noexpand\inputminted[\the\toks@]}%
+  \tcb@temp{#2}{#3}%
+}
+
+\def\tcb@minted@uselistinglisting{%
+  \tcb@minted@input@listing{\kvtcb@minted@options}{\kvtcb@minted@language}{\kvtcb@listingfile}{\kvtcb@minted@style}%
+}%
+
+\def\tcb@minted@usetemplisting{%
+  \tcb@minted@input@listing{\kvtcb@minted@options}{\kvtcb@minted@language}{\kvtcb@tempfile}{\kvtcb@minted@style}%
+}%
+
+\def\tcb@minted@doc@usetemplisting{%
+  \tcb@minted@input@listing{\kvtcb@docmintoptions}{latex}{\kvtcb@tempfile}{\kvtcb@docmintstyle}%
+}
+
+\tcbset{%
+  minted language/.store in=\kvtcb@minted@language,
+  minted options/.store in=\kvtcb@minted@options,
+  minted style/.store in=\kvtcb@minted@style,
+  listing engine/minted/.code={\let\tcbuselistinglisting\tcb@minted@uselistinglisting%
+    \let\tcbusetemplisting\tcb@minted@usetemplisting%
+    \let\tcb@doc@usetemplisting\tcb@minted@doc@usetemplisting},
+}
+
+
+\tcbset{%
+  reset@minted/.style={%
+    minted language=latex,
+    minted options={tabsize=2,fontsize=\small},
+    minted style=,
+    listing engine=minted,
+  },
+  initialize@reset=reset@minted,
+}
+

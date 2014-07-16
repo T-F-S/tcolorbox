@@ -1,0 +1,157 @@
+%% The LaTeX package tcolorbox - version 3.05 (2014/05/28)
+%% tcbtheorems.code.tex: Code for theorems in colorboxes
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+%\makeatletter
+\tcb@set@library@version{3.05}
+
+\RequirePackage{amsmath}
+
+\def\tcb@hack@amsmath{\tcb@hack@currenvir\vskip-\abovedisplayskip}
+
+\def\tcb@theo@form@namenumber#1#2{\hbox{#1~#2}}
+\def\tcb@theo@form@numbername#1#2{\hbox{#2~#1}}
+\def\tcb@theo@form@name#1#2{\hbox{#1}}
+
+\def\tcb@theo@desc@form@std#1{\tcb@desc@col\kvtcb@desc@font\kvtcb@desc@delim@left#1\kvtcb@desc@delim@right}
+
+\def\tcb@theo@title#1#2#3{%
+  \ifdefempty{#2}{\setbox\z@=\hbox{#1}}{\setbox\z@=\tcb@theo@form{#1}{#2}}%
+  \def\temp@a{#3}%
+  \ifx\temp@a\@empty\relax%
+    \unhbox\z@\kvtcb@terminatorsign%
+  \else%
+    \setbox\z@=\hbox{\unhbox\z@\kvtcb@separatorsign\ }%
+    \hangindent\wd\z@%
+    \hangafter=1%
+    \mbox{\unhbox\z@}{\tcb@theo@desc@form{#3}}\kvtcb@terminatorsign%
+  \fi%
+}
+
+\def\tcb@theo@listentry#1#2#3{%
+  \def\kvtcb@listentry{\protect\numberline{#2}#3}%
+}
+
+\def\tcb@theo@label#1#2{%
+  \def\temp@a{#2}%
+  \ifx\temp@a\@empty%
+  \else%
+    \tcbset{label={#1:#2}}%
+  \fi%
+}
+
+\tcbset{
+  theorem/.style args={#1#2#3#4}{%
+    step and label={#2}{#4},%
+    title={\letcs\tcb@temp{the#2}\tcb@theo@title{#1}{\tcb@temp}{#3}}},%
+  math upper/.style={before upper=$\displaystyle,after upper=$},%
+  math lower/.style={before lower=$\displaystyle,after lower=$},%
+  math/.style={math upper,math lower},%
+  ams equation upper/.style={before upper=\tcb@hack@currenvir\equation,after upper=\endequation},%
+  ams equation lower/.style={before lower=\tcb@hack@currenvir\equation,after lower=\endequation},%
+  ams equation/.style={ams equation upper,ams equation lower},%
+  ams equation* upper/.style={before upper=\tcb@hack@currenvir\csname equation*\endcsname,after upper=\endequation},%
+  ams equation* lower/.style={before lower=\tcb@hack@currenvir\csname equation*\endcsname,after lower=\endequation},%
+  ams equation*/.style={ams equation* upper,ams equation* lower},%
+  ams align upper/.style={before upper=\tcb@hack@amsmath\align,after upper=\endalign},%
+  ams align lower/.style={before lower=\tcb@hack@amsmath\align,after lower=\endalign},%
+  ams align/.style={ams align upper,ams align lower},%
+  ams align* upper/.style={before upper=\tcb@hack@amsmath\csname align*\endcsname,after upper=\endalign},%
+  ams align* lower/.style={before lower=\tcb@hack@amsmath\csname align*\endcsname,after lower=\endalign},%
+  ams align*/.style={ams align* upper,ams align* lower},%
+  ams gather upper/.style={before upper=\tcb@hack@amsmath\gather,after upper=\endgather},%
+  ams gather lower/.style={before lower=\tcb@hack@amsmath\gather,after lower=\endgather},%
+  ams gather/.style={ams gather upper,ams gather lower},%
+  ams gather* upper/.style={before upper=\tcb@hack@amsmath\csname gather*\endcsname,after upper=\endgather},%
+  ams gather* lower/.style={before lower=\tcb@hack@amsmath\csname gather*\endcsname,after lower=\endgather},%
+  ams gather*/.style={ams gather* upper,ams gather* lower},%
+  ams nodisplayskip upper/.style={before upper=\vskip-\abovedisplayskip},%
+  ams nodisplayskip lower/.style={before lower=\vskip-\abovedisplayskip},%
+  ams nodisplayskip/.style={ams nodisplayskip upper,ams nodisplayskip lower},%
+  highlight math style/.style={highlight math/.style={notitle,nophantom,#1}},%
+  separator sign/.store in=\kvtcb@separatorsign,%
+  separator sign colon/.style={separator sign={:}},%
+  separator sign dash/.style={separator sign={\ --}},%
+  separator sign none/.style={separator sign=},%
+  terminator sign/.store in=\kvtcb@terminatorsign,%
+  terminator sign colon/.style={terminator sign={:}},%
+  terminator sign dash/.style={terminator sign={\ --}},%
+  terminator sign none/.style={terminator sign=},%
+  description delimiters/.code 2 args={\def\kvtcb@desc@delim@left{#1}\def\kvtcb@desc@delim@right{#2}},%
+  description delimiters parenthesis/.style={description delimiters=()},
+  description delimiters none/.style={description delimiters={}{}},
+  description color/.code={\def\temp@a{#1}\ifx\temp@a\@empty\relax%
+    \def\tcb@desc@col{}\else\def\tcb@desc@col{\color{#1}}\fi},%
+  description color/.default=,
+  description font/.store in=\kvtcb@desc@font,
+  description font/.default=,
+  description formatter/.code={\let\tcb@theo@desc@form=#1},%
+  description formatter/.default={\tcb@theo@desc@form@std},%
+  theorem name and number/.code={\let\tcb@theo@form=\tcb@theo@form@namenumber},
+  theorem number and name/.code={\let\tcb@theo@form=\tcb@theo@form@numbername},
+  theorem name/.code={\let\tcb@theo@form=\tcb@theo@form@name},
+  theorem style/.is choice,
+  theorem style/standard/.style={separator sign colon,description delimiters none,
+    terminator sign none,theorem name and number,attach title},
+  theorem style/change standard/.style={theorem style=standard,theorem number and name},
+  theorem style/plain/.style={separator sign none,description delimiters parenthesis,
+    terminator sign colon,theorem name and number,attach title to upper={\ }},
+  theorem style/plain apart/.style={separator sign none,description delimiters parenthesis,
+    terminator sign none,theorem name and number,attach title},
+  theorem style/break/.style={theorem style=plain,attach title to upper={\par}},
+  theorem style/change/.style={theorem style=plain,theorem number and name},
+  theorem style/change apart/.style={theorem style=plain apart,theorem number and name},
+  theorem style/change break/.style={theorem style=break,theorem number and name},
+  theorem style/margin/.style={theorem style=plain,theorem name,before title=\makebox[0pt][r]{\thetcbcounter\ }},
+  theorem style/margin apart/.style={theorem style=margin,attach title,terminator sign none},
+  theorem style/margin break/.style={theorem style=margin,attach title to upper={\par}},
+}
+
+\newcommand{\new@tcbtheorem}[5][]{%
+  \@@newtcolorbox[auto counter,#1]{#2}[3][]{#4,%
+    title={\tcb@theo@title{#3}{\thetcbcounter}{##2}},%
+    list entry={\protect\numberline{\thetcbcounter}##2},%
+    code={\tcb@theo@label{#5}{##3}},%
+    ##1}%
+  \@@newtcolorbox[#1,no counter,list inside=]{#2*}[2][]{#4,%
+    title={\tcb@theo@title{#3}{\@empty}{##2}},%
+    ##1}%
+}
+
+\def\newtcbtheorem{\let\@@newtcolorbox\newtcolorbox%
+  \new@tcbtheorem}
+
+\def\renewtcbtheorem{\let\@@newtcolorbox\renewtcolorbox%
+  \new@tcbtheorem}
+
+\newcommand{\tcbmaketheorem}[5]{%
+  \newtcolorbox{#1}[3][]{#3,theorem={#2}{#4}{##2}{#5:##3},##1}%
+}
+
+\newtcbox{\tcboxmath}[1][]{nobeforeafter,math upper,tcbox raise base,#1}
+\newtcbox{\tcbhighmath}[1][]{highlight math,nobeforeafter,math upper,tcbox raise base,#1}
+
+\tcbset{%
+  reset@theorems/.style={%
+    description formatter,description color,description font,
+    highlight math style={colframe=red,colback=yellow!25!white},%
+    theorem style=standard,%
+  },
+  initialize@reset=reset@theorems,
+}
+

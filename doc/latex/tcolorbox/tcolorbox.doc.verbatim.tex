@@ -1,0 +1,57 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Saving and Loading of Verbatim Texts}
+The following macros are slightly modified versions of the original macros
+from the known packages |moreverb| and |verbatim|.
+They are used implicitly inside of a |tcolorbox| environment,
+but they can be used outside also.
+\enlargethispage*{1.5cm}
+
+\begin{docEnvironment}{tcbverbatimwrite}{\marg{file name}}
+  Saves the \meta{environment content} to a file named by \meta{file name}.
+  \TeX\ macros inside the environment are not expanded.
+\begin{dispExample}
+\begin{tcbverbatimwrite}{\jobname_verbexp.tex}
+  This text is saved \textit{as is}.
+\end{tcbverbatimwrite}
+
+Now, we are using the file:\par
+\input{\jobname_verbexp.tex}
+\end{dispExample}
+
+This environment may be used inside an own environment. Note, that inside
+the environment definition |\tcbverbatimwrite| has to be used instead of
+|\begin{tcbverbatimwrite}| and |\endtcbverbatimwrite| instead of |\end{tcbverbatimwrite}|.
+\begin{dispExample}
+\newenvironment{myverbatim}{%
+  \begingroup\tcbverbatimwrite{\jobname_myverb.tex}}%
+  {\endtcbverbatimwrite\endgroup}
+
+\begin{myverbatim}
+  This is the text which is saved by my own environment.
+\end{myverbatim}
+
+Now, we are using the file:\par
+\input{\jobname_myverb.tex}
+\end{dispExample}
+\end{docEnvironment}
+
+\begin{docEnvironment}{tcbwritetemp}{}
+  Has the same function as \refEnv{tcbverbatimwrite}, but uses the key value
+  of |tempfile| for the file name.
+\begin{dispExample}
+\begin{tcbwritetemp}
+  This text is saved \textit{as is}.
+\end{tcbwritetemp}
+
+Now, we are using the file:\par
+\tcbusetemp
+\end{dispExample}
+\end{docEnvironment}
+
+
+\begin{docCommand}{tcbusetemp}{}
+  Loads the current temporary file which was saved by \refEnv{tcbwritetemp}.
+\end{docCommand}
+

@@ -1,0 +1,951 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{theorems}}\label{sec:theorems}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{theorems}
+\end{dispListing}
+This also loads the package |amsmath|.
+
+\subsection{Macros of the Library}
+
+\begin{docCommand}{newtcbtheorem}{\oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix}}
+  Creates new environments \meta{name} and \meta{name}|*| based on |tcolorbox| to frame a
+  (mathematical) theorem. The \meta{display name} is used in the title line
+  with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
+  The \meta{options} are given to the underlying |tcolorbox| to control
+  the appearance.
+  %The \meta{counter} is used for automatic numbering.
+  The \meta{init options} allow setting up automatic numbering,
+  see \Vref{sec:initkeys}.\par
+  The new environment \meta{name} takes one optional and two mandatory
+  parameters. The optional parameter supplements the options and should be
+  used only in rare cases.
+  The first mandatory parameter is the title text for the theorem and
+  the second mandatory parameter is a \meta{marker}. The theorem is
+  automatically labeled with \meta{prefix}|:|\meta{marker}.\par
+  The new environment \meta{name}|*| takes one optional and one mandatory
+  parameter and represents an unnumbered variant of the environment \meta{name}.
+  This variant is not labeled and not listed in lists of theorems.
+%\enlargethispage*{20mm}
+\inputpreamblelisting{F}
+\begin{dispExample}
+\begin{mytheo}{This is my title}{theoexample}
+  This is the text of the theorem. The counter is automatically assigned and,
+  in this example, prefixed with the section number. This theorem is numbered with
+  \ref{th:theoexample} and is given on page \pageref{th:theoexample}.
+\end{mytheo}
+\end{dispExample}
+
+\begin{dispExample}
+\begin{mytheo}[label=myownlabel]{This is my title}{}
+  The label parameter can be left empty without \LaTeX\ error.
+  Or you may use an own label to reference Theorem \ref{myownlabel}.
+\end{mytheo}
+\end{dispExample}
+
+\begin{dispExample}
+\begin{mytheo}{}{}
+  The title can also be left empty without problem. Note that the ':'
+  vanished magically.
+\end{mytheo}
+\end{dispExample}
+
+\begin{dispExample}
+\begin{mytheo*}{Unnumbered Theorem}
+  This theorem is not numbered.
+\end{mytheo*}
+\end{dispExample}
+
+\begin{dispExample}
+\begin{mytheo*}{}
+  This theorem has no number and no title.
+\end{mytheo*}
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{renewtcbtheorem}{\oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix}}
+  Operates like \refCom{newtcbtheorem}, but based on |\renewenvironment| instead of |\newenvironment|.
+  An existing environment is redefined.
+\end{docCommand}
+
+
+\begin{docCommand}{tcbmaketheorem}{\marg{name}\marg{display name}\marg{options}\marg{counter}\marg{prefix}}
+\smallskip\begin{marker}
+\refCom{newtcbtheorem} supersedes this macro.
+\end{marker}
+\begin{deprecated}
+  Creates a new environment \meta{name} based on |tcolorbox| to frame a
+  (mathematical) theorem. The \meta{display name} is used in the title line
+  with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
+  The \meta{options} are given to the underlying |tcolorbox| to control
+  the appearance.
+  The \meta{counter} is used for automatic numbering.
+  The new environment \meta{name} takes one optional and two mandatory
+  parameters. The optional parameter supplements the options and should be
+  used only in rare cases.
+  The first mandatory parameter is the title text for the theorem and
+  the second mandatory parameter is a \meta{marker}. The theorem is
+  automatically labeled with \meta{prefix}|:|\meta{marker}.
+\end{deprecated}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}{tcboxmath}{\oarg{options}\marg{mathematical box content}}
+  Creates a \refEnv{tcolorbox} which is fitted to the width of the given
+  \meta{mathematical box content}. This box is intended to be applied as
+  part of a larger formula and may be used as replacement for the |\boxed|
+  macro of |amsmath|.
+
+\begin{dispExample}
+\begin{equation}
+\tcbset{fonttitle=\scriptsize}
+\tcboxmath[colback=LightBlue!25!white,colframe=blue]{ a^2 = 16 }
+\quad \Rightarrow \quad
+\tcboxmath[colback=Salmon!25!white,colframe=red,title=Implication]%
+  { a = 4 ~\vee~ a=-4. }
+\end{equation}
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{tcbhighmath}{\oarg{options}\marg{mathematical box content}}
+  This is a special case of the \refCom{tcboxmath} macro which uses
+  the style \refKey{/tcb/highlight math}.
+  It is intended to provide context sensitive highlighting of formula parts.
+  The color settings via \refKey{/tcb/highlight math style} may be different
+  inside theorems or other colored areas and outside.
+
+\begin{dispExample}
+\tcbset{myformula/.style={colback=yellow!10!white,colframe=red!50!black,
+  every box/.style={highlight math style={colback=LightBlue!50!white,colframe=Navy}}
+  }}
+
+\begin{align}
+  \tcbhighmath{\sum\limits_{n=1}^{\infty} \frac{1}{n}} &= \infty.\\
+  \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
+\end{align}
+
+\begin{tcolorbox}[ams align,myformula]
+  \tcbhighmath{\sum\limits_{n=1}^{\infty} \frac{1}{n}} &= \infty.\\
+  \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+
+\clearpage
+\refCom{tcbhighmath} can be used in symbiosis with the |empheq| package
+which allows to specify own boxing commands to mark multiline formulas.
+
+\begin{dispExample}
+% \usepackage{empheq}
+\begin{empheq}[box=\tcbhighmath]{align}
+a&=\sin(z)\\
+E&=mc^2 + \int_a^b x\, dx
+\end{empheq}
+
+\tcbset{highlight math style={enhanced,
+  colframe=red!60!black,colback=yellow!50!white,arc=4pt,boxrule=1pt,
+  drop fuzzy shadow}}
+
+\begin{empheq}[box=\tcbhighmath]{align}
+a&=\sin(z)\\
+E&=mc^2 + \int_a^b x\, dx
+\end{empheq}
+\end{dispExample}
+
+Besides \refCom{tcbhighmath}, one can easily define an independent new box
+based on \refCom{tcbox} which acts like \refCom{tcbhighmath}:
+
+\begin{dispExample}
+% \usepackage{empheq}
+\newtcbox{\otherbox}[1][]{nobeforeafter,math upper,tcbox raise base,
+  enhanced,frame hidden,boxrule=0pt,interior style={top color=green!10!white,
+  bottom color=green!10!white,middle color=green!50!yellow},
+  fuzzy halo=1pt with green,#1}
+
+\begin{empheq}[box=\otherbox]{align}
+a&=\sin(z)\\
+E&=mc^2 + \int_a^b x\, dx
+\end{empheq}
+
+\begin{equation}
+\tcbhighmath{E} = \otherbox{mc^2}
+\end{equation}
+\end{dispExample}
+\end{docCommand}
+
+
+\clearpage
+\subsection{Option Keys of the Library}
+
+
+\begin{docTcbKey}{separator sign}{=\meta{sign}}{no default, initially |:|}
+  The given \meta{sign} is used inside the title text of a theorem
+  as separater between display name combined with number and
+  the specific title text. It is omitted, if there is no specific title text.
+
+\begin{dispExample}
+% \usepackage{amssymb}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   separator sign={\ $\blacktriangleright$}}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{separator sign colon}{}{style, no value, initially set}
+Sets \refKey{/tcb/separator sign} to the default colon |:| sign.
+\end{docTcbKey}
+
+\begin{docTcbKey}{separator sign dash}{}{style, no value}
+Sets \refKey{/tcb/separator sign} to an en-dash sign.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   separator sign dash}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{separator sign none}{}{style, no value}
+Sets \refKey{/tcb/separator sign} to empty.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   separator sign none}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{description delimiters}{=\marg{left}\marg{right}}{no default, initially empty}
+  The given \meta{left} and \meta{right} delimiter signs are used to frame
+  the descriptive title text of a theorem.
+
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   description delimiters={\flqq}{\frqq}}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{description delimiters parenthesis}{}{style, no value}
+Sets \refKey{/tcb/description delimiters} to |(| and |)|.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   description delimiters parenthesis}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{description delimiters none}{}{style, no value, initially set}
+Sets \refKey{/tcb/description delimiters} to the default empty texts.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{description color}{\colOpt{=\meta{color}}}{default empty, initially empty}
+  Sets the \meta{color} of the descriptive title text deviating from \refKey{/tcb/coltitle}.
+  The color is reset to \refKey{/tcb/coltitle}, if |description color| is used without value.
+
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   description color=red!25!yellow}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{description font}{\colOpt{=\meta{text}}}{default empty, initially empty}
+  Sets \meta{text} (e.\,g.\ font settings) before the descriptive title text deviating from \refKey{/tcb/fonttitle}.
+  The \meta{text} is removed, if |description font| is used without value.
+
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   description delimiters={\glqq}{\grqq},
+   description font=\mdseries\itshape}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{description formatter}{\colOpt{=\meta{macro}}}{default empty, initially empty}
+  Sets \meta{macro} as formatter for the descriptive title text. The \meta{macro}
+  has to take one mandatory argument (the description text).\\ 
+  Note that \refKey{/tcb/description delimiters}, \refKey{/tcb/description color},
+  and \refKey{/tcb/description font} are ignored, if this option is used.\\
+  If |description formatter| is used without value, the formatter is reset
+  to its standard behavior.
+
+\begin{dispExample}
+\newtcbox{\formbox}{enhanced,frame empty,size=minimal,boxsep=2pt,arc=1pt,
+  on line,interior style image=goldshade.png}
+
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   description formatter=\formbox}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{terminator sign}{=\meta{sign}}{no default, initially empty}
+  The given \meta{sign} is used as terminator at the end of the title text of a theorem.
+
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   terminator sign={.}}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{terminator sign colon}{}{style, no value, initially set}
+Sets \refKey{/tcb/terminator sign} to the colon |:| sign.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   separator sign dash,terminator sign colon}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{terminator sign dash}{}{style, no value}
+Sets \refKey{/tcb/terminator sign} to an en-dash sign.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   terminator sign dash}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{terminator sign none}{}{style, no value}
+Sets \refKey{/tcb/terminator sign} to the default empty text.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{theorem name and number}{}{style, no value, initially set}
+Prints theorem name followed by theorem number inside the title.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   theorem name and number}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{theorem number and name}{}{style, no value}
+Prints theorem number followed by theorem name inside the title.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   theorem number and name}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{theorem name}{}{style, no value}
+Prints theorem name without number inside the title.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   theorem name,enhanced,watermark text={\thetcbcounter}}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{theorem}{=\marg{display name}\marg{counter}\marg{title}\marg{marker}}{no default}
+  This key is internally used by \refCom{tcbmaketheorem}, but can be used
+  directly in a |tcolorbox| for a more flexible approach.
+  The \meta{display name} is used together with the increased \meta{counter} value
+  and the \meta{title} for the title line of the box. Additionally, a
+  |\label| with the given \meta{marker} is created.
+\begin{dispExample}
+% \newcounter{texercise}%  preamble
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,arc=4mm,
+                  theorem={Test}{texercise}{Direct usage}{myMarker}]
+Here, we see the test \ref{myMarker}.
+\end{tcolorbox}
+\end{dispExample}
+For a common appearance inside the document, the key |theorem| should not be
+used directly as in the example above, but as part of a new environment
+created by hand or using \refCom{tcbmaketheorem} or using its successor
+\refCom{newtcbtheorem}.
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{highlight math}{}{style, no value}
+  Predefined style which is used for \refCom{tcbhighmath}.
+  It can be changed comfortable with \refKey{/tcb/highlight math style}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{highlight math style}{=\meta{style definition}}{style, no default}
+  Changes the definition for \refKey{/tcb/highlight math} to the given
+  \meta{style definition}. See \refCom{tcbhighmath} for another example.
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\tcbset{highlight math style={enhanced,%<-- needed for the 'remember' options
+  colframe=red,colback=red!10!white,boxsep=0pt}}
+\begin{align*}
+\tcbhighmath[remember as=fx]{f(x)}
+     &= \int\limits_{1}^{x} \frac{1}{t^2}~dt
+      = \left[ -\frac{1}{t} \right]_{1}^{x}\\
+     &= -\frac{1}{x} + \frac{1}{1}\\
+     &=
+\tcbhighmath[remember,overlay={%
+    \draw[blue,very thick,->] (fx.south) to[bend right] ([yshift=2mm]frame.west);}]
+  {1-\frac{1}{x}.}
+\end{align*}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{math upper}{}{style, no value}
+  Sets the upper part to mathematical mode with font |\displaystyle|.
+\end{docTcbKey}
+
+\begin{docTcbKey}{math lower}{}{style, no value}
+  Sets the lower part to mathematical mode with font |\displaystyle|.
+\end{docTcbKey}
+
+\begin{docTcbKey}{math}{}{style, no value}
+  Sets the upper part \emph{and} lower part to mathematical mode with font |\displaystyle|.
+\begin{dispExample}
+\begin{tcolorbox}[math,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{marker}
+  The following styles are only tested to work with the original |amsmath| environments.
+  If e.g. the |equation| environment is redefined as |gather|, then
+  \refKey{/tcb/ams equation} should / could not be used. Obviously, you are encouraged
+  to use \refKey{/tcb/ams gather} in this case.
+\end{marker}
+
+\begin{docTcbKey}{ams equation upper}{}{style, no value}
+  Adds an |amsmath| |equation| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams equation lower}{}{style, no value}
+  Adds an |amsmath| |equation| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams equation}{}{style, no value}
+  Adds an |amsmath| |equation| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams equation,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams equation* upper}{}{style, no value}
+  Adds an |amsmath| |equation*| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams equation* lower}{}{style, no value}
+  Adds an |amsmath| |equation*| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams equation*}{}{style, no value}
+  Adds an |amsmath| |equation*| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams equation*,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{ams align upper}{}{style, no value}
+  Adds an |amsmath| |align| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams align lower}{}{style, no value}
+  Adds an |amsmath| |align| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams align}{}{style, no value}
+  Adds an |amsmath| |align| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
+  \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams align* upper}{}{style, no value}
+  Adds an |amsmath| |align*| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams align* lower}{}{style, no value}
+  Adds an |amsmath| |align*| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams align*}{}{style, no value}
+  Adds an |amsmath| |align*| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams align*,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
+  \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{ams gather upper}{}{style, no value}
+  Adds an |amsmath| |gather| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams gather lower}{}{style, no value}
+  Adds an |amsmath| |gather| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams gather}{}{style, no value}
+  Adds an |amsmath| |gather| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams gather,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
+  \int x^2 ~\text{d}x = \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams gather* upper}{}{style, no value}
+  Adds an |amsmath| |gather*| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams gather* lower}{}{style, no value}
+  Adds an |amsmath| |gather*| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{ams gather*}{}{style, no value}
+  Adds an |amsmath| |gather*| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams gather*,colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
+  \int x^2 ~\text{d}x = \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{ams nodisplayskip upper}{}{style, no value}
+  Neutralizes the |\abovedisplayskip| of a following |align| or |gather|
+  environment for the upper part. Note that the text content has to
+  start with such a formula.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{ams nodisplayskip lower}{}{style, no value}
+  Neutralizes the |\abovedisplayskip| of a following |align| or |gather|
+  environment for the lower part. Note that the text content has to
+  start with such a formula.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{ams nodisplayskip}{}{style, no value}
+  Neutralizes the |\abovedisplayskip| of a following |align| or |gather|
+  environment for the upper part \emph{and} lower part.
+  Note that the text content has to start with such a formula.
+\begin{dispExample}
+\begin{tcolorbox}[ams nodisplayskip,colback=yellow!10!white,colframe=red!50!black]
+  \begin{gather}
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
+  \int x^2 ~\text{d}x = \frac13 x^3 + c.
+  \end{gather}
+  And now for something completely different.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\bigskip
+New colored mathematical environments are easily created using
+\refCom{newtcolorbox}:
+
+\begin{dispExample}
+\newtcolorbox{mymath}{ams gather*,colback=yellow!10!white,colframe=red!50!black}
+
+\begin{mymath}
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
+  \int x^2 ~\text{d}x = \frac13 x^3 + c.
+\end{mymath}
+\end{dispExample}
+
+\bigskip
+\begin{marker}
+  All described options like \refKey{/tcb/ams gather upper}, \refKey{/tcb/ams gather lower},
+  \refKey{/tcb/ams gather} are (partially) setting (overwritting) the
+  keys \refKey{/tcb/before upper}, \refKey{/tcb/after upper},
+  \refKey{/tcb/before lower}, \refKey{/tcb/after lower}.\par
+  Therefore, e.\,g.\ |\tcbset{ams gather,before upper={\text{Pythagoras:}}}|
+  produces an invalid result. For this case, you are invited to use\\
+  |\tcbset{ams gather,before upper app={\text{Pythagoras:}}}|,\\
+  see \refKey{/tcb/before upper app}.
+\end{marker}
+
+
+\clearpage
+\begin{docTcbKey}{theorem style}{=\meta{name}}{no default, initially |standard|}
+Applies a predefined style \meta{name} to the theorem environment. Some of
+the feasible \meta{name} values resemble style names from the packages |theorem|
+and |ntheorem| to give convenient access to known patterns.
+\begin{marker}
+The styles alter \refKey{/tcb/separator sign}, \refKey{/tcb/description delimiters},
+\refKey{/tcb/terminator sign}, and more. Therefore, one should apply such
+keys \emph{after} a theorem style.
+\end{marker}
+
+For the following examples, we use:
+\inputpreamblelisting{J}
+
+The predefined styles are:
+\begin{itemize}
+%
+\item\docValue{standard}: This is the initial value.
+\begin{dispExample}
+\begin{theorem}[theorem style=standard]{standard}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{change standard}
+\begin{dispExample}
+\begin{theorem}[theorem style=change standard]{change standard}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{plain}
+\begin{dispExample}
+\begin{theorem}[theorem style=plain]{plain}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\clearpage
+\item\docValue{break}
+\begin{dispExample}
+\begin{theorem}[theorem style=break]{break}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{plain apart}
+\begin{dispExample}
+\begin{theorem}[theorem style=plain apart]{plain apart}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{change}
+\begin{dispExample}
+\begin{theorem}[theorem style=change]{change}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{change break}
+\begin{dispExample}
+\begin{theorem}[theorem style=change break]{change break}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{change apart}
+\begin{dispExample}
+\begin{theorem}[theorem style=change apart]{change apart}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\clearpage
+\item\docValue{margin}
+\begin{dispExample}
+\begin{theorem}[theorem style=margin,left=10mm]{margin}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\begin{theorem}[theorem style=margin,left=10mm,oversize]{margin}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{margin break}
+\begin{dispExample}
+\begin{theorem}[theorem style=margin break,left=10mm]{margin break}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\begin{theorem}[theorem style=margin break,left=10mm,oversize]{margin break}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\item\docValue{margin apart}
+\begin{dispExample}
+\begin{theorem}[theorem style=margin apart,left=10mm]{margin apart}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\begin{theorem}[theorem style=margin apart,left=10mm,oversize]{margin apart}{}
+This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
+\end{theorem}
+\end{dispExample}
+%
+\end{itemize}
+\end{docTcbKey}
+
+
+%
+\clearpage
+\subsection{Examples for Definitions and Theorems}
+In the following, the application of \refCom{tcbmaketheorem}
+to highlight mathematical definitions, theorems, or the like is demonstrated.
+
+At first, additional |tcb| keys are created for the appearance of
+the colored boxes. It is assumed that theorems and corollaries should be
+identically colored.
+All following environments are numbered with a common counter, but this
+can be changed easily. Here, the counter output is supplemented by
+the subsection number.
+
+\inputpreamblelisting{G}
+
+By \refCom{newtcbtheorem}, commonly numbered theorem environments are
+created now. |defstyle| and |theostyle| are used for the appearance.
+
+Now, everything is prepared for the following examples.
+
+\begin{dispExample}
+The following theorem is numbered as Theorem \ref{theo:diffbarstetig} and
+referenced with the marker \texttt{theo:diffbarstetig}.\bigskip
+
+\begin{Theorem}{Differenzierbarkeit bedingt Stetigkeit, wobei diese Benennung
+  zu Testzwecken ungew\"{o}hnlich lang ist}{diffbarstetig}%
+  Eine Funktion $f:I\to\mathbb{R}$ ist in $x_0\in I$ stetig, wenn $f$ in
+  $x_0$ differenzierbar ist.
+\end{Theorem}
+\end{dispExample}
+
+
+\begin{dispExample}
+The following definition is numbered as Definition \ref{def:diffbarkeit} and
+referenced with the marker \texttt{def:diffbarkeit}.\bigskip
+
+\begin{Definition}{Differenzierbarkeit}{diffbarkeit}
+  Eine Funktion $f:~I\to\mathbb{R}$ auf einem Intervall $I$ hei\ss{}t in
+  $x_0\in I$ differenzierbar oder linear approximierbar,
+  wenn der Grenzwert
+  \begin{equation*}
+  \lim\limits_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=
+  \lim\limits_{h\to 0}\frac{f(x_0+h)-f(x_0)}{h}
+  \end{equation*}
+  existiert. Bei Existenz hei\ss{}t dieser Grenzwert Ableitung
+  oder Differentialquotient von $f$ in $x_0$ und man
+  schreibt f\"{u}r ihn
+  \begin{equation*}
+  f'(x_0)\quad\text{oder}\quad\frac{df}{dx}(x_0).
+  \end{equation*}
+\end{Definition}
+\end{dispExample}
+
+
+\begin{dispExample}
+The following corollary is numbered as Corollary \ref{cor:nullstellen} and
+referenced with the marker \texttt{cor:nullstellen}.\bigskip
+
+\begin{Corollary}{Nullstellenexistenz}{nullstellen}
+  Ist $f:[a,b]\to\mathbb{R}$ stetig und haben $f(a)$ und $f(b)$ entgegengesetzte
+  Vorzeichen, also $f(a)f(b)<0$, so besitzt $f$ eine Nullstelle $x_0\in]a,b[$,
+  also $f(x_0)=0$.
+\end{Corollary}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{Theorem}[boxrule=2mm,toptitle=-1.5mm,bottomtitle=-1.5mm]{%
+    Hinreichende Bedingung f\"{u}r Wendepunkte}{wendehinreichend}%
+  $f$ sei eine auf einem Intervall $]a,b[$ dreimal stetig differenzierbare Funktion.
+  Ist $f''(x_0)=0$ in $x_0\in]a,b[$ und $f'''(x_0)\ne 0$, so ist
+  $(x_0,f(x_0))$ ein Wendepunkt von $f$.
+\end{Theorem}
+\end{dispExample}
+
+\begin{dispExample}
+% \usepackage{varioref}
+% \usepackage{cleveref}
+% \tcbuselibrary{skins}
+\newtcbtheorem[use counter from=Definition]{YetAnotherTheorem}{Theorem}%
+  {theorem style=plain apart,label type=theorem,enhanced,frame hidden,
+  boxrule=2mm,titlerule=0mm,toptitle=1mm,bottomtitle=1mm,
+  fonttitle=\bfseries\large,fontupper=\normalsize,
+  coltitle=green!35!black,colbacktitle=green!15!white,
+  colback=green!50!yellow!15!white,borderline={1pt}{0pt}{green!25!blue},
+  }{theo}
+
+\begin{YetAnotherTheorem}{Mittelwertsatz f\"{u}r $n$ Variable}{meanvaluetheorem}%
+  Es sei $n\in\mathbb{N}$, $D\subseteq\mathbb{R}^n$ eine offene Menge und
+  $f\in C^{1}(D,\mathbb{R})$. Dann gibt es auf jeder Strecke
+  $[x_0,x]\subset D$ einen Punkt $\xi\in[x_0,x]$, so dass gilt
+  \begin{equation*}
+  f(x)-f(x_0) = \operatorname{grad} f(\xi)^{\top}(x-x_0)
+  \end{equation*}
+\end{YetAnotherTheorem}
+
+\medskip
+Here, |cleveref| support is used to reference \Cref{theo:meanvaluetheorem}
+on \Cpageref{theo:meanvaluetheorem}. This \namecref{theo:meanvaluetheorem}
+can also be referenced by |\Vref| resulting in \Vref{theo:meanvaluetheorem}.
+\end{dispExample}
+
+\begin{marker}
+Note that \refKey{/tcb/label type} was used in the example above to feed
+|cleveref| \cite{cubitt:2013a} with the needed name information.
+\end{marker}
+
+\clearpage
+
+\begin{dispExample}
+Here, using |\Vref| resulting in \Vref{theo:meanvaluetheorem} is more interesting\ldots
+\end{dispExample}
+
+
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\newtcbtheorem[use counter from=Definition]{YetAnotherTheorem}{Theorem}%
+  {theorem style=change apart,enhanced,arc=0mm,outer arc=0mm,
+  boxrule=0mm,toprule=1mm,bottomrule=1mm,left=1mm,right=1mm,
+  titlerule=0mm,toptitle=0mm,bottomtitle=1mm,top=0mm,
+  colframe=red!50!black,colback=red!5!white,coltitle=red!50!black,
+  title style={top color=yellow!50!white,bottom color=red!5!white,
+    middle color=yellow!50!white},
+  fonttitle=\bfseries\sffamily\normalsize,fontupper=\normalsize\itshape,
+  }{theo}
+
+\begin{YetAnotherTheorem}{Mittelwertsatz f\"{u}r $n$ Variable}{mittelwertsatz_n2}%
+  Es sei $n\in\mathbb{N}$, $D\subseteq\mathbb{R}^n$ eine offene Menge und
+  $f\in C^{1}(D,\mathbb{R})$. Dann gibt es auf jeder Strecke
+  $[x_0,x]\subset D$ einen Punkt $\xi\in[x_0,x]$, so dass gilt
+  \begin{equation*}
+  f(x)-f(x_0) = \operatorname{grad} f(\xi)^{\top}(x-x_0)
+  \end{equation*}
+\end{YetAnotherTheorem}
+\end{dispExample}
+
+
+\begin{dispExample}
+% \usepackage{varwidth}   \tcbuselibrary{skins}
+\newtcbtheorem[use counter from=Definition]{YetAnotherTheorem}{Theorem}%
+{enhanced,frame empty,interior empty,colframe=ForestGreen!50!white,
+  coltitle=ForestGreen!50!black,fonttitle=\bfseries,colbacktitle=ForestGreen!15!white,
+  borderline={0.5mm}{0mm}{ForestGreen!15!white},
+  borderline={0.5mm}{0mm}{ForestGreen!50!white,dashed},
+  attach boxed title to top center={yshift=-2mm},
+  boxed title style={boxrule=0.4pt},varwidth boxed title}{theo}
+
+\begin{YetAnotherTheorem}{Mittelwertsatz f\"{u}r $n$ Variable}{mittelwertsatz_n2}%
+  Es sei $n\in\mathbb{N}$, $D\subseteq\mathbb{R}^n$ eine offene Menge und
+  $f\in C^{1}(D,\mathbb{R})$. Dann gibt es auf jeder Strecke
+  $[x_0,x]\subset D$ einen Punkt $\xi\in[x_0,x]$, so dass gilt
+  \begin{equation*}
+  f(x)-f(x_0) = \operatorname{grad} f(\xi)^{\top}(x-x_0)
+  \end{equation*}
+\end{YetAnotherTheorem}
+\end{dispExample}
+
+
+\clearpage
+You need more attention for your theorems? Here, you are \ldots
+
+\begin{dispExample}
+% tcbuselibrary{skins}  % preamble
+\begin{Theorem}[enhanced,
+    fuzzy halo=3mm with yellow,
+    fuzzy halo=2mm with red,
+    fuzzy halo=1mm with yellow,
+    watermark color=red!35!white,
+    watermark text={Overacting\\Fundamental Theorem}]%
+  {Fundamental Theorem of Theorems}{fundamental}%
+  \lipsum[1-2]
+\end{Theorem}
+\end{dispExample}
+
+Let's try a more conservative approach:
+
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\newtcbtheorem[use counter from=Definition]{YetAnotherTheorem}{Theorem}%
+  {theorem style=plain,enhanced,colframe=blue!50!black,colback=yellow!20!white,
+   coltitle=red!50!black,fonttitle=\upshape\bfseries,fontupper=\itshape,
+   drop fuzzy shadow=blue!50!black!50!white,boxrule=0.4pt}{theo}
+
+\begin{YetAnotherTheorem}{Mittelwertsatz f\"{u}r $n$ Variable}{mittelwertsatz_n3}%
+  Es sei $n\in\mathbb{N}$, $D\subseteq\mathbb{R}^n$ eine offene Menge und
+  $f\in C^{1}(D,\mathbb{R})$. Dann gibt es auf jeder Strecke
+  $[x_0,x]\subset D$ einen Punkt $\xi\in[x_0,x]$, so dass gilt
+  \begin{equation*}
+  f(x)-f(x_0) = \operatorname{grad} f(\xi)^{\top}(x-x_0)
+  \end{equation*}
+\end{YetAnotherTheorem}
+\end{dispExample}
+
