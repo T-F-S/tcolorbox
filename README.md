@@ -3,7 +3,7 @@ tcolorbox
 
 A LaTeX package to create highly customizable colored boxes.
 
-> http://www.ctan.org/tex-archive/macros/latex/contrib/tcolorbox
+> http://www.ctan.org/pkg/tcolorbox
 
 ```
 The LaTeX package tcolorbox
