@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
+%% The LaTeX package tcolorbox - version 3.10 (2014/07/23)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.10pre1}
+\tcb@set@library@version{3.10}
 
 \tcbuselibrary{skins}
 
@@ -29,12 +29,12 @@
   \tcbdimto\tcb@xa{\tcb@width-\kvtcb@right@rule}%
   \tcbdimto\tcb@ya{\tcb@height-\kvtcb@top@rule}%
   \pgfpathmoveto{\pgfpointorigin}%
-  \tcb@arc@out\pgfpathlineto{\pgfqpoint{0pt}{\tcb@height}}%
-  \pgfpathlineto{\pgfqpoint{\tcb@width}{\tcb@height}}%
+  \tcb@arc@out@NW\pgfpathlineto{\pgfqpoint{0pt}{\tcb@height}}%
+  \tcb@arc@out@NE\pgfpathlineto{\pgfqpoint{\tcb@width}{\tcb@height}}%
   \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\tcb@width}{0pt}}%
   \pgfpathlineto{\pgfqpoint{\tcb@xa}{0pt}}%
-  \tcb@arc@ins\pgfpathlineto{\pgfqpoint{\tcb@xa}{\tcb@ya}}%
-  \pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{\tcb@ya}}%
+  \tcb@arc@ins@NE\pgfpathlineto{\pgfqpoint{\tcb@xa}{\tcb@ya}}%
+  \tcb@arc@ins@NW\pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{\tcb@ya}}%
   \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{0pt}}%
   \pgfpathclose%
 }
@@ -43,13 +43,13 @@
   \tcbdimto\tcb@xa{\tcb@width-\kvtcb@right@rule}%
   \tcbdimto\tcb@ya{\kvtcb@bottom@rule+\tcb@innerheight}%
   \pgfpathmoveto{\pgfpointorigin}%
-  \tcb@arc@out\pgfpathlineto{\pgfqpoint{0pt}{\tcb@height}}%
-  \pgfpathlineto{\pgfqpoint{\tcb@width}{\tcb@height}}%
+  \tcb@arc@out@NW\pgfpathlineto{\pgfqpoint{0pt}{\tcb@height}}%
+  \tcb@arc@out@NE\pgfpathlineto{\pgfqpoint{\tcb@width}{\tcb@height}}%
   \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\tcb@width}{0pt}}%
   \pgfpathlineto{\pgfqpoint{\tcb@xa}{0pt}}%
   \pgfpathlineto{\pgfqpoint{\tcb@xa}{\tcb@ya}}%
   \pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{\tcb@ya}}%
-  \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{0pt}}%
+  \pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{0pt}}%
   \pgfpathclose%
 }
 
@@ -148,7 +148,7 @@
           \tcb@boundaryframe@pathlast%
           \tcb@boundary@base{\kvtcb@left@rule}{\kvtcb@bottom@rule}%
             {\tcb@width-\kvtcb@right@rule}{\tcb@height-\kvtcb@top@rule}%
-            {\tcb@arc@ins}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}%
+            {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
         \fi%
       \else%
         \tcb@boundaryframe@pathlast%
@@ -158,12 +158,12 @@
       \pgfpathmoveto{\pgfpointorigin}%
       \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{0pt}{\tcb@height}}%
       \pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{\tcb@height}}%
-      \tcb@arc@ins\pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{\kvtcb@bottom@rule}}%
-      \pgfpathlineto{\pgfqpoint{\tcb@xa}{\kvtcb@bottom@rule}}%
+      \tcb@arc@ins@SW\pgfpathlineto{\pgfqpoint{\kvtcb@left@rule}{\kvtcb@bottom@rule}}%
+      \tcb@arc@ins@SE\pgfpathlineto{\pgfqpoint{\tcb@xa}{\kvtcb@bottom@rule}}%
       \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\tcb@xa}{\tcb@height}}%
       \pgfpathlineto{\pgfqpoint{\tcb@width}{\tcb@height}}%
-      \tcb@arc@out\pgfpathlineto{\pgfqpoint{\tcb@width}{0pt}}%
-      \pgfpathclose%
+      \tcb@arc@out@SE\pgfpathlineto{\pgfqpoint{\tcb@width}{0pt}}%
+      \tcb@arc@out@SW\pgfpathclose%
     \fi%
   }%
 }

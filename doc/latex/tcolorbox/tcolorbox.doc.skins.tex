@@ -1229,21 +1229,21 @@ This can be used to apply different effects.
   Note that the \tikzname\  |line width| option should not be used here.\\
   The border lines adapt to the rounded corners of the |tcolorbox|. An inside border
   line will switch to sharp corners if necessary, an outside border line will
-  always be rounded if not set to |sharp corners|.
+  always be rounded except for \refKey{/tcb/sharp corners}.
 \begin{dispExample}
 \begin{tcolorbox}[enhanced,title=Rounded corners,fonttitle=\bfseries,boxsep=5pt,
   arc=8pt,
   borderline={0.5pt}{0pt}{red},
   borderline={0.5pt}{5pt}{blue,dotted},
-  borderline={0.5pt}{-5pt}{green,dashed} ]
+  borderline={0.5pt}{-5pt}{green} ]
 This is a tcolorbox.
 \end{tcolorbox}
 \bigskip
 \begin{tcolorbox}[enhanced,title=Sharp corners,fonttitle=\bfseries,boxsep=5pt,
-  arc=0pt,outer arc=0pt,
+  arc=8pt,sharp corners=downhill,
   borderline={0.5pt}{0pt}{red},
   borderline={0.5pt}{5pt}{blue,dotted},
-  borderline={0.5pt}{-5pt}{green,dashed,sharp corners} ]
+  borderline={0.5pt}{-5pt}{green} ]
 This is a tcolorbox.
 \end{tcolorbox}
 \end{dispExample}
@@ -1352,7 +1352,8 @@ used on the same |tcolorbox|. They are drawn \emph{before} the box frame is draw
   The shadow is filled along a \tikzname\  path with the given \tikzname\  \meta{options}.\\
   The shadows adapt to the rounded corners of the |tcolorbox|. An shrinked shadow
   will switch to sharp corners if necessary, an enlarged shadow may become
-  more rounded depending on several factors.
+  more rounded depending on several factors. But \refKey{/tcb/sharp corners}
+  have sharp shadows.
   \begin{marker}
   Shadows are not considered for the bounding box computation by default.
   Large shadows may be overlaped by the following content. But, the
@@ -1784,7 +1785,7 @@ This is a tcolorbox.
   Optionally, the \meta{color} for the shadow can be changed.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \tcbset{enhanced,colback=red!5!white,
-  boxrule=0.4pt,arc=0pt,outer arc=0pt,
+  boxrule=0.4pt,sharp corners,
   colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[drop lifted shadow]
@@ -1803,7 +1804,7 @@ This is a tcolorbox.
   Optionally, the \meta{color} for the shadow can be changed.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \tcbset{enhanced,colback=red!5!white,
-  boxrule=0.4pt,arc=0pt,outer arc=0pt,
+  boxrule=0.4pt,sharp corners,
   colframe=red!75!black,fonttitle=\bfseries}
 
 \tcbox[drop small lifted shadow,size=fbox]
@@ -2652,6 +2653,11 @@ Of course, skins can be used for listings also.
 \end{dispExample}
 \end{docCommand}
 
+\begin{docCommand}{tcbline*}{}
+  Equivalent to \refCom{tcbline}, but in a breakable box, \refCom{tcbline*}
+  is removed if at a page/box break. Also, it is removed at the end
+  of a box.
+\end{docCommand}
 
 \clearpage
 \begin{docSkin}{enhancedfirst}

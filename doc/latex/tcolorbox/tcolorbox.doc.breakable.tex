@@ -93,9 +93,9 @@ parameters. The differences are:
   the applied algorithm has (virtually) no height limit for boxes, but
   very likely the compiler memory will have to be increased for boxes longer
   than 300 pages (depending on compiler settings and box content).
-  But it is recommended to use \docValue{unlimited} for critical large boxes only
-  since there \emph{may} be a single interline space deviation around
-  every 2300cm.
+  But it is recommended to use \docValue{unlimited} for critical large boxes only,
+  since there \emph{may} be a single interline space deviation (lost glue) around
+  every 2300cm, e.\,g.\ a \refCom{tcbline*} \emph{may} get lost.
 \item You can nest an unbreakable |tcolorbox| inside another |tcolorbox|,
   even inside a breakable one.
   But you cannot not nest a breakable box inside a breakable box.
@@ -129,7 +129,7 @@ parameters. The differences are:
     The maximal total height of the upper and of the lower part is
     about 65536pt (ca.\,2300cm or ca.\,90 pages) apiece.
   \item\docValue{unlimited}: Experimental code for unlimited total height of
-    breakable boxes. There \emph{may} be a single interline space deviation around
+    breakable boxes. There \emph{may} be a single interline space deviation (lost glue) around
     every 2300cm. For boxes longer than 300 pages (or even shorter ones) the
     compiler memory will have to be increased.
   \end{itemize}
@@ -187,7 +187,34 @@ parameters. The differences are:
 \end{docTcbKey}
 
 \clearpage
-\begin{docTcbKey}{enlargepage}{=\meta{length}\colOpt{/\meta{length}\ldots/\meta{length}}}{no default, initially |0pt|}
+\begin{docTcbKey}{break at}{=\meta{length}\colOpt{/\meta{length}/\ldots/\meta{length}}}{no default, initially |0pt|}
+  Defines break points at the given \meta{length} values.
+  The first \meta{length} defines the (maximal) height of the first partial box,
+  the second \meta{length} defines the (maximal) height of the second partial box,
+  and so on. The last \meta{length} value is applied to all following partial boxes if any.
+  Setting a length to |0pt| means that the naturally available space is used
+  for breaking.
+\begin{dispExample}
+% \usepackage{multicol,lipsum}
+\begin{multicols}{3}\footnotesize
+Breakable boxes inside a |multicols| environment need special attendance.
+They are broken by default at |\textheight|.
+The |break at| option can be used to insert better break points by hand.
+\par\medskip
+\begin{tcolorbox}[enhanced jigsaw,size=small,before=\noindent,
+  colframe=red,colback=yellow!10!white,before title=\raggedright,
+  title={Broken box inside a |multicols| environment},fonttitle=\bfseries,
+  enforce breakable,% use only breakable in the real world!
+  pad at break=1mm,break at=3cm/6.3cm ]
+\lipsum[1]
+\end{tcolorbox}
+\refKey{/tcb/height fixed for} may also be considered for |multicols| environments.
+\end{multicols}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{enlargepage}{=\meta{length}\colOpt{/\meta{length}/\ldots/\meta{length}}}{no default, initially |0pt|}
   Inserts a |\enlargethispage|\marg{length} to the pages of the break sequence,
   i.\,e.\ allows one to enlarge (or shrink) partial boxes. The first \meta{length} is applied
   to the first partial box, the second \meta{length} is applied
@@ -207,11 +234,30 @@ parameters. The differences are:
   \end{marker}
 \end{docTcbKey}
 
+\clearpage
+\begin{docTcbKey}{enlargepage flexible}{=\meta{length}}{no default, initially |0pt|}
+  This allows an automated page enlargement for up to \meta{length}.
+  The algorithm can use this to avoid breaking a box, if there is anough room
+  after enlargement. Also, the \emph{last} partial box of a break sequence
+  may be enlarged to avoid further breaking.\\
+  Note that this potential enlargement is \emph{additive} to settings of
+  \refKey{/tcb/enlargepage}.
+  But \refKey{/tcb/enlargepage flexible} overwrites settings of
+  \refKey{/tcb/pad before break*} or \refKey{/tcb/pad at break*}.
+\begin{dispListing}
+% The following setting hinders orphan lines for the last partial box
+\tcbset{enlargepage flexible=\baselineskip}
+\end{dispListing}
+\end{docTcbKey}
+
+
 
 \begin{docTcbKey}{shrink break goal}{=\meta{length}}{no default, initially |0pt|}
   This is an emergency parameter if the break algorithm produces unpleasant
-  breaks. It shrinks the goal height of the current box part by \meta{length}
+  breaks.
+  It shrinks the goal height of the current box part by \meta{length}
   which may result in smaller boxes. Never use negative values.
+  \emph{Usually, this option will never be needed at all.}
 \end{docTcbKey}
 
 
@@ -234,8 +280,6 @@ parameters. The differences are:
 \end{docTcbKey}
 
 
-
-
 \begin{docTcbKey}{topsep at break}{=\meta{length}}{no default, initially \texttt{0mm}}
   Additional vertical space of \meta{length} which is added at the top of
   \emph{middle} and \emph{last} parts in a break sequence. In general,
@@ -254,6 +298,12 @@ parameters. The differences are:
   and changes \refKey{/tcb/topsep at break} as required.
   In general, it is not advisable to change this value if the
   \emph{middle} and \emph{last} parts in a break sequence start with a rule or a title.
+\end{docTcbKey}
+
+\begin{docTcbKey}{pad before break*}{=\meta{length}}{style, no default}
+  Sets \refKey{/tcb/pad before break} to \meta{length} and
+  \refKey{/tcb/enlargepage flexible} to an appropriate value such that
+  empty closing frames are avoided.
 \end{docTcbKey}
 
 \begin{docTcbKey}{pad after break}{=\meta{length}}{style, no default, initially \texttt{3.5mm}}
@@ -281,6 +331,18 @@ parameters. The differences are:
 \end{dispListing}
 {\tcbusetemp}
 
+\begin{docTcbKey}{pad at break*}{=\meta{length}}{style, no default}
+  Sets \refKey{/tcb/pad at break} to \meta{length} and
+  \refKey{/tcb/enlargepage flexible} to an appropriate value such that
+  empty closing frames are avoided.
+\end{docTcbKey}
+
+\begin{marker}
+\refKey{/tcb/pad at break} or \refKey{/tcb/pad at break*}
+should be used as very last option in an option list, because
+they adapt other settings.
+\end{marker}
+
 
 \begin{marker}
 Also see \refKey{/tcb/enlarge top at break by}
@@ -288,6 +350,109 @@ and \refKey{/tcb/enlarge bottom at break by}.
 \end{marker}
 
 
+\begin{docTcbKey}{height fixed for}{=\meta{part}}{no default, initially |none|}
+  When certain amount of space is available for a partial box of a
+  break sequence, the partial box typically is smaller than this space
+  (depending on the box content). For given \meta{part}(s), the height can be
+  set to all available space.
+  \begin{itemize}
+  \item\docValue{none}: Every partial |tcolorbox| is set with its natural height.
+  \item\docValue{first}: The \emph{first} partial box is set to a height which matches the available space.
+  \item\docValue{middle}: All \emph{middle} partial boxes are set to a height which matches the available space.
+  \item\docValue{last}: The \emph{last} partial box is set to a height which matches
+    the available space.
+  \item\docValue{first and middle}: The \emph{first} and
+    all \emph{middle} partial boxes are set to a height which matches the available space.
+  \item\docValue{middle and last}: All \emph{middle} partial boxes and the \emph{last} partial box
+    are set to a height which matches the available space.
+  \item\docValue{all}: All partial boxes are set to a height which matches the available space.
+  \end{itemize}
+\begin{marker}
+  If the box keeps unbroken, this option is not applied.
+  See \refKey{/tcb/height} for setting a fixed height for unbroken boxes.
+\end{marker}
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Breakable boxes and the \texttt{multicol} package}\label{subsec:multicol}
+\begin{multicols}{2}
+\begin{tcolorbox}[enhanced jigsaw,size=small,breakable,colback=yellow!10!white,
+  colframe=red!50!white,break at=3cm,height fixed for=all]
+Unbreakable |tcolorbox|es can be used without special care inside a
+|multicols| environment from the |multicol| package \cite{mittelbach:2014a}.
+
+Since version 3.10, a breakable |tcolorbox| detects, if it is used inside
+a |multicols| environment. But choosing break points for a breakable box
+cannot be done by the balancing routine of |multicols|. By default, boxes
+will break at |\textheight|. To get pleasant results, use the
+\refKey{/tcb/break at} and \refKey{/tcb/height fixed for} options.
+\end{tcolorbox}
+\end{multicols}
+
+\enlargethispage{\baselineskip}
+\begin{dispListing}
+% \usepackage{lipsum,multicol}  % preamble
+\small
+\begin{multicols}{2}
+  \lipsum[1]
+  \begin{tcolorbox}[enhanced jigsaw,breakable,size=title,
+    colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+    title=My breakable box,pad at break=1mm, break at=7.5cm/0pt ]
+  \lipsum[2-4]
+  \end{tcolorbox}
+  \lipsum[4]
+\end{multicols}
+\end{dispListing}
+{\tcbusetemp}
+
+\clearpage
+
+\begin{multicols}{2}
+\small
+This example is already set inside a |multicols| environment.
+This time, a \emph{middle} part has full |\textheight|.
+\refKey{/tcb/height fixed for} is used to spread this box part over the full
+height toi align with neighboring columns.
+\begin{dispListing}
+% \usepackage{lipsum,multicol}
+\lipsum[1]
+\begin{tcolorbox}[enhanced jigsaw,breakable,
+  size=title,
+  colback=red!5!white,
+  colframe=red!75!black,
+  fonttitle=\bfseries,
+  title=My breakable box,
+  pad at break=2mm,
+  break at=8.2cm/0pt,
+  height fixed for=middle ]
+\lipsum[2-7]
+\end{tcolorbox}
+\lipsum[8]
+\end{dispListing}
+{\tcbusetemp}
+\end{multicols}
+
+
+The following example has a |\tcolorbox| which fills the |\multicols|
+environment completely. Here, \refKey{/tcb/height fixed for} is used
+to give all three columns the full height.
+Note that the appropriate \refKey{/tcb/break at} value is not computed
+automatically but set manually.
+
+\begin{dispListing}
+% \usepackage{lipsum,multicol}  % preamble
+\small
+\begin{multicols}{3}
+  \begin{tcolorbox}[enhanced jigsaw,breakable,size=small,
+    colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+    title=My breakable box,pad at break=2mm,drop fuzzy shadow,
+    height fixed for=all, break at=11.4cm ]
+  \lipsum[1-3]
+  \end{tcolorbox}
+\end{multicols}
+\end{dispListing}
+{\tcbusetemp}
 
 
 \clearpage
@@ -359,8 +524,15 @@ the \emph{break sequence} parts are displayed.
 \tcbbreakskininto{freelancelast}{freelancemiddle}{freelancemiddle}{freelancelast}{}
 
 
+
+
 \clearpage
 \subsection{Break by Hand (Faked Break)}
+
+\begin{marker}
+See \Vref{subsec:multicol} for \emph{real} column breaks.
+\end{marker}
+
 Since the appearance of broken boxes is done by skins, it is quite easy
 to 'fake a break'. For this, you actually don't need the
 \mylib{breakable} library at

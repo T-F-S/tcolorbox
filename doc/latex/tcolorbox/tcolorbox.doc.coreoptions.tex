@@ -824,6 +824,111 @@ with help of an overlay.
 \tcbusetemp
 \end{docTcbKey}
 
+\clearpage
+\subsection{Corners}\label{subsec:corners}
+
+The four corners of any |tcolorbox| can be set individually as
+\refKey{/tcb/sharp corners} or as \refKey{/tcb/rounded corners}.
+These settings are also reflected in the behavior of \refKey{/tcb/borderline}
+and \refKey{/tcb/shadow} as one would expect.
+
+By default, all four corners are \emph{rounded}. So, only the
+\refKey{/tcb/sharp corners} option will be necessary for most use cases.
+The \refKey{/tcb/rounded corners} option can be used to revert a \refKey{/tcb/sharp corners}
+setting.
+
+\begin{docTcbKey}{sharp corners}{=\meta{position}}{default |all|, initially unset}
+The \meta{position} denotes one or more of the four box corners to be set as
+\emph{sharp} corners. The not assigned corners will retain their mode.
+Feasible values for \meta{position} are:
+\begin{itemize}
+\foreach \p in {northwest,northeast,southwest,southeast,north,south,east,west,downhill,uphill,all}
+{
+\item\tcbox[on line,size=title,arc=2mm,colframe=red!75!black,colback=red!5!white,
+  enlarge top by=0.5mm,enlarge bottom by=0.5mm,sharp corners=\p]{\docValue{\p}}
+}
+\end{itemize}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[colback=red!5!white,
+  colframe=red!75!black,
+  sharp corners=northwest ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[colback=red!5!white,
+  colframe=red!75!black,
+  sharp corners ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{rounded corners}{=\meta{position}}{default |all|, initially |all|}
+The \refKey{/tcb/rounded corners} can be used to revert a \refKey{/tcb/sharp corners}
+setting. The \meta{position} denotes one or more of the four box corners to be set as
+\emph{rounded} corners. The not assigned corners will retain their mode.
+Feasible values for \meta{position} are\footnote{The graphical examples assume
+  that the boxes where set to have sharp corners before.}:
+\begin{itemize}
+\foreach \p in {northwest,northeast,southwest,southeast,north,south,east,west,downhill,uphill,all}
+{
+\item\tcbox[on line,size=title,arc=2mm,colframe=red!75!black,colback=red!5!white,
+  enlarge top by=0.5mm,enlarge bottom by=0.5mm,sharp corners,rounded corners=\p]{\docValue{\p}}
+}
+\end{itemize}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[colback=red!5!white,
+  colframe=red!75!black,sharp corners,
+  rounded corners=northwest ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{sharpish corners}{}{style, no value}
+  Shortcut for setting \refKey{/tcb/arc} and \refKey{/tcb/outer arc}
+  to |0pt|. With this setting, rounded corners will appear als quasi-sharp,
+  but e.\,g.\ the shadow will be somewhat rounder than the shadow
+  of really sharp corners.
+  \begin{marker}
+  Corners are still of type \emph{rounded} with this option, but appear
+  \emph{sharp}. To switch back to rounded corners, one has to adapt
+  \refKey{/tcb/arc} and \refKey{/tcb/outer arc}.
+  \end{marker}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[colback=red!5!white,
+  colframe=red!75!black,
+  sharpish corners ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\clearpage
+
+The following examples will show the differences between
+\refKey{/tcb/rounded corners}, \refKey{/tcb/sharpish corners}, and \refKey{/tcb/sharp corners}.
+The later two give the same core box, but \refKey{/tcb/borderline}
+and \refKey{/tcb/shadow} settings are slightly different.
+The following examples use \refKey{/tcb/drop fuzzy shadow}.
+
+\foreach \n in {rounded corners,sharpish corners,sharp corners}{
+\begin{tcolorbox}[enhanced jigsaw,frame empty,interior empty,fuzzy halo,center upper]
+\begin{tcolorbox}[enhanced,drop fuzzy shadow,width=\linewidth-1cm,
+  colback=red!5!white, colframe=red!75!black, fonttitle=\bfseries,
+  title=My title,\n,
+  tikz={spy using outlines={circle, magnification=8, size=2cm, connect spies}},
+  overlay={\spy [blue, size=4cm] on (frame.south east)
+      in node at ([xshift=-2.5cm,yshift=-2.5cm]frame.south east);
+  \node[right] at ([xshift=2cm,yshift=-1cm]frame.south west) {\textbf{\Large\ttfamily\n}};
+  }]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{tcolorbox}}
+
 
 \clearpage
 \subsection{Transparency}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
+%% The LaTeX package tcolorbox - version 3.10 (2014/07/23)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/07/16 version 3.10pre1 text color boxes]
-\def\tcb@version{3.10pre1}
+\ProvidesPackage{tcolorbox}[2014/07/23 version 3.10 text color boxes]
+\def\tcb@version{3.10}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -54,7 +54,7 @@
 \def\tcbdimto#1#2{\edef#1{\the\dimexpr#2\relax}}
 
 \def\tcb@defToTotalHeightStandard#1#2#3{\tcbdimto#1{\ht#2+\dp#2}}
-
+\let\tcb@defToTotalHeight\tcb@defToTotalHeightStandard
 
 \def\tcb@zpt{0pt}
 
@@ -167,6 +167,7 @@
   arc/.dimstore in=\kvtcb@arc,
   outer arc/.code={\def\kvtcb@outerarc{#1}\let\tcb@comp@arc=\tcb@comp@arc@fix},
   auto outer arc/.code={\let\tcb@comp@arc=\tcb@comp@arc@auto},
+  sharpish corners/.style={arc=0pt,outer arc=0pt},
   lefttitle/.store in=\kvtcb@lefttitle,
   leftupper/.store in=\kvtcb@leftupper,
   leftlower/.store in=\kvtcb@leftlower,
@@ -484,8 +485,8 @@
     \@endpefalse
     \color@setgroup%
     \csname tcb@parbox@use@\kvtcv@parbox\endcsname%
-    \ignorespaces\tcb@minipage#2\tcb@hyph@fix\ignorespaces}
-\def\endtcb@lrbox{\unskip\endminipage\unskip\color@endgroup}
+    \tcb@minipage#2\tcb@hyph@fix\ignorespaces}
+\def\endtcb@lrbox{\unskip\endminipage\color@endgroup}
 
 \let\tcb@savebox=\tcb@lrbox
 \let\endtcb@savebox=\endtcb@lrbox
@@ -747,6 +748,56 @@
 \def\tcb@arc@ins{\pgfsetcornersarced{\pgfqpoint{\kvtcb@arc}{\kvtcb@arc}}}%
 \def\tcb@arc@out{\pgfsetcornersarced{\pgfqpoint{\tcb@outer@arc}{\tcb@outer@arc}}}%
 
+\def\tcb@define@corner@mode#1{%
+\tcbset{%
+  #1 corners/.is choice,%
+  #1 corners/northwest/.code={\edef\tcb@corner@mode@NW{#1}},%
+  #1 corners/northeast/.code={\edef\tcb@corner@mode@NE{#1}},%
+  #1 corners/southwest/.code={\edef\tcb@corner@mode@SW{#1}},%
+  #1 corners/southeast/.code={\edef\tcb@corner@mode@SE{#1}},%
+  #1 corners/north/.code={\edef\tcb@corner@mode@NW{#1}\edef\tcb@corner@mode@NE{#1}},%
+  #1 corners/south/.code={\edef\tcb@corner@mode@SW{#1}\edef\tcb@corner@mode@SE{#1}},%
+  #1 corners/east/.code={\edef\tcb@corner@mode@NE{#1}\edef\tcb@corner@mode@SE{#1}},%
+  #1 corners/west/.code={\edef\tcb@corner@mode@NW{#1}\edef\tcb@corner@mode@SW{#1}},%
+  #1 corners/downhill/.code={\edef\tcb@corner@mode@NW{#1}\edef\tcb@corner@mode@SE{#1}},%
+  #1 corners/uphill/.code={\edef\tcb@corner@mode@NE{#1}\edef\tcb@corner@mode@SW{#1}},%
+  #1 corners/all/.code={\edef\tcb@corner@mode@NW{#1}\edef\tcb@corner@mode@NE{#1}\edef\tcb@corner@mode@SW{#1}\edef\tcb@corner@mode@SE{#1}},%
+  #1 corners/.default=all}}%
+
+\tcb@define@corner@mode{rounded}
+\tcb@define@corner@mode{sharp}
+
+\def\tcb@arc@out@NW{\csname tcb@arc@out@NW@\tcb@corner@mode@NW\endcsname}
+\def\tcb@arc@out@NE{\csname tcb@arc@out@NE@\tcb@corner@mode@NE\endcsname}
+\def\tcb@arc@out@SW{\csname tcb@arc@out@SW@\tcb@corner@mode@SW\endcsname}
+\def\tcb@arc@out@SE{\csname tcb@arc@out@SE@\tcb@corner@mode@SE\endcsname}
+
+\def\tcb@arc@ins@NW{\csname tcb@arc@ins@NW@\tcb@corner@mode@NW\endcsname}
+\def\tcb@arc@ins@NE{\csname tcb@arc@ins@NE@\tcb@corner@mode@NE\endcsname}
+\def\tcb@arc@ins@SW{\csname tcb@arc@ins@SW@\tcb@corner@mode@SW\endcsname}
+\def\tcb@arc@ins@SE{\csname tcb@arc@ins@SE@\tcb@corner@mode@SE\endcsname}
+
+\let\tcb@arc@out@NW@sharp\tcb@arc@zpt
+\let\tcb@arc@out@NE@sharp\tcb@arc@zpt
+\let\tcb@arc@out@SW@sharp\tcb@arc@zpt
+\let\tcb@arc@out@SE@sharp\tcb@arc@zpt
+
+\let\tcb@arc@ins@NW@sharp\tcb@arc@zpt
+\let\tcb@arc@ins@NE@sharp\tcb@arc@zpt
+\let\tcb@arc@ins@SW@sharp\tcb@arc@zpt
+\let\tcb@arc@ins@SE@sharp\tcb@arc@zpt
+
+\let\tcb@arc@out@NW@rounded\tcb@arc@out
+\let\tcb@arc@out@NE@rounded\tcb@arc@out
+\let\tcb@arc@out@SW@rounded\tcb@arc@out
+\let\tcb@arc@out@SE@rounded\tcb@arc@out
+
+\let\tcb@arc@ins@NW@rounded\tcb@arc@ins
+\let\tcb@arc@ins@NE@rounded\tcb@arc@ins
+\let\tcb@arc@ins@SW@rounded\tcb@arc@ins
+\let\tcb@arc@ins@SE@rounded\tcb@arc@ins
+
+
 % boundaries
 \def\tcb@boundary@base#1#2#3#4#5#6#7#8{%
   \tcbdimto\tcb@xa{#1}%
@@ -760,11 +811,10 @@
   #5\pgfpathclose%
 }
 
-
 \def\tcb@boundaryframe@standard{%
   \tcb@boundary@base{0pt}{0pt}%
     {\tcb@width}{\tcb@height}%
-    {\tcb@arc@out}{\tcb@arc@out}{\tcb@arc@out}{\tcb@arc@out}%
+    {\tcb@arc@out@SW}{\tcb@arc@out@NW}{\tcb@arc@out@NE}{\tcb@arc@out@SE}%
 }
 
 \def\tcb@boundaryframe@standardjigsaw{%
@@ -783,19 +833,19 @@
 \def\tcb@boundaryinterior@title@standard{%
   \tcb@boundary@base{\kvtcb@left@rule}{\kvtcb@bottom@rule}%
     {\tcb@width-\kvtcb@right@rule}{\kvtcb@bottom@rule+\tcb@innerheight}%
-    {\tcb@arc@ins}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}%
+    {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@boundaryinterior@notitle@standard{%
   \tcb@boundary@base{\kvtcb@left@rule}{\kvtcb@bottom@rule}%
     {\tcb@width-\kvtcb@right@rule}{\tcb@height-\kvtcb@top@rule}%
-    {\tcb@arc@ins}{\tcb@arc@ins}{\tcb@arc@ins}{\tcb@arc@ins}%
+    {\tcb@arc@ins@SW}{\tcb@arc@ins@NW}{\tcb@arc@ins@NE}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@boundarytitle@standard{%
   \tcb@boundary@base{\kvtcb@left@rule}{\kvtcb@bottom@rule+\tcb@innerheight+\kvtcb@title@rule}%
     {\tcb@width-\kvtcb@right@rule}{\tcb@height-\kvtcb@top@rule}%
-    {\tcb@arc@zpt}{\tcb@arc@ins}{\tcb@arc@ins}{\tcb@arc@zpt}%
+    {\tcb@arc@zpt}{\tcb@arc@ins@NW}{\tcb@arc@ins@NE}{\tcb@arc@zpt}%
 }
 
 % fill frame
@@ -1375,7 +1425,7 @@
   reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@},
     width=\linewidth,autoparskip,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
-    size=normal,
+    size=normal,rounded corners,
     enlarge top by=0mm,enlarge bottom by=0mm,enlarge left by=0mm,enlarge right by=0mm,
     toggle enlargement=none,toggle left and right=none,
     baseline=0pt,adjust text={\"Apgjy},lowerbox=visible,lower separated,

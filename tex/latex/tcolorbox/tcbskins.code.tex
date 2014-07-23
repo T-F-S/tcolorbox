@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.10pre1 (2014/07/16)
+%% The LaTeX package tcolorbox - version 3.10 (2014/07/23)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.10pre1}
+\tcb@set@library@version{3.10}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -69,7 +69,7 @@
 \def\tcb@boundaryframe@pathfirst{%
   \tcb@boundary@base{0pt}{0pt}%
     {\tcb@width}{\tcb@height}%
-    {\tcb@arc@zpt}{\tcb@arc@out}{\tcb@arc@out}{\tcb@arc@zpt}%
+    {\tcb@arc@zpt}{\tcb@arc@out@NW}{\tcb@arc@out@NE}{\tcb@arc@zpt}%
 }
 
 \def\tcb@boundaryframe@pathmiddle{%
@@ -81,7 +81,7 @@
 \def\tcb@boundaryframe@pathlast{%
   \tcb@boundary@base{0pt}{0pt}%
     {\tcb@width}{\tcb@height}%
-    {\tcb@arc@out}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@out}%
+    {\tcb@arc@out@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@out@SE}%
 }
 
 \tikzset{%
@@ -114,7 +114,7 @@
 
 \def\tcb@drawwithouttitle@pathfirst{%
   \tcb@pathbase{tcb fill interior}{interior.west|-frame.south}{interior.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@ins}{\tcb@arc@ins}{\tcb@arc@zpt}%
+    {\tcb@arc@zpt}{\tcb@arc@ins@NW}{\tcb@arc@ins@NE}{\tcb@arc@zpt}%
 }
 
 \def\tcb@drawwithouttitle@pathmiddle{%
@@ -124,7 +124,7 @@
 
 \def\tcb@drawwithouttitle@pathlast{%
   \tcb@pathbase{tcb fill interior}{interior.south west}{interior.east|-frame.north}%
-    {\tcb@arc@ins}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}%
+    {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
 % draw title box
@@ -150,21 +150,29 @@
   \fi%
 }
 
-\long\def\tcb@pseudo@segmentation#1{%
-{\parskip\z@\par\nointerlineskip\hfilneg\kern-\@totalleftmargin}\begingroup%
-\tcb@shield@externalize\begin{tikzpicture}%
+\def\tcb@draw@pseudo@segmentation#1{%
+\begingroup\tcb@shield@externalize\begin{tikzpicture}%
   \path[use as bounding box] (0,{\the\dimexpr-\kvtcb@middle-\kvtcb@boxsep\relax})
      rectangle (\linewidth,{\the\dimexpr\kvtcb@middle+\kvtcb@boxsep\relax});
   \node[line width=0mm,inner sep=0mm,draw=none,fill=none,rectangle,
-        name=segmentation,at={({\the\dimexpr-#1-\kvtcb@boxsep\relax},0)},right,%
+        name=segmentation,at={({\the\dimexpr-\kvtcb@boxsep-(#1)\relax},0)},right,%
         minimum width=\tcb@innerwidth,minimum height=\the\dimexpr\kvtcb@middle*2\relax]{};
   \tcb@drawlower@path%
-\end{tikzpicture}%
-\endgroup{\parskip\z@\par\nointerlineskip}%
-}
+\end{tikzpicture}\endgroup}
 
-\def\tcbline{\iftcb@hasLower\tcb@pseudo@segmentation{\kvtcb@leftlower}%
-  \else\tcb@pseudo@segmentation{\kvtcb@leftupper}\fi}
+\def\tcbline@star#1{%
+{\parskip\z@\par\nointerlineskip}%
+\xleaders\vbox{\tcb@draw@pseudo@segmentation{#1}}\vskip\dimexpr(\kvtcb@middle+\kvtcb@boxsep)*2\relax%
+{\parskip\z@\par\nointerlineskip}}
+
+\def\tcbline@#1{%
+{\parskip\z@\par\nointerlineskip}%
+\tcb@draw@pseudo@segmentation{#1}%
+{\parskip\z@\par\nointerlineskip}}
+
+\def\tcbline{%
+  \@ifstar{\iftcb@hasLower\tcbline@star{\kvtcb@leftlower}\else\tcbline@star{\kvtcb@leftupper}\fi}%
+  {\iftcb@hasLower\tcbline@{\kvtcb@leftlower+\@totalleftmargin}\else\tcbline@{\kvtcb@leftupper+\@totalleftmargin}\fi}}
 
 
 % draw special versions
@@ -175,7 +183,7 @@
 
 \def\tcb@drawspec@UR{%
   \tcb@pathbase{tcb fill interior}{segmentation.west}{interior.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@ins}{\tcb@arc@ins}{\tcb@arc@zpt}%
+    {\tcb@arc@zpt}{\tcb@arc@ins@NW}{\tcb@arc@ins@NE}{\tcb@arc@zpt}%
 }
 
 \def\tcb@drawspec@US{%
@@ -185,7 +193,7 @@
 
 \def\tcb@drawspec@LR#1{%
   \tcb@pathbase{#1,segmentation@style}{interior.south west}{[yshift=0.1mm]segmentation.east}%
-    {\tcb@arc@ins}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}%
+    {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@drawspec@LS#1{%
@@ -195,17 +203,17 @@
 
 \def\tcb@drawspec@sbs@A#1{%
   \tcb@pathbase{#1,segmentation@style}{segmentation.south}{interior.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}{\tcb@arc@ins}%
+    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@NE}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@drawspec@sbs@B#1{%
   \tcb@pathbase{#1,segmentation@style}{segmentation.south}{interior.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}%
+    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@drawspec@sbs@C#1{%
   \tcb@pathbase{#1,segmentation@style}{segmentation.south|-frame.south}{interior.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}{\tcb@arc@zpt}%
+    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@NE}{\tcb@arc@zpt}%
 }
 
 \def\tcb@drawspec@sbs@D#1{%
@@ -220,7 +228,7 @@
 
 \def\tcb@drawspec@sbs@F#1{%
   \tcb@pathbase{#1,segmentation@style}{segmentation.south}{interior.east|-frame.north}%
-  {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins}%
+  {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@drawspec@T{%
@@ -446,19 +454,19 @@
 
 \tcb@new@skin{freelance}{base@unbroken,%
   frame engine=freelance,interior titled engine=freelance,interior engine=freelance,segmentation engine=freelance,title engine=freelance,%
-  skin first=freelancefirst,skin middle=freelancemiddle,skin last=freelancelast}%,freelance@extension}
+  skin first=freelancefirst,skin middle=freelancemiddle,skin last=freelancelast}%
 
 \tcb@new@skin{freelancefirst}{base@first,%
   frame engine=freelance,interior titled engine=freelance,interior engine=freelance,segmentation engine=freelance,title engine=freelance,%
-  skin first=freelancefirst,skin middle=freelancemiddle,skin last=freelancemiddle}%,freelancefirst@extension}
+  skin first=freelancefirst,skin middle=freelancemiddle,skin last=freelancemiddle}%
 
 \tcb@new@skin{freelancemiddle}{base@middle,%
   frame engine=freelance,interior titled engine=freelance,interior engine=freelance,segmentation engine=freelance,title engine=freelance,%
-  skin first=freelancemiddle,skin middle=freelancemiddle,skin last=freelancemiddle}%,freelancemiddle@extension}
+  skin first=freelancemiddle,skin middle=freelancemiddle,skin last=freelancemiddle}%
 
 \tcb@new@skin{freelancelast}{base@last,%
   frame engine=freelance,interior titled engine=freelance,interior engine=freelance,segmentation engine=freelance,title engine=freelance,%
-  skin first=freelancemiddle,skin middle=freelancemiddle,skin last=freelancelast}%,freelancelast@extension}
+  skin first=freelancemiddle,skin middle=freelancemiddle,skin last=freelancelast}%
 
 \tcbset{freelance/.style={skin=freelance},
   % for backward compatibility:
@@ -480,7 +488,7 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@path}%
-    \fi},
+    \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
@@ -492,10 +500,10 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@path}%
-    \fi},
+    \fi\tcb@spec{}},
   segmentation code={\iftcb@sidebyside%
     \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@A{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LR{fill=\kvtcb@colbacklower}\fi},%
+    \tcb@drawspec@sbs@A{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LR{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
   skin first=bicolorfirst,skin middle=bicolormiddle,skin last=bicolorlast}
 
 \tcbset{bicolor/.style={skin=bicolor}}
@@ -513,7 +521,7 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathfirst}%
-    \fi},
+    \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
@@ -525,10 +533,10 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathfirst}%
-    \fi},
+    \fi\tcb@spec{}},
   segmentation code={\iftcb@sidebyside%
     \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@C{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LS{fill=\kvtcb@colbacklower}\fi},%
+    \tcb@drawspec@sbs@C{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LS{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
   skin first=bicolorfirst,skin middle=bicolormiddle,skin last=bicolormiddle}
 
 \tcb@new@skin{bicolormiddle}{base@middle,%
@@ -544,7 +552,7 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathmiddle}%
-    \fi},%
+    \fi\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
@@ -556,10 +564,10 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathmiddle}%
-    \fi},
+    \fi\tcb@spec{}},
   segmentation code={\iftcb@sidebyside%
     \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@E{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LS{fill=\kvtcb@colbacklower}\fi},%
+    \tcb@drawspec@sbs@E{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LS{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolormiddle}
 
 \tcb@new@skin{bicolorlast}{base@last,%
@@ -575,7 +583,7 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathlast}%
-    \fi},
+    \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
@@ -587,10 +595,10 @@
       \fi%
     \else%
       {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathlast}%
-    \fi},%
+    \fi\tcb@spec{}},%
   segmentation code={\iftcb@sidebyside%
     \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@F{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LR{fill=\kvtcb@colbacklower}\fi},%
+    \tcb@drawspec@sbs@F{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LR{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolorlast}
 
 
@@ -608,7 +616,7 @@
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@path}%
     \fi%
-    \tcb@drawspec@T},
+    \tcb@drawspec@T\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifnum\tcb@segment@state=1
@@ -618,8 +626,8 @@
       \fi%
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@path}%
-    \fi},
-  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LR{beamer@color}\fi},%
+    \fi\tcb@spec{}},
+  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LR{beamer@color}\fi\tcb@spec{}},%
   skin first=beamerfirst,skin middle=beamermiddle,skin last=beamerlast}
 
 \tcbset{beamer/.style={skin=beamer,boxrule=0mm,titlerule=1mm,toptitle=0.5mm,arc=2mm,fonttitle=\bfseries,drop fuzzy shadow}}
@@ -636,7 +644,7 @@
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathfirst}%
     \fi%
-    \tcb@drawspec@T},%
+    \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
       \ifnum\tcb@segment@state=1
@@ -646,8 +654,8 @@
       \fi%
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathfirst}%
-    \fi},
-  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LS{beamer@color}\fi},%
+    \fi\tcb@spec{}},
+  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LS{beamer@color}\fi\tcb@spec{}},%
   skin first=beamerfirst,skin middle=beamermiddle,skin last=beamermiddle}
 
 \tcb@new@skin{beamermiddle}{base@middle,%
@@ -662,7 +670,7 @@
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathmiddle}%
     \fi%
-    \tcb@drawspec@T},%
+    \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
       \ifnum\tcb@segment@state=1
@@ -672,8 +680,8 @@
       \fi%
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathmiddle}%
-    \fi},
-  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LS{beamer@color}\fi},%
+    \fi\tcb@spec{}},
+  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LS{beamer@color}\fi\tcb@spec{}},%
   skin first=beamermiddle,skin middle=beamermiddle,skin last=beamermiddle}
 
 \tcb@new@skin{beamerlast}{base@last,%
@@ -688,7 +696,7 @@
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathlast}%
     \fi%
-    \tcb@drawspec@T},%
+    \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
       \ifnum\tcb@segment@state=1
@@ -698,8 +706,8 @@
       \fi%
     \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathlast}%
-    \fi},
-  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LR{beamer@color}\fi},%
+    \fi\tcb@spec{}},
+  segmentation code={\iftcb@sidebyside\tcb@drawlower@path\else\tcb@drawspec@LR{beamer@color}\fi\tcb@spec{}},%
   skin first=beamermiddle,skin middle=beamermiddle,skin last=beamerlast}
 
 \def\tcb@drawspec@widgetsegment{%
@@ -852,10 +860,8 @@
   \tcb@spec{tcb@forced@clip}%
   \def\tcb@spec##1{}%
   \iftcb@hasTitle%
-    %\csname tcb@drawwithtitle@\kvtcb@engine@interiortitled\endcsname%
     \tcb@interiortitled@code%
   \else%
-    %\csname tcb@drawwithouttitle@\kvtcb@engine@interior\endcsname%
     \tcb@interior@code%
   \fi%
   \endgroup%
@@ -867,7 +873,6 @@
   \tcb@spec{tcb@forced@clip}%
   \def\tcb@spec##1{}%
     \iftcb@hasTitle%
-      %\csname tcb@drawtitle@\kvtcb@engine@title\endcsname%
       \tcb@title@code%
     \fi%
   \endgroup%
@@ -1246,6 +1251,23 @@
 }}
 
 
+\def\tcb@arc@bor{\pgfsetcornersarced{\pgfqpoint{\tcb@border@arc}{\tcb@border@arc}}}%
+
+\def\tcb@arc@bor@NW{\csname tcb@arc@bor@NW@\tcb@corner@mode@NW\endcsname}
+\def\tcb@arc@bor@NE{\csname tcb@arc@bor@NE@\tcb@corner@mode@NE\endcsname}
+\def\tcb@arc@bor@SW{\csname tcb@arc@bor@SW@\tcb@corner@mode@SW\endcsname}
+\def\tcb@arc@bor@SE{\csname tcb@arc@bor@SE@\tcb@corner@mode@SE\endcsname}
+
+\let\tcb@arc@bor@NW@sharp\tcb@arc@zpt
+\let\tcb@arc@bor@NE@sharp\tcb@arc@zpt
+\let\tcb@arc@bor@SW@sharp\tcb@arc@zpt
+\let\tcb@arc@bor@SE@sharp\tcb@arc@zpt
+
+\let\tcb@arc@bor@NW@rounded\tcb@arc@bor
+\let\tcb@arc@bor@NE@rounded\tcb@arc@bor
+\let\tcb@arc@bor@SW@rounded\tcb@arc@bor
+\let\tcb@arc@bor@SE@rounded\tcb@arc@bor
+
 \def\tcb@border@prepare#1#2{%
   \tcbdimto\tcb@border@ts{#2+(#1)/2}%
   \ifdim\dimexpr\tcb@outer@arc>\tcb@border@ts\relax%
@@ -1257,18 +1279,21 @@
 
 \def\tcb@border@unbroken#1#2#3{%
   \tcb@border@prepare{#1}{#2}%
-  \draw[line width=#1,rounded corners=\tcb@border@arc,#3]
-    ([xshift=\tcb@border@ts,yshift=\tcb@border@ts]frame.south west)%
-      rectangle ([xshift=-\tcb@border@ts,yshift=-\tcb@border@ts]frame.north east);%
+  \tcb@pathbase{draw,line width=#1,#3}{[xshift=\tcb@border@ts,yshift=\tcb@border@ts]frame.south west}%
+    {[xshift=-\tcb@border@ts,yshift=-\tcb@border@ts]frame.north east}%
+    {\tcb@arc@bor@SW}{\tcb@arc@bor@NW}{\tcb@arc@bor@NE}{\tcb@arc@bor@SE}%
 }
 
 \def\tcb@border@first#1#2#3{%
   \tcb@border@prepare{#1}{#2}%
-  \draw[line width=#1,rounded corners=\tcb@border@arc,#3]
-    ([xshift=\tcb@border@ts]frame.south west) --
-    ([xshift=\tcb@border@ts,yshift=-\tcb@border@ts]frame.north west) --
-    ([xshift=-\tcb@border@ts,yshift=-\tcb@border@ts]frame.north east) --
-    ([xshift=-\tcb@border@ts]frame.south east);%
+  \tcb@pathboundary{draw,line width=#1,#3}{%
+    \tcb@gettikzxy{([xshift=\tcb@border@ts]frame.south west)}{\tcb@xa}{\tcb@ya}%
+    \tcb@gettikzxy{([xshift=-\tcb@border@ts,yshift=-\tcb@border@ts]frame.north east)}{\tcb@xb}{\tcb@yb}%
+    \pgfpathmoveto{\pgfqpoint{\tcb@xa}{\tcb@ya}}%
+    \tcb@arc@bor@NW\pgfpathlineto{\pgfqpoint{\tcb@xa}{\tcb@yb}}%
+    \tcb@arc@bor@NE\pgfpathlineto{\pgfqpoint{\tcb@xb}{\tcb@yb}}%
+    \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\tcb@xb}{\tcb@ya}}%
+  }%
 }
 
 \def\tcb@border@middle#1#2#3{%
@@ -1281,11 +1306,14 @@
 
 \def\tcb@border@last#1#2#3{%
   \tcb@border@prepare{#1}{#2}%
-  \draw[line width=#1,rounded corners=\tcb@border@arc,#3]
-    ([xshift=\tcb@border@ts]frame.north west) --
-    ([xshift=\tcb@border@ts,yshift=\tcb@border@ts]frame.south west) --
-    ([xshift=-\tcb@border@ts,yshift=\tcb@border@ts]frame.south east) --
-    ([xshift=-\tcb@border@ts]frame.north east);%
+  \tcb@pathboundary{draw,line width=#1,#3}{%
+    \tcb@gettikzxy{([xshift=\tcb@border@ts,yshift=\tcb@border@ts]frame.south west)}{\tcb@xa}{\tcb@ya}%
+    \tcb@gettikzxy{([xshift=-\tcb@border@ts]frame.north east)}{\tcb@xb}{\tcb@yb}%
+    \pgfpathmoveto{\pgfqpoint{\tcb@xa}{\tcb@yb}}%
+    \tcb@arc@bor@SW\pgfpathlineto{\pgfqpoint{\tcb@xa}{\tcb@ya}}%
+    \tcb@arc@bor@SE\pgfpathlineto{\pgfqpoint{\tcb@xb}{\tcb@ya}}%
+    \tcb@arc@zpt\pgfpathlineto{\pgfqpoint{\tcb@xb}{\tcb@yb}}%
+  }%
 }
 
 
@@ -1327,16 +1355,31 @@
 
 \def\tcb@arc@sha{\pgfsetcornersarced{\pgfqpoint{\tcb@shadow@arc}{\tcb@shadow@arc}}}%
 
+\def\tcb@arc@sha@NW{\csname tcb@arc@sha@NW@\tcb@corner@mode@NW\endcsname}
+\def\tcb@arc@sha@NE{\csname tcb@arc@sha@NE@\tcb@corner@mode@NE\endcsname}
+\def\tcb@arc@sha@SW{\csname tcb@arc@sha@SW@\tcb@corner@mode@SW\endcsname}
+\def\tcb@arc@sha@SE{\csname tcb@arc@sha@SE@\tcb@corner@mode@SE\endcsname}
+
+\let\tcb@arc@sha@NW@sharp\tcb@arc@zpt
+\let\tcb@arc@sha@NE@sharp\tcb@arc@zpt
+\let\tcb@arc@sha@SW@sharp\tcb@arc@zpt
+\let\tcb@arc@sha@SE@sharp\tcb@arc@zpt
+
+\let\tcb@arc@sha@NW@rounded\tcb@arc@sha
+\let\tcb@arc@sha@NE@rounded\tcb@arc@sha
+\let\tcb@arc@sha@SW@rounded\tcb@arc@sha
+\let\tcb@arc@sha@SE@rounded\tcb@arc@sha
+
 \def\tcb@shadow@unbroken#1#2#3#4{%
   \tcb@shadow@prepare{#3}{#1}%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
-    {\tcb@arc@sha}{\tcb@arc@sha}{\tcb@arc@sha}{\tcb@arc@sha}%
+    {\tcb@arc@sha@SW}{\tcb@arc@sha@NW}{\tcb@arc@sha@NE}{\tcb@arc@sha@SE}%
 }
 
 \def\tcb@shadow@first#1#2#3#4{%
   \tcb@shadow@prepare{#3}{#1}%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@sha}{\tcb@arc@sha}{\tcb@arc@zpt}%
+    {\tcb@arc@zpt}{\tcb@arc@sha@NW}{\tcb@arc@sha@NE}{\tcb@arc@zpt}%
 }
 
 \def\tcb@shadow@middle#1#2#3#4{%
@@ -1348,7 +1391,7 @@
 \def\tcb@shadow@last#1#2#3#4{%
   \tcb@shadow@prepare{#3}{#1}%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
-    {\tcb@arc@sha}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@sha}%
+    {\tcb@arc@sha@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@sha@SE}%
 }
 
 
@@ -1440,13 +1483,13 @@
 \def\tcb@shadowlifted@unbroken#1#2#3#4#5{%
   \tcb@shadowbended@prepare{#3}%
   \tcb@pathbendedbase{fill,#5}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=-#1-#3,yshift=#2-#3]frame.north east}%
-    {\tcb@arc@sha}{\tcb@arc@sha}{\tcb@arc@sha}{\tcb@arc@sha}{#4}{0pt}%
+    {\tcb@arc@sha@SW}{\tcb@arc@sha@NW}{\tcb@arc@sha@NE}{\tcb@arc@sha@SE}{#4}{0pt}%
 }
 
 \def\tcb@shadowlifted@first#1#2#3#4#5{%
   \tcb@shadowbended@prepare{#3}%
   \tcb@pathbendedbase{fill,#5}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=-#1-#3,yshift=#2-#3]frame.north east}%
-    {\tcb@arc@zpt}{\tcb@arc@sha}{\tcb@arc@sha}{\tcb@arc@zpt}{#4}{0pt}%
+    {\tcb@arc@zpt}{\tcb@arc@sha@NW}{\tcb@arc@sha@NE}{\tcb@arc@zpt}{#4}{0pt}%
 }
 
 \def\tcb@shadowlifted@middle#1#2#3#4#5{%
@@ -1458,7 +1501,7 @@
 \def\tcb@shadowlifted@last#1#2#3#4#5{%
   \tcb@shadowbended@prepare{#3}%
   \tcb@pathbendedbase{fill,#5}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=-#1-#3,yshift=#2-#3]frame.north east}%
-    {\tcb@arc@sha}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@sha}{#4}{0pt}%
+    {\tcb@arc@sha@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@sha@SE}{#4}{0pt}%
 }
 
 \tcbset{
