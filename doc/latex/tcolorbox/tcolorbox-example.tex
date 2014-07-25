@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.10 (2014/07/23)
+%% The LaTeX package tcolorbox - version 3.11 (2014/07/25)
 %% tcolorbox-example.tex: an example for tcolorbox
 %%
 %% -------------------------------------------------------------------------------------------
@@ -59,8 +59,10 @@
 \end{tcolorbox}
 
 
-\begin{tcolorbox}[colback=blue!50!white,colframe=blue!25!black,coltext=yellow,
-    fontupper=\Large\bfseries,arc=6mm,boxrule=2mm,boxsep=5mm]
+\begin{tcolorbox}[enhanced,sharp corners=uphill,
+    colback=blue!50!white,colframe=blue!25!black,coltext=yellow,
+    fontupper=\Large\bfseries,arc=6mm,boxrule=2mm,boxsep=5mm,
+    borderline={0.3mm}{0.3mm}{white}]
   Funny settings.
 \end{tcolorbox}
 
@@ -155,8 +157,9 @@ We have given Theorem \ref{theorem:summation} on page \pageref{theorem:summation
     title=Box inside box,drop fuzzy shadow]
     \begin{tcolorbox}[beamer,colframe=blue!50!black,title=Box inside box inside box]
       And now for something completely different: Boxes!\par\medskip
-      \newtcbox{\mybox}{nobeforeafter,tcbox raise base,colframe=green!50!black,colback=green!10!white,arc=0pt}
-      \mybox{This} \mybox{is} \mybox{another} \mybox{box.}
+      \newtcbox{\mybox}[1][]{nobeforeafter,tcbox raise base,colframe=green!50!black,colback=green!10!white,
+        sharp corners,top=1pt,bottom=1pt,before upper=\strut,#1}
+      \mybox[rounded corners=west]{This} \mybox{is} \mybox{another} \mybox[rounded corners=east]{box.}
     \end{tcolorbox}
   \end{tcolorbox}
 \end{tcolorbox}
@@ -165,7 +168,7 @@ We have given Theorem \ref{theorem:summation} on page \pageref{theorem:summation
 
 %----------------------------------------------------------
 \section{Breakable Boxes}
-\begin{tcolorbox}[enhanced jigsaw,breakable,pad at break=1mm,
+\begin{tcolorbox}[enhanced jigsaw,breakable,pad at break*=1mm,
   colback=blue!5!white,colframe=blue!75!black,title=Breakable box,
   watermark color=white,watermark text=\Roman{tcbbreakpart}]
   \lipsum[1-12]
