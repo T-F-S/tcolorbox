@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.11 (2014/07/25)
+%% The LaTeX package tcolorbox - version 3.12pre1 (2014/07/28)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.11}
+\tcb@set@library@version{3.12pre1}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -50,7 +50,7 @@
       \tcb@swap{#2}{\tcb@testbox}%
       \tcbdimto#1{\ht#2+\dp#2}%
     \else%
-      \setbox#2=\vbox{\color@begingroup%
+      \setbox#2=\vbox{%\color@begingroup%
         \unvbox\tcb@testbox%
         \begingroup%
           #3%
@@ -59,7 +59,7 @@
           \advance\dimen@ by \f@baselineskip%
           \vskip\dimen@%
         \endgroup%
-        \unvbox#2\color@endgroup}%
+        \unvbox#2}%\color@endgroup}%
       \edef#1{7168pt}%
     \fi%
   \fi%
@@ -112,7 +112,9 @@
         \tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
       \else%
         \ifdim\pagegoal=16383.99998pt
-          \tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
+          %\showthe\vsize
+          %\tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
+          \tcbdimto\tcb@h@page{\vsize-\kvtcb@shrinkbreakgoal}%
         \else%
           \tcbdimto\tcb@h@page{\pagegoal-\pagetotal-\kvtcb@shrinkbreakgoal}%
         \fi%
@@ -266,7 +268,9 @@
   \else
     \iftcb@break@allowed%
       \ifdim\dimexpr\tcb@h@page-\tcb@h@padding-\tcb@h@padtitle<\kvtcb@breakminlines\baselineskip\relax%
-        \iftcb@multicol\columnbreak\else\pagebreak\null\fi%
+        %\iftcb@multicol\columnbreak\else\pagebreak\null\fi%
+        \iftcb@multicol\columnbreak\else\pagebreak\fi%
+        %\iftcb@multicol\columnbreak\else\eject\fi%
         \tcb@enlbreak@init\tcb@break@allowedfalse%
         \tcb@comp@h@page%
         \tcb@check@for@final@box%
@@ -288,9 +292,11 @@
 
 
 \def\tcb@setbox@upper#1#2{%
-  \setbox\tcb@upperbox=\vbox{\color@begingroup\color{\kvtcb@colupper}\unvbox#2\color@endgroup}%
+  %\setbox\tcb@upperbox=\vbox{\color@begingroup\color{\kvtcb@colupper}\unvbox#2\color@endgroup}%
+  \setbox\tcb@upperbox=\vbox{\unvbox#2}%
   \ifdim\dimexpr\ht\tcb@upperbox+\dp\tcb@upperbox>#1\relax%
-    \setbox\tcb@upperbox=\vbox to\the\dimexpr#1-\dp\tcb@upperbox\relax {\color@begingroup\unvbox\tcb@upperbox\color@endgroup}%
+%    \setbox\tcb@upperbox=\vbox to\the\dimexpr#1-\dp\tcb@upperbox\relax {\color@begingroup\unvbox\tcb@upperbox\color@endgroup}%
+    \setbox\tcb@upperbox=\vbox to\the\dimexpr#1-\dp\tcb@upperbox\relax {\unvbox\tcb@upperbox}%
   \fi%
   \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
@@ -303,9 +309,11 @@
 }
 
 \def\tcb@setbox@lower#1#2{%
-  \setbox\tcb@lowerbox=\vbox{\color@begingroup\color{\kvtcb@collower}\unvbox#2\color@endgroup}%
+  %\setbox\tcb@lowerbox=\vbox{\color@begingroup\color{\kvtcb@collower}\unvbox#2\color@endgroup}%
+  \setbox\tcb@lowerbox=\vbox{\unvbox#2}%
   \ifdim\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox>#1\relax%
-    \setbox\tcb@lowerbox=\vbox to\the\dimexpr#1-\dp\tcb@lowerbox\relax {\color@begingroup\unvbox\tcb@lowerbox\color@endgroup}%
+%    \setbox\tcb@lowerbox=\vbox to\the\dimexpr#1-\dp\tcb@lowerbox\relax {\color@begingroup\unvbox\tcb@lowerbox\color@endgroup}%
+    \setbox\tcb@lowerbox=\vbox to\the\dimexpr#1-\dp\tcb@lowerbox\relax {\unvbox\tcb@lowerbox}%
   \fi%
   \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
 }
@@ -359,13 +367,16 @@
 \def\tcb@split@first{%
   \setcounter{tcbbreakpart}{1}%
   \ifx\kvtcb@float\@empty%
-    \let\tcb@before@first=\@empty%
+    %\let\tcb@before@first=\@empty%
+    \let\tcb@before@first=\vfill%
     \let\tcb@before@middle=\@empty%
     \let\tcb@before@last=\@empty%
     \iftcb@multicol%
       \let\tcb@after@first=\par%
     \else%
-      \long\def\tcb@after@first{\par\pagebreak\null\tcb@enlbreak@next}%
+      %\long\def\tcb@after@first{\par\pagebreak\null\tcb@enlbreak@next}%
+      \long\def\tcb@after@first{\par\pagebreak\tcb@enlbreak@next}%
+      %\long\def\tcb@after@first{\eject\tcb@enlbreak@next}%
     \fi%
     \let\tcb@after@middle=\tcb@after@first%
     \let\tcb@after@last=\par%
@@ -418,7 +429,9 @@
           \tcb@swap{\tcb@totallowerbox}{\tcb@lowerbox}%
           \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
           \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
-          \iftcb@multicol\columnbreak\else\pagebreak\null\fi%
+          %\iftcb@multicol\columnbreak\else\pagebreak\null\fi%
+          \iftcb@multicol\columnbreak\else\pagebreak\fi%
+          %\iftcb@multicol\columnbreak\else\eject\fi%
           \tcb@enlbreak@init\tcb@break@allowedfalse%
           \let\tcb@split@next=\tcb@split@start%
         \else%
