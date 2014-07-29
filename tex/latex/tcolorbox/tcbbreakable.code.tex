@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12pre1 (2014/07/28)
+%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,13 +17,13 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.12pre1}
+\tcb@set@library@version{3.12}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
 
 % total height for boxes smaller than 0.4375\maxdimen and 0.4375\maxdimen else (ca 2.5m)
-\def\tcb@defToTotalHeightBreakable#1#2#3{%
+\def\tcb@defToTotalHeightBreakable#1#2{%
   \ifnum\ht#2<0 %
     \edef#1{7168pt}%
   \else\ifnum\ht#2<469762048 %
@@ -36,32 +36,28 @@
 \newbox\tcb@testbox
 
 % for oversized boxes height is detected as \textheight or larger
-\def\tcb@defToTotalHeightUnlimited#1#2#3{%
-  \tcb@defToTotalHeightBreakable#1#2#3%
+\def\tcb@defToTotalHeightUnlimited#1#2{%
+  \tcb@defToTotalHeightBreakable#1#2%
   \ifdim\dimexpr#1<\textheight\relax%
     \edef\tcb@thevfuzz{\the\vfuzz}%
     \edef\tcb@thevbadness{\the\vbadness}%
     \vfuzz=\maxdimen\vbadness=10000%
     \splittopskip=0pt%
     \splitmaxdepth=0pt%
+    \savingvdiscards=1%
     \setbox\tcb@testbox=\vsplit#2 to \textheight%
     \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
     \ifdim\wd#2=0pt\relax%
       \tcb@swap{#2}{\tcb@testbox}%
       \tcbdimto#1{\ht#2+\dp#2}%
     \else%
-      \setbox#2=\vbox{%\color@begingroup%
+      \setbox#2=\vbox{%
         \unvbox\tcb@testbox%
-        \begingroup%
-          #3%
-          \dimen@-\f@size \p@%
-          \dimen@0.888888\dimen@%
-          \advance\dimen@ by \f@baselineskip%
-          \vskip\dimen@%
-        \endgroup%
-        \unvbox#2}%\color@endgroup}%
+        \splitdiscards%
+        \unvbox#2}%
       \edef#1{7168pt}%
     \fi%
+    \savingvdiscards=0%
   \fi%
 }
 
@@ -112,9 +108,7 @@
         \tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
       \else%
         \ifdim\pagegoal=16383.99998pt
-          %\showthe\vsize
-          %\tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
-          \tcbdimto\tcb@h@page{\vsize-\kvtcb@shrinkbreakgoal}%
+          \tcbdimto\tcb@h@page{\vsize-\kvtcb@shrinkbreakgoal}% detects floating objects
         \else%
           \tcbdimto\tcb@h@page{\pagegoal-\pagetotal-\kvtcb@shrinkbreakgoal}%
         \fi%
@@ -222,13 +216,14 @@
 
 
 \newif\iftcb@multicol
+\newif\iftcb@vfillbeforefirst
 
 \def\tcb@drawcolorbox@breakable{%
-  \@ifundefined{col@number}{\tcb@multicolfalse}{%
-    \ifnum\col@number<2 %
-      \tcb@multicolfalse%
-    \else%
+  \@ifundefined{columnbreak}{\tcb@multicolfalse}{%
+    \ifnum\doublecol@number>\z@ %
       \tcb@multicoltrue%
+    \else%
+      \tcb@multicolfalse%
     \fi}%
   \ifx\kvtcb@float\@empty%
     \kvtcb@beforebox%
@@ -263,19 +258,15 @@
   \let\tcb@split@next=\relax%
   \tcb@check@for@final@box%
   \iftcb@final@box%
-  %\ifdim\tcb@h@total<\tcb@h@page\relax% no break
     \tcb@drawcolorbox@standalone%
   \else
     \iftcb@break@allowed%
       \ifdim\dimexpr\tcb@h@page-\tcb@h@padding-\tcb@h@padtitle<\kvtcb@breakminlines\baselineskip\relax%
-        %\iftcb@multicol\columnbreak\else\pagebreak\null\fi%
         \iftcb@multicol\columnbreak\else\pagebreak\fi%
-        %\iftcb@multicol\columnbreak\else\eject\fi%
         \tcb@enlbreak@init\tcb@break@allowedfalse%
         \tcb@comp@h@page%
         \tcb@check@for@final@box%
         \iftcb@final@box%
-        %\ifdim\tcb@h@total<\tcb@h@page\relax% no break!
           \tcb@drawcolorbox@standalone%
         \else
           \let\tcb@split@next=\tcb@split@first%
@@ -291,13 +282,17 @@
 }
 
 
-\def\tcb@setbox@upper#1#2{%
-  %\setbox\tcb@upperbox=\vbox{\color@begingroup\color{\kvtcb@colupper}\unvbox#2\color@endgroup}%
-  \setbox\tcb@upperbox=\vbox{\unvbox#2}%
-  \ifdim\dimexpr\ht\tcb@upperbox+\dp\tcb@upperbox>#1\relax%
-%    \setbox\tcb@upperbox=\vbox to\the\dimexpr#1-\dp\tcb@upperbox\relax {\color@begingroup\unvbox\tcb@upperbox\color@endgroup}%
-    \setbox\tcb@upperbox=\vbox to\the\dimexpr#1-\dp\tcb@upperbox\relax {\unvbox\tcb@upperbox}%
+\def\tcb@setbox#1#2#3{%
+  \setbox#1=\vbox{\unvbox#3}%
+  \ifdim\dimexpr\ht#1+\dp#1>#2\relax%
+    %\tcb@warning{Splitted box part too large by \the\dimexpr\ht#1+\dp#1-#2\relax}% switched off (99% useless/annoying)
+    \setbox#1=\vbox to\the\dimexpr#2-\dp#1\relax{\unvbox#1}%
   \fi%
+}
+
+
+\def\tcb@setbox@upper#1#2{%
+  \tcb@setbox\tcb@upperbox{#1}{#2}%
   \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
@@ -309,12 +304,7 @@
 }
 
 \def\tcb@setbox@lower#1#2{%
-  %\setbox\tcb@lowerbox=\vbox{\color@begingroup\color{\kvtcb@collower}\unvbox#2\color@endgroup}%
-  \setbox\tcb@lowerbox=\vbox{\unvbox#2}%
-  \ifdim\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox>#1\relax%
-%    \setbox\tcb@lowerbox=\vbox to\the\dimexpr#1-\dp\tcb@lowerbox\relax {\color@begingroup\unvbox\tcb@lowerbox\color@endgroup}%
-    \setbox\tcb@lowerbox=\vbox to\the\dimexpr#1-\dp\tcb@lowerbox\relax {\unvbox\tcb@lowerbox}%
-  \fi%
+  \tcb@setbox\tcb@lowerbox{#1}{#2}%
   \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
 }
 
@@ -367,18 +357,20 @@
 \def\tcb@split@first{%
   \setcounter{tcbbreakpart}{1}%
   \ifx\kvtcb@float\@empty%
-    %\let\tcb@before@first=\@empty%
-    \let\tcb@before@first=\vfill%
+    \iftcb@vfillbeforefirst%
+      \let\tcb@before@first=\vfill%
+    \else%
+    \let\tcb@before@first=\@empty%
+    \fi%
     \let\tcb@before@middle=\@empty%
     \let\tcb@before@last=\@empty%
     \iftcb@multicol%
-      \let\tcb@after@first=\par%
+      \long\def\tcb@after@first{\par}% using \columnbreak here kills multicols' algortihm sometimes
+      \long\def\tcb@after@middle{\par\vfill}%
     \else%
-      %\long\def\tcb@after@first{\par\pagebreak\null\tcb@enlbreak@next}%
       \long\def\tcb@after@first{\par\pagebreak\tcb@enlbreak@next}%
-      %\long\def\tcb@after@first{\eject\tcb@enlbreak@next}%
+      \long\def\tcb@after@middle{\par\vfill\eject\tcb@enlbreak@next}%
     \fi%
-    \let\tcb@after@middle=\tcb@after@first%
     \let\tcb@after@last=\par%
   \else%
     \edef\tcb@before@first{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]}%
@@ -429,9 +421,7 @@
           \tcb@swap{\tcb@totallowerbox}{\tcb@lowerbox}%
           \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
           \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
-          %\iftcb@multicol\columnbreak\else\pagebreak\null\fi%
           \iftcb@multicol\columnbreak\else\pagebreak\fi%
-          %\iftcb@multicol\columnbreak\else\eject\fi%
           \tcb@enlbreak@init\tcb@break@allowedfalse%
           \let\tcb@split@next=\tcb@split@start%
         \else%
@@ -480,13 +470,12 @@
   \stepcounter{tcbbreakpart}%
   \tcb@following@title%
   \tcb@comp@h@page%
-  \tcb@defToTotalHeight\tcb@h@upper{\tcb@totalupperbox}{\kvtcb@fontupper}%
+  \tcb@defToTotalHeight\tcb@h@upper{\tcb@totalupperbox}%
   \tcbdimto\tcb@h@total{\tcb@h@padding@last+\tcb@h@padtitle+\tcb@h@upper+\tcb@h@segment+\tcb@h@lower}%
   %
   \let\tcb@split@next=\relax%
   \tcb@check@for@final@box%
   \iftcb@final@box%
-  %\ifdim\tcb@h@total<\tcb@h@page\relax% no break
     \tcb@split@setstate@last%
     \tcb@setbox@upper{\tcb@h@upper}{\tcb@totalupperbox}%
     \iftcb@lowerspace%
@@ -544,13 +533,12 @@
   \tcb@following@title%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
-  \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}{\kvtcb@fontlower}%
+  \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}%
   \tcbdimto\tcb@h@total{\tcb@h@padding@last-\kvtcb@top-\kvtcb@boxsep+\tcb@h@padtitle+\tcb@h@segment+\tcb@h@lower}%
   %
   \let\tcb@split@next=\relax%
   \tcb@check@for@final@box%
   \iftcb@final@box%
-  %\ifdim\tcb@h@total<\tcb@h@page\relax% no break
     \tcb@split@setstate@last%
     \tcb@setbox@lower{\tcb@h@lower}{\tcb@totallowerbox}%
     \tcb@sdraw@SL%
@@ -575,13 +563,12 @@
   \tcb@following@title%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
-  \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}{\kvtcb@fontflower}%
+  \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}%
   \tcbdimto\tcb@h@total{\tcb@h@padding@last+\tcb@h@padtitle+\tcb@h@lower}%
   %
   \let\tcb@split@next=\relax%
   \tcb@check@for@final@box%
   \iftcb@final@box%
-  %\ifdim\tcb@h@total<\tcb@h@page\relax% no break
     \tcb@split@setstate@last%
     \tcb@setbox@lower{\tcb@h@lower}{\tcb@totallowerbox}%
     \tcb@sdraw@L%
@@ -773,6 +760,7 @@
     \let\tcb@break@ch@first=\tcb@break@ch@fixed%
     \let\tcb@break@ch@middle=\tcb@break@ch@fixed%
     \let\tcb@break@ch@last=\tcb@break@ch@fixed},%
+  vfill before first/.is if=tcb@vfillbeforefirst,%
 }
 
 
@@ -785,7 +773,8 @@
     bottomsep at break=0pt,
     enlargepage=0pt,enlargepage flexible=0pt,
     break at=0pt,
-    height fixed for=none
+    height fixed for=none,
+    vfill before first=false,
   },
   initialize@reset=reset@breakable,
 }

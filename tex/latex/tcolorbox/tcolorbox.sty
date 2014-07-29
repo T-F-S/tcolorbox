@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12pre1 (2014/07/28)
+%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/07/28 version 3.12pre1 text color boxes]
-\def\tcb@version{3.12pre1}
+\ProvidesPackage{tcolorbox}[2014/07/29 version 3.12 text color boxes]
+\def\tcb@version{3.12}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -45,6 +45,9 @@
 \newcounter{tcbbreakpart}
 \newcounter{tcblayer}
 
+\def\tcb@warning#1{\PackageWarning{tcolorbox}{#1}}
+\def\tcb@error#1#2{\PackageError{tcolorbox}{#1}{#2}}
+
 % key management
 \pgfkeys{/tcb/.is family}
 
@@ -53,7 +56,7 @@
 \def\tcb@dim@to#1#2{\def#1{\the\dimexpr#2\relax}}
 \def\tcbdimto#1#2{\edef#1{\the\dimexpr#2\relax}}
 
-\def\tcb@defToTotalHeightStandard#1#2#3{\tcbdimto#1{\ht#2+\dp#2}}
+\def\tcb@defToTotalHeightStandard#1#2{\tcbdimto#1{\ht#2+\dp#2}}
 \let\tcb@defToTotalHeight\tcb@defToTotalHeightStandard
 
 \def\tcb@zpt{0pt}
@@ -202,8 +205,8 @@
   before/.code={\def\kvtcb@beforebox{#1}\let\tcb@use@autoparskip=\relax},
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
   autoparskip/.code={\let\tcb@use@autoparskip=\tcb@use@auto@parskip},
-  parskip/.style={before={\par\pagebreak[0]\noindent},after={\par}},
-  noparskip/.style={before={\par\smallskip\pagebreak[0]\noindent},after={\par\smallskip}},
+  parskip/.style={before={\par\pagebreak[0]\parindent=0pt},after={\par}},
+  noparskip/.style={before={\par\smallskip\pagebreak[0]\parindent=0pt},after={\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   lowerbox/.is choice,
   lowerbox/visible/.code={\tcb@lowerignoredfalse\tcb@lowervisibletrue},
@@ -483,21 +486,18 @@
     \def\noexpand\@currenvline{\on@line}}%
   \reserved@a
     \@endpefalse
-    %\color@setgroup%
     \csname tcb@parbox@use@\kvtcv@parbox\endcsname%
     \tcb@minipage#2\tcb@hyph@fix\ignorespaces}
-\def\endtcb@lrbox{\unskip\endminipage}%\color@endgroup}
+\def\endtcb@lrbox{\unskip\endminipage}
 
 \let\tcb@savebox=\tcb@lrbox
 \let\endtcb@savebox=\endtcb@lrbox
 
 \def\tcb@saveupperbox{%
-%\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{\kvtcb@colupper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces}
-\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces}
+\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\penalty-\@m\kvtcb@fontupper\kvtcb@before@upper\ignorespaces}
 
 \def\tcb@savelowerbox{%
-%\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\color{\kvtcb@collower}\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}
-\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}
+\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\penalty-\@m\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}
 
 
 % counter for float
@@ -987,10 +987,6 @@
   \iftcb@hasTitle%
     \begin{pgfscope}%
     \pgfsetfillopacity{\kvtcb@opacitytitle}%
-    %\pgfsetfillcolor{\kvtcb@coltitle}%
-    %\pgftext[x=\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@lefttitle\relax,
-    %         y=\the\dimexpr\tcb@height-\kvtcb@top@rule-\kvtcb@boxsep-\kvtcb@toptitle\relax,
-    %         left,top]{\usebox{\tcb@titlebox}}%
     \pgftext[x=\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@lefttitle\relax,
              y=\the\dimexpr\tcb@height-\kvtcb@top@rule-\kvtcb@boxsep-\kvtcb@toptitle\relax,
              left,top]{\color{\kvtcb@coltitle}\box\tcb@titlebox}%
@@ -1002,7 +998,6 @@
 \def\tcb@tdraw@upper@core{%
   \begin{pgfscope}%
   \pgfsetfillopacity{\kvtcb@opacityupper}%
-  %\pgfsetfillcolor{\kvtcb@colupper}%
   \csname tcb@dbox@\kvtcb@valign\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper\relax}%
           {\the\dimexpr\tcb@innerheight+\kvtcb@bottom@rule-\kvtcb@boxsep-\tcb@break@topsep-\kvtcb@top-\tcb@height@upper\relax}%
           {\tcb@height@upper}{\tcb@upperbox}{\kvtcb@colupper}%
@@ -1014,7 +1009,6 @@
   \iftcb@lowervisible%
     \begin{pgfscope}%
     \pgfsetfillopacity{\kvtcb@opacitylower}%
-    %\pgfsetfillcolor{\kvtcb@collower}%
     \csname tcb@dbox@\kvtcb@valignlower\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftlower\relax}%
             {\the\dimexpr\kvtcb@bottom@rule+\kvtcb@boxsep+\tcb@break@bottomsep+\kvtcb@bottom\relax}%
             {\tcb@height@lower}{\tcb@lowerbox}{\kvtcb@collower}%
@@ -1048,14 +1042,14 @@
     \let\tcb@h@padtitle=\tcb@zpt%
   \fi%
   %
-  \tcb@defToTotalHeight\tcb@h@upper{\tcb@upperbox}{\kvtcb@fontupper}%
+  \tcb@defToTotalHeight\tcb@h@upper{\tcb@upperbox}%
   %
   \iftcb@hasLower%
   \iftcb@lowerignored\tcb@lowerspacefalse\else\tcb@lowerspacetrue\fi%
   \else\tcb@lowerspacefalse\fi%
   \iftcb@lowerspace%
     \tcbdimto\tcb@h@segment{\kvtcb@boxsep*2+\kvtcb@middle*2}%
-    \tcb@defToTotalHeight\tcb@h@lower{\tcb@lowerbox}{\kvtcb@fontlower}%
+    \tcb@defToTotalHeight\tcb@h@lower{\tcb@lowerbox}%
   \else
     \let\tcb@h@segment=\tcb@zpt%
     \let\tcb@h@lower=\tcb@zpt%
@@ -1089,14 +1083,12 @@
 
 \def\tcb@drawing@env@begin{%
   \csname tcb@before@\tcb@split@state\endcsname%
-  %\bgroup\color@begingroup%
   \begin{\kvtcb@graphenv}%
   \tcb@bbdraw%
 }
 
 \def\tcb@drawing@env@end{%
   \end{\kvtcb@graphenv}%
-  %\color@endgroup\egroup%
   \csname tcb@after@\tcb@split@state\endcsname%
 }
 
@@ -1158,7 +1150,6 @@
 \long\def\tcbox@inner@hbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
   \sbox\tcb@upperbox{\color{\kvtcb@colupper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
-  %\sbox\tcb@upperbox{\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
   \tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
   \tcbdimto{\tcb@val@raisebase}{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbset{width=\the\dimexpr\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax}%
@@ -1172,7 +1163,6 @@
   \let\tcb@val@raisebase=\tcb@zpt%
   \tcb@set@@dim@and@title%
   \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{\kvtcb@colupper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
-  %\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
   \tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
   \tcbset{width=\the\dimexpr\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax}%
   \tcb@hasLowerfalse%

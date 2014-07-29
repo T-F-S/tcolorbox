@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12pre1 (2014/07/28)
+%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -575,6 +575,11 @@ version 3.11 (2014/07/25)
 - regresssion: vertical space at end of breakable boxes was not removed
 - example file updated with new features
 
-version 3.12 (2014/xx/xx)
+version 3.12 (2014/07/29)
 - text color implementation changed to circumvent xelatex color problems
+- multicol vs. twocolumn detection fixed
+- code for breakable boxes without height limit improved
+- before box \noindent is replaced by \parindent=0pt (bidi package compatibilty)
+- library 'breakable':
+  * new option: 'vfill before first'
 

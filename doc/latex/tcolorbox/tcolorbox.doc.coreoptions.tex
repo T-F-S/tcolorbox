@@ -2079,7 +2079,7 @@ This behavior is controlled by the keys |before| and |after|.
   recommended, if the package |parskip| \emph{is} used and there is no better
   idea for |before| and |after|.
 \begin{dispListing}
-\tcbset{parskip/.style={before={\par\pagebreak[0]\noindent},
+\tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
                         after={\par}}}
 \end{dispListing}
 \end{docTcbKey}
@@ -2089,7 +2089,7 @@ This behavior is controlled by the keys |before| and |after|.
   recommended, if the package |parskip| is \emph{not} used and there is no better
   idea for |before| and |after|.
 \begin{dispListing}
-\tcbset{noparskip/.style={before={\par\smallskip\pagebreak[0]\noindent},
+\tcbset{noparskip/.style={before={\par\smallskip\pagebreak[0]\parindent=0pt},
                           after={\par\smallskip}}}
 \end{dispListing}
 \end{docTcbKey}

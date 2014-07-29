@@ -93,9 +93,9 @@ parameters. The differences are:
   the applied algorithm has (virtually) no height limit for boxes, but
   very likely the compiler memory will have to be increased for boxes longer
   than 300 pages (depending on compiler settings and box content).
-  But it is recommended to use \docValue{unlimited} for critical large boxes only,
-  since there \emph{may} be a single interline space deviation (lost glue) around
-  every 2300cm, e.\,g.\ a \refCom{tcbline*} \emph{may} get lost.
+  But it is recommended to use \docValue{unlimited} for critical large boxes only.
+  %,since there \emph{may} be a single interline space deviation (lost glue) around
+  %every 2300cm, e.\,g.\ a \refCom{tcbline*} \emph{may} get lost.
 \item You can nest an unbreakable |tcolorbox| inside another |tcolorbox|,
   even inside a breakable one.
   But you cannot not nest a breakable box inside a breakable box.
@@ -129,8 +129,9 @@ parameters. The differences are:
     The maximal total height of the upper and of the lower part is
     about 65536pt (ca.\,2300cm or ca.\,90 pages) apiece.
   \item\docValue{unlimited}: Experimental code for unlimited total height of
-    breakable boxes. There \emph{may} be a single interline space deviation (lost glue) around
-    every 2300cm. For boxes longer than 300 pages (or even shorter ones) the
+    breakable boxes.
+    %There \emph{may} be a single interline space deviation (lost glue) around every 2300cm.
+    For boxes longer than 300 pages (or even shorter ones) the
     compiler memory will have to be increased.
   \end{itemize}
 
@@ -200,8 +201,7 @@ parameters. The differences are:
 Breakable boxes inside a |multicols| environment need special attendance.
 They are broken by default at |\textheight|.
 The |break at| option can be used to insert better break points by hand.
-\par\medskip
-\begin{tcolorbox}[enhanced jigsaw,size=small,before=\noindent,
+\begin{tcolorbox}[enhanced jigsaw,size=small,vfill before first,
   colframe=red,colback=yellow!10!white,before title=\raggedright,
   title={Broken box inside a |multicols| environment},fonttitle=\bfseries,
   enforce breakable,% use only breakable in the real world!
@@ -373,6 +373,14 @@ and \refKey{/tcb/enlarge bottom at break by}.
 \end{marker}
 \end{docTcbKey}
 
+
+\begin{docTcbKey}{vfill before first}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+  Inserts a |\vfill| at the begin of the \emph{first} partial box to move this
+  partial box to the end of the current page. This may be used as an alternative
+  to \refKey{/tcb/height fixed for}|=|\docValue{first} to get justified
+  columns or pages. The |\vfill| is not inserted, if the box gets not
+  actually broken.
+\end{docTcbKey}
 
 \clearpage
 \subsection{Breakable boxes and the \texttt{multicol} package}\label{subsec:multicol}
