@@ -823,6 +823,7 @@ But a mixture is possible with the \mylib{hooks} library, see Section \ref{sec:h
 \end{dispExample}
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{watermark text on}{=\meta{part} is \meta{text}}{no default, initially unset}
   This option writes some \meta{text} in the center of the interior region of a |tcolorbox|
@@ -838,6 +839,7 @@ But a mixture is possible with the \mylib{hooks} library, see Section \ref{sec:h
   \item\docValue{last}: last parts of a break sequence,
   \item\docValue{unbroken and first}: unbroken boxes and first parts of a break sequence,
   \item\docValue{middle and last}: middle and last parts of a break sequence.
+  \item\docValue{first and middle}: first and middle parts of a break sequence.
   \end{itemize}
 \end{docTcbKey}
 
@@ -2125,6 +2127,12 @@ The differences between underlays and overlays are:
   \refKey{/tcb/underlay} overwrites this key.
 \end{docTcbKey}
 
+\begin{docTcbKey}{underlay first and middle}{=\meta{graphical code}}{no default, initially unset}
+  This is an abbreviation for setting
+  \refKey{/tcb/underlay first} and
+  \refKey{/tcb/underlay middle} together.
+  \refKey{/tcb/underlay} overwrites this key.
+\end{docTcbKey}
 
 
 \clearpage
@@ -2260,6 +2268,13 @@ Finishes are intended for special effects like highlights or glosses or text ove
   \refKey{/tcb/finish} overwrites this key.
 \end{docTcbKey}
 
+
+\begin{docTcbKey}{finish first and middle}{=\meta{graphical code}}{no default, initially unset}
+  This is an abbreviation for setting
+  \refKey{/tcb/finish first} and
+  \refKey{/tcb/finish middle} together.
+  \refKey{/tcb/finish} overwrites this key.
+\end{docTcbKey}
 
 
 \clearpage

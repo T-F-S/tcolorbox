@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
+%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.12}
+\tcb@set@library@version{3.13pre1}
 
 \RequirePackage{amsmath}
 
@@ -31,7 +31,7 @@
 \def\tcb@theo@desc@form@std#1{\tcb@desc@col\kvtcb@desc@font\kvtcb@desc@delim@left#1\kvtcb@desc@delim@right}
 
 \def\tcb@theo@title#1#2#3{%
-  \ifdefempty{#2}{\setbox\z@=\hbox{#1}}{\setbox\z@=\tcb@theo@form{#1}{#2}}%
+  \ifdefempty{#2}{\setbox\z@=\color@hbox#1\color@endbox}{\setbox\z@=\tcb@theo@form{#1}{#2}}%
   \def\temp@a{#3}%
   \ifx\temp@a\@empty\relax%
     \unhbox\z@\kvtcb@terminatorsign%

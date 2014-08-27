@@ -1794,6 +1794,13 @@ This is the lower part.
   \refKey{/tcb/overlay} overwrites this key.
 \end{docTcbKey}
 
+\begin{docTcbKey}{overlay first and middle}{=\meta{graphical code}}{no default, initially unset}
+  This is an optimized abbreviation for setting
+  \refKey{/tcb/overlay first} and
+  \refKey{/tcb/overlay middle} together.
+  \refKey{/tcb/overlay} overwrites this key.
+\end{docTcbKey}
+
 
 \begin{dispListing*}{breakable,before upper={This example demonstrates
 the application of break sequence specific overlay options.
@@ -1812,7 +1819,6 @@ are drawn by the codes given with
 %\tcbuselibrary{skins,breakable}
 %\newcounter{example}
 \colorlet{colexam}{red!75!black}
-
 \newtcolorbox[use counter=example]{myexample}{%
   empty,title={Example \thetcbcounter},attach boxed title to top left,
   boxed title style={empty,size=minimal,toprule=2pt,top=4pt,
@@ -1919,6 +1925,24 @@ are drawn by the codes given with
 
 \begin{docTcbKey}{nofloat}{}{style, initially set}
   Turns the floating behavior off.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{every float}{=\meta{code}}{no default, initially empty}
+  For floating objects, the \refKey{/tcb/before} and \refKey{/tcb/after}
+  settings are ignored. Instead, the given \meta{code} is inserted before
+  a floating box. If the box is \refKey{/tcb/breakable}, the given \meta{code} is
+  inserted before every part of the break sequence.
+  The most common use case is |every float=\centering|.
+
+\begin{dispListing}
+\tcbox[float=htb,title={Floating box},every float=\centering,
+  colback=blue!50!black,colframe=blue!50!white,colbacktitle=blue!10!white,
+  coltitle=black,center title]
+  {\includegraphics[height=6cm]{lichtspiel.jpg}}
+\end{dispListing}
+{\tcbusetemp}
+
 \end{docTcbKey}
 
 
@@ -2748,7 +2772,7 @@ Test\dotfill
 %page \pageref{sec:skincorekeys}.
 
 \clearpage
-\subsection{Counters, Labels and References}
+\subsection{Counters, Labels, and References}
 
 \begin{docTcbKey}{phantom}{=\meta{code}}{no default, initially unset}
 The \meta{code} is put in a box at the upper left corner of the |tcolorbox|.
@@ -2820,6 +2844,18 @@ If the \flqq list of tcolorbox(es)\frqq\ feature described in Subsection
 \ref{sec:listsof} from page \pageref{sec:listsof} is used, this key
 describes the \meta{text} for an entry into the generated list, e.\,g.
 \begin{dispListing}
+list entry={\protect\numberline{\thetcbcounter}My beautiful Example}
+\end{dispListing}
+See Section \ref{listing:exercises} from page \pageref{listing:exercises}
+for a complete example.
+\end{docTcbKey}
+
+\begin{docTcbKey}{list text}{=\meta{text}}{style, no default}
+This is a shortcut for setting \refKey{/tcb/list entry} to\\
+|\protect\numberline{\thetcbcounter}|\meta{text}.
+So, the following settings are identical:
+\begin{dispListing}
+list text={My beautiful Example},
 list entry={\protect\numberline{\thetcbcounter}My beautiful Example}
 \end{dispListing}
 See Section \ref{listing:exercises} from page \pageref{listing:exercises}

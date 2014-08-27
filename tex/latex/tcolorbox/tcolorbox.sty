@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
+%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/07/29 version 3.12 text color boxes]
-\def\tcb@version{3.12}
+\ProvidesPackage{tcolorbox}[2014/08/27 version 3.13pre1 text color boxes]
+\def\tcb@version{3.13pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -201,6 +201,7 @@
   float/.default=\kvtcb@floatplacement,
   float*/.code={\def\kvtcb@float{#1}\def\tcb@float@env@begin{\@dblfloat}\def\tcb@float@env@end{\end@dblfloat}},
   float*/.default=\kvtcb@floatplacement,
+  every float/.store in=\kvtcb@everyfloat,%
   nofloat/.style={float=},
   before/.code={\def\kvtcb@beforebox{#1}\let\tcb@use@autoparskip=\relax},
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
@@ -326,6 +327,9 @@
   overlay middle and last/.code={\def\tcb@overlay@temp{#1}%
     \let\tcb@overlay@middle=\tcb@overlay@temp%
     \let\tcb@overlay@last=\tcb@overlay@temp},%
+  overlay first and middle/.code={\def\tcb@overlay@temp{#1}%
+    \let\tcb@overlay@first=\tcb@overlay@temp%
+    \let\tcb@overlay@middle=\tcb@overlay@temp},%
   no overlay/.style={overlay=},%
   standard/.style={skin=standard},%
   standard jigsaw/.style={skin=standard jigsaw},%
@@ -368,8 +372,8 @@
   tcbox raise/.style={baseline=-#1},%
   tcbox raise base/.style={baseline=\tcb@val@raisebase},%
   shrink tight/.style={boxsep=0mm,top=-\kvtcb@top@rule@stand,bottom=-\kvtcb@bottom@rule@stand,left=-\kvtcb@left@rule,right=-\kvtcb@right@rule},%
-  extrude left by/.code={\tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}\tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-#1}},%
-  extrude right by/.code={\tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}\tcbdimto\kvtcb@bbright{\kvtcb@bbright-#1}},%
+  extrude left by/.code={\tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}\tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-#1}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
+  extrude right by/.code={\tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}\tcbdimto\kvtcb@bbright{\kvtcb@bbright-#1}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
   extrude top by/.code={\tcbdimto\kvtcb@top{\kvtcb@top+#1}\tcbdimto\kvtcb@bbtop@stand{\kvtcb@bbtop@stand-#1}},%
   extrude bottom by/.code={\tcbdimto\kvtcb@bottom{\kvtcb@bottom+#1}\tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand-#1}},%
   extrude by/.style={extrude left by=#1,extrude right by=#1,extrude top by=#1,extrude bottom by=#1},%
@@ -415,6 +419,7 @@
   lower separated/.is if=tcb@lowerseparated,
   options@for/.code={\letcs\tcb@new@colop{tcb@opt@#1}\pgfkeysalsofrom\tcb@new@colop},
   list entry/.store in=\kvtcb@listentry,
+  list text/.style={list entry={\protect\numberline{\thetcbcounter}{\ignorespaces #1}}},
   title filled/.is if=tcb@titlefilled,%
   @colbacktitle/.store in=\kvtcb@colbacktitle,
   colbacktitle/.style={title filled,@colbacktitle={#1}},
@@ -1106,7 +1111,7 @@
     \let\tcb@before@unbroken=\kvtcb@beforebox%
     \let\tcb@after@unbroken=\kvtcb@afterbox%
   \else%
-    \edef\tcb@before@unbroken{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]}%
+    \edef\tcb@before@unbroken{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]\noexpand\kvtcb@everyfloat}%
     \let\tcb@after@unbroken=\tcb@float@env@end%
   \fi%
   \setcounter{tcbbreakpart}{1}%
@@ -1186,7 +1191,8 @@
 
 \tcbset{%
   new/.cd,%
-  use counter/.code={\def\kvtcb@new@counter{#1}\let\tcb@proc@counter=\tcb@proc@counter@use},
+  use counter/.code={\edef\kvtcb@new@counter{#1}\let\tcb@proc@counter=\tcb@proc@counter@use},
+  use counter*/.code={\edef\kvtcb@new@counter{#1}\let\tcb@proc@counter=\tcb@proc@counter@from},
   auto counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@auto},
   use counter from/.code={\edef\kvtcb@new@counter{\csname tcb@cnt@#1\endcsname}\let\tcb@proc@counter=\tcb@proc@counter@from},
   no counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@no},
@@ -1201,6 +1207,11 @@
   init@hook@clear/.code={\def\kvtcb@init@hook{}},
   crefname/.code 2 args={\appto\kvtcb@init@hook{\crefname{\tcbcounter}{#1}{#2}}},
   Crefname/.code 2 args={\appto\kvtcb@init@hook{\Crefname{\tcbcounter}{#1}{#2}}},
+  %
+  blend into/.is choice,%
+  blend into/figures/.style={use counter*=figure,list inside=lof,/tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure:\ }}}},%
+  blend into/tables/.style={use counter*=table,list inside=lot,/tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table:\ }}}},%
+  blend into/listings/.style={use counter*=lstlisting,list inside=lol,/tcb/code={\appto\tcb@new@colopt{,before title={\lstlistingname~\thetcbcounter:\ }}}},%
   %
   reset@new/.style={no counter,number within=,number format=\arabic,number freestyle=,list inside=,list type=tcolorbox,init@hook@clear},
 }
@@ -1339,9 +1350,13 @@
 \def\tcb@addcontentsline#1#2{%
   \ifx\kvtcb@listentry\@empty%
     \ifx\kvtcb@title\@empty%
-      \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}\kvtcb@savedelimiter}%
+      \ifx\tcbtitletext\@empty%
+        \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}{\ignorespaces\kvtcb@savedelimiter}}%
+      \else%
+        \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}{\ignorespaces\tcbtitletext}}%
+      \fi%
     \else%
-      \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}\kvtcb@title}%
+      \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}{\ignorespaces\kvtcb@title}}%
     \fi%
   \else%
     \addcontentsline{#1}{#2}{\kvtcb@listentry}%
@@ -1440,7 +1455,7 @@
     lefthand ratio=0.5,check odd page=false,nophantom,
     shield externalize=false,list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
-    title filled=false
+    title filled=false,every float=,
   },
   initialize@reset=reset@core,
 }

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
+%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -566,7 +566,7 @@ version 3.10 (2014/07/23)
   for all types of boxes, skins, borders, and shadows:
   * new options:  'sharpish corners', 'sharp corners', and 'rounded corners'
 - library 'skins':
-  * new options: '\tcbline*'
+  * new macros: '\tcbline*'
   * bug fix: skin families 'bicolor' and 'beamer' did not respect 'colbacktitle'
 - pictures 'blueshade.png', 'crinklepaper.png', 'goldshade.png', 'pink_marble.png'
   moved to package folder
@@ -582,4 +582,21 @@ version 3.12 (2014/07/29)
 - before box \noindent is replaced by \parindent=0pt (bidi package compatibilty)
 - library 'breakable':
   * new option: 'vfill before first'
+
+version 3.13 (2014/xx/xx)
+- bug fix: titles set with 'detach' or 'boxed title' options were not considered
+    for lists of tcolorboxes.
+- bug fix: 'extrude left by', 'extrude right by' worked only for '\tcbox' but not for 'tcolorbox'
+- new options: 'every float', 'list text', 'overlay first and middle'
+- new initialization options:
+  'use counter*', 'blend into'
+- library 'skins':
+  * new macros: '\tcbsettowidthofnode', '\tcbsetmacrotowidthofnode',
+    '\tcbsettoheightofnode', '\tcbsetmacrotoheightofnode'
+  * new options: 'underlay first and middle', 'finish first and middle'
+- library 'hooks':
+  * new options: 'underlay first and middle pre',
+    'overlay first and middle app', 'overlay first and middle pre',
+    'finish first and middle pre'
+
 

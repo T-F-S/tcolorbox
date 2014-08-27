@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
+%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -103,8 +103,8 @@
 
 \newtcolorbox{marker}[1][]{marker,#1}
 
-\def\version{3.12}%
-\def\datum{2014/07/29}%
+\def\version{3.13pre1}%
+\def\datum{2014/08/27}%
 \makeindex
 
 \hypersetup{
@@ -150,6 +150,7 @@
     tcbmakedocSubKey,
     % skins
     tcbline,tcboxedtitleheight,tcboxedtitlewidth,
+    tcbsettowidthofnode,tcbsetmacrotowidthofnode,tcbsettoheightofnode,tcbsetmacrotoheightofnode,
     % xparse
     DeclareTColorBox,NewTColorBox,RenewTColorBox,ProvideTColorBox,
     DeclareTotalTColorBox,NewTotalTColorBox,RenewTotalTColorBox,ProvideTotalTColorBox,
@@ -250,8 +251,7 @@
   listing file={\solfile\thetcbcounter},label={exe:#2},
   phantom={\writesol{#2}},
   title={Exercise \thetcbcounter\hfill\mdseries Solution on page \pageref{sol:#2}},
-  list entry={\protect\numberline{\thetcbcounter}Exercise with solution on
-              page \pageref{sol:#2}},#1}
+  list text={Exercise with solution on page \pageref{sol:#2}},#1}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_E.tex}
 
@@ -305,7 +305,7 @@
 
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.breakable}
+%\includeonly{tcolorbox.doc.theorems}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

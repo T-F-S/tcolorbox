@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
+%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
 %% tcbhooks.code.tex: Code for adding hooks
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.12}
+\tcb@set@library@version{3.13pre1}
 
 \tcbset{%
   before upper app/.code={\appto\kvtcb@before@upper{#1}},%
@@ -59,6 +59,8 @@
   overlay unbroken and last pre/.style={overlay unbroken pre={#1},overlay last pre={#1}},%
   overlay middle and last app/.style={overlay middle app={#1},overlay last app={#1}},%
   overlay middle and last pre/.style={overlay middle pre={#1},overlay last pre={#1}},%
+  overlay first and middle app/.style={overlay first app={#1},overlay middle app={#1}},%
+  overlay first and middle pre/.style={overlay first pre={#1},overlay middle pre={#1}},%
   %
   % skins:
   frame code app/.code={\appto\tcb@frame@code{#1}},%
@@ -82,6 +84,7 @@
   underlay unbroken and first pre/.style={underlay unbroken pre={#1},underlay first pre={#1}},%
   underlay unbroken and last pre/.style={underlay unbroken pre={#1},underlay last pre={#1}},%
   underlay middle and last pre/.style={underlay middle pre={#1},underlay last pre={#1}},%
+  underlay first and middle pre/.style={underlay first pre={#1},underlay middle pre={#1}},%
   finish unbroken pre/.code={\preto\tcb@finish@unbroken{#1}},%
   finish first pre/.code={\preto\tcb@finish@first{#1}},%
   finish middle pre/.code={\preto\tcb@finish@middle{#1}},%
@@ -91,6 +94,7 @@
   finish unbroken and first pre/.style={finish unbroken pre={#1},finish first pre={#1}},%
   finish unbroken and last pre/.style={finish unbroken pre={#1},finish last pre={#1}},%
   finish middle and last pre/.style={finish middle pre={#1},finish last pre={#1}},%
+  finish first and middle pre/.style={finish first pre={#1},finish middle pre={#1}},%
   %
   watermark tikz app/.style={overlay app={\tcb@drawspec@watermark@tikz{#1}}},
   watermark tikz pre/.style={overlay pre={\tcb@drawspec@watermark@tikz{#1}}},

@@ -50,7 +50,7 @@ The real counter name is \texttt{\tcbcounter}.
 \clearpage
 \begin{newTcbKey}{use counter from}{=\meta{tcolorbox}}{no default, initially unset}
 Here, a counter from another \meta{tcolorbox} is reused.
-Note that the setting for \refKey{/tcb/new/number format} and
+Note that the settings for \refKey{/tcb/new/number format} and
 \refKey{/tcb/new/number within} are inherited and cannot be changed.
 The counter value is referenced by \docAuxCommand{thetcbcounter}.
 
@@ -70,7 +70,7 @@ The real counter name is \texttt{\tcbcounter}.
 
 
 \begin{newTcbKey}{use counter}{=\meta{counter}}{no default, initially unset}
-Here, an ordinary existing \LaTeX\ counter is used for numbering.
+Here, an ordinary existing \LaTeX\ \meta{counter} is used for numbering.
 With \refKey{/tcb/new/number format} and
 \refKey{/tcb/new/number within}, the appearance and behavior of the counter
 can be changed. The counter value is referenced by \docAuxCommand{thetcbcounter}.
@@ -88,6 +88,15 @@ also be referenced by |\thetcbcounter|.
 The real counter name is \texttt{\tcbcounter}.
 \end{mybox}
 \end{dispExample}
+\end{newTcbKey}
+
+
+\begin{newTcbKey}{use counter*}{=\meta{counter}}{no default, initially unset}
+An existing \LaTeX\ \meta{counter} is used for numbering. In contrast to
+\refKey{/tcb/new/use counter}, the options \refKey{/tcb/new/number format} and
+\refKey{/tcb/new/number within} are ignored. Use this for counters which
+are already configured outside the |tcolorbox| package, e.\,g.\ the standard
+|figure| counter.
 \end{newTcbKey}
 
 
@@ -182,9 +191,46 @@ With \texttt{varioref}:\\
 \Vref*{myreference}, \vref*{myreference}.
 \end{dispExample}
 
+\clearpage
 
+\begin{newTcbKey}{blend into}{=\meta{name}}{style, no default, initially unset}
+Used to comfortably blend into an existing schema of naming and numbering for
+some selected cases. For example, a |tcolorbox| can be used to display
+and entitle an image pretending to be a standard |figure| environment.
+Here, \refKey{/tcb/title} is used instead of the standard |\caption|
+and \refKey{/tcb/list text} can be used instead of the optional parameter
+of the standard |\caption|.
 
+Feasible values for \meta{name} are:
+\begin{itemize}
+\item\docValue{figures}: blend into the standard |figure| environment.
+\item\docValue{tables}: blend into the standard |table| environment.
+\item\docValue{listings}: blend into the standard |lstlistings| environment
+  of the package |listings| \cite{heinz:2013a}.
+  \begin{marker}
+  Note that |blend into=listings| can only be used in the document content
+  or, preferably, inside a |\AtBeginDocument| clause! Using it without
+  |\AtBeginDocument| inside the preamble does not work since the |listings|
+  packages initializes its counter also inside |\AtBeginDocument|.
+  \end{marker}
+\end{itemize}
+\end{newTcbKey}
 
+\enlargethispage*{5cm}
+\begin{dispListing}
+\begin{figure}[htb]
+  \centering\includegraphics[height=4cm]{lichtspiel.jpg}
+  \caption{A standard figure}
+\end{figure}
+
+\newtcolorbox[blend into=figures]{myfigure}[2][]{float=htb,capture=hbox,
+  title={#2},every float=\centering,#1}
+
+\begin{myfigure}{A tcolorbox figure}
+  \includegraphics[height=4cm]{lichtspiel.jpg}
+\end{myfigure}
+\end{dispListing}
+{\tcbusetemp}
 
 
 \clearpage

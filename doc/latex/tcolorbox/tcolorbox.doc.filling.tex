@@ -1,7 +1,7 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{\tikzname\ Image and Picture Fill Extensions}\label{sec:tikzimagefilling}
+\section{\tikzname\ Image and Picture Fill Extensions; Auxiliary Macros}\label{sec:tikzimagefilling}
 The \mylib{skins} library adds some image and picture fill options to the vast option set of
 \tikzname\ \cite{tantau:2013a}. These options can be used in any |tikzpicture|.
 For the following options, the \mylib{skins} library has to be loaded
@@ -412,4 +412,40 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \draw[->,very thick] (B)--(C);
 \end{tikzpicture}
 \end{dispExample*}
+
+
+\clearpage
+\subsection{Extracting Node Dimensions}
+The following auxiliary macros are defined by the \mylib{skins} library.
+They allow to determine the width and height of an arbitrary \tikzname\ node.
+To be more specific, they determine the east-to-west and the north-to-south dimensions
+which may be not the maximal dimensions for a non-rectangular node.
+
+\begin{docCommand}{tcbsettowidthofnode}{\marg{register}\marg{node}}
+  Sets the east-to-west dimension of the given \meta{node}
+  to the \TeX\ \meta{register}.
+\end{docCommand}
+
+\begin{docCommand}{tcbsetmacrotowidthofnode}{\marg{macro}\marg{node}}
+  Defines \meta{macro} as the east-to-west dimension of the given \meta{node}.
+\end{docCommand}
+
+\begin{docCommand}{tcbsettoheightofnode}{\marg{register}\marg{node}}
+  Sets the north-to-south dimension of the given \meta{node}
+  to the \TeX\ \meta{register}.
+\end{docCommand}
+
+\begin{docCommand}{tcbsetmacrotoheightofnode}{\marg{macro}\marg{node}}
+  Defines \meta{macro} as the north-to-south dimension of the given \meta{node}.
+\end{docCommand}
+
+\begin{dispExample}
+\begin{tikzpicture}
+  \node[align=center,draw=red,fill=yellow] (A) {This is my\\example node};
+  \tcbsetmacrotowidthofnode\mywidth{A}
+  \tcbsetmacrotoheightofnode\myheight{A}
+  \path[draw=blue,fill=blue!25!white] ([xshift=2mm]A.south east)
+    rectangle node{Copy} +(\mywidth,\myheight);
+\end{tikzpicture}
+\end{dispExample}
 

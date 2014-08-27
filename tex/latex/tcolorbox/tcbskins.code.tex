@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.12 (2014/07/29)
+%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.12}
+\tcb@set@library@version{3.13pre1}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -42,6 +42,30 @@
     \fi%
     \tcb@specialgeonodes@hook%
   \end{scope}%
+}
+
+\def\tcbsettowidthofnode#1#2{%
+  \pgfpointanchor{#2}{east}\unskip%
+  #1\pgf@x%
+  \pgfpointanchor{#2}{west}\unskip%
+  \advance #1 by -\pgf@x\relax%
+}
+
+\def\tcbsetmacrotowidthofnode#1#2{%
+  \tcbsettowidthofnode\pgf@xa{#2}%
+  \edef#1{\the\pgf@xa}%
+}
+
+\def\tcbsettoheightofnode#1#2{%
+  \pgfpointanchor{#2}{north}\unskip%
+  #1\pgf@y%
+  \pgfpointanchor{#2}{south}\unskip%
+  \advance #1 by -\pgf@y\relax%
+}
+
+\def\tcbsetmacrotoheightofnode#1#2{%
+  \tcbsettoheightofnode\pgf@ya{#2}%
+  \edef#1{\the\pgf@ya}%
 }
 
 \def\tcb@spec#1{\tikzset{tcb@spec/.style={#1}}}
@@ -897,6 +921,7 @@
   underlay unbroken and first/.style={underlay unbroken={#1},underlay first={#1}},%
   underlay unbroken and last/.style={underlay unbroken={#1},underlay last={#1}},%
   underlay middle and last/.style={underlay middle={#1},underlay last={#1}},%
+  underlay first and middle/.style={underlay first={#1},underlay middle={#1}},%
   no underlay unbroken/.code={\let\tcb@underlay@unbroken\@empty},%
   no underlay first/.code={\let\tcb@underlay@first\@empty},%
   no underlay middle/.code={\let\tcb@underlay@middle\@empty},%
@@ -912,6 +937,7 @@
   finish unbroken and first/.style={finish unbroken={#1},finish first={#1}},%
   finish unbroken and last/.style={finish unbroken={#1},finish last={#1}},%
   finish middle and last/.style={finish middle={#1},finish last={#1}},%
+  finish first and middle/.style={finish first={#1},finish middle={#1}},%
   no finish unbroken/.code={\let\tcb@finish@unbroken\@empty},%
   no finish first/.code={\let\tcb@finish@first\@empty},%
   no finish middle/.code={\let\tcb@finish@middle\@empty},%
@@ -971,8 +997,8 @@
       \let\tcb@trans@colframe\kvtcb@colframe%
       \let\tcb@trans@colback\kvtcb@colbacktitle%
       \let\tcb@trans@boxedstyle\kvtcb@style@boxedtitle%
-      \setbox\tcb@titlebox\hbox{\bgroup\color{\kvtcb@coltitle}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup}%
-      \setbox\tcb@titlebox\hbox{\tcbox[colframe=\tcb@trans@colframe,colback=\tcb@trans@colback,size=title,code={\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}}%
+      \setbox\tcb@titlebox\color@hbox\bgroup\color{\kvtcb@coltitle}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\tcbox[colframe=\tcb@trans@colframe,colback=\tcb@trans@colback,size=title,code={\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
       %
       \tcbdimto\tcboxedtitleheight{\ht\tcb@titlebox+\dp\tcb@titlebox}%
       \tcbdimto\tcboxedtitlewidth{\wd\tcb@titlebox}%
@@ -1043,12 +1069,12 @@
 }
 
 \def\tcb@drawspec@watermark@tikz#1{%
-  \setbox\tcb@waterbox=\hbox{\pgfinterruptpicture{\pgfsetbaseline{0pt}\begin{tikzpicture}[color=\kvtcb@watermark@color]#1\end{tikzpicture}}\endpgfinterruptpicture}%
+  \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture{\pgfsetbaseline{0pt}\begin{tikzpicture}[color=\kvtcb@watermark@color]#1\end{tikzpicture}}\endpgfinterruptpicture\color@endbox%
   \tcb@drawspec@watermark%
 }
 
 \def\tcb@drawspec@watermark@graphics#1{%
-  \setbox\tcb@waterbox=\hbox{\pgfinterruptpicture{\includegraphics{#1}}\endpgfinterruptpicture}%
+  \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture{\includegraphics{#1}}\endpgfinterruptpicture\color@endbox%
   \tcb@drawspec@watermark%
 }
 
@@ -1118,11 +1144,11 @@
 }
 
 \def\tcb@set@waterbox@to@graphics#1{%
-  \setbox\tcb@waterbox=\hbox{\pgfinterruptpicture{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}}\endpgfinterruptpicture}%
+  \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}}\endpgfinterruptpicture\color@endbox%
 }
 
 \def\tcb@set@waterbox@to@picture#1{%
-  \setbox\tcb@waterbox=\hbox{\pgfinterruptpicture{\pgfsetbaseline{0pt}\begin{tikzpicture}#1\end{tikzpicture}}\endpgfinterruptpicture}%
+  \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture{\pgfsetbaseline{0pt}\begin{tikzpicture}#1\end{tikzpicture}}\endpgfinterruptpicture\color@endbox%
 }
 
 \tikzset{%
@@ -1195,7 +1221,7 @@
   fill tile image/.style={fill@tile={\tcb@set@waterbox@to@graphics{#1}}},%
   fill tile picture/.style={fill@tile={\tcb@set@waterbox@to@picture{#1}}},%
   fill tile picture*/.style 2 args={fill@tile={\tcb@set@waterbox@to@picture{#2}%
-    \setbox\tcb@waterbox=\hbox{\scalebox{#1}{\box\tcb@waterbox}}}},%
+    \setbox\tcb@waterbox=\color@hbox\scalebox{#1}{\box\tcb@waterbox}\color@endbox}},%
   %
   fill plain image*/.style 2 args={fill image options={#1},fill plain image={#2}},%
   fill stretch image*/.style 2 args={fill image options={#1},fill stretch image={#2}},%
