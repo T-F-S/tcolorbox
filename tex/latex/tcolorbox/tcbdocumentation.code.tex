@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
+%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.13pre1}
+\tcb@set@library@version{3.20}
 
-\tcbuselibrary{listings,skins}
+\tcbuselibrary{listings,skins,xparse}
 
 \RequirePackage{doc}[2010/02/04]
 \RequirePackage{pifont}[2005/04/12]
@@ -27,6 +27,7 @@
 \ifdefined\printindex\else\RequirePackage{makeidx}[2000/03/29]\fi
 \RequirePackage{refcount}[2011/10/16]
 \RequirePackage{hyperref}[2012/02/06]
+\ifdefined\marginnote\else\RequirePackage{marginnote}[2012/03/29]\fi
 
 \definecolor{Option}{rgb}{0.118,0.546,0.222}
 \definecolor{Definition}{rgb}{0.784,0.06,0.176}
@@ -75,7 +76,9 @@
   key/.store in=\kvtcb@text@key,
   keys/.store in=\kvtcb@text@keys,
   index/.store in=\kvtcb@text@index,
+  new/.store in=\kvtcb@text@new,
   pageshort/.store in=\kvtcb@text@pageshort,
+  updated/.store in=\kvtcb@text@updated,
   value/.store in=\kvtcb@text@value,
   values/.store in=\kvtcb@text@values,
 }
@@ -113,6 +116,10 @@
   doc head/.style={doc head command={#1},doc head environment={#1},doc head key={#1}},
   doc description/.store in=\kvtcb@doc@description,%
   doc into index/.is if=tcb@doc@toindex,%
+  doc updated/.style={before upper={\tcbdocmarginnote{\tcbdocupdated{#1}}}},
+  doc new/.style={before upper={\tcbdocmarginnote{\tcbdocnew{#1}}}},
+  doc new and updated/.style 2 args={before upper={\tcbdocmarginnote{\tcbdocnew{#1}\\\tcbdocupdated{#2}}}},
+  doc marginnote/.style={doc@marginnote/.style={#1}},
 }
 
 
@@ -129,7 +136,9 @@
     environment=environment,environments=Environments,
     key=key,keys=Keys,
     index=Index,
+    new=New,
     pageshort={P.},
+    updated=Updated,
     value=value,values=Values}},
 }
 
@@ -240,7 +249,7 @@
   \begin{tcb@doc@head}{doc@head@command}%
   \tcb@Print@Com{#2}\tcb@index@Com{#2}\protected@edef\@currentlabel{\noexpand\cs{#2}}\label{com:#2}{\ttfamily #3}%
   \tcb@doc@do@description%
-  \end{tcb@doc@head}}%
+  \end{tcb@doc@head}\tcbset{before upper=}}%
   {\end{tcb@manual@entry}}
 
 \newenvironment{docCommand*}{\bgroup\tcb@doc@toindexfalse\begin{docCommand}}{\end{docCommand}\egroup}
@@ -252,28 +261,28 @@
   \strut~~\meta{\kvtcb@text@envcontent}\par%
   \strut\cs{end}\brackets{\tcb@Print@Env{#2}}%
   \tcb@doc@do@description%
-  \end{tcb@doc@head}}%
+  \end{tcb@doc@head}\tcbset{before upper=}}%
   {\end{tcb@manual@entry}}
 
 \newenvironment{docEnvironment*}{\bgroup\tcb@doc@toindexfalse\begin{docEnvironment}}{\end{docEnvironment}\egroup}
 
-\newenvironment{docKey}[4][\@empty]{\begin{tcb@manual@entry}%
-  \tcbset{doc description={#4}}%
+\NewDocumentEnvironment{docKey}{ O{\@empty} +O{} m m +m }{\tcbset{#2,doc description={#5}}%
+  \begin{tcb@manual@entry}%
   \begin{tcb@doc@head}{doc@head@key}%
-  \ifx#1\@empty%
-  \tcb@Print@Key{#2}\tcb@index@Key{#2}\protected@edef\@currentlabel{#2}\label{key:#2}{\ttfamily #3}%
-  \else\tcb@Print@Key{/#1/#2}\tcb@index@KeyPath{#1}{#2}\protected@edef\@currentlabel{/#1/#2}\label{key:/#1/#2}{\ttfamily #3}%
-  \fi%
+  \def\temp@a{#1}\ifx\temp@a\@empty%
+  \tcb@Print@Key{#3}\tcb@index@Key{#3}\protected@edef\@currentlabel{#3}\label{key:#2}{\ttfamily #4}%
+  \else\tcb@Print@Key{/#1/#3}\tcb@index@KeyPath{#1}{#3}\protected@edef\@currentlabel{/#1/#3}\label{key:/#1/#3}{\ttfamily #4}\fi%
   \tcb@doc@do@description%
-  \end{tcb@doc@head}}%
+  \end{tcb@doc@head}\tcbset{before upper=}}%
   {\end{tcb@manual@entry}}
 
 \newenvironment{docKey*}{\bgroup\tcb@doc@toindexfalse\begin{docKey}}{\end{docKey}\egroup}
 
 \def\tcbmakedocSubKey#1#2{%
-  \newenvironment{#1}[4][\@empty]{%
-    \ifx##1\@empty\def\tcb@key@path{#2}\else\def\tcb@key@path{#2/##1}\fi%
-    \begin{docKey}[\tcb@key@path]{##2}{##3}{##4}}%
+  \NewDocumentEnvironment{#1}{ O{} +O{} m m +m }{%
+    \def\temp@a{##1}\ifx\temp@a\@empty%
+      \def\tcb@key@path{#2}\else\def\tcb@key@path{#2/##1}\fi%
+    \begin{docKey}[\tcb@key@path][##2]{##3}{##4}{##5}}%
       {\end{docKey}}%
   \newenvironment{#1*}{\bgroup\tcb@doc@toindexfalse\begin{#1}}{\end{#1}\egroup}%
 }
@@ -286,15 +295,15 @@
 \def\docAuxEnvironment@star#1{\tcb@Print@Env{#1}}%
 \def\docAuxEnvironment{\@ifstar\docAuxEnvironment@star\docAuxEnvironment@}
 
-\newcommand{\docAuxKey@}[2][\@empty]{%
-  \ifx#1\@empty%
+\newcommand{\docAuxKey@}[2][]{%
+  \def\temp@a{#1}\ifx\temp@a\@empty%
     \tcb@Print@Key{#2}\tcb@index@Key{#2}%
   \else%
     \tcb@Print@Key{/#1/#2}\tcb@index@KeyPath{#1}{#2}%
   \fi}%
 
-\newcommand{\docAuxKey@star}[2][\@empty]{%
-  \ifx#1\@empty%
+\newcommand{\docAuxKey@star}[2][]{%
+  \def\temp@a{#1}\ifx\temp@a\@empty%
     \tcb@Print@Key{#2}%
   \else%
     \tcb@Print@Key{/#1/#2}%
@@ -335,6 +344,17 @@
                {\list{}{\leftmargin2cm\rightmargin\leftmargin}%
                 \item\relax\footnotesize}
                {\endlist}
+
+\newcommand{\tcbdocmarginnote}[2][]{
+  \marginnote{%
+  \begin{tcolorbox}[enhanced jigsaw,size=fbox,boxrule=1pt,leftrule=0pt,rightrule=0pt,
+    arc=0pt,outer arc=1pt,boxsep=1pt,top=1pt,bottom=1pt,
+    nobeforeafter,width=\marginparwidth,
+    colframe=red!50!white,colback=red!25!yellow!5!white,fontupper=\scriptsize,before upper=\flushright,
+    doc@marginnote,#1]#2\end{tcolorbox}}}
+
+\newcommand*{\tcbdocnew}[1]{\kvtcb@text@new: #1}
+\newcommand*{\tcbdocupdated}[1]{\kvtcb@text@updated: #1}
 
 %--- index macros taken from pgfmanual-en-macros
 \def\tcb@doc@index@pgf@{%
@@ -398,6 +418,7 @@
     doc into index=true,
     index colorize=false,
     index annotate=true,
+    doc marginnote=,
     },
   initialize@reset=reset@documentation,
 }

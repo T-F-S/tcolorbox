@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
+%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@
 \usepackage{varwidth,cleveref,incgraph}
 
 \usepackage[a4paper,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm,
-    marginparsep=5mm,marginparwidth=10mm,
+    marginparsep=3mm,marginparwidth=18mm,
     headheight=0mm,headsep=0cm,
     footskip=1.5cm,includeheadfoot]{geometry}
 \usepackage{fancyhdr}
@@ -103,8 +103,11 @@
 
 \newtcolorbox{marker}[1][]{marker,#1}
 
-\def\version{3.13pre1}%
-\def\datum{2014/08/27}%
+\renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
+\renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
+
+\def\version{3.20}%
+\def\datum{2014/09/22}%
 \makeindex
 
 \hypersetup{
@@ -147,7 +150,7 @@
     meta,marg,
     oarg,
     refCom,refEnv,refKey,
-    tcbmakedocSubKey,
+    tcbmakedocSubKey,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
     % skins
     tcbline,tcboxedtitleheight,tcboxedtitlewidth,
     tcbsettowidthofnode,tcbsetmacrotowidthofnode,tcbsettoheightofnode,tcbsetmacrotoheightofnode,
@@ -305,7 +308,7 @@
 
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.theorems}
+%\includeonly{tcolorbox.doc.abstract}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

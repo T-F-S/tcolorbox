@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
+%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.13pre1}
+\tcb@set@library@version{3.20}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -218,7 +218,7 @@
 \newif\iftcb@multicol
 \newif\iftcb@vfillbeforefirst
 
-\def\tcb@drawcolorbox@breakable{%
+\def\tcb@prepare@break@operation{%
   \@ifundefined{columnbreak}{\tcb@multicolfalse}{%
     \ifnum\doublecol@number>\z@ %
       \tcb@multicoltrue%
@@ -227,7 +227,7 @@
     \fi}%
   \ifx\kvtcb@float\@empty%
     \kvtcb@beforebox%
-    \def\kvtcb@beforebox{\nointerlineskip\noindent}%
+    \def\kvtcb@beforebox{\parskip\z@\nointerlineskip\noindent}%
     \noindent% applies parskip
     \vskip\lineskip{\parskip\z@\par\vskip\z@}\bgroup\@nobreakfalse\addpenalty\z@\egroup% force update vertical list
     \tcb@break@allowedtrue%
@@ -235,13 +235,24 @@
   \else%
     \tcb@break@allowedfalse%
   \fi%
+}
+
+\def\tcb@height@fill@unbroken{%
+  \tcb@prepare@break@operation%
+  \tcb@breakat@init%
+  \tcb@comp@h@page%
+  \tcbset{height=\tcb@h@page}%
+}
+
+\def\tcb@drawcolorbox@breakable{%
+  \tcb@prepare@break@operation%
   \let\tcb@after@lastbox=\kvtcb@afterbox%
   \let\kvtcb@afterbox=\@empty%
   \begingroup%
-    \parskip0pt%
-    \parindent0pt%
-    \lineskip0pt%
-    \topskip0pt%
+    \parskip\z@%
+    \parindent\z@%
+    \lineskip\z@%
+    \topskip\z@%
     \tcb@split@start%
   \endgroup%
   \ifx\kvtcb@float\@empty%
@@ -720,7 +731,7 @@
   bottomsep at break/.store in=\kvtcb@bottomsep,%
   pad before break/.code={\let\kvtcb@bottom@rule@break=\tcb@zpt%
     \tcbdimto\kvtcb@bottomsep{#1-\kvtcb@bottom-\kvtcb@boxsep}},%
-  pad before break*/.style={pad before break,%
+  pad before break*/.style={pad before break={#1},%
     code={\tcbdimto\tcb@temp{\kvtcb@bottom@rule@stand-\kvtcb@bottomsep}%
       \ifdim\tcb@temp>0pt\relax%
         \tcbdimto\kvtcb@enlargepage@flex{\kvtcb@enlargepage@flex+\tcb@temp}\fi}},%
@@ -761,6 +772,8 @@
     \let\tcb@break@ch@middle=\tcb@break@ch@fixed%
     \let\tcb@break@ch@last=\tcb@break@ch@fixed},%
   vfill before first/.is if=tcb@vfillbeforefirst,%
+  height fill/true/.code={\let\tcb@height@adjust\tcb@height@fill@unbroken},%
+  height fill/.default=true,%
 }
 
 

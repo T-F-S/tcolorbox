@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
+%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -583,11 +583,13 @@ version 3.12 (2014/07/29)
 - library 'breakable':
   * new option: 'vfill before first'
 
-version 3.13 (2014/xx/xx)
+version 3.20 (2014/09/22)
 - bug fix: titles set with 'detach' or 'boxed title' options were not considered
     for lists of tcolorboxes.
 - bug fix: 'extrude left by', 'extrude right by' worked only for '\tcbox' but not for 'tcolorbox'
-- new options: 'every float', 'list text', 'overlay first and middle'
+- bug fix: 'pad before break*' and 'pad at break*' were always setting to 0pt
+- new options: 'every float', 'list text', 'overlay first and middle',
+  'height fill'
 - new initialization options:
   'use counter*', 'blend into'
 - library 'skins':
@@ -598,5 +600,10 @@ version 3.13 (2014/xx/xx)
   * new options: 'underlay first and middle pre',
     'overlay first and middle app', 'overlay first and middle pre',
     'finish first and middle pre'
-
+- library 'documentation':
+  * new macros: '\tcbdocmarginnote', '\tcbdocnew', '\tcbdocupdated'
+  * The 'docKey' and 'docKey*' environments take tcolorbox options now
+  * new options:
+    'doclang/new', 'doclang/updated',
+    'doc marginnote', 'doc updated', 'doc new', 'doc new and updated'
 

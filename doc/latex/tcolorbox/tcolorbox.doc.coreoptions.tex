@@ -1122,9 +1122,32 @@ This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
 \end{dispExample}
 \end{docTcbKey}
 
-
-
 \clearpage
+\begin{docTcbKey}[][doc new=2014-09-22]{height fill}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+If set to |true|, the height of the |tcolorbox| is set to the rest of the
+available vertical space of the current page. Note that the |tcolorbox|
+is always set as its own paragraph using this option.
+This option overrules \refKey{/tcb/natural height}, \refKey{/tcb/height}, etc.
+\begin{marker}
+Note that the library \mylib{breakable} has to be loaded to use this key!
+\end{marker}
+This height control key is only applicable to unbreakable boxes but it
+uses code from the library \mylib{breakable}.
+The counterpart for breakable boxes is \refKey{/tcb/height fixed for}.
+
+\begin{dispListing}
+% \usepackage{lipsum}
+% \tcbuselibrary{breakable}
+\begin{tcolorbox}[height fill,
+  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  title=Box which fills the rest of the page]
+\lipsum[1]
+\end{tcolorbox}
+\end{dispListing}
+\end{docTcbKey}
+{\tcbusetemp}
+
+%\clearpage
 \begin{docTcbKey}{space}{=\meta{fraction}}{no default, initially 0}
   If the height of a |tcolorbox| is not the natural height, the space
   difference between the forced and the natural size is distributed
@@ -1794,7 +1817,7 @@ This is the lower part.
   \refKey{/tcb/overlay} overwrites this key.
 \end{docTcbKey}
 
-\begin{docTcbKey}{overlay first and middle}{=\meta{graphical code}}{no default, initially unset}
+\begin{docTcbKey}[][doc new=2014-09-19]{overlay first and middle}{=\meta{graphical code}}{no default, initially unset}
   This is an optimized abbreviation for setting
   \refKey{/tcb/overlay first} and
   \refKey{/tcb/overlay middle} together.
@@ -1928,7 +1951,7 @@ are drawn by the codes given with
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{every float}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2014-09-19]{every float}{=\meta{code}}{no default, initially empty}
   For floating objects, the \refKey{/tcb/before} and \refKey{/tcb/after}
   settings are ignored. Instead, the given \meta{code} is inserted before
   a floating box. If the box is \refKey{/tcb/breakable}, the given \meta{code} is
@@ -1941,7 +1964,7 @@ are drawn by the codes given with
   coltitle=black,center title]
   {\includegraphics[height=6cm]{lichtspiel.jpg}}
 \end{dispListing}
-{\tcbusetemp}
+{\tcbset{reset}\tcbusetemp}
 
 \end{docTcbKey}
 
@@ -2387,7 +2410,7 @@ Lorem \tcbox{ipsum} dolor sit amet, consectetuer adipiscing elit.
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}{extrude left by}{=\meta{length}}{style, no default, initially unset}
+\begin{docTcbKey}[][doc updated=2014-09-19]{extrude left by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the left side.
   The inner width and the bounding box is kept unchanged and the operation
   is additiv!
@@ -2403,7 +2426,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}{extrude right by}{=\meta{length}}{style, no default, initially unset}
+\begin{docTcbKey}[][doc updated=2014-09-19]{extrude right by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the right side.
   The inner width and the bounding box is kept unchanged and the operation
   is additiv!
@@ -2850,7 +2873,7 @@ See Section \ref{listing:exercises} from page \pageref{listing:exercises}
 for a complete example.
 \end{docTcbKey}
 
-\begin{docTcbKey}{list text}{=\meta{text}}{style, no default}
+\begin{docTcbKey}[][doc new=2014-09-19]{list text}{=\meta{text}}{style, no default}
 This is a shortcut for setting \refKey{/tcb/list entry} to\\
 |\protect\numberline{\thetcbcounter}|\meta{text}.
 So, the following settings are identical:

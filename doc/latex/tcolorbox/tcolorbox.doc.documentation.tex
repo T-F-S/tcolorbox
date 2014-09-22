@@ -14,8 +14,9 @@ The library is loaded by a package option or inside the preamble by:
 \end{dispListing}
 This also loads the library \mylib{listings}, see \Vref{sec:listings},
 the library \mylib{skins}, see \Vref{sec:skins},
+the library \mylib{xparse}\tcbdocmarginnote{\tcbdocnew{2014-09-19}}, see \Vref{sec:xparse},
 and a bunch of packages, namely
-|doc|, |pifont|, |marvosym|, |makeidx|, |refcount|, and |hyperref|.
+|doc|, |pifont|, |marvosym|, |makeidx|, |marginnote|, |refcount|, and |hyperref|.
 
 \begin{marker}
 The package |makeidx| is loaded only, if \docAuxCommand*{printindex} is
@@ -96,8 +97,9 @@ For |minted| \cite{rudolph:2011a} support, load:
 \end{xdocEnvironment}}
 
 
-\begin{docEnvironment}[doclang/environment content=key description]{docKey}{\oarg{key path}\marg{name}\marg{parameters}\marg{description}}
+\begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-19]{docKey}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
   Documents a key with given \meta{name} and an optional \meta{key path}.
+  The given \meta{options} are set with \refCom{tcbset}.
   This key takes mandatory or optional \meta{parameters} as value
   with a short \meta{description}.
   It is automatically indexed and can be referenced with
@@ -110,7 +112,7 @@ For |minted| \cite{rudolph:2011a} support, load:
 \end{docEnvironment}
 
 
-\begin{docEnvironment}[doclang/environment content=key description]{docKey*}{\oarg{key path}\marg{name}\marg{parameters}\marg{description}}
+\begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-19]{docKey*}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
   Identical to \refEnv{docKey}, but without index entry.
 \end{docEnvironment}
 
@@ -402,6 +404,43 @@ This is my \colOpt{text}.
 \end{dispExample}
 \end{docCommand}
 
+\clearpage
+
+\begin{docCommand}[doc new=2014-09-19]{tcbdocmarginnote}{\oarg{options}\marg{text}}
+  Creates a |tcolorbox| note with the given \meta{text} inside the margin using
+  the |marginnote| package. The style of the |tcolorbox| is predefined and can be
+  altered by \refKey{/tcb/doc marginnote} and the given \meta{options}.
+\begin{dispExample}
+Some text\tcbdocmarginnote{Note A}
+which is commented by a note inside the margin.
+Alternatively to |\tcbdocmarginnote|, you can always use
+|\marginnote| with a |tcolorbox| directly.\par
+This is further text%
+\tcbdocmarginnote[colframe=blue!50!white,colback=blue!5!white]{Note B}
+with another note.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}[doc new=2014-09-19]{tcbdocnew}{\marg{date}}
+  Auxiliary macro which typesets the \refKey{/tcb/doclang/new} text with
+  the given \meta{date}. It may be redefined for customization.
+  \makeatletter\renewcommand*{\tcbdocnew}[1]{\kvtcb@text@new: #1}\makeatother%
+\begin{dispExample*}{sidebyside}
+\tcbdocnew{1981-10-29}.
+% Next one is displayed in the margin:
+\tcbdocmarginnote{\tcbdocnew{1978-02-09}}
+\end{dispExample*}
+\end{docCommand}
+
+\begin{docCommand}[doc new=2014-09-19]{tcbdocupdated}{\marg{date}}
+  Auxiliary macro which typesets the \refKey{/tcb/doclang/updated} text with
+  the given \meta{date}. It may be redefined for customization.
+  \makeatletter\renewcommand*{\tcbdocupdated}[1]{\kvtcb@text@updated: #1}\makeatother%
+\begin{dispExample*}{sidebyside}
+\tcbdocupdated{2014-09-19}.
+\end{dispExample*}
+\end{docCommand}
+
 
 \clearpage
 \subsection{Option Keys of the Library}
@@ -561,9 +600,6 @@ The English language is predefined.
   Heading text in the index for colors.
 \end{langTcbKey}
 
-\begin{langTcbKey}{environment content}{=\meta{text}}{no default, initially |environment content|}
-  Text used in \refEnv{docEnvironment}.
-\end{langTcbKey}
 
 \begin{langTcbKey}{environment}{=\meta{text}}{no default, initially |environment|}
   Text used in the index for environments.
@@ -571,6 +607,10 @@ The English language is predefined.
 
 \begin{langTcbKey}{environments}{=\meta{text}}{no default, initially |Environments|}
   Heading text in the index for environments.
+\end{langTcbKey}
+
+\begin{langTcbKey}{environment content}{=\meta{text}}{no default, initially |environment content|}
+  Text used in \refEnv{docEnvironment}.
 \end{langTcbKey}
 
 \begin{langTcbKey}{key}{=\meta{text}}{no default, initially |key|}
@@ -581,6 +621,22 @@ The English language is predefined.
   Heading text used in the index for keys.
 \end{langTcbKey}
 
+\begin{langTcbKey}{index}{=\meta{text}}{no default, initially |Index|}
+  Heading text for the index.
+\end{langTcbKey}
+
+\begin{langTcbKey}[][doc new={2014-09-19}]{new}{=\meta{text}}{no default, initially |New|}
+  Announcement text for new content.
+\end{langTcbKey}
+
+\begin{langTcbKey}{pageshort}{=\meta{text}}{no default, initially |P.|}
+  Short text for page references.
+\end{langTcbKey}
+
+\begin{langTcbKey}[][doc new={2014-09-19}]{updated}{=\meta{text}}{no default, initially |Updated|}
+  Announcement text for updated content.
+\end{langTcbKey}
+
 \begin{langTcbKey}{value}{=\meta{text}}{no default, initially |value|}
   Text used in the index for values.
 \end{langTcbKey}
@@ -589,13 +645,7 @@ The English language is predefined.
   Heading text in the index for values.
 \end{langTcbKey}
 
-\begin{langTcbKey}{index}{=\meta{text}}{no default, initially |Index|}
-  Heading text for the index.
-\end{langTcbKey}
 
-\begin{langTcbKey}{pageshort}{=\meta{text}}{no default, initially |P.|}
-  Short text for page references.
-\end{langTcbKey}
 
 \clearpage
 \begin{docTcbKey}{doc left}{=\meta{length}}{no default, initially |2em|}
@@ -716,6 +766,38 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
   instead of \refEnv{docCommand}.
 \end{docTcbKey}
 
+\begin{docTcbKey}[][doc new=2014-09-19]{doc marginnote}{=\meta{options}}{no default, initially empty}
+  Sets style \meta{options} for the displayed box of the \refCom{tcbdocmarginnote} command.
+\begin{dispExample}
+\tcbset{doc marginnote={colframe=blue!50!white,colback=blue!5!white}}%
+This is some text\tcbdocmarginnote{Note A}
+which is commented by a note inside the margin.
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-09-19]{doc new}{=\meta{date}}{style, no default}
+  Adds a a marginnote with a 'New: \meta{data}' message at the beginning of
+  the upper box part. The intended use is inside the option list of
+  \refEnv{docCommand}, \refEnv{docEnvironment}, etc.
+  \makeatletter\renewcommand*{\tcbdocnew}[1]{\kvtcb@text@new: #1}\makeatother%
+\begin{dispExample}
+\begin{docCommand}[doc new=2000-01-01]{foosomething}{\marg{text}}
+Some command for something.
+\end{docCommand}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-09-19]{doc updated}{=\meta{date}}{style, no default}
+  Adds a marginnote with a 'Updated: \meta{data}' message at the beginning of
+  the upper box part. See \refKey{/tcb/doc new}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-09-19]{doc new and updated}{=\marg{new date}\marg{update date}}{style, no default}
+  Adds a marginnote with 'New: \meta{new date}' and 'Updated: \meta{update data}' messages at the beginning of
+  the upper box part. See \refKey{/tcb/doc new}.
+\end{docTcbKey}
 
 
 \subsection{Predefined Colors of the Library}

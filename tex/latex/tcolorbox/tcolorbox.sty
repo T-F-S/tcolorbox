@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.13pre1 (2014/08/27)
+%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/08/27 version 3.13pre1 text color boxes]
-\def\tcb@version{3.13pre1}
+\ProvidesPackage{tcolorbox}[2014/09/22 version 3.20 text color boxes]
+\def\tcb@version{3.20}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -217,6 +217,8 @@
   height/.code={\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed},
   height plus/.dimstore in=\kvtcb@height@fixed@plus,%
   height from/.style args={#1 to #2}{height={#1},height plus={#2-#1}},%
+  height fill/.is choice,%
+  height fill/false/.code={\let\tcb@height@adjust\@empty},%
   equal height group/.code={\edef\tcb@ehgid{#1}\let\tcb@ch=\tcb@ch@equalheight},
   minimum for equal height group/.code args={#1:#2}{\edef\tcb@ehgid{#1}\tcb@ehgadd{#2}},
   space/.code={\def\tcb@height@fraction{#1}\let\tcb@ch@fixed@both=\tcb@ch@fixed@space},
@@ -659,7 +661,7 @@
 
 \long\def\tcb@@icolorbox[#1]{%
   \tcb@layer@inc%
-  \tcbset{capture=minipage,#1}\tcb@afteroptions@hook%
+  \tcbset{capture=minipage,#1}\tcb@height@adjust\tcb@afteroptions@hook%
   \tcb@hasLowerfalse%
   \csname tcb@@capture@\kvtcb@capture\endcsname%
 }
@@ -1178,7 +1180,7 @@
 \long\def\tcb@ox#1#2{%
   \begingroup%
   \tcb@layer@inc%
-  \tcbset{#1}\tcb@afteroptions@hook%
+  \tcbset{#1}\tcb@height@adjust\tcb@afteroptions@hook%
   \csname tcbox@inner@\kvtcb@capture\endcsname{#2}%
   \tcb@layer@dec%
   \endgroup%
@@ -1439,7 +1441,8 @@
 \tcbset{%
   initialize@reset/.code={\tcbset{#1}\appto\tcb@reset{\tcbset{#1}}},%
   reset/.code={\tcb@reset},%
-  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@},
+  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@%
+      \let\tcb@afteroptions@hook\@empty},
     width=\linewidth,autoparskip,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
     size=normal,rounded corners,
@@ -1455,7 +1458,7 @@
     lefthand ratio=0.5,check odd page=false,nophantom,
     shield externalize=false,list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
-    title filled=false,every float=,
+    title filled=false,every float=,height fill=false,
   },
   initialize@reset=reset@core,
 }
