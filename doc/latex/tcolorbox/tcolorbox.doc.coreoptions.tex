@@ -105,6 +105,64 @@ More title options are documented in \Vref{subsec:contentadditions}
 and \Vref{subsec:skinboxedtitle}.
 \end{marker}
 
+\clearpage
+\subsection{Subtitle}
+
+Inside the box content, one or more subtitles can be added.
+In general, a subtitle is a further \refEnv{tcolorbox} which inherits some
+color and geometry options from the enclosing box. It may be customized
+just like any other \refEnv{tcolorbox}.
+
+\begin{docCommand}[doc new=2014-10-10]{tcbsubtitle}{\oarg{options}\marg{text}}
+  Used inside a \refEnv{tcolorbox} to add a subtitle box with the given \meta{text}.
+  This is an independent \refEnv{tcolorbox} which is formatted by several
+  inherited properties of the enclosing box, by further settings from
+  \refKey{/tcb/subtitle style}, and by the given \meta{options}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[title=My title,
+    colback=red!5!white,
+    colframe=red!75!black,
+    fonttitle=\bfseries]
+  This is a \textbf{tcolorbox}.
+\tcbsubtitle[before skip=\baselineskip]%
+  {My subtitle}
+  Further text.
+\end{tcolorbox}
+\end{dispExample*}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[title=My title,
+    colback=red!5!white,
+    colframe=red!75!black,
+    colbacktitle=yellow!50!red,
+    coltitle=red!25!black,
+    fonttitle=\bfseries]
+  This is a \textbf{tcolorbox}.
+\tcbsubtitle[before skip=\baselineskip]%
+  {My subtitle}
+  Further text.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docCommand}
+
+\begin{docTcbKey}[][doc new=2014-10-10]{subtitle style}{=\meta{options}}{no default, initially empty}
+  Adds |tcolorbox| \meta{options} to the settings for \refCom{tcbsubtitle}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[title=My title,
+  colback=red!5!white,
+  colframe=red!75!black,
+  colbacktitle=yellow!50!red,
+  coltitle=red!25!black,
+  fonttitle=\bfseries,
+  subtitle style={boxrule=0.4pt,
+    colback=yellow!50!red!25!white} ]
+  This is a \textbf{tcolorbox}.
+\tcbsubtitle{My subtitle}
+  Further text.
+\tcbsubtitle{Second subtitle}
+  Further text.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
 
 \clearpage
 \subsection{Lower Part}
@@ -2170,6 +2228,47 @@ This behavior is controlled by the keys |before| and |after|.
 
 \begin{docTcbKey}{baseline}{=\meta{length}}{no default, initially |0pt|}
   Used to set the |\pgfsetbaseline| value of the resulting |tcolorbox|.
+\end{docTcbKey}
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2014-10-10]{before skip}{=\meta{length}}{style, no default}
+  Inserts some vertical space of the given \meta{length} before the colored box.
+  This style sets \refKey{/tcb/before}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+Some text.
+\begin{tcolorbox}[before skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-10]{after skip}{=\meta{length}}{style, no default}
+  Inserts some vertical space of the given \meta{length} after the colored box.
+  This style sets \refKey{/tcb/after}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[after skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+Some text.
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-10]{beforeafter skip}{=\meta{length}}{style, no default}
+  Inserts some vertical space of the given \meta{length} before \emph{and} after the colored box.
+  This style sets \refKey{/tcb/before} and \refKey{/tcb/after}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{beforeafter skip=0pt,
+  colframe=red!50!white}
+\begin{tcolorbox}
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}
+  Second box.
+\end{tcolorbox}
+\end{dispExample*}
 \end{docTcbKey}
 
 

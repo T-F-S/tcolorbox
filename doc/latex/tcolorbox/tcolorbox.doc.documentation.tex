@@ -97,7 +97,7 @@ For |minted| \cite{rudolph:2011a} support, load:
 \end{xdocEnvironment}}
 
 
-\begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-19]{docKey}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
+\begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-29]{docKey}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
   Documents a key with given \meta{name} and an optional \meta{key path}.
   The given \meta{options} are set with \refCom{tcbset}.
   This key takes mandatory or optional \meta{parameters} as value
@@ -112,7 +112,7 @@ For |minted| \cite{rudolph:2011a} support, load:
 \end{docEnvironment}
 
 
-\begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-19]{docKey*}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
+\begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-29]{docKey*}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
   Identical to \refEnv{docKey}, but without index entry.
 \end{docEnvironment}
 
@@ -131,7 +131,7 @@ A feasible value for \refKey{/foo/footitle} is \docValue{foovalue}.
 \end{docCommand}
 
 
-\begin{docCommand}{docAuxCommand}{\marg{name}}
+\begin{docCommand}[doc updated=2014-10-09]{docAuxCommand}{\marg{name}}
   Documents an auxiliary or minor \LaTeX\ macro with given \meta{name}
   where \meta{name} is written without backslash.
   This macro is automatically indexed.
@@ -140,7 +140,7 @@ The macro \docAuxCommand{fooaux} holds some interesting data.
 \end{dispExample}
 \end{docCommand}
 
-\begin{docCommand}{docAuxCommand*}{\marg{name}}
+\begin{docCommand}[doc updated=2014-10-09]{docAuxCommand*}{\marg{name}}
   Identical to \refCom{docAuxCommand}, but without index entry.
 \end{docCommand}
 
@@ -200,6 +200,7 @@ This is a \meta{text}.
 \end{dispExample}
 \end{docCommand}
 
+
 \begin{docCommand}{marg}{\marg{text}}
   Macro from |ltxdoc| \cite{carlisle:2007a} to typeset a \meta{text} with
   curly brackets as a mandatory argument. The library overwrites the original macro.
@@ -229,7 +230,7 @@ This is an optional \oarg{argument}.
 
 {\let\xdispExample\dispExample
   \let\endxdispExample\enddispExample
-\begin{docEnvironment}{dispExample}{}
+\begin{docEnvironment}[doc updated=2014-10-10]{dispExample}{}
   Creates a colored box based on a \refEnv{tcolorbox}.
   It displays the environment content as source code in the upper part
   and as compiled text in the lower part of the box.
@@ -250,7 +251,7 @@ This is a \LaTeX\ example.
 
 {\let\xdispExample\dispExample
   \let\endxdispExample\enddispExample
-\begin{docEnvironment}{dispExample*}{\marg{options}}
+\begin{docEnvironment}[doc updated=2014-10-10]{dispExample*}{\marg{options}}
   The starred version of \refEnv{dispExample} takes \refEnv{tcolorbox} \meta{options}
   as parameter. These \meta{options} are executed after \refKey{/tcb/docexample}.
 \begin{xdispExample}

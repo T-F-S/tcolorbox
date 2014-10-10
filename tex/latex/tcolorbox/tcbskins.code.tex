@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
+%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.20}
+\tcb@set@library@version{3.21}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -949,7 +949,7 @@
 \tcbset{%
   before@boxed@title/.store in=\kvtcb@before@boxedtitle,%
   after@boxed@title/.store in=\kvtcb@after@boxedtitle,%
-  boxed title style/.store in=\kvtcb@style@boxedtitle,%.style={boxed@title@style/.style={#1}},
+  boxed title style/.store in=\kvtcb@style@boxedtitle,%
   %
   varwidth boxed title/.style={before@boxed@title={\tcbdimto\tcb@w@title{#1}\begin{varwidth}{\tcb@w@title}},after@boxed@title={\end{varwidth}}},%
   varwidth boxed title/.default={\kvtcb@width-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle},

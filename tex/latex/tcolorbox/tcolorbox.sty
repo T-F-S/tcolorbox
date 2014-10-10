@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
+%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/09/22 version 3.20 text color boxes]
-\def\tcb@version{3.20}
+\ProvidesPackage{tcolorbox}[2014/10/10 version 3.21 text color boxes]
+\def\tcb@version{3.21}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -145,6 +145,7 @@
   attach title/.code=\tcb@attach@title@code,%
   attach title to upper/.style={detach title,before upper={\tcbtitle#1}},
   attach title to upper/.default=,
+  subtitle style/.store in=\kvtcb@subtitle@style,%
   width/.dimstore in=\kvtcb@width,
   boxsep/.store in=\kvtcb@boxsep,
   toprule/.code={%
@@ -209,6 +210,15 @@
   parskip/.style={before={\par\pagebreak[0]\parindent=0pt},after={\par}},
   noparskip/.style={before={\par\smallskip\pagebreak[0]\parindent=0pt},after={\par\smallskip}},
   nobeforeafter/.style={before=,after=},
+  before skip/.style={before={\begingroup%
+    \parindent\z@\parskip\z@\par\nointerlineskip%
+    \addvspace{#1}\noindent%
+  \endgroup}},
+  after skip/.style={after={\begingroup%
+    \parindent\z@\parskip\z@\par\nointerlineskip%
+    \addvspace{#1}%
+  \endgroup}},
+  beforeafter skip/.style={before skip={#1},after skip={#1}},
   lowerbox/.is choice,
   lowerbox/visible/.code={\tcb@lowerignoredfalse\tcb@lowervisibletrue},
   lowerbox/invisible/.code={\tcb@lowerignoredfalse\tcb@lowervisiblefalse},
@@ -1190,6 +1200,36 @@
   \tcb@ox{capture=hbox,#1}{#2}%
 }
 
+\newcommand{\tcbsubtitle}[2][]{%
+  \begingroup%
+  \let\tcb@trans@colframe\kvtcb@colframe%
+  \iftcb@titlefilled%
+    \let\tcb@trans@colback\kvtcb@colbacktitle%
+  \else%
+    \let\tcb@trans@colback\kvtcb@colframe%
+  \fi%
+  \let\tcb@trans@colupper\kvtcb@coltitle%
+  \let\tcb@trans@fontupper\kvtcb@fonttitle%
+  \let\tcb@trans@boxsep\kvtcb@boxsep%
+  \let\tcb@trans@left\kvtcb@leftupper%
+  \let\tcb@trans@right\kvtcb@rightupper%
+  \let\tcb@trans@top\kvtcb@toptitle%
+  \let\tcb@trans@bottom\kvtcb@bottomtitle%
+  \let\tcb@trans@rule\kvtcb@title@rule%
+  \let\tcb@trans@style\kvtcb@subtitle@style%
+  \begin{tcolorbox}[sharp corners,
+    before skip={0.5\baselineskip},after skip={0.5\baselineskip},
+    colframe=\tcb@trans@colframe,colback=\tcb@trans@colback,
+    colupper=\tcb@trans@colupper,fontupper=\tcb@trans@fontupper,
+    boxsep=\tcb@trans@boxsep,left=\tcb@trans@left,right=\tcb@trans@right,
+    top=\tcb@trans@top,bottom=\tcb@trans@bottom,
+    boxrule=\tcb@trans@rule,leftrule=0pt,rightrule=0pt,oversize,
+    code={\pgfkeysalsofrom\tcb@trans@style},#1]%
+  #2%
+  \end{tcolorbox}%
+  \endgroup%
+}
+
 
 \tcbset{%
   new/.cd,%
@@ -1441,8 +1481,7 @@
 \tcbset{%
   initialize@reset/.code={\tcbset{#1}\appto\tcb@reset{\tcbset{#1}}},%
   reset/.code={\tcb@reset},%
-  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@%
-      \let\tcb@afteroptions@hook\@empty},
+  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@},
     width=\linewidth,autoparskip,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
     size=normal,rounded corners,
@@ -1458,7 +1497,7 @@
     lefthand ratio=0.5,check odd page=false,nophantom,
     shield externalize=false,list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
-    title filled=false,every float=,height fill=false,
+    subtitle style=,title filled=false,every float=,height fill=false,
   },
   initialize@reset=reset@core,
 }

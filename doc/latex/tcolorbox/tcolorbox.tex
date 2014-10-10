@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
+%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -90,15 +90,14 @@
 \makeatletter
 \newrobustcmd{\tcbIndexPrintSkinCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{Skin}}
 \newrobustcmd{\tcbIndexPrintSkinC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
+\def\tcb@index@Skin#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}\fi}%
 
-
-\def\index@Skin#1{\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}}
 \newenvironment{docSkin}[1]{\begin{tcb@manual@entry}%
   \begin{tcb@doc@head}{colback=magenta!5!white,interior style=fill}%
-  \hypertarget{skin:#1}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#1}\index@Skin{#1}\protected@edef\@currentlabel{#1}\label{skin:#1}\hfill(skin)}%
+  \hypertarget{skin:#1}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#1}\tcb@index@Skin{#1}\protected@edef\@currentlabel{#1}\label{skin:#1}\hfill(skin)}%
   \end{tcb@doc@head}}%
   {\end{tcb@manual@entry}}
-\def\refSkin#1{\tcb@ref@doc{skin:#1}}
+\def\refSkin{\tcb@ref@doc{skin}}
 \makeatother
 
 \newtcolorbox{marker}[1][]{marker,#1}
@@ -106,8 +105,8 @@
 \renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
 \renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
 
-\def\version{3.20}%
-\def\datum{2014/09/22}%
+\def\version{3.21}%
+\def\datum{2014/10/10}%
 \makeindex
 
 \hypersetup{
@@ -136,7 +135,7 @@
   % tcolorbox macros
   moretexcs={% core
     endtcolorbox,endtcbverbatimwrite,newtcolorbox,newtcbox,newtcboxfit,tcbusetemp,tcbtitle,tcbtitletext,
-    tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,
+    tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
     % listings
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
@@ -308,8 +307,8 @@
 
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.abstract}
-
+%\includeonly{tcolorbox.doc.documentation,tcolorbox.doc.index}
+%\includeonly{tcolorbox.doc.coreoptions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}

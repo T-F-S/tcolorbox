@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.20 (2014/09/22)
+%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -607,3 +607,15 @@ version 3.20 (2014/09/22)
     'doclang/new', 'doclang/updated',
     'doc marginnote', 'doc updated', 'doc new', 'doc new and updated'
 
+version 3.21 (2014/10/10)
+- bug fix: empty key path handling inside the 'docKey' and 'docKey*' environments was faulty
+- bug fix: wrong coloring for '\docAuxCommand' and '\docAuxCommand*'
+- bug fix: draft mode for inner boxes deactivated in v3.20
+- subtitles added
+- new macros:
+  '\tcbsubtitle'
+- new options:
+  'subtitle style', 'before skip', 'after skip', 'beforeafter',
+- library 'documentation':
+  implementation of handling macro and key names changed to accept underscores
+  several internal implementation changes
