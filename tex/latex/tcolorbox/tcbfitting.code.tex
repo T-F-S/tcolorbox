@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
+%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.21}
+\tcb@set@library@version{3.22}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -60,8 +60,11 @@
     \def\tcb@fit@warn@end{\hbadness=\tcb@cur@hbadness\relax\tcb@fit@@box}},
   fit algorithm/.is choice,
   fit algorithm/fontsize/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@fontsize},
+  fit algorithm/fontsize*/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@fontsize@star},
   fit algorithm/areasize/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@areasize},
+  fit algorithm/areasize*/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@areasize@star},
   fit algorithm/hybrid/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@hybrid},
+  fit algorithm/hybrid*/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@hybrid@star},
   fit algorithm/squeeze/.code={\let\tcbox@fitalgorithm=\tcbox@fitalgorithm@squeeze},
   spartan@fit/.style={fit algorithm=squeeze},
 }
@@ -142,7 +145,13 @@
   \fi%
 }
 
-\def\tcbox@fitalgorithm@areasize{%
+\def\tcbox@fitalgorithm@fontsize@star{%
+  \tcbox@fitalgorithm@fontsize%
+  \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@target}{\box\tcb@upperbox}}%
+  \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
+}
+
+\def\tcbox@fitalgorithm@areasize@core{%
   \pgfmathdivide{\tcb@fit@@h}{\tcb@fit@@target}%
   \pgfmathsqrt{\pgfmathresult}%
   \let\tcb@temp=\pgfmathresult%
@@ -162,6 +171,10 @@
   \fi\fi%
   %
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
+}
+
+\def\tcbox@fitalgorithm@areasize{%
+  \tcbox@fitalgorithm@areasize@core%
   \pgfmathdivide{\tcb@w@upper}{\tcb@w@upper@temp}%
   \tcbdimto\tcb@fit@@h{\pgfmathresult\dimexpr\tcb@fit@@h}%
   \ifdim\dimexpr\tcb@fit@@h>\tcb@fit@@target\relax%
@@ -172,12 +185,18 @@
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
+\def\tcbox@fitalgorithm@areasize@star{%
+  \tcbox@fitalgorithm@areasize@core%
+  \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@target}{\box\tcb@upperbox}}%
+  \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
+}
+
 \def\tcbox@fitalgorithm@squeeze{%
   \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@target}{\box\tcb@upperbox}}%
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
-\def\tcbox@fitalgorithm@hybrid{%
+\def\tcbox@fitalgorithm@hybrid@core{%
   \pgfmathdivide{\tcb@fit@@target}{\tcb@fit@@h}%
   \pgfmathsqrt{\pgfmathresult}%
   \tcbfitdim=\pgfmathresult\tcbfitdim%
@@ -192,8 +211,16 @@
     \tcbfitdim=\pgfmathresult\tcbfitdim%
     \tcb@fit@@box%
   \fi\fi%
-  %
+}
+
+\def\tcbox@fitalgorithm@hybrid{%
+  \tcbox@fitalgorithm@hybrid@core%
   \tcbox@fitalgorithm@areasize%
+}
+
+\def\tcbox@fitalgorithm@hybrid@star{%
+  \tcbox@fitalgorithm@hybrid@core%
+  \tcbox@fitalgorithm@areasize@star%
 }
 
 \def\tcb@fit@@box{%

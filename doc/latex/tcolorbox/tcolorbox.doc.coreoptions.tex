@@ -458,6 +458,19 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2014-10-31]{text width}{=\meta{length}}{style, no default}
+  Sets the text width of the upper part to \meta{length}.
+  See also \refKey{/tcb/text height}.
+\begin{dispExample}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+\begin{tcolorbox}[text width=4cm]
+This is a \textbf{tcolorbox} where the text has a width of 4cm.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
 \begin{docTcbKey}{toprule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the top rule to \meta{length}.
 \begin{dispExample}
@@ -481,7 +494,7 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
-
+\clearpage
 \begin{docTcbKey}{leftrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the left rule to \meta{length}.
 \begin{dispExample}
@@ -493,7 +506,7 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
-\clearpage
+
 \begin{docTcbKey}{rightrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the right rule to \meta{length}.
 \begin{dispExample}
@@ -517,6 +530,7 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{boxrule}{=\meta{length}}{style, no default, initially \texttt{0.5mm}}
   Sets all rules of the frame to \meta{length}, i.\,e.\ 
@@ -1180,6 +1194,21 @@ This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
 \end{dispExample}
 \end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc new=2014-10-31]{text height}{=\meta{length}}{style, no default}
+  Sets the text height to \meta{length}. This is the length from the top
+  of the upper part to the bottom of the optional lower part.
+  See also \refKey{/tcb/text width}.
+\begin{dispExample}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+\begin{tcolorbox}[text height=2cm]
+This is a \textbf{tcolorbox} where the text area has a height of 2cm.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
 \clearpage
 \begin{docTcbKey}[][doc new=2014-09-22]{height fill}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
 If set to |true|, the height of the |tcolorbox| is set to the rest of the
@@ -1671,7 +1700,7 @@ One     & Two     & Three \\\hline\hline
   of the lower part. The \meta{options} may be given as \tikzname\  picture options.
 \begin{dispExample}
 % \usepackage{tikz}
-% \usetikzlibrary{skins,listings}
+% \tcbuselibrary{skins,listings}
 \tcbset{tikz lower,listing side text,fonttitle=\bfseries,
   bicolor,colback=LightBlue!50!white,colbacklower=white,colframe=black,
   righthand width=3cm}

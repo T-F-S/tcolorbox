@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
+%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/10/10 version 3.21 text color boxes]
-\def\tcb@version{3.21}
+\ProvidesPackage{tcolorbox}[2014/10/31 version 3.22 text color boxes]
+\def\tcb@version{3.22}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -147,6 +147,7 @@
   attach title to upper/.default=,
   subtitle style/.store in=\kvtcb@subtitle@style,%
   width/.dimstore in=\kvtcb@width,
+  text width/.style={width={#1+\kvtcb@left@rule+\kvtcb@right@rule+\kvtcb@boxsep*2+\kvtcb@leftupper+\kvtcb@rightupper}},%
   boxsep/.store in=\kvtcb@boxsep,
   toprule/.code={%
     \def\kvtcb@top@rule@stand{#1}%
@@ -225,6 +226,7 @@
   lowerbox/ignored/.code={\tcb@lowerignoredtrue\tcb@lowervisiblefalse},
   natural height/.code={\let\tcb@ch=\tcb@ch@natural},
   height/.code={\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed},
+  text height/.code={\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed},
   height plus/.dimstore in=\kvtcb@height@fixed@plus,%
   height from/.style args={#1 to #2}{height={#1},height plus={#2-#1}},%
   height fill/.is choice,%
@@ -730,6 +732,11 @@
     \fi%
   \fi%
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
+}
+
+\def\tcb@ch@innerfixed{%
+  \tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+\kvtcb@top@rule+\kvtcb@bottom@rule+\tcb@h@padtitle+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom}%
+  \tcb@ch@fixed%
 }
 
 \def\tcb@saveehg#1{%
@@ -1345,6 +1352,10 @@
   \let\tcb@process@newtcolorbox@continue\tcb@new@tcolorbox%
   \tcb@process@newenvironment}
 
+\newcommand{\tcolorboxenvironment}[2]{%
+  \BeforeBeginEnvironment{#1}{\begin{tcolorbox}[savedelimiter={#1},#2]}%
+  \AfterEndEnvironment{#1}{\end{tcolorbox}}%
+}
 
 % auxiliary code to remove a leading backspace
 \newcommand{\tcb@remove@bs}[1]{%

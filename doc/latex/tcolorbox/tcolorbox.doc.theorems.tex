@@ -464,17 +464,17 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
   to use \refKey{/tcb/ams gather} in this case.
 \end{marker}
 
-\begin{docTcbKey}{ams equation upper}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2014-10-30]{ams equation upper}{}{style, no value}
   Adds an |amsmath| |equation| environment to the start and end
   of the upper part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams equation lower}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2014-10-30]{ams equation lower}{}{style, no value}
   Adds an |amsmath| |equation| environment to the start and end
   of the lower part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams equation}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2014-10-30]{ams equation}{}{style, no value}
   Adds an |amsmath| |equation| environment to the start and end
   of the upper \emph{and} lower part.
 \begin{dispExample}
@@ -484,17 +484,17 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams equation* upper}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2014-10-30]{ams equation* upper}{}{style, no value}
   Adds an |amsmath| |equation*| environment to the start and end
   of the upper part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams equation* lower}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2014-10-30]{ams equation* lower}{}{style, no value}
   Adds an |amsmath| |equation*| environment to the start and end
   of the lower part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams equation*}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2014-10-30]{ams equation*}{}{style, no value}
   Adds an |amsmath| |equation*| environment to the start and end
   of the upper \emph{and} lower part.
 \begin{dispExample}
@@ -949,3 +949,27 @@ Let's try a more conservative approach:
 \end{YetAnotherTheorem}
 \end{dispExample}
 
+
+\clearpage
+\subsection{Using other theorem environments with \texttt{tcolorbox}}\label{subsec:theorems_other}
+
+Instead of creating theorem environments with the methods described before,
+environments from other packages can be boxed with a |tcolorbox|.
+
+Environments may be created e.g. by methods from the |theorem| package or
+the |amsthm| package. \refCom{tcolorboxenvironment} can be used to put a box
+around these environments.
+
+\inputpreamblelisting{K}
+
+\begin{dispExample}
+\begin{lem}
+  \lipsum[2]
+\end{lem}
+
+\lipsum[3]
+
+\begin{proof}
+  \lipsum*[4]
+\end{proof}
+\end{dispExample}

@@ -275,4 +275,30 @@ The \xmybox[green]{quick} brown \xmybox{fox} \xmybox[blue]{jumps} over the
   An existing macro is redefined.
 \end{docCommand}
 
+\clearpage
+
+\begin{docCommand}[doc new=2014-10-20]{tcolorboxenvironment}{\marg{name}\marg{options}}
+  An existing environment \meta{name} is redefined to be boxed inside a
+  |tcolorbox| with the given \meta{options}.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+% tcbuselibrary{skins}
+\newenvironment{myitemize}{%
+  \begin{itemize}}{\end{itemize}}
+
+\tcolorboxenvironment{myitemize}{blanker,
+  before skip=6pt,after skip=6pt,
+  borderline west={3mm}{0pt}{red}}
+
+Some text.
+\begin{myitemize}
+\item Alpha
+\item Beta
+\item Gamma
+\end{myitemize}
+More text.
+\end{dispExample*}
+
+\medskip
+See further examples in \Vref{subsec:theorems_other}.
+\end{docCommand}
 

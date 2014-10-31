@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
+%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -615,7 +615,23 @@ version 3.21 (2014/10/10)
 - new macros:
   '\tcbsubtitle'
 - new options:
-  'subtitle style', 'before skip', 'after skip', 'beforeafter',
+  'subtitle style', 'before skip', 'after skip', 'beforeafter skip',
 - library 'documentation':
   implementation of handling macro and key names changed to accept underscores
   several internal implementation changes
+
+version 3.22 (2014/10/31)
+- new macro: '\tcolorboxenvironment'
+- new options:
+  'text width', 'text height'
+- library 'skins':
+  * new options: 'borderline north', 'borderline south',
+    'borderline east', 'borderline west', 'borderline horizontal', 'borderline vertical'
+- library 'breakable':
+  * internal change for compatibility with the 'perpage' option of the 'footmisc' package
+- library 'theorems':
+  * compatibility fix: The 'ams equation' options left too much vertical
+    space for the 'fleqn' case
+- library 'fitting':
+  * new 'fit algorithm' settings: 'fontsize*', 'areasize*', 'hybrid*'
+

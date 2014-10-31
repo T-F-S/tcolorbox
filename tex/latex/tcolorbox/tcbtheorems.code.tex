@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
+%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.21}
+\tcb@set@library@version{3.22}
 
 \RequirePackage{amsmath}
 
@@ -55,6 +55,22 @@
   \fi%
 }
 
+\if@fleqn%
+\tcbset{%
+  ams equation upper/.style={before upper=\tcb@hack@amsmath\equation,after upper=\endequation},%
+  ams equation lower/.style={before lower=\tcb@hack@amsmath\equation,after lower=\endequation},%
+  ams equation* upper/.style={before upper=\tcb@hack@amsmath\csname equation*\endcsname,after upper=\endequation},%
+  ams equation* lower/.style={before lower=\tcb@hack@amsmath\csname equation*\endcsname,after lower=\endequation}%
+}%
+\else%
+\tcbset{%
+  ams equation upper/.style={before upper=\tcb@hack@currenvir\equation,after upper=\endequation},%
+  ams equation lower/.style={before lower=\tcb@hack@currenvir\equation,after lower=\endequation},%
+  ams equation* upper/.style={before upper=\tcb@hack@currenvir\csname equation*\endcsname,after upper=\endequation},%
+  ams equation* lower/.style={before lower=\tcb@hack@currenvir\csname equation*\endcsname,after lower=\endequation},%
+}%
+\fi
+
 \tcbset{
   theorem/.style args={#1#2#3#4}{%
     step and label={#2}{#4},%
@@ -62,11 +78,7 @@
   math upper/.style={before upper=$\displaystyle,after upper=$},%
   math lower/.style={before lower=$\displaystyle,after lower=$},%
   math/.style={math upper,math lower},%
-  ams equation upper/.style={before upper=\tcb@hack@currenvir\equation,after upper=\endequation},%
-  ams equation lower/.style={before lower=\tcb@hack@currenvir\equation,after lower=\endequation},%
   ams equation/.style={ams equation upper,ams equation lower},%
-  ams equation* upper/.style={before upper=\tcb@hack@currenvir\csname equation*\endcsname,after upper=\endequation},%
-  ams equation* lower/.style={before lower=\tcb@hack@currenvir\csname equation*\endcsname,after lower=\endequation},%
   ams equation*/.style={ams equation* upper,ams equation* lower},%
   ams align upper/.style={before upper=\tcb@hack@amsmath\align,after upper=\endalign},%
   ams align lower/.style={before lower=\tcb@hack@amsmath\align,after lower=\endalign},%

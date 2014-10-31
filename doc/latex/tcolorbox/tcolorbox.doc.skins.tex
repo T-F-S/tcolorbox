@@ -1202,15 +1202,15 @@ Donau\-dampf\-schiff\-fahrts\-ka\-pi\-t\"ans\-m\"ut\-zen\-fran\-sen
 
 \clearpage
 \subsection{Border Line Option Keys}\label{subsec:borderline}
-The following border line options are applicable for most skins which
+The following borderline options are applicable for most skins which
 use |tikzpicture| as \refKey{/tcb/graphical environment}.
 Therefore, the skin \refSkin{standard} does not support these border lines,
 but most other skins, e.\,g.\ \refSkin{enhanced}.
 
-The border lines are independent from the normal |tcolorbox| rules.
+The borderlines are independent from the normal |tcolorbox| rules.
 They may be used with or without the \refKey{/tcb/segmentation engine}.
 
-The border lines are stackable, i.\,e.\ several different border lines can be
+The borderlines are stackable, i.\,e.\ several different border lines can be
 used on the same |tcolorbox|. They are drawn \emph{after} the box frame and box
 interior and \emph{before} overlays or watermarks.
 
@@ -1222,15 +1222,15 @@ This can be used to apply different effects.
 
 
 \begin{docTcbKey}{borderline}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
-  Adds a new border line to the stack of border lines.
-  This border line is drawn with the given \meta{width} and gets a
+  Adds a new borderline to the stack of border lines.
+  This border line is drawn with the given \meta{width} and gets an
   \meta{offset} computed from the frame outline. A positive \meta{offset} value
   moves the borderline inside the |tcolorbox| and a negative \meta{offset} value
   moves it outside without changing the bounding box.\\
   The border line is drawn along a \tikzname\  path with the given \tikzname\  \meta{options}.
   Note that the \tikzname\  |line width| option should not be used here.\\
-  The border lines adapt to the rounded corners of the |tcolorbox|. An inside border
-  line will switch to sharp corners if necessary, an outside border line will
+  The border lines adapt to the rounded corners of the |tcolorbox|. An inside
+  borderline will switch to sharp corners if necessary, an outside borderline will
   always be rounded except for \refKey{/tcb/sharp corners}.
 \begin{dispExample}
 \begin{tcolorbox}[enhanced,title=Rounded corners,fonttitle=\bfseries,boxsep=5pt,
@@ -1303,7 +1303,7 @@ This is a tcolorbox.
 
 
 \begin{docTcbKey}{no borderline}{}{no default, initially set}
-  Removes all border lines if set before.
+  Removes all borderlines if set before.
 \end{docTcbKey}
 
 
@@ -1329,6 +1329,111 @@ This is a tcolorbox.
 \end{dispExample}
 \end{docTcbKey}
 
+\clearpage
+
+\begin{marker}
+The following \emph{partial} borderlines act slightly different from the
+complete borderlines described before. They ignore rounded corner settings,
+their length is not modified by their \meta{offset}, they ignore skin settings
+but adapt to breakable boxes.
+\end{marker}
+
+\begin{docTcbKey}[][doc new=2014-10-20]{borderline north}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
+  Adds a new borderline with the given \meta{width} to the
+  north of the |tcolorbox|.
+  A positive \meta{offset} value
+  moves the borderline inside the |tcolorbox| and a negative \meta{offset} value
+  moves it outside without changing the bounding box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[enhanced,
+  borderline north={2pt}{-2pt}{red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-20]{borderline south}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
+  Adds a new borderline with the given \meta{width} to the
+  south of the |tcolorbox|.
+  A positive \meta{offset} value
+  moves the borderline inside the |tcolorbox| and a negative \meta{offset} value
+  moves it outside without changing the bounding box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[enhanced,
+  borderline south={2pt}{-2pt}{red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-20]{borderline east}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
+  Adds a new borderline with the given \meta{width} to the
+  east of the |tcolorbox|.
+  A positive \meta{offset} value
+  moves the borderline inside the |tcolorbox| and a negative \meta{offset} value
+  moves it outside without changing the bounding box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[enhanced,
+  borderline east={2pt}{-2pt}{red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-20]{borderline west}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
+  Adds a new borderline with the given \meta{width} to the
+  west of the |tcolorbox|.
+  A positive \meta{offset} value
+  moves the borderline inside the |tcolorbox| and a negative \meta{offset} value
+  moves it outside without changing the bounding box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[enhanced,
+  borderline west={2pt}{-2pt}{red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[][doc new=2014-10-20]{borderline horizontal}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
+  Adds a new borderline with the given \meta{width} to the
+  north and south of the |tcolorbox|.
+  A positive \meta{offset} value
+  moves the borderlines inside the |tcolorbox| and a negative \meta{offset} value
+  moves them outside without changing the bounding box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[blanker,top=3mm,bottom=3mm,
+   borderline horizontal={2pt}{0pt}{red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-10-20]{borderline vertical}{=\marg{width}\marg{offset}\marg{options}}{no default, initially unset}
+  Adds a new borderline with the given \meta{width} to the
+  east and west of the |tcolorbox|.
+  A positive \meta{offset} value
+  moves the borderlines inside the |tcolorbox| and a negative \meta{offset} value
+  moves them outside without changing the bounding box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[blanker,left=3mm,right=3mm,
+   borderline vertical={2pt}{0pt}{red}]
+  This is a \textbf{tcolorbox}.\\
+  My second line.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{dispExample}
+\begin{tcolorbox}[enhanced,colback=yellow!10!white,boxrule=0pt,frame hidden,
+  borderline north={1mm}{-2mm}{red},
+  borderline south={1mm}{-2mm}{blue},
+  borderline west={1mm}{-2mm}{green},
+  borderline east={1mm}{-2mm}{yellow}]
+\lipsum[1]
+\end{tcolorbox}
+\end{dispExample}
 
 \clearpage
 \subsection{Shadow Option Keys}\label{subsec:shadows}

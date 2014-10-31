@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.21 (2014/10/10)
+%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.21}
+\tcb@set@library@version{3.22}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -80,7 +80,8 @@
   \c@mpfootnote\z@%
   \let\@footnotetext\@mpfootnotetext%
   \@setminipage\tcb@hyph@fix%
-  \let\tcb@drawcolorbox=\tcb@drawcolorbox@standalone%
+  \let\tcb@drawcolorbox\tcb@drawcolorbox@standalone%
+  \let\FN@pp@footnote\@empty% disable perpage mode of 'footmisc' package
   \ignorespaces%
 }
 

@@ -393,6 +393,14 @@ are adapted.
     Other content than text is not scaled down.
     The aspect ratio is fully garanteed.
     \end{marker}
+  \item\docValue{fontsize*}:\tcbdocmarginnote{\tcbdocnew{2014-10-29}}
+    First, the \docValue{fontsize} algorithm is applied. If the font was scaled down
+    and the resulting height is too small, the box is squeezed to fit the area.
+    \begin{marker}
+    The used font has to be freely scalable for this method!
+    Other content than text may be slightly rescaled.
+    The aspect ratio cannot be fully garanteed.
+    \end{marker}
   \item\docValue{areasize}:
     The algorithm calculates the area size for the text without scaling the font.
     The text box is shaped for the needed aspect ratio in one or two
@@ -401,9 +409,24 @@ are adapted.
     The used font has not to be scalable. Every box content is scaled down.
     The aspect ratio cannot be fully garanteed.
     \end{marker}
+  \item\docValue{areasize*}:\tcbdocmarginnote{\tcbdocnew{2014-10-29}}
+    The \docValue{areasize} algorithm is applied, but if the content was scaled
+    down and the resulting height is too small, the box is squeezed to fit the area.
+    \begin{marker}
+    The used font has not to be scalable. Every box content is scaled down.
+    The aspect ratio cannot be fully garanteed.
+    \end{marker}
   \item\docValue{hybrid}:
     First, this algorithm estimates the needed font size in one or two steps.
-    Then an |areasize| fitting as above is a applied.
+    Then an \docValue{areasize} fitting as above is a applied.
+    \begin{marker}
+    The used font has to be freely scalable for this method!
+    Other content than text may be slightly rescaled.
+    The aspect ratio cannot be fully garanteed.
+    \end{marker}
+  \item\docValue{hybrid*}:\tcbdocmarginnote{\tcbdocnew{2014-10-29}}
+    First, this algorithm estimates the needed font size in one or two steps.
+    Then an \docValue{areasize*} fitting as above is a applied.
     \begin{marker}
     The used font has to be freely scalable for this method!
     Other content than text may be slightly rescaled.
@@ -417,6 +440,8 @@ are adapted.
     \end{marker}
 \end{itemize}
 
+
+\end{docTcbKey}
 \begin{dispExample}
 % \usepackage{lipsum}
 \newtcboxfit{mybox}[1]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
@@ -433,7 +458,17 @@ are adapted.
 Quality \dotfill versus \dotfill Speed
 \end{dispExample}
 
-\end{docTcbKey}
+
+\begin{dispExample}
+% \usepackage{lipsum}
+\newtcboxfit{mybox}[2]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
+  size=tight,width=7.2cm,height=5cm,nobeforeafter,
+  before upper=\textcolor{blue}{\rule{5mm}{5mm}}\ ,
+  enhanced,fonttitle=\bfseries,adjusted title=#2,fit algorithm=#1}
+
+\mybox{hybrid}{hybrid (possible gap at end)}{\lipsum[1]}\hfill
+\mybox{hybrid*}{hybrid* (no gap but possibly squeezed)}{\lipsum[1]}
+\end{dispExample}
 
 
 \clearpage
