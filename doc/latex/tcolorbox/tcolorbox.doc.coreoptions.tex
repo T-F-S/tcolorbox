@@ -445,6 +445,7 @@ This is a \textbf{tcolorbox}.
 
 \clearpage
 \subsection{Geometry}
+
 \begin{docTcbKey}{width}{=\meta{length}}{no default, initially \cs{linewidth}}
   Sets the total width of the colored box to \meta{length}.
   See also \refKey{/tcb/height}.
@@ -470,7 +471,24 @@ This is a \textbf{tcolorbox} where the text has a width of 4cm.
 \end{dispExample}
 \end{docTcbKey}
 
+\begin{docTcbKey}[][doc new=2014-11-07]{add to width}{=\meta{length}}{style, no default}
+  Adds \meta{length} to the current total width of the colored box.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{width=4cm,colback=red!5!white,
+  colframe=red!75!black}
 
+\begin{tcolorbox}
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+
+\begin{tcolorbox}[add to width=1cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+
+\clearpage
 \begin{docTcbKey}{toprule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the top rule to \meta{length}.
 \begin{dispExample}
@@ -494,7 +512,6 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
-\clearpage
 \begin{docTcbKey}{leftrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the left rule to \meta{length}.
 \begin{dispExample}
@@ -518,6 +535,7 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
+\clearpage
 \begin{docTcbKey}{titlerule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the rule below the title to \meta{length}.
 \begin{dispExample}
@@ -530,7 +548,6 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
 
 \begin{docTcbKey}{boxrule}{=\meta{length}}{style, no default, initially \texttt{0.5mm}}
   Sets all rules of the frame to \meta{length}, i.\,e.\ 
@@ -1208,8 +1225,26 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \end{dispExample}
 \end{docTcbKey}
 
-
 \clearpage
+
+\begin{docTcbKey}[][doc new=2014-11-07]{add to height}{=\meta{length}}{style, no default}
+  Adds \meta{length} to the current height of the colored box.
+  \refKey{/tcb/height} has to be set before this key is used!
+\begin{dispExample}
+\tcbset{height=1cm,
+  valign=center,width=(\linewidth-2mm)/2,
+  before=,after=\hfill,colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}
+  This box has a height of 1cm.
+\end{tcolorbox}
+\begin{tcolorbox}[add to height=1cm]
+  This box has a height of 2cm.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
 \begin{docTcbKey}[][doc new=2014-09-22]{height fill}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
 If set to |true|, the height of the |tcolorbox| is set to the rest of the
 available vertical space of the current page. Note that the |tcolorbox|
@@ -1308,7 +1343,7 @@ This is the lower part with a lot of text in several lines.
 \begin{docTcbKey}{valign}{=\meta{alignment}}{no default, initially |top|}
   If the height of a |tcolorbox| is not the natural height, |valign|
   determines the vertical \meta{alignment} of the upper part.
-  Feasible values are |top|, |center|, and |bottom|. For a box with natural
+  Feasible values are \docValue{top},  \docValue{center}, and  \docValue{bottom}. For a box with natural
   height, these values are meaningless.
 \begin{dispExample}
 \tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
@@ -1331,13 +1366,14 @@ colframe=blue!75!black,colback=white,height=2cm}
 
 
 \clearpage
-\begin{docTcbKey}{equal height group}{=\meta{id}}{no default}
+\begin{docTcbKey}[][doc updated=2014-11-07]{equal height group}{=\meta{id}}{no default}
   Boxes which are members of an |equal height group| will all get the
   same height, i.\,e. the maximum of all their natural heights. The
   \meta{id} serves to distinguish between different height groups.
-  This \meta{id} should contain only characters which are feasible
-  for \TeX\ macro names, typically alphabetic characters but no numerals
-  and spaces. Note that you have to compile twice to see changes and
+  %This \meta{id} should contain only characters which are feasible
+  %for \TeX\ macro names, typically alphabetic characters but no numerals
+  %and spaces.
+  Note that you have to compile twice to see changes and
   that height groups are global definitions.
 
 
@@ -2254,14 +2290,78 @@ This behavior is controlled by the keys |before| and |after|.
 \end{dispExample}
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}{baseline}{=\meta{length}}{no default, initially |0pt|}
   Used to set the |\pgfsetbaseline| value of the resulting |tcolorbox|.
+\begin{dispExample}
+\tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
+Some text\dotfill
+\begin{tcolorbox}[baseline=3mm]
+One line.
+\end{tcolorbox}
+\begin{tcolorbox}[baseline=3mm]
+First line.\\Second line.
+\end{tcolorbox}
+\end{dispExample}
 \end{docTcbKey}
 
-\clearpage
 
-\begin{docTcbKey}[][doc new=2014-10-10]{before skip}{=\meta{length}}{style, no default}
+\begin{docTcbKey}[][doc new=2014-10-10]{box align}{=\meta{alignment}}{style, no default, initially |bottom|}
+  Used to set the \refKey{/tcb/baseline} value of the resulting |tcolorbox|.
+  Feasible values for \meta{alignment} are:
+  \begin{itemize}
+  \item\docValue{bottom}: alignment with the box bottom,
+  \item\docValue{top}: alignment with the box top,
+  \item\docValue{center}: alignment with the box center,
+  \item\docValue{base}: alignment with the box content base. This option
+    is not applicable for a \refEnv{tcolorbox} but for a \refCom{tcbox} only.
+    It is an alias for \refKey{/tcb/tcbox raise base}.
+  \end{itemize}
+
+\begin{dispExample}
+\tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
+Some text\dotfill
+\begin{tcolorbox}[box align=bottom]
+One line.
+\end{tcolorbox}
+\begin{tcolorbox}[box align=bottom]
+First line.\\Second line.
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+\tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
+Some text\dotfill
+\begin{tcolorbox}[box align=top]
+One line.
+\end{tcolorbox}
+\begin{tcolorbox}[box align=top]
+First line.\\Second line.
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+\tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
+Some text\dotfill
+\begin{tcolorbox}[box align=center]
+One line.
+\end{tcolorbox}
+\begin{tcolorbox}[box align=center]
+First line.\\Second line.
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+\tcbset{colframe=red!50!white,nobeforeafter}
+Some text\dotfill
+\tcbox[nobeforeafter,box align=base]{One line}
+\tcbox[nobeforeafter,box align=base,size=fbox]{Another line}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-11-07}]{before skip}{=\meta{length}}{style, no default}
   Inserts some vertical space of the given \meta{length} before the colored box.
   This style sets \refKey{/tcb/before}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
@@ -2273,7 +2373,7 @@ Some text.
 \end{dispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2014-10-10]{after skip}{=\meta{length}}{style, no default}
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-11-07}]{after skip}{=\meta{length}}{style, no default}
   Inserts some vertical space of the given \meta{length} after the colored box.
   This style sets \refKey{/tcb/after}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
@@ -2299,6 +2399,50 @@ Some text.
 \end{tcolorbox}
 \end{dispExample*}
 \end{docTcbKey}
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2014-11-07]{left skip}{=\meta{length}}{style, no default, initially |0mm|}
+  Inserts some horizontal space of the given \meta{length} before the colored box.
+  This style sets \refKey{/tcb/grow to left by} with the negated \meta{length},
+  i.e. the bounding box and box width are changed.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\noindent\rule{\linewidth}{2pt}
+
+\begin{tcolorbox}[left skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-07]{right skip}{=\meta{length}}{style, no default, initially |0mm|}
+  Inserts some horizontal space of the given \meta{length} after the colored box.
+  This style sets \refKey{/tcb/grow to right by} with the negated \meta{length},
+  i.e. the bounding box and box width are changed.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\noindent\rule{\linewidth}{2pt}
+
+\begin{tcolorbox}[right skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-10]{leftright skip}{=\meta{length}}{style, no default}
+  Inserts some horizontal space of the given \meta{length} before \emph{and} after the colored box.
+  This style changes the bounding box and the box width.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\noindent\rule{\linewidth}{2pt}
+
+\begin{tcolorbox}[leftright skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
 
 
 \clearpage
@@ -2432,9 +2576,9 @@ This is a \textbf{tcolorbox}.
 
 
 \begin{docTcbKey}{grow to left by}{=\meta{length}}{no default, initially |0mm|}
-  Enlarges the current box size by \meta{length} and
+  Enlarges the current box width by \meta{length} and
   enlarges (shrinks) the bounding box distance to the left side of the box by
-  $-$\meta{length}.
+  $-$\meta{length}. Also see \refKey{/tcb/left skip}.
 \begin{dispExample}
 \tcbset{colframe=blue!75!black,colback=white}
 
@@ -2445,9 +2589,9 @@ This is a \textbf{tcolorbox} with a width of 7cm.
 \end{docTcbKey}
 
 \begin{docTcbKey}{grow to right by}{=\meta{length}}{no default, initially |0mm|}
-  Enlarges the current box size by \meta{length} and
+  Enlarges the current box width by \meta{length} and
   enlarges (shrinks) the bounding box distance to the right side of the box by
-  $-$\meta{length}.
+  $-$\meta{length}. Also see \refKey{/tcb/right skip}.
 \begin{dispExample}
 \tcbset{colframe=blue!75!black,colback=white}
 
@@ -2724,13 +2868,13 @@ not forbidden.
 \begin{tcboutputlisting}
 % \usepackage{lipsum}
 % \tcbuselibrary{skins,breakable}
-\tcbset{enhanced jigsaw,breakable,colframe=red!75!black,fonttitle=\bfseries,
+\tcbset{colframe=red!75!black,fonttitle=\bfseries,
   colback=red!5!white,
   every box/.style={enhanced,watermark text=\thetcblayer,
     before=\par\smallskip,after=\par\smallskip},
   every box on layer 2/.style={reset,every box,colback=yellow!10!white,
     drop fuzzy shadow}}
-\begin{tcolorbox}[title=Layer 1 Box]
+\begin{tcolorbox}[enhanced jigsaw,breakable,title=Layer 1 Box]
 Here comes a footnote\footnote{Footnote from layer 1 box}.
 \lipsum[2]
   \begin{tcolorbox}[title=Layer 2 Box]
@@ -3114,6 +3258,8 @@ do \emph{not} use |\tikzexternaldisable| in front of the |tcolorbox|.
 Sets (nearly) all |tcolorbox| settings (including loaded libraries) back to their default values
 \emph{plus} any settings given by \refCom{tcbsetforeverylayer}.
 \refKey{/tcb/savedelimiter} and \refKey{/tcb/capture} keep their values.
+Also, all raster values (see \Vref{sec:raster}) are not resetted.
+
 This option is useful for boxes in boxes where the inner box should not inherit
 the settings of the outer box.
 Note that for boxes inside boxes the |reset| is done automatically, if the

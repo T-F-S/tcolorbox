@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -105,8 +105,8 @@
 \renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
 \renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
 
-\def\version{3.22}%
-\def\datum{2014/10/31}%
+\def\version{3.30}%
+\def\datum{2014/11/17}%
 \makeindex
 
 \hypersetup{
@@ -141,6 +141,8 @@
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
     tcbfitdim,tcbfitsteps,
+    % raster
+    thetcbrasternum,tcbitem,
     % theorems
     tcbmaketheorem,tcboxmath,tcbhighmath,thetcbcounter,newtcbtheorem,
     % documentation
@@ -152,6 +154,7 @@
     refCom,refEnv,refKey,
     tcbmakedocSubKey,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
     % skins
+    tcbincludegraphics,tcbincludepdf,pdfpages,imagepage,imagepath,imagename,
     tcbline,tcboxedtitleheight,tcboxedtitlewidth,
     tcbsettowidthofnode,tcbsetmacrotowidthofnode,tcbsettoheightofnode,tcbsetmacrotoheightofnode,
     % xparse
@@ -325,19 +328,22 @@
 
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.coreoptions}
+%\includeonly{tcolorbox.doc.quickref}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \include{tcolorbox.doc.abstract}
 \include{tcolorbox.doc.intro}
+\include{tcolorbox.doc.quickref}
 \include{tcolorbox.doc.coremacros}
 \include{tcolorbox.doc.coreoptions}
 \include{tcolorbox.doc.initoptions}
 \include{tcolorbox.doc.verbatim}
 \include{tcolorbox.doc.technical}
 \include{tcolorbox.doc.skins}
+\include{tcolorbox.doc.graphics}
 \include{tcolorbox.doc.filling}
+\include{tcolorbox.doc.raster}
 \include{tcolorbox.doc.listings}
 \include{tcolorbox.doc.theorems}
 \include{tcolorbox.doc.breakable}

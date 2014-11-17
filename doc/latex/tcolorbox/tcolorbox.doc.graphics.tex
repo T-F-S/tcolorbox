@@ -1,0 +1,147 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Inclusion of Boxed Image Files}\label{sec:includegraphics}
+The \mylib{skins} library adds some commands to conveniently include
+boxed image files.
+For the following macros and options, the \mylib{skins} library has to be loaded
+by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{skins}
+\end{dispListing}
+
+See \Vref{sec:skins} for the documentation of all other options of the \mylib{skins} library.
+
+\subsection{Macros}
+
+\begin{docCommand}[doc new=2014-11-14]{tcbincludegraphics}{\oarg{options}\marg{file name}}
+  In principle, this macro includes an image file denoted by \meta{file name}
+  using the standard |\includegraphics| and puts it into a \refEnv{tcolorbox}.
+  The \meta{options} are |tcolorbox| keys to set up the colored box.
+  Use \refKey{/tcb/graphics options} to specify options for the underlying
+  |\includegraphics|.
+  Some |tcolorbox| option keys are automatically set, namely \refKey{/tcb/enhanced} and
+  options to center the image inside the box.
+
+  The sizing of the included image is done depending on the following:
+  \begin{itemize}
+  \item If a \refKey{/tcb/width} is specified, but no fixed \refKey{/tcb/height},
+    the image is sized to fill the inner width of the box. The height of the
+    box adapts to the image.
+  \item If a fixed \refKey{/tcb/height} is specified, the image is sized to fill
+    the fixed inner area of the box.
+  \item If the \refKey{/tcb/capture} mode \refKey{/tcb/hbox} is specified,
+    the image is sized according to given |\includegraphics| options only.
+    The box adapts to the image.
+  \end{itemize}
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=3,raster force size=false,size=fbox,
+    colframe=red!50!black,colback=red!20!black,
+    fonttitle=\bfseries,center title,drop fuzzy shadow]
+  \tcbincludegraphics[title=Normal]{goldshade.png}
+  \tcbincludegraphics[title=Fixed height,height=3cm]{goldshade.png}
+  \tcbincludegraphics[title=hbox mode,hbox,graphics options={width=3cm}]
+    {goldshade.png}
+\end{tcbraster}
+\end{dispExample}
+
+\clearpage
+The auxiliary macro \docAuxCommand{imagename} may be used inside
+\refCom{tcbincludegraphics} to display the name of the file.
+\docAuxCommand{imagename} is already detokenized and is allowed to
+included special characters like the underscore. Note that an appropriate
+font is required to display such characters.
+%\docAuxCommand{imagepath}%
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[size=fbox,
+    colframe=red!50!black,colback=red!20!black,
+    fonttitle=\bfseries\ttfamily,center title,drop fuzzy shadow]
+  \tcbincludegraphics[title=\imagename]{goldshade.png}
+  \tcbincludegraphics[finish={
+    \node[fill=white,fill opacity=0.5,text opacity=1]
+    at (frame.center) {\bfseries\ttfamily\imagename};}]{blueshade.png}
+\end{tcbraster}
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}[doc new=2014-11-14]{tcbincludepdf}{\oarg{options}\marg{file name}}
+This is a generalized version of \refCom{tcbincludegraphics} which allows
+to include a complete PDF file denoted by \meta{file name}.
+Every page is boxed into an own \refEnv{tcolorbox} customized by the
+given \meta{options}. It is reasonable to put such a series of boxes
+inside a \refEnv{tcbraster} for alignment.
+
+Use \refKey{/tcb/graphics pages} to use a selection of pages instead of
+using the whole file.
+
+The auxiliary macro \docAuxCommand{imagepage} may be used inside
+\refCom{tcbincludepdf} to display the current page number.
+\end{docCommand}
+
+
+\begin{dispListing}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=3,colframe=blue,colback=white,
+  colbacktitle=blue!50!white,fonttitle=\small\bfseries\ttfamily,
+  left=0pt,right=0pt,top=0pt,bottom=0pt,boxsep=0pt,boxrule=0.6pt,
+  toptitle=1mm,bottomtitle=1mm,drop lifted shadow,center title,
+  graphics pages={1,...,6},title={\imagename\ [\imagepage]}]
+\tcbincludepdf{tcolorbox-example.pdf}
+\end{tcbraster}
+\end{dispListing}
+{\tcbusetemp}
+
+
+\clearpage
+\subsection{Option Keys}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{graphics options}{=\meta{options}}{no default, initially empty}
+Used for \refCom{tcbincludegraphics} and \refCom{tcbincludepdf} to
+specify |\includegraphics| \meta{options}.
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=3,size=fbox,raster equal height,
+    colframe=red!50!black,colback=red!20!black,drop fuzzy shadow]
+  \tcbincludegraphics{goldshade.png}
+  \tcbincludegraphics[graphics options={angle=20}]{goldshade.png}
+  \tcbincludegraphics[graphics options={viewport=0cm 0cm 8cm 4cm,clip}]
+    {goldshade.png}
+\end{tcbraster}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-14]{graphics directory}{=\meta{directory}}{no default, initially empty}
+Used for \refCom{tcbincludegraphics} and \refCom{tcbincludepdf} to
+specify a file system \meta{directory} where the image files are located.
+\begin{dispListing}
+\tcbset{
+  graphics directory={.},
+  graphics directory={examples},
+  graphics directory={../../pictures},
+}
+\end{dispListing}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{graphics pages}{=\meta{selection}}{no default, initially |1,...,|\cs{pdfpages}}
+Used for \refCom{tcbincludepdf} to specify a \meta{selection} of pages to be included.
+The largest page number is accessible by \docAuxCommand{pdfpages}.
+The \meta{selection} has to be given using the |\foreach| syntax of \tikzname.
+\begin{dispListing}
+\tcbset{
+  graphics pages={1,3,7},
+  graphics pages={1,...,10},
+  graphics pages={1,3,...,18},
+  graphics pages={100,...,\pdfpages},
+}
+\end{dispListing}
+\end{docTcbKey}
+
+
+

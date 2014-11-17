@@ -1,0 +1,91 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Quick Reference}\label{sec:quickref}
+
+\makeatletter
+\begin{tcolorbox}[enhanced,title={tcolorbox},
+  left skip=1cm,right skip=1cm,before skip=1cm,after skip=1cm,
+  colframe=red!50!black!30!white,colback=red!10!white!40!white,
+  colbacktitle=red!30!white,colupper=black!20!white,
+  code={\appto\kvtcb@shadow{%
+    \path[fill=yellow!20!white,draw=yellow!50!black,dashed,line width=0.4pt]
+      ([xshift=-1cm,yshift=-1cm]frame.south west) rectangle
+      ([xshift=1cm,yshift=1cm]frame.north east);
+    }},
+  finish={
+  \draw[thick,<->] ([yshift=-1.3cm]frame.north west)-- node[below]{\refKey{/tcb/width}}
+    ([yshift=-1.3cm]frame.north east);
+  \draw[thick,<->] ([xshift=-15mm]frame.north east)-- node[left,pos=0.35]{\refKey{/tcb/height}}
+    ([xshift=-15mm]frame.south east);
+  \draw[thick,<->] (frame.north)-- node[right]{\refKey{/tcb/before}, \refKey{/tcb/before skip}} +(0,1);
+  \draw[thick,<->] (frame.south)-- node[right]{\refKey{/tcb/after}, \refKey{/tcb/after skip}} +(0,-1);
+  \draw[thick,<->] (frame.west)-- node[below right,align=center]{\refKey{/tcb/left skip}\\\refKey{/tcb/grow to left by}}+(-1,0);
+  \draw[thick,<->] (frame.east)-- node[below left,align=center]{\refKey{/tcb/right skip}\\\refKey{/tcb/grow to right by}}+(1,0);
+  }
+    ]
+  \lipsum[1]
+\end{tcolorbox}
+\makeatother
+
+\bigskip
+\bigskip
+
+\begin{tcolorbox}[enhanced,title={tcolorbox},before skip=5mm,after skip=5mm,
+  colframe=red!50!black!30!white,colback=red!10!white!40!white,
+  colbacktitle=red!30!white,coltext=black!20!white,
+  finish={
+  \coordinate (A) at ([yshift=-0.25mm]frame.north);
+  \draw[thick,<-] (A) -- +(-1,0.3) node[left]{\refKey{/tcb/toprule}};
+  \coordinate (A) at ([yshift=-0.75mm]A);
+  \draw[thick,<-] (A) -- +(1,0) node[right]{\refKey{/tcb/boxsep}};
+  \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/toptitle}};
+  %
+  \coordinate (A) at ([yshift=1.00mm]interior.north);
+  \draw[thick,<-] (A) -- +(1,0) node[right]{\refKey{/tcb/boxsep}};
+  \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/bottomtitle}};
+  \coordinate (A) at ([yshift=0.25mm]interior.north);
+  \draw[thick,<-] (A) -- +(-1,-0.4) node[left]{\refKey{/tcb/titlerule}};
+  \coordinate (A) at ([yshift=-0.25mm]interior.north);
+  \draw[thick,<-] (A) -- +(1,-0.2) node[right]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([yshift=-1.5mm]A);
+  \draw[thick,<-] (A) -- +(-1,-0.6) node[left]{\refKey{/tcb/top}};
+  %
+  \coordinate (A) at ([yshift=2.0mm]segmentation);
+  \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/middle}};
+  \coordinate (A) at ([yshift=0.5mm]segmentation);
+  \draw[thick,<-] (A) -- +(1,0.2) node[right]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([yshift=-0.5mm]segmentation);
+  \draw[thick,<-] (A) -- +(1,-0.2) node[right]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([yshift=-2.0mm]segmentation);
+  \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/middle}};
+  %
+  \coordinate (A) at ([yshift=0.25mm]frame.south);
+  \draw[thick,<-] (A) -- +(-1,-0.3) node[left]{\refKey{/tcb/bottomrule}};
+  \coordinate (A) at ([yshift=0.75mm]A);
+  \draw[thick,<-] (A) -- +(1,0) node[right]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([yshift=2.5mm]A);
+  \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/bottom}};
+  %
+  \coordinate (A) at ([xshift=0.25mm]frame.west);
+  \draw[thick,<-] (A) -- +(-0.3,-1) node[below]{\refKey{/tcb/leftrule}};
+  \coordinate (A) at ([xshift=0.75mm]A);
+  \draw[thick,<-] (A) -- +(0,1) node[above]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([xshift=2.5mm]A);
+  \draw[thick,<-] (A) -- +(0.7,0.5) node[above right]{\refKey{/tcb/left}};
+  %
+  \coordinate (A) at ([xshift=-0.25mm]frame.east);
+  \draw[thick,<-] (A) -- +(0.3,-1) node[below]{\refKey{/tcb/rightrule}};
+  \coordinate (A) at ([xshift=-0.75mm]A);
+  \draw[thick,<-] (A) -- +(0,1) node[above]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([xshift=-2.5mm]A);
+  \draw[thick,<-] (A) -- +(-0.7,0.5) node[above left]{\refKey{/tcb/right}};
+  }
+    ]
+  \lipsum[1]
+  \tcblower
+  \lipsum[2]
+\end{tcolorbox}
+
+
+

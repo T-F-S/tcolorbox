@@ -85,13 +85,19 @@ The following keys are used inside |\tcbuselibrary| respectively
 \begin{docTcbKey}[library]{skins}{}{\mylib{skins}}
   Loads the package |tikz| \cite{tantau:2013a} and provides additional
   styles (skins) for the appearance of the colored boxes; see
-  Section \ref{sec:skins} from page \pageref{sec:skins}.
+  Section~\ref{sec:skins} from page~\pageref{sec:skins}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{raster}{}{\mylib{raster}}
+  Provides additional macros and options for typesetting multiple
+  boxes arranged in a kind of raster;
+  see Section~\ref{sec:raster} from page~\pageref{sec:raster}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{listings}{}{\mylib{listings}}
   Loads the package |listings| \cite{heinz:2013a} and provides additional
-  macros for typesetting listings which are described in Section \ref{sec:listings}
-  from page \pageref{sec:listings}.
+  macros for typesetting listings which are described in Section~\ref{sec:listings}
+  from page~\pageref{sec:listings}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{listingsutf8}{}{\mylib{listingsutf8}}
@@ -99,7 +105,7 @@ The following keys are used inside |\tcbuselibrary| respectively
   |listingsutf8| \cite{oberdiek:2011a} for UTF-8 support.
   This is a variant of the library \mylib{listings}
   and is described in Section \ref{sec:listings}
-  from page \pageref{sec:listings}.
+  from page~\pageref{sec:listings}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{minted}{}{\mylib{minted}}
@@ -110,43 +116,43 @@ The following keys are used inside |\tcbuselibrary| respectively
 
 \begin{docTcbKey}[library]{theorems}{}{\mylib{theorems}}
   Provides additional
-  macros for typesetting theorems which are described in Section \ref{sec:theorems}
-  from page \pageref{sec:theorems}.
+  macros for typesetting theorems which are described in Section~\ref{sec:theorems}
+  from page~\pageref{sec:theorems}.
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[library]{breakable}{}{\mylib{breakable}}
   Provides support for automatic box breaking from one page to another;
-  see Section \ref{sec:breakable} from page \pageref{sec:breakable}.
+  see Section~\ref{sec:breakable} from page~\pageref{sec:breakable}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{fitting}{}{\mylib{fitting}}
   Provides support for font size adaption of the box content to
   the box dimensions;
-  see Section \ref{sec:fitting} from page \pageref{sec:fitting}.
+  see Section~\ref{sec:fitting} from page~\pageref{sec:fitting}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{hooks}{}{\mylib{hooks}}
   Extends several option keys to 'hookable' keys;
-  see Section \ref{sec:hooks} from page \pageref{sec:hooks}.
+  see Section~\ref{sec:hooks} from page~\pageref{sec:hooks}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{xparse}{}{\mylib{xparse}}
   Provides document command production with |xparse| for |tcolorbox|;
-  see Section \ref{sec:xparse} from page \pageref{sec:xparse}.
+  see Section~\ref{sec:xparse} from page~\pageref{sec:xparse}.
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[library]{documentation}{}{\mylib{documentation}}
   Provides additional
   macros for typesetting \LaTeX\ documentations
-  which are described in Section \ref{sec:documentation}
-  from page \pageref{sec:documentation}.
+  which are described in Section~\ref{sec:documentation}
+  from page~\pageref{sec:documentation}.
 \end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}[library]{many}{}{style, no value}
-  Loads the libraries \mylib{skins}, \mylib{breakable}, \mylib{hooks},
+  Loads the libraries \mylib{skins}, \mylib{breakable}, \mylib{raster}, \mylib{hooks},
   \mylib{theorems}, \mylib{fitting}, and \mylib{xparse}.
   Use this shortcut, if you want to use all features of |tcolorbox|
   with exception of typesetting listings and using
@@ -173,29 +179,23 @@ The following keys are used inside |\tcbuselibrary| respectively
   \begin{tcolorbox}[beamer,adjusted title=Basic Features,colframe=blue!50!black,colback=blue!10!white]
   Base package
   \end{tcolorbox}
-  \tcbset{every box on layer 2/.style={reset,nobeforeafter,width=\linewidth/3-2mm,
-    equal height group=packageoverview,beamer,colframe=blue!50!black,colback=blue!10!white}}
-  \vspace{2mm}
-  \begin{tcolorbox}[adjusted title=Advanced Features]
+  \begin{tcbitemize}[raster columns=3,raster before skip=2mm,raster after skip=0pt,
+    raster equal height,beamer,colframe=blue!50!black,colback=blue!10!white]
+  \tcbitem[adjusted title=Advanced Features]
     \mylib{skins}\\
+    \mylib{raster}\\
     \mylib{breakable}\\
     \mylib{theorems}\\
     \mylib{fitting}\\
     \mylib{hooks}\\
     \mylib{xparse}
-  \end{tcolorbox}
-  \hfill
-  \begin{tcolorbox}[adjusted title=Listings]
+  \tcbitem[adjusted title=Advanced Listings]
     \mylib{listings}\\
     \mylib{listingsutf8}
     \tcblower
     \mylib{minted}
-  \end{tcolorbox}
-  \hfill
-  \begin{tcolorbox}[adjusted title=Documentation]
+  \tcbitem[adjusted title=Documentation]
     \mylib{documentation}
-  \end{tcolorbox}
+  \end{tcbitemize}
 \end{tcolorbox}
-
-
 

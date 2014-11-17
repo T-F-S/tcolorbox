@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,9 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.22}
+\tcb@set@library@version{3.30}
+
+\RequirePackage{pdftexcmds}
 
 \def\tcbuselistingtext{\input{\kvtcb@listingfile}}%
 \def\tcbuselistingcomment{\kvtcb@listingcomment}%
@@ -38,21 +40,23 @@
 
 \newenvironment{tcb@lower@outside}[1]{%
   \tcbset{savedelimiter=tcb@lower@outside}\tcb@minipage{#1}%
-  \color{\kvtcb@collower}\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}%
+  \color{tcbcol@lower}\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}%
   {\unskip\kvtcb@after@lower\endminipage}
+
+\def\tcb@use@listing@other@reset{%
+  \tcbset{every box on layer 1/.style={reset,every box}}%
+  \tcb@use@listing@other}
 
 \def\tcb@use@lower@outside#1{%
   \setbox\z@=\hbox{\begin{tcb@lower@outside}{#1}%
-    \stepcounter{tcblayer}%
-    \tcb@use@listing@other%
-    \addtocounter{tcblayer}{-1}%
+    \tcb@use@listing@other@reset%
   \end{tcb@lower@outside}}%
   \tcbdimto{\tcb@temp@wd}{\wd\z@}%
   \unhbox\z@%
 }
 
 \def\tcb@inputlisting@out@otherAboveListing{%
-  \kvtcb@beforebox\noindent%
+  {\kvtcb@beforebox}\noindent%
   \iftcb@lowervisible%
     \tcb@use@lower@outside{\kvtcb@width}%
     \par\vskip-\parskip\vspace*{\kvtcb@middle}\noindent%
@@ -60,13 +64,28 @@
   \begin{tcolorbox}[before=,savedelimiter=tcolorbox]\tcbuselistinglisting\end{tcolorbox}%
 }
 
+\def\tcb@inputlisting@out@otherAboveListing@Decoupled{%
+  \iftcb@lowervisible%
+    {\par\tcb@use@listing@other@reset\par}%
+  \fi%
+  \begin{tcolorbox}[savedelimiter=tcolorbox]\tcbuselistinglisting\end{tcolorbox}%
+}
+
 \def\tcb@inputlisting@out@listingAboveOther{%
   \begin{tcolorbox}[after=,savedelimiter=tcolorbox]\tcbuselistinglisting\end{tcolorbox}%
   \iftcb@lowervisible\par\vskip-\parskip\vspace*{\kvtcb@middle}\noindent%
     \tcb@use@lower@outside{\kvtcb@width}%
   \fi%
-  \kvtcb@afterbox%
+  {\kvtcb@afterbox}%
 }
+
+\def\tcb@inputlisting@out@listingAboveOther@Decoupled{%
+  \begin{tcolorbox}[savedelimiter=tcolorbox]\tcbuselistinglisting\end{tcolorbox}%
+  \iftcb@lowervisible%
+    {\par\tcb@use@listing@other@reset\par}%
+  \fi%
+}
+
 
 \newenvironment{tcb@outside@environment}{%
   \tcb@before@unbroken%
@@ -129,6 +148,17 @@
   \begin{tcolorbox}[capture=\tcb@listing@capture,savedelimiter=tcolorbox]\tcb@listing@process\end{tcolorbox}%
 }
 
+\long\def\tcb@run@system@command#1{%
+  \ifcase\pdf@shellescape\relax
+    \tcb@error{You must invoke LaTeX with the -shell-escape flag}{Pass the -shell-escape flag to LaTeX.}%
+  \or\or
+    \tcb@warning{System call with restricted shell escape may fail}%
+  \fi%
+  \filename@parse{\kvtcb@listingfile}\immediate\write18{#1}%
+  \relax%
+}
+
+
 \tcbset{%
   listing file/.store in=\kvtcb@listingfile,%
   comment/.store in=\kvtcb@listingcomment,%
@@ -141,10 +171,13 @@
     \let\tcb@use@listing@other=#2},%
   listing only/.style={listing@process@inside={\tcb@listing@listing}{\tcbuselistingtext}},%
   text only/.style={listing@process@inside={\tcbuselistingtext}{\tcbuselistingtext}},%
+  comment only/.style={listing@process@inside={\tcbuselistingcomment}{\tcbuselistingcomment}},%
   listing and text/.style={listing@process@inside={\tcb@listing@listingAndOther}{\tcbuselistingtext}},%
   text and listing/.style={listing@process@inside={\tcb@listing@otherAndListing}{\tcbuselistingtext}},%
   text above listing/.style={listing@process@outside={\tcb@inputlisting@out@otherAboveListing}{\tcbuselistingtext}},%
+  text above* listing/.style={listing@process@outside={\tcb@inputlisting@out@otherAboveListing@Decoupled}{\tcbuselistingtext}},%
   listing above text/.style={listing@process@outside={\tcb@inputlisting@out@listingAboveOther}{\tcbuselistingtext}},%
+  listing above* text/.style={listing@process@outside={\tcb@inputlisting@out@listingAboveOther@Decoupled}{\tcbuselistingtext}},%
   text outside listing/.style={listing@process@outside={\tcb@inputlisting@out@otherAndListing}{\tcbuselistingtext}},%
   listing outside text/.style={listing@process@outside={\tcb@inputlisting@out@listingAndOther}{\tcbuselistingtext}},%
   text side listing/.style={sidebyside,text and listing},%
@@ -152,28 +185,62 @@
   listing and comment/.style={listing@process@inside={\tcb@listing@listingAndOther}{\tcbuselistingcomment}},%
   comment and listing/.style={listing@process@inside={\tcb@listing@otherAndListing}{\tcbuselistingcomment}},%
   comment above listing/.style={listing@process@outside={\tcb@inputlisting@out@otherAboveListing}{\tcbuselistingcomment}},%
+  comment above* listing/.style={listing@process@outside={\tcb@inputlisting@out@otherAboveListing@Decoupled}{\tcbuselistingcomment}},%
   listing above comment/.style={listing@process@outside={\tcb@inputlisting@out@listingAboveOther}{\tcbuselistingcomment}},%
+  listing above* comment/.style={listing@process@outside={\tcb@inputlisting@out@listingAboveOther@Decoupled}{\tcbuselistingcomment}},%
   comment outside listing/.style={listing@process@outside={\tcb@inputlisting@out@otherAndListing}{\tcbuselistingcomment}},%
   listing outside comment/.style={listing@process@outside={\tcb@inputlisting@out@listingAndOther}{\tcbuselistingcomment}},%
   comment side listing/.style={sidebyside,comment and listing},%
   listing side comment/.style={sidebyside,listing and comment},%
   listing engine/.is choice,%
-  image comment/.style 2 args={comment={\includegraphics[#1]{#2}}},
+  image comment/.style 2 args={comment={\includegraphics[#1]{#2}}},%
+  comment style/.store in=\kvtcb@commentstyle,%
+  tcbimage comment/.style={comment={\let\tcb@trans@commentstyle\kvtcb@commentstyle\tcbincludegraphics[code={\pgfkeysalsofrom\tcb@trans@commentstyle}]{#1}}},
+  pdf extension/.store in=\kvtcb@pdf@extension,%
+  pdf comment/.style={comment={\let\tcb@trans@commentstyle\kvtcb@commentstyle\filename@parse{#1}\edef\tcb@trans@commentfile{\filename@area\filename@base.\kvtcb@pdf@extension}%
+    \begin{tcbraster}[raster halign=center,sharp corners,size=tight,colback=white,code={\pgfkeysalsofrom\tcb@trans@commentstyle}]\tcbincludepdf{\tcb@trans@commentfile}\end{tcbraster}}},
+  pdf comment/.default={\kvtcb@listingfile},
+  process code/.code={\appto\tcb@listing@process@hook{#1}},%
+  no process/.code={\def\tcb@listing@process@hook{}},%
+  compilable listing/.style={listing file={\jobname-listing-\thetcblistingcount}},
+  run system command/.style={process code={\tcb@run@system@command{#1}}},%
+  run@system@command/.style 2 args={run system command={#1\space#2\space\filename@area\filename@base}},%
+  run pdflatex/.style={run@system@command={pdflatex}{#1}},%
+  run xelatex/.style={run@system@command={xelatex}{#1}},%
+  run lualatex/.style={run@system@command={lualatex}{#1}},%
+  run makeindex/.style={run@system@command={makeindex}{#1}},%
+  run bibtex/.style={run@system@command={bibtex}{#1}},%
+  run biber/.style={run@system@command={biber}{#1}},%
+  run arara/.style={run@system@command={arara}{#1}},%
+  run latex/.style={run@system@command={latex}{#1}},%
+  run dvips/.style={run@system@command={dvips}{#1}},%
+  run ps2pdf/.style={run system command={ps2pdf\space#1\space\filename@area\filename@base.ps}},%
 }
 
+\def\tcbinputlisting@core{%
+  \tcb@listing@process@hook%
+  \let\tcb@listing@capture=\kvtcb@capture%
+  \tcb@inputlisting%
+}
+
+\newcounter{tcblisting}
+
 \newenvironment{tcblisting}[1]{%
-  \def\tcblisting@box{\tcbinputlisting{#1}}%
+  \stepcounter{tcblisting}\edef\thetcblistingcount{\thetcblisting}%
+  \tcb@layer@pushup%
+  \tcb@apply@box@options{capture=minipage,#1}%
   \begingroup\tcbverbatimwrite{\kvtcb@listingfile}%
 }{\endtcbverbatimwrite\endgroup%
-  \tcblisting@box%
+  \tcbinputlisting@core%
 }
 
 \long\def\tcbinputlisting#1{%
   \begingroup%
+  \stepcounter{tcblisting}\edef\thetcblistingcount{\thetcblisting}%
   \tcb@layer@pushup%
-  \tcbset{capture=minipage,#1}\tcb@afteroptions@hook%
-  \let\tcb@listing@capture=\kvtcb@capture%
-  \tcb@inputlisting\endgroup%
+  \tcb@apply@box@options{capture=minipage,#1}%
+  \tcbinputlisting@core%
+  \endgroup%
 }
 
 \newenvironment{tcboutputlisting}{%
@@ -227,8 +294,8 @@
 \tcbset{%
   reset@listingscore/.style={%
     listing file=\jobname.listing,
-    comment=,
-    listing and text,
+    comment=, listing and text,
+    no process,comment style=,pdf extension=pdf,
   },
   initialize@reset=reset@listingscore,
 }

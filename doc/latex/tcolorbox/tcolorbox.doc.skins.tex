@@ -2564,27 +2564,26 @@ This box looks like a box provided by the \texttt{beamer} class.
 \end{docTcbKey}
 
 \begin{dispExample}
-\tcbset{standard,equal height group=standard,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  colbacktitle=LimeGreen!75!DarkGreen,width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[standard,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -2611,28 +2610,27 @@ This box looks like a box provided by the \texttt{beamer} class.
 \end{docTcbKey}
 
 \begin{dispExample}
-\tcbset{standard jigsaw,equal height group=standardjigsaw,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  colbacktitle=LimeGreen!75!DarkGreen,width=(\linewidth-6mm)/4,nobeforeafter,
-  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[standard jigsaw,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -2673,27 +2671,26 @@ have some 'enhanced' features, the |enhanced| skin is what you are looking for.
 \end{docTcbKey}
 
 \begin{dispExample}
-\tcbset{enhanced,equal height group=enhanced,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[enhanced,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 \begin{dispExample}
@@ -2799,27 +2796,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=enhancedfirst,equal height group=enhancedfirst,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=enhancedfirst,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -2844,27 +2840,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=enhancedmiddle,equal height group=enhancedmiddle,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=enhancedmiddle,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -2889,27 +2884,26 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 \begin{dispExample}
-\tcbset{skin=enhancedlast,equal height group=enhancedlast,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=enhancedlast,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -2935,28 +2929,27 @@ Nevertheless, this skin can be applied independently.
 \end{docTcbKey}
 
 \begin{dispExample}
-\tcbset{enhanced jigsaw,equal height group=enhancedjigsaw,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  colbacktitle=LimeGreen!75!DarkGreen,width=(\linewidth-6mm)/4,nobeforeafter,
-  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[enhanced jigsaw,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -2979,28 +2972,27 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=enhancedfirst jigsaw,equal height group=enhancedfirstjigsaw,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  colbacktitle=LimeGreen!75!DarkGreen,width=(\linewidth-6mm)/4,nobeforeafter,
-  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=enhancedfirst jigsaw,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3023,28 +3015,27 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=enhancedmiddle jigsaw,equal height group=enhancedmiddlejigsaw,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  colbacktitle=LimeGreen!75!DarkGreen,width=(\linewidth-6mm)/4,nobeforeafter,
-  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=enhancedmiddle jigsaw,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3122,28 +3113,27 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=enhancedlast jigsaw,equal height group=enhancedlastjigsaw,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  colbacktitle=LimeGreen!75!DarkGreen,width=(\linewidth-6mm)/4,nobeforeafter,
-  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=enhancedlast jigsaw,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3201,27 +3191,27 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{bicolor,equal height group=bicolor,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[bicolor,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 \begin{docTcbKey}{colbacklower}{=\meta{color}}{no default, initially \texttt{black!15!white}}
@@ -3271,27 +3261,27 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 \begin{dispExample}
-\tcbset{skin=bicolorfirst,equal height group=bicolorfirst,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=bicolorfirst,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3315,27 +3305,27 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=bicolormiddle,equal height group=bicolormiddle,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=bicolormiddle,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3359,27 +3349,27 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{skin=bicolorlast,equal height group=bicolorlast,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[skin=bicolorlast,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3421,27 +3411,26 @@ cannot be controlled by a style.
 
 
 \begin{dispExample}
-\tcbset{beamer,equal height group=beamer,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[beamer,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3494,27 +3483,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{beamer,skin=beamerfirst,equal height group=beamerfirst,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[beamer,skin=beamerfirst,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3539,27 +3527,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{beamer,skin=beamermiddle,equal height group=beamermiddle,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[beamer,skin=beamermiddle,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3582,27 +3569,26 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 \begin{dispExample}
-\tcbset{beamer,skin=beamerlast,equal height group=beamerlast,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[beamer,skin=beamerlast,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3640,27 +3626,26 @@ if needed.
 
 
 \begin{dispExample}
-\tcbset{widget,equal height group=widget,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[widget,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3692,27 +3677,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{widget,skin=widgetfirst,equal height group=widgetfirst,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[widget,skin=widgetfirst,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 \clearpage
@@ -3735,27 +3719,26 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 \begin{dispExample}
-\tcbset{widget,skin=widgetmiddle,equal height group=widgetmiddle,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[widget,skin=widgetmiddle,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3779,27 +3762,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{widget,skin=widgetlast,equal height group=widgetlast,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[widget,skin=widgetlast,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3831,27 +3813,26 @@ Nevertheless, this skin can be applied independently.
 \end{docTcbKey}
 
 \begin{dispExample}
-\tcbset{empty,equal height group=empty,
-  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[empty,raster equal height,raster columns=4,
+    coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3901,27 +3882,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{empty,skin=emptyfirst,equal height group=emptyfirst,
-  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[empty,skin=emptyfirst,raster equal height,raster columns=4,
+    coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3946,27 +3926,26 @@ Nevertheless, this skin can be applied independently.
 
 
 \begin{dispExample}
-\tcbset{empty,skin=emptymiddle,equal height group=emptymiddle,
-  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[empty,skin=emptymiddle,raster equal height,raster columns=4,
+    coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -3989,27 +3968,26 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 \begin{dispExample}
-\tcbset{empty,skin=emptylast,equal height group=emptylast,
-  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[empty,skin=emptylast,raster equal height,raster columns=4,
+    coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 \clearpage
@@ -4130,27 +4108,26 @@ are drawn by the codes given by
 
 
 \begin{dispExample}
-\tcbset{spartan,equal height group=spartan,
-  colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[spartan,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 
@@ -4180,27 +4157,26 @@ are drawn by the codes given by
 
 
 \begin{dispExample}
-\tcbset{draft,equal height group=draft,
-  colback=LightGreen,colframe=DarkGreen,
-  width=(\linewidth-6mm)/4,nobeforeafter,
-  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
-%
-\begin{tcolorbox}
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=My title]
-  This is my content.
-  \tcblower
-  More content.
-\end{tcolorbox}
+\begin{tcbraster}[draft,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
 \end{dispExample}
 
 

@@ -1,0 +1,555 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{raster}}\label{sec:raster}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{raster}
+\end{dispListing}
+%This also loads the package |xparse| \cite{latexproject:2013a}.
+
+%The purpose of this library is to give comfortable access to the
+%powerful document command production with |xparse| for |tcolorbox|.
+%See the |xparse| package documentation \cite{latexproject:2013a}
+%for details about the argument \meta{specification} used in this section.
+
+\subsection{Concept of Rasters}\label{subsec:raster_overview}
+
+A \emph{raster} is used to align several colored boxes in a regular way.
+It can be seen as a far related counterpart to the |matrix| construct
+of \tikzname, but it differs in many aspects.
+
+In principle, |tcolorbox|es are arranged in rows and columns when put
+inside a \refEnv{tcbraster} environment. The boxes are fluently added to the
+raster like adding text to a paragraph.
+Especially, line/row breaks are done
+automatically and one cannot end a line/row ahead of schedule.
+Further, a \emph{raster} is not restricted to a single page but may
+break into an arbitrary series of pages.
+
+\bigskip
+\begin{tcolorbox}[enhanced,size=tight,boxrule=0pt,frame hidden,
+  top=5mm,bottom=5mm,colback=yellow!20!white,
+  borderline={0.4pt}{0pt}{dashed,yellow!50!black},
+  finish={
+  \draw[thick,<->] ([yshift=-1.3cm]frame.north west)-- node[below]{\refKey{/tcb/raster width}}
+    ([yshift=-1.3cm]frame.north east);
+  \draw[thick,<->] ([xshift=5mm,yshift=-5mm]frame.north east)-- node[left,pos=.75]{\refKey{/tcb/raster height}}
+    ([xshift=5mm,yshift=5mm]frame.south east);
+  }]
+  \begin{tcbitemize}[enhanced,fontupper=\tiny,
+    title={Box \#\thetcbrasternum},
+    colframe=red!50!black!30!white,colback=red!10!white!40!white,
+    colupper=black!20!white,
+    raster equal height=rows,
+    raster left skip=5mm,raster right skip=5mm,
+    raster before skip=5mm,raster after skip=5mm,
+    raster row skip=3mm,raster column skip=3mm,
+    ]
+  \tcbitem[finish={%
+    \draw[thick,<->] (frame.west)-- node[below right]{\refKey{/tcb/raster left skip}}+(-0.5,0);
+    \draw[thick,<->] (frame.north)-- node[right]{\refKey{/tcb/raster before skip}} +(0,0.5);
+    \draw[thick,<->] (frame.south)-- node[above]{\refKey{/tcb/raster row skip}} +(0,-0.3);
+    }] \lipsum[1]
+  \tcbitem[finish={
+    \draw[thick,<->] (frame.east)-- node[below left]{\refKey{/tcb/raster right skip}}+(0.5,0);
+    \draw[thick,<->] ([yshift=5mm]frame.south west)-- node[above]{\refKey{/tcb/raster column skip}}+(-0.3,0);
+    }] \lipsum[2]
+  \tcbitem[finish={%
+    \draw[thick,<->] (frame.south)-- node[right]{\refKey{/tcb/raster after skip}} +(0,-0.5);
+    }] \lipsum[3]
+  \tcbitem \lipsum[4]
+  \end{tcbitemize}
+\end{tcolorbox}
+
+\clearpage
+\begin{tcboutputlisting}
+\begin{tcbraster}[raster columns=3,raster rows=3,raster height=\linewidth,
+  enhanced,size=small,sharp corners,arc=8mm,colframe=red!50!black,
+  colback=yellow!10!white,watermark overzoom=1.0,fit algorithm=hybrid* ]
+  \begin{tcolorbox}[rounded corners=northwest,boxrule=0pt,
+    watermark graphics=lichtspiel.jpg]\end{tcolorbox}
+  \tcboxfit{\lipsum[1]}
+  \begin{tcolorbox}[rounded corners=northeast,boxrule=0pt,
+    watermark graphics=goldshade.png]\end{tcolorbox}
+  \tcboxfit{\lipsum[2]}
+  \begin{tcolorbox}[valign=center,center upper]Nine Boxes.\end{tcolorbox}
+  \tcboxfit{\lipsum[3]}
+  \begin{tcolorbox}[rounded corners=southwest,boxrule=0pt,
+    watermark graphics=goldshade.png]\end{tcolorbox}
+  \tcboxfit{\lipsum[4]}
+  \begin{tcolorbox}[rounded corners=southeast,boxrule=0pt,
+    watermark graphics=lichtspiel.jpg]\end{tcolorbox}
+\end{tcbraster}
+\end{tcboutputlisting}
+
+\tcbinputlisting{base example,listing only,listing style=mydocumentation}
+
+\bigskip
+{\tcbuselistingtext}
+
+\clearpage
+\subsection{Macros of the Library}\label{subsec:raster_macros}
+
+\begin{docEnvironment}[doc new=2014-11-10]{tcbraster}{\oarg{options}}
+A raster arranges enclosed boxes in a regular way, mainly into rows and
+columns. The \meta{options} are used to control the raster
+parameters and to set the properties for the enclosed boxes.
+\begin{itemize}
+\item The \emph{raster} is only allowed to contain a series of
+  \refEnv{tcolorbox} environments or derived constructs.
+  With some small restrictions, boxes created with \refCom{tcboxfit} can also be added.
+  Boxes created with \refCom{tcbox} are not reasonable here, but may be
+  used to a certain degree.
+\item Do not add anything else between the boxes inside the raster with
+  exception of white\-space. Especially, do not use |\\| or |\par| to end
+  a row; row breaks are done automatically.
+\item The boxes inside a raster are numbered automatically.
+  \docAuxCommand{thetcbrasternum} may be used inside a box to access
+  this number.
+\end{itemize}
+
+\begin{dispExample}
+\begin{tcbraster}[raster columns=3, raster equal height,
+  size=small,colframe=red!50!black,colback=red!10!white,colbacktitle=red!50!white,
+  title={Box \# \thetcbrasternum}]
+  \begin{tcolorbox}First box\end{tcolorbox}
+  \begin{tcolorbox}Second box\end{tcolorbox}
+  \begin{tcolorbox}This is a box\\with a second line\end{tcolorbox}
+  \begin{tcolorbox}Another box\end{tcolorbox}
+  \begin{tcolorbox}A box again\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+\begin{dispExample}
+\begin{tcbraster}[raster columns=2, raster equal height=rows,
+  size=small,colframe=red!50!black,colback=red!10!white,colbacktitle=red!50!white,
+  title={Box \# \thetcbrasternum}]
+  \begin{tcolorbox}First box\end{tcolorbox}
+  \begin{tcolorbox}Second box\end{tcolorbox}
+  \begin{tcolorbox}This is a box\\with a second line\end{tcolorbox}
+  \begin{tcolorbox}Another box\end{tcolorbox}
+  \begin{tcolorbox}A box again\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+\end{docEnvironment}
+
+
+\clearpage
+
+\begin{docEnvironment}[doc new=2014-11-10]{tcbitemize}{\oarg{options}}
+This is a special case of a \refEnv{tcbraster} with the given \meta{options}.
+\begin{itemize}
+\item Here, the enclosed boxes are created using \refCom{tcbitem}.
+\item There has to be at least one \refCom{tcbitem}.
+\item One cannot use anything else than \refCom{tcbitem} to add something
+  to the \emph{raster}.
+\end{itemize}
+This leads to a very compact syntax.
+
+\begin{dispExample}
+\begin{tcbitemize}[raster columns=2, raster equal height=rows,
+  size=small,colframe=red!50!black,colback=red!10!white,colbacktitle=red!50!white,
+  title={Box \# \thetcbrasternum}]
+  \tcbitem First box
+  \tcbitem Second box
+  \tcbitem This is a box\\with a second line
+  \tcbitem[colback=yellow,colbacktitle=yellow!50!black] Another box
+  \tcbitem A box again
+\end{tcbitemize}
+\end{dispExample}
+
+\bigskip
+
+\begin{marker}
+\refEnv{tcbitemize} has more restrictions than \refEnv{tcbraster}.
+Especially, the \refKey{/tcb/capture} mode has to be \docValue{minipage}.
+For example, \refKey{/tcb/fit} cannot be used safely.
+If \refKey{/tcb/fit} should be used, turn over to \refEnv{tcbraster}.
+\end{marker}
+\end{docEnvironment}
+
+
+\begin{docCommand}[doc new=2014-11-10]{tcbitem}{\oarg{options}}
+  Used inside \refEnv{tcbitemize} to create a new \refEnv{tcolorbox}
+  with the given \meta{options}.
+\end{docCommand}
+
+
+\clearpage
+\subsection{Option Keys of the Library}\label{subsec:raster_options}
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster columns}{=\meta{number}}{no default, initially |2|}
+  Sets the \meta{number} of columns for a \emph{raster}.
+\begin{dispExample}
+\begin{tcbitemize}[raster columns=3,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\begin{tcbitemize}[raster columns=4,
+  size=small,colframe=blue!50!black,colback=blue!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster rows}{=\meta{number}}{no default, initially |2|}
+  Sets the \meta{number} of rows for a \emph{raster}.
+  Note that this is only relevant in connection with setting \refKey{/tcb/raster height}
+  to a value greater than |0pt|. Then, it defines the number of rows \emph{per} given
+  height.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster width}{=\meta{length}}{no default, initially \cs{linewidth}}
+  Sets the total raster width to the given \meta{length}.
+  \refKey{/tcb/raster left skip} and \refKey{/tcb/raster right skip} are part
+  of the total width.
+\begin{dispExample}
+\begin{tcbitemize}[raster width=\linewidth/2,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2014-11-10]{raster height}{=\meta{length}}{no default, initially |0pt|}
+  Sets the raster height \emph{per} \refKey{/tcb/raster rows} to the given \meta{length}.
+  This forces an appropriate height for the enclosed boxes.
+  \refKey{/tcb/raster before skip} and \refKey{/tcb/raster after skip}
+  are not part of this calculation.
+  If the \meta{length} is set to |0pt|, this feature is deactivated.
+\begin{dispExample}
+\begin{tcbitemize}[raster height=4cm, raster rows=2,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem[enhanced,
+    finish={\draw[blue,very thick,<->] (frame.south)
+      -- node[right,pos=.75]{4cm} +(0,4); }]
+    Three
+  \tcbitem Four
+  \tcbitem Five
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster before skip}{=\meta{length}}{no default, initially |2mm|}
+  Space of the given \meta{length} is inserted vertically before the \emph{raster}.
+  This space is discardable.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster after skip}{=\meta{length}}{no default, initially |2mm|}
+  Space of the given \meta{length} is inserted vertically after the \emph{raster}.
+  This space is discardable.
+\end{docTcbKey}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster left skip}{=\meta{length}}{no default, initially |0pt|}
+  Space of the given \meta{length} is inserted horizontally left of the \emph{raster}.
+\begin{dispExample}
+\begin{tcbitemize}[raster left skip=2cm,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster right skip}{=\meta{length}}{no default, initially |0pt|}
+  Space of the given \meta{length} is inserted horizontally right of the \emph{raster}.
+\begin{dispExample}
+\begin{tcbitemize}[raster right skip=2cm,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\enlargethispage*{1cm}
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster column skip}{=\meta{length}}{no default, initially |2mm|}
+ Space of the given \meta{length} is inserted horizontally between the columns.
+\begin{dispExample}
+\begin{tcbitemize}[raster column skip=2cm,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster row skip}{=\meta{length}}{no default, initially |2mm|}
+ Space of the given \meta{length} is inserted vertically between the rows.
+\begin{dispExample}
+\begin{tcbitemize}[raster row skip=0pt,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster halign}{=\meta{alignment}}{no default, initially \docValue{left}}
+  Defines the horizontal alignment for the boxes of the rows of a \emph{raster},
+  if these rows are not completely filled (mainly: the last one).
+
+  Feasible values for \meta{alignment} are:
+  \begin{itemize}
+  \item\docValue{left}: align to the left side,
+  \item\docValue{center}: align to the center,
+  \item\docValue{right}: align to the right side.
+  \end{itemize}
+
+\begin{dispExample}
+\begin{tcbitemize}[raster halign=center,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster valign}{=\meta{alignment}}{no default, initially \docValue{center}}
+  Defines the vertical alignment for the boxes of a row,
+  if the boxes do not have equal height. This sets the
+  \refKey{/tcb/box align} option.
+
+  Feasible values for \meta{alignment} are:
+  \begin{itemize}
+  \item\docValue{top}: align to the top side,
+  \item\docValue{center}: align to the center,
+  \item\docValue{bottom}: align to the bottom side.
+  \end{itemize}
+
+\begin{dispExample}
+\begin{tcbitemize}[raster valign=top, raster columns=3,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem \Huge One
+  \tcbitem \Large Two
+  \tcbitem Three
+\end{tcbitemize}
+\begin{tcbitemize}[raster valign=center, raster columns=3,
+  size=small,colframe=blue!50!black,colback=blue!10!white]
+  \tcbitem \Huge One
+  \tcbitem \Large Two
+  \tcbitem Three
+\end{tcbitemize}
+\begin{tcbitemize}[raster valign=bottom, raster columns=3,
+  size=small,colframe=green!50!black,colback=green!10!white]
+  \tcbitem \Huge One
+  \tcbitem \Large Two
+  \tcbitem Three
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2014-11-10]{raster equal height}{=\meta{type}}{default \docValue{all}, initially \docValue{none}}
+  Puts the enclosed boxes into a common \refKey{/tcb/equal height group}.
+  The \meta{id} of the equal height group is chosen automatically, but
+  it may be set manually by \refKey{/tcb/raster equal height group}.
+
+  Feasible values for \meta{type} are:
+  \begin{itemize}
+  \item\docValue{none}: no equal height setting,
+  \item\docValue{rows}: all boxes in a row are set to equal height,
+  \item\docValue{all}: all boxes in the raster are set to equal height.
+  \end{itemize}
+  Note that you have to compile twice to see changes.
+
+\begin{dispExample}
+\begin{tcbitemize}[raster equal height=rows,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem \Huge Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\begin{dispExample}
+\begin{tcbitemize}[raster equal height,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem \Huge Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster equal height group}{=\meta{id}}{no default}
+  Overwrites the automatically chosen id with the given \meta{id}.
+  If this is used to share a common height between the \emph{raster} and
+  another raster or box, the \refKey{/tcb/raster equal height} option
+  should be set to \docValue{all}.
+\begin{dispExample}
+\tcbset{size=small,colframe=red!50!black,colback=red!10!white}
+\begin{tcolorbox}[equal height group=raster-manual-id]
+  A single box
+\end{tcolorbox}
+\begin{tcbitemize}[raster equal height,raster equal height group=raster-manual-id]
+  \tcbitem One
+  \tcbitem \Huge Two
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster force size}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+  Enforces the raster size computations onto the enclosed boxes.
+  If set to \docValue{false}, individual settings can be used (for the better or worse).
+\begin{dispExample}
+\begin{tcbitemize}[raster force size=false, raster halign=center,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem[add to width=-3cm] Three
+  \tcbitem[add to width=-3cm] Four
+  \tcbitem[add to width=-3cm] Five
+  \tcbitem[add to width=3cm] Six
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new=2014-11-10]{raster reset}{}{no value}
+  Sets all raster settings back to their default values.
+  Note that \refKey{/tcb/reset} does not execute this option.
+  Style settings like \refKey{/tcb/raster odd column} etc. are not
+  touched by \refKey{/tcb/raster reset}.
+\end{docTcbKey}
+
+
+
+\subsection{Adding Styles for Specific Boxes}\label{subsec:raster_styles}
+
+The following styles can be defined to address certain boxes inside
+a \emph{raster}. Note that such style definitions are not removed by
+\refKey{/tcb/reset} or \refKey{/tcb/raster reset}.
+The style definitions are used in the order given below.
+
+\begin{docTcbKey}{raster odd column}{}{style}
+This style is used for every box in an odd column.
+\begin{dispExample}
+\begin{tcbitemize}[size=small,colframe=red!50!black,colback=red!10!white,
+  raster odd column/.style={colframe=blue!50!black,colback=blue!10!white}]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{raster even column}{}{style}
+This style is used for every box in an even column.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{raster column n}{}{style}
+This style is used for every box in the |n|-th column.
+|n| has to be replaced by a number.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{raster odd row}{}{style}
+This style is used for every box in an odd row.
+\end{docTcbKey}
+
+\begin{docTcbKey}{raster even row}{}{style}
+This style is used for every box in an even row.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{raster row m}{}{style}
+This style is used for every box in the |m|-th row.
+|m| has to be replaced by a number.
+\begin{dispExample}
+\begin{tcbitemize}[size=small,colframe=red!50!black,colback=red!10!white,
+  raster row 2/.style={colframe=blue!50!black,colback=blue!10!white}]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{raster odd number}{}{style}
+This style is used for every box with an odd number.
+\end{docTcbKey}
+
+\begin{docTcbKey}{raster even number}{}{style}
+This style is used for every box with an even number.
+\begin{dispExample}
+\begin{tcbitemize}[size=small,colframe=red!50!black,colback=red!10!white,
+  raster columns=3,
+  raster even number/.style={colframe=blue!50!black,colback=blue!10!white}]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+  \tcbitem Five
+  \tcbitem Six
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{raster row m column n}{}{style}
+This style is used for the box in the
+|m|-th row and |n|-th column.
+|m| and |n| have to be replaced by numbers.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{raster number n}{}{style}
+This style is used for the box with number |n|.
+|n| has to be replaced by a number.
+\begin{dispExample}
+\begin{tcbitemize}[size=small,colframe=red!50!black,colback=red!10!white,
+  raster number 4/.style={colframe=blue!50!black,colback=blue!10!white}]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+

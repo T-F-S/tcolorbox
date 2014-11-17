@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.22}
+\tcb@set@library@version{3.30}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -255,7 +255,7 @@
   %
   \def\tcb@fit@@boxsave##1{%
     \begin{tcb@savebox}{\tcb@upperbox}{##1}%
-      \color{\kvtcb@colupper}%
+      \color{tcbcol@upper}%
       \kvtcb@fontupper\fontsize{\tcbfitdim}{\tcb@fit@@line}\selectfont%
       \kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper%
     \end{tcb@savebox}%

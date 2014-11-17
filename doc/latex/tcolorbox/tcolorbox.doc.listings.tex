@@ -566,6 +566,19 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2014-11-17]{comment only}{}{no value}
+  Typesets the environment content with the comment text.
+\begin{dispExample}
+\begin{tcblisting}{comment only,
+  comment={This is a comment.},
+  colback=red!5!white,colframe=red!75!black}
+This is a \textbf{tcolorbox}.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
 \begin{docTcbKey}{image comment}{=\marg{options}\marg{filename}}{style, no default, initially unset}
   Uses an image denoted by \meta{filename} as \textit{comment} for the listing.
   The image is included by the standard |\includegraphics| macro with
@@ -578,7 +591,68 @@ This is a \LaTeX\ example.
 \end{dispExample}
 \end{docTcbKey}
 
+
 \clearpage
+\begin{docTcbKey}[][doc new=2014-11-14]{tcbimage comment}{=\meta{filename}}{style, no default, initially unset}
+  Uses an image denoted by \meta{filename} as \textit{comment} for the listing.
+  The image is included by the \refCom{tcbincludegraphics} macro.
+  The inclusion can be customized by \refKey{/tcb/comment style}.
+  \begin{marker}
+  The library \mylib{skins} is needed to apply this option.
+  \end{marker}
+  \medskip
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing side comment,
+  righthand width=3cm,lower separated=false,
+  tcbimage comment={example-image-a.pdf},
+  comment style={size=fbox,colframe=blue,colback=blue!50,sharp corners,
+    drop fuzzy shadow}}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+%\enlargethispage*{1cm}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{pdf comment}{\colOpt{=\meta{filename}}}{style, default listing file, initially unset}
+  Uses a PDF file denoted by \meta{filename} as \textit{comment} for the listing.
+  The image is included by \refCom{tcbincludepdf} inside a \refEnv{tcbraster}.
+  The inclusion can be customized by \refKey{/tcb/comment style}.
+  \begin{marker}
+  The libraries \mylib{skins} and \mylib{raster} are needed to apply this option.
+  \end{marker}
+  \medskip
+\begin{dispExample}
+% \tcbuselibrary{skins,raster}
+\begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing and comment,
+  righthand width=3cm,lower separated=false,middle=1mm,
+  pdf comment={tcolorbox-example.pdf},
+  comment style={raster columns=3,graphics pages={1,2,3},
+    colframe=blue,drop fuzzy shadow}}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+
+
+\begin{docTcbKey}[][doc new=2014-11-14]{pdf extension}{=\meta{extension}}{no default, initially |pdf|}
+  Sets the PDF file name extension for \refKey{/tcb/pdf comment} to \meta{extension}.
+  Note that \meta{extension} always overwrites any actual extension given
+  inside \refKey{/tcb/pdf comment}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-14]{comment style}{=\meta{options}}{no default, initially empty}
+  Sets the \meta{options} for \refKey{/tcb/tcbimage comment} and \refKey{/tcb/pdf comment}.
+  These are |tcolorbox| options to customize the colored box drawn around the
+  image(s), also image options encapsulated by \refKey{/tcb/graphics options},
+  and \refEnv{tcbraster} options for \refKey{/tcb/pdf comment}.
+\end{docTcbKey}
+
+
 \begin{docTcbKey}{listing and comment}{}{no value}
   Typesets the environment content as listing in the upper part and
   a given comment in the lower part.
@@ -731,6 +805,14 @@ This is a \LaTeX\ example.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2014-11-07]{listing above* text}{}{no value}
+  Widely equal to \refKey{/tcb/listing above text}, but the outside text is
+  not formatted with the lower part options.
+  Also, it is not put into a minipage and it may span several pages.
+  The distance between box and text is controlled by \refKey{/tcb/after}.
+\end{docTcbKey}
+
+
 \begin{docTcbKey}{text above listing}{}{no value}
   Typesets the environment content as listing in a |tcolorbox|
   and as compiled text outside and above the box.
@@ -742,6 +824,14 @@ This is a \LaTeX\ example.
 This is a \LaTeX\ example.
 \end{tcblisting}
 \end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-07]{text above* listing}{}{no value}
+  Widely equal to \refKey{/tcb/text above listing}, but the outside text is
+  not formatted with the lower part options.
+  Also, it is not put into a minipage and it may span several pages.
+  The distance between box and text is controlled by \refKey{/tcb/before}.
 \end{docTcbKey}
 
 
@@ -761,6 +851,14 @@ This is a \LaTeX\ example.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2014-11-07]{listing above* comment}{}{no value}
+  Widely equal to \refKey{/tcb/listing above comment}, but the outside comment is
+  not formatted with the lower part options.
+  Also, it is not put into a minipage and it may span several pages.
+  The distance between box and comment is controlled by \refKey{/tcb/after}.
+\end{docTcbKey}
+
+
 \begin{docTcbKey}{comment above listing}{}{no value}
   Typesets the environment content as listing in a |tcolorbox|
   and a given comment outside and above the box.
@@ -774,6 +872,211 @@ This is a \LaTeX\ example.
 \end{tcblisting}
 \end{dispExample}
 \end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-07]{comment above* listing}{}{no value}
+  Widely equal to \refKey{/tcb/comment above listing}, but the outside comment is
+  not formatted with the lower part options.
+  Also, it is not put into a minipage and it may span several pages.
+  The distance between box and comment is controlled by \refKey{/tcb/before}.
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Option Keys for Processing and Full Document Examples}\label{sec:proclistingkeys}
+A complete \LaTeX\ document including |\documentclass|, |\begin{document}|
+and |\end{document}| cannot be processed directly by |tcolorbox|.
+It always has to be compiled separately. There are two methods supported
+by the package to process and display such a full document example:
+\begin{itemize}
+\item Prepare and compile the example document independent from your main
+  document. The source file and the resulting PDF file can be included
+  into the main document afterwards. This is the most economic way since
+  the example document can be left untouched after the example is complete.
+\item The other possibility is to compile the example on the fly while
+  the main document is compiled. This way has some charm, because the
+  example can be edited inside the main document. But be aware that the
+  compilation of the example is issued on every run of the main document.
+  Also, there are fewer degrees of freedom how the example is compiled.
+\end{itemize}
+
+For both methods, the resulting example PDF file can be included
+as a \refKey{/tcb/pdf comment}.
+
+The following example shows how to apply the first method.
+There already is a file |tcolorbox-example.tex| and a PDF file
+|tcolorbox-example.pdf|. Both of them are input partly by the following:
+
+\begin{dispListing}
+% \tcbuselibrary{breakable,skins,raster}
+\tcbinputlisting{
+  enhanced jigsaw,breakable,pad at break*=2mm,height fixed for=first and middle,
+  lower separated=false,
+  leftlower=0pt,rightlower=0pt,middle=0pt,
+  colframe=red!50!black,colback=yellow!10!white,
+  listing and comment,
+  listing file={tcolorbox-example},
+  listing options=
+    {style=tcblatex,texcsstyle=*\color{red!70!black},firstline=20,lastline=85},
+  after upper={\par\bigskip\texttt{\ldots}\par},
+  pdf comment,
+  comment style={drop lifted shadow,graphics pages={1,...,4}},
+}
+\end{dispListing}
+{\tcbusetemp}
+
+
+\clearpage
+
+
+\begin{docTcbKey}[][doc new=2014-11-14]{no process}{}{no default}
+  Removes all processing commands if set before.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{process code}{=\meta{code}}{no default, initially empty}
+  Adds \meta{code} which is executed during \refCom{tcbinputlisting}
+  and \refEnv{tcblisting}. At the time of executing the given \meta{code},
+  the listing is already written to \refKey{/tcb/listing file}, but
+  the colored box is not constructed yet.
+  Its intended use is to process the listing somehow before displaying.
+  The processing result can be used inside a \refKey{/tcb/comment}.
+  Several \refKey{/tcb/process code} options can be given which are
+  processed in the given order.
+\end{docTcbKey}
+
+\begin{marker}
+To use the further options, the compiler has to be called with the
+|-shell-escape| permission to authorize potentially dangerous system calls.
+Be warned that this is a security risk. Anyway, it's more economic to
+compile examples independent from the main document and to include them as
+shown in the previous pages.
+\end{marker}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run system command}{=\meta{system command}}{style, no default, initially unset}
+Runs a \meta{system command}, if the document is compiled with the
+|-shell-escape| permission.
+The current listing file can be accessed as |\filename@area\filename@base\filename@ext|.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-14]{compilable listing}{}{style, no default}
+  Sets \refKey{/tcb/listing file} to |\jobname|\texttt{-listing-}\meta{counter}.
+  \begin{marker}
+  The default \refKey{/tcb/listing file} setting cannot be used to compile
+  a listing, since the base name equals the |\jobname| and the included PDF
+  files should be unique.
+  Therefore, to use \refKey{/tcb/run pdflatex} etc., the \refKey{/tcb/listing file}
+  has to be set to a unique value.
+  One may use \refKey{/tcb/compilable listing} for this purpose.
+  \end{marker}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run pdflatex}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |pdflatex| compilation of the listing with the given \meta{arguments}.
+\begin{itemize}
+\item The main document has to be compiled with the |-shell-escape| permission.
+\item The \refKey{/tcb/listing file} has to be unique for the listing.
+\item If the listing has to be compiled twice, add |run pdflatex| two times to
+  the option list.
+\end{itemize}
+
+\begin{dispListing*}{breakable,enhanced,pad at break*=2mm,before upper=,after skip=3mm}
+\begin{tcblisting}{enhanced jigsaw,lower separated=false,
+  leftlower=0pt,rightlower=0pt,
+  colframe=red!50!black,colback=yellow!10!white,
+  listing options={style=tcblatex,texcsstyle=*\color{red!70!black}},
+  listing and comment,
+  pdf comment,
+  compilable listing,
+  run pdflatex
+}
+\documentclass{beamer}
+\usetheme{Warsaw}
+\begin{document}
+\begin{frame}{Beamer example}
+  \begin{block}{Hello World}
+    \begin{itemize}[<+->]
+      \item One
+      \item Two
+    \end{itemize}
+  \end{block}
+
+  \begin{alertblock}{Integral}
+    \begin{equation}
+      \visible<3->{\int\limits_1^x \frac{1}{t}~dt}
+      \visible<4->{ = \ln(x).}
+    \end{equation}
+  \end{alertblock}
+\end{frame}
+\end{document}
+\end{tcblisting}
+\end{dispListing*}
+{\tcbusetemp}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2014-11-14]{run xelatex}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |xelatex| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run lualatex}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |lualatex| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run makeindex}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |makeindex| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run bibtex}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |bibtex| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run biber}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |biber| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run arara}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues an |arara| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run latex}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |latex| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run dvips}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |dvips| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-14]{run ps2pdf}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
+Issues a |ps2pdf| compilation of the listing with the given \meta{arguments}.
+\end{docTcbKey}
+
+\begin{dispListing*}{breakable,enhanced,pad at break*=2mm,before upper=,after skip=3mm}
+\begin{tcblisting}{enhanced jigsaw,
+  title={PSTricks with pdflatex},fonttitle=\bfseries,
+  colframe=red!50!black,colback=yellow!10!white,
+  listing options={style=tcblatex,texcsstyle=*\color{red!70!black}},
+  lower separated=false,middle=0pt,
+  listing side comment,righthand width=4.5cm,
+  compilable listing,
+  run latex,run dvips,run ps2pdf,
+  pdf comment,
+  comment style={raster columns=1,graphics options={viewport=0in 8in 4in 11.5in,clip}},
+}
+\documentclass{article}
+\usepackage{pstricks,multido}
+\begin{document}
+\psset{unit=3}%
+\multido{\nHue=0.01+0.01}{100}{%
+\definecolor{MyColor}{hsb}{\nHue,1,1}%
+\pscircle[linewidth=0.01,linecolor=MyColor]{\nHue}}
+\end{document}
+\end{tcblisting}
+\end{dispListing*}
+{\tcbusetemp}
+
 
 
 

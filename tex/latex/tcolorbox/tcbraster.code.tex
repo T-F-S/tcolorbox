@@ -1,0 +1,184 @@
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
+%% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+\tcb@set@library@version{3.30}
+
+\newcounter{tcbrastercolumn}
+\newcounter{tcbrasterrow}
+\newcounter{tcbraster}
+
+\newrobustcmd{\thetcbrasternum}{\the\numexpr(\c@tcbrasterrow-1)*\kvtcb@raster@columns+\c@tcbrastercolumn\relax}
+
+\def\tcb@raster@ehg@all{%
+  \tcbset{equal height group={\kvtcb@raster@ehgid}}%
+}
+
+\def\tcb@raster@ehg@row{%
+  \tcbset{equal height group={\kvtcb@raster@ehgid @\number\c@tcbrasterrow}}%
+}
+
+
+\tcbset{%
+  raster columns/.store in=\kvtcb@raster@columns,
+  raster rows/.store in=\kvtcb@raster@rows,
+  raster width/.store in=\kvtcb@raster@width,
+  raster height/.store in=\kvtcb@raster@height,
+  %
+  raster before skip/.store in=\kvtcb@raster@skip@before,
+  raster after skip/.store in=\kvtcb@raster@skip@after,
+  raster left skip/.store in=\kvtcb@raster@skip@left,
+  raster right skip/.store in=\kvtcb@raster@skip@right,
+  %
+  raster column skip/.store in=\kvtcb@raster@xskip,
+  raster row skip/.store in=\kvtcb@raster@yskip,
+  %
+  raster@halign/.store in=\kvtcb@raster@halign,
+  raster halign/.is choice,
+  raster halign/center/.style={raster@halign=\centering},
+  raster halign/left/.style={raster@halign=\raggedright},
+  raster halign/right/.style={raster@halign=\raggedleft},
+  %
+  raster valign/.store in=\kvtcb@raster@valign,
+  %
+  raster equal height group/.store in=\kvtcb@raster@ehgid,%
+  raster equal height/.is choice,
+  raster equal height/.default=all,
+  raster equal height/none/.code={\let\tcb@raster@ehg@start\@empty%
+    \let\tcb@raster@ehg@continue\@empty},%
+  raster equal height/rows/.code={\let\tcb@raster@ehg@start\tcb@raster@ehg@row%
+    \let\tcb@raster@ehg@continue\tcb@raster@ehg@row},%
+  raster equal height/all/.code={\let\tcb@raster@ehg@start\tcb@raster@ehg@all%
+    \let\tcb@raster@ehg@continue\@empty},%
+  %
+  raster force size/.is choice,%
+  raster force size/.default=true,%
+  raster force size/true/.code={\let\tcb@raster@set@size\tcbset@late@options},%
+  raster force size/false/.code={\let\tcb@raster@set@size\tcbset},%
+}
+
+\tcbset{
+  raster reset/.style={
+    raster width=\linewidth,raster height=0pt,
+    raster before skip=2mm, raster after skip=2mm,
+    raster columns=2,raster rows=2,
+    raster column skip=2mm,raster row skip=2mm,
+    raster left skip=0pt,raster right skip=0pt,
+    raster halign=left,raster valign=center,
+    raster equal height=none,
+    raster equal height group={REG@\tcb@raster@number},
+    raster force size,},
+  raster reset
+}
+
+\setcounter{tcbraster}{0}
+
+\let\tcb@raster@change@minipage\@empty
+\let\tcb@raster@change@fitbox\@empty
+\def\tcb@raster@change@hbox{\tcbset{capture=minipage}}
+
+\newenvironment{tcbraster}[1][]{%
+  \tcb@layer@pushup%
+  \stepcounter{tcbraster}%
+  \edef\tcb@raster@number{\number\c@tcbraster}%
+  \edef\tcb@raster@save@column{\number\c@tcbrastercolumn}%
+  \edef\tcb@raster@save@row{\number\c@tcbrasterrow}%
+  \let\tcb@raster@change@fitbox\@empty%
+  \setcounter{tcbrastercolumn}{1}%
+  \setcounter{tcbrasterrow}{1}%
+  \tcbset{every box on layer \the\numexpr\number\c@tcblayer+1\relax/.code={%
+    \ifodd\c@tcbrastercolumn\relax%
+      \tcbset{raster odd column/.try}%
+    \else%
+      \tcbset{raster even column/.try}%
+    \fi%
+    \tcbset{raster column \number\c@tcbrastercolumn/.try}%
+    \ifodd\c@tcbrasterrow\relax%
+      \tcbset{raster odd row/.try}%
+    \else%
+      \tcbset{raster even row/.try}%
+    \fi%
+    \tcbset{raster row \number\c@tcbrasterrow/.try}%
+    \ifodd\thetcbrasternum\relax%
+      \tcbset{raster odd number/.try}%
+    \else%
+      \tcbset{raster even number/.try}%
+    \fi%
+    \tcbset{raster row \number\c@tcbrasterrow\space column \number\c@tcbrastercolumn/.try}%
+    \tcbset{raster number \thetcbrasternum/.try}%
+  }}%
+  \tcbset{#1}%
+  \tcbset@late@options{%
+    before={\unskip\ifnum\c@tcbrastercolumn>1 \kern\kvtcb@raster@xskip\else\kern\kvtcb@raster@skip@left\fi},
+    after={%
+      \ifnum\c@tcbrastercolumn=\kvtcb@raster@columns\relax%
+        \kern\kvtcb@raster@skip@right%
+        \parindent\z@\parskip\z@\par\nointerlineskip%
+        \addvspace{\the\dimexpr\kvtcb@raster@yskip\relax}%
+        \noindent%
+        \setcounter{tcbrastercolumn}{1}\addtocounter{tcbrasterrow}{1}%
+        \aftergroup\tcb@raster@ehg@continue%
+      \else%
+        \stepcounter{tcbrastercolumn}%
+      \fi},%
+    box align=\kvtcb@raster@valign,%
+  }%
+  \tcbdimto\tcb@raster@box@width{(\kvtcb@raster@width+\kvtcb@raster@xskip-\kvtcb@raster@skip@left-\kvtcb@raster@skip@right)/\kvtcb@raster@columns-\kvtcb@raster@xskip}%
+  \tcb@raster@set@size{%
+    code={\csuse{tcb@raster@change@\kvtcb@capture}},
+    width=\tcb@raster@box@width,
+  }%
+  \ifdim\dimexpr\kvtcb@raster@height>0pt\relax%
+    \tcbdimto\tcb@raster@box@height{(\kvtcb@raster@height+\kvtcb@raster@yskip-0.001pt)/\kvtcb@raster@rows-\kvtcb@raster@yskip}%
+    \tcb@raster@set@size{height=\tcb@raster@box@height}%
+  \fi%
+  \tcb@raster@ehg@start%
+  {\par\nointerlineskip%
+  \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
+  \kvtcb@raster@halign\noindent%
+}{%
+  \unskip%
+  \ifnum\c@tcbrastercolumn>1 %
+    \kern\kvtcb@raster@skip@right%
+  \fi%
+  \begingroup%
+  \par\nointerlineskip%
+  \ifnum\c@tcbrastercolumn=1 %
+    \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\kvtcb@raster@yskip-\parskip\relax}%
+  \else%
+   \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\parskip\relax}%
+  \fi%
+  \endgroup%
+  \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%
+  \setcounter{tcbrasterrow}{\tcb@raster@save@row}%
+}
+
+\newcommand{\tcbitem@following}[1][]{%
+  \end{tcolorbox}\begin{tcolorbox}[#1]%
+}
+
+\newcommand{\tcbitem@first}[1][]{%
+  \let\tcbitem=\tcbitem@following%
+  \begin{tcolorbox}[#1]%
+}
+
+\newenvironment{tcbitemize}[1][]{%
+  \begin{tcbraster}[#1]%
+  \let\tcb@raster@change@fitbox=\tcb@raster@change@hbox%
+  \let\tcbitem=\tcbitem@first%
+}{\end{tcolorbox}\end{tcbraster}}

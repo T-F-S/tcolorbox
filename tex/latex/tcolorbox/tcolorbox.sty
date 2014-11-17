@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/10/31 version 3.22 text color boxes]
-\def\tcb@version{3.22}
+\ProvidesPackage{tcolorbox}[2014/11/17 version 3.30 text color boxes]
+\def\tcb@version{3.30}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -36,6 +36,7 @@
 \newif\iftcb@hasPhantom
 \newif\iftcb@lowerseparated
 \newif\iftcb@titlefilled
+\newif\iftcb@fixedheight
 
 \newbox\tcb@titlebox
 \newbox\tcb@upperbox
@@ -52,6 +53,7 @@
 \pgfkeys{/tcb/.is family}
 
 \def\tcbset{\pgfqkeys{/tcb}}
+\long\def\tcbset@late@options#1{\appto\tcb@lateoptions@hook{\tcbset{#1}}}
 
 \def\tcb@dim@to#1#2{\def#1{\the\dimexpr#2\relax}}
 \def\tcbdimto#1#2{\edef#1{\the\dimexpr#2\relax}}
@@ -114,9 +116,10 @@
 \newcommand{\tcbsubskin}[3]{\tcb@new@skin{#1}{skin@#2,#3}}
 
 \pgfkeys{/handlers/.dimstore in/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\def#1{\the\dimexpr##1\relax}}}
+\pgfkeys{/handlers/.colorlet/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\colorlet{#1}{##1}}}
 
 \newcommand\tcbtitle{\ifx\tcbtitletext\@empty\else%
-  {\color{\kvtcb@coltitle}\kvtcb@fonttitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
+  {\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
 
 \def\tcb@detach@title@code@{%
   \let\tcbtitletext\kvtcb@title%
@@ -148,6 +151,7 @@
   subtitle style/.store in=\kvtcb@subtitle@style,%
   width/.dimstore in=\kvtcb@width,
   text width/.style={width={#1+\kvtcb@left@rule+\kvtcb@right@rule+\kvtcb@boxsep*2+\kvtcb@leftupper+\kvtcb@rightupper}},%
+  add to width/.code={\tcbdimto\kvtcb@width{\kvtcb@width+(#1)}},%
   boxsep/.store in=\kvtcb@boxsep,
   toprule/.code={%
     \def\kvtcb@top@rule@stand{#1}%
@@ -186,12 +190,12 @@
   bottom/.store in=\kvtcb@bottom,
   bottomtitle/.store in=\kvtcb@bottomtitle,
   middle/.store in=\kvtcb@middle,
-  colback/.store in=\kvtcb@colback,
-  colframe/.store in=\kvtcb@colframe,
-  colupper/.store in=\kvtcb@colupper,
-  collower/.store in=\kvtcb@collower,
+  colback/.colorlet=tcbcol@back,
+  colframe/.colorlet=tcbcol@frame,
+  colupper/.colorlet=tcbcol@upper,
+  collower/.colorlet=tcbcol@lower,
   coltext/.style={colupper=#1,collower=#1},
-  coltitle/.store in=\kvtcb@coltitle,
+  coltitle/.colorlet=tcbcol@title,
   fonttitle/.store in=\kvtcb@fonttitle,
   fontupper/.store in=\kvtcb@fontupper,
   fontlower/.store in=\kvtcb@fontlower,
@@ -211,22 +215,24 @@
   parskip/.style={before={\par\pagebreak[0]\parindent=0pt},after={\par}},
   noparskip/.style={before={\par\smallskip\pagebreak[0]\parindent=0pt},after={\par\smallskip}},
   nobeforeafter/.style={before=,after=},
-  before skip/.style={before={\begingroup%
-    \parindent\z@\parskip\z@\par\nointerlineskip%
-    \addvspace{#1}\noindent%
-  \endgroup}},
-  after skip/.style={after={\begingroup%
-    \parindent\z@\parskip\z@\par\nointerlineskip%
-    \addvspace{#1}%
-  \endgroup}},
+  before skip/.style={before={%
+    \par\nointerlineskip\lineskip=0pt%
+    \addvspace{\the\dimexpr#1-\parskip\relax}%
+    \noindent%
+    }},
+  after skip/.style={after={%
+    \par\nointerlineskip%
+    \addvspace{\the\dimexpr#1-\parskip\relax}%
+    }},
   beforeafter skip/.style={before skip={#1},after skip={#1}},
   lowerbox/.is choice,
   lowerbox/visible/.code={\tcb@lowerignoredfalse\tcb@lowervisibletrue},
   lowerbox/invisible/.code={\tcb@lowerignoredfalse\tcb@lowervisiblefalse},
   lowerbox/ignored/.code={\tcb@lowerignoredtrue\tcb@lowervisiblefalse},
-  natural height/.code={\let\tcb@ch=\tcb@ch@natural},
-  height/.code={\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed},
-  text height/.code={\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed},
+  natural height/.code={\tcb@fixedheightfalse\let\tcb@ch=\tcb@ch@natural},
+  height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed},
+  text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed},
+  add to height/.code={\ifdefined\kvtcb@height@fixed\tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+(#1)}\fi},
   height plus/.dimstore in=\kvtcb@height@fixed@plus,%
   height from/.style args={#1 to #2}{height={#1},height plus={#2-#1}},%
   height fill/.is choice,%
@@ -255,6 +261,9 @@
   grow to right by/.code={%
     \tcbdimto\kvtcb@width{\kvtcb@width+#1}%
     \pgfkeysalso{enlarge right by={-\the\dimexpr#1\relax}}},%
+  left skip/.style={grow to left by={-#1}},
+  right skip/.style={grow to right by={-#1}},
+  leftright skip/.style={left skip={#1},right skip={#1}},
   toggle enlargement/.is choice,
   toggle enlargement/none/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@none},
   toggle enlargement/evenpage/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@evenpage},
@@ -365,7 +374,7 @@
   tabularx*/.style 2 args={%
     boxsep=0pt,top=0pt,bottom=0pt,leftupper=0pt,rightupper=0pt,
     toptitle=1mm,bottomtitle=1mm,boxrule=0.5mm,
-    before upper={\arrayrulecolor{\kvtcb@colframe}\def\arraystretch{1.1}#1%
+    before upper={\arrayrulecolor{tcbcol@frame}\def\arraystretch{1.1}#1%
       \tcb@hack@currenvir\tabularx{\linewidth}{#2}},
     after upper=\endtabularx\arrayrulecolor{black}},
   tabularx/.style={tabularx*={}{#1}},
@@ -385,6 +394,11 @@
   baseline/.store in=\kvtcb@baseline,%
   tcbox raise/.style={baseline=-#1},%
   tcbox raise base/.style={baseline=\tcb@val@raisebase},%
+  box align/.is choice,%
+  box align/bottom/.style={baseline=0pt},%
+  box align/top/.style={baseline=\tcb@height},%
+  box align/center/.style={baseline=\tcb@height/2},%
+  box align/base/.style={baseline=\tcb@val@raisebase},%
   shrink tight/.style={boxsep=0mm,top=-\kvtcb@top@rule@stand,bottom=-\kvtcb@bottom@rule@stand,left=-\kvtcb@left@rule,right=-\kvtcb@right@rule},%
   extrude left by/.code={\tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}\tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-#1}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
   extrude right by/.code={\tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}\tcbdimto\kvtcb@bbright{\kvtcb@bbright-#1}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
@@ -435,7 +449,7 @@
   list entry/.store in=\kvtcb@listentry,
   list text/.style={list entry={\protect\numberline{\thetcbcounter}{\ignorespaces #1}}},
   title filled/.is if=tcb@titlefilled,%
-  @colbacktitle/.store in=\kvtcb@colbacktitle,
+  @colbacktitle/.colorlet=tcbcol@backtitle,
   colbacktitle/.style={title filled,@colbacktitle={#1}},
   opacityupper/.store in=\kvtcb@opacityupper,
   opacitylower/.store in=\kvtcb@opacitylower,
@@ -550,7 +564,7 @@
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\tcb@temp-\kvtcb@lefttitle-\kvtcb@righttitle}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{\kvtcb@coltitle}\kvtcb@fonttitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
   \fi%
 }
 
@@ -671,9 +685,13 @@
   \addtocounter{tcblayer}{-1}%
 }
 
+\long\def\tcb@apply@box@options#1{%
+  \tcbset{#1}\tcb@lateoptions@hook\tcb@afteroptions@hook%
+}
+
 \long\def\tcb@@icolorbox[#1]{%
   \tcb@layer@inc%
-  \tcbset{capture=minipage,#1}\tcb@height@adjust\tcb@afteroptions@hook%
+  \tcb@apply@box@options{capture=minipage,#1}\tcb@height@adjust%
   \tcb@hasLowerfalse%
   \csname tcb@@capture@\kvtcb@capture\endcsname%
 }
@@ -688,7 +706,7 @@
 }
 
 \def\tcb@finalize@environment{%
-  \color{.}% hack for some special cases
+  %\color{.}% hack for some special cases
   \tcb@layer@dec%
 }
 
@@ -740,27 +758,32 @@
 }
 
 \def\tcb@saveehg#1{%
-  \immediate\write\@auxout{\string\gdef\string\tcb@ehg@#1@height{\csname tcb@ehg@#1@current\endcsname}}%
+  \immediate\write\@auxout{\string\csgdef{tcb@ehg@height@#1}{\csuse{tcb@ehg@current@#1}}}%
 }
 
 \def\tcb@ehgadd#1{%
-  \@ifundefined{tcb@ehg@\tcb@ehgid @current}{%
-    \expandafter\xdef\csname tcb@ehg@\tcb@ehgid @current\endcsname{#1}%
+  \ifcsdef{tcb@ehg@current@\tcb@ehgid}{%
+    \ifdim\csuse{tcb@ehg@current@\tcb@ehgid}<#1\relax%
+      \csxdef{tcb@ehg@current@\tcb@ehgid}{#1}%
+    \fi%
+  }{%
+    \csxdef{tcb@ehg@current@\tcb@ehgid}{#1}%
     \edef\tcb@temp{\noexpand\AtEndDocument{\noexpand\tcb@saveehg{\tcb@ehgid}}}%
-    \tcb@temp}{%
-    \ifdim\csname tcb@ehg@\tcb@ehgid @current\endcsname<#1%
-    \expandafter\xdef\csname tcb@ehg@\tcb@ehgid @current\endcsname{#1}\fi}%
+    \tcb@temp%
+  }%
 }
 
 \def\tcb@ch@equalheight{%
   \tcb@ehgadd{\tcb@natheight}%
-  \@ifundefined{tcb@ehg@\tcb@ehgid @height}{%
-    \edef\tcb@height{\tcb@natheight}}{%
-    \ifdim\csname tcb@ehg@\tcb@ehgid @height\endcsname<\tcb@natheight%
+  \ifcsdef{tcb@ehg@height@\tcb@ehgid}{%
+    \ifdim\csuse{tcb@ehg@height@\tcb@ehgid}<\tcb@natheight\relax%
+      \edef\tcb@height{\tcb@natheight}%
+    \else%
+      \letcs{\tcb@height}{tcb@ehg@height@\tcb@ehgid}%
+    \fi%
+  }{%
     \edef\tcb@height{\tcb@natheight}%
-    \else
-    \edef\tcb@height{\csname tcb@ehg@\tcb@ehgid @height\endcsname}%
-    \fi}%
+  }%
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
 }
 
@@ -878,7 +901,7 @@
 \def\tcb@drawframe@standard{%
   \begin{pgfscope}%
   \tcb@boundaryframe@standard%
-  \pgfsetfillcolor{\kvtcb@colframe}%
+  \pgfsetfillcolor{tcbcol@frame}%
   \pgfsetfillopacity{\kvtcb@opacityframe}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -888,7 +911,7 @@
 \def\tcb@drawframe@standardjigsaw{%
   \begin{pgfscope}%
   \tcb@boundaryframe@standardjigsaw%
-  \pgfsetfillcolor{\kvtcb@colframe}%
+  \pgfsetfillcolor{tcbcol@frame}%
   \pgfsetfillopacity{\kvtcb@opacityframe}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -898,7 +921,7 @@
 \def\tcb@drawwithtitle@standard{%
   \begin{pgfscope}%
   \tcb@boundaryinterior@title@standard%
-  \pgfsetfillcolor{\kvtcb@colback}%
+  \pgfsetfillcolor{tcbcol@back}%
   \pgfsetfillopacity{\kvtcb@opacityback}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -908,7 +931,7 @@
 \def\tcb@drawwithouttitle@standard{%
   \begin{pgfscope}%
   \tcb@boundaryinterior@notitle@standard%
-  \pgfsetfillcolor{\kvtcb@colback}%
+  \pgfsetfillcolor{tcbcol@back}%
   \pgfsetfillopacity{\kvtcb@opacityback}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -918,7 +941,7 @@
 \def\tcb@drawtitle@standard{%
   \begin{pgfscope}%
   \tcb@boundarytitle@standard%
-  \pgfsetfillcolor{\kvtcb@colbacktitle}%
+  \pgfsetfillcolor{tcbcol@backtitle}%
   \pgfsetfillopacity{\kvtcb@opacitybacktitle}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -937,7 +960,7 @@
   \pgfpathmoveto{\pgfqpoint{\kvtcb@left@rule}{\tcb@seg@pos}}%
   \pgfpathlineto{\pgfqpoint{\the\dimexpr\tcb@width-\kvtcb@right@rule\relax}{\tcb@seg@pos}}%
   \fi%
-  \pgfsetcolor{\kvtcb@colframe}%
+  \pgfsetcolor{tcbcol@frame}%
   \pgfsetstrokeopacity{\kvtcb@opacityframe}%
   \pgfusepath{stroke}%
   \end{pgfscope}%
@@ -1013,7 +1036,7 @@
     \pgfsetfillopacity{\kvtcb@opacitytitle}%
     \pgftext[x=\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@lefttitle\relax,
              y=\the\dimexpr\tcb@height-\kvtcb@top@rule-\kvtcb@boxsep-\kvtcb@toptitle\relax,
-             left,top]{\color{\kvtcb@coltitle}\box\tcb@titlebox}%
+             left,top]{\color{tcbcol@title}\box\tcb@titlebox}%
     \end{pgfscope}%
   \fi%
 }
@@ -1024,7 +1047,7 @@
   \pgfsetfillopacity{\kvtcb@opacityupper}%
   \csname tcb@dbox@\kvtcb@valign\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper\relax}%
           {\the\dimexpr\tcb@innerheight+\kvtcb@bottom@rule-\kvtcb@boxsep-\tcb@break@topsep-\kvtcb@top-\tcb@height@upper\relax}%
-          {\tcb@height@upper}{\tcb@upperbox}{\kvtcb@colupper}%
+          {\tcb@height@upper}{\tcb@upperbox}{tcbcol@upper}%
   \end{pgfscope}%
 }
 \let\tcb@tdraw@upper=\tcb@tdraw@upper@core
@@ -1035,7 +1058,7 @@
     \pgfsetfillopacity{\kvtcb@opacitylower}%
     \csname tcb@dbox@\kvtcb@valignlower\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftlower\relax}%
             {\the\dimexpr\kvtcb@bottom@rule+\kvtcb@boxsep+\tcb@break@bottomsep+\kvtcb@bottom\relax}%
-            {\tcb@height@lower}{\tcb@lowerbox}{\kvtcb@collower}%
+            {\tcb@height@lower}{\tcb@lowerbox}{tcbcol@lower}%
     \end{pgfscope}%
   \fi%
 }
@@ -1046,7 +1069,7 @@
     \tcbdimto{\tcb@temp@wd}{\tcb@w@upper-\wd\tcb@upperbox+\kvtcb@sbs@gap}%
     \noindent\unhbox\tcb@upperbox\kern\tcb@temp@wd%
     \iftcb@hasLower%
-      \iftcb@lowervisible\color{\kvtcb@collower}\unhbox\tcb@lowerbox%
+      \iftcb@lowervisible\color{tcbcol@lower}\unhbox\tcb@lowerbox%
       \else%
         \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{0pt}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
       \fi%
@@ -1173,7 +1196,7 @@
 
 \long\def\tcbox@inner@hbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
-  \sbox\tcb@upperbox{\color{\kvtcb@colupper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
+  \sbox\tcb@upperbox{\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
   \tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
   \tcbdimto{\tcb@val@raisebase}{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbset{width=\the\dimexpr\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax}%
@@ -1186,7 +1209,7 @@
   \tcbset{breakable@false,sidebyside=false}%
   \let\tcb@val@raisebase=\tcb@zpt%
   \tcb@set@@dim@and@title%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{\kvtcb@colupper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
   \tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
   \tcbset{width=\the\dimexpr\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax}%
   \tcb@hasLowerfalse%
@@ -1197,7 +1220,7 @@
 \long\def\tcb@ox#1#2{%
   \begingroup%
   \tcb@layer@inc%
-  \tcbset{#1}\tcb@height@adjust\tcb@afteroptions@hook%
+  \tcb@apply@box@options{#1}\tcb@height@adjust%
   \csname tcbox@inner@\kvtcb@capture\endcsname{#2}%
   \tcb@layer@dec%
   \endgroup%
@@ -1209,13 +1232,13 @@
 
 \newcommand{\tcbsubtitle}[2][]{%
   \begingroup%
-  \let\tcb@trans@colframe\kvtcb@colframe%
+  \colorlet{tcbtranscol@frame}{tcbcol@frame}%
   \iftcb@titlefilled%
-    \let\tcb@trans@colback\kvtcb@colbacktitle%
+    \colorlet{tcbtranscol@back}{tcbcol@backtitle}%
   \else%
-    \let\tcb@trans@colback\kvtcb@colframe%
+    \colorlet{tcbtranscol@back}{tcbcol@frame}%
   \fi%
-  \let\tcb@trans@colupper\kvtcb@coltitle%
+  \colorlet{tcbtranscol@upper}{tcbcol@title}%
   \let\tcb@trans@fontupper\kvtcb@fonttitle%
   \let\tcb@trans@boxsep\kvtcb@boxsep%
   \let\tcb@trans@left\kvtcb@leftupper%
@@ -1226,8 +1249,8 @@
   \let\tcb@trans@style\kvtcb@subtitle@style%
   \begin{tcolorbox}[sharp corners,
     before skip={0.5\baselineskip},after skip={0.5\baselineskip},
-    colframe=\tcb@trans@colframe,colback=\tcb@trans@colback,
-    colupper=\tcb@trans@colupper,fontupper=\tcb@trans@fontupper,
+    colframe=tcbtranscol@frame,colback=tcbtranscol@back,
+    colupper=tcbtranscol@upper,fontupper=\tcb@trans@fontupper,
     boxsep=\tcb@trans@boxsep,left=\tcb@trans@left,right=\tcb@trans@right,
     top=\tcb@trans@top,bottom=\tcb@trans@bottom,
     boxrule=\tcb@trans@rule,leftrule=0pt,rightrule=0pt,oversize,
@@ -1278,7 +1301,7 @@
     \csxdef{the\tcbcounter}{\kvtcb@new@freestyle}%
   \fi%
   \global\csletcs{thetcb@cnt@#1}{the\tcbcounter}%
-  \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\preto\kvtcb@phantom{\refstepcounter{\tcbcounter}}}}%
+  \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\stepcounter{\tcbcounter}\preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}}}%
 }
 
 \def\tcb@proc@counter@auto#1{%
@@ -1295,7 +1318,7 @@
 \def\tcb@proc@counter@from#1{%
   \csxdef{tcb@cnt@#1}{\kvtcb@new@counter}%
   \global\csletcs{thetcb@cnt@#1}{the\kvtcb@new@counter}%
-  \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\preto\kvtcb@phantom{\refstepcounter{\tcbcounter}}}}%
+  \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\stepcounter{\tcbcounter}\preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}}}%
 }
 
 \def\tcb@proc@counter@no#1{%
@@ -1492,7 +1515,8 @@
 \tcbset{%
   initialize@reset/.code={\tcbset{#1}\appto\tcb@reset{\tcbset{#1}}},%
   reset/.code={\tcb@reset},%
-  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@},
+  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@%
+    \let\tcb@lateoptions@hook\@empty},
     width=\linewidth,autoparskip,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
     size=normal,rounded corners,
@@ -1526,7 +1550,8 @@
 
 \def\tcb@check@library@version{%
   \ifx\tcb@library@version\tcb@version\else%
-  \PackageError{tcolorbox}{tcolorbox version '\tcb@version' loads library '\tcb@library@inload' with version '\tcb@library@version'}
+  \tcb@error{tcolorbox version '\tcb@version' loads library '\tcb@library@inload' with version '\tcb@library@version'}%
+    {tcolorbox is not installed correctly. At least one library is not compatible to the main package.}%
   \fi%
 }
 
@@ -1574,6 +1599,7 @@
 \tcb@add@library{minted}{tcbminted.code.tex}
 \tcb@add@library{theorems}{tcbtheorems.code.tex}
 \tcb@add@library{documentation}{tcbdocumentation.code.tex}
+\tcb@add@library{raster}{tcbraster.code.tex}
 \tcb@add@library{skins@jigsaw}{tcbskinsjigsaw.code.tex}
 \tcb@add@library{skins}{tcbskins.code.tex}
 \tcb@add@library{breakable}{tcbbreakable.code.tex}
@@ -1581,7 +1607,7 @@
 \tcb@add@library{fitting}{tcbfitting.code.tex}
 \tcb@add@library{xparse}{tcbxparse.code.tex}
 
-\tcb@add@library@style{many}{skins,breakable,hooks,theorems,fitting,xparse}
+\tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting,xparse}
 \tcb@add@library@style{most}{many,listingsutf8}
 \tcb@add@library@style{all}{many,minted,listingsutf8,documentation}
 

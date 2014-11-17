@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.22}
+\tcb@set@library@version{3.30}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -109,9 +109,9 @@
 }
 
 \tikzset{%
-  tcb fill frame/.style={fill=\kvtcb@colframe,fill opacity=\kvtcb@opacityframe,tcb@spec,frame@style},%
-  tcb fill interior/.style={fill=\kvtcb@colback,fill opacity=\kvtcb@opacityback,tcb@spec,interior@style},%
-  tcb fill title/.style={fill=\kvtcb@colbacktitle,fill opacity=\kvtcb@opacitybacktitle,tcb@spec,title@style},%
+  tcb fill frame/.style={fill=tcbcol@frame,fill opacity=\kvtcb@opacityframe,tcb@spec,frame@style},%
+  tcb fill interior/.style={fill=tcbcol@back,fill opacity=\kvtcb@opacityback,tcb@spec,interior@style},%
+  tcb fill title/.style={fill=tcbcol@backtitle,fill opacity=\kvtcb@opacitybacktitle,tcb@spec,title@style},%
 }
 
 % fill frame
@@ -166,10 +166,10 @@
 % draw segmentation line
 \def\tcb@drawlower@path{%
   \iftcb@sidebyside%
-    \path[draw=\kvtcb@colframe,fill opacity=\kvtcb@opacityframe,dash pattern=on 1mm off 1mm,dash phase=0.5mm,tcb@spec,segmentation@style]
+    \path[draw=tcbcol@frame,fill opacity=\kvtcb@opacityframe,dash pattern=on 1mm off 1mm,dash phase=0.5mm,tcb@spec,segmentation@style]
     (segmentation.north)--(segmentation.south);%
   \else%
-    \path[draw=\kvtcb@colframe,fill opacity=\kvtcb@opacityframe,dash pattern=on 1mm off 1mm,dash phase=0.5mm,tcb@spec,segmentation@style]
+    \path[draw=tcbcol@frame,fill opacity=\kvtcb@opacityframe,dash pattern=on 1mm off 1mm,dash phase=0.5mm,tcb@spec,segmentation@style]
     (segmentation.west)--(segmentation.east);%
   \fi%
 }
@@ -256,7 +256,7 @@
 }
 
 \def\tcb@drawspec@T{%
-  \tcb@pathbase{top color=\kvtcb@colframe,bottom color=\kvtcb@colback,fill opacity=\kvtcb@opacitybacktitle}{[yshift=-0.01pt]interior.north west}{[yshift=0.01pt]title.south east}%
+  \tcb@pathbase{top color=tcbcol@frame,bottom color=tcbcol@back,fill opacity=\kvtcb@opacitybacktitle}{[yshift=-0.01pt]interior.north west}{[yshift=0.01pt]title.south east}%
   {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
 }
 
@@ -270,7 +270,7 @@
 \def\tcb@drawframe@spartan{%
   \begin{pgfscope}%
   \pgfpathrectangle{\pgfpointorigin}{\pgfqpoint{\tcb@width}{\tcb@height}}%
-  \pgfsetfillcolor{\kvtcb@colframe}%
+  \pgfsetfillcolor{tcbcol@frame}%
   \pgfsetfillopacity{\kvtcb@opacityframe}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -280,7 +280,7 @@
   \begin{pgfscope}%
   \pgfpathrectanglecorners{\pgfqpoint{\kvtcb@left@rule}{\kvtcb@bottom@rule}}%
    {\pgfqpoint{\the\dimexpr\tcb@width-\kvtcb@right@rule\relax}{\the\dimexpr\kvtcb@bottom@rule+\tcb@innerheight\relax}}%
-  \pgfsetfillcolor{\kvtcb@colback}%
+  \pgfsetfillcolor{tcbcol@back}%
   \pgfsetfillopacity{\kvtcb@opacityback}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -290,7 +290,7 @@
   \begin{pgfscope}%
   \pgfpathrectanglecorners{\pgfqpoint{\kvtcb@left@rule}{\kvtcb@bottom@rule}}%
    {\pgfqpoint{\the\dimexpr\tcb@width-\kvtcb@right@rule\relax}{\the\dimexpr\tcb@height-\kvtcb@top@rule\relax}}%
-  \pgfsetfillcolor{\kvtcb@colback}%
+  \pgfsetfillcolor{tcbcol@back}%
   \pgfsetfillopacity{\kvtcb@opacityback}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -300,7 +300,7 @@
   \begin{pgfscope}%
   \pgfpathrectanglecorners{\pgfqpoint{\kvtcb@left@rule}{\the\dimexpr\kvtcb@bottom@rule+\tcb@innerheight+\kvtcb@title@rule\relax}}%
    {\pgfqpoint{\the\dimexpr\tcb@width-\kvtcb@right@rule\relax}{\the\dimexpr\tcb@height-\kvtcb@top@rule\relax}}%
-  \pgfsetfillcolor{\kvtcb@colbacktitle}%
+  \pgfsetfillcolor{tcbcol@backtitle}%
   \pgfsetfillopacity{\kvtcb@opacitybacktitle}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -317,7 +317,7 @@
   \pgfpathmoveto{\pgfqpoint{\kvtcb@left@rule}{\tcb@seg@pos}}%
   \pgfpathlineto{\pgfqpoint{\the\dimexpr\tcb@width-\kvtcb@right@rule\relax}{\tcb@seg@pos}}%
   \fi%
-  \pgfsetcolor{\kvtcb@colframe}%
+  \pgfsetcolor{tcbcol@frame}%
   \pgfsetstrokeopacity{\kvtcb@opacityframe}%
   \pgfusepath{stroke}%
   \end{pgfscope}%
@@ -371,7 +371,7 @@
   @title style/.code={\tikzset{title@style/.style={#1}}},%
   title style/.style={title filled,@title style={#1}},
   title hidden/.style={title style={draw=none,fill=none}},
-  colbacklower/.store in=\kvtcb@colbacklower,%
+  colbacklower/.colorlet=tcbcol@backlower,%
   clear@spec/.code={\tcb@spec{}},%
   tikz/.code={\appto\tcb@tikz@option@hook{,#1}},%
   tikz reset/.code={\let\tcb@tikz@option@hook\@empty},%
@@ -504,30 +504,30 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@path}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@path}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@UT%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithtitle@path}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@path}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@path}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@path}%
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@path}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@path}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@UR%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithouttitle@path}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@path}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@path}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@path}%
     \fi\tcb@spec{}},
   segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@A{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LR{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
+    \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=tcbcol@backlower}\else%
+    \tcb@drawspec@sbs@A{fill=tcbcol@backlower}\fi\else\tcb@drawspec@LR{fill=tcbcol@backlower}\fi\tcb@spec{}},%
   skin first=bicolorfirst,skin middle=bicolormiddle,skin last=bicolorlast}
 
 \tcbset{bicolor/.style={skin=bicolor}}
@@ -537,30 +537,30 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathfirst}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathfirst}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@UT%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithtitle@pathfirst}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathfirst}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathfirst}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathfirst}%
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathfirst}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathfirst}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@UR%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithouttitle@pathfirst}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathfirst}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathfirst}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathfirst}%
     \fi\tcb@spec{}},
   segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@C{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LS{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
+    \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=tcbcol@backlower}\else%
+    \tcb@drawspec@sbs@C{fill=tcbcol@backlower}\fi\else\tcb@drawspec@LS{fill=tcbcol@backlower}\fi\tcb@spec{}},%
   skin first=bicolorfirst,skin middle=bicolormiddle,skin last=bicolormiddle}
 
 \tcb@new@skin{bicolormiddle}{base@middle,%
@@ -568,30 +568,30 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathmiddle}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathmiddle}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@UT%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithtitle@pathmiddle}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathmiddle}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathmiddle}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathmiddle}%
     \fi\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathmiddle}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathmiddle}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@US%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithouttitle@pathmiddle}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathmiddle}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathmiddle}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathmiddle}%
     \fi\tcb@spec{}},
   segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@E{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LS{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
+    \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=tcbcol@backlower}\else%
+    \tcb@drawspec@sbs@E{fill=tcbcol@backlower}\fi\else\tcb@drawspec@LS{fill=tcbcol@backlower}\fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolormiddle}
 
 \tcb@new@skin{bicolorlast}{base@last,%
@@ -599,34 +599,34 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathlast}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathlast}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@UT%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithtitle@pathlast}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathlast}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithtitle@pathlast}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathlast}%
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcb@segment@state%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathlast}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathlast}%
       \or%
-      \tcb@spec{fill=\kvtcb@colback}\tcb@drawspec@US%
+      \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
       \else
-      {\tcb@spec{fill=\kvtcb@colbacklower}\tcb@drawwithouttitle@pathlast}%
+      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathlast}%
       \fi%
     \else%
-      {\tcb@spec{fill=\kvtcb@colback}\tcb@drawwithouttitle@pathlast}%
+      {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathlast}%
     \fi\tcb@spec{}},%
   segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=\kvtcb@colbacklower}\else%
-    \tcb@drawspec@sbs@F{fill=\kvtcb@colbacklower}\fi\else\tcb@drawspec@LR{fill=\kvtcb@colbacklower}\fi\tcb@spec{}},%
+    \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=tcbcol@backlower}\else%
+    \tcb@drawspec@sbs@F{fill=tcbcol@backlower}\fi\else\tcb@drawspec@LR{fill=tcbcol@backlower}\fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolorlast}
 
 
-\tikzset{beamer@color/.style={top color=\kvtcb@colback,bottom color=\kvtcb@colback!85!black}}
+\tikzset{beamer@color/.style={top color=tcbcol@back,bottom color=tcbcol@back!85!black}}
 
 \tcb@new@skin{beamer}{base@unbroken,%
   frame engine=path,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=path,%
@@ -738,12 +738,12 @@
   \iftcb@sidebyside%
   \tcb@drawlower@path%
   \else%
-  \path[left color=\kvtcb@colframe!75!white,right color=\kvtcb@colframe!75!white!25!\kvtcb@colback,segmentation@style]
+  \path[left color=tcbcol@frame!75!white,right color=tcbcol@frame!75!white!25!tcbcol@back,segmentation@style]
     ([yshift={-\kvtcb@middle/4}]segmentation.west) rectangle ([yshift={\kvtcb@middle/4}]segmentation.east);
   \fi%
 }
 
-\tikzset{widget@color/.style={left color=\kvtcb@colframe!75!white,right color=\kvtcb@colframe!75!white!25!\kvtcb@colback}}
+\tikzset{widget@color/.style={left color=tcbcol@frame!75!white,right color=tcbcol@frame!75!white!25!tcbcol@back}}
 
 \tcb@new@skin{widget}{base@unbroken,%
   frame engine=path,interior titled engine=path,interior engine=path,segmentation engine=empty,title engine=empty,%
@@ -994,11 +994,11 @@
     detach title,
     code={\def\tcb@specialtitle@hook{%
       \ifx\tcbtitletext\@empty\else%
-      \let\tcb@trans@colframe\kvtcb@colframe%
-      \let\tcb@trans@colback\kvtcb@colbacktitle%
+      \colorlet{tcbtranscol@frame}{tcbcol@frame}%
+      \colorlet{tcbtranscol@back}{tcbcol@backtitle}%
       \let\tcb@trans@boxedstyle\kvtcb@style@boxedtitle%
-      \setbox\tcb@titlebox\color@hbox\bgroup\color{\kvtcb@coltitle}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
-      \setbox\tcb@titlebox\color@hbox\tcbox[colframe=\tcb@trans@colframe,colback=\tcb@trans@colback,size=title,code={\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\tcbox[colframe=tcbtranscol@frame,colback=tcbtranscol@back,size=title,code={\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
       %
       \tcbdimto\tcboxedtitleheight{\ht\tcb@titlebox+\dp\tcb@titlebox}%
       \tcbdimto\tcboxedtitlewidth{\wd\tcb@titlebox}%
@@ -1270,8 +1270,8 @@
   enlarge top by=0mm,
   enlarge bottom by=0mm,
   width=\the\dimexpr\linewidth+1.6cm\relax,
-  frame style={top color=\kvtcb@colframe,bottom color=\kvtcb@colframe,middle color=yellow!75!\kvtcb@colframe},
-  title style={left color=\kvtcb@colframe,right color=\kvtcb@colframe,middle color=yellow!75!\kvtcb@colframe},
+  frame style={top color=tcbcol@frame,bottom color=tcbcol@frame,middle color=yellow!75!tcbcol@frame},
+  title style={left color=tcbcol@frame,right color=tcbcol@frame,middle color=yellow!75!tcbcol@frame},
   watermark tikz={\draw[line width=2mm] circle (1cm) node{\fontfamily{ptm}\fontseries{b}\fontsize{20mm}{20mm}\selectfont!};},
   watermark zoom=0.75,
 }}
@@ -1608,17 +1608,104 @@
   draftmode/false/.code=\tcbstopdraftmode,%
 }
 
+
+\def\tcb@include@graphics{%
+  \ifdefstring{\kvtcb@capture}{hbox}{%
+    \tcbox{%
+      \edef\tcb@temp{\noexpand\includegraphics[\expandonce\kvtcb@graphics@options]}%
+      \tcb@temp{\imagepath}%
+    }%
+  }{%
+    \iftcb@fixedheight%
+      \begin{tcolorbox}[underlay={%
+        \begin{tcbclipinterior}%
+        \edef\tcb@temp{\noexpand\tikzset{fill image options={\expandonce\kvtcb@graphics@options}}}%
+        \tcb@temp%
+        \path[fill zoom image={\imagepath}]
+          ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south west) rectangle
+          ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north east);
+        \end{tcbclipinterior}%
+        }]%
+      \end{tcolorbox}%
+    \else%
+      \begin{tcolorbox}%
+        \edef\tcb@temp{\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth]}%
+        \tcb@temp{\imagepath}%
+      \end{tcolorbox}%
+    \fi%
+  }%
+}
+
+\def\tcb@include@graphics@preparefile#1{%
+  \def\imagename{\detokenize{#1}}%
+  \ifx\kvtcb@graphics@directory\@empty%
+    \edef\imagepath{#1}%
+  \else%
+    \edef\imagepath{\expandonce\kvtcb@graphics@directory/\noexpand#1}%
+  \fi%
+}
+
+\newcommand{\tcbincludegraphics}[2][]{%
+  \begingroup%
+  \tcb@layer@pushup%
+  \tcb@apply@box@options{enhanced,clip upper=true,valign=center,center upper,#1}%
+  \tcb@include@graphics@preparefile{#2}%
+  \edef\imagepage{1}%
+  \tcb@include@graphics%
+  \endgroup%
+}
+
+\def\tcb@set@pdfpages#1#2{%
+  \IfFileExists{#2}{%
+    \ifdef{\pdfximage}{%
+      \pdfximage{#2}%
+      \edef#1{\the\pdflastximagepages}%
+    }{%
+      \ifdef{\XeTeXpdfpagecount}{%
+        \edef#1{\the\XeTeXpdfpagecount #2 }%
+        \ifnum#1=0 %
+          \edef#1{1}%
+        \fi%
+      }{\tcb@error{For PDF support run pdflatex, xelatex, or lualatex}{%
+        Your compiler seems not to support PDF include files.}}%
+    }%
+  }{\tcb@error{PDF file `#2' not found}{The PDF file `#2' was not found}}%
+  \relax%
+}
+
+\newcommand{\tcbincludepdf}[2][]{%
+  \begingroup%
+  \tcb@layer@pushup%
+  \tcb@apply@box@options{enhanced,clip upper=true,valign=center,center upper,#1}%
+  \appto\kvtcb@graphics@options{,page=\imagepage}%
+  \tcb@include@graphics@preparefile{#2}%
+  \tcb@set@pdfpages\pdfpages{\imagepath}%
+  \foreach \imagepage in \kvtcb@graphics@pages%
+  {%
+    \tcb@include@graphics%
+  }%
+  \endgroup%
+}
+
+\tcbset{%
+  graphics options/.store in=\kvtcb@graphics@options,
+  graphics pages/.store in=\kvtcb@graphics@pages,
+  graphics directory/.store in=\kvtcb@graphics@directory,
+}
+
+
 \tcbset{%
   reset@skins/.style={%
     frame style=,interior style=,segmentation style=,@title style=,%
     colbacklower=black!15!white,%
     extend freelance=,extend freelancefirst=,extend freelancemiddle=,extend freelancelast=,%
     clear@spec,%
-    watermark opacity=1.00,watermark color=\kvtcb@colback!85!\kvtcb@colframe,%
+    watermark opacity=1.00,watermark color=tcbcol@back!85!tcbcol@frame,%
     watermark zoom=0.75,clip watermark,%
     clip title=false,clip upper=false,clip lower=false,%
     no borderline,no shadow,no underlay,no finish,tikz reset,at begin tikz reset,at end tikz reset,%
-    boxed title style=,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax}%
+    boxed title style=,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax},%
+    graphics options=,graphics pages={1,...,\pdfpages},graphics directory=,%
   },
   initialize@reset=reset@skins,
 }

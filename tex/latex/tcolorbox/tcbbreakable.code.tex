@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.22}
+\tcb@set@library@version{3.30}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -155,7 +155,7 @@
   \else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{\kvtcb@coltitle}\kvtcb@fonttitle\kvtcb@followingtitle\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@followingtitle\end{tcb@savebox}%
     \tcbdimto\tcb@h@title{\ht\tcb@titlebox+\dp\tcb@titlebox}%
     \tcbdimto\tcb@h@padtitle{\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle+\tcb@h@title}%
   \fi%
@@ -245,9 +245,11 @@
   \tcbset{height=\tcb@h@page}%
 }
 
+\def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
+
 \def\tcb@drawcolorbox@breakable{%
   \tcb@prepare@break@operation%
-  \let\tcb@after@lastbox=\kvtcb@afterbox%
+  \global\let\tcb@after@lastbox=\kvtcb@afterbox%
   \let\kvtcb@afterbox=\@empty%
   \begingroup%
     \parskip\z@%
@@ -256,8 +258,9 @@
     \topskip\z@%
     \tcb@split@start%
   \endgroup%
+  \color{.}% hack for some special cases
   \ifx\kvtcb@float\@empty%
-    \tcb@after@lastbox%
+    \aftergroup\tcb@use@after@lastbox%
   \fi%
 }
 

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.22 (2014/10/31)
+%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -635,3 +635,38 @@ version 3.22 (2014/10/31)
 - library 'fitting':
   * new 'fit algorithm' settings: 'fontsize*', 'areasize*', 'hybrid*'
 
+version 3.30 (2014/11/17)
+- bug fix: compilation errors using colors like 'red!10' in some skins like 'beamer'
+- '\thetcbcounter' can now be used as part of a 'listing file' name for 'tcblisting'
+- implementation of 'before skip' and 'after skip' improved
+- implementation of 'equal height group' improved to take arbitrary id's
+- Quick Reference added
+- new options:
+  'add to width', 'add to height',
+  'box align', 'left skip', 'right skip', 'leftright skip'
+- library 'skins':
+  * new macros:
+  '\tcbincludegraphics', '\tcbincludepdf'
+  * new options:
+  'graphics options', 'graphics directory', 'graphics pages'
+- library 'listings', 'listingsut8', 'minted':
+  * 'listing file' now usable inside 'tcblisting' and 'tcbinputlisting'
+  * new options:
+  'comment only', 'text above* listing', 'listing above* text',
+  'comment above* listing', 'listing above* comment',
+  'comment style', 'tcbimage comment', 'pdf extension', 'pdf comment',
+  'process code', 'no process', 'run system command', 'run pdflatex',
+  'run xelatex', 'run lualatex', 'run makeindex', 'run bibtex', 'run biber',
+  'run arara', 'run latex', 'run dvips', 'run ps2pdf',
+  'compilable listing'
+- new library 'raster':
+  * new macros and environments:
+  'tcbraster', 'tcbitemize', 'tcbitem'
+  * new options:
+  'raster columns', 'raster rows', 'raster width', 'raster height', 'raster before skip',
+  'raster after skip', 'raster left skip', 'raster right skip', 'raster column skip',
+  'raster row skip', 'raster halign', 'raster valign', 'raster equal height',
+  'raster equal height group', 'raster force size' ,'raster reset',
+  'raster odd column', 'raster even column', 'raster column n', 'raster odd row',
+  'raster even row', 'raster row m','raster odd number', 'raster even number',
+  'raster row m column n', 'raster number n'
