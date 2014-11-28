@@ -4,23 +4,52 @@
 % \usepackage{incgraph}
 \begin{inctext}
 \begin{tikzpicture}
-\definecolorseries{boxcol}{rgb}{last}{red}{blue}
-\resetcolorseries[24]{boxcol}
+\definecolorseries{boxcol}{rgb}{last}{blue}{red}
+\resetcolorseries[28]{boxcol}
 \coordinate (A) at (0,0); \coordinate (B) at (21,29.7);
-\path[use as bounding box,top color=Goldenrod!25!white,bottom color=Navy!25!white]
-  (A) rectangle coordinate (C) (B);
-\foreach \w in {-15,-30,...,-360}
-{\node[below right,rotate around={\w:(C)}] at ([xshift=1cm]C) {%
-  \begin{tcolorbox}[width=8cm,title=tcolorbox \version,
-    fontupper=\scriptsize,fonttitle=\small\bfseries,
-    colframe=boxcol,colback=boxcol!25!white,colbacktitle=boxcol!!+!50!black,
-    enhanced jigsaw,opacityback=0.5,opacitybacktitle=0.75]
-    \lipsum[2]
-  \end{tcolorbox}};
-}
-\node[font=\Huge\bfseries] at ([yshift=12cm]C) {|tcolorbox|};
-\node[font=\large\bfseries] at ([yshift=-12cm]C)
-  {Manual for version \version\ (\datum)};
+\path[use as bounding box] (A) rectangle coordinate (C) (B);
+\node[transform shape,xslant=0.7,rotate=-10,xshift=0cm] at (C) {%
+  \begin{tcbraster}[raster columns=4,title=tcolorbox \version,
+    fonttitle=\small\bfseries,raster width=50cm]
+  \foreach \b in {1,...,28} {\begin{tcolorbox}[enhanced,
+    watermark text=\thetcbrasternum,
+    colframe=boxcol!30!white,
+    colback=boxcol!25!white!30!white,
+    colbacktitle=boxcol!!+!50!black!30!white,
+    colupper=black!30!white]\lipsum[2]\end{tcolorbox}}
+  \end{tcbraster}%
+};
+\node at (C) {%
+  \begin{tcbitemize}[title=tcolorbox \version,fonttitle=\small\bfseries,
+    enhanced jigsaw,opacityback=0.5,opacitybacktitle=0.75,
+    center upper,valign=center,arc=5mm,
+    raster width=16cm,raster column skip=8mm,raster halign=center,
+    raster force size=false,
+    raster row 1/.style={height=6cm},
+    raster row 2/.style={width=6cm,height=4cm},
+    raster column 1/.style={flushright title,
+      frame style={left color=yellow!50!black,right color=green!50!black},
+      title style={left color=yellow!50!blue,right color=blue!50!green!50!black},
+      interior style={left color=yellow!70,right color=green!70},
+      underlay={\draw[line width=6mm,line cap=round,black!60]
+        ([shift={(0.4,-0.15)}]frame.north east)
+        --([shift={(0.4,0.15)}]frame.south east); }},
+    raster column 2/.style={
+      frame style={left color=green!50!black,right color=yellow!50!black},
+      title style={left color=blue!50!green!50!black,right color=yellow!50!blue},
+      interior style={left color=green!70,right color=yellow!70}}]
+  \tcbitem[fontupper=\Huge\bfseries,sharp corners=east,
+    underlay={\draw[line width=6mm,line cap=round,black!60]
+      ([shift={(0.4,0.30)}]frame.north east)-- coordinate(A) +(0,0.2);
+      \draw[line width=1mm,line cap=round,black!60](A) -- +(30:1.5cm);
+      \draw[line width=1mm,line cap=round,black!60](A) -- +(150:1.5cm);}]
+    tcolorbox
+  \tcbitem[fontupper=\large\bfseries,sharp corners=west]
+    Manual for\\ version\\ \version\\(\datum)
+  \tcbitem[sharp corners=northeast]
+  \tcbitem[sharp corners=northwest] Thomas F.~Sturm
+  \end{tcbitemize}%
+};
 \end{tikzpicture}
 \end{inctext}
 \end{tcboutputlisting}
@@ -30,12 +59,11 @@
   colbacktitle=Navy!15!ExampleBack,top=0mm,before=\par\smallskip,%
   listing style=mydocumentation,listing only}
 
-\bigskip
-
-\begin{marker}
-If you have trouble printing this document, the reason is quite likely the
-cover page. Printing the pages starting with page 2 or page 3 should work.
-\end{marker}
+%\bigskip
+%\begin{marker}
+%If you have trouble printing this document, the reason is quite likely the
+%cover page. Printing the pages starting with page 2 or page 3 should work.
+%\end{marker}
 
 \clearpage
 \begin{center}

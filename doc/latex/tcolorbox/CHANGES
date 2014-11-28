@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
+%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -670,3 +670,15 @@ version 3.30 (2014/11/17)
   'raster odd column', 'raster even column', 'raster column n', 'raster odd row',
   'raster even row', 'raster row m','raster odd number', 'raster even number',
   'raster row m column n', 'raster number n'
+
+version 3.31 (2014/11/28)
+- new macros: '\tcbstartrecording', '\tcbrecord', '\tcbstoprecording', '\tcbinputrecords'
+- new option: 'squeezed title', 'squeezed title*', 'phantomlabel',
+  'record', 'no recording'
+- 'savelowerto' changed to need only one run instead of two
+- library 'skins':
+  * '\imagename' macro can be used in more situations
+  * '\tcbincludegraphics' made aware of 'grffile' package
+- new library 'raster':
+  * tcbraster safeguarded against restricted horizontal mode
+  * new option: 'raster every box'

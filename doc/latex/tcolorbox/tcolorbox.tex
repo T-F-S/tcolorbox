@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
+%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -69,6 +69,7 @@
 
 \providecommand{\tcbpkgprefix}{}
 \usepackage[all]{\tcbpkgprefix tcolorbox}
+\usepackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
 
 \tcbset{skin=enhanced,
   doc head={colback=yellow!10!white,interior style=fill},
@@ -105,8 +106,8 @@
 \renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
 \renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
 
-\def\version{3.30}%
-\def\datum{2014/11/17}%
+\def\version{3.31}%
+\def\datum{2014/11/28}%
 \makeindex
 
 \hypersetup{
@@ -136,7 +137,7 @@
   moretexcs={% core
     endtcolorbox,endtcbverbatimwrite,newtcolorbox,newtcbox,newtcboxfit,tcbusetemp,tcbtitle,tcbtitletext,
     tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
-    tcolorboxenvironment,
+    tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
     % listings
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
@@ -252,10 +253,11 @@
 \input{\jobname_preamble_D.tex}
 
 \begin{tcbverbatimwrite}{\jobname_preamble_E.tex}
-\newtcolorbox[auto counter,number within=section,list inside=exam]%
-  {texercise}[2][]{texercisestyle,
-  listing file={\solfile\thetcbcounter},label={exe:#2},
-  phantom={\writesol{#2}},
+\newtcolorbox[auto counter,number within=section,list inside=exam]{texercise}[2][]{%
+  texercisestyle,
+  listing file={solutions/texercise\thetcbcounter.tex},
+  label={exe:#2},
+  record={\string\processsol{solutions/texercise\thetcbcounter.tex}{#2}},
   title={Exercise \thetcbcounter\hfill\mdseries Solution on page \pageref{sol:#2}},
   list text={Exercise with solution on page \pageref{sol:#2}},#1}
 \end{tcbverbatimwrite}
@@ -327,8 +329,50 @@
 \input{\jobname_preamble_K.tex}
 
 
+\begin{tcbverbatimwrite}{\jobname_preamble_L.tex}
+% \tcbuselibrary{skins,xparse}
+
+\NewTColorBox[auto counter,number within=section]{exercise}{+O{}}{%
+  enhanced,colframe=green!20!black,colback=yellow!10!white,coltitle=green!40!black,
+  fonttitle=\bfseries,
+  underlay={\begin{tcbclipinterior}
+    \shade[inner color=green!80!yellow,outer color=yellow!10!white]
+      (interior.north west) circle (2cm);
+    \draw[help lines,step=5mm,yellow!80!black,shift={(interior.north west)}]
+      (interior.south west) grid (interior.north east);
+    \end{tcbclipinterior}},
+  title={Exercise~\thetcbcounter:},
+  label={exercise@\thetcbcounter},
+  attach title to upper=\quad,
+  after upper={\par\hfill\textcolor{green!40!black}%
+    {\itshape Solution on page~\pageref{solution@\thetcbcounter}}},
+  lowerbox=ignored,
+  savelowerto=solutions/exercise-\thetcbcounter.tex,
+  record={\string\solution{\thetcbcounter}{solutions/exercise-\thetcbcounter.tex}},
+  #1
+}
+
+\NewTotalTColorBox{\solution}{mm}{%
+  enhanced,colframe=red!20!black,colback=yellow!10!white,coltitle=red!40!black,
+  fonttitle=\bfseries,
+  underlay={\begin{tcbclipinterior}
+    \shade[inner color=red!50!yellow,outer color=yellow!10!white]
+      (interior.north west) circle (2cm);
+    \draw[help lines,step=5mm,yellow!80!black,shift={(interior.north west)}]
+      (interior.south west) grid (interior.north east);
+    \end{tcbclipinterior}},
+  title={Solution of Exercise~\ref{exercise@#1} on page~\pageref{exercise@#1}:},
+  phantomlabel={solution@#1},
+  attach title to upper=\par,
+}{\input{#2}}
+
+\tcbset{no solution/.style={no recording,after upper=}}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_L.tex}
+
+
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.quickref}
+%\includeonly{tcolorbox.doc.listings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -339,6 +383,7 @@
 \include{tcolorbox.doc.coreoptions}
 \include{tcolorbox.doc.initoptions}
 \include{tcolorbox.doc.verbatim}
+\include{tcolorbox.doc.recording}
 \include{tcolorbox.doc.technical}
 \include{tcolorbox.doc.skins}
 \include{tcolorbox.doc.graphics}

@@ -1293,31 +1293,19 @@ The following series of examples demonstrate the application of
 In the following, a guideline is given for the creation of \LaTeX\ exercises
 with solutions. These solutions are saved to disk for application at a place of
 choice.
-Therefore, all used exercises are logged to a file |\jobname.sol| for automatic
+Therefore, all used exercises are logged to a file |\jobname.records| for automatic
 processing. The solution contents themselves are saved to a subdirectory named
-|solutions|.
-
-\begin{dispListing}
-%\newcounter{texercise}  % preamble
-
-\newwrite\solout
-\def\openoutsol{\immediate\openout\solout\jobname.sol}
-\def\solfile#1{solutions/texercise#1.tex}
-\def\writesol#1{\immediate\write\solout{\noexpand\processsol{\thetcbcounter}{#1}}}%
-\def\closeoutsol{\immediate\closeout\solout}
-\def\inputsol{\IfFileExists{\jobname.sol}{\input{\jobname.sol}}{}}
-\end{dispListing}
-\tcbusetemp
+|solutions|. Also see \Vref{sec:recording}.
 
 \begin{itemize}
 \item Before the first exercise is given,
-  |\openoutsol| has to be called to start logging.
+  \refCom{tcbstartrecording} has to be called to start recording.
 \item The solution is given as content of a \refEnv{tcboutputlisting}
   environment. Note, that you can use this content also inside the
   exercise with \refCom{tcbuselistingtext} in compiled form.
 \item After the last exercise is given (and before using the solutions),
-  |\closeoutsol| has to be called to stop logging.
-\item The solutions are loaded by |\inputsol|.
+  \refCom{tcbstoprecording} has to be called to stop recording.
+\item The solutions are loaded by \refCom{tcbinputrecords}.
 \end{itemize}
 
 Inside the exercise text, there may be text parts which are needed as
@@ -1334,7 +1322,9 @@ and the label |sol:|\meta{marker} is used to mark the solution.
 \begin{dispListing}
 \tcbset{texercisestyle/.style={arc=0.5mm, colframe=blue!25!yellow!90!white,
   colback=blue!25!yellow!5!white, coltitle=blue!25!yellow!40!black,
-  fonttitle=\small\sffamily\bfseries, fontupper=\small, fontlower=\small}}
+  fonttitle=\small\sffamily\bfseries, fontupper=\small, fontlower=\small,
+  listing options={style=tcblatex,texcsstyle=*\color{red!40!black}},
+}}
 \end{dispListing}
 \tcbusetemp
 
@@ -1343,17 +1333,13 @@ exercises is created quickly:
 
 \inputpreamblelisting{E}
 
-\begin{dispListing}
-\newtcolorbox{texercise}[2][]{texercisestyle,
-  listing file={\solfile\thetexercise},
-  phantom={\refstepcounter{texercise}\label{exe:#2}\writesol{#2}},
-  title={Exercise \arabic{texercise}%
-    \hfill\mdseries Solution on page \pageref{sol:#2}},#1}
-\end{dispListing}
-%\tcbusetemp
-
+\clearpage
 The following examples demonstrate the application.
-\openoutsol
+
+\begin{dispListing}
+\tcbstartrecording
+\end{dispListing}
+\tcbusetemp
 
 
 \begin{dispExample}
@@ -1448,7 +1434,12 @@ total line width.\par\smallskip
 \tcbusetemplisting\par\smallskip\tcbusetemp%
 \end{texercise}
 \end{dispExample}
-\closeoutsol
+%\closeoutsol
+
+\begin{dispListing}
+\tcbstoprecording
+\end{dispListing}
+\tcbusetemp
 
 \bigskip
 
@@ -1463,23 +1454,25 @@ Now, we give a list of all exercises with:
 \clearpage
 \subsection{Solutions for the given \LaTeX\ Exercises}
 
-For all solutions, a macro |\processsol| was written to the file |\jobname.sol|.
+For all solutions, a macro |\processsol| was written to the file |\jobname.records|.
 Now, we need a definition for this macro to use the solutions.
 
 \begin{dispListing}
-% \usepackage{hyperref} % for \phantomsection
-\newcommand{\processsol}[2]{%
-  \tcbinputlisting{texercisestyle,listing only,
-    phantom={\phantomsection\label{sol:#2}},%
-    title={Solution for Exercise \ref{exe:#2} on page \pageref{exe:#2}},
-    listing file={\solfile{#1}}}}
+% \usepackage{hyperref} % for phantomlabel
+\newtcbinputlisting{\processsol}[2]{%
+  texercisestyle,
+  listing only,
+  listing file={#1},
+  phantomlabel={sol:#2},%
+  title={Solution for Exercise \ref{exe:#2} on page \pageref{exe:#2}},
+}
 \end{dispListing}
 \tcbusetemp
 
 The loading of all solutions is done by:
 
 \begin{dispListing}
-\inputsol
+\tcbinputrecords
 \end{dispListing}
 
 With this, we get:

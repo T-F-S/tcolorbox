@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
+%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/11/17 version 3.30 text color boxes]
-\def\tcb@version{3.30}
+\ProvidesPackage{tcolorbox}[2014/11/28 version 3.31 text color boxes]
+\def\tcb@version{3.31}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -144,6 +144,15 @@
   notitle/.style={title=},
   adjust text/.store in=\kvtcb@adjusttext,
   adjusted title/.style={title={#1\vphantom{\kvtcb@adjusttext}}},
+  squeezed title/.style={title={%
+    \setbox\z@=\color@hbox#1\color@endbox%
+    \ifdim\wd\z@>\linewidth\relax%
+      \resizebox{\linewidth}{\height}{\unhbox\z@}%
+    \else%
+      \unhbox\z@%
+    \fi%
+  }},
+  squeezed title*/.style={squeezed title={#1\vphantom{\kvtcb@adjusttext}}},%
   detach title/.code=\tcb@detach@title@code,%
   attach title/.code=\tcb@attach@title@code,%
   attach title to upper/.style={detach title,before upper={\tcbtitle#1}},
@@ -433,6 +442,7 @@
   step and label/.style 2 args={phantom={\refstepcounter{#1}\tcb@set@label{#2}}},%
   step/.style={phantom={\refstepcounter{#1}}},%
   label/.style={phantom={\tcb@set@label{#1}}},%
+  phantomlabel/.style={phantom={\ifdefined\phantomsection\phantomsection\fi\tcb@set@label{#1}}},%
   label type/.store in=\kvtcvb@label@type,%
   no label type/.style={label type=},%
   add to list/.style 2 args={phantom={\tcb@addcontentsline{#1}{#2}}},
@@ -593,8 +603,6 @@
       \let\tcb@startbox\tcb@savelowerbox%
       \let\endtcolorbox\tcb@endboxanddraw%
     \else%
-      \IfFileExists{\kvtcb@savelowerto}{%
-        \tcb@savelowerbox\input{\kvtcb@savelowerto}\end{tcb@savebox}}{}%
       \let\tcb@startbox\tcb@lowerverbatim%
       \expandafter\let\csname end\kvtcb@savedelimiter\expandafter\endcsname\csname tcb@endlowerverbatimanddraw\endcsname%
     \fi%
@@ -1473,6 +1481,8 @@
 
 \def\tcb@endlowerverbatimanddraw{%
   \tcb@endlowerverbatim%
+  \IfFileExists{\kvtcb@savelowerto}{%
+    \tcb@savelowerbox\input{\kvtcb@savelowerto}\end{tcb@savebox}}{}%
   \tcb@draw@color@box%
   \tcb@finalize@environment%
 }
@@ -1498,6 +1508,34 @@
 }
 
 \def\tcbusetemp{\input{\kvtcb@tempfile}}
+
+% recording
+
+\newwrite\tcb@record@out
+
+\def\tcb@null#1{}
+\newcommand{\tcb@record}[1]{\immediate\write\tcb@record@out{#1}}
+
+\newcommand{\tcbstartrecording}[1][\jobname.records]{%
+  \let\tcbrecord\tcb@record%
+  \edef\tcb@record@file{#1}%
+  \immediate\openout\tcb@record@out\tcb@record@file%
+}
+
+\newcommand{\tcbstoprecording}{%
+  \immediate\closeout\tcb@record@out%
+  \let\tcbrecord\tcb@null%
+}
+
+\tcbset{%
+  record/.style={phantom={\tcbrecord{#1}}},
+  no recording/.code={\let\tcbrecord\tcb@null},
+  no recording
+}
+
+\newcommand{\tcbinputrecords}[1][\tcb@record@file]{%
+  \IfFileExists{#1}{\input{#1}}{\tcb@error{record file `#1' not found}{The record file `#1' was not found}}%
+}
 
 \tcb@new@skin{standard}{frame engine=standard,interior titled engine=standard,
   interior engine=standard,segmentation engine=standard,title engine=standard,

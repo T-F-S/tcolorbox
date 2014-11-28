@@ -53,6 +53,41 @@ Now, we try again with adjusted titles:\\
 
 \clearpage
 
+\begin{docTcbKey}[][doc new=2014-11-24]{squeezed title}{=\meta{text}}{style, no default, initially unset}
+  Creates a single heading line with \meta{text} as content.
+  If the \meta{text} is longer than the available space, the text is
+  squeezed to fit into the available space.
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbitemize}[raster columns=3,raster equal height,
+  colframe=red!75!black,colback=red!5!white,fonttitle=\bfseries]
+\tcbitem[squeezed title={Short title}]
+  First box
+\tcbitem[squeezed title={This is a very very long title}]
+  Second box
+\tcbitem[squeezed title={This title is clearly to long for this application}]
+  Third box
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-24]{squeezed title*}{=\meta{text}}{style, no default, initially unset}
+  This is a combination of \refKey{/tcb/adjusted title} and  \refKey{/tcb/squeezed title}.
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbitemize}[raster columns=3,raster equal height,
+  colframe=red!75!black,colback=red!5!white,fonttitle=\bfseries]
+\tcbitem[squeezed title*={Short title}]
+  First box
+\tcbitem[squeezed title*={This is a very very long title}]
+  Second box
+\tcbitem[squeezed title*={This title is clearly to long for this application}]
+  Third box
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
 \begin{docTcbKey}{detach title}{}{no value}
 Detaches the title from its normal position. The text of the title is
 stored into \docAuxCommand{tcbtitletext} and the formatted title is
@@ -191,7 +226,7 @@ This is the lower part (but ignored).
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{savelowerto}{=\meta{file name}}{no default, initially empty}
+\begin{docTcbKey}[][doc updated=2014-11-28]{savelowerto}{=\meta{file name}}{no default, initially empty}
   Saves the content of the lower part in a file for an optional later usage.
 \begin{dispExample}
 \begin{tcolorbox}[lowerbox=invisible,savelowerto=\jobname_bspsave.tex,colback=white]
@@ -1408,6 +1443,11 @@ colframe=red!75!black,colback=white}
 \end{tcolorbox}
 \end{dispExample}
 \end{docTcbKey}
+
+\medskip
+\begin{marker}
+See \Vref{sec:raster} for more equal height options.
+\end{marker}
 
 \clearpage
 \begin{docTcbKey}{minimum for equal height group}{=\meta{id}:\meta{length}}{no default, initially unset}
@@ -3101,6 +3141,12 @@ Removes the phantom code if set before.
 The \meta{marker} is set as label text for a reference with the |\ref| macro.
 Typically, this option is used for numbered boxes, see Subsection \ref{sec:numberedboxes}
 from page \pageref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-28]{phantomlabel}{=\meta{marker}}{no default, initially unset}
+Equivalent to \refKey{/tcb/label} for an \emph{unnumbered} box.
+A |\phantomsection| from the package |hyperref| is used to set a correct
+hyperlink target. This is not needed for a numbered box.
 \end{docTcbKey}
 
 \begin{docTcbKey}{label type}{=\meta{type}}{no default, initially unset}

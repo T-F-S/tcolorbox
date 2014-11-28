@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
+%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.30}
+\tcb@set@library@version{3.31}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -1636,12 +1636,39 @@
   }%
 }
 
+\def\tcb@scanfilename#1#2{%
+  \begingroup%
+    \everyeof{\noexpand}%
+    \endlinechar -1%
+    \catcode`\_=11%
+    \catcode`\~=11%
+    \edef\x{\scantokens\expandafter{#2}}%
+  \expandafter\endgroup%
+  \expandafter\def\expandafter #1\expandafter{\x}%
+}%
+
+
 \def\tcb@include@graphics@preparefile#1{%
-  \def\imagename{\detokenize{#1}}%
-  \ifx\kvtcb@graphics@directory\@empty%
-    \edef\imagepath{#1}%
+  \tcb@scanfilename\tcb@temp{#1}%
+  \filename@parse{\tcb@temp}%
+  \ifx\filename@ext\relax%
+    \let\imagename\filename@base%
   \else%
-    \edef\imagepath{\expandonce\kvtcb@graphics@directory/\noexpand#1}%
+    \def\imagename{\filename@base\Gin@sepdefault\filename@ext}%
+  \fi%
+  \ifdefined\grffile@Ginclude@graphics%
+    % grffile package loaded
+    \ifx\kvtcb@graphics@directory\@empty%
+      \def\imagepath{#1}%
+    \else%
+      \def\imagepath{\kvtcb@graphics@directory/#1}%
+    \fi%
+  \else%
+    \ifx\kvtcb@graphics@directory\@empty%
+      \edef\imagepath{#1}%
+    \else%
+      \edef\imagepath{\kvtcb@graphics@directory/#1}%
+    \fi%
   \fi%
 }
 

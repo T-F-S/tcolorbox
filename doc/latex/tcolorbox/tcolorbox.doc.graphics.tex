@@ -14,7 +14,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 
 \subsection{Macros}
 
-\begin{docCommand}[doc new=2014-11-14]{tcbincludegraphics}{\oarg{options}\marg{file name}}
+\begin{docCommand}[doc new and updated={2014-11-14}{2014-11-24}]{tcbincludegraphics}{\oarg{options}\marg{file name}}
   In principle, this macro includes an image file denoted by \meta{file name}
   using the standard |\includegraphics| and puts it into a \refEnv{tcolorbox}.
   The \meta{options} are |tcolorbox| keys to set up the colored box.
@@ -50,8 +50,8 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \clearpage
 The auxiliary macro \docAuxCommand{imagename} may be used inside
 \refCom{tcbincludegraphics} to display the name of the file.
-\docAuxCommand{imagename} is already detokenized and is allowed to
-included special characters like the underscore. Note that an appropriate
+\docAuxCommand{imagename} is already partially detokenized and is allowed to
+contain special characters like the underscore. Note that an appropriate
 font is required to display such characters.
 %\docAuxCommand{imagepath}%
 
@@ -127,6 +127,12 @@ specify a file system \meta{directory} where the image files are located.
   graphics directory={../../pictures},
 }
 \end{dispListing}
+\smallskip
+\begin{marker}
+The |\graphicspath| macro from the |graphics| package is superior to this option.
+\refKey{/tcb/graphics directory} may be used especially for
+\refCom{tcbincludepdf}.
+\end{marker}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-11-14]{graphics pages}{=\meta{selection}}{no default, initially |1,...,|\cs{pdfpages}}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.30 (2014/11/17)
+%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.30}
+\tcb@set@library@version{3.31}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -102,6 +102,7 @@
   \setcounter{tcbrastercolumn}{1}%
   \setcounter{tcbrasterrow}{1}%
   \tcbset{every box on layer \the\numexpr\number\c@tcblayer+1\relax/.code={%
+    \tcbset{raster every box/.try}%
     \ifodd\c@tcbrastercolumn\relax%
       \tcbset{raster odd column/.try}%
     \else%
@@ -148,6 +149,12 @@
     \tcb@raster@set@size{height=\tcb@raster@box@height}%
   \fi%
   \tcb@raster@ehg@start%
+  \let\tcb@end@raster\@empty%
+  \ifinner\ifhmode%
+    \color@vbox%
+    \hsize=\kvtcb@raster@width%
+    \let\tcb@end@raster\color@endbox%
+  \fi\fi%&
   {\par\nointerlineskip%
   \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
   \kvtcb@raster@halign\noindent%
@@ -164,6 +171,7 @@
    \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\parskip\relax}%
   \fi%
   \endgroup%
+  \tcb@end@raster%
   \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%
   \setcounter{tcbrasterrow}{\tcb@raster@save@row}%
 }
