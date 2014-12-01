@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
+%% The LaTeX package tcolorbox - version 3.32 (2014/12/01)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -106,8 +106,8 @@
 \renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
 \renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
 
-\def\version{3.31}%
-\def\datum{2014/11/28}%
+\def\version{3.32}%
+\def\datum{2014/12/01}%
 \makeindex
 
 \hypersetup{
@@ -271,15 +271,19 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_G.tex}
+% \usepackage{cleveref}
 \tcbset{
   defstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
               arc=0mm, colback=blue!5!white,colframe=blue!75!black},
   theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
                colback=red!10!white,colframe=red!75!black},
 }
-\newtcbtheorem[number within=subsection]{Definition}{Definition}{defstyle}{def}
-\newtcbtheorem[use counter from=Definition]{Theorem}{Theorem}{theostyle}{theo}
-\newtcbtheorem[use counter from=Definition]{Corollary}{Corollary}{theostyle}{cor}
+\newtcbtheorem[number within=subsection,crefname={definition}{definitions}]%
+  {Definition}{Definition}{defstyle}{def}
+\newtcbtheorem[use counter from=Definition,crefname={theorem}{theorems}]%
+  {Theorem}{Theorem}{theostyle}{theo}
+\newtcbtheorem[use counter from=Definition,crefname={corollary}{corollaries}]%
+  {Corollary}{Corollary}{theostyle}{cor}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_G.tex}
 
@@ -297,7 +301,7 @@
 \begin{tcbverbatimwrite}{\jobname_preamble_I.tex}
 % \usepackage{cleveref}
 \newtcolorbox[auto counter,number within=section,
-  Crefname={Bluebox}{Blueboxes},crefname={bluebox}{blueboxes}]%
+  crefname={bluebox}{blueboxes}]%
   {mybluebox}[2][]{colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
      title=Bluebox \thetcbcounter: #2,#1}
 \end{tcbverbatimwrite}
@@ -372,7 +376,7 @@
 
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.listings}
+%\includeonly{tcolorbox.doc.theorems}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}

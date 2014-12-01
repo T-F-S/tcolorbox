@@ -157,27 +157,29 @@ The following options \refKey{/tcb/new/crefname} and \refKey{/tcb/new/Crefname}
 need to be set inside the preamble.
 \end{marker}
 
-\begin{newTcbKey}{crefname}{=\marg{singular}\marg{plural}}{no default, initially unset}
+\begin{newTcbKey}[][doc updated=2014-12-01]{crefname}{=\marg{singular}\marg{plural}}{no default, initially unset}
   This option key can be used only in conjunction with the |cleveref| package
   \cite{cubitt:2013a} which has to be loaded separately.
   It creates a cross-reference type for the new |tcolorbox|'es, where the
   lowercase \meta{singular} and \meta{plural} forms of the cross-reference are given.
+  This type is the environment or macro name and \refKey{/tcb/label type} is set automatically.
   See \refKey{/tcb/label type} and \cite{cubitt:2013a} for more information.
 \end{newTcbKey}
 
 
-\begin{newTcbKey}{Crefname}{=\marg{singular}\marg{plural}}{no default, initially unset}
+\begin{newTcbKey}[][doc updated=2014-12-01]{Crefname}{=\marg{singular}\marg{plural}}{no default, initially unset}
   This option key can be used only in conjunction with the |cleveref| package
   \cite{cubitt:2013a} which has to be loaded separately.
   It creates a cross-reference type for the new |tcolorbox|'es, where the
   uppercase \meta{singular} and \meta{plural} forms of the cross-reference are given.
+  This type is the environment or macro name and \refKey{/tcb/label type} is set automatically.
   See \refKey{/tcb/label type} and \cite{cubitt:2013a} for more information.
 \end{newTcbKey}
 
 \inputpreamblelisting{I}
 \begin{dispExample}
-% \usepackage{cleveref}
 % \usepackage{varioref}
+% \usepackage{cleveref}
 \begin{mybluebox}[label={myreference}]{My title}
 This is an example.
 \end{mybluebox}

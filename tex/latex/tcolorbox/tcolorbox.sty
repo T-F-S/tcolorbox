@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.31 (2014/11/28)
+%% The LaTeX package tcolorbox - version 3.32 (2014/12/01)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/11/28 version 3.31 text color boxes]
-\def\tcb@version{3.31}
+\ProvidesPackage{tcolorbox}[2014/12/01 version 3.32 text color boxes]
+\def\tcb@version{3.32}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -443,7 +443,7 @@
   step/.style={phantom={\refstepcounter{#1}}},%
   label/.style={phantom={\tcb@set@label{#1}}},%
   phantomlabel/.style={phantom={\ifdefined\phantomsection\phantomsection\fi\tcb@set@label{#1}}},%
-  label type/.store in=\kvtcvb@label@type,%
+  label type/.store in=\kvtcb@label@type,%
   no label type/.style={label type=},%
   add to list/.style 2 args={phantom={\tcb@addcontentsline{#1}{#2}}},
   nophantom/.code={\def\kvtcb@phantom{}},%
@@ -498,10 +498,10 @@
 }%
 
 \def\tcb@set@label#1{%
-  \ifx\kvtcvb@label@type\@empty%
+  \ifx\kvtcb@label@type\@empty%
     \label{#1}%
   \else%
-    \label[\kvtcvb@label@type]{#1}%
+    \label[\kvtcb@label@type]{#1}%
   \fi%
 }
 
@@ -1269,6 +1269,8 @@
 }
 
 
+\def\tcb@new@label@type{\begingroup\edef\x{\endgroup\noexpand\appto\noexpand\tcb@new@colopt{,label type=\tcb@new@boxname}}\x}
+
 \tcbset{%
   new/.cd,%
   use counter/.code={\edef\kvtcb@new@counter{#1}\let\tcb@proc@counter=\tcb@proc@counter@use},
@@ -1285,8 +1287,8 @@
   list type/.store in=\kvtcb@new@listtype,
   %
   init@hook@clear/.code={\def\kvtcb@init@hook{}},
-  crefname/.code 2 args={\appto\kvtcb@init@hook{\crefname{\tcbcounter}{#1}{#2}}},
-  Crefname/.code 2 args={\appto\kvtcb@init@hook{\Crefname{\tcbcounter}{#1}{#2}}},
+  crefname/.code 2 args={\begingroup\edef\x{\endgroup\noexpand\crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
+  Crefname/.code 2 args={\begingroup\edef\x{\endgroup\noexpand\Crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
   %
   blend into/.is choice,%
   blend into/figures/.style={use counter*=figure,list inside=lof,/tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure:\ }}}},%
@@ -1346,6 +1348,7 @@
 }%
 
 \long\def\tcb@process@newtcolorbox#1#2{%
+  \edef\tcb@new@boxname{#1}%
   \def\tcb@new@colopt{}%
   \long\def\temp@a{#2}%
   \ifx\temp@a\@empty\relax%
@@ -1404,8 +1407,7 @@
 \newcommand{\tcb@remove@bs@aux@iii}[1]{\z@}
 
 \newcommand\tcb@process@newcommand[2][]{%
-  \edef\tcb@temp{\noexpand\tcb@process@newtcolorbox{\tcb@remove@bs{#2}}}%
-  \tcb@temp{#1}%
+  \begingroup\edef\x{\endgroup\noexpand\tcb@process@newtcolorbox{\tcb@remove@bs{#2}}}\x{#1}%
 }
 
 \long\def\tcb@newtcbox#1#2{\expandafter\tcb@newcommand\csname#1\endcsname{\tcbox[#2,options@for=#1]}}

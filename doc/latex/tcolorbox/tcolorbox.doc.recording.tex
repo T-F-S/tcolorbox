@@ -1,0 +1,186 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Recording}\label{sec:recording}
+The package provides some macros and options to take \emph{records} during
+compilation. This is done by \LaTeX\ file operations to save some data
+to a file for later usage. The main application scenario is depicted in
+\Vref{sec:recording-exercises} where
+informations about example solutions are recorded and read again
+in \Vref{sec:recording-solutions}.
+
+\subsection{Makros}\label{sec:recording-makros}
+\begin{docCommand}[doc new=2014-11-28]{tcbstartrecording}{\oarg{file name}}
+  Opens a file denoted by \meta{file name} for writing the records.
+  The default file name is |\jobname.records|.
+  See \Vref{sec:recording-exercises} for an example application.
+\end{docCommand}
+
+\begin{docCommand}[doc new=2014-11-28]{tcbrecord}{\marg{content}}
+  Records any \meta{content} to the record file.
+  \refCom{tcbrecord} is implemented as |\immediate\write|.
+  \refCom{tcbstartrecording} has to be called before; otherwise, \refCom{tcbrecord}
+  is silently ignored.
+\begin{dispListing}
+\tcbrecord{\string\solution{\thetcbcounter}{solutions/exercise-\thetcbcounter.tex}}
+\end{dispListing}
+\end{docCommand}
+
+\begin{docCommand}[doc new=2014-11-28]{tcbstoprecording}{}
+  Closes the current record file which was opened by \refCom{tcbstartrecording}
+  before.
+\end{docCommand}
+
+\begin{docCommand}[doc new=2014-11-28]{tcbinputrecords}{\oarg{file name}}
+  Opens a file denoted by \meta{file name} for reading the records via |\input|.
+  The default file name is the name of the last used record file for saving.
+  \refCom{tcbstoprecording} has to be called before.
+\end{docCommand}
+
+
+\subsection{Options}\label{sec:recording-options}
+\begin{docTcbKey}[][doc new=2014-11-28]{record}{=\meta{content}}{style, no default}
+  Records any \meta{content} to the record file, see \refCom{tcbrecord}.
+  This key can be used several times to write several lines.
+  \begin{dispListing}
+  record={\string\solution{\thetcbcounter}{solutions/exercise-\thetcbcounter.tex}}
+  \end{dispListing}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-28]{no recording}{}{}
+  Disables \refCom{tcbrecord} and \refKey{/tcb/record} inside the current
+  group.
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Example: Exercises}\label{sec:recording-exercises}
+The following application example creates exercises and their corresponding
+solutions. Each pair is generated inside a single |tcolorbox| where the
+solution is given below \refCom{tcblower}. For every example, the solution part
+is saved by \refKey{/tcb/savelowerto} to a file. The saving is recorded using
+\refKey{/tcb/record}. To enlighten the possibilities, the second exercise
+has no solution. Finally, the solutions are input in \Vref{sec:recording-solutions}.
+
+\inputpreamblelisting{L}
+
+\begin{dispListing*}{breakable,before upper=}
+\tcbstartrecording
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=\sin((\sin x)^2)
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( \sin((\sin x)^2) \right)'
+    =\cos((\sin x)^2) 2\sin x \cos x.
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}[no solution]
+  It holds:
+  \begin{equation*}
+    \frac{d}{dx}\left(\ln|x|\right) = \frac{1}{x}.
+  \end{equation*}
+\end{exercise}
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=(\sin(\sin x))^2
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( (\sin(\sin x))^2 \right)'
+    =2\sin(\sin x)\cos(\sin x)\cos x.
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=\sqrt{x^3-6x^2+2x}
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( \sqrt{x^3-6x^2+2x} \right)'
+    = \frac{3x^2-12x+2}{2\sqrt{x^3-6x^2+2x}}.
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=\left(\frac{2+3x}{1-2x}\right)^3
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( \left(\frac{2+3x}{1-2x}\right)^3 \right)'
+    = 3 \left(\frac{2+3x}{1-2x}\right)^2 \frac{(1-2x)3-(2+3x)(-2)}{(1-2x)^2}
+    = \frac{21(2+3x)^2}{(1-2x)^4}.
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=\frac{\cos x}{(\tan 2x)^2}
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( \frac{\cos x}{(\tan 2x)^2} \right)'
+    = \left( \frac{\cos x (\cos 2x)^2}{(\sin 2x)^2} \right)'\\
+    &= \frac{(\sin 2x)^2 [(-\sin x)(\cos 2x)^2+(\cos x)4\cos 2x (-\sin 2x)]
+       - \cos x (\cos 2x)^2 4\sin 2x \cos 2x}{(\sin 2x)^4}\\
+    &= -\frac{\cos(2x) [\sin x \sin 2x \cos 2x+ 4\cos x(\sin 2x)^2
+       + 4 \cos x (\cos 2x)^2]}{(\sin 2x)^3}\\
+    &= -\frac{\cos(2x) [\sin x \sin 2x \cos 2x+ 4\cos x]}{(\sin 2x)^3}.
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=\cos((2x^2+3)^3)
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( \cos((2x^2+3)^3) \right)'
+    =-\sin((2x^2+3)^3) 3(2x^2+3)^2 2\cdot 2x\\
+    &=-12x(2x^2+3)^2\sin((2x^2+3)^3).
+  \end{align*}
+\end{exercise}
+
+\begin{exercise}
+  Compute the derivative of the following function:
+  \begin{equation*}
+    f(x)=(x^2+1)\sqrt{x^4+1}
+  \end{equation*}
+\tcblower
+  The derivative is:
+  \begin{align*}
+    f'(x) &= \left( (x^2+1)\sqrt{x^4+1} \right)'
+    = 2x\sqrt{x^4+1} + \frac{2x^3(x^2+1)}{\sqrt{x^4+1}}.
+  \end{align*}
+\end{exercise}
+
+\tcbstoprecording
+\end{dispListing*}
+\tcbusetemp
+
+\subsection{Example: Solutions}\label{sec:recording-solutions}
+This concludes the example given in \Vref{sec:recording-exercises}.
+Now, the saved and recorded solutions are included.
+
+\begin{dispListing*}{breakable,before upper=}
+\tcbinputrecords
+\end{dispListing*}
+\tcbusetemp
