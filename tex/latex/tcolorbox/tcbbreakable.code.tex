@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.32 (2014/12/01)
+%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.32}
+\tcb@set@library@version{3.33}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -219,7 +219,35 @@
 \newif\iftcb@multicol
 \newif\iftcb@vfillbeforefirst
 
+\def\tcb@do@nobreak@warning{%
+  \iftcb@ignorenobreak%
+    \tcb@warning{Using nobreak failed. You should set `ignore nobreak=false' to avoid this}%
+  \else%
+    \tcb@warning{Using nobreak failed. Try to enlarge `lines before break' or set page breaks manually}%
+  \fi%
+}
+
+\def\tcb@handle@nobreak{%
+  \tcb@enlbreak@init%
+  \tcb@breakat@init%
+  \tcb@comp@h@page%
+  \tcbdimto\tcb@h@page{\tcb@h@page-1.5\baselineskip-\parskip-\lineskip}% security surcharge
+  \tcb@comp@h@total@standalone%
+  \tcb@check@for@final@box%
+  \iftcb@final@box%
+  \else%
+    \ifdim\dimexpr\tcb@h@page-\tcb@h@padding-\tcb@h@padtitle<\kvtcb@breakminlines\baselineskip\relax%
+      \tcbdimto\tcb@h@page{\tcb@h@page+3.5\baselineskip+\parskip+\lineskip}%
+      \vspace{\tcb@h@page}%
+      {\parskip\z@\nointerlineskip\noindent}%
+      \vspace{-\tcb@h@page}%
+      \par%
+    \fi%
+  \fi%
+}
+
 \def\tcb@prepare@break@operation{%
+  \let\tcb@nobreak@warning\@empty%
   \@ifundefined{columnbreak}{\tcb@multicolfalse}{%
     \ifnum\doublecol@number>\z@ %
       \tcb@multicoltrue%
@@ -227,7 +255,16 @@
       \tcb@multicolfalse%
     \fi}%
   \ifx\kvtcb@float\@empty%
-    \kvtcb@beforebox%
+    \if@nobreak%
+      \let\tcb@nobreak@warning\tcb@do@nobreak@warning%
+      \iftcb@ignorenobreak%
+        \kvtcb@beforebox%
+      \else%
+        \tcb@handle@nobreak%
+      \fi%
+    \else%
+      \kvtcb@beforebox%
+    \fi%
     \def\kvtcb@beforebox{\parskip\z@\nointerlineskip\noindent}%
     \noindent% applies parskip
     \vskip\lineskip{\parskip\z@\par\vskip\z@}\bgroup\@nobreakfalse\addpenalty\z@\egroup% force update vertical list
@@ -274,25 +311,26 @@
   \tcb@check@for@final@box%
   \iftcb@final@box%
     \tcb@drawcolorbox@standalone%
-  \else
+  \else%
     \iftcb@break@allowed%
       \ifdim\dimexpr\tcb@h@page-\tcb@h@padding-\tcb@h@padtitle<\kvtcb@breakminlines\baselineskip\relax%
         \iftcb@multicol\columnbreak\else\pagebreak\fi%
+        \tcb@nobreak@warning%
         \tcb@enlbreak@init\tcb@break@allowedfalse%
         \tcb@comp@h@page%
         \tcb@check@for@final@box%
         \iftcb@final@box%
           \tcb@drawcolorbox@standalone%
-        \else
+        \else%
           \let\tcb@split@next=\tcb@split@first%
-        \fi
+        \fi%
       \else%
         \let\tcb@split@next=\tcb@split@first%
-      \fi
+      \fi%
     \else%
       \let\tcb@split@next=\tcb@split@first%
     \fi%
-  \fi
+  \fi%
   \tcb@split@next%
 }
 
@@ -437,6 +475,7 @@
           \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
           \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
           \iftcb@multicol\columnbreak\else\pagebreak\fi%
+          \tcb@nobreak@warning%
           \tcb@enlbreak@init\tcb@break@allowedfalse%
           \let\tcb@split@next=\tcb@split@start%
         \else%

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.32 (2014/12/01)
+%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.32}
+\tcb@set@library@version{3.33}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -125,13 +125,12 @@
   }}%
   \tcbset{#1}%
   \tcbset@late@options{%
-    before={\unskip\ifnum\c@tcbrastercolumn>1 \kern\kvtcb@raster@xskip\else\kern\kvtcb@raster@skip@left\fi},
+    before={\unskip\ifnum\c@tcbrastercolumn>1 \kern\kvtcb@raster@xskip\else%
+      \ifnum\c@tcbrasterrow>1 \parindent\z@\parskip\z@\par\nointerlineskip\addvspace{\the\dimexpr\kvtcb@raster@yskip\relax}\noindent\fi%
+      \kern\kvtcb@raster@skip@left\fi},
     after={%
       \ifnum\c@tcbrastercolumn=\kvtcb@raster@columns\relax%
         \kern\kvtcb@raster@skip@right%
-        \parindent\z@\parskip\z@\par\nointerlineskip%
-        \addvspace{\the\dimexpr\kvtcb@raster@yskip\relax}%
-        \noindent%
         \setcounter{tcbrastercolumn}{1}\addtocounter{tcbrasterrow}{1}%
         \aftergroup\tcb@raster@ehg@continue%
       \else%
@@ -155,8 +154,15 @@
     \hsize=\kvtcb@raster@width%
     \let\tcb@end@raster\color@endbox%
   \fi\fi%&
-  {\par\nointerlineskip%
-  \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
+  \if@nobreak%
+    \iftcb@ignorenobreak%
+      {\par\nointerlineskip%
+      \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
+    \fi%
+  \else%
+    {\par\nointerlineskip%
+    \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
+  \fi%
   \kvtcb@raster@halign\noindent%
 }{%
   \unskip%
@@ -165,11 +171,7 @@
   \fi%
   \begingroup%
   \par\nointerlineskip%
-  \ifnum\c@tcbrastercolumn=1 %
-    \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\kvtcb@raster@yskip-\parskip\relax}%
-  \else%
-   \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\parskip\relax}%
-  \fi%
+  \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\parskip\relax}%
   \endgroup%
   \tcb@end@raster%
   \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%

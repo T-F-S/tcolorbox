@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.32 (2014/12/01)
+%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/12/01 version 3.32 text color boxes]
-\def\tcb@version{3.32}
+\ProvidesPackage{tcolorbox}[2014/12/11 version 3.33 text color boxes]
+\def\tcb@version{3.33}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -37,6 +37,7 @@
 \newif\iftcb@lowerseparated
 \newif\iftcb@titlefilled
 \newif\iftcb@fixedheight
+\newif\iftcb@ignorenobreak
 
 \newbox\tcb@titlebox
 \newbox\tcb@upperbox
@@ -487,6 +488,7 @@
     middle=0pt,arc=0pt,outer arc=0pt},
   on line/.style={tcbox raise base,nobeforeafter},
   shape@of@skin/.store in=\tcb@shapeofskin,
+  ignore nobreak/.is if=tcb@ignorenobreak,%
   }
 
 \def\kvtcb@beforebox{}
@@ -1159,6 +1161,11 @@
   % floats
   \ifx\kvtcb@float\@empty%
     \let\tcb@before@unbroken=\kvtcb@beforebox%
+    \if@nobreak%
+      \iftcb@ignorenobreak\else%
+        \let\tcb@before@unbroken=\@empty%
+      \fi%
+    \fi%
     \let\tcb@after@unbroken=\kvtcb@afterbox%
   \else%
     \edef\tcb@before@unbroken{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]\noexpand\kvtcb@everyfloat}%
@@ -1572,7 +1579,7 @@
     lefthand ratio=0.5,check odd page=false,nophantom,
     shield externalize=false,list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
-    subtitle style=,title filled=false,every float=,height fill=false,
+    subtitle style=,title filled=false,every float=,height fill=false,ignore nobreak=false,
   },
   initialize@reset=reset@core,
 }
