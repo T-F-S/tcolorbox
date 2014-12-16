@@ -1280,11 +1280,13 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2014-09-22]{height fill}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
-If set to |true|, the height of the |tcolorbox| is set to the rest of the
-available vertical space of the current page. Note that the |tcolorbox|
+\begin{docTcbKey}[][doc new and updated={2014-09-22}{2014-12-15}]{height fill}{\colOpt{=true\textbar false\textbar maximum}}{default |true|, initially |false|}
+If set to \docValue*{true}, the height of the |tcolorbox| is set to the rest of the
+available vertical space of the current page.
+If set to \docValue{maximum}, the page is compressed as much as possible.
+Note that the |tcolorbox|
 is always set as its own paragraph using this option.
-This option overrules \refKey{/tcb/natural height}, \refKey{/tcb/height}, etc.
+%This option overrules \refKey{/tcb/natural height}, \refKey{/tcb/height}, etc.
 \begin{marker}
 Note that the library \mylib{breakable} has to be loaded to use this key!
 \end{marker}
@@ -1988,7 +1990,7 @@ This is the lower part.
 \end{docTcbKey}
 
 
-\begin{dispListing*}{breakable,before upper={This example demonstrates
+\begin{dispListing*}{breakable,vfill before first,before upper={This example demonstrates
 the application of break sequence specific overlay options.
 Here, we define an environment |myexample| based
 on |tcolorbox| where the visible drawing is done totally by overlay keys.\par
@@ -2012,7 +2014,7 @@ are drawn by the codes given with
       ([yshift=-1pt]frame.north west)--([yshift=-1pt]frame.north east);}},
   coltitle=colexam,fonttitle=\Large\bfseries,
   before=\par\medskip\noindent,parbox=false,boxsep=0pt,left=0pt,right=3mm,top=4pt,
-  breakable,pad at break=0mm,
+  breakable,pad at break*=0mm,vfill before first,
   overlay unbroken={\draw[colexam,line width=1pt]
     ([yshift=-1pt]title.north east)--([xshift=-0.5pt,yshift=-1pt]title.north-|frame.east)
     --([xshift=-0.5pt]frame.south east)--(frame.south west); },
@@ -2403,8 +2405,8 @@ Some text\dotfill
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-11-07}]{before skip}{=\meta{length}}{style, no default}
-  Inserts some vertical space of the given \meta{length} before the colored box.
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-12-16}]{before skip}{=\meta{glue}}{style, no default}
+  Inserts some vertical space of the given \meta{glue} before the colored box.
   This style sets \refKey{/tcb/before}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 Some text.
@@ -2415,8 +2417,8 @@ Some text.
 \end{dispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-11-07}]{after skip}{=\meta{length}}{style, no default}
-  Inserts some vertical space of the given \meta{length} after the colored box.
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-12-16}]{after skip}{=\meta{glue}}{style, no default}
+  Inserts some vertical space of the given \meta{glue} after the colored box.
   This style sets \refKey{/tcb/after}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[after skip=1cm,
@@ -2427,8 +2429,8 @@ Some text.
 \end{dispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2014-10-10]{beforeafter skip}{=\meta{length}}{style, no default}
-  Inserts some vertical space of the given \meta{length} before \emph{and} after the colored box.
+\begin{docTcbKey}[][doc new=2014-10-10]{beforeafter skip}{=\meta{glue}}{style, no default}
+  Inserts some vertical space of the given \meta{glue} before \emph{and} after the colored box.
   This style sets \refKey{/tcb/before} and \refKey{/tcb/after}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \tcbset{beforeafter skip=0pt,
@@ -2489,16 +2491,22 @@ Some text.
 \begin{docTcbKey}[][doc new=2014-12-11]{ignore nobreak}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
 After a heading, \LaTeX\ tries to avoid a break by setting a |nobreak| boolean value.
 Starting from version |3.33|, the \refKey{/tcb/before} respectively \refKey{/tcb/before skip}
-settings are not used after a heading, if \refKey{/tcb/ignore nobreak} is
-set to \docValue{false}. Further, a \refKey{/tcb/breakable} box will also try to
+settings are not used after a heading if \refKey{/tcb/ignore nobreak} is
+set to \docValue{false}. For an unbreakable box, \refKey{/tcb/before nobreak} is used instead.
+Further, a \refKey{/tcb/breakable} box will also try to
 avoid a break between a heading and a directly following first part of a
 break sequence.
 
 Set \refKey{/tcb/ignore nobreak} to \docValue{true}, if |nobreak| should be
-ignored as prior to version |3.33|. Also, this setting may be used locally to
+ignored as prior to version |3.33|. Also, such a setting may be used locally to
 enforce the \refKey{/tcb/before} setting.
 \end{docTcbKey}
 
+\begin{docTcbKey}[][doc new=2014-12-16]{before nobreak}{=\meta{code}}{no default, initially \cs{noindent}}
+  Sets the \meta{code} which is executed before the colored box if it
+  is unbreakable, if \refKey{/tcb/ignore nobreak} is not set, and if
+  the box follows a heading.
+\end{docTcbKey}
 
 
 \clearpage

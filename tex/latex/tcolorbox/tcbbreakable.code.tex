@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
+%% The LaTeX package tcolorbox - version 3.34 (2014/12/16)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.33}
+\tcb@set@library@version{3.34}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -111,7 +111,8 @@
         \ifdim\pagegoal=16383.99998pt
           \tcbdimto\tcb@h@page{\vsize-\kvtcb@shrinkbreakgoal}% detects floating objects
         \else%
-          \tcbdimto\tcb@h@page{\pagegoal-\pagetotal-\kvtcb@shrinkbreakgoal}%
+          \tcb@comp@compress%
+          \tcbdimto\tcb@h@page{\pagegoal-\pagetotal+\tcb@compress@height-\kvtcb@shrinkbreakgoal}%
         \fi%
       \fi%
     \else%
@@ -275,12 +276,16 @@
   \fi%
 }
 
-\def\tcb@height@fill@unbroken{%
+\def\tcb@height@fill@unbroken#1{%
   \tcb@prepare@break@operation%
   \tcb@breakat@init%
+  \tcbset{compress page=#1}%
   \tcb@comp@h@page%
-  \tcbset{height=\tcb@h@page}%
+  \tcbset{height=\tcb@h@page,after=\eject}%
 }
+
+\def\tcb@height@fill@unbroken@normal{\tcb@height@fill@unbroken{none}}
+\def\tcb@height@fill@unbroken@compressed{\tcb@height@fill@unbroken{all}}
 
 \def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
 
@@ -815,8 +820,20 @@
     \let\tcb@break@ch@middle=\tcb@break@ch@fixed%
     \let\tcb@break@ch@last=\tcb@break@ch@fixed},%
   vfill before first/.is if=tcb@vfillbeforefirst,%
-  height fill/true/.code={\let\tcb@height@adjust\tcb@height@fill@unbroken},%
+  height fill/true/.code={\let\tcb@height@adjust\tcb@height@fill@unbroken@normal},%
+  height fill/maximum/.code={\let\tcb@height@adjust\tcb@height@fill@unbroken@compressed},%
   height fill/.default=true,%
+  compress page/.is choice,%
+  compress page/all/.code={\def\tcb@comp@compress{\def\tcb@compress@height{\pageshrink-1sp}}},%
+  compress page/none/.code={\def\tcb@comp@compress{\let\tcb@compress@height\tcb@zpt}},%
+  compress page/baselineskip/.code={\def\tcb@comp@compress{%
+    \ifdim\pageshrink>\baselineskip%
+      \let\tcb@compress@height\baselineskip%
+    \else%
+      \def\tcb@compress@height{\pageshrink-1sp}%
+    \fi}},%
+  compress page/.default=all,%
+  compress page=baselineskip,% global setting
 }
 
 

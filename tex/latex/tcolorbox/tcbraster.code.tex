@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
+%% The LaTeX package tcolorbox - version 3.34 (2014/12/16)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.33}
+\tcb@set@library@version{3.34}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -157,11 +157,11 @@
   \if@nobreak%
     \iftcb@ignorenobreak%
       {\par\nointerlineskip%
-      \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
+      \addvspace{\glueexpr\kvtcb@raster@skip@before-\parskip}}%
     \fi%
   \else%
     {\par\nointerlineskip%
-    \addvspace{\the\dimexpr\kvtcb@raster@skip@before-\parskip\relax}}%
+    \addvspace{\glueexpr\kvtcb@raster@skip@before-\parskip}}%
   \fi%
   \kvtcb@raster@halign\noindent%
 }{%
@@ -171,7 +171,7 @@
   \fi%
   \begingroup%
   \par\nointerlineskip%
-  \addvspace{\the\dimexpr\kvtcb@raster@skip@after-\parskip\relax}%
+  \addvspace{\glueexpr\kvtcb@raster@skip@after-\parskip}%
   \endgroup%
   \tcb@end@raster%
   \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%

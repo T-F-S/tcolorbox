@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
+%% The LaTeX package tcolorbox - version 3.34 (2014/12/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -691,3 +691,12 @@ version 3.33 (2014/12/11)
   unbreakable boxes. Use the new option 'ignore nobreak' to restore the old
   behavior.
 - vertical skip of two successive tcbraster environments fixed
+
+version 3.34 (2014/12/16)
+- 'height fill' now fills gapless and can be overruled by other height options
+- 'before skip' and 'after skip' accept glue values now
+- library 'breakable':
+  * new option 'compress page':
+    Use the new option 'compress page=none' to restore the old behavior.
+- library 'raster':
+  * 'raster before skip' and 'raster after skip' accept glue values now

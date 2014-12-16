@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.33 (2014/12/11)
+%% The LaTeX package tcolorbox - version 3.34 (2014/12/16)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -34,7 +34,8 @@
 \usepackage[a4paper,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm,
     marginparsep=3mm,marginparwidth=18mm,
     headheight=0mm,headsep=0cm,
-    footskip=1.5cm,includeheadfoot]{geometry}
+    footskip=1.5cm,includeheadfoot%,showframe
+    ]{geometry}
 \usepackage{fancyhdr}
 \fancyhf{}
 \fancyfoot[C]{\thepage}%
@@ -106,8 +107,8 @@
 \renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
 \renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
 
-\def\version{3.33}%
-\def\datum{2014/12/11}%
+\def\version{3.34}%
+\def\datum{2014/12/16}%
 \makeindex
 
 \hypersetup{
@@ -376,7 +377,7 @@
 
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.quickref}
+%\includeonly{tcolorbox.doc.coreoptions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}

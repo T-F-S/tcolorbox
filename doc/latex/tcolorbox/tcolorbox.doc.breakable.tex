@@ -254,6 +254,28 @@ The |break at| option can be used to insert better break points by hand.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2014-12-15]{compress page}{\colOpt{=\meta{option}}}{default |all|, initially |baselineskip|}
+  This option controls the space management on the page which contains the
+  unbroken box or the first part of a \emph{break sequence}.
+  Feasible \meta{option} values are:
+  \begin{itemize}
+  \item\docValue{all} (default value):
+    All shrinkable glue on the page is potentially used for the
+    unbroken box or the first part of a \emph{break sequence}. Thus, all
+    vertical spaces on the page will potentially be reduced to their
+    minimal values.
+  \item\docValue{baselineskip} (initial value):
+    Shrinkable glue up to one |\baselineskip| on the page is potentially used for the
+    unbroken box or the first part of a \emph{break sequence}.
+  \item\docValue{none}:
+    The break algorithm respects the target size of the given glue values
+    on the page. This was the inital value before version |3.34|.
+  \end{itemize}
+  \begin{marker}
+  Note that the box \emph{content} is not influenced by this option.
+  \end{marker}
+\end{docTcbKey}
+
 
 \begin{docTcbKey}{shrink break goal}{=\meta{length}}{no default, initially |0pt|}
   This is an emergency parameter if the break algorithm produces unpleasant
@@ -322,23 +344,23 @@ The |break at| option can be used to insert better break points by hand.
   and \refKey{/tcb/pad after break}.
 \end{docTcbKey}
 
+\begin{docTcbKey}{pad at break*}{=\meta{length}}{style, no default}
+  Sets \refKey{/tcb/pad at break} to \meta{length} and
+  \refKey{/tcb/enlargepage flexible} to an appropriate value such that
+  empty closing frames are avoided.
+\end{docTcbKey}
 
 \begin{dispListing}
 % \usepackage{lipsum}  % preamble
 \tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
 
-\begin{tcolorbox}[enhanced jigsaw,breakable,pad at break=0mm,
+\begin{tcolorbox}[enhanced jigsaw,breakable,pad at break*=0mm,
   title={For this box, the pad space at the break point is set to 0mm}]
   \lipsum[1-2]
 \end{tcolorbox}
 \end{dispListing}
 {\tcbusetemp}
 
-\begin{docTcbKey}{pad at break*}{=\meta{length}}{style, no default}
-  Sets \refKey{/tcb/pad at break} to \meta{length} and
-  \refKey{/tcb/enlargepage flexible} to an appropriate value such that
-  empty closing frames are avoided.
-\end{docTcbKey}
 
 \begin{marker}
 \refKey{/tcb/pad at break} or \refKey{/tcb/pad at break*}
