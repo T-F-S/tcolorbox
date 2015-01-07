@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.34 (2014/12/16)
+%% The LaTeX package tcolorbox - version 3.35 (2015/01/07)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2014/12/16 version 3.34 text color boxes]
-\def\tcb@version{3.34}
+\ProvidesPackage{tcolorbox}[2015/01/07 version 3.35 text color boxes]
+\def\tcb@version{3.35}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -29,6 +29,7 @@
 % register
 \newif\iftcb@lowerignored
 \newif\iftcb@lowervisible
+\newif\iftcb@uppervisible
 \newif\iftcb@hasTitle
 \newif\iftcb@hasLower
 \newif\iftcb@lowerspace
@@ -240,6 +241,11 @@
   lowerbox/visible/.code={\tcb@lowerignoredfalse\tcb@lowervisibletrue},
   lowerbox/invisible/.code={\tcb@lowerignoredfalse\tcb@lowervisiblefalse},
   lowerbox/ignored/.code={\tcb@lowerignoredtrue\tcb@lowervisiblefalse},
+  upperbox/.is choice,
+  upperbox/visible/.code={\tcb@uppervisibletrue},
+  upperbox/invisible/.code={\tcb@uppervisiblefalse},
+  visible/.style={upperbox=visible,lowerbox=visible},
+  invisible/.style={upperbox=invisible,lowerbox=invisible},
   natural height/.code={\tcb@fixedheightfalse\let\tcb@ch=\tcb@ch@natural\let\tcb@height@adjust\@empty},
   height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed\let\tcb@height@adjust\@empty},
   text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed\let\tcb@height@adjust\@empty},
@@ -592,11 +598,13 @@
 }
 
 \def\tcb@set@@upper@and@lower{%
+  \colorlet{tcbcol@origin}{.}%
   \let\tcb@after@box=\kvtcb@after@upper%
   % switch for lower box
   \def\tcblower{%
     \unskip\tcb@after@box%
     \end{tcb@savebox}%
+    \letcs{\current@color}{\string\color@tcbcol@lower}%
     \unless\iftcb@sidebyside%
       \tcbdimto\tcb@w@lower{\tcb@temp-\kvtcb@leftlower-\kvtcb@rightlower}%
     \fi%
@@ -612,6 +620,7 @@
     \tcb@startbox}%
   % start of upper box
   \let\endtcolorbox\tcb@endboxanddraw%
+  \letcs{\current@color}{\string\color@tcbcol@upper}%
   \tcb@saveupperbox%
 }
 
@@ -712,6 +721,7 @@
 \def\tcb@endboxanddraw{%
   \unskip\tcb@after@box%
   \end{tcb@savebox}%
+  \letcs{\current@color}{\string\color@tcbcol@origin}%
   \tcb@draw@color@box%
   \tcb@finalize@environment%
 }
@@ -1054,12 +1064,14 @@
 \let\tcb@tdraw@title=\tcb@tdraw@title@core
 
 \def\tcb@tdraw@upper@core{%
-  \begin{pgfscope}%
-  \pgfsetfillopacity{\kvtcb@opacityupper}%
-  \csname tcb@dbox@\kvtcb@valign\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper\relax}%
-          {\the\dimexpr\tcb@innerheight+\kvtcb@bottom@rule-\kvtcb@boxsep-\tcb@break@topsep-\kvtcb@top-\tcb@height@upper\relax}%
-          {\tcb@height@upper}{\tcb@upperbox}{tcbcol@upper}%
-  \end{pgfscope}%
+  \iftcb@uppervisible%
+    \begin{pgfscope}%
+    \pgfsetfillopacity{\kvtcb@opacityupper}%
+    \csname tcb@dbox@\kvtcb@valign\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper\relax}%
+            {\the\dimexpr\tcb@innerheight+\kvtcb@bottom@rule-\kvtcb@boxsep-\tcb@break@topsep-\kvtcb@top-\tcb@height@upper\relax}%
+            {\tcb@height@upper}{\tcb@upperbox}{tcbcol@upper}%
+    \end{pgfscope}%
+  \fi%
 }
 \let\tcb@tdraw@upper=\tcb@tdraw@upper@core
 
@@ -1077,8 +1089,14 @@
 
 \def\tcb@sbs@mix{%
   \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper@real}%
-    \tcbdimto{\tcb@temp@wd}{\tcb@w@upper-\wd\tcb@upperbox+\kvtcb@sbs@gap}%
-    \noindent\unhbox\tcb@upperbox\kern\tcb@temp@wd%
+    \iftcb@uppervisible%
+      \tcbdimto{\tcb@temp@wd}{\tcb@w@upper-\wd\tcb@upperbox+\kvtcb@sbs@gap}%
+      \noindent\unhbox\tcb@upperbox\kern\tcb@temp@wd%
+    \else%
+      \tcbdimto{\tcb@temp@wd}{\tcb@w@upper+\kvtcb@sbs@gap}%
+      \noindent\kern\tcb@temp@wd%
+      \rule[-\dp\tcb@upperbox]{0pt}{\the\dimexpr\ht\tcb@upperbox+\dp\tcb@upperbox\relax}%
+    \fi%
     \iftcb@hasLower%
       \iftcb@lowervisible\color{tcbcol@lower}\unhbox\tcb@lowerbox%
       \else%
@@ -1087,6 +1105,7 @@
     \fi%
   \end{tcb@savebox}%
   \tcb@hasLowerfalse%
+  \tcb@uppervisibletrue%
 }
 
 \def\tcb@draw@color@box{%
@@ -1570,7 +1589,7 @@
     size=normal,rounded corners,
     enlarge top by=0mm,enlarge bottom by=0mm,enlarge left by=0mm,enlarge right by=0mm,
     toggle enlargement=none,toggle left and right=none,
-    baseline=0pt,adjust text={\"Apgjy},lowerbox=visible,lower separated,
+    baseline=0pt,adjust text={\"Apgjy},upperbox=visible,lowerbox=visible,lower separated,
     colback=black!5!white,colframe=black!75!white,@colbacktitle=black!50!white,coltext=black,coltitle=white,
     fonttitle=,fontupper=,fontlower=,floatplacement=htb,nofloat,savelowerto=,
     tempfile={\jobname.tcbtemp},

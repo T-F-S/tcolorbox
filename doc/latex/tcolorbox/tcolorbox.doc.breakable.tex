@@ -109,6 +109,10 @@ parameters. The differences are:
   \textbf{But, a breakable box inside a breakable box will usually give a mess.}
 \item If your text content contains some text color changing commands,
   your color will not survive the break to the next box.
+  But, with the |fontspec| package and |xelatex| or |lualatex|,
+  you can use
+  |\addfontfeatures{Color=mycolor}|
+  to add a font color which survives the break.
 \item\tcbdocmarginnote{\tcbdocnew{2014-10-30}}
   The |perpage| option of the |footmisc| package is deliberately deactivated
   inside a breakable box since all footnotes are placed at the end

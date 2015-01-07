@@ -6,7 +6,7 @@ For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
 the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
 the syntax for |pgf| keys, see \cite{tantau:2013a,sturm:2014g} or the examples
-starting from page \pageref{sec:latextutorial}.
+starting from page~\pageref{sec:latextutorial}.
 
 
 \subsection{Title}
@@ -200,6 +200,53 @@ just like any other \refEnv{tcolorbox}.
 \end{docTcbKey}
 
 \clearpage
+\subsection{Upper Part}
+The text content of a \refEnv{tcolorbox} may be parted into a mandatory \emph{upper part}
+and an optional \emph{lower part}. These parts are separated by
+\refCom{tcblower}. If there is no \refCom{tcblower} present, there is no
+\emph{lower part} and the \emph{upper part} forms the complete text content.
+
+\begin{docTcbKey}[][doc new=2015-01-06]{upperbox}{=\meta{mode}}{no default, initially \texttt{visible}}
+  Controls the treatment of the upper part of the box. If there is no lower part,
+  this is the complete text content.
+  Feasible values for \meta{mode} are:
+  \begin{itemize}
+  \item\docValue{visible}: usual type setting of the upper part,
+  \item\docValue{invisible}: empty space instead of the uooer part contents.
+  \end{itemize}
+\begin{dispExample}
+\begin{tcolorbox}[upperbox=invisible,colback=white]
+This is a \textbf{tcolorbox} (but invisible).
+\end{tcolorbox}
+
+\bigskip
+
+\begin{tcolorbox}[upperbox=invisible,colback=white]
+This is a \textbf{tcolorbox} (but invisible).
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-01-06]{visible}{}{style, no value}
+  Shortcut for setting \refKey{/tcb/upperbox} and \refKey{/tcb/lowerbox}
+  to be \docValue{visible}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-01-06]{invisible}{}{style, no value}
+  Shortcut for setting \refKey{/tcb/upperbox} and \refKey{/tcb/lowerbox}
+  to be \docValue{invisible}.
+\begin{dispExample}
+\begin{tcolorbox}[invisible]
+This is a \textbf{tcolorbox} (but invisible).
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
 \subsection{Lower Part}
 \begin{docTcbKey}{lowerbox}{=\meta{mode}}{no default, initially \texttt{visible}}
   Controls the treatment of the lower part of the box.
@@ -245,44 +292,49 @@ Now, we load the saved text:\\
 \begin{docTcbKey}{lower separated}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
 If set to |true|, the lower part is visually separated from the upper part.
 It depends on the chosen skin how the visualization of the separation is done.
-
+\enlargethispage*{1cm}
 \begin{dispExample}
-% \tcbuselibrary{skins}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,nobeforeafter,
-  width=(\linewidth-4mm)/2,fontlower=\itshape}
-
+% \tcbuselibrary{skins,raster}
+\begin{tcbraster}[colback=red!5!white,colframe=red!75!black,
+  fonttitle=\bfseries,fontlower=\itshape]
+%
 \begin{tcolorbox}[title=Lower separated]
 This is the upper part.
 \tcblower
 This is the lower part.
-\end{tcolorbox}\hfill
+\end{tcolorbox}
+%
 \begin{tcolorbox}[title=Lower not separated,lower separated=false]
 This is the upper part.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\par\bigskip\par
+%
 \begin{tcolorbox}[sidebyside,title=Lower separated]
 This is the upper part.
 \tcblower
 This is the lower part.
-\end{tcolorbox}\hfill
+\end{tcolorbox}
+%
 \begin{tcolorbox}[sidebyside,title=Lower not separated,lower separated=false]
 This is the upper part.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\par\bigskip\par
+%
 \begin{tcolorbox}[beamer,title=Lower separated]
 This is the upper part.
 \tcblower
 This is the lower part.
-\end{tcolorbox}\hfill
+\end{tcolorbox}
+%
 \begin{tcolorbox}[beamer,title=Lower not separated,lower separated=false]
 This is the upper part.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
+%
+\end{tcbraster}
 \end{dispExample}
 \end{docTcbKey}
 
@@ -2268,6 +2320,40 @@ This is the lower (\textit{right-handed}) part.
 \end{tcolorbox}
 \end{dispExample}
 \end{docTcbKey}
+
+
+\clearpage
+If one side of a side-by-side box should be adapted to the width of
+its content, this width has to be computed beforehand.
+The following example uses a savebox |\mysavebox| to store the picture to determine
+its width.
+
+\begin{dispExample}
+% \tcbuselibrary{skins,xparse}
+% \usepackage{lipsum}
+% \newsavebox\mysavebox  % preamble
+\DeclareTotalTColorBox{\mysidebox}{ O{} +m +m }{
+  bicolor,colback=white,colbacklower=yellow!10,
+  fonttitle=\bfseries,center title,
+  sidebyside,
+  code={\sbox{\mysavebox}{#2}},
+  lefthand width=\wd\mysavebox,
+  drop lifted shadow,
+  #1
+}
+{\usebox{\mysavebox}\tcblower#3}
+
+\mysidebox[title=The Triangle]{%
+  \begin{tikzpicture}
+    \path[fill=red!20,draw=red!50!black]
+      (0,0) node[below]{A} -- (3,1) node[right]{B}
+      -- (1,4) node[above]{C} -- cycle;
+  \end{tikzpicture}%
+}{%
+  \lipsum[1]
+}
+\end{dispExample}
+
 
 
 \clearpage

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.34 (2014/12/16)
+%% The LaTeX package tcolorbox - version 3.35 (2015/01/07)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -429,7 +429,7 @@ version 2.71 (2014/02/21)
     'color command', 'color environment', 'color key', 'color value', 'color color'
 
 version 2.72 (2014/03/18)
-- bug fix: mixing \newtcblisting with 'ams align' and similar options was not possíble
+- bug fix: mixing \newtcblisting with 'ams align' and similar options was not possible
 - bug fix: footnotes lost for 'listing outside text' and similar options
 - sidebyside and outside implementation slightly changed for beamer usage
 - bicolor skin respects 'opacityback' for the upper part now
@@ -673,7 +673,7 @@ version 3.30 (2014/11/17)
 
 version 3.31 (2014/11/28)
 - new macros: '\tcbstartrecording', '\tcbrecord', '\tcbstoprecording', '\tcbinputrecords'
-- new option: 'squeezed title', 'squeezed title*', 'phantomlabel',
+- new options: 'squeezed title', 'squeezed title*', 'phantomlabel',
   'record', 'no recording'
 - 'savelowerto' changed to need only one run instead of two
 - library 'skins':
@@ -700,3 +700,9 @@ version 3.34 (2014/12/16)
     Use the new option 'compress page=none' to restore the old behavior.
 - library 'raster':
   * 'raster before skip' and 'raster after skip' accept glue values now
+
+version 3.35 (2015/01/07)
+- fix: 'tcbdocumentation.code.tex' changed to US-ASCII
+- text color implementation changed to fix some color problems
+- new options: 'upperbox', 'visible', 'invisible'
+- documentation complemented
