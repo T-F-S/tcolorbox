@@ -19,19 +19,19 @@ The library is loaded by a package option or inside the preamble by:
 
 \enlargethispage*{1cm}
 \begin{dispExample}
-% \usepackage{lipsum}
+% \usepackage{lipsum} \tcbuselibrary{raster}
 \tcbset{colframe=blue!50!black,colback=red!10!white,
-        boxsep=0pt,top=1mm,bottom=1mm,left=1mm,right=1mm,
-        nobeforeafter,width=(\linewidth-2mm)/3}
-
-\tcboxfit[height=8cm]{\lipsum[1]}\hfill
-\tcboxfit[height=4cm]{\lipsum[1]}\hfill
-\tcboxfit[height=2cm]{\lipsum[1]}
-
-\medskip
-\tcbset{width=(\linewidth-2mm)/2,colback=green!10!white,boxsep=1mm}
-\tcboxfit[height=4cm]{\lipsum[2]}\hfill
-\tcboxfit[height=4cm,title=With a title]{\lipsum[2]}
+    boxsep=0pt,top=1mm,bottom=1mm,left=1mm,right=1mm,
+    fit algorithm=hybrid*,raster equal skip=1mm}
+\begin{tcbraster}[raster columns=3,raster valign=bottom]
+  \tcboxfit[height=8cm]{\lipsum[1]}
+  \tcboxfit[height=4cm]{\lipsum[1]}
+  \tcboxfit[height=2cm]{\lipsum[1]}
+\end{tcbraster}
+\begin{tcbraster}[colback=green!10!white,boxsep=1mm]
+  \tcboxfit[height=4cm]{\lipsum[2]}
+  \tcboxfit[height=4cm,title=With a title]{\lipsum[2]}
+\end{tcbraster}
 \end{dispExample}
 \end{docCommand}
 
@@ -275,6 +275,19 @@ are also usable without the
 \end{tcolorbox}
 
 \end{dispExample*}
+
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{size=fbox,colback=red!5!white,
+  colframe=red!75!black}
+
+\tcboxfit[height=5cm,
+  fit fontsize macros,
+  fonttitle=\normalsize\bfseries,
+  title=Adapted title]
+{\lipsum[2]}
+
+\end{dispExample*}
 \end{docTcbKey}
 
 
@@ -331,7 +344,7 @@ This is a tcolorbox.
 
 
 \begin{marker}
-Typically, the optional title of a |tcolorbox| is not part of the fit operation.
+Typically but not necessarily, the optional title of a |tcolorbox| is not part of the fit operation.
 If a \refKey{/tcb/fit width plus} is applied, the title is also adapted to
 the new width. If counters are increased inside the title text, they may be
 increased more than one time.

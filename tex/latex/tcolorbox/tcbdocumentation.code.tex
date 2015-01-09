@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.35 (2015/01/07)
+%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.35}
+\tcb@set@library@version{3.36}
 
 \tcbuselibrary{listings,skins,xparse}
 
@@ -73,12 +73,16 @@
   doclang/.cd,
   color/.store in=\kvtcb@text@color,
   colors/.store in=\kvtcb@text@colors,
+  counter/.store in=\kvtcb@text@counter,
+  counters/.store in=\kvtcb@text@counters,
   environment content/.store in=\kvtcb@text@envcontent,
   environment/.store in=\kvtcb@text@env,
   environments/.store in=\kvtcb@text@envs,
+  index/.store in=\kvtcb@text@index,
   key/.store in=\kvtcb@text@key,
   keys/.store in=\kvtcb@text@keys,
-  index/.store in=\kvtcb@text@index,
+  length/.store in=\kvtcb@text@length,
+  lengths/.store in=\kvtcb@text@lengths,
   new/.store in=\kvtcb@text@new,
   pageshort/.store in=\kvtcb@text@pageshort,
   updated/.store in=\kvtcb@text@updated,
@@ -96,8 +100,11 @@
   color environment/.store in=\kvtcb@col@environment,
   color key/.store in=\kvtcb@col@key,
   color value/.store in=\kvtcb@col@value,
+  color counter/.store in=\kvtcb@col@counter,
+  color length/.store in=\kvtcb@col@length,
   color color/.store in=\kvtcb@col@color,
-  color definition/.style={color command={#1},color environment={#1},color key={#1},color value={#1},color color={#1}},
+  color definition/.style={color command={#1},color environment={#1},color key={#1},
+    color value={#1},color color={#1},color counter={#1},color length={#1}},
   color option/.store in=\kvtcb@col@opt,
   color hyperlink/.store in=\kvtcb@colhyper,
   color frame/.store in=\kvtcb@colhyper,
@@ -109,6 +116,8 @@
   index format/.store in=\idx@format,
   index colorize/.is if=tcb@doc@colorize,%
   index annotate/.is if=tcb@doc@annotate,%
+  index command/.code={\def\kvtcb@index@command##1{#1{##1}}},%
+  index command name/.code={\def\kvtcb@index@command##1{\index[#1]{##1}}},%
   doc left/.dimstore in=\kvtcb@doc@left,
   doc right/.dimstore in=\kvtcb@doc@right,
   doc left indent/.dimstore in=\kvtcb@doc@indentleft,
@@ -135,10 +144,12 @@
   index german settings/.style={index actual={=},index quote={!},index level={>}},
   english language/.code={\tcbset{doclang/.cd,
     color=color,colors=Colors,
+    counter=counter,counters=Counters,
     environment content=environment content,
     environment=environment,environments=Environments,
-    key=key,keys=Keys,
     index=Index,
+    key=key,keys=Keys,
+    length=length,lengths=Lengths,
     new=New,
     pageshort={P.},
     updated=Updated,
@@ -193,6 +204,11 @@
   \iftcb@doc@colorize\textcolor{#2}{\tcb@scantokens{#1}}\else\tcb@scantokens{#1}\fi%
 }
 
+\def\tcb@Index@Print@ComCA#1#2#3{%
+  \iftcb@doc@colorize\textcolor{#2}{\tcb@cs{#1}}\else\tcb@cs{#1}\fi%
+  \iftcb@doc@annotate\ #3\fi%
+}
+
 \def\tcb@Index@Print@ComC#1#2{%
   \iftcb@doc@colorize\textcolor{#2}{\tcb@cs{#1}}\else\tcb@cs{#1}\fi%
 }
@@ -216,12 +232,22 @@
 \newrobustcmd{\tcbIndexPrintColC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@color}}
 \def\tcb@Print@Col#1{\textcolor{\kvtcb@col@color}{\bfseries\tcb@scantokens{#1}}}
 
-\def\tcb@index@Com#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintComC{#1}}\fi}
-\def\tcb@index@Env#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintEnvCA{#1}}\index{\kvtcb@text@envs\idx@level#1\idx@actual\tcbIndexPrintEnvC{#1}}\fi}
-\def\tcb@index@Key#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintKeyCA{#1}}\index{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{#1}}\fi}%
-\def\tcb@index@KeyPath#1#2{\iftcb@doc@toindex\index{#2\idx@actual\tcbIndexPrintKeyCA{#2}}\index{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{/#1/}\idx@level#2\idx@actual\tcbIndexPrintKeyC{#2}}\fi}%
-\def\tcb@index@Val#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintValCA{#1}}\index{\kvtcb@text@values\idx@level#1\idx@actual\tcbIndexPrintValC{#1}}\fi}
-\def\tcb@index@Col#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintColCA{#1}}\index{\kvtcb@text@colors\idx@level#1\idx@actual\tcbIndexPrintColC{#1}}\fi}
+\newrobustcmd{\tcbIndexPrintCountCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@counter}{\kvtcb@text@counter}}
+\newrobustcmd{\tcbIndexPrintCountC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@counter}}
+\def\tcb@Print@Count#1{\textcolor{\kvtcb@col@counter}{\bfseries\tcb@scantokens{#1}}}
+
+\newrobustcmd{\tcbIndexPrintLenCA}[1]{\tcb@Index@Print@ComCA{#1}{\kvtcb@col@length}{\kvtcb@text@length}}
+\newrobustcmd{\tcbIndexPrintLenC}[1]{\tcb@Index@Print@ComC{#1}{\kvtcb@col@length}}
+\def\tcb@Print@Len#1{\textcolor{\kvtcb@col@length}{\bfseries\tcb@cs{#1}}}
+
+\def\tcb@index@Com#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintComC{#1}}\fi}
+\def\tcb@index@Env#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintEnvCA{#1}}\kvtcb@index@command{\kvtcb@text@envs\idx@level#1\idx@actual\tcbIndexPrintEnvC{#1}}\fi}
+\def\tcb@index@Key#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintKeyCA{#1}}\kvtcb@index@command{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{#1}}\fi}%
+\def\tcb@index@KeyPath#1#2{\iftcb@doc@toindex\kvtcb@index@command{#2\idx@actual\tcbIndexPrintKeyCA{#2}}\kvtcb@index@command{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{/#1/}\idx@level#2\idx@actual\tcbIndexPrintKeyC{#2}}\fi}%
+\def\tcb@index@Val#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintValCA{#1}}\kvtcb@index@command{\kvtcb@text@values\idx@level#1\idx@actual\tcbIndexPrintValC{#1}}\fi}
+\def\tcb@index@Col#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintColCA{#1}}\kvtcb@index@command{\kvtcb@text@colors\idx@level#1\idx@actual\tcbIndexPrintColC{#1}}\fi}
+\def\tcb@index@Count#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintCountCA{#1}}\kvtcb@index@command{\kvtcb@text@counters\idx@level#1\idx@actual\tcbIndexPrintCountC{#1}}\fi}
+\def\tcb@index@Len#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintLenCA{#1}}\kvtcb@index@command{\kvtcb@text@lengths\idx@level#1\idx@actual\tcbIndexPrintLenC{#1}}\fi}
 
 \def\brackets#1{{\ttfamily\char`\{}#1{\ttfamily\char`\}}}
 
@@ -319,6 +345,16 @@
   \IfBooleanTF{#1}{}{\tcb@index@Col{#2}}%
 }
 
+\DeclareDocumentCommand\docCounter{sm}{%
+  \tcb@Print@Count{#2}%
+  \IfBooleanTF{#1}{}{\tcb@index@Count{#2}}%
+}
+
+\DeclareDocumentCommand\docLength{sm}{%
+  \tcb@Print@Len{#2}%
+  \IfBooleanTF{#1}{}{\tcb@index@Len{#2}}%
+}
+
 \DeclareDocumentCommand\docValue{sm}{%
   \tcb@Print@Val{#2}%
   \IfBooleanTF{#1}{}{\tcb@index@Val{#2}}%
@@ -401,6 +437,7 @@
 
 \tcbset{%
   reset@documentation/.style={%
+    index command=\index,%
     index format=pgf,
     english language,
     documentation listing style=tcbdocumentation,

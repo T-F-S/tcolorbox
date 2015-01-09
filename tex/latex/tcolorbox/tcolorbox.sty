@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.35 (2015/01/07)
+%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/01/07 version 3.35 text color boxes]
-\def\tcb@version{3.35}
+\ProvidesPackage{tcolorbox}[2015/01/09 version 3.36 text color boxes]
+\def\tcb@version{3.36}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -77,7 +77,7 @@
 }
 
 \def\tcb@comp@arc@fix{%
-  \let\tcb@outer@arc=\kvtcb@outerarc%
+  \tcbdimto\tcb@outer@arc{\kvtcb@outerarc}%
 }
 
 \def\tcb@use@auto@parskip{%
@@ -160,7 +160,7 @@
   attach title to upper/.style={detach title,before upper={\tcbtitle#1}},
   attach title to upper/.default=,
   subtitle style/.store in=\kvtcb@subtitle@style,%
-  width/.dimstore in=\kvtcb@width,
+  width/.store in=\kvtcb@width,
   text width/.style={width={#1+\kvtcb@left@rule+\kvtcb@right@rule+\kvtcb@boxsep*2+\kvtcb@leftupper+\kvtcb@rightupper}},%
   add to width/.code={\tcbdimto\kvtcb@width{\kvtcb@width+(#1)}},%
   boxsep/.store in=\kvtcb@boxsep,
@@ -184,7 +184,7 @@
     \let\kvtcb@right@rule=\kvtcb@top@rule@stand%
     \let\kvtcb@title@rule=\kvtcb@top@rule@stand%
     },
-  arc/.dimstore in=\kvtcb@arc,
+  arc/.store in=\kvtcb@arc,
   outer arc/.code={\def\kvtcb@outerarc{#1}\let\tcb@comp@arc=\tcb@comp@arc@fix},
   auto outer arc/.code={\let\tcb@comp@arc=\tcb@comp@arc@auto},
   sharpish corners/.style={arc=0pt,outer arc=0pt},
@@ -496,6 +496,7 @@
   on line/.style={tcbox raise base,nobeforeafter},
   shape@of@skin/.store in=\tcb@shapeofskin,
   ignore nobreak/.is if=tcb@ignorenobreak,%
+  only/.code args={<#1>#2}{\only<#1>{\tcbset{#2}}},%
   }
 
 \def\kvtcb@beforebox{}
@@ -570,21 +571,50 @@
 \long\def\tcb@colorbox{%
   \@ifnextchar[{\tcb@@icolorbox}{\tcb@@icolorbox[]}}
 
-\def\tcb@set@@dim@and@title{%
-  % computation of text width
-  \tcbdimto\tcb@width{\kvtcb@width}%
-  \tcbdimto\tcb@innerwidth{\tcb@width-\kvtcb@left@rule-\kvtcb@right@rule}%
-  \tcbdimto\tcb@temp{\tcb@innerwidth-\kvtcb@boxsep*2}%
-  \tcbdimto\tcb@w@upper{\tcb@temp-\kvtcb@leftupper-\kvtcb@rightupper}%
+
+\def\tcb@set@@phantom{%
   \ifx\kvtcb@phantom\@empty\tcb@hasPhantomfalse\else%
     \tcb@hasPhantomtrue%
     \sbox\tcb@phantombox{\kvtcb@phantom}%
   \fi%
+}
+
+\def\tcb@set@@title{%
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
-    \tcbdimto\tcb@w@title{\tcb@temp-\kvtcb@lefttitle-\kvtcb@righttitle}%
+    \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)}%
     \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
   \fi%
+}
+
+\def\tcb@set@@dimensions{%
+  % sanitize
+  \tcbdimto\kvtcb@arc{\kvtcb@arc}%
+  \tcbdimto\kvtcb@left@rule{\kvtcb@left@rule}%
+  \tcbdimto\kvtcb@right@rule{\kvtcb@right@rule}%
+  \tcbdimto\kvtcb@title@rule{\kvtcb@title@rule}%
+  \tcbdimto\kvtcb@top@rule@stand{\kvtcb@top@rule@stand}%
+  \tcbdimto\kvtcb@top@rule@break{\kvtcb@top@rule@break}%
+  \tcbdimto\kvtcb@bottom@rule@stand{\kvtcb@bottom@rule@stand}%
+  \tcbdimto\kvtcb@bottom@rule@break{\kvtcb@bottom@rule@break}%
+  \tcbdimto\kvtcb@boxsep{\kvtcb@boxsep}%
+  \tcbdimto\kvtcb@lefttitle{\kvtcb@lefttitle}%
+  \tcbdimto\kvtcb@leftupper{\kvtcb@leftupper}%
+  \tcbdimto\kvtcb@leftlower{\kvtcb@leftlower}%
+  \tcbdimto\kvtcb@righttitle{\kvtcb@righttitle}%
+  \tcbdimto\kvtcb@rightupper{\kvtcb@rightupper}%
+  \tcbdimto\kvtcb@rightlower{\kvtcb@rightlower}%
+  \tcbdimto\kvtcb@top{\kvtcb@top}%
+  \tcbdimto\kvtcb@toptitle{\kvtcb@toptitle}%
+  \tcbdimto\kvtcb@bottom{\kvtcb@bottom}%
+  \tcbdimto\kvtcb@bottomtitle{\kvtcb@bottomtitle}%
+  \tcbdimto\kvtcb@middle{\kvtcb@middle}%
+  % computation of text width
+  \tcbdimto\tcb@width{\kvtcb@width}%
+  \tcbdimto\tcb@innerwidth{\tcb@width-\kvtcb@left@rule-\kvtcb@right@rule}%
+  %\tcbdimto\tcb@temp{\tcb@innerwidth-\kvtcb@boxsep*2}%
+  \tcbdimto\tcb@w@upper{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftupper-\kvtcb@rightupper}%
+  %\tcbdimto\tcb@w@upper{\tcb@temp-\kvtcb@leftupper-\kvtcb@rightupper}%
 }
 
 \def\tcb@set@@sidebyside{%
@@ -592,6 +622,7 @@
     \tcbset{breakable@false}%
     \def\tcb@minipage{\csname tcb@minipage@\kvtcb@sbs@align\endcsname}%
     \tcbdimto\tcb@w@upper@real{\tcb@w@upper}%
+    \tcbdimto\kvtcb@sbs@gap{\kvtcb@sbs@gap}%
     \tcbdimto\tcb@w@sbs{\tcb@w@upper@real-\kvtcb@sbs@gap}%
     \tcb@sbs@quota%
   \fi%
@@ -606,7 +637,7 @@
     \end{tcb@savebox}%
     \letcs{\current@color}{\string\color@tcbcol@lower}%
     \unless\iftcb@sidebyside%
-      \tcbdimto\tcb@w@lower{\tcb@temp-\kvtcb@leftlower-\kvtcb@rightlower}%
+      \tcbdimto\tcb@w@lower{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftlower-\kvtcb@rightlower}%
     \fi%
     \tcb@hasLowertrue%
     \let\tcb@after@box=\kvtcb@after@lower%
@@ -627,7 +658,9 @@
 
 \def\tcb@@capture@minipage{%
   \let\tcb@val@raisebase=\tcb@zpt%
-  \tcb@set@@dim@and@title%
+  \tcb@set@@phantom%
+  \tcb@set@@title%
+  \tcb@set@@dimensions%
   \tcb@set@@sidebyside%
   \tcb@set@@upper@and@lower%
 }
@@ -1231,22 +1264,26 @@
 
 \long\def\tcbox@inner@hbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
+  \tcb@set@@phantom%
   \sbox\tcb@upperbox{\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
-  \tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
-  \tcbdimto{\tcb@val@raisebase}{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
-  \tcbset{width=\the\dimexpr\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax}%
+  \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
+  \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
   \tcb@hasLowerfalse%
-  \tcb@set@@dim@and@title%
+  \tcb@set@@title%
+  \tcb@set@@dimensions%
   \tcb@draw@color@box%
 }
 
 \long\def\tcbox@inner@minipage#1{%
   \tcbset{breakable@false,sidebyside=false}%
   \let\tcb@val@raisebase=\tcb@zpt%
-  \tcb@set@@dim@and@title%
+  \tcb@set@@phantom%
+  \tcb@set@@title%
+  \tcb@set@@dimensions%
   \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
-  \tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
-  \tcbset{width=\the\dimexpr\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax}%
+  %\tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
+  %\tcbdimto\kvtcb@width{\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
+  %\let\tcb@width\kvtcb@width%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
 }

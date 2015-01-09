@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.35 (2015/01/07)
+%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.35}
+\tcb@set@library@version{3.36}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -48,6 +48,9 @@
   raster column skip/.store in=\kvtcb@raster@xskip,
   raster row skip/.store in=\kvtcb@raster@yskip,
   %
+  raster equal skip/.style={raster before skip=#1,raster after skip=#1,
+    raster column skip=#1,raster row skip=#1},
+  %
   raster@halign/.store in=\kvtcb@raster@halign,
   raster halign/.is choice,
   raster halign/center/.style={raster@halign=\centering},
@@ -75,9 +78,8 @@
 \tcbset{
   raster reset/.style={
     raster width=\linewidth,raster height=0pt,
-    raster before skip=2mm, raster after skip=2mm,
+    raster equal skip=2mm,
     raster columns=2,raster rows=2,
-    raster column skip=2mm,raster row skip=2mm,
     raster left skip=0pt,raster right skip=0pt,
     raster halign=left,raster valign=center,
     raster equal height=none,

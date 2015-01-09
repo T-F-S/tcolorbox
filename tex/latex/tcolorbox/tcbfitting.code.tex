@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.35 (2015/01/07)
+%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.35}
+\tcb@set@library@version{3.36}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -224,21 +224,18 @@
 }
 
 \def\tcb@fit@@box{%
-  \tcbdimto\tcb@fit@@line{\kvtcb@fit@skip\tcbfitdim}%
-  \tcbdimto\tcb@w@upper{\tcb@width-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@leftupper-\kvtcb@rightupper}%
-  \tcb@fit@@boxsave{\tcb@w@upper}%
-  \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
-  \tcbdimto\tcb@fit@@target{\kvtcb@height@fixed-\kvtcb@top@rule@stand-\kvtcb@bottom@rule@stand-\kvtcb@top-\kvtcb@bottom-\kvtcb@boxsep*2-\tcb@h@titletotal}%
-}%
-
-\def\tcb@fit@@box@titled{%
-  \tcb@set@@dim@and@title%
   \iftcb@hasTitle%
-    \tcbdimto\tcb@h@titletotal{\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
+    \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \tcbdimto\tcb@h@titletotal{\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+(\kvtcb@boxsep)*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
   \else%
     \let\tcb@h@titletotal=\tcb@zpt%
   \fi%
-  \tcb@fit@@box%
+  \tcbdimto\tcb@fit@@line{\kvtcb@fit@skip\tcbfitdim}%
+  \tcbdimto\tcb@w@upper{\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@leftupper)-(\kvtcb@rightupper)}%
+  \tcb@fit@@boxsave{\tcb@w@upper}%
+  \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
+  \tcbdimto\tcb@fit@@target{\kvtcb@height@fixed-(\kvtcb@top@rule@stand)-(\kvtcb@bottom@rule@stand)-(\kvtcb@top)-(\kvtcb@bottom)-(\kvtcb@boxsep)*2-\tcb@h@titletotal}%
 }%
 
 \long\def\tcbox@inner@fitbox#1{%
@@ -262,7 +259,9 @@
     \advance\count@ 1\relax%
   }%
   %
-  \tcb@fit@@box@titled%
+  \tcb@set@@phantom%
+  \tcb@set@@title%
+  \tcb@fit@@box%
   %
   % height fit
   \ifdim\kvtcb@height@fixed@plus>0pt\relax%
@@ -282,17 +281,17 @@
   \ifdim\kvtcb@fit@plus@width>0pt\relax%
     \ifnum\count@<\kvtcb@fit@maxstep\relax%
       \ifdim\dimexpr\tcb@fit@@h>\tcb@fit@@target\relax%
-        \tcb@lowerfitdim\kvtcb@width%
+        \tcb@lowerfitdim\dimexpr\kvtcb@width\relax%
         \tcb@upperfitdim\dimexpr\kvtcb@width+\kvtcb@fit@plus@width\relax%
         \tcbdimto\kvtcb@width{\tcb@upperfitdim}%
-        \tcb@fit@@box@titled%
+        \tcb@fit@@box%
         \ifdim\dimexpr\tcb@fit@@h>\tcb@fit@@target\relax%
         \else%
           \ifnum\count@<\kvtcb@fit@maxstep\relax%
             \tcbdimto\tcb@fit@@gap{\tcb@fit@@target-\tcb@fit@@h}%
             \tcbdimto\kvtcb@width{(\tcb@lowerfitdim+\tcb@upperfitdim)/2}%
             \loop%
-              \tcb@fit@@box@titled%
+              \tcb@fit@@box%
               \tcb@continuetrue%
               \ifnum\count@<\kvtcb@fit@maxstep\relax%
                 \ifdim\dimexpr\tcb@upperfitdim-\tcb@lowerfitdim<\kvtcb@fit@maxwidthdiff\relax%
@@ -309,17 +308,17 @@
               \fi%
               \iftcb@continue%
                 \ifdim\dimexpr\tcb@fit@@h>\tcb@fit@@target\relax%
-                  \tcb@lowerfitdim\kvtcb@width%
+                  \tcb@lowerfitdim\dimexpr\kvtcb@width\relax%
                   \tcbdimto\kvtcb@width{(\tcb@lowerfitdim+\tcb@upperfitdim)/2}%
                 \else%
-                  \tcb@upperfitdim\kvtcb@width%
+                  \tcb@upperfitdim\dimexpr\kvtcb@width\relax%
                   \tcbdimto\tcb@fit@@gap{\tcb@fit@@target-\tcb@fit@@h}%
                   \tcbdimto\kvtcb@width{(\tcb@lowerfitdim+\tcb@upperfitdim)/2}%
                 \fi%
               \else%
                 \ifdim\dimexpr\tcb@fit@@h>\tcb@fit@@target\relax%
                   \tcbdimto\kvtcb@width{\tcb@upperfitdim}%
-                  \tcb@fit@@box@titled%
+                  \tcb@fit@@box%
                 \fi%
               \fi%
             \iftcb@continue \repeat%
@@ -350,6 +349,7 @@
   \fi%
   %
   \edef\tcbfitsteps{\the\count@}%
+  \tcb@set@@dimensions%
   \tcb@draw@color@box%
 }
 

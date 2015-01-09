@@ -3423,3 +3423,41 @@ standard settings of the package are used (v2.40 and above), see
 Section \ref{subsec:everybox} from page \pageref{subsec:everybox}.
 %See \refCom{tcbhighmath} for an example.
 \end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[][doc new=2015-01-09]{only}{=\textless\meta{overlay specification}\textgreater\marg{options}}{style, no default, initially unset}
+Sets the given |tcolorbox| \meta{options} in dependency of
+a |beamer| \meta{overlay specification}. Note that this needs the |beamer| class.
+The \meta{options} will only be used on the specified |beamer| frames.
+
+\begin{dispListing}
+\documentclass{beamer}
+\usepackage[many]{tcolorbox}
+\begin{document}
+
+\begin{frame}
+  \begin{tcolorbox}[title=My title,fonttitle=\bfseries,
+      enhanced,colframe=red!50!black,colback=red!10,colbacktitle=red,
+      sidebyside,righthand width=3cm,
+      lowerbox=invisible,lower separated=false,
+      drop lifted shadow,
+      only=<1>{colbacktitle=yellow,coltitle=red!50!black,colframe=red},
+      only=<3>{colback=yellow!50,watermark text={Attention!}},
+      only=<3->{lowerbox=visible}  ]
+    This is a test.
+    \begin{itemize}[<+->]
+      \item One
+      \item Two
+      \item \alert<3>{Three}
+      \item Four
+    \end{itemize}
+  \tcblower
+    \begin{equation*}
+    \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
+    \end{equation*}
+  \end{tcolorbox}
+\end{frame}
+
+\end{document}
+\end{dispListing}
+\end{docTcbKey}

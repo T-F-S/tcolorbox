@@ -257,6 +257,25 @@ If \refKey{/tcb/fit} should be used, turn over to \refEnv{tcbraster}.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2015-01-08]{raster equal skip}{=\meta{length}}{style, no default}
+  Shortcut to set
+  \refKey{/tcb/raster before skip},
+  \refKey{/tcb/raster after skip},
+  \refKey{/tcb/raster column skip}, and
+  \refKey{/tcb/raster row skip}
+  to the same \meta{length} value.
+\begin{dispExample}
+\begin{tcbitemize}[raster equal skip=4mm,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
 \clearpage
 
 \begin{docTcbKey}[][doc new=2014-11-10]{raster left skip}{=\meta{length}}{no default, initially |0pt|}

@@ -172,6 +172,29 @@ The key \docAuxKey[foo]{fooaux} holds some interesting data.
 
 
 \clearpage
+\begin{docCommand}[doc new=2015-01-08]{docCounter}{\marg{name}}
+  Documents a counter with given \meta{name}. The counter is automatically indexed.
+\begin{dispExample}
+The counter \docCounter{foocounter} can be used for computation.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}[doc new=2015-01-08]{docCounter*}{\marg{name}}
+  Identical to \refCom{docCounter}, but without index entry.
+\end{docCommand}
+
+\begin{docCommand}[doc new=2015-01-08]{docLength}{\marg{name}}
+  Documents a counter with given \meta{name}. The counter is automatically indexed.
+\begin{dispExample}
+The length \docLength{foolength} can be used for computation.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}[doc new=2015-01-08]{docLength*}{\marg{name}}
+  Identical to \refCom{docLength}, but without index entry.
+\end{docCommand}
+
+
 \begin{docCommand}{docColor}{\marg{name}}
   Documents a color with given \meta{name}. The color is automatically indexed.
 \begin{dispExample}
@@ -184,6 +207,7 @@ The color \docColor{foocolor} is available.
 \end{docCommand}
 
 
+\clearpage
 \begin{docCommand}{cs}{\marg{name}}
   Macro from |ltxdoc| \cite{carlisle:2007a} to typeset a command word \meta{name}
   where the backslash is prefixed. The library overwrites the original macro.
@@ -208,7 +232,6 @@ This is a \meta{text}.
 This is a mandatory \marg{argument}.
 \end{dispExample}
 \end{docCommand}
-
 
 \begin{docCommand}{oarg}{\marg{text}}
   Macro from |ltxdoc| \cite{carlisle:2007a} to typeset a \meta{text} with
@@ -487,39 +510,6 @@ with another note.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{color command}{=\meta{color}}{no default, initially |Definition|}
-  Sets the highlight color used by macro definitions.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color environment}{=\meta{color}}{no default, initially |Definition|}
-  Sets the highlight color used by environment definitions.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color key}{=\meta{color}}{no default, initially |Definition|}
-  Sets the highlight color used by key definitions.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color value}{=\meta{color}}{no default, initially |Definition|}
-  Sets the highlight color used by value definitions.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color color}{=\meta{color}}{no default, initially |Definition|}
-  Sets the highlight color used by color definitions.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color definition}{=\meta{color}}{no default, initially |Definition|}
-  Sets the highlight color for \refKey{/tcb/color command}, \refKey{/tcb/color environment},
-  \refKey{/tcb/color key}, \refKey{/tcb/color value}, and \refKey{/tcb/color color}.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color option}{=\meta{color}}{no default, initially |Option|}
-  Sets the color used for optional arguments.
-\end{docTcbKey}
-
-\begin{docTcbKey}{color hyperlink}{=\meta{color}}{no default, initially |Hyperlink|}
-  Sets the color for all hyper-links, i.\,e. all internal and external links.
-\end{docTcbKey}
-
 \begin{docTcbKey}{before example}{=\meta{macros}}{no default, initially \cs{par}\cs{smallskip}}
   Sets the \meta{macros} which are executed before \refEnv{dispExample} and \refEnv{dispListing}
   additional to \refKey{/tcb/before}.
@@ -529,6 +519,32 @@ with another note.
   Sets the \meta{macros} which are executed after \refEnv{dispExample} and \refEnv{dispListing}
   additional to \refKey{/tcb/after}.
 \end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2015-01-09]{index command}{=\meta{macro}}{no default, initially \cs{index}}
+  Replaces the internally used \cs{index} macro by the given \meta{macro}.
+  The \meta{macro} has to take one mandatory argument like \cs{index}.
+  This option is mutually exclusive with \refKey{/tcb/index command name}.
+\begin{dispListing}
+\tcbset{index command=\myindexcommand}
+\end{dispListing}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-01-09]{index command name}{=\meta{name}}{no default, initially unset}
+  Replaces the internally used \cs{index} macro by
+  \mbox{\cs{index}\texttt{[\meta{name}]}}, i.e.\ 
+  \mbox{\cs{index}\texttt{\textbraceleft\ldots\textbraceright}} is replaced by
+  \mbox{\cs{index}\texttt{[\meta{name}]\textbraceleft\ldots\textbraceright}}.
+  This option is intended to be used with |imakeidx| and is
+  mutually exclusive with \refKey{/tcb/index command}.
+\begin{dispListing}
+\tcbset{index command name=mydoc}
+\end{dispListing}
+\end{docTcbKey}
+
+
 
 \begin{docTcbKey}{index format}{=\meta{format}}{no default, initially |pgf|}
   Determines the basic \meta{format} of the generated index.
@@ -540,7 +556,8 @@ with another note.
   \item\docValue{doc}: The index is assumed to be formatted by |doc| or |ltxdoc|. The usage of |makeindex|
     with |-s gind.ist| is assumed. The package |hypdoc| has to be loaded
     \emph{before} |tcolorbox|.
-  \item\docValue{off}: The index is not formatted by |tcolorbox|.
+  \item\docValue{off}: The index is not formatted by |tcolorbox|. Use this, if
+    the index is formatted by other package like |imakeidx|.
   \end{itemize}
 \end{docTcbKey}
 
@@ -573,6 +590,8 @@ with another note.
 \end{dispListing}
 \end{docTcbKey}
 
+\clearpage
+
 \begin{docTcbKey}{index annotate}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   If set to |true|, the index entries are annotated with short descriptions
   given by \refKey{/tcb/doclang/environment}, \refKey{/tcb/doclang/key},
@@ -584,6 +603,50 @@ with another note.
   settings given by \refKey{/tcb/color environment}, \refKey{/tcb/color key},
   and others.
 \end{docTcbKey}
+
+
+\begin{docTcbKey}{color command}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by macro definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color environment}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by environment definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color key}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by key definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color value}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by value definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new={2015-01-08}]{color counter}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by counter definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new={2015-01-08}]{color length}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by length definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color color}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by color definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color definition}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color for \refKey{/tcb/color command}, \refKey{/tcb/color environment},
+  \refKey{/tcb/color key}, \refKey{/tcb/color value}, \refKey{/tcb/color counter},
+  \refKey{/tcb/color length}, and \refKey{/tcb/color color}.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color option}{=\meta{color}}{no default, initially |Option|}
+  Sets the color used for optional arguments.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color hyperlink}{=\meta{color}}{no default, initially |Hyperlink|}
+  Sets the color for all hyper-links, i.\,e. all internal and external links.
+\end{docTcbKey}
+
 
 \clearpage
 The following keys are provided for language specific settings.
@@ -601,6 +664,13 @@ The English language is predefined.
   Heading text in the index for colors.
 \end{langTcbKey}
 
+\begin{langTcbKey}[][doc new={2015-01-08}]{counter}{=\meta{text}}{no default, initially |counter|}
+  Text used in the index for counters.
+\end{langTcbKey}
+
+\begin{langTcbKey}[][doc new={2015-01-08}]{counters}{=\meta{text}}{no default, initially |Counters|}
+  Heading text in the index for counters.
+\end{langTcbKey}
 
 \begin{langTcbKey}{environment}{=\meta{text}}{no default, initially |environment|}
   Text used in the index for environments.
@@ -614,6 +684,10 @@ The English language is predefined.
   Text used in \refEnv{docEnvironment}.
 \end{langTcbKey}
 
+\begin{langTcbKey}{index}{=\meta{text}}{no default, initially |Index|}
+  Heading text for the index.
+\end{langTcbKey}
+
 \begin{langTcbKey}{key}{=\meta{text}}{no default, initially |key|}
   Text used in the index for keys.
 \end{langTcbKey}
@@ -622,9 +696,14 @@ The English language is predefined.
   Heading text used in the index for keys.
 \end{langTcbKey}
 
-\begin{langTcbKey}{index}{=\meta{text}}{no default, initially |Index|}
-  Heading text for the index.
+\begin{langTcbKey}[][doc new={2015-01-08}]{length}{=\meta{text}}{no default, initially |length|}
+  Text used in the index for lengths.
 \end{langTcbKey}
+
+\begin{langTcbKey}[][doc new={2015-01-08}]{lengths}{=\meta{text}}{no default, initially |Lengths|}
+  Heading text in the index for lengths.
+\end{langTcbKey}
+
 
 \begin{langTcbKey}[][doc new={2014-09-19}]{new}{=\meta{text}}{no default, initially |New|}
   Announcement text for new content.
