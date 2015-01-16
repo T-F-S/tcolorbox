@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
+%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.36}
+\tcb@set@library@version{3.40}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -371,6 +371,11 @@
   @title style/.code={\tikzset{title@style/.style={#1}}},%
   title style/.style={title filled,@title style={#1}},
   title hidden/.style={title style={draw=none,fill=none}},
+  titlerule style/.style={%
+    underlay={\iftcb@hasTitle%
+      \path[draw,line width=\kvtcb@title@rule+1000sp,#1]
+        ([yshift=-\kvtcb@title@rule/2]title.south west)--([yshift=-\kvtcb@title@rule/2]title.south east);
+    \fi}},%
   colbacklower/.colorlet=tcbcol@backlower,%
   clear@spec/.code={\tcb@spec{}},%
   tikz/.code={\appto\tcb@tikz@option@hook{,#1}},%

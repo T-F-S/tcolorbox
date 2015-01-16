@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
+%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -722,3 +722,9 @@ version 3.36 (2015/01/09)
     'color counter', 'color length',
     'doclang/counter', 'doclang/counters', 'doclang/length', 'doclang/lengths'
 
+version 3.40 (2015/01/14)
+- bug fix: list environments had too much leading space if set as first elements in a box
+- library 'skins':
+  * new option: 'titlerule style'
+- library 'breakable':
+  algorithm for handling overfull boxes revised; new warnings implemented

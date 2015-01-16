@@ -287,6 +287,67 @@ This is the lower part.
 \end{dispExample*}
 \end{docTcbKey}
 
+
+\clearpage
+
+
+\begin{docTcbKey}[][doc new=2015-01-14]{titlerule style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
+  The \meta{\texttt{\upshape tikz} keys} are used to draw a title rule,
+  i.e.\ a rule below the optional title. The width of the rule is controlled
+  by \refKey{/tcb/titlerule}. It may be set directly to a smaller width
+  to create mixed effects with the standard rule.
+  This option is implemented as an \refKey{/tcb/underlay}. Thus, it is not
+  available for \refSkin{standard} and \refSkin{standard jigsaw}, but for
+  all other skins, e.g.\ \refSkin{enhanced}.
+  As an underlay, this option can be used multiple times and is removed
+  by \refKey{/tcb/no underlay}.
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,
+  colback=red!5!white,colframe=red!75!black,
+  colbacktitle=red!50!yellow,fonttitle=\bfseries,
+  title=My title,
+  titlerule=1mm,
+  titlerule style=yellow  ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,
+  colback=red!5!white,colframe=red!75!black,
+  colbacktitle=red!50!yellow,fonttitle=\bfseries,
+  title=My title,
+  titlerule=1mm,
+  titlerule style={yellow,line width=0.5mm}  ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,
+  colback=red!10!white,colframe=red!75!black,
+  colbacktitle=red!50!yellow,fonttitle=\bfseries,
+  frame hidden,
+  title=My title,
+  boxrule=0pt,titlerule=1mm,
+  titlerule style=red!50!black  ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+%\usetikzlibrary{arrows.meta}
+\begin{tcolorbox}[empty,
+  coltitle=red!75!black,fonttitle=\bfseries,
+  borderline horizontal={0.5mm}{0pt}{red!50!white},
+  title=My title,
+  titlerule style={red,
+    arrows = {Hooks[arc=270]-Hooks[arc=270]}} ]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
 \clearpage
 
 The combined \tikzname\ style applied to frame, interior, and title

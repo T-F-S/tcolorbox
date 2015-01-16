@@ -34,19 +34,45 @@
 \begin{tcolorbox}[enhanced,title={tcolorbox},before skip=5mm,after skip=5mm,
   colframe=red!50!black!30!white,colback=red!10!white!40!white,
   colbacktitle=red!30!white,coltext=black!20!white,
+  toptitle=1mm,bottomtitle=1mm,
+  overlay={\begin{tcbclipinterior}%
+    \path[fill=red!10!white!40!yellow!20!white,draw=yellow!50!black,dotted]
+      ([xshift=1mm,yshift=1mm]interior.south west)
+      rectangle ([xshift=-1mm,yshift=-1mm]interior.north east);
+    \path[fill=red!10!white!40!white,draw=yellow!50!black,dotted] (
+      [xshift=5mm,yshift=3mm]interior.south west)
+      rectangle ([xshift=-5mm,yshift=-3mm]interior.north east);
+    \path[fill=red!10!white!40!yellow!20!white,draw=yellow!50!black,dotted]
+      ([xshift=5mm,yshift=-1mm]segmentation.south west)
+      rectangle ([xshift=-5mm,yshift=1mm]segmentation.north east);
+    \path[fill=red!10!white!40!white,draw=yellow!50!black,dotted]
+      ([xshift=5mm,yshift=1mm]segmentation.south west)
+      rectangle ([xshift=-5mm,yshift=-1mm]segmentation.north east);
+    \path[dashed,draw=red!50!black!30!white] (segmentation.west) -- (segmentation.east);
+    \end{tcbclipinterior}%
+    \begin{tcbcliptitle}
+    \path[fill=red!30!white!70!yellow,draw=yellow!50!black,dotted]
+      ([xshift=1mm,yshift=1mm]title.south west)
+      rectangle ([xshift=-1mm,yshift=-1mm]title.north east);
+    \path[fill=red!30!white,draw=yellow!50!black,dotted]
+      ([xshift=5mm,yshift=2mm]title.south west)
+      rectangle ([xshift=-5mm,yshift=-2mm]title.north east);
+    \end{tcbcliptitle}},
   finish={
   \coordinate (A) at ([yshift=-0.25mm]frame.north);
   \draw[thick,<-] (A) -- +(-1,0.3) node[left]{\refKey{/tcb/toprule}};
   \coordinate (A) at ([yshift=-0.75mm]A);
   \draw[thick,<-] (A) -- +(1,0) node[right]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([yshift=-1mm]A);
   \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/toptitle}};
   %
   \coordinate (A) at ([yshift=1.00mm]interior.north);
   \draw[thick,<-] (A) -- +(1,0) node[right]{\refKey{/tcb/boxsep}};
+  \coordinate (A) at ([yshift=1mm]A);
   \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/bottomtitle}};
   \coordinate (A) at ([yshift=0.25mm]interior.north);
   \draw[thick,<-] (A) -- +(-1,-0.4) node[left]{\refKey{/tcb/titlerule}};
-  \coordinate (A) at ([yshift=-0.25mm]interior.north);
+  \coordinate (A) at ([yshift=-0.5mm]interior.north);
   \draw[thick,<-] (A) -- +(1,-0.2) node[right]{\refKey{/tcb/boxsep}};
   \coordinate (A) at ([yshift=-1.5mm]A);
   \draw[thick,<-] (A) -- +(-1,-0.6) node[left]{\refKey{/tcb/top}};
@@ -64,7 +90,7 @@
   \draw[thick,<-] (A) -- +(-1,-0.3) node[left]{\refKey{/tcb/bottomrule}};
   \coordinate (A) at ([yshift=0.75mm]A);
   \draw[thick,<-] (A) -- +(1,0) node[right]{\refKey{/tcb/boxsep}};
-  \coordinate (A) at ([yshift=2.5mm]A);
+  \coordinate (A) at ([yshift=1.5mm]A);
   \draw[thick,<-] (A) -- +(-1,0) node[left]{\refKey{/tcb/bottom}};
   %
   \coordinate (A) at ([xshift=0.25mm]frame.west);

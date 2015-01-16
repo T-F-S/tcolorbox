@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
+%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.36}
+\tcb@set@library@version{3.40}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -354,24 +354,67 @@
   \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
+
+\def\tcb@split@upper@box@and@assemble{%
+  \vfuzz=\maxdimen\vbadness=10000\savingvdiscards=1%
+  \setbox\tcb@upperbox=\vsplit\tcb@totalupperbox to\tcb@split@dim%
+  \edef\tcb@upper@box@badness{\the\badness}%
+  \ifnum\tcb@upper@box@badness=1000000\relax%
+    \setbox\tcb@totalupperbox=\vbox{%
+      \unvbox\tcb@upperbox%
+      \splitdiscards%
+      \unvbox\tcb@totalupperbox}%
+  \else%
+    \tcb@setbox@upper{\tcb@split@dim}{\tcb@upperbox}%
+  \fi%
+  \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz\savingvdiscards=0%
+}
+
+
 \def\tcb@split@upper@box{%
   \vfuzz=\maxdimen\vbadness=10000%
   \setbox\tcb@upperbox=\vsplit\tcb@totalupperbox to\tcb@split@dim%
+  \edef\tcb@upper@box@badness{\the\badness}%
+  \ifnum\tcb@upper@box@badness=1000000\relax%
+    \tcb@warning{The upper box part has become overfull}%
+  \fi%
   \tcb@setbox@upper{\tcb@split@dim}{\tcb@upperbox}%
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
 }
+
 
 \def\tcb@setbox@lower#1#2{%
   \tcb@setbox\tcb@lowerbox{#1}{#2}%
   \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
 }
 
+\def\tcb@split@lower@box@and@assemble{%
+  \vfuzz=\maxdimen\vbadness=10000\savingvdiscards=1%
+  \setbox\tcb@lowerbox=\vsplit\tcb@totallowerbox to\tcb@split@dim%
+  \edef\tcb@lower@box@badness{\the\badness}%
+  \ifnum\tcb@lower@box@badness=1000000\relax%
+    \setbox\tcb@totallowerbox=\vbox{%
+      \unvbox\tcb@lowerbox%
+      \splitdiscards%
+      \unvbox\tcb@totallowerbox}%
+  \else%
+    \tcb@setbox@lower{\tcb@split@dim}{\tcb@lowerbox}%
+  \fi%
+  \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz\savingvdiscards=0%
+}
+
+
 \def\tcb@split@lower@box{%
   \vfuzz=\maxdimen\vbadness=10000%
   \setbox\tcb@lowerbox=\vsplit\tcb@totallowerbox to\tcb@split@dim%
+  \edef\tcb@lower@box@badness{\the\badness}%
+  \ifnum\tcb@lower@box@badness=1000000\relax%
+    \tcb@warning{The lower box part has become overfull}%
+  \fi%
   \tcb@setbox@lower{\tcb@split@dim}{\tcb@lowerbox}%
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
 }
+
 
 \def\tcb@split@setstate@first{%
   \edef\tcb@split@state{first}%
@@ -411,6 +454,17 @@
   \fi%
 }
 
+
+\def\tcb@split@break@to@start{%
+  \tcb@swap{\tcb@totalupperbox}{\tcb@upperbox}%
+  \tcb@swap{\tcb@totallowerbox}{\tcb@lowerbox}%
+  \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
+  \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
+  \iftcb@multicol\columnbreak\else\pagebreak\fi%
+  \tcb@nobreak@warning%
+  \tcb@enlbreak@init\tcb@break@allowedfalse%
+  \let\tcb@split@next=\tcb@split@start%
+}
 
 \def\tcb@split@first{%
   \setcounter{tcbbreakpart}{1}%
@@ -463,29 +517,39 @@
   \let\tcb@split@next=\relax%
   \tcbdimto\tcb@split@dim{\tcb@h@page-\tcb@h@padding@first-\tcb@h@padtitle}%
   \ifdim\tcb@split@dim<\tcb@h@upper\relax%
-    \tcb@split@upper@box%
-    \ifdim\wd\tcb@totalupperbox=0pt\relax%
-      \iftcb@lowerspace%
-        \tcb@sdraw@U%
-        \let\tcb@split@next=\tcb@split@SL%
+    %
+    %
+    \iftcb@break@allowed%
+      \tcb@split@upper@box@and@assemble%
+      \ifnum\tcb@upper@box@badness=1000000\relax%
+        \tcb@split@break@to@start%
       \else%
-        \tcb@split@force@standalone%
-        \tcb@drawcolorbox@standalone%
+        \ifdim\wd\tcb@totalupperbox=0pt\relax%
+          \iftcb@lowerspace%
+            \tcb@sdraw@U%
+            \let\tcb@split@next=\tcb@split@SL%
+          \else%
+            \tcb@split@force@standalone%
+            \tcb@drawcolorbox@standalone%
+          \fi%
+        \else%
+          \ifdim\dimexpr\tcb@h@upper=0pt\relax%
+            \tcb@split@break@to@start%
+          \else%
+            \tcb@sdraw@U%
+            \let\tcb@split@next=\tcb@split@USL%
+          \fi%
+        \fi%
       \fi%
     \else%
-      \ifdim\dimexpr\tcb@h@upper=0pt\relax%
-        \iftcb@break@allowed
-          \tcb@swap{\tcb@totalupperbox}{\tcb@upperbox}%
-          \tcb@swap{\tcb@totallowerbox}{\tcb@lowerbox}%
-          \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
-          \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
-          \iftcb@multicol\columnbreak\else\pagebreak\fi%
-          \tcb@nobreak@warning%
-          \tcb@enlbreak@init\tcb@break@allowedfalse%
-          \let\tcb@split@next=\tcb@split@start%
-        \else%
+      \tcb@split@upper@box%
+      \ifdim\wd\tcb@totalupperbox=0pt\relax%
+        \iftcb@lowerspace%
           \tcb@sdraw@U%
-          \let\tcb@split@next=\tcb@split@USL%
+          \let\tcb@split@next=\tcb@split@SL%
+        \else%
+          \tcb@split@force@standalone%
+          \tcb@drawcolorbox@standalone%
         \fi%
       \else%
         \tcb@sdraw@U%
@@ -494,23 +558,29 @@
     \fi%
   \else%
     \tcb@swap{\tcb@totalupperbox}{\tcb@upperbox}%
-    \tcbdimto\tcb@split@dim{\tcb@split@dim-\tcb@h@upper-\tcb@h@segment}
-    \ifdim\tcb@split@dim<\kvtcb@breakminlines\baselineskip\relax%
-      \tcb@sdraw@U%
-      \iftcb@lowerspace%
-      \let\tcb@split@next=\tcb@split@SL%
-      \else%
-      \let\tcb@split@next=\tcb@split@USL%
+    \iftcb@lowerspace%
+      \tcbdimto\tcb@split@dim{\tcb@split@dim-\tcb@h@upper-\tcb@h@segment}%
+      \ifdim\tcb@split@dim<\kvtcb@breakminlines\baselineskip\relax%
+        \tcb@sdraw@U%
+        \let\tcb@split@next=\tcb@split@SL%
+      \else
+        \tcb@split@lower@box@and@assemble%
+        \ifnum\tcb@lower@box@badness=1000000\relax%
+          \tcb@sdraw@U%
+          \let\tcb@split@next=\tcb@split@SL%
+        \else%
+          \ifdim\wd\tcb@totallowerbox=0pt\relax%
+            \tcb@split@force@standalone%
+            \tcb@drawcolorbox@standalone%
+          \else%
+            \tcb@sdraw@USL%
+            \let\tcb@split@next=\tcb@split@L%
+          \fi%
+        \fi%
       \fi%
-    \else
-      \tcb@split@lower@box%
-      \ifdim\wd\tcb@totallowerbox=0pt\relax%
-        \tcb@split@force@standalone%
-        \tcb@drawcolorbox@standalone%
-      \else%
-        \tcb@sdraw@USL%
-        \let\tcb@split@next=\tcb@split@L%
-      \fi%
+    \else%
+      \tcb@split@force@standalone%
+      \tcb@drawcolorbox@standalone%
     \fi%
   \fi%
   \tcb@split@next%
@@ -568,13 +638,18 @@
           \tcb@sdraw@U%
           \let\tcb@split@next=\tcb@split@SL%
         \else
-          \tcb@split@lower@box%
-          \ifdim\wd\tcb@totallowerbox=0pt\relax%
-            \tcb@split@force@last%
-            \tcb@sdraw@USL%
+          \tcb@split@lower@box@and@assemble%
+          \ifnum\tcb@lower@box@badness=1000000\relax%
+            \tcb@sdraw@U%
+            \let\tcb@split@next=\tcb@split@SL%
           \else%
-            \tcb@sdraw@USL%
-            \let\tcb@split@next=\tcb@split@L%
+            \ifdim\wd\tcb@totallowerbox=0pt\relax%
+              \tcb@split@force@last%
+              \tcb@sdraw@USL%
+            \else%
+              \tcb@sdraw@USL%
+              \let\tcb@split@next=\tcb@split@L%
+            \fi%
           \fi%
         \fi%
       \else%
@@ -851,4 +926,3 @@
   },
   initialize@reset=reset@breakable,
 }
-

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.36 (2015/01/09)
+%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/01/09 version 3.36 text color boxes]
-\def\tcb@version{3.36}
+\ProvidesPackage{tcolorbox}[2015/01/14 version 3.40 text color boxes]
+\def\tcb@version{3.40}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -547,10 +547,10 @@
 \let\endtcb@savebox=\endtcb@lrbox
 
 \def\tcb@saveupperbox{%
-\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\penalty-\@m\kvtcb@fontupper\kvtcb@before@upper\ignorespaces}
+\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces}
 
 \def\tcb@savelowerbox{%
-\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\penalty-\@m\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}
+\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}
 
 
 % counter for float
@@ -612,9 +612,7 @@
   % computation of text width
   \tcbdimto\tcb@width{\kvtcb@width}%
   \tcbdimto\tcb@innerwidth{\tcb@width-\kvtcb@left@rule-\kvtcb@right@rule}%
-  %\tcbdimto\tcb@temp{\tcb@innerwidth-\kvtcb@boxsep*2}%
   \tcbdimto\tcb@w@upper{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftupper-\kvtcb@rightupper}%
-  %\tcbdimto\tcb@w@upper{\tcb@temp-\kvtcb@leftupper-\kvtcb@rightupper}%
 }
 
 \def\tcb@set@@sidebyside{%
@@ -1281,9 +1279,6 @@
   \tcb@set@@title%
   \tcb@set@@dimensions%
   \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
-  %\tcbdimto{\tcb@temp@wd}{\wd\tcb@upperbox}%
-  %\tcbdimto\kvtcb@width{\tcb@temp@wd+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
-  %\let\tcb@width\kvtcb@width%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
 }
