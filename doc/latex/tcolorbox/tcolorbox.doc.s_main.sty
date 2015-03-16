@@ -1,0 +1,206 @@
+% !TeX root = tcolorbox.tex
+% include file (style) of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\RequirePackage[T1]{fontenc}
+\RequirePackage[latin1]{inputenc}
+\RequirePackage[english]{babel}
+\RequirePackage{lmodern,parskip,array,ifthen,calc}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage[svgnames,table,hyperref]{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{varioref}
+\RequirePackage[pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks]{hyperref}
+\RequirePackage{varwidth,cleveref,incgraph}
+
+\RequirePackage[a4paper,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm,
+    marginparsep=3mm,marginparwidth=18mm,
+    headheight=0mm,headsep=0cm,
+    footskip=1.5cm,includeheadfoot%,showframe
+    ]{geometry}
+\RequirePackage{fancyhdr}
+\fancyhf{}
+\fancyfoot[C]{\thepage}%
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+\tolerance=2000%
+\setlength{\emergencystretch}{20pt}%
+
+
+\usetikzlibrary{shadings,shadows}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{patterns}
+\usetikzlibrary{spy}
+\usetikzlibrary{arrows.meta}
+
+\RequirePackage{array,tabularx}
+\RequirePackage{amsmath}
+\RequirePackage{lipsum}
+\RequirePackage{empheq}
+
+%\RequirePackage[cache]{minted}% minted 2.0
+
+\RequirePackage{changepage}
+\strictpagecheck
+
+\providecommand{\tcbpkgprefix}{}
+\RequirePackage[all]{\tcbpkgprefix tcolorbox}
+\RequirePackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
+
+\tcbset{skin=enhanced,
+  doc head={colback=yellow!10!white,interior style=fill},
+  doc head key={colback=magenta!5!white,interior style=fill},
+  color key=DarkViolet,
+  color value=Teal,
+  color color=Teal,
+  color counter=Orange!85!black,
+  color length=Orange!85!black,
+  index colorize,
+  index annotate,
+}
+\urlstyle{sf}
+
+\tcbmakedocSubKey{docTcbKey}{tcb}
+\tcbmakedocSubKey{langTcbKey}{tcb/doclang}
+\tcbmakedocSubKey{newTcbKey}{tcb/new}
+\tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
+\tcbmakedocSubKey{extTcbKey}{tcb/external}
+\tcbmakedocSubKey{docTikzKey}{tikz}
+
+\def\tikzname{Ti\emph{k}Z}
+
+\makeatletter
+\newrobustcmd{\tcbIndexPrintSkinCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{Skin}}
+\newrobustcmd{\tcbIndexPrintSkinC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
+\def\tcb@index@Skin#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}\fi}%
+
+\newenvironment{docSkin}[1]{\begin{tcb@manual@entry}%
+  \begin{tcb@doc@head}{colback=magenta!5!white,interior style=fill}%
+  \hypertarget{skin:#1}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#1}\tcb@index@Skin{#1}\protected@edef\@currentlabel{#1}\label{skin:#1}\hfill(skin)}%
+  \end{tcb@doc@head}}%
+  {\end{tcb@manual@entry}}
+\def\refSkin{\tcb@ref@doc{skin}}
+\makeatother
+
+\newtcolorbox{marker}[1][]{marker,#1}
+
+\renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
+\renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
+
+\newcounter{texexp}
+\newcounter{texercise}
+\newcounter{mytheorem}[section]
+
+\newcounter{myexample}
+
+\newcounter{example}
+\newlength{\examlen}
+\newsavebox\mysavebox
+
+\lstdefinestyle{mydocumentation}{style=tcbdocumentation,
+  classoffset=0,
+  texcsstyle=*\color{blue},
+  % LaTeX and other packages
+  moretexcs={arrayrulecolor,draw,includegraphics,ifthenelse,isodd,lipsum,path,pgfkeysalso},
+  classoffset=1,
+  % tcolorbox macros
+  moretexcs={% core
+    endtcolorbox,endtcbverbatimwrite,newtcolorbox,newtcbox,newtcboxfit,tcbusetemp,tcbtitle,tcbtitletext,
+    tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
+    tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
+    % listings
+    endtcblisting,newtcblisting,newtcbinputlisting,
+    tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
+    tcbfitdim,tcbfitsteps,
+    % raster
+    thetcbrasternum,tcbitem,
+    % theorems
+    tcbmaketheorem,tcboxmath,tcbhighmath,thetcbcounter,newtcbtheorem,
+    % documentation
+    brackets,
+    colDef,colOpt,cs,
+    docAuxCommand,docColor,docAuxEnvironment,docAuxKey,
+    docCounter,docLength,
+    meta,marg,
+    oarg,
+    refCom,refEnv,refKey,
+    tcbmakedocSubKey,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
+    % skins
+    tcbincludegraphics,tcbincludepdf,pdfpages,imagepage,imagepath,imagename,
+    tcbline,tcboxedtitleheight,tcboxedtitlewidth,
+    tcbsettowidthofnode,tcbsetmacrotowidthofnode,tcbsettoheightofnode,tcbsetmacrotoheightofnode,
+    % xparse
+    DeclareTColorBox,NewTColorBox,RenewTColorBox,ProvideTColorBox,
+    DeclareTotalTColorBox,NewTotalTColorBox,RenewTotalTColorBox,ProvideTotalTColorBox,
+    DeclareTCBox,NewTCBox,RenewTCBox,ProvideTCBox,
+    DeclareTotalTCBox,NewTotalTCBox,RenewTotalTCBox,ProvideTotalTCBox,
+    DeclareTCBListing,NewTCBListing,RenewTCBListing,ProvideTCBListing,
+    DeclareTCBInputListing,NewTCBInputListing,RenewTCBInputListing,ProvideTCBInputListing,
+    DeclareTCBoxFit,NewTCBoxFit,RenewTCBoxFit,ProvideTCBoxFit,
+    DeclareTotalTCBoxFit,NewTotalTCBoxFit,RenewTotalTCBoxFit,ProvideTotalTCBoxFit,
+    tcboxverb,
+    % externalization
+    tcbEXTERNALIZE,tcbifexternal,newtcbexternalizeenvironment,
+    renewtcbexternalizeenvironment,extcolorbox,extikzpicture,
+    newtcbexternalizetcolorbox,renewtcbexternalizetcolorbox,
+    },
+  texcsstyle=*\color{Definition}\bfseries,
+  classoffset=0% restore default
+  }
+
+
+\definecolor{Green_Dark}{rgb}{0.078431,0.407843,0.176471}
+\definecolor{Blue_Dark}{rgb}{0.078431,0.188235,0.615686}
+
+
+\tcbset{
+  documentation listing style=mydocumentation,%
+  sbs/.style={sidebyside,before lower app={\tcbset{sidebyside=false}}},%
+  innerbox/.style={reset,documentation listing style=mydocumentation,
+    docexample/.style={docexample original},%
+    },
+  base example/.style={bicolor,
+    before skip=4pt plus 2pt minus 1pt,
+    after skip=8pt plus 4pt minus 2pt,
+    colback=white,opacityback=0.87,
+    fontlower=\footnotesize,
+    frame style={top color=Green_Dark,bottom color=Blue_Dark},
+    colbacklower=ExampleBack!5!white,
+    drop fuzzy shadow,
+    },
+  docexample/.style={base example,%
+    every box on layer 2/.style={every box},
+    before upper={\tcbset{innerbox}},before lower={\tcbset{innerbox}}
+    },
+  docexample original/.style={colframe=ExampleFrame,colback=ExampleBack,fontlower=\footnotesize,
+    before skip=\medskipamount,after skip=\medskipamount,frame style={}},
+}
+
+\newtcbexternalizetcolorbox{exdispExample}{dispExample}{minipage}%
+  {before skip=4pt plus 2pt minus 1pt,after skip=8pt plus 4pt minus 2pt}
+
+\newtcbexternalizetcolorbox{exdispExample*}{dispExample*}{minipage}%
+  {before skip=4pt plus 2pt minus 1pt,after skip=8pt plus 4pt minus 2pt}
+
+\newcommand{\inputpreamblelisting}[1]{%
+  \tcbinputlisting{title=Definition in the preamble:,
+    base example,coltitle=black,fonttitle=\itshape,titlerule=0pt,
+    colbacktitle=Navy!15!ExampleBack,
+    top=0mm,
+    before=\par\smallskip,%
+    listing style=mydocumentation,
+    listing only,listing file={\jobname_preamble_#1.tex}}%
+}
+
+\newtcolorbox{deprecated}{blank,breakable,watermark text=deprecated}
+
+\newtcbox{\mylib}{enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
+  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
+  colframe=green!50!black,coltext=green!25!black,colback=green!10!white,
+  overlay={\begin{tcbclipinterior}\fill[green!75!blue!50!white] (frame.south west)
+    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {LIB} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
+
+\robustify{\mylib}
+
+\pdfstringdefDisableCommands{%
+  \def\mylib#1{'#1'}%
+}

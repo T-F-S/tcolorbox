@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.40}
+\tcb@set@library@version{3.50}
 
-\tcbuselibrary{listings,skins,xparse}
+\tcbuselibrary{listings,skins,xparse,external}
 
 \RequirePackage{doc}[2010/02/04]
 \RequirePackage{pifont}[2005/04/12]
@@ -108,8 +108,6 @@
   color option/.store in=\kvtcb@col@opt,
   color hyperlink/.store in=\kvtcb@colhyper,
   color frame/.store in=\kvtcb@colhyper,
-  before example/.store in=\kvtcb@beforeexample,
-  after example/.store in=\kvtcb@afterexample,
   index actual/.store in=\idx@actual,
   index quote/.store in=\idx@quote,
   index level/.store in=\idx@level,
@@ -137,7 +135,9 @@
 
 % styles
 \tcbset{
-  docexample/.style={colframe=ExampleFrame,colback=ExampleBack,fontlower=\footnotesize},
+  docexample/.style={colframe=ExampleFrame,colback=ExampleBack,
+    before skip=\medskipamount,after skip=\medskipamount,
+    fontlower=\footnotesize},
   documentation minted style=,
   documentation minted options={tabsize=2,fontsize=\small},
   index default settings/.style={index actual={@},index quote={"},index level={!}},
@@ -166,32 +166,32 @@
   menucolor=\kvtcb@colhyper
 }}
 
-\def\dispExample{\tcb@layer@pushup\tcbset{docexample}\tcbwritetemp}
+\def\dispExample{\tcb@layer@pushup\tcbset{docexample}\begingroup\tcbwritetemp}
 
 \def\enddispExample{%
-  \endtcbwritetemp%
-  \kvtcb@beforeexample\begin{tcolorbox}%
+  \endtcbwritetemp\endgroup%
+  \begin{tcolorbox}%
   \tcb@doc@usetemplisting%
   \tcblower%
   \tcbusetemp%
-  \end{tcolorbox}\kvtcb@afterexample%
+  \end{tcolorbox}%
 }
 
 \newenvironment{dispExample*}[1]{%
-  \tcb@layer@pushup\tcbset{docexample,#1}\tcbwritetemp%
+  \tcb@layer@pushup\tcbset{docexample,#1}\begingroup\tcbwritetemp%
   }{\enddispExample}
 
-\def\dispListing{\tcb@layer@pushup\tcbset{docexample}\tcbwritetemp}
+\def\dispListing{\tcb@layer@pushup\tcbset{docexample}\begingroup\tcbwritetemp}
 
 \def\enddispListing{%
-  \endtcbwritetemp%
-  \kvtcb@beforeexample\begin{tcolorbox}%
+  \endtcbwritetemp\endgroup%
+  \begin{tcolorbox}%
   \tcb@doc@usetemplisting%
-  \end{tcolorbox}\kvtcb@afterexample%
+  \end{tcolorbox}%
 }
 
 \newenvironment{dispListing*}[1]{%
-  \tcb@layer@pushup\tcbset{docexample,#1}\tcbwritetemp%
+  \tcb@layer@pushup\tcbset{docexample,#1}\begingroup\tcbwritetemp%
   }{\enddispListing}
 
 % index auxiliary macros
@@ -445,8 +445,6 @@
     color option=Option,
     color definition=Definition,
     color hyperlink=Hyperlink,
-    before example=\par\smallskip,
-    after example=,
     doc left=2em,
     doc right=0pt,
     doc left indent=-2em,
@@ -459,4 +457,12 @@
     doc marginnote=,
     },
   initialize@reset=reset@documentation,
+}
+
+% deprecated
+\tcbset{
+  before example/.store in=\kvtcb@beforeexample,
+  after example/.store in=\kvtcb@afterexample,
+    before example=\par\smallskip,
+    after example=,
 }

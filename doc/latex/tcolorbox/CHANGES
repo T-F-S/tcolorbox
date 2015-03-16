@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -728,3 +728,26 @@ version 3.40 (2015/01/14)
   * new option: 'titlerule style'
 - library 'breakable':
   algorithm for handling overfull boxes revised; new warnings implemented
+
+version 3.50 (2015/03/16)
+- bug fix: \tcbline was broken for \tcboxfit-boxes since 3.36
+- text color implementation changed to fix some color problems
+- before/after settings changed to detect special situations
+- 'sidebyside align': new selections 'top seam', 'center seam', 'bottom seam'
+- new options:
+  'force nobeforeafter', 'blend before title', 'blend before title code'
+- library 'documentation':
+  'before example', 'after example' are deprecated; 'docexample' is changed
+- new library 'external'
+  * new macros and environments:
+    'tcbexternal', '\tcbEXTERNALIZE', 'extikzpicture', 'extcolorbox',
+    '\tcbifexternal',
+    '\newtcbexternalizeenvironment', 'renewtcbexternalizeenvironment',
+    'newtcbexternalizetcolorbox', 'renewtcbexternalizetcolorbox'
+  * new options:
+    'runner', 'externalize', 'force remake', '!',
+    'name', 'externalize listing', 'externalize listing!',
+    'externalize example', 'externalize example!',
+    'prefix', 'environment', 'minipage', 'plain', 'compiler', 'runs',
+    'input source on error', 'safety', 'preamble'
+- documentation structure revised

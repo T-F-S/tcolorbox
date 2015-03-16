@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.40}
+\tcb@set@library@version{3.50}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -264,7 +264,11 @@
         \tcb@handle@nobreak%
       \fi%
     \else%
-      \kvtcb@beforebox%
+      %\ifnum\lastnodetype=-1\relax%
+      %  \lineskip=0pt%
+      %\else%
+        \kvtcb@beforebox%
+      %\fi%
     \fi%
     \def\kvtcb@beforebox{\parskip\z@\nointerlineskip\noindent}%
     \noindent% applies parskip

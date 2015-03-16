@@ -142,7 +142,12 @@ The following keys are used inside |\tcbuselibrary| respectively
   see Section~\ref{sec:xparse} from page~\pageref{sec:xparse}.
 \end{docTcbKey}
 
+\begin{docTcbKey}[library]{external}{}{\mylib{external}}
+  Provides externalization support for stand-alone document snippets,
+  see \Fullref{sec:external}.
+\end{docTcbKey}
 
+\clearpage
 \begin{docTcbKey}[library]{documentation}{}{\mylib{documentation}}
   Provides additional
   macros for typesetting \LaTeX\ documentations
@@ -150,7 +155,6 @@ The following keys are used inside |\tcbuselibrary| respectively
   from page~\pageref{sec:documentation}.
 \end{docTcbKey}
 
-\clearpage
 \begin{docTcbKey}[library]{many}{}{style, no value}
   Loads the libraries \mylib{skins}, \mylib{breakable}, \mylib{raster}, \mylib{hooks},
   \mylib{theorems}, \mylib{fitting}, and \mylib{xparse}.
@@ -172,7 +176,8 @@ The following keys are used inside |\tcbuselibrary| respectively
 \end{docTcbKey}
 
 
-\begin{tcolorbox}[title={Package \texttt{tcolorbox}},center title,fonttitle=\bfseries,arc=0pt,
+\begin{extcolorbox}[runs=2]{intro_packageoverview}
+  [title={Package \texttt{tcolorbox}},center title,fonttitle=\bfseries,arc=0pt,
   colback=red!10!white,
   interior style={fill tile image*={width=2cm}{pink_marble.png},fill image opacity=0.5},
   colframe=red!50!black]
@@ -188,6 +193,7 @@ The following keys are used inside |\tcbuselibrary| respectively
     \mylib{theorems}\\
     \mylib{fitting}\\
     \mylib{hooks}\\
+    \mylib{external}\\
     \mylib{xparse}
   \tcbitem[adjusted title=Advanced Listings]
     \mylib{listings}\\
@@ -197,5 +203,5 @@ The following keys are used inside |\tcbuselibrary| respectively
   \tcbitem[adjusted title=Documentation]
     \mylib{documentation}
   \end{tcbitemize}
-\end{tcolorbox}
+\end{extcolorbox}
 

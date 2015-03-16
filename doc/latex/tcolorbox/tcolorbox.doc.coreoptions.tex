@@ -30,7 +30,7 @@ This is a \textbf{tcolorbox}.
   This option makes sense
   for single line headings if boxes are set side by side with equal height.
   Note that it is very easy to trick this adjustment.
-\begin{dispExample}
+\begin{exdispExample}[runs=2]{options_adjusted_title}
 \tcbset{colback=White,arc=0mm,width=(\linewidth-4pt)/4,
 equal height group=AT,before=,after=\hfill,fonttitle=\bfseries}
 
@@ -42,7 +42,7 @@ Now, we try again with adjusted titles:\\
 \foreach \n in {xxx,ggg,AAA,\"Agypten}
 {\begin{tcolorbox}[adjusted title=\n,colframe=blue!75!black]
   Some content.\end{tcolorbox}}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -181,7 +181,7 @@ just like any other \refEnv{tcolorbox}.
 
 \begin{docTcbKey}[][doc new=2014-10-10]{subtitle style}{=\meta{options}}{no default, initially empty}
   Adds |tcolorbox| \meta{options} to the settings for \refCom{tcbsubtitle}.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{options_subtitle_style}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[title=My title,
   colback=red!5!white,
   colframe=red!75!black,
@@ -196,7 +196,7 @@ just like any other \refEnv{tcolorbox}.
 \tcbsubtitle{Second subtitle}
   Further text.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -293,7 +293,7 @@ Now, we load the saved text:\\
 If set to |true|, the lower part is visually separated from the upper part.
 It depends on the chosen skin how the visualization of the separation is done.
 \enlargethispage*{1cm}
-\begin{dispExample}
+\begin{exdispExample}{options_lower_separated}
 % \tcbuselibrary{skins,raster}
 \begin{tcbraster}[colback=red!5!white,colframe=red!75!black,
   fonttitle=\bfseries,fontlower=\itshape]
@@ -335,7 +335,7 @@ This is the lower part.
 \end{tcolorbox}
 %
 \end{tcbraster}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1808,6 +1808,7 @@ One     & Two     & Three \\\hline\hline
 \end{dispExample}
 \end{docTcbKey}
 
+
 \clearpage
 \begin{docTcbKey}{tikz upper}{\colOpt{=\meta{options}}}{style}
   This style adds a centered |tikzpicture| environment to the start and end
@@ -1856,7 +1857,8 @@ One     & Two     & Three \\\hline\hline
 \begin{dispExample}
 % \usepackage{tikz}
 \newtcbox{\headline}[1][]{enhanced,before=\begin{center},after=\end{center},
-  fontupper=\Large\bfseries,colframe=red!50!black,colback=red!10!white,
+  ignore nobreak,fontupper=\Large\bfseries,
+  colframe=red!50!black,colback=red!10!white,
   drop fuzzy shadow=yellow,tikznode upper,#1}
 
 \headline{Important\\Headline}
@@ -1946,7 +1948,7 @@ is recommended which allows |tikz| code and gives access to
     \begin{scope}[shift={([xshift=\x]frame.north west)}]
       \path[draw=green!65!black,fill=green!10,line width=1mm] (0,0) arc (0:180:5mm);
       \path[fill=black] (-0.2,0) arc (0:180:1mm);
-    \end{scope}}}]}}
+    \end{scope}}}}}
 
 \begin{tcolorbox}[frogbox,title=My title]
 This is a \textbf{tcolorbox}.
@@ -2217,9 +2219,10 @@ This is the lower (\textit{right-handed}) part.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{sidebyside align}{=\meta{alignment value}}{no default, initially |center|}
+\begin{docTcbKey}[][doc updated=2015-02-06]{sidebyside align}{=\meta{alignment value}}{no default, initially |center|}
   Sets the vertical alignment for the left-handed and right-handed part.
-  Feasible values are \docValue{center}, \docValue{top}, and \docValue{bottom}.
+  Feasible values are \docValue{center}, \docValue{top}, \docValue{bottom},
+  \docValue{center seam}, \docValue{top seam}, and \docValue{bottom seam}.
 \begin{dispExample}
 \tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,nobeforeafter,
   left=2mm,right=2mm,sidebyside,sidebyside gap=6mm,width=(\linewidth-2mm)/3}
@@ -2240,6 +2243,48 @@ This is a text which is too long for one line.
 This is a short text.
 \end{tcolorbox}
 \end{dispExample}
+
+\clearpage
+\docValue{center}, \docValue{top}, and \docValue{bottom} are identical
+to the known corresponding |minipage| options. For example, \docValue{top}
+aligns the top lines  of the lefthand and righthand side
+according to their baselines.
+While this is the preferred approach for text content, the result for
+boxed content like tables or images may not be as expected.
+
+For such content, one may use \docValue{center seam}, \docValue{top seam},
+and \docValue{bottom seam}. For example, \docValue{top seam} aligns
+the very top seam of the lefthand and righthand side.
+
+
+\begin{dispExample}
+\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  size=small,righthand width=4cm,sidebyside,sidebyside gap=6mm,lower separated=false}
+
+\begin{tcolorbox}[adjusted title=center seam,sidebyside align=center seam]
+  This is my description text for the pictures displayed on the righthand side.
+  \tcblower
+  \includegraphics[width=\linewidth/2]{goldshade}%
+  \includegraphics[width=\linewidth/2]{blueshade}
+\end{tcolorbox}
+
+\begin{tcolorbox}[adjusted title=top seam,sidebyside align=top seam]
+  This is my description text for the pictures displayed on the righthand side.
+  \tcblower
+  \includegraphics[width=\linewidth/2]{goldshade}%
+  \includegraphics[width=\linewidth/2]{blueshade}
+\end{tcolorbox}
+
+\begin{tcolorbox}[adjusted title=bottom seam,sidebyside align=bottom seam]
+  This is my description text for the pictures displayed on the righthand side.
+  \tcblower
+  \includegraphics[width=\linewidth/2]{goldshade}%
+  \includegraphics[width=\linewidth/2]{blueshade}
+\end{tcolorbox}
+\end{dispExample}
+
+
+
 \end{docTcbKey}
 
 \clearpage
@@ -2384,7 +2429,7 @@ This behavior is controlled by the keys |before| and |after|.
 \end{dispListing}
 \end{docTcbKey}
 
-\begin{docTcbKey}{noparskip}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2015-03-16]{noparskip}{}{style, no value}
   Sets the keys |before| and |after| to values which are
   recommended, if the package |parskip| is \emph{not} used and there is no better
   idea for |before| and |after|.
@@ -2419,6 +2464,15 @@ This behavior is controlled by the keys |before| and |after|.
 \begin{tcolorbox}[myone,title=Box 4]Box 4\end{tcolorbox}
 \end{dispExample}
 \end{docTcbKey}
+
+\enlargethispage*{1cm}
+\begin{docTcbKey}{forces nobeforeafter}{}{style, no value}
+  Forces the setting of \refKey{/tcb/nobeforeafter} even if
+  \refKey{/tcb/before} and \refKey{/tcb/after} are set to other values
+  later. Do not use this option globally unless you \emph{really} know what you do.
+  Note that embedded boxes do not inherit this forced clearance.
+\end{docTcbKey}
+
 
 \clearpage
 
@@ -2491,7 +2545,7 @@ Some text\dotfill
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-12-16}]{before skip}{=\meta{glue}}{style, no default}
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2015-03-16}]{before skip}{=\meta{glue}}{style, no default}
   Inserts some vertical space of the given \meta{glue} before the colored box.
   This style sets \refKey{/tcb/before}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
@@ -2503,7 +2557,7 @@ Some text.
 \end{dispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2014-12-16}]{after skip}{=\meta{glue}}{style, no default}
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2015-03-16}]{after skip}{=\meta{glue}}{style, no default}
   Inserts some vertical space of the given \meta{glue} after the colored box.
   This style sets \refKey{/tcb/after}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
@@ -3358,6 +3412,10 @@ box content.
 
 \clearpage
 \subsection{Externalization}
+\begin{marker}
+See \Fullref{sec:external} for the \mylib{external} library of |tcolorbox|.
+\end{marker}
+
 If the \emph{externalization} library of the \texttt{tikz} package is used
 and \refKey{/tcb/graphical environment} is set to |tikzpicture|,
 a |tcolorbox| could trigger the externalization process which will arise

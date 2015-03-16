@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -20,98 +20,20 @@
 %%
 \documentclass[a4paper,11pt]{ltxdoc}
 
-\usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
-\usepackage[english]{babel}
-\usepackage{lmodern,parskip,array,ifthen,calc}
-\usepackage{amsmath,amssymb}
-\usepackage[svgnames,table,hyperref]{xcolor}
-\usepackage{tikz}
-\usepackage{varioref}
-\usepackage[pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks]{hyperref}
-\usepackage{varwidth,cleveref,incgraph}
+\usepackage{tcolorbox.doc.s_main}
+\tcbEXTERNALIZE
+\usepackage{tcolorbox.doc.s_snippet}
 
-\usepackage[a4paper,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm,
-    marginparsep=3mm,marginparwidth=18mm,
-    headheight=0mm,headsep=0cm,
-    footskip=1.5cm,includeheadfoot%,showframe
-    ]{geometry}
-\usepackage{fancyhdr}
-\fancyhf{}
-\fancyfoot[C]{\thepage}%
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-\pagestyle{fancy}
-\tolerance=2000%
-\setlength{\emergencystretch}{20pt}%
-
-\usepackage{csquotes}
-\usepackage[style=numeric-comp,sorting=nyt,
+\RequirePackage{csquotes}
+\RequirePackage[style=numeric-comp,sorting=nyt,
   maxnames=8,minnames=8,abbreviate=false,backend=biber]{biblatex}
 \DeclareFieldFormat{url}{\newline\url{#1}}%
 \DeclareListFormat{language}{}%
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\usetikzlibrary{shadings,shadows}
-\usetikzlibrary{decorations.pathmorphing}
-\usetikzlibrary{patterns}
-\usetikzlibrary{spy}
-\usetikzlibrary{arrows.meta}
-
-\usepackage{array,tabularx}
-\usepackage{amsmath}
-\usepackage{lipsum}
-\usepackage{empheq}
-
-%\usepackage[cache]{minted}% minted 2.0
-
-\usepackage{changepage}
-\strictpagecheck
-
-\providecommand{\tcbpkgprefix}{}
-\usepackage[all]{\tcbpkgprefix tcolorbox}
-\usepackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
-
-\tcbset{skin=enhanced,
-  doc head={colback=yellow!10!white,interior style=fill},
-  doc head key={colback=magenta!5!white,interior style=fill},
-  color key=DarkViolet,
-  color value=Teal,
-  color color=Teal,
-  color counter=Orange!85!black,
-  color length=Orange!85!black,
-  index colorize,index annotate}
-\urlstyle{sf}
-
-\tcbmakedocSubKey{docTcbKey}{tcb}
-\tcbmakedocSubKey{langTcbKey}{tcb/doclang}
-\tcbmakedocSubKey{newTcbKey}{tcb/new}
-\tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
-\tcbmakedocSubKey{docTikzKey}{tikz}
-
-\def\tikzname{Ti\emph{k}Z}
-
-\makeatletter
-\newrobustcmd{\tcbIndexPrintSkinCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{Skin}}
-\newrobustcmd{\tcbIndexPrintSkinC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
-\def\tcb@index@Skin#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}\fi}%
-
-\newenvironment{docSkin}[1]{\begin{tcb@manual@entry}%
-  \begin{tcb@doc@head}{colback=magenta!5!white,interior style=fill}%
-  \hypertarget{skin:#1}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#1}\tcb@index@Skin{#1}\protected@edef\@currentlabel{#1}\label{skin:#1}\hfill(skin)}%
-  \end{tcb@doc@head}}%
-  {\end{tcb@manual@entry}}
-\def\refSkin{\tcb@ref@doc{skin}}
-\makeatother
-
-\newtcolorbox{marker}[1][]{marker,#1}
-
-\renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
-\renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
-
-\def\version{3.40}%
-\def\datum{2015/01/14}%
+\def\version{3.50}%
+\def\datum{2015/03/16}%
 \makeindex
 
 \hypersetup{
@@ -121,267 +43,10 @@
   pdfkeywords={colored boxes, LaTeX examples, theorems}
 }
 
-\newcounter{texexp}
-\newcounter{texercise}
-\newcounter{mytheorem}[section]
-
-\newcounter{myexample}
-
-\newcounter{example}
-\newlength{\examlen}
-\newsavebox\mysavebox
-
-\lstdefinestyle{mydocumentation}{style=tcbdocumentation,
-  classoffset=0,
-  texcsstyle=*\color{blue},
-  % LaTeX and other packages
-  moretexcs={arrayrulecolor,draw,includegraphics,ifthenelse,isodd,lipsum,path,pgfkeysalso},
-  classoffset=1,
-  % tcolorbox macros
-  moretexcs={% core
-    endtcolorbox,endtcbverbatimwrite,newtcolorbox,newtcbox,newtcboxfit,tcbusetemp,tcbtitle,tcbtitletext,
-    tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
-    tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
-    % listings
-    endtcblisting,newtcblisting,newtcbinputlisting,
-    tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
-    tcbfitdim,tcbfitsteps,
-    % raster
-    thetcbrasternum,tcbitem,
-    % theorems
-    tcbmaketheorem,tcboxmath,tcbhighmath,thetcbcounter,newtcbtheorem,
-    % documentation
-    brackets,
-    colDef,colOpt,cs,
-    docAuxCommand,docColor,docAuxEnvironment,docAuxKey,
-    docCounter,docLength,
-    meta,marg,
-    oarg,
-    refCom,refEnv,refKey,
-    tcbmakedocSubKey,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
-    % skins
-    tcbincludegraphics,tcbincludepdf,pdfpages,imagepage,imagepath,imagename,
-    tcbline,tcboxedtitleheight,tcboxedtitlewidth,
-    tcbsettowidthofnode,tcbsetmacrotowidthofnode,tcbsettoheightofnode,tcbsetmacrotoheightofnode,
-    % xparse
-    DeclareTColorBox,NewTColorBox,RenewTColorBox,ProvideTColorBox,
-    DeclareTotalTColorBox,NewTotalTColorBox,RenewTotalTColorBox,ProvideTotalTColorBox,
-    DeclareTCBox,NewTCBox,RenewTCBox,ProvideTCBox,
-    DeclareTotalTCBox,NewTotalTCBox,RenewTotalTCBox,ProvideTotalTCBox,
-    DeclareTCBListing,NewTCBListing,RenewTCBListing,ProvideTCBListing,
-    DeclareTCBInputListing,NewTCBInputListing,RenewTCBInputListing,ProvideTCBInputListing,
-    DeclareTCBoxFit,NewTCBoxFit,RenewTCBoxFit,ProvideTCBoxFit,
-    DeclareTotalTCBoxFit,NewTotalTCBoxFit,RenewTotalTCBoxFit,ProvideTotalTCBoxFit,
-    tcboxverb,
-    },
-  texcsstyle=*\color{Definition}\bfseries,
-  classoffset=0% restore default
-  }
-
-\tcbset{documentation listing style=mydocumentation,%
-  sbs/.style={sidebyside,before lower app={\tcbset{sidebyside=false}}},%
-  innerbox/.style={reset,documentation listing style=mydocumentation,
-    docexample/.style={docexample original},%listing engine=minted,documentation minted style=manni,documentation minted options={tabsize=2,fontsize=\footnotesize},
-    },
-  base example/.style={bicolor,
-    colframe=Navy!50!ExampleFrame,colback=Navy!5!ExampleBack,fontlower=\footnotesize,
-    %interior style={fill stretch image=blueshade.png,fill image opacity=0.15},
-    frame style={fill stretch image*={angle=180,origin=c}{blueshade.png},fill image opacity=0.75},
-    colbacklower=ExampleBack!5!white,opacityback=0.9,
-    drop fuzzy shadow},
-  docexample/.style={base example,%
-    every box on layer 2/.style={every box},
-    before upper={\tcbset{innerbox}},before lower={\tcbset{innerbox}}
-    },
-  docexample original/.style={colframe=ExampleFrame,colback=ExampleBack,fontlower=\footnotesize,frame style={}},
-}
-
-\newcommand{\inputpreamblelisting}[1]{%
-  \tcbinputlisting{title=Definition in the preamble:,
-    base example,coltitle=black,fonttitle=\itshape,titlerule=0pt,
-    colbacktitle=Navy!15!ExampleBack,
-    top=0mm,
-    before=\par\smallskip,%
-    listing style=mydocumentation,
-    listing only,listing file={\jobname_preamble_#1.tex}}%
-}
-
-\newtcolorbox{deprecated}{blank,breakable,watermark text=deprecated}
-
-\newtcbox{\mylib}{enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-  colframe=green!50!black,coltext=green!25!black,colback=green!10!white,
-  overlay={\begin{tcbclipinterior}\fill[green!75!blue!50!white] (frame.south west)
-    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {LIB} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-
-\robustify{\mylib}
-
-%\tcbset{every box/.style={enhanced}}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_A.tex}
-\newtcolorbox[auto counter,number within=section]{pabox}[2][]{%
-  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-  title=Examp.~\thetcbcounter: #2,#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_A.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_B.tex}
-% counter from previous example
-\newtcbox[use counter from=pabox]{\pbbox}[2][]{%
-  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-  title=(\thetcbcounter) #2,#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_B.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_C.tex}
-\newtcblisting[auto counter]{mycbox}[1]{%
-  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-  title=Listing \thetcbcounter: #1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_C.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_D.tex}
-\tcbset{
-  texexp/.style={colframe=red!50!yellow!50!black, colback=red!50!yellow!5!white,
-      coltitle=red!50!yellow!3!white,
-      fonttitle=\small\sffamily\bfseries, fontupper=\small, fontlower=\small},
-  example/.style 2 args={texexp,
-      title={Example \thetcbcounter: #1},label={#2}},
-}
-
-\newtcblisting{texexp}[1]{texexp,#1}
-\newtcblisting[auto counter,number within=section]{texexptitled}[3][]{%
-  example={#2}{#3},#1}
-\newtcolorbox[use counter from=texexptitled]{texexptitledspec}[3][]{%
-  example={#2}{#3},#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_D.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_E.tex}
-\newtcolorbox[auto counter,number within=section,list inside=exam]{texercise}[2][]{%
-  texercisestyle,
-  listing file={solutions/texercise\thetcbcounter.tex},
-  label={exe:#2},
-  record={\string\processsol{solutions/texercise\thetcbcounter.tex}{#2}},
-  title={Exercise \thetcbcounter\hfill\mdseries Solution on page \pageref{sol:#2}},
-  list text={Exercise with solution on page \pageref{sol:#2}},#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_E.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_F.tex}
-\newtcbtheorem[number within=section]{mytheo}{My Theorem}%
-  {colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_F.tex}
-
-
-\begin{tcbverbatimwrite}{\jobname_preamble_G.tex}
-% \usepackage{cleveref}
-\tcbset{
-  defstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
-              arc=0mm, colback=blue!5!white,colframe=blue!75!black},
-  theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
-               colback=red!10!white,colframe=red!75!black},
-}
-\newtcbtheorem[number within=subsection,crefname={definition}{definitions}]%
-  {Definition}{Definition}{defstyle}{def}
-\newtcbtheorem[use counter from=Definition,crefname={theorem}{theorems}]%
-  {Theorem}{Theorem}{theostyle}{theo}
-\newtcbtheorem[use counter from=Definition,crefname={corollary}{corollaries}]%
-  {Corollary}{Corollary}{theostyle}{cor}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_G.tex}
-
-
-\begin{tcbverbatimwrite}{\jobname_preamble_H.tex}
-\newtcolorbox[auto counter,number within=section,
-  number freestyle={(Q/\noexpand\thesection/\noexpand\Alph{\tcbcounter})},
-  ]{phbox}[2][]{%
-  colback=yellow!15!white,colframe=blue!75!black,fonttitle=\bfseries,
-  title=Question~\thetcbcounter: #2,#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_H.tex}
-
-
-\begin{tcbverbatimwrite}{\jobname_preamble_I.tex}
-% \usepackage{cleveref}
-\newtcolorbox[auto counter,number within=section,
-  crefname={bluebox}{blueboxes}]%
-  {mybluebox}[2][]{colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
-     title=Bluebox \thetcbcounter: #2,#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_I.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_J.tex}
-\newtcbtheorem[use counter from=mytheo]{theorem}{Theorem}{%
-  fonttitle=\bfseries\upshape,fontupper=\itshape,
-  colframe=green!50!black,colback=green!10!white,
-  colbacktitle=green!20!white,coltitle=blue!75!black}{theo}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_J.tex}
-
-\begin{tcbverbatimwrite}{\jobname_preamble_K.tex}
-\usepackage{amsthm}
-
-\theoremstyle{plain}%    from 'amsthm'
-\newtheorem{lem}{Lemma}% from 'amsthm'
-
-\tcolorboxenvironment{lem}{
-  enhanced jigsaw,colframe=cyan,interior hidden,
-  breakable,before skip=10pt,after skip=10pt }
-
-\tcolorboxenvironment{proof}{% 'proof' from 'amsthm'
-  blanker,breakable,left=5mm,
-  before skip=10pt,after skip=10pt,
-  borderline west={1mm}{0pt}{red}}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_K.tex}
-
-
-\begin{tcbverbatimwrite}{\jobname_preamble_L.tex}
-% \tcbuselibrary{skins,xparse}
-
-\NewTColorBox[auto counter,number within=section]{exercise}{+O{}}{%
-  enhanced,colframe=green!20!black,colback=yellow!10!white,coltitle=green!40!black,
-  fonttitle=\bfseries,
-  underlay={\begin{tcbclipinterior}
-    \shade[inner color=green!80!yellow,outer color=yellow!10!white]
-      (interior.north west) circle (2cm);
-    \draw[help lines,step=5mm,yellow!80!black,shift={(interior.north west)}]
-      (interior.south west) grid (interior.north east);
-    \end{tcbclipinterior}},
-  title={Exercise~\thetcbcounter:},
-  label={exercise@\thetcbcounter},
-  attach title to upper=\quad,
-  after upper={\par\hfill\textcolor{green!40!black}%
-    {\itshape Solution on page~\pageref{solution@\thetcbcounter}}},
-  lowerbox=ignored,
-  savelowerto=solutions/exercise-\thetcbcounter.tex,
-  record={\string\solution{\thetcbcounter}{solutions/exercise-\thetcbcounter.tex}},
-  #1
-}
-
-\NewTotalTColorBox{\solution}{mm}{%
-  enhanced,colframe=red!20!black,colback=yellow!10!white,coltitle=red!40!black,
-  fonttitle=\bfseries,
-  underlay={\begin{tcbclipinterior}
-    \shade[inner color=red!50!yellow,outer color=yellow!10!white]
-      (interior.north west) circle (2cm);
-    \draw[help lines,step=5mm,yellow!80!black,shift={(interior.north west)}]
-      (interior.south west) grid (interior.north east);
-    \end{tcbclipinterior}},
-  title={Solution of Exercise~\ref{exercise@#1} on page~\pageref{exercise@#1}:},
-  phantomlabel={solution@#1},
-  attach title to upper=\par,
-}{\input{#2}}
-
-\tcbset{no solution/.style={no recording,after upper=}}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_L.tex}
-
+\usepackage{pgfplots}
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.skins}
+%\includeonly{tcolorbox.doc.coreoptions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -404,6 +69,7 @@
 \include{tcolorbox.doc.fitting}
 \include{tcolorbox.doc.hooks}
 \include{tcolorbox.doc.xparse}
+\include{tcolorbox.doc.external}
 \include{tcolorbox.doc.documentation}
 \appendix
 \include{tcolorbox.doc.picturecredits}

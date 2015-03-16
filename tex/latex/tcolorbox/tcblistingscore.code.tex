@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,11 +18,12 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.40}
+\tcb@set@library@version{3.50}
 
 \RequirePackage{pdftexcmds}
 
-\def\tcbuselistingtext{\input{\kvtcb@listingfile}}%
+\def\tcbuselistingtext@input{\input{\kvtcb@listingfile}}%
+\def\tcbuselistingtext{\tcbuselistingtext@input}%
 \def\tcbuselistingcomment{\kvtcb@listingcomment}%
 \def\tcb@listing@listing{\tcbuselistinglisting}
 
@@ -113,16 +114,28 @@
   \fi%
 }
 
+\def\tcb@use@lower@outside@side#1{%
+  \setbox\z@=\hbox{\begin{tcb@lower@outside}{#1}%
+    \tcb@use@listing@other@reset%
+  \end{tcb@lower@outside}}%
+  \tcb@box@align\z@%
+  \tcbdimto{\tcb@temp@wd}{\wd\z@}%
+  \unhbox\z@%
+}
+
 \def\tcb@inputlisting@out@listingAndOther{%
   \tcb@inputlisting@out@prepare%
   \tcbdimto\tcb@w@outside{\tcb@w@lower}%
   \tcbdimto\tcb@w@inside{\tcb@width-\tcb@w@lower-\kvtcb@sbs@gap}%
   \begin{tcb@outside@environment}%
-  \tcb@minipage{\tcb@w@inside}%
+  \setbox\z@=\hbox{\tcb@minipage{\tcb@w@inside}%
   \begin{tcolorbox}[width=\tcb@w@inside,nobeforeafter,nofloat,sidebyside=false,savedelimiter=tcolorbox]\tcbuselistinglisting\end{tcolorbox}%
-  \endminipage\kern\kvtcb@sbs@gap%
+  \endminipage}%
+  \tcb@box@align\z@%
+  \unhbox\z@%
+  \kern\kvtcb@sbs@gap%
   \iftcb@lowervisible%
-    \tcb@use@lower@outside{\tcb@w@outside}%
+    \tcb@use@lower@outside@side{\tcb@w@outside}%
   \fi%
   \end{tcb@outside@environment}%
 }
@@ -133,14 +146,17 @@
   \tcbdimto\tcb@w@inside{\tcb@width-\tcb@w@upper-\kvtcb@sbs@gap}%
   \begin{tcb@outside@environment}%
   \iftcb@lowervisible%
-    \tcb@use@lower@outside{\tcb@w@outside}%
+    \tcb@use@lower@outside@side{\tcb@w@outside}%
     \tcbdimto{\tcb@temp@wd}{\tcb@w@outside-\tcb@temp@wd+\kvtcb@sbs@gap}%
   \else%
     \tcbdimto{\tcb@temp@wd}{\tcb@w@outside+\kvtcb@sbs@gap}%
   \fi%
-  \kern\tcb@temp@wd\tcb@minipage{\tcb@w@inside}%
+  \kern\tcb@temp@wd%
+  \setbox\z@=\hbox{\tcb@minipage{\tcb@w@inside}%
   \begin{tcolorbox}[width=\tcb@w@inside,nobeforeafter,nofloat,sidebyside=false,savedelimiter=tcolorbox]\tcbuselistinglisting\end{tcolorbox}%
-  \endminipage%
+  \endminipage}%
+  \tcb@box@align\z@%
+  \unhbox\z@%
   \end{tcb@outside@environment}%
 }
 

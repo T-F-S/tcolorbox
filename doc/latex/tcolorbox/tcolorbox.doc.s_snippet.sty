@@ -1,0 +1,183 @@
+% !TeX root = tcolorbox.tex
+% include file (style) of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+
+\begin{tcbverbatimwrite}{\jobname_preamble_A.tex}
+\newtcolorbox[auto counter,number within=section]{pabox}[2][]{%
+  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  title=Examp.~\thetcbcounter: #2,#1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_A.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_B.tex}
+% counter from previous example
+\newtcbox[use counter from=pabox]{\pbbox}[2][]{%
+  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  title=(\thetcbcounter) #2,#1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_B.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_C.tex}
+\newtcblisting[auto counter]{mycbox}[1]{%
+  colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  title=Listing \thetcbcounter: #1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_C.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_D.tex}
+\tcbset{
+  texexp/.style={colframe=red!50!yellow!50!black, colback=red!50!yellow!5!white,
+      coltitle=red!50!yellow!3!white,
+      fonttitle=\small\sffamily\bfseries, fontupper=\small, fontlower=\small},
+  example/.style 2 args={texexp,
+      title={Example \thetcbcounter: #1},label={#2}},
+}
+
+
+\newtcblisting{texexp}[1]{texexp,#1}
+\newtcblisting[auto counter,number within=section]{texexptitled}[3][]{%
+  example={#2}{#3},#1}
+\newtcolorbox[use counter from=texexptitled]{texexptitledspec}[3][]{%
+  example={#2}{#3},#1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_D.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_E.tex}
+\newtcolorbox[auto counter,number within=section,list inside=exam]{texercise}[2][]{%
+  texercisestyle,
+  listing file={solutions/texercise\thetcbcounter.tex},
+  label={exe:#2},
+  record={\string\processsol{solutions/texercise\thetcbcounter.tex}{#2}},
+  title={Exercise \thetcbcounter\hfill\mdseries Solution on page \pageref{sol:#2}},
+  list text={Exercise with solution on page \pageref{sol:#2}},#1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_E.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_F.tex}
+\newtcbtheorem[number within=section]{mytheo}{My Theorem}%
+  {colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_F.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_G.tex}
+% \usepackage{cleveref}
+\tcbset{
+  defstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
+              arc=0mm, colback=blue!5!white,colframe=blue!75!black},
+  theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
+               colback=red!10!white,colframe=red!75!black},
+}
+\newtcbtheorem[number within=subsection,crefname={definition}{definitions}]%
+  {Definition}{Definition}{defstyle}{def}
+\newtcbtheorem[use counter from=Definition,crefname={theorem}{theorems}]%
+  {Theorem}{Theorem}{theostyle}{theo}
+\newtcbtheorem[use counter from=Definition,crefname={corollary}{corollaries}]%
+  {Corollary}{Corollary}{theostyle}{cor}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_G.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_H.tex}
+\newtcolorbox[auto counter,number within=section,
+  number freestyle={(Q/\noexpand\thesection/\noexpand\Alph{\tcbcounter})},
+  ]{phbox}[2][]{%
+  colback=yellow!15!white,colframe=blue!75!black,fonttitle=\bfseries,
+  title=Question~\thetcbcounter: #2,#1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_H.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_I.tex}
+% \usepackage{cleveref}
+\newtcolorbox[auto counter,number within=section,
+  crefname={bluebox}{blueboxes}]%
+  {mybluebox}[2][]{colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
+     title=Bluebox \thetcbcounter: #2,#1}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_I.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_J.tex}
+\newtcbtheorem[use counter from=mytheo]{theorem}{Theorem}{%
+  fonttitle=\bfseries\upshape,fontupper=\itshape,
+  colframe=green!50!black,colback=green!10!white,
+  colbacktitle=green!20!white,coltitle=blue!75!black}{theo}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_J.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_K.tex}
+\usepackage{amsthm}
+
+\theoremstyle{plain}%    from 'amsthm'
+\newtheorem{lem}{Lemma}% from 'amsthm'
+
+\tcolorboxenvironment{lem}{
+  enhanced jigsaw,colframe=cyan,interior hidden,
+  breakable,before skip=10pt,after skip=10pt }
+
+\tcolorboxenvironment{proof}{% 'proof' from 'amsthm'
+  blanker,breakable,left=5mm,
+  before skip=10pt,after skip=10pt,
+  borderline west={1mm}{0pt}{red}}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_K.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_L.tex}
+% \tcbuselibrary{skins,xparse}
+
+\NewTColorBox[auto counter,number within=section]{exercise}{+O{}}{%
+  enhanced,colframe=green!20!black,colback=yellow!10!white,coltitle=green!40!black,
+  fonttitle=\bfseries,
+  underlay={\begin{tcbclipinterior}
+    \shade[inner color=green!80!yellow,outer color=yellow!10!white]
+      (interior.north west) circle (2cm);
+    \draw[help lines,step=5mm,yellow!80!black,shift={(interior.north west)}]
+      (interior.south west) grid (interior.north east);
+    \end{tcbclipinterior}},
+  title={Exercise~\thetcbcounter:},
+  label={exercise@\thetcbcounter},
+  attach title to upper=\quad,
+  after upper={\par\hfill\textcolor{green!40!black}%
+    {\itshape Solution on page~\pageref{solution@\thetcbcounter}}},
+  lowerbox=ignored,
+  savelowerto=solutions/exercise-\thetcbcounter.tex,
+  record={\string\solution{\thetcbcounter}{solutions/exercise-\thetcbcounter.tex}},
+  #1
+}
+
+\NewTotalTColorBox{\solution}{mm}{%
+  enhanced,colframe=red!20!black,colback=yellow!10!white,coltitle=red!40!black,
+  fonttitle=\bfseries,
+  underlay={\begin{tcbclipinterior}
+    \shade[inner color=red!50!yellow,outer color=yellow!10!white]
+      (interior.north west) circle (2cm);
+    \draw[help lines,step=5mm,yellow!80!black,shift={(interior.north west)}]
+      (interior.south west) grid (interior.north east);
+    \end{tcbclipinterior}},
+  title={Solution of Exercise~\ref{exercise@#1} on page~\pageref{exercise@#1}:},
+  phantomlabel={solution@#1},
+  attach title to upper=\par,
+}{\input{#2}}
+
+\tcbset{no solution/.style={no recording,after upper=}}
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_L.tex}
+
+
+\begin{tcbverbatimwrite}{\jobname_preamble_M.tex}
+\newtcblisting{myownlisting}[2][]{
+  enhanced,colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  colbacktitle=red!50!yellow,before skip=6pt,after skip=6pt,
+  title={#2},#1}
+
+\newtcbexternalizetcolorbox{exmyownlisting}{myownlisting}{minipage}%
+  {before skip=6pt,after skip=6pt}% same values as for mylisting
+\end{tcbverbatimwrite}
+\input{\jobname_preamble_M.tex}

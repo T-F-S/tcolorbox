@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -31,6 +31,7 @@ Contents of the package
   'tcolorbox.sty'             LaTeX package file (style file)
   'tcbbreakable.code.tex'     LaTeX package file (library of tcolorbox)
   'tcbdocumenation.code.tex'  LaTeX package file (library of tcolorbox)
+  'tcbexternal.code.tex'      LaTeX package file (library of tcolorbox)
   'tcbfitting.code.tex'       LaTeX package file (library of tcolorbox)
   'tcbhooks.code.tex'         LaTeX package file (library of tcolorbox)
   'tcblistings.code.tex'      LaTeX package file (library of tcolorbox)
@@ -62,6 +63,7 @@ Alternatively, put the files to their respective locations within the TeX instal
   'tcolorbox.sty'             ->  /tex/latex/tcolorbox
   'tcbbreakable.code.tex'     ->  /tex/latex/tcolorbox
   'tcbdocumenation.code.tex'  ->  /tex/latex/tcolorbox
+  'tcbexternal.code.tex'      ->  /tex/latex/tcolorbox
   'tcbfitting.code.tex'       ->  /tex/latex/tcolorbox
   'tcbhooks.code.tex'         ->  /tex/latex/tcolorbox
   'tcblistings.code.tex'      ->  /tex/latex/tcolorbox

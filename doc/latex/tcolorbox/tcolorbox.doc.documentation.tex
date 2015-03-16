@@ -469,11 +469,19 @@ with another note.
 \clearpage
 \subsection{Option Keys of the Library}
 
-\begin{docTcbKey}{docexample}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2015-03-16]{docexample}{}{style, no value}
   Sets the style for \refEnv{dispExample} and \refEnv{dispListing}
   with the colors |ExampleBack| and |ExampleFrame|.
   To change the appearance of the examples, this style can be
   redefined.
+\begin{dispListing}
+% Predefined style:
+\tcbset{
+  docexample/.style={colframe=ExampleFrame,colback=ExampleBack,
+    before skip=\medskipamount,after skip=\medskipamount,
+    fontlower=\footnotesize}
+}
+\end{dispListing}
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation listing options}{=\meta{key list}}{no default,\\\hspace*{\fill} initially |style=tcbdocumentation|}
@@ -509,17 +517,25 @@ with another note.
   Used for \refKey{/tcb/listing engine}|=minted| only.
 \end{docTcbKey}
 
+\begin{marker}
+The following two keys are deprecated and without function (v3.50 and above).
+Use \refKey{/tcb/before} and \refKey{/tcb/after} with appropriate values
+instead. Also see \refKey{/tcb/docexample}.
+\end{marker}
 
-\begin{docTcbKey}{before example}{=\meta{macros}}{no default, initially \cs{par}\cs{smallskip}}
+\begin{docTcbKey}[][doc updated=2015-03-16]{before example}{=\meta{macros}}{no default, initially empty}
+\smallskip\begin{deprecated}
   Sets the \meta{macros} which are executed before \refEnv{dispExample} and \refEnv{dispListing}
   additional to \refKey{/tcb/before}.
+\end{deprecated}
 \end{docTcbKey}
 
 \begin{docTcbKey}{after example}{=\meta{macros}}{no default, initially empty}
+\smallskip\begin{deprecated}
   Sets the \meta{macros} which are executed after \refEnv{dispExample} and \refEnv{dispListing}
   additional to \refKey{/tcb/after}.
+\end{deprecated}
 \end{docTcbKey}
-
 
 \clearpage
 \begin{docTcbKey}[][doc new=2015-01-09]{index command}{=\meta{macro}}{no default, initially \cs{index}}

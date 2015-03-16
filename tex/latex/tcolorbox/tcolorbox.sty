@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.40 (2015/01/14)
+%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/01/14 version 3.40 text color boxes]
-\def\tcb@version{3.40}
+\ProvidesPackage{tcolorbox}[2015/03/16 version 3.50 text color boxes]
+\def\tcb@version{3.50}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -224,16 +224,21 @@
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
   autoparskip/.code={\let\tcb@use@autoparskip=\tcb@use@auto@parskip},
   parskip/.style={before={\par\pagebreak[0]\parindent=0pt},after={\par}},
-  noparskip/.style={before={\par\smallskip\pagebreak[0]\parindent=0pt},after={\par\smallskip}},
+  noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par\smallskip\pagebreak[0]\fi\parindent=0pt},after={\par\smallskip}},
   nobeforeafter/.style={before=,after=},
+  force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
   before skip/.style={before={%
-    \par\nointerlineskip\lineskip=0pt%
-    \addvspace{\glueexpr#1-\parskip}%
-    \noindent%
+    \ifnum\lastnodetype=-1\relax%
+    \else%
+      \par\ifvmode\nointerlineskip%
+      \addvspace{\glueexpr#1-\parskip}%
+      \fi%
+    \fi%
+    \lineskip=0pt\noindent%
     }},
   after skip/.style={after={%
-    \par\nointerlineskip%
-    \addvspace{\glueexpr#1-\parskip}%
+    \par\ifvmode\nointerlineskip%
+    \addvspace{\glueexpr#1-\parskip}\fi%
     }},
   beforeafter skip/.style={before skip={#1},after skip={#1}},
   before nobreak/.store in=\kvtcb@beforebox@nobreak,
@@ -423,7 +428,13 @@
   extrude bottom by/.code={\tcbdimto\kvtcb@bottom{\kvtcb@bottom+#1}\tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand-#1}},%
   extrude by/.style={extrude left by=#1,extrude right by=#1,extrude top by=#1,extrude bottom by=#1},%
   sidebyside/.is if=tcb@sidebyside,%
-  sidebyside align/.store in=\kvtcb@sbs@align,%
+  sidebyside align/.is choice,%
+  sidebyside align/top/.code={\def\kvtcb@sbs@align{top}\def\tcb@box@align##1{}},%
+  sidebyside align/center/.code={\def\kvtcb@sbs@align{center}\def\tcb@box@align##1{}},%
+  sidebyside align/bottom/.code={\def\kvtcb@sbs@align{bottom}\def\tcb@box@align##1{}},%
+  sidebyside align/top seam/.code={\def\kvtcb@sbs@align{top}\let\tcb@box@align\tcb@box@align@top},%
+  sidebyside align/center seam/.code={\def\kvtcb@sbs@align{center}\let\tcb@box@align\tcb@box@align@center},%
+  sidebyside align/bottom seam/.code={\def\kvtcb@sbs@align{bottom}\let\tcb@box@align\tcb@box@align@bottom},%
   sidebyside gap/.dimstore in=\kvtcb@sbs@gap,%
   lefthand width/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@leftwidth},
   righthand width/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@rightwidth},
@@ -626,6 +637,16 @@
   \fi%
 }
 
+\def\tcb@set@color#1{%
+  \letcs{\current@color}{\string\color@#1}%
+  \colorlet{.}{#1}%
+}
+
+\def\tcb@reset@color{%
+  \colorlet{.}{tcbcol@origin}%
+  \letcs{\current@color}{\string\color@tcbcol@origin}%
+}
+
 \def\tcb@set@@upper@and@lower{%
   \colorlet{tcbcol@origin}{.}%
   \let\tcb@after@box=\kvtcb@after@upper%
@@ -633,7 +654,7 @@
   \def\tcblower{%
     \unskip\tcb@after@box%
     \end{tcb@savebox}%
-    \letcs{\current@color}{\string\color@tcbcol@lower}%
+    \tcb@set@color{tcbcol@lower}%
     \unless\iftcb@sidebyside%
       \tcbdimto\tcb@w@lower{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftlower-\kvtcb@rightlower}%
     \fi%
@@ -649,7 +670,7 @@
     \tcb@startbox}%
   % start of upper box
   \let\endtcolorbox\tcb@endboxanddraw%
-  \letcs{\current@color}{\string\color@tcbcol@upper}%
+  \tcb@set@color{tcbcol@upper}%
   \tcb@saveupperbox%
 }
 
@@ -702,6 +723,8 @@
   \stepcounter{tcblayer}%
   \ifnum\c@tcblayer>1%
     \tcbset{breakable@true/.code=}%
+  \else%
+    \ifinner\ifhmode\tcbset{breakable@true/.code=}\fi\fi%
   \fi%
   \ifnum\c@tcblayer>\tcb@managed@layers@max%
     \tcbset{every box on higher layers}%
@@ -716,6 +739,8 @@
   \stepcounter{tcblayer}%
   \ifnum\c@tcblayer>1%
     \tcbset{breakable@true/.code=}%
+  \else%
+    \ifinner\ifhmode\tcbset{breakable@true/.code=}\fi\fi%
   \fi%
   \ifnum\c@tcblayer>\tcb@managed@layers@max%
     \tcbset{every box on higher layers}%
@@ -752,7 +777,7 @@
 \def\tcb@endboxanddraw{%
   \unskip\tcb@after@box%
   \end{tcb@savebox}%
-  \letcs{\current@color}{\string\color@tcbcol@origin}%
+  \tcb@reset@color%
   \tcb@draw@color@box%
   \tcb@finalize@environment%
 }
@@ -1118,8 +1143,21 @@
 }
 \let\tcb@tdraw@lower=\tcb@tdraw@lower@core
 
+\def\tcb@box@align@top#1{%
+  \setbox#1=\hbox{\raise-\ht#1\box#1}%
+}
+
+\def\tcb@box@align@center#1{%
+  \setbox#1=\hbox{\raise\dimexpr(\dp#1-\ht#1)/2\relax\box#1}%
+}
+
+\def\tcb@box@align@bottom#1{%
+  \setbox#1=\hbox{\raise\dp#1\box#1}%
+}
+
 \def\tcb@sbs@mix{%
   \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper@real}%
+    \tcb@box@align{\tcb@upperbox}%
     \iftcb@uppervisible%
       \tcbdimto{\tcb@temp@wd}{\tcb@w@upper-\wd\tcb@upperbox+\kvtcb@sbs@gap}%
       \noindent\unhbox\tcb@upperbox\kern\tcb@temp@wd%
@@ -1129,6 +1167,7 @@
       \rule[-\dp\tcb@upperbox]{0pt}{\the\dimexpr\ht\tcb@upperbox+\dp\tcb@upperbox\relax}%
     \fi%
     \iftcb@hasLower%
+      \tcb@box@align{\tcb@lowerbox}%
       \iftcb@lowervisible\color{tcbcol@lower}\unhbox\tcb@lowerbox%
       \else%
         \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{0pt}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
@@ -1200,6 +1239,15 @@
   \csname tcb@after@\tcb@split@state\endcsname%
 }
 
+\def\tcb@set@normal@unbroken@beforeafter{%
+  \let\tcb@before@unbroken=\kvtcb@beforebox%
+  \if@nobreak%
+    \iftcb@ignorenobreak\else%
+      \let\tcb@before@unbroken=\kvtcb@beforebox@nobreak%
+    \fi%
+  \fi%
+  \let\tcb@after@unbroken=\kvtcb@afterbox%
+}
 
 \def\tcb@drawcolorbox{%
   \edef\tcb@split@state{unbroken}%
@@ -1211,13 +1259,7 @@
   \let\tcb@break@bottomsep=\tcb@zpt%
   % floats
   \ifx\kvtcb@float\@empty%
-    \let\tcb@before@unbroken=\kvtcb@beforebox%
-    \if@nobreak%
-      \iftcb@ignorenobreak\else%
-        \let\tcb@before@unbroken=\kvtcb@beforebox@nobreak%
-      \fi%
-    \fi%
-    \let\tcb@after@unbroken=\kvtcb@afterbox%
+    \tcb@set@normal@unbroken@beforeafter%
   \else%
     \edef\tcb@before@unbroken{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]\noexpand\kvtcb@everyfloat}%
     \let\tcb@after@unbroken=\tcb@float@env@end%
@@ -1263,7 +1305,10 @@
 \long\def\tcbox@inner@hbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
   \tcb@set@@phantom%
-  \sbox\tcb@upperbox{\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
+  \colorlet{tcbcol@origin}{.}%
+  \tcb@set@color{tcbcol@upper}%
+  \sbox\tcb@upperbox{\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}%
+  \tcb@reset@color%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
   \tcb@hasLowerfalse%
@@ -1278,7 +1323,10 @@
   \tcb@set@@phantom%
   \tcb@set@@title%
   \tcb@set@@dimensions%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{tcbcol@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
+  \colorlet{tcbcol@origin}{.}%
+  \tcb@set@color{tcbcol@upper}%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
+  \tcb@reset@color%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
 }
@@ -1330,6 +1378,20 @@
 
 \def\tcb@new@label@type{\begingroup\edef\x{\endgroup\noexpand\appto\noexpand\tcb@new@colopt{,label type=\tcb@new@boxname}}\x}
 
+\def\tcb@blend@beforetitle#1{#1:\ }
+
+\tcbset{%
+  blend before title code/.code={\def\tcb@blend@beforetitle##1{#1}},
+  blend before title/.is choice,
+  blend before title/colon/.style={blend before title code={##1:\ }},
+  blend before title/dash/.style={blend before title code={##1 --\ }},
+  blend before title/colon hang/.style={blend before title code={%
+    \setbox\z@=\hbox{##1:\ }\hangindent\wd\z@\hangafter=1\mbox{\unhbox\z@}}},
+  blend before title/dash hang/.style={blend before title code={%
+    \setbox\z@=\hbox{##1 --\ }\hangindent\wd\z@\hangafter=1\mbox{\unhbox\z@}}},
+  blend before title=colon,
+}
+
 \tcbset{%
   new/.cd,%
   use counter/.code={\edef\kvtcb@new@counter{#1}\let\tcb@proc@counter=\tcb@proc@counter@use},
@@ -1350,9 +1412,9 @@
   Crefname/.code 2 args={\begingroup\edef\x{\endgroup\noexpand\Crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
   %
   blend into/.is choice,%
-  blend into/figures/.style={use counter*=figure,list inside=lof,/tcb/code={\appto\tcb@new@colopt{,before title={\fnum@figure:\ }}}},%
-  blend into/tables/.style={use counter*=table,list inside=lot,/tcb/code={\appto\tcb@new@colopt{,before title={\fnum@table:\ }}}},%
-  blend into/listings/.style={use counter*=lstlisting,list inside=lol,/tcb/code={\appto\tcb@new@colopt{,before title={\lstlistingname~\thetcbcounter:\ }}}},%
+  blend into/figures/.style={use counter*=figure,list inside=lof,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@figure}}}}},%
+  blend into/tables/.style={use counter*=table,list inside=lot,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@table}}}}},%
+  blend into/listings/.style={use counter*=lstlisting,list inside=lol,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\lstlistingname~\thetcbcounter}}}}},%
   %
   reset@new/.style={no counter,number within=,number format=\arabic,number freestyle=,list inside=,list type=tcolorbox,init@hook@clear},
 }
@@ -1521,9 +1583,13 @@
 
 \newwrite\tcb@out
 
+\let\tcb@verbatim@begin@hook\@empty
+\let\tcb@verbatim@end@hook\@empty
+
 \def\tcbverbatimwrite#1{%
   \@bsphack
-  \immediate\openout \tcb@out #1
+  \immediate\openout\tcb@out #1
+  \tcb@verbatim@begin@hook%
   \let\do\@makeother\dospecials
   \catcode`\^^M\active \catcode`\^^I=12
   \def\verbatim@processline{%
@@ -1533,6 +1599,7 @@
 
 
 \def\endtcbverbatimwrite{%
+  \tcb@verbatim@end@hook%
   \immediate\closeout\tcb@out
   \@esphack%
 }
@@ -1705,10 +1772,11 @@
 \tcb@add@library{hooks}{tcbhooks.code.tex}
 \tcb@add@library{fitting}{tcbfitting.code.tex}
 \tcb@add@library{xparse}{tcbxparse.code.tex}
+\tcb@add@library{external}{tcbexternal.code.tex}
 
 \tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting,xparse}
-\tcb@add@library@style{most}{many,listingsutf8}
-\tcb@add@library@style{all}{many,minted,listingsutf8,documentation}
+\tcb@add@library@style{most}{many,listingsutf8,external}
+\tcb@add@library@style{all}{many,minted,listingsutf8,external,documentation}
 
 \ProcessOptions*
 \edef\tcb@temp{\noexpand\tcbuselibrary{\tcb@optionlist}}

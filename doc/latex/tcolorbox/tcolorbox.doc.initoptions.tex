@@ -235,6 +235,51 @@ Feasible values for \meta{name} are:
 {\tcbusetemp}
 
 
+
+\clearpage
+\begin{docTcbKey}[][doc new=2015-03-13]{blend before title}{=\meta{value}}{no default, initially \docValue{colon}}
+  This option formats the title output of \refKey{/tcb/new/blend into}.
+  Note that this is a common |tcolorbox| option which should be set
+  globally or in the normal option part of \refCom{newtcolorbox}.
+
+Feasible values for \meta{value} are:
+\begin{itemize}
+\item\docValue{colon}: use name/number plus colon.
+\item\docValue{dash}: use name/number plus dash.
+\item\docValue{colon hang}: use name/number plus colon with hanging indent.
+\item\docValue{dash hang}: use name/number plus dash with hanging indent.
+\end{itemize}
+
+\begin{dispListing}
+\newtcolorbox[blend into=figures]{myfigure}[2][]{float=htb,capture=hbox,
+  blend before title=dash hang,title={#2},every float=\centering,#1}
+
+\begin{myfigure}{A tcolorbox figure with quite a long title}
+  \includegraphics[height=5cm]{lichtspiel.jpg}
+\end{myfigure}
+\end{dispListing}
+{\tcbusetemp}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[][doc new=2015-03-13]{blend before title code}{=\meta{code}}{no default}
+  This option formats the title output of \refKey{/tcb/new/blend into}.
+  The \meta{code} takes one parameter, the name/number.
+  Use this, if \refKey{/tcb/blend before title} is not flexible enough.
+
+\begin{dispListing}
+\newtcolorbox[blend into=figures]{myfigure}[2][]{float=htb,capture=hbox,
+  blend before title code={\fbox{##1}\ },title={#2},every float=\centering,#1}
+
+\begin{myfigure}{A tcolorbox figure}
+  \includegraphics[height=6cm]{lichtspiel.jpg}
+\end{myfigure}
+\end{dispListing}
+{\tcbusetemp}
+\end{docTcbKey}
+
+
+
 \clearpage
 \subsection{Lists of \texttt{tcolorbox}es}\label{sec:listsof}
 For figures and tables, \LaTeX\ provides the |\listoffigures| and
