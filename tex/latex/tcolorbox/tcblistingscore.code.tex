@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
+%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.50}
+\tcb@set@library@version{3.60}
 
 \RequirePackage{pdftexcmds}
 
@@ -41,7 +41,7 @@
 
 \newenvironment{tcb@lower@outside}[1]{%
   \tcbset{savedelimiter=tcb@lower@outside}\tcb@minipage{#1}%
-  \color{tcbcol@lower}\kvtcb@fontlower\kvtcb@before@lower\ignorespaces}%
+  \color{tcbcol@lower}\kvtcb@fontlower\kvtcb@halignlower\kvtcb@before@lower\ignorespaces}%
   {\unskip\kvtcb@after@lower\endminipage}
 
 \def\tcb@use@listing@other@reset{%

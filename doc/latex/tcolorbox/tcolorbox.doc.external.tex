@@ -1,7 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{Library \mylib{external}}\label{sec:external}
+\section{Library \mylib{external}}\label{sec:external}%
+\tcbset{external/prefix=external/external_}%
 The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{external}
@@ -352,6 +353,13 @@ parameters.
 Note that this option is ignored for \refKey{/tcb/externalize listing}.
 \end{extTcbKey}
 
+\begin{extTcbKey}[][doc new=2015-05-05]{environment with percent}{\colOpt{=true\textbar false}}{default |true|,
+  initially |true|}
+If set to |true|, the |\begin| and |\end| code of \refKey{/tcb/external/environment}
+is appended with a percent sign. For verbatim environments, this option
+typically has to be se to |false|.
+\end{extTcbKey}
+
 
 \begin{extTcbKey}[][doc new=2015-03-11]{minipage}{\colOpt{=\meta{length}}}{default \texttt{\cs{linewidth}},
   initially unset}
@@ -393,7 +401,7 @@ Note that this option is ignored for \refKey{/tcb/externalize listing}.
 \end{dispExample}
 \end{extTcbKey}
 
-
+\enlargethispage*{1cm}
 \begin{extTcbKey}[][doc new=2015-03-11]{input source on error}{\colOpt{=true\textbar false}}{default |true|,
   initially |true|}
 If set to |true|, the source code of the snippet is loaded instead of
@@ -410,10 +418,51 @@ in this case.
 
 
 \clearpage
-\begin{extTcbKey}[][doc new=2015-03-11]{preamble}{=\meta{macro}}{no default,
+
+\begin{extTcbKey}[][doc new=2015-05-05]{preclass}{=\meta{code}}{no default,
   initially unset}
-  The give \meta{macro} is added to the preamble of the snippet document.
-  It is not used for compilation of the main document.
+  The given \meta{code} is added before the snippet document.
+  Typically, this means before |\documentclass|.
+  This is not used for compilation of the main document.
+\end{extTcbKey}
+
+
+\begin{extTcbKey}[][doc new=2015-05-05]{PassOptionsToPackage}{=\marg{options}\marg{package}}{no default,
+  initially unset}
+  The given \meta{options} are passed to the given \meta{package} for
+  the snippet document. This is a shortcut for using \refKey{/tcb/external/preclass}
+  with |\PassOptionsToPackage|.
+  This not used for compilation of the main document.
+\end{extTcbKey}
+
+
+\begin{extTcbKey}[][doc new=2015-05-05]{PassOptionsToClass}{=\marg{options}\marg{class}}{no default,
+  initially unset}
+  The given \meta{options} are passed to the given \meta{class} for
+  the snippet document. This is a shortcut for using \refKey{/tcb/external/preclass}
+  with |\PassOptionsToClass|.
+  This not used for compilation of the main document.
+\end{extTcbKey}
+
+
+\begin{extTcbKey}[][doc new=2015-05-05]{clear preclass}{}{no value}
+  Removes all additional \refKey{/tcb/external/preclass} settings.
+\end{extTcbKey}
+
+
+
+\begin{extTcbKey}[][doc new=2015-03-11]{preamble}{=\meta{code}}{no default,
+  initially unset}
+  The given \meta{code} is added to the preamble of the snippet document.
+  This is not used for compilation of the main document.
+\end{extTcbKey}
+
+
+\begin{extTcbKey}[][doc new=2015-05-05]{preamble tcbset}{=\meta{options}}{no default,
+  initially unset}
+  The given \meta{options} are added as parameter for \refCom{tcbset}
+  to the preamble of the snippet document.
+  This are not used for compilation of the main document.
 \end{extTcbKey}
 
 
@@ -439,6 +488,7 @@ in this case.
 
 
 
+\clearpage
 \begin{docCommand}[doc new=2015-03-11]{newtcbexternalizeenvironment}{\marg{newenv}\marg{env}\marg{options}\marg{begin}\marg{end}}
   Creates a new environment \meta{newenv} which is based on
   \refEnv{tcbexternal}. This enviroment takes \emph{at least}
@@ -471,7 +521,6 @@ a & This table is externalized as snippet. Obviously,
 \end{docCommand}
 
 
-\clearpage
 \begin{docCommand}[doc new=2015-03-11]{newtcbexternalizetcolorbox}{\marg{newenv}\marg{env}\marg{options}\marg{begin end options}}
   Creates a new environment \meta{newenv} which is based on
   \refEnv{tcbexternal}. This enviroment takes \emph{at least}
@@ -514,4 +563,49 @@ This is my \LaTeX\ box.
   Identical to \refCom{newtcbexternalizetcolorbox}, but the environment \meta{newenv}
   is created by |\renewenvironment| instead of |\newenvironment|.
 \end{docCommand}
+
+
+\subsection{Troubleshooting and FAQ}\label{subsec:external_troubleshooting}
+
+\begin{itemize}
+
+\item\textbf{I use the default settings, but the |external| subdirectory is
+  not created.}\\
+  Depending on operating system and compiler, an |external| subdirectory is
+  automatically created or not. If not, create such a directory manually
+  or add the following to your document:
+\begin{dispListing}
+\immediate\write18{mkdir external}
+\end{dispListing}
+or
+\begin{dispListing}
+\immediate\write18{mkdir -p external}
+\end{dispListing}
+  If the combination of \refKey{/tcb/external/prefix} and chosen snippet
+  name points to another subdirectory than |external|, this has to be
+  adapted.
+
+\item\textbf{I use the |minted| package and I get a cache directory for
+  every externalized snippet.}\\
+  To avoid this problem, there are several ways.
+  \begin{itemize}
+  \item If you do not need |minted| inside the snippet code, you may use
+    |\usepackage{minted}| \emph{after} \refCom{tcbEXTERNALIZE}
+    or use \refCom{tcbifexternal} to switch |minted| off for the external code.
+    If |minted| is already included by another package, add the following to
+    your preamble:
+\begin{dispListing}
+\tcbset{external/PassOptionsToPackage={draft}{minted}}
+\end{dispListing}
+  \item If |minted| is needed for the snippet code, caching can be switched
+    off by adding the following to your preamble:
+\begin{dispListing}
+\tcbset{external/PassOptionsToPackage={cache=false}{minted}}
+\end{dispListing}
+  Alternatively, the |cachedir| option of |minted| may be used to redirect
+  the cache.
+  \end{itemize}
+
+
+\end{itemize}
 

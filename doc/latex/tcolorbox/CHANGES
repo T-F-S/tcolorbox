@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
+%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -751,3 +751,21 @@ version 3.50 (2015/03/16)
     'prefix', 'environment', 'minipage', 'plain', 'compiler', 'runs',
     'input source on error', 'safety', 'preamble'
 - documentation structure revised
+
+version 3.60 (2015/05/07)
+- bug fix: dimension settings with 'em' or 'ex' units for 'enlarge .. by' converted to 0pt
+- bug fix: 'bicolor' skin sometimes ignored color for lower part when broken
+- new macros: '\tcbpatcharcangular', '\tcbpatcharcround'
+- implementation of text alignment changed with new options:
+  'halign', 'halign upper', 'halign lower', 'halign title', 'valign upper'
+- new options:
+  'saveto', 'circular arc', 'bean arc', 'arc is angular', 'arc is curved',
+  'square', 'tcbox width'
+- library 'skins':
+  * new option: 'smart shadow arc'
+- library 'documentation':
+  package 'doc' removed from list of required packages
+- new library 'external':
+  * new options:
+    'environment with percent', 'preamble tcbset', 'preclass', 'clear preclass',
+    'PassOptionsToPackage', 'PassOptionsToClass'

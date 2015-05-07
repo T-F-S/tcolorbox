@@ -1,8 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{Macros for Box Creation}
-
+\section{Macros for Box Creation}%
+\tcbset{external/prefix=external/coremacros_}%
 \begin{docEnvironment}{tcolorbox}{\oarg{options}}
   This is the main environment to create an accentuated colored text box with
   rounded corners and, optionally, two parts. The appearance of this box
@@ -103,7 +103,7 @@ Here, you see the lower part of the box.
 \clearpage
 \begin{docCommand}{tcbox}{\oarg{options}\marg{box content}}
   Creates a colored box which is fitted to the width of the given
-  \meta{box content}. In principal, most \meta{options} for a \refEnv{tcolorbox}
+  \meta{box content}. In principle, most \meta{options} for a \refEnv{tcolorbox}
   can be used for |\tcbox| with some restrictions. A |\tcbox| cannot have
   a lower part and cannot be broken.
 

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
+%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.50}
+\tcb@set@library@version{3.60}
 
 {
 \catcode`\"=12
@@ -73,6 +73,7 @@
   \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALINPUT{"\tcbexternal@job@source"}}%
   \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALSAFETY{\tcbexternal@safety}}%
   \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALPREAMBLE{\expandonce{\tcbexternal@preamble}}}%
+  \ifdefempty{\tcbexternal@preclass}{}{\immediate\write\tcb@out{\expandonce{\tcbexternal@preclass}}}%
   \immediate\write\tcb@out{\string\input{"\jobname.tex"}}%
   \immediate\closeout\tcb@out%
   \foreach \n in {1,...,\tcbexternal@runs}
@@ -227,6 +228,10 @@
   preamble/.code={\appto\tcbexternal@preamble{#1}},
   preamble tcbset/.code={\appto\tcbexternal@preamble{\tcbset{#1}}},
   clear preamble/.code={\def\tcbexternal@preamble{}},
+  preclass/.code={\appto\tcbexternal@preclass{#1}},
+  clear preclass/.code={\def\tcbexternal@preclass{}},
+  PassOptionsToPackage/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToPackage{#1}{#2}}},
+  PassOptionsToClass/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToClass{#1}{#2}}},
   externalize/.code={},
   %
   force remake/.is choice,
@@ -250,10 +255,21 @@
   },
   minipage/.default=\linewidth,
   %
-  environment/.code={%
-    \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{#1}\@percentchar}}%
-    \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{#1}\@percentchar}}%
-  },%
+  environment with percent/.is choice,
+  environment with percent/true/.style={%
+    /tcb/external/environment/.code={%
+      \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{##1}\@percentchar}}%
+      \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{##1}\@percentchar}}%
+    }
+  },
+  environment with percent/false/.style={%
+    /tcb/external/environment/.code={%
+      \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{##1}}}%
+      \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{##1}}}%
+    }
+  },
+  environment with percent/.default=true,
+  %
   runner=\jobname_run.tex,
   prefix={external/},
   compiler=pdflatex,
@@ -261,8 +277,10 @@
   name=unnamed,
   safety=2mm,
   clear preamble,
+  clear preclass,
   force remake=false,
   input source on error,
+  environment with percent,
   plain
 }
 

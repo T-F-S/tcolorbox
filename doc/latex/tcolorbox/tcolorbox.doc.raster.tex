@@ -1,7 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{Library \mylib{raster}}\label{sec:raster}
+\section{Library \mylib{raster}}\label{sec:raster}%
+\tcbset{external/prefix=external/raster_}%
 The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{raster}
@@ -73,7 +74,7 @@ break into an arbitrary series of pages.
   \begin{tcolorbox}[rounded corners=northeast,boxrule=0pt,
     watermark graphics=goldshade.png]\end{tcolorbox}
   \tcboxfit{\lipsum[2]}
-  \begin{tcolorbox}[valign=center,center upper]Nine Boxes.\end{tcolorbox}
+  \begin{tcolorbox}[valign=center,halign=center]Nine Boxes.\end{tcolorbox}
   \tcboxfit{\lipsum[3]}
   \begin{tcolorbox}[rounded corners=southwest,boxrule=0pt,
     watermark graphics=goldshade.png]\end{tcolorbox}

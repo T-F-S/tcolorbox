@@ -1,7 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{Library \mylib{fitting}}\label{sec:fitting}
+\section{Library \mylib{fitting}}\label{sec:fitting}%
+\tcbset{external/prefix=external/fitting_}%
 The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{fitting}
@@ -13,7 +14,7 @@ The library is loaded by a package option or inside the preamble by:
   Creates a colored box where the given \meta{box content} is fitted to
   the width and height of the box. A |tcboxfit| has to have a fixed height.
   If no fixed height is given, a square box is constructed.
-  In principal, most \meta{options} for a \refEnv{tcolorbox}
+  In principle, most \meta{options} for a \refEnv{tcolorbox}
   can be used for |\tcboxfit| with some restrictions. A |\tcboxfit| cannot have
   a lower part and cannot be broken.
 
@@ -54,7 +55,7 @@ elaborate methods to create new commands.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \newtcboxfit{\mybox}{colback=red!5!white,
   colframe=red!75!black,width=4cm,
-  height=1.5cm,center upper}
+  height=1.5cm,halign=center}
 
 \mybox{This is my own box.}\par
 \mybox{This is my own box with more text
@@ -66,7 +67,7 @@ elaborate methods to create new commands.
 \newtcboxfit{\mybox}[2]{colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
   boxsep=1mm,left=0mm,right=0mm,top=0mm,
-  bottom=0mm,center upper,valign=center,
+  bottom=0mm,halign=center,valign=center,
   nobeforeafter,width=#1,height=#2}
 
 \mybox{2.5cm}{1cm}{First box}%

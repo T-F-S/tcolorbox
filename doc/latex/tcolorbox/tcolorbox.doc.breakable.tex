@@ -1,7 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{Library \mylib{breakable}}\label{sec:breakable}
+\section{Library \mylib{breakable}}\label{sec:breakable}%
+\tcbset{external/prefix=external/breakable_}%
 The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{breakable}
@@ -61,7 +62,7 @@ the end of a box. The optional lower box part is also checked to
 have at least \refKey{/tcb/lines before break}.
 
 \clearpage
-In principal, all boxes of the \emph{break sequence} share the same geometric
+In principle, all boxes of the \emph{break sequence} share the same geometric
 parameters. The differences are:
 \begin{itemize}
 \item The given \refKey{/tcb/before} and \refKey{/tcb/after} values are

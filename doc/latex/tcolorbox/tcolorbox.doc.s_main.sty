@@ -107,6 +107,7 @@
     endtcolorbox,endtcbverbatimwrite,newtcolorbox,newtcbox,newtcboxfit,tcbusetemp,tcbtitle,tcbtitletext,
     tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
     tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
+    tcbpatcharcangular,tcbpatcharcround,
     % listings
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
@@ -158,9 +159,12 @@
   innerbox/.style={reset,documentation listing style=mydocumentation,
     docexample/.style={docexample original},%
     },
-  base example/.style={bicolor,
+  beforeafter example/.style={
     before skip=4pt plus 2pt minus 1pt,
-    after skip=8pt plus 4pt minus 2pt,
+    after skip=8pt plus 4pt minus 2pt
+  },
+  base example/.style={bicolor,
+    beforeafter example,arc is angular,
     colback=white,opacityback=0.87,
     fontlower=\footnotesize,
     frame style={top color=Green_Dark,bottom color=Blue_Dark},
@@ -175,11 +179,9 @@
     before skip=\medskipamount,after skip=\medskipamount,frame style={}},
 }
 
-\newtcbexternalizetcolorbox{exdispExample}{dispExample}{minipage}%
-  {before skip=4pt plus 2pt minus 1pt,after skip=8pt plus 4pt minus 2pt}
+\newtcbexternalizetcolorbox{exdispExample}{dispExample}{environment with percent=false,minipage}{beforeafter example}
 
-\newtcbexternalizetcolorbox{exdispExample*}{dispExample*}{minipage}%
-  {before skip=4pt plus 2pt minus 1pt,after skip=8pt plus 4pt minus 2pt}
+\newtcbexternalizetcolorbox{exdispExample*}{dispExample*}{environment with percent=false,minipage}{beforeafter example}
 
 \newcommand{\inputpreamblelisting}[1]{%
   \tcbinputlisting{title=Definition in the preamble:,

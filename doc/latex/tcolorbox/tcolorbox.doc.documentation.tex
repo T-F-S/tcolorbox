@@ -1,7 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 \clearpage
-\section{Library \mylib{documentation}}\label{sec:documentation}
+\section{Library \mylib{documentation}}\label{sec:documentation}%
+\tcbset{external/prefix=external/documentation_}%
 This library has the single purpose to support \LaTeX\ package documentations
 like this one. Actually, the visual nature follows the approach from
 Till Tantau's |pgf| \cite{tantau:2013a} documentation.
@@ -16,12 +17,16 @@ This also loads the library \mylib{listings}, see \Vref{sec:listings},
 the library \mylib{skins}, see \Vref{sec:skins},
 the library \mylib{xparse}\tcbdocmarginnote{\tcbdocnew{2014-09-19}}, see \Vref{sec:xparse},
 and a bunch of packages, namely
-|doc|, |pifont|, |marvosym|, |makeidx|, |marginnote|, |refcount|, and |hyperref|.
+|pifont|, |marvosym|, |makeidx|, |marginnote|, |refcount|, and |hyperref|.
 
 \begin{marker}
 The package |makeidx| is loaded only, if \docAuxCommand*{printindex} is
 \emph{not} already defined. Therefore, one can include an alternative to |makeidx| like
 |imakeidx| \emph{before} the library |documentation| is used.
+\end{marker}
+\begin{marker}
+The package |marginnote| is loaded only, if \docAuxCommand*{marginnote} is
+\emph{not} already defined.
 \end{marker}
 
 For UTF-8 support, load:

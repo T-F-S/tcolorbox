@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
+%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.50}
+\tcb@set@library@version{3.60}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -389,16 +389,15 @@
     at begin tikz={%
     \tcbdimto\kvtcb@arc{#1\dimexpr\kvtcb@arc}%
     \tcbdimto\tcb@outer@arc{#1\dimexpr\tcb@outer@arc}%
-    \def\tcb@shadow@prepare##1##2{%
-      \ifdim##2>0pt\relax\tcbdimto\tcb@shadow@ts{##1-##2/2}%%
-      \else\tcbdimto\tcb@shadow@ts{##1+##2/2}\fi%
+    \def\tcb@shadow@comp@arc{%
       \tcbdimto\tcb@shadow@ts{#1\dimexpr\tcb@shadow@ts}%
-      \ifdim\dimexpr\tcb@outer@arc>\tcb@shadow@ts\relax%
-        \tcbdimto\tcb@shadow@arc{\tcb@outer@arc-\tcb@shadow@ts}%
+      \ifdim\dimexpr\tcb@outer@arc>\tcb@arc@scale\dimexpr\tcb@shadow@ts\relax%
+        \tcbdimto\tcb@shadow@arc{\tcb@outer@arc-\tcb@arc@scale\dimexpr\tcb@shadow@ts\relax}%
       \else%
         \let\tcb@shadow@arc=\tcb@zpt%
       \fi%
-    }}},%
+    }%
+    }},%
   remember/.style={tikz={remember picture}},%
   remember as/.style={tikz={remember picture},at end tikz={\pgfnodealias{#1}{frame}}},%
 }
@@ -546,7 +545,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathfirst}%
+      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathfirst}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathfirst}%
@@ -558,7 +557,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathfirst}%
+      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathfirst}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathfirst}%
@@ -577,7 +576,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathmiddle}%
+      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathmiddle}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathmiddle}%
@@ -589,7 +588,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathmiddle}%
+      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathmiddle}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathmiddle}%
@@ -608,7 +607,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathlast}%
+      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathlast}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathlast}%
@@ -620,7 +619,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
       \else
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathlast}%
+      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathlast}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathlast}%
@@ -1002,7 +1001,7 @@
       \colorlet{tcbtranscol@frame}{tcbcol@frame}%
       \colorlet{tcbtranscol@back}{tcbcol@backtitle}%
       \let\tcb@trans@boxedstyle\kvtcb@style@boxedtitle%
-      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
       \setbox\tcb@titlebox\color@hbox\tcbox[colframe=tcbtranscol@frame,colback=tcbtranscol@back,size=title,code={\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
       %
       \tcbdimto\tcboxedtitleheight{\ht\tcb@titlebox+\dp\tcb@titlebox}%
@@ -1301,8 +1300,8 @@
 
 \def\tcb@border@prepare#1#2{%
   \tcbdimto\tcb@border@ts{#2+(#1)/2}%
-  \ifdim\dimexpr\tcb@outer@arc>\tcb@border@ts\relax%
-    \tcbdimto\tcb@border@arc{\tcb@outer@arc-\tcb@border@ts}%
+  \ifdim\dimexpr\tcb@outer@arc>\tcb@arc@scale\dimexpr\tcb@border@ts\relax%
+    \tcbdimto\tcb@border@arc{\tcb@outer@arc-\tcb@arc@scale\dimexpr\tcb@border@ts\relax}%
   \else%
     \let\tcb@border@arc=\tcb@zpt%
   \fi%
@@ -1409,11 +1408,19 @@
   borderline vertical/.style args={#1#2#3}{borderline west={#1}{#2}{#3},borderline east={#1}{#2}{#3}},%
 }
 
-\def\tcb@shadow@prepare#1#2{%
+
+\def\tcb@shadow@comp@ts@smart#1#2{%
   \ifdim#2>0pt\relax\tcbdimto\tcb@shadow@ts{#1-#2/2}%%
   \else\tcbdimto\tcb@shadow@ts{#1+#2/2}\fi%
-  \ifdim\dimexpr\tcb@outer@arc>\tcb@shadow@ts\relax%
-    \tcbdimto\tcb@shadow@arc{\tcb@outer@arc-\tcb@shadow@ts}%
+}
+
+\def\tcb@shadow@comp@ts@copy#1#2{%
+  \tcbdimto\tcb@shadow@ts{#1}%
+}
+
+\def\tcb@shadow@comp@arc{%
+  \ifdim\dimexpr\tcb@outer@arc>\tcb@arc@scale\dimexpr\tcb@shadow@ts\relax%
+    \tcbdimto\tcb@shadow@arc{\tcb@outer@arc-\tcb@arc@scale\dimexpr\tcb@shadow@ts\relax}%
   \else%
     \let\tcb@shadow@arc=\tcb@zpt%
   \fi%
@@ -1437,25 +1444,29 @@
 \let\tcb@arc@sha@SE@rounded\tcb@arc@sha
 
 \def\tcb@shadow@unbroken#1#2#3#4{%
-  \tcb@shadow@prepare{#3}{#1}%
+  \tcb@shadow@comp@ts{#3}{#1}%
+  \tcb@shadow@comp@arc%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
     {\tcb@arc@sha@SW}{\tcb@arc@sha@NW}{\tcb@arc@sha@NE}{\tcb@arc@sha@SE}%
 }
 
 \def\tcb@shadow@first#1#2#3#4{%
-  \tcb@shadow@prepare{#3}{#1}%
+  \tcb@shadow@comp@ts{#3}{#1}%
+  \tcb@shadow@comp@arc%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
     {\tcb@arc@zpt}{\tcb@arc@sha@NW}{\tcb@arc@sha@NE}{\tcb@arc@zpt}%
 }
 
 \def\tcb@shadow@middle#1#2#3#4{%
-  \tcb@shadow@prepare{#3}{#1}%
+  \tcb@shadow@comp@ts{#3}{#1}%
+  \tcb@shadow@comp@arc%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
 }
 
 \def\tcb@shadow@last#1#2#3#4{%
-  \tcb@shadow@prepare{#3}{#1}%
+  \tcb@shadow@comp@ts{#3}{#1}%
+  \tcb@shadow@comp@arc%
   \tcb@pathbase{fill,#4}{[xshift=#1+#3,yshift=#2+#3]frame.south west}{[xshift=#1-#3,yshift=#2-#3]frame.north east}%
     {\tcb@arc@sha@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@sha@SE}%
 }
@@ -1525,6 +1536,11 @@
   drop fuzzy shadow northeast/.default={black!50!white},%
   drop fuzzy shadow east/.style={fuzzy shadow={1.0mm}{0mm}{-0.5mm}{0.12mm}{#1}},
   drop fuzzy shadow east/.default={black!50!white},%
+  %
+  smart shadow arc/.is choice,
+  smart shadow arc/true/.code={\let\tcb@shadow@comp@ts=\tcb@shadow@comp@ts@smart},
+  smart shadow arc/false/.code={\let\tcb@shadow@comp@ts=\tcb@shadow@comp@ts@copy},
+  smart shadow arc/.default=true,
 }
 
 \def\tcb@boundary@tikzbendedbase#1#2#3#4#5#6#7#8{%
@@ -1540,7 +1556,7 @@
 \def\tcb@pathbendedbase#1#2#3#4#5#6#7#8#9{\tcb@pathboundary{#1}{\tcb@boundary@tikzbendedbase{#2}{#3}{#4}{#5}{#6}{#7}{#8}{#9}}}
 
 \def\tcb@shadowbended@prepare#1{%
-  \tcbdimto\tcb@shadow@arc{\tcb@outer@arc-#1}%
+  \tcbdimto\tcb@shadow@arc{\tcb@outer@arc-\tcb@arc@scale\dimexpr#1\relax}%
   \ifdim\dimexpr\tcb@shadow@arc<0pt\relax%
     \let\tcb@shadow@arc=\tcb@zpt%
   \fi%
@@ -1735,7 +1751,7 @@
     watermark opacity=1.00,watermark color=tcbcol@back!85!tcbcol@frame,%
     watermark zoom=0.75,clip watermark,%
     clip title=false,clip upper=false,clip lower=false,%
-    no borderline,no shadow,no underlay,no finish,tikz reset,at begin tikz reset,at end tikz reset,%
+    no borderline,smart shadow arc,no shadow,no underlay,no finish,tikz reset,at begin tikz reset,at end tikz reset,%
     boxed title style=,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax},%
     graphics options=,graphics pages={1,...,\pdfpages},graphics directory=,%
   },
@@ -1743,4 +1759,3 @@
 }
 
 \tcbuselibrary{skins@jigsaw}
-

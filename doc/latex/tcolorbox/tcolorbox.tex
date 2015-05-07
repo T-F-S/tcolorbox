@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.50 (2015/03/16)
+%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -19,10 +19,14 @@
 %% This work consists of all files listed in README
 %%
 \documentclass[a4paper,11pt]{ltxdoc}
+%\documentclass[a4paper,11pt]{report}
 
 \usepackage{tcolorbox.doc.s_main}
 \tcbEXTERNALIZE
 \usepackage{tcolorbox.doc.s_snippet}
+\tcbset{external/PassOptionsToPackage={cache=false}{minted}}
+\immediate\write18{mkdir external}
+\immediate\write18{mkdir solutions}
 
 \RequirePackage{csquotes}
 \RequirePackage[style=numeric-comp,sorting=nyt,
@@ -32,8 +36,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{3.50}%
-\def\datum{2015/03/16}%
+\def\version{3.60}%
+\def\datum{2015/05/07}%
 \makeindex
 
 \hypersetup{
@@ -46,7 +50,7 @@
 \usepackage{pgfplots}
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.coreoptions}
+%\includeonly{tcolorbox.doc.skins}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
