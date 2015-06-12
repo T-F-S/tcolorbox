@@ -31,7 +31,7 @@ The main differences between \tikzname\ externalization and \mylib{external} are
   |tikzpicture| environments. But these snippets have to be stand-alone without
   dependencies to the rest of the document.
 \end{itemize}
-Why should one use \mylib{external} instead of the more powerful \tikzname\ |external|?
+Why should somebody use \mylib{external} instead of the more powerful \tikzname\ |external|?
 One reason could be compilation speed, but the main reason for creating the
 library at all was that \tikzname\ |external| tends to choke on complicated
 documents where the sophisticated mechanism stumbles. Since \mylib{external} does
@@ -43,6 +43,12 @@ They are not compiled automatically, if option settings are changed or
 anything outside the snippet is changed.
 Use \refKey{/tcb/external/force remake} to force compilation in this case
 or simply delete the externalized snippets.
+\end{marker}
+
+\begin{marker}
+To use the externalization options, the compiler has to be called with the
+|-shell-escape| permission to authorize potentially dangerous system calls.
+Be warned that this is a security risk.
 \end{marker}
 
 
@@ -124,10 +130,14 @@ The necessity is given, if a compiled pdf file is missing or the
 |md5| checksum of the source snippet has changed.
 \end{extTcbKey}
 
-\begin{extTcbKey}[][doc new=2015-03-11]{!}{}{style}
+\enlargethispage*{1cm}
+\begin{extTcbKey}[][doc new=2015-03-11]{\tcbexclamation}{}{style}
   Shortcut for setting \refKey{/tcb/external/force remake} to |true|.
 \end{extTcbKey}
 
+\begin{extTcbKey}[][doc new=2015-06-12]{-}{}{style}
+  Shortcut for setting \refKey{/tcb/external/externalize} to |false|.
+\end{extTcbKey}
 
 
 \subsection{Marking Externalization Snippets}\label{subsec:external_marking}
@@ -315,7 +325,7 @@ mandatory parameter, see \refEnv{tcbexternal}.
 \end{dispExample}
 
 
-\begin{docTcbKey}[][doc new=2015-03-11]{externalize listing!}{=\meta{name}}{style, no default}
+\begin{docTcbKey}[][doc new=2015-03-11]{externalize listing\tcbexclamation}{=\meta{name}}{style, no default}
 Combination of \refKey{/tcb/externalize listing} and \refKey{/tcb/external/force remake}.
 \end{docTcbKey}
 
@@ -331,7 +341,7 @@ Combination of \refKey{/tcb/externalize listing} and \refKey{/tcb/external/force
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2015-03-11]{externalize example!}{=\meta{name}}{style, no default}
+\begin{docTcbKey}[][doc new=2015-03-11]{externalize example\tcbexclamation}{=\meta{name}}{style, no default}
 Combination of \refKey{/tcb/externalize example} and \refKey{/tcb/external/force remake}.
 \end{docTcbKey}
 

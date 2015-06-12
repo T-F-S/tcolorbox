@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
+%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/05/07 version 3.60 text color boxes]
-\def\tcb@version{3.60}
+\ProvidesPackage{tcolorbox}[2015/06/12 version 3.61 text color boxes]
+\def\tcb@version{3.61}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -865,6 +865,11 @@
 
 \long\def\tcb@apply@box@options#1{%
   \tcbset{#1}\tcb@lateoptions@hook\tcb@afteroptions@hook%
+  \if@nobreak%
+    \let\iftcb@nobreak\@firstoftwo%
+  \else%
+    \let\iftcb@nobreak\@secondoftwo%
+  \fi%
 }
 
 \long\def\tcb@@icolorbox[#1]{%
@@ -1381,11 +1386,11 @@
 
 \def\tcb@set@normal@unbroken@beforeafter{%
   \let\tcb@before@unbroken=\kvtcb@beforebox%
-  \if@nobreak%
+  \iftcb@nobreak{%
     \iftcb@ignorenobreak\else%
       \let\tcb@before@unbroken=\kvtcb@beforebox@nobreak%
     \fi%
-  \fi%
+  }{}%
   \let\tcb@after@unbroken=\kvtcb@afterbox%
 }
 

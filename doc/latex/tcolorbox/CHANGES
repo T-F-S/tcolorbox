@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
+%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -765,7 +765,15 @@ version 3.60 (2015/05/07)
   * new option: 'smart shadow arc'
 - library 'documentation':
   package 'doc' removed from list of required packages
-- new library 'external':
+- library 'external':
   * new options:
     'environment with percent', 'preamble tcbset', 'preclass', 'clear preclass',
     'PassOptionsToPackage', 'PassOptionsToClass'
+
+version 3.61 (2015/06/12)
+- bug fix: nobreak settings after a heading were sometimes ignored depending
+  on the box content
+- library 'external':
+  * now throws an error if the same external job name is used twice
+  * new option: '-'
+- documentation bug fixes

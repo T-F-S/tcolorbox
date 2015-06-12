@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.60 (2015/05/07)
+%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,8 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-%\makeatletter
-\tcb@set@library@version{3.60}
+\tcb@set@library@version{3.61}
 
 {
 \catcode`\"=12
@@ -58,11 +57,10 @@
 \@onlypreamble\tcbEXTERNALIZE
 
 \def\tcbexternal@setbasename#1{%
-  \gdef\tcbexternal@basename{#1}%
-  \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcbexternal@job@name{\expandonce{\tcbexternal@prefix}\expandonce{\tcbexternal@basename}}}\x%
-  \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcbexternal@job@mdfive{\expandonce{\tcbexternal@job@name.md5}}}\x%
-  \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcbexternal@job@source{\expandonce{\tcbexternal@job@name.tex}}}\x%
-  \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcbexternal@job@pdf{\expandonce{\tcbexternal@job@name.pdf}}}\x%
+  \edef\tcbexternal@job@name{\expandonce{\tcbexternal@prefix}\expandonce{#1}}%
+  \edef\tcbexternal@job@mdfive{\expandonce{\tcbexternal@job@name.md5}}%
+  \edef\tcbexternal@job@source{\expandonce{\tcbexternal@job@name.tex}}%
+  \edef\tcbexternal@job@pdf{\expandonce{\tcbexternal@job@name.pdf}}%
 }
 
 \def\tcbexternal@corecompile{%
@@ -159,6 +157,12 @@
 
 \newenvironment{tcbexternal}[2][]{%
   \tcbset{external/.cd,#1,name=#2}%
+  \@ifundefined{@tcbexternal@JN@\tcbexternal@job@name}{%
+      \global\@namedef{@tcbexternal@JN@\tcbexternal@job@name}{}%
+    }{%
+      \tcb@error{External job name '\tcbexternal@job@name' already used}%
+        {Give a new unique name to the current external job.}%
+    }%
   \begingroup%
   \let\tcb@verbatim@begin@hook=\tcbexternal@out@begin%
   \let\tcb@verbatim@end@hook=\tcbexternal@out@end%
@@ -193,7 +197,7 @@
 \long\def\new@tcb@externalizetcolorbox#1#2#3#4{%
   \new@tcb@externalizeenvironment{#1}{#2}%
     {preamble tcbset={force nobeforeafter},#3}%
-    {\tcbset{#4}\tcb@set@normal@unbroken@beforeafter\tcb@before@unbroken}%
+    {\tcb@apply@box@options{#4}\tcb@set@normal@unbroken@beforeafter\tcb@before@unbroken}%
     {\tcb@after@unbroken}%
 }
 
@@ -217,7 +221,7 @@
   external/.cd,
   %
   runner/.code={%
-    \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcbexternal@run@tex{\expandonce{#1}}}\x%
+    \edef\tcbexternal@run@tex{\expandonce{#1}}%
   },
   %
   prefix/.store in=\tcbexternal@prefix,
@@ -233,6 +237,7 @@
   PassOptionsToPackage/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToPackage{#1}{#2}}},
   PassOptionsToClass/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToClass{#1}{#2}}},
   externalize/.code={},
+  -/.style={externalize=false},
   %
   force remake/.is choice,
   force remake/true/.code={\let\tcbexternal@compile=\tcbexternal@corecompile},

@@ -213,7 +213,7 @@ and an optional \emph{lower part}. These parts are separated by
   Feasible values for \meta{mode} are:
   \begin{itemize}
   \item\docValue{visible}: usual type setting of the upper part,
-  \item\docValue{invisible}: empty space instead of the uooer part contents.
+  \item\docValue{invisible}: empty space instead of the upper part contents.
   \end{itemize}
 \begin{exdispExample}{upperbox}
 \begin{tcolorbox}[upperbox=invisible,colback=white]
@@ -1312,7 +1312,7 @@ outer arc   & auto   & auto   & auto  & auto  & 0.0pt & 0.0pt \\
   \item\docValue{none}: no switching.
   \item\docValue{forced}: the values of the left and right rules and spaces are switched.
   \item\docValue{evenpage}: if the page is an even page, the values of the left and
-    right rules and spaces are switched. It is recommended that one use this setting in
+    right rules and spaces are switched. It is recommended that you use this setting in
     conjunction with \refKey{/tcb/check odd page}.
   \end{itemize}
 \begin{dispListing}
@@ -3015,7 +3015,7 @@ This is a \textbf{tcolorbox}.
   \item\docValue{none}: no switching.
   \item\docValue{forced}: the values of the left and right enlargement are switched.
   \item\docValue{evenpage}: if the page is an even page, the values of the left and
-    right enlargement are switched. It is recommended that one use this setting in
+    right enlargement are switched. It is recommended that you use this setting in
     conjunction with \refKey{/tcb/check odd page}.
     %Note that the page number detection may
     %fail in certain cases. For these cases, use the |forced| value.
@@ -3082,7 +3082,7 @@ Lorem \tcbox{ipsum} dolor sit amet, consectetuer adipiscing elit.
 \begin{docTcbKey}[][doc updated=2014-09-19]{extrude left by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the left side.
   The inner width and the bounding box is kept unchanged and the operation
-  is additiv!
+  is additive!
 \begin{dispExample}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
@@ -3098,7 +3098,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \begin{docTcbKey}[][doc updated=2014-09-19]{extrude right by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the right side.
   The inner width and the bounding box is kept unchanged and the operation
-  is additiv!
+  is additive!
 \begin{dispExample}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
@@ -3115,7 +3115,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \begin{docTcbKey}{extrude top by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the top side.
   The inner width and the bounding box is kept unchanged and the operation
-  is additiv!
+  is additive!
 \begin{dispExample}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
@@ -3131,7 +3131,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \begin{docTcbKey}{extrude bottom by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the bottom side.
   The inner width and the bounding box is kept unchanged and the operation
-  is additiv!
+  is additive!
 \begin{dispExample}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
@@ -3147,7 +3147,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \begin{docTcbKey}{extrude by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to all sides.
   The inner width and the bounding box is kept unchanged and the operation
-  is additiv!
+  is additive!
 \begin{dispExample}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
@@ -3175,7 +3175,7 @@ Here, footnote texts are administrated to find their intended place
 and specific layer dependent options may be set by changing
 \refKey{/tcb/every box on layer n}.
 If needed, the number of managed layers can be increased by setting
-\refCom{tcbsetmanagedlayer} to a higher value than 4.
+\refCom{tcbsetmanagedlayer} to a higher value than~4.
 
 The following styles have a considerable influence on how layered boxes
 are processed. Note especially that nested boxes are getting a
@@ -3369,7 +3369,7 @@ This is a tcolorbox.
   a |minipage|. In a |minipage| or |parbox|, paragraphs are formatted slightly different
   as the main text. If the key value is set to |false|, the normal main text
   behavior is restored. In some situations, this has some unwanted side
-  effects. It is recommended that one use this experimental setting only
+  effects. It is recommended that you use this experimental setting only
   where you really want to have this feature.
 \end{docTcbKey}
 
