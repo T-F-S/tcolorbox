@@ -1,0 +1,438 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{magazine}}\label{sec:magazine}%
+\tcbset{external/prefix=external/magazine_}%
+\newboxarray{myarticle}
+
+\begin{tcolorbox}[
+  enhanced jigsaw,
+  size=small,width=6cm,
+  title=Example Article,
+  fonttitle=\bfseries,center title,
+  fontupper=\small,
+  %height fixed for=first and middle,
+  watermark text=\arabic{tcbbreakpart},
+  breakable,
+  break at=8.5\baselineskip/9\baselineskip,
+  reset and store to box array=myarticle,
+  colframe=green!50!black,
+  colback=green!10,
+  pad at break=5mm,
+  ]
+This is an example for an article which starts right here and
+is continued to the following pages.
+The body text for the article is written inside a single
+|tcolorbox|. This box is split into parts using the tools from
+this section, namely \refKey{/tcb/reset and store to box array}
+with a new box array |myarticle| which was created by
+|\newboxarray{myarticle}|.
+
+The resulting parts are distributed throughout this
+\Fullref{sec:magazine} using \refCom{consumetcboxarray}
+at the appropriate places you see.
+The linking texts like \emph{continued on page x} are created
+by \refKey{/tcb/finish} commands for the embedding \refCom{tcbox}.
+To label the box parts, \refKey{/tcb/phantomlabel} is used.
+
+These quite small partial boxes are for demonstration purposes.
+With the tools of this section, a magazine type document could be
+created, but this still needs a lot of manual control.
+\end{tcolorbox}
+
+\newtcolorbox{articleside}[1][]{blanker,sidebyside,sidebyside gap=5mm,sidebyside align=top seam,
+  parbox=false,righthand width=6cm,
+  goto/.style={finish={\node[above=-2pt,color=green!50!black] at (frame.south)
+    {\slshape\scriptsize --- continued on page~\hypersetup{linkcolor=green!50!black}\pageref{myarticle-##1}\ \textcolor{green!50!black}{---}};}},
+  from/.style={finish={\node[below=-1pt,color=green!50!black] at (frame.north)
+    {\slshape\scriptsize --- continued from page~\hypersetup{linkcolor=green!50!black}\pageref{myarticle-##1}\ \textcolor{green!50!black}{---}};}},
+  #1}
+
+\begin{articleside}[after skip=6pt]
+The main purpose of this library is to store a |tcolorbox| into an array
+of box registers for later usage.
+
+If the |tcolorbox| is not breakable, there is not much add-on
+compared to usual \TeX/\LaTeX\ box storage and usage (and you do not really need this
+library for that use case).
+For a breakable |tcolorbox|, this library allows to capture all partial boxes
+into a sequence of registers. The partial boxes can be used anywhere in
+arbitrary order.
+\tcblower\consumetcboxarray[myarticle]{1}{blanker,nobeforeafter,phantomlabel=myarticle-one,goto=two}
+\end{articleside}
+
+The name of this library indicates \emph{magazine} in the sense of storage,
+but also in the sense of a journal where an article often is \emph{continued on page x}.
+An example for this kind of application is given throughout this section starting
+on the right hand side. The creation of this library was motivated by
+Ulrike Fischer and Steven B.~Segletes.
+
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+  \tcbuselibrary{magazine}
+\end{dispListing}
+This also loads the library \mylib{breakable}, see \Fullref{sec:breakable}.
+
+\begin{marker}
+The box register operations of this library are global. \TeX\ grouping will
+not clear the registers when leaving the current group. Also be aware that
+extensive use of large box arrays may eat up \TeX's available memory and
+registers.
+\end{marker}
+
+
+\subsection{Creation and Resetting of Box Arrays}\label{subsec:magazine_creation}
+
+\begin{docCommand}[doc new=2015-07-13]{newboxarray}{\marg{name}}
+  This creates a new box array called \meta{name}. There already is a
+  box array available with name |default| which can be used directly.
+  Note that the creation is a global operation.
+\begin{dispListing}
+\newboxarray{myarray}
+\end{dispListing}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-07-13]{boxarrayreset}{\oarg{name}}
+  Resets the size counter of a box array \meta{name} to zero.
+  If \meta{name} is not provided, |default| is used as name.
+  Use this or \refKey{/tcb/reset box array} before
+  you apply \refKey{/tcb/store to box array}. Otherwise, all boxes would
+  be appended to the already existing boxes.
+  This command does not clear box registers.
+\begin{dispListing}
+\boxarrayreset            % resets 'default'
+\boxarrayreset{myarray}   % resets 'myarray'
+\end{dispListing}
+\end{docCommand}
+
+\begin{docTcbKey}[][doc new=2015-07-13]{reset box array}{\colOpt{=\meta{name}}}{default |default|, initially unset}
+  Resets the size counter of a box array \meta{name} to zero.
+  Use this or \refCom{boxarrayreset} (which does the same) before
+  you apply \refKey{/tcb/store to box array}.
+\begin{dispListing}
+\tcbset{
+  reset box array,         % resets 'default'
+  reset box array=myarray, % resets 'myarray'
+}
+\end{dispListing}
+\end{docTcbKey}
+
+\clearpage
+\begin{docCommand}[doc new=2015-07-13]{boxarrayclear}{\oarg{name}}
+  Works like \refCom{boxarrayreset} to reset the size counter of a
+  box array \meta{name} to zero. Additionally, all allocated box registers
+  of the box array are cleared of their content.
+  Note that the allocated box registers stay allocated. So, this may be
+  useful to clear memory, but not to free registers for other applications.
+  If \refCom{consumeboxarray} or \refCom{consumetcboxarray} was used to
+  apply the stored boxes, there is no advantage in using \refCom{boxarrayclear}.
+\begin{dispListing}
+\boxarrayclear            % clears 'default'
+\boxarrayclear{myarray}   % clears 'myarray'
+\end{dispListing}
+\end{docCommand}
+
+
+
+\subsection{Storing Content}\label{subsec:magazine_storing}
+
+\begin{docTcbKey}[][doc new=2015-07-13]{store to box array}{\colOpt{=\meta{name}}}{default |default|, initially unset}
+Stores a |tcolorbox| or all parts of a break sequence of a |tcolorbox| into
+a box array \meta{name}. If no \meta{name} is given, the already existing |default|
+box array is used. Otherwise, the box array has to be created beforehand
+with \refCom{newboxarray}. Note that the box has to be \refKey{/tcb/breakable},
+if the box shall break into several parts.
+Typically, manual break points are additionally defined by \refKey{/tcb/break at}.
+Otherwise, the box parts will have a length of about |\textheight|.
+For most use cases, a \refKey{/tcb/reset box array} should be applied
+to reset the box array counter.\enlargethispage*{2cm}
+
+\begin{exdispExample}{storetoboxarray_1}
+% \usepackage{lipsum}
+\begin{tcolorbox}[enhanced jigsaw,size=fbox,width=4cm,
+  colback=yellow!10,colframe=yellow!10!black,
+  enforce breakable,% use only breakable in the real world!
+  break at=7cm/4cm,
+  height fixed for=all,
+  watermark text=\arabic{tcbbreakpart},
+  reset box array,
+  store to box array
+  ]
+\lipsum[1]
+\end{tcolorbox}
+
+\useboxarray{1}\hfill
+\begin{tabular}[b]{cc}
+\multicolumn{2}{c}{\includegraphics[width=7cm]{Basilica_5.png}}\\
+\useboxarray{2} & \useboxarray{3}
+\end{tabular}
+\end{exdispExample}
+
+\clearpage
+If the first box part should fill the rest of the available space of
+the current page, you can use |\pagegoal-\pagetotal| minus some distance for
+the first element of \refKey{/tcb/break at}. You may want to have some
+additional distance to the preceeding text.
+
+\begin{dispListing}
+% \usepackage{lipsum}
+\begin{tcolorbox}[enhanced,breakable,
+  reset box array,
+  store to box array,
+  break at=\pagegoal-\pagetotal-5mm/0pt,
+  height fixed for=first and middle]
+\lipsum[1-15]
+\end{tcolorbox}%
+%
+\consumetcboxarray{1}{blanker,before=\par\vfill\noindent}
+\end{dispListing}
+
+
+\begin{exdispExample}{storetoboxarray_2}
+\begin{tcolorbox}[blanker,width=4cm,
+  fontupper=\footnotesize,
+  enforce breakable,% use only breakable in the real world!
+  break at=4cm,
+  height fixed for=all,
+  watermark text=\arabic{tcbbreakpart},
+  reset box array,
+  store to box array
+  ]
+\includegraphics[width=\linewidth]{Basilica_5.png}\par
+\lipsum[1-2]
+\end{tcolorbox}
+
+\begin{tcbitemize}[raster columns=3,raster equal height,
+  size=small,halign=center,sharp corners,colback=blue!5]
+\tcbitem\consumeboxarray{5}
+\tcbitem\consumeboxarray{6}
+\tcbitem\consumeboxarray{1}
+\tcbitem\consumeboxarray{2}
+\tcbitem\consumeboxarray{3}
+\tcbitem\consumeboxarray{4}
+\end{tcbitemize}
+\end{exdispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-07-13]{reset and store to box array}{\colOpt{=\meta{name}}}{style, default |default|, initially unset}
+  Combination of \refKey{/tcb/reset box array} and \refKey{/tcb/store to box array}.
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new=2015-07-13]{do not store to box array}{}{style, no default, initially set}
+Disables the \refKey{/tcb/store to box array} option, if set before.
+\end{docTcbKey}
+
+
+\begin{docEnvironment}[doc new=2015-07-13]{boxarraystore}{\marg{name}}
+  Stores the environment content into a box array \meta{name}.
+  This corresponds to the standard \LaTeX\ environment |lrbox|, but
+  the storage operation is global. As long as \refCom{boxarrayreset} is
+  not used, every new \refEnv{boxarraystore} adds a further box to
+  the array.
+
+\begin{dispExample}
+\boxarrayreset
+\begin{boxarraystore}{default}\fbox{Mary}\end{boxarraystore}
+\begin{boxarraystore}{default}\fbox{Had}\end{boxarraystore}
+\begin{boxarraystore}{default}\fbox{a}\end{boxarraystore}
+\begin{boxarraystore}{default}\fbox{Little}\end{boxarraystore}
+\begin{boxarraystore}{default}\fbox{Lamb}\end{boxarraystore}
+\useboxarray{5}\useboxarray{4}\useboxarray{3}\useboxarray{2}\useboxarray{1}\hfill
+\useboxarray{1}\useboxarray{5}
+\end{dispExample}
+\end{docEnvironment}
+
+\subsection{Retrieving Content}\label{subsec:magazine_retrieve}
+
+\begin{docCommand}[doc new=2015-07-13]{boxarraygetsize}{\oarg{name}\marg{macro}}
+\begin{articleside}[before skip=5pt]
+  Stores the current size of a box array \meta{name} into a given \meta{macro}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+\begin{dispExample}
+\boxarraygetsize{\mysize}
+Current size of the default box array:
+\mysize.
+\end{dispExample}
+\tcblower\consumetcboxarray[myarticle]{2}{blanker,nobeforeafter,phantomlabel=myarticle-two,from=one,goto=three}
+\end{articleside}
+\end{docCommand}
+
+\begin{docCommand}[doc new=2015-07-13]{useboxarray}{\oarg{name}\marg{index}}
+  Typesets the box with the given \meta{index} number from the box array \meta{name}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  It is silently ignored, if the \meta{index} is out of range.
+  Note that \refCom{useboxarray} corresponds to the standard |\usebox| macro,
+  respectively, |\copy|.
+\begin{dispExample}
+\boxarraygetsize{\mysize}
+\foreach \n in  {1,...,\mysize} { \useboxarray{\n} }
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}[doc new=2015-07-13]{usetcboxarray}{\oarg{name}\marg{index}\marg{options}}
+  Typesets the box with the given \meta{index} number from the box array \meta{name}
+  using \refCom{useboxarray} as content of a \refCom{tcbox}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  It is silently ignored, if the \meta{index} is out of range.
+  The \refCom{tcbox} can be customized by |tcolorbox| \meta{options}.
+\begin{dispExample}
+\boxarraygetsize{\mysize}
+\foreach \n in  {1,...,\mysize} { \usetcboxarray{\n}{on line,colframe=yellow,
+  colback=yellow!10} }
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-07-13]{consumeboxarray}{\oarg{name}\marg{index}}
+  Typesets the box with the given \meta{index} number from the box array \meta{name}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  It is silently ignored, if the \meta{index} is out of range.
+  In contrast to \refCom{useboxarray},
+  \refCom{consumeboxarray} corresponds to the standard |\box| macro, i.e.
+  after typesetting the box register is cleared and cannot be used again.
+\begin{dispExample}
+\boxarraygetsize{\mysize}
+First run: \foreach \n in  {1,...,\mysize} { \consumeboxarray{\n} }
+\par
+Second run: \foreach \n in  {1,...,\mysize} { \consumeboxarray{\n} }
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-07-13]{consumetcboxarray}{\oarg{name}\marg{index}\marg{options}}
+\begin{articleside}[before skip=5pt]
+  Typesets the box with the given \meta{index} number from the box array \meta{name}
+  using \refCom{consumeboxarray} as content of a \refCom{tcbox}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  It is silently ignored, if the \meta{index} is out of range.
+  The \refCom{tcbox} can be customized by |tcolorbox| \meta{options}.
+  After typesetting the box register is cleared and cannot be used again.
+\tcblower\consumetcboxarray[myarticle]{3}{blanker,nobeforeafter,phantomlabel=myarticle-three,,from=two,goto=four}
+\end{articleside}
+\begin{exdispExample}{consumetcboxarray}
+% \usepackage{lipsum}
+\begin{tcolorbox}[enhanced jigsaw,size=fbox,width=6cm,
+  colback=yellow!10,colframe=yellow!10!black,
+  enforce breakable,% use only breakable in the real world!
+  break at=5cm,
+  watermark text=\arabic{tcbbreakpart},
+  reset and store to box array
+  ]
+\lipsum[1]
+\end{tcolorbox}
+
+\consumeboxarray{2} \hfill \consumeboxarray{1} \hfill \consumeboxarray{1}
+\end{exdispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-07-13]{boxarraygetbox}{\oarg{name}\marg{macro}\marg{index}}
+  Assigns the box with the given \meta{index} number from the box array \meta{name}
+  to a \meta{macro}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  If the \meta{index} is out of range, the \meta{macro} will be undefined.
+\begin{exdispExample}{boxarraygetbox}
+\tcbox[size=small,colframe=blue!20,colback=yellow!5,on line,
+  reset and store to box array]{Test}
+
+\boxarraygetsize{\mysize} Array size: \mysize
+
+\boxarraygetbox{\mybox}{1}
+Box width: \the\wd\mybox
+\quad\usebox{\mybox}
+\end{exdispExample}
+\end{docCommand}
+
+
+\clearpage
+\subsection{Box Dimensions}\label{subsec:magazine_dimensions}
+
+\begin{docCommand}[doc new=2015-07-13]{boxarraygetwidth}{\oarg{name}\marg{macro}\marg{index}}
+  Assigns the width of the box with the given \meta{index} number from the box array \meta{name}
+  to a \meta{macro}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  If the \meta{index} is out of range, the \meta{macro} will be set to |0pt|.
+\begin{exdispExample}{boxarraygetwidth}
+\tcbox[size=small,colframe=blue!20,colback=yellow!5,on line,
+  reset and store to box array]{Test}
+
+\begin{tabular}{ll}
+\useboxarray{1} & width of box 1: \boxarraygetwidth{\mylen}{1} \mylen\\
+\useboxarray{2} & width of box 2: \boxarraygetwidth{\mylen}{2} \mylen
+\end{tabular}
+\end{exdispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-07-13]{boxarraygetheight}{\oarg{name}\marg{macro}\marg{index}}
+  Assigns the height of the box with the given \meta{index} number from the box array \meta{name}
+  to a \meta{macro}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  If the \meta{index} is out of range, the \meta{macro} will be set to |0pt|.
+\begin{exdispExample}{boxarraygetheight}
+\tcbox[size=small,colframe=blue!20,colback=yellow!5,on line,
+  reset and store to box array]{Test}
+
+\begin{tabular}{ll}
+\useboxarray{1} & height of box 1: \boxarraygetheight{\mylen}{1} \mylen\\
+\useboxarray{2} & height of box 2: \boxarraygetheight{\mylen}{2} \mylen
+\end{tabular}
+\end{exdispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-07-13]{boxarraygetdepth}{\oarg{name}\marg{macro}\marg{index}}
+  Assigns the depth of the box with the given \meta{index} number from the box array \meta{name}
+  to a \meta{macro}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  If the \meta{index} is out of range, the \meta{macro} will be set to |0pt|.
+\begin{exdispExample}{boxarraygetdepth}
+\tcbox[size=small,colframe=blue!20,colback=yellow!5,on line,
+  reset and store to box array]{Test}
+
+\begin{tabular}{ll}
+\useboxarray{1} & depth of box 1: \boxarraygetdepth{\mylen}{1} \mylen\\
+\useboxarray{2} & depth of box 2: \boxarraygetdepth{\mylen}{2} \mylen
+\end{tabular}
+\end{exdispExample}
+\end{docCommand}
+
+
+\clearpage
+\begin{docCommand}[doc new=2015-07-13]{boxarraygettotalheight}{\oarg{name}\marg{macro}\marg{index}}
+\begin{articleside}[before skip=5pt]
+  Assigns the total height of the box with the given \meta{index} number from the box array \meta{name}
+  to a \meta{macro}.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+  If the \meta{index} is out of range, the \meta{macro} will be set to |0pt|.
+\tcblower\consumetcboxarray[myarticle]{4}{blanker,nobeforeafter,phantomlabel=myarticle-four,from=three}
+\end{articleside}
+\begin{exdispExample}{boxarraygettotalheight}
+\boxarrayreset
+\tcbox[size=small,colframe=blue!20,colback=yellow!5,on line,
+  store to box array]{Test}
+
+\begin{tabular}{ll}
+\useboxarray{1} & total height of box 1: \boxarraygettotalheight{\mylen}{1} \mylen\\
+\useboxarray{2} & total height of box 2: \boxarraygettotalheight{\mylen}{2} \mylen
+\end{tabular}
+\end{exdispExample}
+\end{docCommand}
+
+
+
+

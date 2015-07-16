@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.61}
+\tcb@set@library@version{3.70}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -147,7 +147,7 @@
 
 \def\tcbox@fitalgorithm@fontsize@star{%
   \tcbox@fitalgorithm@fontsize%
-  \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@target}{\box\tcb@upperbox}}%
+  \tcb@resize@box{\tcb@upperbox}{\tcb@w@upper}{\tcb@fit@@target}%
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
@@ -180,19 +180,19 @@
   \ifdim\dimexpr\tcb@fit@@h>\tcb@fit@@target\relax%
     \let\tcb@fit@@h=\tcb@fit@@target%
   \fi
-  \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@h}{\box\tcb@upperbox}}%
+  \tcb@resize@box{\tcb@upperbox}{\tcb@w@upper}{\tcb@fit@@h}%
   %
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
 \def\tcbox@fitalgorithm@areasize@star{%
   \tcbox@fitalgorithm@areasize@core%
-  \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@target}{\box\tcb@upperbox}}%
+  \tcb@resize@box{\tcb@upperbox}{\tcb@w@upper}{\tcb@fit@@target}%
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
 \def\tcbox@fitalgorithm@squeeze{%
-  \setbox\tcb@upperbox\hbox{\resizebox*{\tcb@w@upper}{\tcb@fit@@target}{\box\tcb@upperbox}}%
+  \tcb@resize@box{\tcb@upperbox}{\tcb@w@upper}{\tcb@fit@@target}%
   \tcbdimto\tcb@fit@@h{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 

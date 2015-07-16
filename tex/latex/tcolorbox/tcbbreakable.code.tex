@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.61}
+\tcb@set@library@version{3.70}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -248,6 +248,7 @@
 }
 
 \def\tcb@prepare@break@operation{%
+  \setcounter{tcbbreakpart}{0}%
   \let\tcb@nobreak@warning\@empty%
   \@ifundefined{columnbreak}{\tcb@multicolfalse}{%
     \ifnum\doublecol@number>\z@ %
@@ -731,7 +732,10 @@
 
 
 \def\tcb@sdraw@USL{%
-  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}\tcb@afteroptions@hook%
+  \begingroup%
+  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
+  \csuse{tcb@extras@\tcb@split@state}%
+  \tcb@afteroptions@hook%
   \def\tcb@segment@state{1}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper+\tcb@h@segment+\tcb@h@lower+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
@@ -752,11 +756,15 @@
     \tcb@tdraw@lower%
     \tcb@extensions@final%
   \tcb@drawing@env@end%
+  \endgroup%
 }
 
 
 \def\tcb@sdraw@U{%
-  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}\tcb@afteroptions@hook%
+  \begingroup%
+  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
+  \csuse{tcb@extras@\tcb@split@state}%
+  \tcb@afteroptions@hook%
   \def\tcb@segment@state{0}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
@@ -773,11 +781,15 @@
     \tcb@tdraw@upper%
     \tcb@extensions@final%
   \tcb@drawing@env@end%
+  \endgroup%
 }
 
 
 \def\tcb@sdraw@SL{%
-  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}\tcb@afteroptions@hook%
+  \begingroup%
+  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
+  \csuse{tcb@extras@\tcb@split@state}%
+  \tcb@afteroptions@hook%
   \def\tcb@segment@state{1}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@bottom+\kvtcb@boxsep+\tcb@h@segment+\tcb@h@lower+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
@@ -797,11 +809,15 @@
     \tcb@tdraw@lower%
     \tcb@extensions@final%
   \tcb@drawing@env@end%
+  \endgroup%
 }
 
 
 \def\tcb@sdraw@L{%
-  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}\tcb@afteroptions@hook%
+  \begingroup%
+  \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
+  \csuse{tcb@extras@\tcb@split@state}%
+  \tcb@afteroptions@hook%
   \def\tcb@segment@state{2}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\ht\tcb@lowerbox+\dp\tcb@lowerbox+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
@@ -818,6 +834,7 @@
     \tcb@tdraw@lower%
     \tcb@extensions@final%
   \tcb@drawing@env@end%
+  \endgroup%
 }
 
 
@@ -907,6 +924,21 @@
     \fi}},%
   compress page/.default=all,%
   compress page=baselineskip,% global setting
+  extras unbroken/.code={\appto\tcb@extras@unbroken{\tcbset{#1}}},%
+  extras first/.code={\appto\tcb@extras@first{\tcbset{#1}}},%
+  extras middle/.code={\appto\tcb@extras@middle{\tcbset{#1}}},%
+  extras last/.code={\appto\tcb@extras@last{\tcbset{#1}}},%
+  extras/.style={extras unbroken={#1},extras first={#1},extras middle={#1},extras last={#1}},%
+  extras broken/.style={extras first={#1},extras middle={#1},extras last={#1}},%
+  extras unbroken and first/.style={extras unbroken={#1},extras first={#1}},%
+  extras unbroken and last/.style={extras unbroken={#1},extras last={#1}},%
+  extras middle and last/.style={extras middle={#1},extras last={#1}},%
+  extras first and middle/.style={extras first={#1},extras middle={#1}},%
+  no extras unbroken/.code={\let\tcb@extras@unbroken\@empty},%
+  no extras first/.code={\let\tcb@extras@first\@empty},%
+  no extras middle/.code={\let\tcb@extras@middle\@empty},%
+  no extras last/.code={\let\tcb@extras@last\@empty},%
+  no extras/.code={\let\tcb@extras@unbroken\@empty\let\tcb@extras@first\@empty\let\tcb@extras@middle\@empty\let\tcb@extras@last\@empty},%
 }
 
 
@@ -921,6 +953,7 @@
     break at=0pt,
     height fixed for=none,
     vfill before first=false,
+    no extras,
   },
   initialize@reset=reset@breakable,
 }

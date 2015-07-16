@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/06/12 version 3.61 text color boxes]
-\def\tcb@version{3.61}
+\ProvidesPackage{tcolorbox}[2015/07/16 version 3.70 text color boxes]
+\def\tcb@version{3.70}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -168,7 +168,7 @@
   squeezed title*/.style={squeezed title={#1\vphantom{\kvtcb@adjusttext}}},%
   detach title/.code=\tcb@detach@title@code,%
   attach title/.code=\tcb@attach@title@code,%
-  attach title to upper/.style={detach title,before upper={\tcbtitle#1}},
+  attach title to upper/.style={detach title,before upper={\ifx\tcbtitletext\@empty\else\tcbtitle#1\fi}},
   attach title to upper/.default=,
   subtitle style/.store in=\kvtcb@subtitle@style,%
   width/.store in=\kvtcb@width,
@@ -329,15 +329,21 @@
   halign title/center/.code={\let\kvtcb@haligntitle=\tcb@raggedcenter@plain},
   halign title/justify/.code={\let\kvtcb@haligntitle=\@empty},
   %
+  valign scale limit/.store in=\kvtcbv@valignscalelimit,
+  valign scale limit=1.1,
   valign/.is choice,
   valign/top/.code={\def\kvtcb@valignupper{top}},
   valign/center/.code={\def\kvtcb@valignupper{center}},
   valign/bottom/.code={\def\kvtcb@valignupper{bottom}},
+  valign/scale/.code={\def\kvtcb@valignupper{resize}},
+  valign/scale*/.code={\def\kvtcb@valignupper{resizelimited}},
   valign upper/.style={valign=#1},
   valign lower/.is choice,
   valign lower/top/.code={\def\kvtcb@valignlower{top}},
   valign lower/center/.code={\def\kvtcb@valignlower{center}},
   valign lower/bottom/.code={\def\kvtcb@valignlower{bottom}},
+  valign lower/scale/.code={\def\kvtcb@valignlower{resize}},
+  valign lower/scale*/.code={\def\kvtcb@valignlower{resizelimited}},
   enlarge top initially by/.store in=\kvtcb@bbtop@stand,%
   enlarge top at break by/.store in=\kvtcb@bbtop@break,%
   enlarge top by/.style={enlarge top initially by={#1},enlarge top at break by={#1}},%
@@ -478,6 +484,19 @@
   varwidth upper/.style={before upper={\tcbdimto\tcb@w@upper{#1-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@leftupper-\kvtcb@rightupper}%
     \begin{varwidth}{\tcb@w@upper}},after upper={\end{varwidth}}},%
   varwidth upper/.default=\kvtcb@width,
+  text fill/.style={before upper={%
+    \iftcb@fixedheight%
+      \tcbdimto\tcb@temp{\kvtcb@top@rule@stand+\kvtcb@bottom@rule@stand+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom}%
+      \iftcb@hasTitle%
+        \tcbdimto\tcb@temp{\tcb@temp+\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
+      \fi%
+      \tcbdimto\tcb@temp{\kvtcb@height@fixed-\tcb@temp}%
+      \edef\tcb@temp{\noexpand\minipage[c][\tcb@temp]}%
+    \else%
+      \let\tcb@temp\minipage%
+    \fi%
+    \tcb@temp{\linewidth}\kvtcb@halignupper},
+    after upper=\endminipage},
   oversize/.style={%
     width=\the\dimexpr\dimexpr\linewidth+#1+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax,%
     enlarge left by=\the\dimexpr-\kvtcb@left@rule-\kvtcb@leftupper-\kvtcb@boxsep-#1/2\relax,%
@@ -977,6 +996,31 @@
 
 \def\tcb@dbox@center#1#2#3#4#5{\pgftext[x=#1,y=#2+#3/2,left]{\color{#5}\box#4}}%
 
+\def\tcb@resize@box#1#2#3{%
+  \setbox#1\hbox{\resizebox*{#2}{#3}{\box#1}}%
+  \wd#1=#2\relax%
+  \ht#1=\the\dimexpr#3-\dp#1\relax%
+}
+
+\def\tcb@dbox@resize#1#2#3#4#5{%
+  \iftcb@fixedheight%
+    \tcbdimto\tcb@box@w@target{\wd#4}%
+    \tcbdimto\tcb@box@h@target{#3}%
+    \tcb@resize@box{#4}{\tcb@box@w@target}{\tcb@box@h@target}%
+  \fi%
+  \pgftext[x=#1,y=#2+#3,left,top]{\color{#5}\box#4}}%
+
+\def\tcb@dbox@resizelimited#1#2#3#4#5{%
+  \iftcb@fixedheight%
+    \tcbdimto\tcb@box@w@target{\wd#4}%
+    \tcbdimto\tcb@box@h@target{\kvtcbv@valignresizelimit\dimexpr(\ht#4+\dp#4)}%
+    \ifdim\dimexpr\tcb@box@h@target>#3\relax%
+      \tcbdimto\tcb@box@h@target{#3}%
+    \fi%
+    \tcb@resize@box{#4}{\tcb@box@w@target}{\tcb@box@h@target}%
+  \fi%
+  \pgftext[x=#1,y=#2+#3,left,top]{\color{#5}\box#4}}%
+
 \let\tcb@pgfprocess@@specialround@orig=\pgfprocess@@specialround
 
 % patch for \pgfprocess@@specialround
@@ -1396,6 +1440,7 @@
 
 \def\tcb@drawcolorbox{%
   \edef\tcb@split@state{unbroken}%
+  \tcb@extras@unbroken%
   \let\kvtcb@top@rule=\kvtcb@top@rule@stand%
   \let\kvtcb@bottom@rule=\kvtcb@bottom@rule@stand%
   \let\kvtcb@bbtop=\kvtcb@bbtop@stand%
@@ -1925,14 +1970,15 @@
 \tcb@add@library{skins@jigsaw}{tcbskinsjigsaw.code.tex}
 \tcb@add@library{skins}{tcbskins.code.tex}
 \tcb@add@library{breakable}{tcbbreakable.code.tex}
+\tcb@add@library{magazine}{tcbmagazine.code.tex}
 \tcb@add@library{hooks}{tcbhooks.code.tex}
 \tcb@add@library{fitting}{tcbfitting.code.tex}
 \tcb@add@library{xparse}{tcbxparse.code.tex}
 \tcb@add@library{external}{tcbexternal.code.tex}
 
 \tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting,xparse}
-\tcb@add@library@style{most}{many,listingsutf8,external}
-\tcb@add@library@style{all}{many,minted,listingsutf8,external,documentation}
+\tcb@add@library@style{most}{many,listingsutf8,external,magazine}
+\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,documentation}
 
 \ProcessOptions*
 \edef\tcb@temp{\noexpand\tcbuselibrary{\tcb@optionlist}}

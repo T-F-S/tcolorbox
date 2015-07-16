@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -777,3 +777,34 @@ version 3.61 (2015/06/12)
   * now throws an error if the same external job name is used twice
   * new option: '-'
 - documentation bug fixes
+
+version 3.70 (2015/07/16)
+- bug fix: 'attach title to upper' attached also empty titles
+- bug fix: library 'raster': blank line after tcbitemize or tcbraster could give an error message
+- new options:
+  'text fill', 'valign scale bound',
+  'valign=scale', 'valigns=scale*', 'valign lower=scale', 'valign lower=scale*'
+- library 'breakable':
+  * Settings for broken box parts are now shielded by TeX grouping. This may
+    break code which used side-effects with unproper skins.
+  * new options:
+    'extras unbroken', 'extras first', 'extras middle', 'extras last',
+    'extras', 'extras broken', 'extras unbroken and first',
+    'extras unbroken and last', 'extras middle and last',
+    'extras first and middle', 'no extras unbroken', 'no extras first',
+    'no extras middle', 'no extras last', 'no extras',
+- library 'hooks':
+  * new options:
+    'extras unbroken pre', 'extras first pre', 'extras middle pre',
+    'extras last pre', 'extras pre', 'extras broken pre',
+    'extras unbroken and first pre', 'extras unbroken and last pre',
+    'extras middle and last pre', 'extras first and middle pre',
+- new library 'magazine'
+  * new macros and environments:
+    '\newboxarray', '\boxarraygetsize', '\boxarrayreset', '\boxarrayclear',
+    '\boxarraygetbox', '\boxarraygetwidth', '\boxarraygetheight', '\boxarraygetdepth',
+    '\boxarraygettotalheight', '\useboxarray', '\usetcboxarray',
+    '\consumeboxarray', '\consumetcboxarray', 'boxarraystore',
+  * new options:
+    'store to box array', 'reset box array', 'do not store to box array',
+    'reset and store to box array'

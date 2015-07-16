@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %% tcbhooks.code.tex: Code for adding hooks
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.61}
+\tcb@set@library@version{3.70}
 
 \tcbset{%
   before upper app/.code={\appto\kvtcb@before@upper{#1}},%
@@ -73,6 +73,17 @@
   segmentation code pre/.code={\preto\tcb@segmentation@code{#1}},%
   title code app/.code={\appto\tcb@title@code{#1}},%
   title code pre/.code={\preto\tcb@title@code{#1}},%
+  %
+  extras unbroken pre/.code={\preto\tcb@extras@unbroken{#1}},%
+  extras first pre/.code={\preto\tcb@extras@first{#1}},%
+  extras middle pre/.code={\preto\tcb@extras@middle{#1}},%
+  extras last pre/.code={\preto\tcb@extras@last{#1}},%
+  extras pre/.style={extras unbroken pre={#1},extras first pre={#1},extras middle pre={#1},extras last pre={#1}},%
+  extras broken pre/.style={extras first pre={#1},extras middle pre={#1},extras last pre={#1}},%
+  extras unbroken and first pre/.style={extras unbroken pre={#1},extras first pre={#1}},%
+  extras unbroken and last pre/.style={extras unbroken pre={#1},extras last pre={#1}},%
+  extras middle and last pre/.style={extras middle pre={#1},extras last pre={#1}},%
+  extras first and middle pre/.style={extras first pre={#1},extras middle pre={#1}},%
   %
   underlay unbroken pre/.code={\preto\tcb@underlay@unbroken{#1}},%
   underlay first pre/.code={\preto\tcb@underlay@first{#1}},%

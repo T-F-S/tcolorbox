@@ -413,6 +413,141 @@ and \refKey{/tcb/enlarge bottom at break by}.
   actually broken.
 \end{docTcbKey}
 
+
+\clearpage
+\subsection{Extra Options for Partial Boxes}\label{subsec:extras}
+
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras}{=\marg{options}}{no default, initially unset}
+  Adds |tcolorbox| \meta{options} to every box of a \emph{break sequence}
+  after skin settings are done. This is quite late in box processing.
+  Geometry and break settings should \emph{not be used} here, because they
+  will either be ignored or have unexpected negative results. But it is possible
+  to change most colors, skin effects, shadows, borders, frame code, etc.
+  Note that using \refKey{/tcb/extras} for every box is very seldom an
+  advantage over setting the options directly. Usually, \refKey{/tcb/extras first},
+  \refKey{/tcb/extras middle}, etc.\ are sensible to apply.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-07-16]{no extras}{}{style, no default, initially set}
+  Removes all extras if set before.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras broken}{=\marg{options}}{no default, initially unset}
+  If the box is set to be \refKey{/tcb/breakable} and \emph{is} broken actually,
+  then the \meta{options} are added to every box of the \emph{break sequence}.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras unbroken}{=\marg{options}}{no default, initially unset}
+  If the box is set to be \refKey{/tcb/breakable} but \emph{is not} broken actually
+  or if the box is set to be \refKey{/tcb/unbreakable},
+  then the \meta{options} are added to the box.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{no extras unbroken}{}{style, no default, initially set}
+  Removes the unbroken extras if set before.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras first}{=\marg{options}}{no default, initially unset}
+  If the box is set to be \refKey{/tcb/breakable} and \emph{is} broken actually,
+  then the \meta{options} are added to the \emph{first} box of the break sequence.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{no extras first}{}{style, no default, initially set}
+  Removes the first extras if set before.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras middle}{=\marg{options}}{no default, initially unset}
+  If the box is set to be \refKey{/tcb/breakable} and \emph{is} broken actually,
+  then the \meta{options} are added to every \emph{middle} box (if any) of the break sequence.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{no extras middle}{}{style, no default, initially set}
+  Removes the middle extras if set before.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras last}{=\marg{options}}{no default, initially unset}
+  If the box is set to be \refKey{/tcb/breakable} and \emph{is} broken actually,
+  then the \meta{options} are added to the \emph{last} box of the break sequence.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{no extras last}{}{style, no default, initially set}
+  Removes the last extras if set before.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras unbroken and first}{=\marg{options}}{no default, initially unset}
+  This is an abbreviation for setting
+  \refKey{/tcb/extras unbroken} and
+  \refKey{/tcb/extras first} together.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras middle and last}{=\marg{options}}{no default, initially unset}
+  This is an abbreviation for setting
+  \refKey{/tcb/extras middle} and
+  \refKey{/tcb/extras last} together.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\enlargethispage*{1cm}
+\begin{docTcbKey}[][doc new=2015-07-16]{extras unbroken and last}{=\marg{options}}{no default, initially unset}
+  This is an abbreviation for setting
+  \refKey{/tcb/extras unbroken} and
+  \refKey{/tcb/extras last} together.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-07-16]{extras first and middle}{=\marg{options}}{no default, initially unset}
+  This is an abbreviation for setting
+  \refKey{/tcb/extras first} and
+  \refKey{/tcb/extras middle} together.
+  \refKey{/tcb/extras} overwrites this key.
+\end{docTcbKey}
+
+\clearpage
+\begin{exdispExample}{extras}
+% \usepackage{lipsum,multicol}
+% \usetikzlibrary{decorations.pathmorphing}
+% \tcbuselibrary{skins}
+\newtcolorbox{mybox}[1][]{
+  enhanced,frame hidden,
+  colframe=yellow,
+  sharp corners,
+  colback=green!7,coltitle=blue!50!black,colbacktitle=blue!5,
+  center title,
+  boxrule=0pt,toprule=1.25mm,bottomrule=1.25mm,
+  extras unbroken and first={
+    borderline north={0.25mm}{0.5mm}{blue,decoration={zigzag,amplitude=0.5mm},decorate}},
+  extras unbroken and last={
+    borderline south={0.25mm}{0.5mm}{blue,decoration={zigzag,amplitude=0.5mm},decorate}},
+  #1
+}
+
+\begin{mybox}[title=My unbroken box]
+\lipsum[1]
+\end{mybox}
+
+\begin{multicols}{3}
+  \begin{mybox}[title=My broken box,
+    enforce breakable,% use only breakable in the real world!
+    break at=4.2cm,pad at break=2mm,
+    height fixed for=first and middle,  ]
+  \lipsum[2]
+  \end{mybox}
+\end{multicols}
+\end{exdispExample}
+
+
+
+
 \clearpage
 \subsection{Breakable boxes and the \texttt{multicol} package}\label{subsec:multicol}
 \begin{multicols}{2}

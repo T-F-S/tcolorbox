@@ -117,7 +117,7 @@ Attaches the title to its normal position. This option is used to reverse
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{attach title to upper}{\colOpt{=\meta{text}}}{style, default empty, initially unset}
+\begin{docTcbKey}[][doc updated=2015-07-08]{attach title to upper}{\colOpt{=\meta{text}}}{style, default empty, initially unset}
 Attaches the title to the begin of the upper part of the box content.
 The optional \meta{text} is set between the formatted title and the box content.
 \begin{dispExample}
@@ -738,16 +738,26 @@ The vertical alignment settings are only relevant for boxes which are larger
 than their natural height, see \Fullref{sec:heightcontrol}.
 \end{marker}
 
-\begin{docTcbKey}{valign}{=\meta{alignment}}{no default, initially |top|}
+\begin{docTcbKey}[][doc updated=2015-07-16]{valign}{=\meta{alignment}}{no default, initially |top|}
   If the height of a |tcolorbox| is not the natural height, |valign|
   determines the vertical \meta{alignment} of the upper part.
-  Feasible values are \docValue{top},  \docValue{center}, and  \docValue{bottom}.
-  For a box with natural height, these values are meaningless.
+  Feasible values are
+  \begin{itemize}
+  \item\docValue{top}: Anchor text at top.
+  \item\docValue{center}: Anchor text at center.
+  \item\docValue{bottom}: Anchor text at bottom.
+  \item\docValue{scale}: Scale text vertically to fit into the available space.
+    This is brutal and may not look very good. Consider \Fullref{sec:fitting}
+    alternatively.
+  \item\docValue{scale*}: Like \docValue{scale}, but scaling is bounded by
+    \refKey{/tcb/valign scale limit}.
+  \end{itemize}
+  For a box with natural height, these settings are meaningless.
 \begin{exdispExample}{valign}
-\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
+\tcbset{width=(\linewidth-2mm)/4,before=,after=\hfill,
 colframe=blue!75!black,colback=white,height=2cm}
 
-\foreach \myalign in {top,center,bottom}
+\foreach \myalign in {top,center,bottom,scale}
 {\begin{tcolorbox}[valign=\myalign]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}}
@@ -759,12 +769,18 @@ colframe=blue!75!black,colback=white,height=2cm}
   Alias for \refKey{/tcb/valign}.
 \end{docTcbKey}
 
-
 \begin{docTcbKey}{valign lower}{=\meta{alignment}}{no default, initially |top|}
   This key has the same meaning for the lower part as |valign|
   for the upper part, i.\,e., it determines
   the vertical \meta{alignment} of the lower part with feasible values
-  |top|, |center|, and |bottom|.
+  |top|, |center|, |bottom|, |scale|, and |scale*|.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-07-16]{valign scale limit}{=\meta{real number}}{no default, initially \texttt{1.1}}
+  Sets an upper scale limit for the \docValue{scale*} setting in
+  \refKey{/tcb/valign} and \refKey{/tcb/valign lower}.
+  Note that this value is not reset by \refKey{/tcb/reset}. So, changes
+  also apply to embedded boxes.
 \end{docTcbKey}
 
 
@@ -1684,7 +1700,7 @@ available vertical space of the current page.
 If set to \docValue{maximum}, the page is compressed as much as possible.
 Note that the |tcolorbox|
 is always set as its own paragraph using this option.
-%This option overrules \refKey{/tcb/natural height}, \refKey{/tcb/height}, etc.
+Also see \refKey{/tcb/text fill}.
 \begin{marker}
 Note that the library \mylib{breakable} has to be loaded to use this key!
 \end{marker}
@@ -1971,6 +1987,35 @@ This is the lower part.
 
 \clearpage
 \begin{marker}
+If \refKey{/tcb/text fill} is used, one cannot have a lower part
+and the box is unbreakable.
+\end{marker}
+
+\begin{docTcbKey}[][doc new=2015-07-15]{text fill}{}{style, no value}
+  This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
+  to embedd the upper part with a minipage. If a fixed height was applied
+  e.g.\ by \refKey{/tcb/height} or \refKey{/tcb/height fill}, this minipage
+  gets a matching height. This allows to use vertical glue macros like
+  |\vfill| to act like expected. If the box has no fixed height,
+  setting \refKey{/tcb/text fill} has no other effect as making the box
+  unbreakable.
+\begin{exdispExample}{text_fill}
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+  height=8cm,text fill,
+  title=My filled box]
+This is a \textbf{tcolorbox}.
+\par\vfill
+\begin{center}
+  My middle text.
+\end{center}
+\par\vfill
+This is the end of my box.
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{marker}
 If \refKey{/tcb/tabularx} or \refKey{/tcb/tabularx*} are used, one cannot
 have a lower part.
 \end{marker}
@@ -1981,7 +2026,7 @@ have a lower part.
   given \meta{preamble}.
   The packages |tabularx| \cite {carlisle:2014a}, |array|, and |colortbl|
   have to be loaded separately.
-\begin{dispExample}
+\begin{exdispExample}{tabularx_1}
 % \usepackage{array,tabularx}
 % \usepackage{colortbl} - or - \usepackage[table]{xcolor}
 \newcolumntype{Y}{>{\raggedleft\arraybackslash}X}% see tabularx
@@ -1996,14 +2041,14 @@ Green & 2000.00 & 3000.00 &  4000.00 &  5000.00 & 14000.00\\\hline
 Blue  & 3000.00 & 4000.00 &  5000.00 &  6000.00 & 18000.00\\\hline\hline
 Sum   & 6000.00 & 9000.00 & 12000.00 & 15000.00 & 42000.00
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{tabularx*}{=\marg{code}\marg{preamble}}{style}
   This is a variant of \refKey{/tcb/tabularx} which adds some \meta{code}
   before the table starts.
-\begin{dispExample}
+\begin{exdispExample}{tabularx_2}
 % \usepackage{array,tabularx}
 % \usepackage{colortbl} - or - \usepackage[table]{xcolor}
 \tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
@@ -2015,7 +2060,7 @@ One     & Two     & Three \\\hline\hline
 1000.00 & 2000.00 &  3000.00\\\hline
 2000.00 & 3000.00 &  4000.00
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 

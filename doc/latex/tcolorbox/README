@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -37,6 +37,7 @@ Contents of the package
   'tcblistings.code.tex'      LaTeX package file (library of tcolorbox)
   'tcblistingscore.code.tex'  LaTeX package file (library of tcolorbox)
   'tcblistingsutf8.code.tex'  LaTeX package file (library of tcolorbox)
+  'tcbmagazine.code.tex'      LaTeX package file (library of tcolorbox)
   'tcbminted.code.tex'        LaTeX package file (library of tcolorbox)
   'tcbraster.code.tex'        LaTeX package file (library of tcolorbox)
   'tcbskins.code.tex'         LaTeX package file (library of tcolorbox)
@@ -69,6 +70,7 @@ Alternatively, put the files to their respective locations within the TeX instal
   'tcblistings.code.tex'      ->  /tex/latex/tcolorbox
   'tcblistingscore.code.tex'  ->  /tex/latex/tcolorbox
   'tcblistingsutf8.code.tex'  ->  /tex/latex/tcolorbox
+  'tcbmagazine.code.tex'      ->  /tex/latex/tcolorbox
   'tcbminted.code.tex'        ->  /tex/latex/tcolorbox
   'tcbraster.code.tex'        ->  /tex/latex/tcolorbox
   'tcbskins.code.tex'         ->  /tex/latex/tcolorbox

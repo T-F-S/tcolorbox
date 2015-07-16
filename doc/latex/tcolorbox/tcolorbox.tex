@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.61 (2015/06/12)
+%% The LaTeX package tcolorbox - version 3.70 (2015/07/16)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@
 \usepackage{tcolorbox.doc.s_main}
 \tcbEXTERNALIZE
 \usepackage{tcolorbox.doc.s_snippet}
-\tcbset{external/PassOptionsToPackage={cache=false}{minted}}
+%\tcbset{external/PassOptionsToPackage={cache=false}{minted}}
 \immediate\write18{mkdir external}
 \immediate\write18{mkdir solutions}
 
@@ -35,8 +35,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{3.61}%
-\def\datum{2015/06/12}%
+\def\version{3.70}%
+\def\datum{2015/07/16}%
 \makeindex
 
 \hypersetup{
@@ -49,7 +49,7 @@
 \usepackage{pgfplots}
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.external}
+%\includeonly{tcolorbox.doc.coreoptions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -69,6 +69,7 @@
 \include{tcolorbox.doc.listings}
 \include{tcolorbox.doc.theorems}
 \include{tcolorbox.doc.breakable}
+\include{tcolorbox.doc.magazine}
 \include{tcolorbox.doc.fitting}
 \include{tcolorbox.doc.hooks}
 \include{tcolorbox.doc.xparse}

@@ -43,7 +43,16 @@
 \strictpagecheck
 
 \providecommand{\tcbpkgprefix}{}
-\RequirePackage[all]{\tcbpkgprefix tcolorbox}
+\RequirePackage{\tcbpkgprefix tcolorbox}
+
+\tcbuselibrary{most,documentation}
+\makeatletter
+\tcbifexternal{}{%
+  \tcbuselibrary{minted}%
+  \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
+}
+\makeatother
+
 \RequirePackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
 
 \tcbset{skin=enhanced,
@@ -143,6 +152,11 @@
     tcbEXTERNALIZE,tcbifexternal,newtcbexternalizeenvironment,
     renewtcbexternalizeenvironment,extcolorbox,extikzpicture,
     newtcbexternalizetcolorbox,renewtcbexternalizetcolorbox,
+    % box array
+    newboxarray,boxarraygetsize,boxarrayreset,boxarrayclear,
+    boxarraygetbox,boxarraygetwidth,boxarraygetheight,boxarraygetdepth,
+    boxarraygettotalheight,useboxarray,usetcboxarray,
+    consumeboxarray,consumetcboxarray,
     },
   texcsstyle=*\color{Definition}\bfseries,
   classoffset=0% restore default

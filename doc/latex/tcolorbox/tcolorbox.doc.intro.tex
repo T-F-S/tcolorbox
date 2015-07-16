@@ -124,7 +124,12 @@ The following keys are used inside |\tcbuselibrary| respectively
 
 \begin{docTcbKey}[library]{breakable}{}{\mylib{breakable}}
   Provides support for automatic box breaking from one page to another;
-  see Section~\ref{sec:breakable} from page~\pageref{sec:breakable}.
+  see \Fullref{sec:breakable}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{magazine}{}{\mylib{magazine}}
+  Provides support for storing broken box parts to be used later or
+  in interchanged order, \Fullref{sec:magazine}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{fitting}{}{\mylib{fitting}}
@@ -143,12 +148,12 @@ The following keys are used inside |\tcbuselibrary| respectively
   see Section~\ref{sec:xparse} from page~\pageref{sec:xparse}.
 \end{docTcbKey}
 
+\clearpage
 \begin{docTcbKey}[library]{external}{}{\mylib{external}}
   Provides externalization support for stand-alone document snippets,
   see \Fullref{sec:external}.
 \end{docTcbKey}
 
-\clearpage
 \begin{docTcbKey}[library]{documentation}{}{\mylib{documentation}}
   Provides additional
   macros for typesetting \LaTeX\ documentations
@@ -191,6 +196,7 @@ The following keys are used inside |\tcbuselibrary| respectively
     \mylib{skins}\\
     \mylib{raster}\\
     \mylib{breakable}\\
+    \mylib{magazine}\\
     \mylib{theorems}\\
     \mylib{fitting}\\
     \mylib{hooks}\\
