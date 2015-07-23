@@ -22,7 +22,7 @@ and \refSkin{standard} \emph{none}.
   This option is available if the \refKey{/tcb/frame engine} is set to
   |path|, |pathfirst|, |pathmiddle|, or |pathlast|.
   It is \emph{not} available for |standard|.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{frame_style}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,fonttitle=\bfseries}
 
 \begin{tcolorbox}[enhanced,title=My title,
@@ -32,7 +32,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -40,7 +40,7 @@ This is the lower part.
   Fills the frame with an external image referenced by \meta{file name}.
   For advanced features like blending of a picture with the background,
   use \refKey{/tcb/frame style} together with \refKey{/tikz/fill stretch image}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{frame_style_image}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,fonttitle=\bfseries}
 
 \begin{tcolorbox}[enhanced,title=My title,
@@ -49,7 +49,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -58,7 +58,7 @@ This is the lower part.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
   For advanced features like blending of a picture with the background,
   use \refKey{/tcb/frame style} together with \refKey{/tikz/fill tile image}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{frame_style_tile}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,coltitle=red!30!black,
   opacityback=0.75,fonttitle=\bfseries}
 
@@ -68,7 +68,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -77,7 +77,7 @@ This is the lower part.
   Depending on the skin, this option switches off the drawing of the
   frame.
   Alternatively, use \refKey{/tcb/frame empty}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{frame_hidden}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   fonttitle=\bfseries,coltitle=black}
 
@@ -87,7 +87,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -99,7 +99,7 @@ This is the lower part.
   or \refKey{/tcb/interior engine} is set to
   |path|, |pathfirst|, |pathmiddle|, or |pathlast|.
   It is \emph{not} available for |standard|.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{interior_style}{sbs,lefthand ratio=0.66}
 \tcbset{colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[enhanced,title=My title,
@@ -109,7 +109,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -117,7 +117,7 @@ This is the lower part.
   Fills the interior with an external image referenced by \meta{file name}.
   For advanced features like blending of a picture with the background,
   use \refKey{/tcb/interior style} together with \refKey{/tikz/fill stretch image}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{interior_style_image}{sbs,lefthand ratio=0.66}
 \tcbset{colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[enhanced,title=My title,
@@ -126,7 +126,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -136,7 +136,7 @@ This is the lower part.
   For advanced features like blending of a picture with the background,
   use \refKey{/tcb/interior style} together with \refKey{/tikz/fill tile image}.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{interior_style_tile}{sbs,lefthand ratio=0.66}
 \tcbset{colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[enhanced,title=My title,
@@ -145,7 +145,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -154,7 +154,7 @@ This is the lower part.
   Depending on the skin, this option switches off the drawing of the
   interior.
   Alternatively, use \refKey{/tcb/interior empty} and/or \refKey{/tcb/interior titled empty}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{interior_hidden}{sbs,lefthand ratio=0.66}
 \tcbset{frame style={top color=red!20!white,
   bottom color=red!20!white!75!black},
   fonttitle=\bfseries,coltitle=black}
@@ -165,7 +165,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -175,7 +175,7 @@ This is the lower part.
   This option is available if the \refKey{/tcb/segmentation engine}
   is set to |path|.
   It is \emph{not} available for |standard|.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{segmentation_style}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   fonttitle=\bfseries}
 
@@ -186,7 +186,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -196,7 +196,7 @@ This is the lower part.
   segmentation line. See also \refKey{/tcb/lower separated} which
   has the same effect for most skins.
   Alternatively, use \refKey{/tcb/segmentation empty}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{segmentation_hidden}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   fonttitle=\bfseries}
 
@@ -206,7 +206,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -216,7 +216,7 @@ This is the lower part.
   This option is available if the \refKey{/tcb/title engine} is set to
   |path|, |pathfirst|, |pathmiddle|, or |pathlast|.
   It is \emph{not} available for |standard|.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{title_style}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   coltitle=blue!50!black,fonttitle=\bfseries}
 
@@ -227,7 +227,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -236,7 +236,7 @@ This is the lower part.
   For advanced features like blending of a picture with the background,
   use \refKey{/tcb/title style} together with \refKey{/tikz/fill stretch image}.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{title_style_image}{sbs,lefthand ratio=0.66}
 \tcbset{colback=blue!5!white,colframe=blue!75!black,
   fonttitle=\bfseries}
 
@@ -246,7 +246,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -256,7 +256,7 @@ This is the lower part.
   For advanced features like blending of a picture with the background,
   use \refKey{/tcb/title style} together with \refKey{/tikz/fill tile image}.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{title_style_tile}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   coltitle=blue!50!black,fonttitle=\bfseries}
 
@@ -266,7 +266,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -275,7 +275,7 @@ This is the lower part.
   Depending on the skin, this option switches off the drawing of the
   title background. See also \refKey{/tcb/title filled} for a similar effect.
   Alternatively, use \refKey{/tcb/title empty}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{title_hidden}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   fonttitle=\bfseries}
 
@@ -285,7 +285,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -302,7 +302,7 @@ This is the lower part.
   all other skins, e.g.\ \refSkin{enhanced}.
   As an underlay, this option can be used multiple times and is removed
   by \refKey{/tcb/no underlay}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{titlerule_style_1}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,
   colback=red!5!white,colframe=red!75!black,
   colbacktitle=red!50!yellow,fonttitle=\bfseries,
@@ -311,9 +311,9 @@ This is the lower part.
   titlerule style=yellow  ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{titlerule_style_2}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,
   colback=red!5!white,colframe=red!75!black,
   colbacktitle=red!50!yellow,fonttitle=\bfseries,
@@ -322,9 +322,9 @@ This is a \textbf{tcolorbox}.
   titlerule style={yellow,line width=0.5mm}  ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{titlerule_style_3}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,
   colback=red!10!white,colframe=red!75!black,
   colbacktitle=red!50!yellow,fonttitle=\bfseries,
@@ -334,9 +334,9 @@ This is a \textbf{tcolorbox}.
   titlerule style=red!50!black  ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{titlerule_style_4}{sbs,lefthand ratio=0.66}
 %\usetikzlibrary{arrows.meta}
 \begin{tcolorbox}[empty,
   coltitle=red!75!black,fonttitle=\bfseries,
@@ -346,7 +346,7 @@ This is a \textbf{tcolorbox}.
     arrows = {Hooks[arc=270]-Hooks[arc=270]}} ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -358,7 +358,7 @@ background can used by authors in customizing code.
 This is a \tikzname\ style which is finally applied to the \emph{frame}
 of the box.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{tcb_fill_frame}{sbs,lefthand ratio=0.66}
 % \tcbuselibrary{hooks}
 \tcbset{enhanced,colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
@@ -371,7 +371,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTikzKey}
 
 
@@ -379,7 +379,7 @@ This is the lower part.
 This is a \tikzname\ style which is finally applied to the \emph{interior}
 of the box.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{tcb_fill_interior}{sbs,lefthand ratio=0.66}
 % \tcbuselibrary{hooks}
 \tcbset{enhanced,colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
@@ -394,7 +394,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTikzKey}
 
 
@@ -402,7 +402,7 @@ This is the lower part.
 This is a \tikzname\ style which is finally applied to the \emph{title area}
 of the box.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{tcb_fill_title}{sbs,lefthand ratio=0.66}
 % \tcbuselibrary{hooks}
 \tcbset{enhanced,colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
@@ -415,7 +415,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTikzKey}
 
 
@@ -430,67 +430,67 @@ The placement can be influenced by \meta{boxtitle options}.
 \begin{docTcbKey}{attach boxed title to top left}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top left corner of the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{attach_boxed_title_to_top_left}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top left]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{attach boxed title to top center}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top of the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{attach_boxed_title_to_top_center}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top center]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{attach boxed title to top right}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top right corner of the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{attach_boxed_title_to_top_right}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top right]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{attach boxed title to bottom left}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom left corner of the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{attach_boxed_title_to_bottom_left}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to bottom left]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{attach boxed title to bottom center}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom of the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{attach_boxed_title_to_bottom_center}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to bottom center]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{attach boxed title to bottom right}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom right corner of the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{attach_boxed_title_to_bottom_right}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to bottom right]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -503,50 +503,50 @@ following \meta{boxtitle options}:
 
 \begin{boxTcbKey}{xshift}{=\meta{length}}{no default, initially |0pt|}
 The boxed title is shifted by \meta{length} in the horizontal direction.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{xshift}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top left={xshift=-2mm},
   boxed title style={size=small,colback=blue}]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{boxTcbKey}
 
 \begin{boxTcbKey}{yshift}{=\meta{length}}{no default, initially |0pt|}
 The boxed title is shifted by \meta{length} in the vertical direction.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{yshift}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top center=
     {yshift=-\tcboxedtitleheight/2},
   boxed title style={size=small,colback=blue}]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{boxTcbKey}
 
 \begin{boxTcbKey}{yshifttext}{=\meta{length}}{no default, initially |0pt|}
 The text inside the main box by \meta{length} to give room for e.\,g.\ a sunken title.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{yshifttext}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top center=
     {yshift=-3mm,yshifttext=-1mm},
   boxed title style={size=small,colback=blue}]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{boxTcbKey}
 
 \begin{boxTcbKey}{yshift*}{=\meta{length}}{no default, initially |0pt|}
 Sets \refKey{/tcb/boxtitle/yshift} and \refKey{/tcb/boxtitle/yshifttext}
 the same time.\\
 \refKey{/tcb/boxtitle/yshifttext} is only set if necessary.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{yshiftstar}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top center={yshift*=-3mm},
   boxed title style={size=small,colback=blue}]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{boxTcbKey}
 
 \begin{marker}
@@ -556,7 +556,7 @@ are \emph{not} automatically computed.
 \end{marker}
 
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{boxed_title_example_1}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top left=
     {xshift=-2mm,yshift=-2mm},
@@ -564,7 +564,7 @@ are \emph{not} automatically computed.
   show bounding box]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
 
 \clearpage
@@ -600,7 +600,7 @@ All other \meta{options} are set by the |boxed title style| key.
 Since a boxed title is set by \refCom{tcbox}, all |tcolorbox| options are
 applicable here.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{boxed_title_style_1}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   fonttitle=\bfseries,coltitle=green!25!black,
   attach boxed title to top center=
@@ -609,10 +609,10 @@ applicable here.
     colback=yellow!50!green}]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{boxed_title_style_2}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   colframe=red!50!black,colback=red!10!white,
   arc=1mm,colbacktitle=red!10!white,
@@ -627,9 +627,9 @@ applicable here.
       bottom color=red!20!white}}]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
-\begin{dispExample}
+\begin{exdispExample}{boxed_title_style_3}
 \begin{tcolorbox}[enhanced,title=My title,
   colframe=blue!50!black,colback=blue!10!white,colbacktitle=blue!5!yellow!10!white,
   fonttitle=\bfseries,coltitle=black,attach boxed title to top center=
@@ -644,10 +644,10 @@ applicable here.
     -- cycle;}  }]
   \lipsum[2]
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
 
-\begin{dispExample}
+\begin{exdispExample}{boxed_title_style_4}
 % \usepackage{varwidth}
 \newtcolorbox{mybox}[2][]{enhanced,skin=enhancedlast jigsaw,
   attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
@@ -669,10 +669,10 @@ applicable here.
 \begin{mybox}{My title}
   \lipsum[2]
 \end{mybox}
-\end{dispExample}
+\end{exdispExample}
 
 
-\begin{dispExample}
+\begin{exdispExample}{boxed_title_style_5}
 % \usepackage{varwidth}
 \newtcolorbox{mybox}[2][]{enhanced,
   attach boxed title to top left={xshift=1cm,yshift=-2mm},
@@ -690,10 +690,25 @@ applicable here.
 \begin{mybox}{My title}
   \lipsum[2]
 \end{mybox}
-\end{dispExample}
+\end{exdispExample}
 
 
-\begin{dispExample}
+\begin{exdispExample}{boxed_title_style_6}
+\newtcolorbox{flipbox}[2][]{
+  enhanced,sharp corners=south,
+  attach boxed title to bottom center={yshift=0.5mm},
+  minipage boxed title*,
+  boxed title style={enhanced,size=normal,top=0pt,bottom=0pt,
+    interior hidden,sharp corners=north},
+  title={#2},#1}
+
+\begin{flipbox}{My title}
+\lipsum[2]
+\end{flipbox}
+\end{exdispExample}
+
+
+\begin{exdispExample}{boxed_title_style_7}
 % \usepackage{varwidth}
 \newtcolorbox{mybox}[2][]{skin=enhancedlast jigsaw,interior hidden,
   boxsep=0pt,top=0pt,colframe=red,coltitle=red!50!black,
@@ -718,7 +733,7 @@ applicable here.
 \begin{mybox}{My title}
   \lipsum[2]
 \end{mybox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -726,7 +741,7 @@ applicable here.
 \begin{docTcbKey}{hbox boxed title}{}{no value, initially set}
 The title text content is captured with a horizontal box.
 Especially, there are no linebreak possible.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{hbox_boxed_title}{sbs,lefthand ratio=0.66}
 \newtcolorbox{mybox}[1]{hbox boxed title,
   enhanced,attach boxed title to top center=
     {yshift=-3mm,yshifttext=-1mm},
@@ -740,14 +755,14 @@ Especially, there are no linebreak possible.
 \begin{mybox}{This title is not really very short}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{minipage boxed title}{\colOpt{=\meta{length}}}{initially unset}
 The title text content is captured with a minipage with a width of \meta{length}.
 By default, the resulting boxed title is somewhat smaller than the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{minipage_boxed_title}{sbs,lefthand ratio=0.66}
 \newtcolorbox{mybox}[1]{minipage boxed title,
   enhanced,attach boxed title to top center=
     {yshift=-3mm,yshifttext=-1mm},
@@ -761,14 +776,14 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{mybox}{This title is not really very short}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{minipage boxed title*}{\colOpt{=\meta{length}}}{initially unset}
 The title text content is captured with a minipage with a width of main box width plus \meta{length}.
 By default, the resulting boxed title is somewhat smaller than the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{minipage_boxed_title_star}{sbs,lefthand ratio=0.66}
 \newtcolorbox{mybox}[1]{minipage boxed title*=-2cm,
   enhanced,attach boxed title to top center=
     {yshift=-3mm,yshifttext=-1mm},
@@ -782,7 +797,7 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{mybox}{This title is not really very short}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -790,7 +805,7 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{docTcbKey}{tikznode boxed title}{=\meta{options}}{initially unset}
 The title text content is captured with a \tikzname\ node with given \tikzname\ \meta{options}.
 The text is centered by default
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{tikznode_boxed_title}{sbs,lefthand ratio=0.66}
 \newtcolorbox{mybox}[1]{tikznode boxed title,
   enhanced,attach boxed title to top center=
     {yshift=-3mm,yshifttext=-1mm},
@@ -804,7 +819,7 @@ The text is centered by default
 \begin{mybox}{This title\\is not really\\very short}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -812,7 +827,7 @@ The text is centered by default
 The title text content is captured with a |varwidth| environment with a width of \meta{length}.
 This style needs the |varwidth| package \cite{arseneau:2011a} to be loaded manually.
 By default, the resulting boxed title is somewhat smaller than the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{varwidth_boxed_title}{sbs,lefthand ratio=0.66}
 % \usepackage{varwidth}
 \newtcolorbox{mybox}[1]{varwidth boxed title,
   enhanced,attach boxed title to top center=
@@ -827,7 +842,7 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{mybox}{This title is not really very short}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -835,7 +850,7 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 The title text content is captured with a |varwidth| environment with a width of main box width plus \meta{length}.
 This style needs the |varwidth| package \cite{arseneau:2011a} to be loaded manually.
 By default, the resulting boxed title is somewhat smaller than the main box.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{exdispExample*}{varwidth_boxed_title_star}{sbs,lefthand ratio=0.66}
 % \usepackage{varwidth}
 \newtcolorbox{mybox}[1]{varwidth boxed title*=-2cm,
   enhanced,attach boxed title to top center=
@@ -850,7 +865,7 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{mybox}{This title is not really very short}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
