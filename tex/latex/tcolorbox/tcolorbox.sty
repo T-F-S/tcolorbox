@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.71 (2015/07/23)
+%% The LaTeX package tcolorbox - version 3.72pre1 (2015/07/24)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/07/23 version 3.71 text color boxes]
-\def\tcb@version{3.71}
+\ProvidesPackage{tcolorbox}[2015/07/24 version 3.72pre1 text color boxes]
+\def\tcb@version{3.72pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -1913,13 +1913,13 @@
 
 \def\tcb@set@library@version#1{%
   \def\tcb@library@version{#1}%
-  \typeout{Library (tcolorbox): '\tcb@library@inload' version '\tcb@library@version'}
+  \typeout{Library (tcolorbox): '\@currname' version '\tcb@library@version'}
   \tcb@check@library@version%
 }
 
 \def\tcb@check@library@version{%
   \ifx\tcb@library@version\tcb@version\else%
-  \tcb@error{tcolorbox version '\tcb@version' loads library '\tcb@library@inload' with version '\tcb@library@version'}%
+  \tcb@error{tcolorbox version '\tcb@version' loads library '\@currname' with version '\tcb@library@version'}%
     {tcolorbox is not installed correctly. At least one library is not compatible to the main package.}%
   \fi%
 }
@@ -1929,28 +1929,17 @@
 
 \providecommand{\tcbpkgprefix}{}
 
-\def\tcb@input@library@in#1{%
-  \input\tcbpkgprefix#1\relax%
-}
-
-\let\tcb@input@library=\tcb@input@library@in%
-
-\def\tcb@input@library@ex#1{%
-  \let\tcb@input@library=\tcb@input@library@in%
-  \edef\tcb@at@catcode{\the\catcode`@}%
-  \catcode`\@11\relax%
-  \tcb@input@library@in{#1}%
-  \catcode`\@\tcb@at@catcode\relax%
-  \let\tcb@input@library=\tcb@input@library@ex%
-}
-
 \def\tcb@load@library#1#2{%
   \pgfkeysifdefined{/tcb/libload/#1}{}{%
     \pgfkeyssetvalue{/tcb/libload/#1}{}%
-    \def\tcb@library@inload{#2}%
+    \xdef\@currname{#2}%
     \def\tcb@library@version{-}%
-    \tcb@input@library{#2}%
-    \tcb@check@library@version}%
+    \@pushfilename%
+    \makeatletter%
+    \input\tcbpkgprefix#2\relax%
+    \tcb@check@library@version%
+    \@popfilename%
+  }%
 }
 
 \def\tcb@add@library#1#2{%
@@ -1983,6 +1972,4 @@
 \tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,documentation}
 
 \ProcessOptions*
-\edef\tcb@temp{\noexpand\tcbuselibrary{\tcb@optionlist}}
-\tcb@temp
-\let\tcb@input@library=\tcb@input@library@ex%
+\begingroup\edef\x{\endgroup\noexpand\tcbuselibrary{\tcb@optionlist}}\x
