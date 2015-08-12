@@ -90,7 +90,19 @@
 \def\refSkin{\tcb@ref@doc{skin}}
 \makeatother
 
-\newtcolorbox{marker}[1][]{marker,#1}
+\newtcolorbox{marker}[1][]{enhanced,
+  before skip=2mm,after skip=3mm,
+  boxrule=0.4pt,left=5mm,right=2mm,top=1mm,bottom=1mm,
+  colback=yellow!50,
+  colframe=yellow!20!black,
+  sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
+  underlay={%
+    \path[fill=tcbcol@back!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[draw=tcbcol@frame,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
+    },
+  drop fuzzy shadow,#1}
+
 
 \renewcommand*{\tcbdocnew}[1]{\textcolor{green!50!black}{\sffamily\bfseries N} #1}
 \renewcommand*{\tcbdocupdated}[1]{\textcolor{blue!75!black}{\sffamily\bfseries U} #1}
@@ -167,6 +179,9 @@
 \definecolor{Blue_Dark}{rgb}{0.078431,0.188235,0.615686}
 
 
+\definecolor{Blue_Dark}{rgb}{0.090196,0.211765,0.364706}
+\definecolor{Blue_Bright}{rgb}{0.858824,0.898039,0.945098}
+
 \tcbset{
   documentation listing style=mydocumentation,%
   sbs/.style={sidebyside,before lower app={\tcbset{sidebyside=false}}},%
@@ -179,10 +194,10 @@
   },
   base example/.style={bicolor,
     beforeafter example,arc is angular,
-    colback=white,opacityback=0.87,
     fontlower=\footnotesize,
-    frame style={top color=Green_Dark,bottom color=Blue_Dark},
-    colbacklower=ExampleBack!5!white,
+    colframe=Blue_Dark,
+    colback=Blue_Bright,
+    colbacklower=white,
     drop fuzzy shadow,
     },
   docexample/.style={base example,%

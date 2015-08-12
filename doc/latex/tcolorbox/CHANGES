@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.72pre2 (2015/07/27)
+%% The LaTeX package tcolorbox - version 3.72 (2015/08/12)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -814,5 +814,8 @@ version 3.71 (2015/07/23)
 - bug fix: library 'external': spurious blank in source input removed
 - documentation extended
 
-version 3.72 (2015/xx/xx)
+version 3.72 (2015/08/12)
+- bug fix: bounding box changes and boxed title additions were not considered
+    correctly by 'height fixed for' or 'height fill' (resulting in wrong page breaks)
 - library loading made compatible with expl3
+- cosmetic documentation changes

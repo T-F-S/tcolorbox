@@ -101,7 +101,7 @@ For |minted| \cite{rudolph:2011a} support, load:
   Identical to \refEnv{docEnvironment}, but without index entry.
 \end{xdocEnvironment}}
 
-
+\clearpage
 \begin{docEnvironment}[doclang/environment content=key description,doc updated=2014-09-29]{docKey}{\oarg{key path}\oarg{options}\marg{name}\marg{parameters}\marg{description}}
   Documents a key with given \meta{name} and an optional \meta{key path}.
   The given \meta{options} are set with \refCom{tcbset}.
@@ -161,6 +161,7 @@ The environment \docAuxEnvironment{fooauxenv} holds some interesting data.
   Identical to \refCom{docAuxEnvironment}, but without index entry.
 \end{docCommand}
 
+\clearpage
 
 \begin{docCommand}{docAuxKey}{\oarg{key path}\marg{name}}
   Documents an auxiliary key with given \meta{name} and an optional \meta{key path}.
@@ -176,7 +177,6 @@ The key \docAuxKey[foo]{fooaux} holds some interesting data.
 \end{docCommand}
 
 
-\clearpage
 \begin{docCommand}[doc new=2015-01-08]{docCounter}{\marg{name}}
   Documents a counter with given \meta{name}. The counter is automatically indexed.
 \begin{dispExample}

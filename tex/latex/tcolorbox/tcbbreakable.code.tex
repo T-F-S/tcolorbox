@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.72pre2 (2015/07/27)
+%% The LaTeX package tcolorbox - version 3.72 (2015/08/12)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.72pre2}
+\tcb@set@library@version{3.72}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \def\tcb@parboxrestore@false{\vskip-\parskip\linewidth\hsize\noindent}
@@ -280,7 +280,7 @@
   \tcb@breakat@init%
   \tcbset{compress page=#1}%
   \tcb@comp@h@page%
-  \tcbset{height=\tcb@h@page,after=\eject}%
+  \tcbset{height=\tcb@h@page-\kvtcb@bbtop@stand-\kvtcb@bbbottom@stand,after=\eject}%
 }
 
 \def\tcb@height@fill@unbroken@normal{\tcb@height@fill@unbroken{none}}
@@ -723,7 +723,7 @@
 
 \def\tcb@break@ch@fixed{%
   \ifdim\tcb@natheight<\tcb@h@page\relax%
-    \tcbdimto\kvtcb@height@fixed{\tcb@h@page}%
+    \tcbdimto\kvtcb@height@fixed{\tcb@h@page-\kvtcb@bbtop-\kvtcb@bbbottom}%
     \tcb@ch@fixed%
   \else%
     \tcb@ch@natural%
