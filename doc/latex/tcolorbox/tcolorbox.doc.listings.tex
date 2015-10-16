@@ -25,12 +25,12 @@ the settings of a previous loaded library. A library is never loaded twice.
 
 
 \subsubsection{Loading \mylib{listings}}
-This library uses the package |listings| \cite{heinz:2013a} to typeset
+This library uses the package |listings| \cite{heinz:2015a} to typeset
 listings. It is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{listings}
 \end{dispListing}
-This also loads the package |listings| \cite{heinz:2013a}.
+This also loads the package |listings| \cite{heinz:2015a}.
 
 The \refKey{/tcb/listing engine} is set to |listings| by the library.
 To reactivate this setting, if overwritten by other libraries, use
@@ -47,7 +47,7 @@ variant \mylib{listingsutf8}.
 \tcbset{listing utf8=latin1}% optional; 'latin1' is the default.
 \end{dispListing}
 This also loads the library \mylib{listings}
-and the packages |listings| \cite{heinz:2013a}
+and the packages |listings| \cite{heinz:2015a}
 and |listingsutf8| \cite{oberdiek:2011a}.
 
 The \refKey{/tcb/listing engine} is set to |listings| by the library.
@@ -59,19 +59,19 @@ To reactivate this setting, if overwritten by other libraries, use
 
 \clearpage
 \subsubsection{Loading \mylib{minted}}
-This library uses the package |minted| \cite{rudolph:2011a} to typeset
+This library uses the package |minted| \cite{poore:2015a} to typeset
 listings. It is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{minted}
 \end{dispListing}
-This also loads the package |minted| \cite{rudolph:2011a}.
+This also loads the package |minted| \cite{poore:2015a}.
 
 \begin{marker}
 The |minted| package uses the external tool |Pygments| \cite{pygments:2013}
 to apply syntax highlighting. It has to be installed and set up, before the
-library can be used, see \cite{rudolph:2011a} and \cite{pygments:2013}.
+library can be used, see \cite{poore:2015a} and \cite{pygments:2013}.
 The |tcolorbox| library \mylib{minted} does not work, if the package
-|minted| \cite{rudolph:2011a} does not work.
+|minted| \cite{poore:2015a} does not work.
 \end{marker}
 
 The \refKey{/tcb/listing engine} is set to |minted| by the library.
@@ -317,7 +317,7 @@ This is my \LaTeX\ box.
 \subsection{Option Keys of the \mylib{listings} Library}\label{sec:speclistingkeys}
 
 \begin{docTcbKey}{listing options}{=\meta{key list}}{no default, initially |style=tcblatex|}
-  Sets the options from the package |listings| \cite{heinz:2013a}
+  Sets the options from the package |listings| \cite{heinz:2015a}
   which are used during typesetting of the listing.
   For \LaTeX\ listings, there is a predefined |listings| style named |tcblatex|
   which can be used.
@@ -347,7 +347,7 @@ All \textit{listings} options removed.
 
 \begin{docTcbKey}{listing style}{=\meta{style}}{no default, initially |tcblatex|}
   Abbreviation for |listing options={style=...}|. This key sets a \meta{style}
-  for the |listings| package, see \cite{heinz:2013a}.
+  for the |listings| package, see \cite{heinz:2015a}.
   For \LaTeX, there is a predefined style named |tcblatex|.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,
@@ -453,7 +453,7 @@ public class HelloWorld {
 
 
 \begin{docTcbKey}{minted options}{=\meta{key list}}{no default, initially |tabsize=2,fontsize=\textbackslash small|}
-  Sets the options from the package |minted| \cite{rudolph:2011a}
+  Sets the options from the package |minted| \cite{poore:2015a}
   which are used during typesetting of the listing.
 \begin{dispExample}
 % \tcbuselibrary{skins}

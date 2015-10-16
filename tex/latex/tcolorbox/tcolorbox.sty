@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.72 (2015/08/12)
+%% The LaTeX package tcolorbox - version 3.73 (2015/10/16)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/08/12 version 3.72 text color boxes]
-\def\tcb@version{3.72}
+\ProvidesPackage{tcolorbox}[2015/10/16 version 3.73 text color boxes]
+\def\tcb@version{3.73}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -407,7 +407,7 @@
   title code/.default=\tcb@drawtitle@standard,%
   title empty/.style={@title code=},
   %
-  geometry nodes/.store in=\kvtcv@geonodes,
+  geometry nodes/.store in=\kvtcb@geonodes,
   geometry nodes/.default=true,%
   set@extensions@preframe/.store in=\tcb@extensions@preframe,%
   set@extensions@postframe/.store in=\tcb@extensions@postframe,%
@@ -420,7 +420,7 @@
   skin first is subskin of/.style 2 args={skin@local@first/.style={skin@#1,#2},skin first=local@first},%
   skin middle is subskin of/.style 2 args={skin@local@middle/.style={skin@#1,#2},skin middle=local@middle},%
   skin last is subskin of/.style 2 args={skin@local@last/.style={skin@#1,#2},skin last=local@last},%
-  parbox/.store in=\kvtcv@parbox,
+  parbox/.store in=\kvtcb@parbox,
   parbox/.default=true,%
   hyphenationfix/.is choice,%
   hyphenationfix/.default=true,%
@@ -632,12 +632,24 @@
 
 \let\tcb@parboxrestore=\@parboxrestore
 
+\def\tcb@parbox@false@settings{%
+  \noindent%
+  \linewidth\hsize%
+  \@totalleftmargin\z@%
+  \leftskip\z@skip%
+  \rightskip\z@skip%
+  \@rightskip\z@skip%
+}
+
+\let\tcb@parbox@use@true\relax
 \def\tcb@parbox@use@false{%
-  \def\@parboxrestore{\noindent\linewidth\hsize\let\@parboxrestore=\tcb@parboxrestore\leavevmode}%
+  \def\@parboxrestore{%
+    \tcb@parbox@false@settings%
+    \let\@parboxrestore=\tcb@parboxrestore%
+    }%
 }
 
 \let\tcb@afteroptions@hook\@empty
-\let\tcb@parbox@use@true\relax%
 
 \def\tcb@minipage@top{\minipage[t]}
 \let\tcb@minipage@center=\minipage
@@ -654,7 +666,7 @@
     \def\noexpand\@currenvline{\on@line}}%
   \reserved@a
     \@endpefalse
-    \csname tcb@parbox@use@\kvtcv@parbox\endcsname%
+    \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
     \tcb@minipage#2\tcb@hyph@fix\ignorespaces}
 \def\endtcb@lrbox{\unskip\endminipage}
 
@@ -1292,7 +1304,7 @@
     \pgftext[x=0pt,y=\tcb@height-\baselineskip,left,top]{\box\tcb@phantombox}%
     \tcb@hasPhantomfalse%
   \fi%
-  \csname tcb@creategeonodes@\kvtcv@geonodes\endcsname%
+  \csname tcb@creategeonodes@\kvtcb@geonodes\endcsname%
 }
 
 \def\tcb@tdraw@title@core{%

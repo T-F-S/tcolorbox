@@ -5,7 +5,7 @@
 \tcbset{external/prefix=external/documentation_}%
 This library has the single purpose to support \LaTeX\ package documentations
 like this one. Actually, the visual nature follows the approach from
-Till Tantau's |pgf| \cite{tantau:2013a} documentation.
+Till Tantau's |pgf| \cite{tantau:2015a} documentation.
 Typically, this library is assumed to be used in conjunction with the
 class |ltxdoc| or alike.
 
@@ -34,7 +34,7 @@ For UTF-8 support, load:
   \tcbuselibrary{listingsutf8,documentation}
 \end{dispListing}
 
-For |minted| \cite{rudolph:2011a} support, load:
+For |minted| \cite{poore:2015a} support, load:
 \begin{dispListing}
   \tcbuselibrary{documentation,minted}
   \tcbset{listing engine=minted}
@@ -42,7 +42,7 @@ For |minted| \cite{rudolph:2011a} support, load:
 
 
 \subsection{Macros of the Library}
-\enlargethispage*{15mm}
+%\enlargethispage*{15mm}
 \begin{docEnvironment}[doclang/environment content=command description]{docCommand}{\oarg{options}\marg{name}\marg{parameters}}
   Documents a \LaTeX\ macro with given \meta{name} where \meta{name} is
   written without backslash. The given \meta{options} are set with \refCom{tcbset}.
@@ -490,7 +490,7 @@ with another note.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation listing options}{=\meta{key list}}{no default,\\\hspace*{\fill} initially |style=tcbdocumentation|}
-  Sets the options from the package |listings| \cite{heinz:2013a}.
+  Sets the options from the package |listings| \cite{heinz:2015a}.
   They are used inside \refEnv{dispExample} and \refEnv{dispListing} to typeset
   the listings. Note that this is not identical to the key
   \refKey{/tcb/listing options} which is used for 'normal' listings.\\
@@ -500,7 +500,7 @@ with another note.
 \begin{docTcbKey}{documentation listing style}{=\meta{listing style}}{no default, initially |tcbdocumentation|}
   Abbreviation for |documentation listing options={style=...}|.
   This key sets a \meta{style}
-  for the |listings| package, see \cite{heinz:2013a}.
+  for the |listings| package, see \cite{heinz:2015a}.
   Note that this is not identical to the key
   \refKey{/tcb/listing style} which is used for 'normal' listings.\\
   Used for \refKey{/tcb/listing engine}|=listings| only.
@@ -508,14 +508,14 @@ with another note.
 
 \begin{docTcbKey}{documentation minted style}{=\meta{key list}}{no default, initially unset}
   Sets a \meta{style} known to |Pygments| \cite{pygments:2013} for
-  the package |minted| \cite{rudolph:2011a}, if used.
+  the package |minted| \cite{poore:2015a}, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted style} which is used for 'normal' listings.\\
   Used for \refKey{/tcb/listing engine}|=minted| only.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation minted options}{=\meta{minted style}}{no default,\\\hspace*{\fill} initially |tabsize=2,fontsize=\textbackslash small|}
-  Sets the options from the package |minted| \cite{rudolph:2011a}
+  Sets the options from the package |minted| \cite{poore:2015a}
   which are used during typesetting of the listing, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted options} which is used for 'normal' listings.\\
@@ -843,6 +843,79 @@ Options to these |tcolorbox|es can be given using the following keys.
   \refKey{/tcb/doc head command}, \refKey{/tcb/doc head environment},
   and \refKey{/tcb/doc head key}.
 \end{docTcbKey}
+
+\clearpage
+The description texts of the main documentation environments \refEnv{docCommand},
+\refEnv{docEnvironment}, \refEnv{docKey}, etc, are set in a compact form without
+indention and |parskip=0pt|. This settings can overruled by using the following
+keys to insert code before (or after) the description texts.
+
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body command}{=\meta{code}}{no default, initially empty}
+  Executes \meta{code} before the description texts
+  of \refEnv{docCommand} and \refEnv{docCommand*}.
+\begin{dispExample}
+\tcbset{before doc body command={%
+    \setlength{\parindent}{2.5em}%
+    \setlength{\parskip}{1ex plus 0.75ex minus 0.25ex}%
+}}
+
+\begin{docCommand*}{myCommandG}{\marg{argment}}
+  This is the documentation of \refCom{myCommandG} which takes one \meta{argument}.
+  \refCom{myCommandG} does some funny things with its \meta{argument}.
+\end{docCommand*}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body command}{=\meta{code}}{no default, initially empty}
+  Executes \meta{code} after the description texts
+  of \refEnv{docCommand} and \refEnv{docCommand*}.
+\begin{dispExample}
+\tcbset{after doc body command={%
+    \hfill\nolinebreak[1]\hspace*{\fill}\textcolor{red}{$\diamondsuit$}%
+}}
+
+\begin{docCommand*}{myCommandH}{\marg{argment}}
+  This is the documentation of \refCom{myCommandH} which takes one \meta{argument}.
+  \refCom{myCommandH} does some funny things with its \meta{argument}.
+\end{docCommand*}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body environment}{=\meta{code}}{no default, initially empty}
+  Executes \meta{code} before the description texts
+  of \refEnv{docEnvironment} and \refEnv{docEnvironment*}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body environment}{=\meta{code}}{no default, initially empty}
+  Executes \meta{code} after the description texts
+  of \refEnv{docEnvironment} and \refEnv{docEnvironment*}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body key}{=\meta{code}}{no default, initially empty}
+  Executes \meta{code} before the description texts
+  of \refEnv{docKey} and \refEnv{docKey*}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body key}{=\meta{code}}{no default, initially empty}
+  Executes \meta{code} after the description texts
+  of \refEnv{docKey} and \refEnv{docKey*}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body}{=\meta{options}}{no default, initially empty}
+  Shortcut for setting the same \meta{options} for
+  \refKey{/tcb/before doc body command}, \refKey{/tcb/before doc body environment},
+  and \refKey{/tcb/before doc body key}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body}{=\meta{options}}{no default, initially empty}
+  Shortcut for setting the same \meta{options} for
+  \refKey{/tcb/after doc body command}, \refKey{/tcb/after doc body environment},
+  and \refKey{/tcb/after doc body key}.
+\end{docTcbKey}
+
 
 \clearpage
 \begin{docTcbKey}{doc description}{=\meta{text}}{no default, initially empty}

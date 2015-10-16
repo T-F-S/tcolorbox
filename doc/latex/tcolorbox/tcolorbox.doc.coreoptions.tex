@@ -6,7 +6,7 @@
 For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
 the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
-the syntax for |pgf| keys, see \cite{tantau:2013a,sturm:2014g} or the examples
+the syntax for |pgf| keys, see \cite{tantau:2015a,sturm:2014g} or the examples
 starting from page~\pageref{sec:latextutorial}.
 
 
@@ -590,7 +590,7 @@ This is a \textbf{tcolorbox}.
   \item\docValue{flush center}: centering with |\centering| of \LaTeX.
   \end{itemize}
   The differences between the flush and non-flush version are explained in
-  detail in the \tikzname\ manual \cite{tantau:2013a}. The short story is that
+  detail in the \tikzname\ manual \cite{tantau:2015a}. The short story is that
   the non-flush versions will often look more balanced but with more
   hyphenations.
 
@@ -1331,6 +1331,11 @@ outer arc   & auto   & auto   & auto  & auto  & 0.0pt & 0.0pt \\
     right rules and spaces are switched. It is recommended that you use this setting in
     conjunction with \refKey{/tcb/check odd page}.
   \end{itemize}
+\begin{marker}
+Horizontal bounding box enlargements are not toggled by this option.
+They can be toggled independently by \refKey{/tcb/toggle enlargement}.
+For example, \refKey{/tcb/oversize} changes the bounding box.
+\end{marker}
 \begin{dispListing}
 % \usepackage{changepage} for 'check odd page'
 % \usepackage{lipsum}
@@ -3065,6 +3070,10 @@ This is a \textbf{tcolorbox}.
     %Note that the page number detection may
     %fail in certain cases. For these cases, use the |forced| value.
   \end{itemize}
+\begin{marker}
+See \refKey{/tcb/toggle left and right} to toggle geometry settings.
+\end{marker}
+
 \begin{dispExample}
 % \usepackage{changepage} for 'check odd page'
 \tcbset{colframe=blue!75!black,colback=white,
@@ -3408,7 +3417,7 @@ This is a tcolorbox.
 
 \clearpage
 \subsection{Text Characteristics}
-\begin{docTcbKey}{parbox}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+\begin{docTcbKey}[][doc updated=2015-10-14]{parbox}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   The text inside a |tcolorbox| is formatted using a \LaTeX\ |minipage|
   if the box is unbreakable. If breakable, the box tries a mimicry of
   a |minipage|. In a |minipage| or |parbox|, paragraphs are formatted slightly different
@@ -3746,7 +3755,7 @@ do \emph{not} use |\tikzexternaldisable| in front of the |tcolorbox|.
   it may be used inside the option list of a |tcolorbox| to set the
   externalization \meta{file name} for the first |tikzpicture| which is discovered
   \emph{inside} the box content.
-  The package |tikz| \cite{tantau:2013a} or the library \mylib{skins} has to be loaded to use this option.
+  The package |tikz| \cite{tantau:2015a} or the library \mylib{skins} has to be loaded to use this option.
   Additionally, |\usetikzlibrary{external}| has to be used.
 \end{docTcbKey}
 
@@ -3754,7 +3763,7 @@ do \emph{not} use |\tikzexternaldisable| in front of the |tcolorbox|.
   Convenience option which calls |/tikz/external/remake next|. Typically,
   it may be used inside the option list of a |tcolorbox| to force the remake
   of the first |tikzpicture| which is discovered \emph{inside} the box content.
-  The package |tikz| \cite{tantau:2013a} or the library \mylib{skins} has to be loaded to use this option.
+  The package |tikz| \cite{tantau:2015a} or the library \mylib{skins} has to be loaded to use this option.
   Additionally, |\usetikzlibrary{external}| has to be used.
 \end{docTcbKey}
 

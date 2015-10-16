@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.72 (2015/08/12)
+%% The LaTeX package tcolorbox - version 3.73 (2015/10/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -819,3 +819,14 @@ version 3.72 (2015/08/12)
     correctly by 'height fixed for' or 'height fill' (resulting in wrong page breaks)
 - library loading made compatible with expl3
 - cosmetic documentation changes
+
+version 3.73 (2015/10/16)
+- bug fix: '\tcbdocmarginnote' had a spurious blank.
+- parbox=false settings adapted for embedded lists
+- library 'documentation':
+  * new options:
+  'before doc body command', 'after doc body command',
+  'before doc body environment', 'after doc body environment',
+  'before doc body key', 'after doc body key',
+  'before doc body', 'after doc body'
+
