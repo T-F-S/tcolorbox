@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.73 (2015/10/16)
+%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.73}
+\tcb@set@library@version{3.80}
 
 {
 \catcode`\"=12
@@ -197,7 +197,7 @@
 \long\def\new@tcb@externalizetcolorbox#1#2#3#4{%
   \new@tcb@externalizeenvironment{#1}{#2}%
     {preamble tcbset={force nobeforeafter},#3}%
-    {\tcb@apply@box@options{#4}\tcb@set@normal@unbroken@beforeafter\tcb@before@unbroken}%
+    {\tcb@layer@pushup\tcb@apply@box@options{#4}\tcb@set@normal@unbroken@beforeafter\tcb@before@unbroken}%
     {\tcb@after@unbroken}%
 }
 
@@ -256,7 +256,7 @@
   },
   minipage/.code={%
     \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{minipage}{\the\dimexpr#1\relax}\string\ignorespaces\@percentchar}}%
-    \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\unskip\string\end{minipage}\@percentchar}}%
+    \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{minipage}\@percentchar}}%
   },
   minipage/.default=\linewidth,
   %

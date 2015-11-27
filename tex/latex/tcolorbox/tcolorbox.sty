@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.73 (2015/10/16)
+%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/10/16 version 3.73 text color boxes]
-\def\tcb@version{3.73}
+\ProvidesPackage{tcolorbox}[2015/11/27 version 3.80 text color boxes]
+\def\tcb@version{3.80}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -39,6 +39,7 @@
 \newif\iftcb@titlefilled
 \newif\iftcb@fixedheight
 \newif\iftcb@ignorenobreak
+\newif\iftcb@checkpage
 
 \newbox\tcb@titlebox
 \newbox\tcb@upperbox
@@ -47,6 +48,7 @@
 
 \newcounter{tcbbreakpart}
 \newcounter{tcblayer}
+\newcount\tcolorbox@number
 
 \def\tcb@warning#1{\PackageWarning{tcolorbox}{#1}}
 \def\tcb@error#1#2{\PackageError{tcolorbox}{#1}{#2}}
@@ -116,7 +118,7 @@
 
 \def\tcb@set@embed@tcbox#1{%
   \long\def\tcb@embed@tcbox##1{%
-    \tcbdimto\tcb@w@upper{\kvtcb@width-\kvtcb@left@rule-\kvtcb@leftupper-\kvtcb@boxsep*2-\kvtcb@rightupper-\kvtcb@right@rule}%
+    \tcbdimto\tcb@w@upper{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@leftupper+(\kvtcb@boxsep)*2+\kvtcb@rightupper+\kvtcb@right@rule)}%
     #1}%
 }
 
@@ -201,10 +203,10 @@
   circular arc/.style={arc=\tcb@innerwidth/2},
   bean arc/.code={%
     \iftcb@fixedheight%
-      \ifdim\dimexpr\kvtcb@width-\kvtcb@left@rule-\kvtcb@right@rule>\dimexpr\kvtcb@height@fixed-\kvtcb@top@rule@stand-\kvtcb@bottom@rule@stand\relax%
-        \def\kvtcb@arc{(\kvtcb@height@fixed-\kvtcb@top@rule@stand-\kvtcb@bottom@rule@stand)/2}%
+      \ifdim\dimexpr\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule)>\dimexpr\kvtcb@height@fixed-(\kvtcb@top@rule@stand+\kvtcb@bottom@rule@stand)\relax%
+        \def\kvtcb@arc{(\kvtcb@height@fixed-(\kvtcb@top@rule@stand+\kvtcb@bottom@rule@stand))/2}%
       \else%
-        \def\kvtcb@arc{(\kvtcb@width-\kvtcb@left@rule-\kvtcb@right@rule)/2}%
+        \def\kvtcb@arc{(\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule))/2}%
       \fi%
     \else%
       \def\kvtcb@arc{\tcb@innerwidth/2}%
@@ -289,12 +291,13 @@
   text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed\let\tcb@height@adjust\@empty},
   add to height/.code={\ifdefined\kvtcb@height@fixed\tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+(#1)}\fi},
   height plus/.dimstore in=\kvtcb@height@fixed@plus,%
-  height from/.style args={#1 to #2}{height={#1},height plus={#2-#1}},%
+  height from/.style args={#1 to #2}{height={#1},height plus={#2-(#1)}},%
   height fill/.is choice,%
   height fill/false/.code={\let\tcb@height@adjust\@empty},%
   square/.style={height=\kvtcb@width},
   equal height group/.code={\edef\tcb@ehgid{#1}\let\tcb@ch=\tcb@ch@equalheight},
   minimum for equal height group/.code args={#1:#2}{\edef\tcb@ehgid{#1}\tcb@ehgadd{#2}},
+  use height from group/.code={\ifcsundef{tcb@ehg@height@#1}{}{\tcbset{height=\csuse{tcb@ehg@height@#1}}}},
   space/.code={\def\tcb@height@fraction{#1}\let\tcb@ch@fixed@both=\tcb@ch@fixed@space},
   space to upper/.style={space=1},
   space to lower/.style={space=0},
@@ -359,17 +362,17 @@
   grow to right by/.code={%
     \tcbdimto\kvtcb@width{\kvtcb@width+#1}%
     \pgfkeysalso{enlarge right by={-\the\dimexpr#1\relax}}},%
-  left skip/.style={grow to left by={-#1}},
-  right skip/.style={grow to right by={-#1}},
+  left skip/.style={grow to left by={-\dimexpr#1\relax}},
+  right skip/.style={grow to right by={-\dimexpr#1\relax}},
   leftright skip/.style={left skip={#1},right skip={#1}},
   toggle enlargement/.is choice,
   toggle enlargement/none/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@none},
-  toggle enlargement/evenpage/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@evenpage},
+  toggle enlargement/evenpage/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@evenpage\tcbset{check odd page}},
   toggle enlargement/forced/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@forced},
   toggle enlargement/.default=evenpage,
   toggle left and right/.is choice,
   toggle left and right/none/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@none},
-  toggle left and right/evenpage/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@evenpage},
+  toggle left and right/evenpage/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@evenpage\tcbset{check odd page}},
   toggle left and right/forced/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@forced},
   toggle left and right/.default=evenpage,
   graphical environment/.store in=\kvtcb@graphenv,
@@ -458,8 +461,10 @@
   after title/.store in=\kvtcb@after@title,%
   before upper/.store in=\kvtcb@before@upper,%
   after upper/.store in=\kvtcb@after@upper,%
+  after upper*/.style={after upper={\unskip#1}},%
   before lower/.store in=\kvtcb@before@lower,%
   after lower/.store in=\kvtcb@after@lower,%
+  after lower*/.style={after lower={\unskip#1}},%
   center title/.style={halign title=flush center},%
   center upper/.style={halign upper=flush center},%
   center lower/.style={halign lower=flush center},%
@@ -481,7 +486,7 @@
   tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=0pt,outer sep=0pt,#1]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
   tikznode lower/.style={before lower={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=0pt,outer sep=0pt,#1]\bgroup},after lower={\egroup;\end{tikzpicture}}},%
   tikznode/.style={tikznode upper={#1},tikznode lower={#1}},%
-  varwidth upper/.style={before upper={\tcbdimto\tcb@w@upper{#1-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@leftupper-\kvtcb@rightupper}%
+  varwidth upper/.style={before upper={\tcbdimto\tcb@w@upper{#1-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@leftupper+\kvtcb@rightupper)}%
     \begin{varwidth}{\tcb@w@upper}},after upper={\end{varwidth}}},%
   varwidth upper/.default=\kvtcb@width,
   text fill/.style={before upper={%
@@ -499,22 +504,26 @@
     after upper=\endminipage},
   oversize/.style={%
     width=\the\dimexpr\dimexpr\linewidth+#1+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax,%
-    enlarge left by=\the\dimexpr-\kvtcb@left@rule-\kvtcb@leftupper-\kvtcb@boxsep-#1/2\relax,%
-    enlarge right by=\the\dimexpr-\kvtcb@boxsep-\kvtcb@rightupper-\kvtcb@right@rule-#1/2\relax},%
+    enlarge left by=-\the\dimexpr\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep+(#1)/2\relax,%
+    enlarge right by=-\the\dimexpr\kvtcb@boxsep+\kvtcb@rightupper+\kvtcb@right@rule+(#1)/2\relax},%
   oversize/.default=0pt,%
+  flush right/.style={enlarge left by=\linewidth-(\kvtcb@width)},
+  flush left/.style={enlarge right by=\linewidth-(\kvtcb@width)},
+  center/.style={enlarge left by=(\linewidth-(\kvtcb@width))/2,enlarge right by=\kvtcb@bbleft},
   baseline/.store in=\kvtcb@baseline,%
-  tcbox raise/.style={baseline=-#1},%
+  tcbox raise/.style={baseline=-\the\dimexpr#1\relax},%
   tcbox raise base/.style={baseline=\tcb@val@raisebase},%
   box align/.is choice,%
   box align/bottom/.style={baseline=0pt},%
   box align/top/.style={baseline=\tcb@height},%
   box align/center/.style={baseline=\tcb@height/2},%
   box align/base/.style={baseline=\tcb@val@raisebase},%
-  shrink tight/.style={boxsep=0mm,top=-\kvtcb@top@rule@stand,bottom=-\kvtcb@bottom@rule@stand,left=-\kvtcb@left@rule,right=-\kvtcb@right@rule},%
-  extrude left by/.code={\tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}\tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-#1}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
-  extrude right by/.code={\tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}\tcbdimto\kvtcb@bbright{\kvtcb@bbright-#1}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
-  extrude top by/.code={\tcbdimto\kvtcb@top{\kvtcb@top+#1}\tcbdimto\kvtcb@bbtop@stand{\kvtcb@bbtop@stand-#1}},%
-  extrude bottom by/.code={\tcbdimto\kvtcb@bottom{\kvtcb@bottom+#1}\tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand-#1}},%
+  shrink tight/.style={boxsep=0mm,top=-\the\dimexpr\kvtcb@top@rule@stand\relax,bottom=-\the\dimexpr\kvtcb@bottom@rule@stand\relax,%
+    left=-\the\dimexpr\kvtcb@left@rule\relax,right=-\the\dimexpr\kvtcb@right@rule\relax},%
+  extrude left by/.code={\tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}\tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-(#1)}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
+  extrude right by/.code={\tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}\tcbdimto\kvtcb@bbright{\kvtcb@bbright-(#1)}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
+  extrude top by/.code={\tcbdimto\kvtcb@top{\kvtcb@top+#1}\tcbdimto\kvtcb@bbtop@stand{\kvtcb@bbtop@stand-(#1)}},%
+  extrude bottom by/.code={\tcbdimto\kvtcb@bottom{\kvtcb@bottom+#1}\tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand-(#1)}},%
   extrude by/.style={extrude left by=#1,extrude right by=#1,extrude top by=#1,extrude bottom by=#1},%
   sidebyside/.is if=tcb@sidebyside,%
   sidebyside align/.is choice,%
@@ -538,14 +547,11 @@
   capture/.store in=\kvtcb@capture,%
   hbox/.style={capture=hbox},%
   minipage/.style={capture=minipage},%
-  check odd page/.is choice,
-  check odd page/true/.code={\let\tcb@checkoddpage=\checkoddpage%
-    \def\tcb@evenoddmode{strict}%
-    },
-  check odd page/false/.code={\let\tcb@checkoddpage=\relax%
-    \def\tcb@evenoddmode{easy}%
-    },
-  check odd page/.default=true,
+  check odd page/.is if=tcb@checkpage,
+  if odd page/.code 2 args={%
+    \tcbset{check odd page}%
+    \ifodd\thetcolorboxpage\tcbset{#1}\else\tcbset{#2}\fi%
+  },
   phantom/.code={\appto\kvtcb@phantom{#1}},
   step and label/.style 2 args={phantom={\refstepcounter{#1}\tcb@set@label{#2}}},%
   step/.style={phantom={\refstepcounter{#1}}},%
@@ -668,7 +674,7 @@
     \@endpefalse
     \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
     \tcb@minipage#2\tcb@hyph@fix\ignorespaces}
-\def\endtcb@lrbox{\unskip\endminipage}
+\let\endtcb@lrbox=\endminipage
 
 \let\tcb@savebox=\tcb@lrbox
 \let\endtcb@savebox=\endtcb@lrbox
@@ -700,16 +706,18 @@
 
 
 \def\tcb@set@@phantom{%
+  \iftcb@checkpage\tcb@phantom@savepage\fi%
   \ifx\kvtcb@phantom\@empty\tcb@hasPhantomfalse\else%
     \tcb@hasPhantomtrue%
     \sbox\tcb@phantombox{\kvtcb@phantom}%
+    \let\kvtcb@phantom\@empty%
   \fi%
 }
 
 \def\tcb@set@@title{%
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
-    \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)}%
+    \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@lefttitle+\kvtcb@righttitle)}%
     \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
   \fi%
 }
@@ -774,7 +782,7 @@
   \let\tcb@after@box=\kvtcb@after@upper%
   % switch for lower box
   \def\tcblower{%
-    \unskip\tcb@after@box%
+    \tcb@after@box%
     \end{tcb@savebox}%
     \tcb@set@color{tcbcol@lower}%
     \unless\iftcb@sidebyside%
@@ -827,6 +835,35 @@
   \tcb@finalize@environment%
 }
 
+\def\tcb@count@boxes{%
+  \global\advance\tcolorbox@number by 1\relax%
+  \edef\thetcolorboxnumber{\number\tcolorbox@number}%
+  \expandafter\ifx\csname tcolorboxpage@\thetcolorboxnumber\endcsname\relax%
+    \edef\thetcolorboxpage{\number\c@page}%
+  \else%
+    \expandafter\let\expandafter\thetcolorboxpage\csname tcolorboxpage@\thetcolorboxnumber\endcsname%
+  \fi%
+}
+
+\def\tcolorbox@label{\@newl@bel{tcolorboxpage}}%
+
+\write\@auxout{\string\providecommand\string\tcolorbox@label[2]{}}%
+
+\def\tcolorbox@savepage#1{%
+    \@bsphack%
+    \write\@auxout{\string\tcolorbox@label{#1}{\number\c@page}}%
+    \@esphack%
+}%
+
+\def\tcb@phantom@savepage{\preto\kvtcb@phantom{\expandafter\tcolorbox@savepage\expandafter{\thetcolorboxnumber}}}
+
+\def\tcbifoddpage{%
+  \ifodd\thetcolorboxpage\relax%
+    \expandafter\@firstoftwo%
+  \else%
+    \expandafter\@secondoftwo%
+  \fi%
+}
 
 \def\tcb@managed@layers@max{0}
 \def\tcbsetmanagedlayers#1{%
@@ -853,6 +890,7 @@
 }
 
 \def\tcb@layer@inc{%
+  \tcb@count@boxes%
   \stepcounter{tcblayer}%
   \ifnum\c@tcblayer>1%
     \tcbset{breakable@true/.code=}%
@@ -869,6 +907,8 @@
 }
 
 \def\tcb@layer@pushup{%
+  \tcb@count@boxes%
+  \global\advance\tcolorbox@number by -1\relax%
   \stepcounter{tcblayer}%
   \ifnum\c@tcblayer>1%
     \tcbset{breakable@true/.code=}%
@@ -913,7 +953,7 @@
 \let\tcolorbox\tcb@colorbox
 
 \def\tcb@endboxanddraw{%
-  \unskip\tcb@after@box%
+  \tcb@after@box%
   \end{tcb@savebox}%
   \tcb@reset@color%
   \tcb@draw@color@box%
@@ -929,7 +969,7 @@
 
 % height computations
 \def\tcb@ch@natural{%
-  \edef\tcb@height{\tcb@natheight}%
+  \let\tcb@height\tcb@natheight%
   \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
   \iftcb@lowerspace%
   \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
@@ -955,13 +995,13 @@
 
 \def\tcb@ch@fixed{%
   \ifdim\tcb@natheight<\dimexpr\kvtcb@height@fixed\relax%
-    \edef\tcb@height{\kvtcb@height@fixed}%
+    \tcbdimto\tcb@height{\kvtcb@height@fixed}%
   \else%
     \tcbdimto\tcb@temp{\kvtcb@height@fixed+\kvtcb@height@fixed@plus}%
-    \ifdim\tcb@natheight>\tcb@temp%
-      \edef\tcb@height{\tcb@temp}%
+    \ifdim\tcb@natheight>\tcb@temp\relax%
+      \let\tcb@height\tcb@temp%
     \else%
-      \edef\tcb@height{\tcb@natheight}%
+      \let\tcb@height\tcb@natheight%
     \fi%
   \fi%
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
@@ -970,6 +1010,14 @@
 \def\tcb@ch@innerfixed{%
   \tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+\kvtcb@top@rule+\kvtcb@bottom@rule+\tcb@h@padtitle+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom}%
   \tcb@ch@fixed%
+}
+
+\def\tcbheightfromgroup#1#2{%
+  \ifcsundef{tcb@ehg@height@#2}{%
+    \let#1\tcb@zpt%
+  }{%
+    \letcs{#1}{tcb@ehg@height@#2}%
+  }%
 }
 
 \def\tcb@saveehg#1{%
@@ -992,12 +1040,12 @@
   \tcb@ehgadd{\tcb@natheight}%
   \ifcsdef{tcb@ehg@height@\tcb@ehgid}{%
     \ifdim\csuse{tcb@ehg@height@\tcb@ehgid}<\tcb@natheight\relax%
-      \edef\tcb@height{\tcb@natheight}%
+      \let\tcb@height\tcb@natheight%
     \else%
       \letcs{\tcb@height}{tcb@ehg@height@\tcb@ehgid}%
     \fi%
   }{%
-    \edef\tcb@height{\tcb@natheight}%
+    \let\tcb@height\tcb@natheight%
   }%
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
 }
@@ -1243,7 +1291,6 @@
   \end{pgfscope}%
 }
 
-
 \def\tcb@setbb@toggle@none{%
   \pgfpathrectanglecorners{\pgfqpoint{\the\dimexpr0pt-\kvtcb@bbleft\relax}{\the\dimexpr0pt-\kvtcb@bbbottom\relax}}%
      {\pgfqpoint{\the\dimexpr\tcb@width+\kvtcb@bbright\relax}{\the\dimexpr\tcb@height+\kvtcb@bbtop\relax}}%
@@ -1254,16 +1301,8 @@
     {\pgfqpoint{\the\dimexpr\tcb@width+\kvtcb@bbleft\relax}{\the\dimexpr\tcb@height+\kvtcb@bbtop\relax}}%
 }
 
-\def\tcb@setbb@toggle@evenpage@easy{%
-  \ifodd\thepage\tcb@setbb@toggle@none\else\tcb@setbb@toggle@forced\fi%
-}
-
-\def\tcb@setbb@toggle@evenpage@strict{%
-  \ifoddpage\tcb@setbb@toggle@none\else\tcb@setbb@toggle@forced\fi%
-}
-
 \def\tcb@setbb@toggle@evenpage{%
-  \csname tcb@setbb@toggle@evenpage@\tcb@evenoddmode\endcsname%
+  \ifodd\thetcolorboxpage\tcb@setbb@toggle@none\else\tcb@setbb@toggle@forced\fi%
 }
 
 \def\tcb@creategeonodes@false{}
@@ -1283,20 +1322,11 @@
   \tcb@swap{\kvtcb@leftlower}{\kvtcb@rightlower}%
 }
 
-\def\tcb@lrtoggle@evenpage@easy{%
-  \unless\ifodd\thepage\tcb@lrtoggle@forced\fi%
-}
-
-\def\tcb@lrtoggle@evenpage@strict{%
-  \unless\ifoddpage\tcb@lrtoggle@forced\fi%
-}
-
 \def\tcb@lrtoggle@evenpage{%
-  \csname tcb@lrtoggle@evenpage@\tcb@evenoddmode\endcsname%
+  \unless\ifodd\thetcolorboxpage\tcb@lrtoggle@forced\fi%
 }
 
 \def\tcb@bbdraw{%
-  \tcb@checkoddpage%
   \tcb@lrtoggle%
   \tcb@setbb@toggle%
   \pgfusepath{use as bounding box}%
@@ -1511,7 +1541,7 @@
   \tcb@set@@phantom%
   \colorlet{tcbcol@origin}{.}%
   \tcb@set@color{tcbcol@upper}%
-  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper}}%
+  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\kvtcb@after@upper}}%
   \tcb@reset@color%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
@@ -1529,7 +1559,7 @@
   \tcb@set@@dimensions%
   \colorlet{tcbcol@origin}{.}%
   \tcb@set@color{tcbcol@upper}%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\unskip\kvtcb@after@upper\end{tcb@savebox}%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\kvtcb@after@upper\end{tcb@savebox}%
   \tcb@reset@color%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%

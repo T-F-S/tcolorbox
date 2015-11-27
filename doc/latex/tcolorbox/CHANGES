@@ -1,7 +1,7 @@
-%% The LaTeX package tcolorbox - version 3.73 (2015/10/16)
+%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2014 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -830,3 +830,21 @@ version 3.73 (2015/10/16)
   'before doc body key', 'after doc body key',
   'before doc body', 'after doc body'
 
+version 3.80 (2015/11/27)
+- superfluous and sometimes troublesome \unskip's were removed.
+  Note that this changed the behavior of 'after upper' and 'after lower'.
+  Some user code may need to apply the new 'after upper*' / 'after lower*'
+  options or insert an \unskip.
+- even/odd page testing completely rewritten.
+- some difference formulas were revised.
+- new macros:
+  '\thetcolorboxnumber', '\thetcolorboxpage',
+  '\tcbifoddpage', '\tcbheightfromgroup'
+- new options:
+  'after upper*', 'after lower*',
+  'center', 'flush right', 'flush left',
+  'if odd page', 'if odd page*',
+  'use height from group'
+- library 'xparse':
+  * new macro:    '\tcbsidebyside'
+  * new options:  'sidebyside adapt', 'sidebyside switch'

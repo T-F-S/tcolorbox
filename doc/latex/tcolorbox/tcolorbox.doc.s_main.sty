@@ -39,9 +39,6 @@
 
 %\RequirePackage[cache]{minted}% minted 2.0
 
-\RequirePackage{changepage}
-\strictpagecheck
-
 \providecommand{\tcbpkgprefix}{}
 \RequirePackage{\tcbpkgprefix tcolorbox}
 
@@ -128,7 +125,8 @@
     endtcolorbox,endtcbverbatimwrite,newtcolorbox,newtcbox,newtcboxfit,tcbusetemp,tcbtitle,tcbtitletext,
     tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
     tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
-    tcbpatcharcangular,tcbpatcharcround,
+    tcbpatcharcangular,tcbpatcharcround,tcbifoddpage,thetcolorboxnumber,thetcolorboxpage,
+    tcbheightfromgroup,
     % listings
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
@@ -159,7 +157,7 @@
     DeclareTCBInputListing,NewTCBInputListing,RenewTCBInputListing,ProvideTCBInputListing,
     DeclareTCBoxFit,NewTCBoxFit,RenewTCBoxFit,ProvideTCBoxFit,
     DeclareTotalTCBoxFit,NewTotalTCBoxFit,RenewTotalTCBoxFit,ProvideTotalTCBoxFit,
-    tcboxverb,
+    tcbsidebyside,tcboxverb,
     % externalization
     tcbEXTERNALIZE,tcbifexternal,newtcbexternalizeenvironment,
     renewtcbexternalizeenvironment,extcolorbox,extikzpicture,

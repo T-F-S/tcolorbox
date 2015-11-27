@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.73 (2015/10/16)
+%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.73}
+\tcb@set@library@version{3.80}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -87,7 +87,6 @@
 }
 
 \def\endtcb@vbox{%
-  \unskip%
   \par%
   \unskip%
   \ifvoid\@mpfootins\else%
@@ -594,10 +593,21 @@
   \fi%
 }
 
+\def\tcb@nextbreakpart{%
+  \stepcounter{tcbbreakpart}%
+  \tcb@count@boxes%
+  \iftcb@checkpage%
+    \tcb@phantom@savepage%
+    \tcb@hasPhantomtrue%
+    \sbox\tcb@phantombox{\kvtcb@phantom}%
+    \let\kvtcb@phantom\@empty%
+  \fi%
+  \tcb@following@title%
+}
+
 
 \def\tcb@split@USL{%
-  \stepcounter{tcbbreakpart}%
-  \tcb@following@title%
+  \tcb@nextbreakpart%
   \tcb@comp@h@page%
   \tcb@defToTotalHeight\tcb@h@upper{\tcb@totalupperbox}%
   \tcbdimto\tcb@h@total{\tcb@h@padding@last+\tcb@h@padtitle+\tcb@h@upper+\tcb@h@segment+\tcb@h@lower}%
@@ -663,8 +673,7 @@
 
 
 \def\tcb@split@SL{%
-  \stepcounter{tcbbreakpart}%
-  \tcb@following@title%
+  \tcb@nextbreakpart%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
   \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}%
@@ -693,8 +702,7 @@
 
 
 \def\tcb@split@L{%
-  \stepcounter{tcbbreakpart}%
-  \tcb@following@title%
+  \tcb@nextbreakpart%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
   \tcb@defToTotalHeight\tcb@h@lower{\tcb@totallowerbox}%
@@ -940,6 +948,7 @@
   no extras middle/.code={\let\tcb@extras@middle\@empty},%
   no extras last/.code={\let\tcb@extras@last\@empty},%
   no extras/.code={\let\tcb@extras@unbroken\@empty\let\tcb@extras@first\@empty\let\tcb@extras@middle\@empty\let\tcb@extras@last\@empty},%
+  if odd page*/.style 2 args={check odd page,extras={if odd page={#1}{#2}}},%
 }
 
 

@@ -1321,15 +1321,15 @@ outer arc   & auto   & auto   & auto  & auto  & 0.0pt & 0.0pt \\
 
 
 \clearpage
-\begin{docTcbKey}{toggle left and right}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
+\begin{docTcbKey}[][doc updated=2015-11-13]{toggle left and right}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
   According to the \meta{toggle preset}, the left and the right settings of
   the |tcolorbox| are switched or not. Feasible values are:
   \begin{itemize}
   \item\docValue{none}: no switching.
   \item\docValue{forced}: the values of the left and right rules and spaces are switched.
   \item\docValue{evenpage}: if the page is an even page, the values of the left and
-    right rules and spaces are switched. It is recommended that you use this setting in
-    conjunction with \refKey{/tcb/check odd page}.
+    right rules and spaces are switched. This value also sets
+    \refKey{/tcb/check odd page} to |true|.
   \end{itemize}
 \begin{marker}
 Horizontal bounding box enlargements are not toggled by this option.
@@ -1337,19 +1337,18 @@ They can be toggled independently by \refKey{/tcb/toggle enlargement}.
 For example, \refKey{/tcb/oversize} changes the bounding box.
 \end{marker}
 \begin{dispListing}
-% \usepackage{changepage} for 'check odd page'
 % \usepackage{lipsum}
 % \usetikzlibrary{patterns}
 % \tcbuselibrary{skins,breakable}
 \begin{tcolorbox}[skin=enhancedmiddle,breakable,
-  check odd page,toggle left and right,
+  toggle left and right,
   boxrule=0mm,top=0mm,bottom=0mm,left=1mm,right=1mm,
   rightrule=1cm,colupper=blue!25!black,
   interior style={fill overzoom image=lichtspiel.jpg,fill image opacity=0.25},
   frame style={pattern=crosshatch dots light steel blue},
   overlay={%
-    \ifoddpage\coordinate (X) at ([xshift=-5mm]frame.east);
-         \else\coordinate (X) at ([xshift=5mm]frame.west);\fi
+    \tcbifoddpage{\coordinate (X) at ([xshift=-5mm]frame.east);}
+                 {\coordinate (X) at ([xshift=5mm]frame.west);}
     \fill[shading=ball,ball color=blue!50!white,opacity=0.5] (X) circle (4mm);}]
 \lipsum[1-6]
 \end{tcolorbox}
@@ -1851,7 +1850,7 @@ colframe=red!75!black,colback=white}
 \begin{tcolorbox}[equal height group=B]
   Now, we use another equal height group.
 \end{tcolorbox}%
-\begin{tcolorbox}[equal height group=B]
+\begin{tcolorbox}[equal height group=B,after=]
   \begin{equation*}
     \int\limits_{0}^{1} x^2 = \frac13.
   \end{equation*}
@@ -1900,6 +1899,31 @@ with a listing.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2015-11-27]{use height from group}{=\meta{id}}{style, no default}
+  Sets the current box to a fixed \refKey{/tcb/height} which is copied from
+  an equal height group with the given \meta{id}. If this height is not
+  available during the current compilation, no fixed height setting is used.\par
+  Note that the natural height of the current box is not considered for
+  computation of the group height. The main application for
+  \refKey{/tcb/use height from group} is that the height can be adapted
+  further by \refKey{/tcb/add to height}.
+
+\begin{dispExample}
+\begin{tcolorbox}[use height from group=C,add to height=-2cm,
+  colframe=blue!75!black,colback=white]
+Height from group 'C' of the previous example, but reduced by 2cm.
+\end{tcolorbox}%
+\end{dispExample}
+\end{docTcbKey}
+
+\enlargethispage*{1cm}
+\begin{docCommand}[doc new=2015-11-27]{tcbheightfromgroup}{\marg{macro}\marg{id}}
+  Saves the height from an equal height group with the given \meta{id}
+  to a \meta{macro}. If this height is not available during the current compilation,
+  \meta{macro} is set to |0pt|.
+\end{docCommand}
+
+
 \clearpage
 \subsection{Box Content Additions}\label{subsec:contentadditions}
 The following options introduce some arbitrary \meta{code} to the content
@@ -1933,6 +1957,7 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
+\clearpage
 \begin{docTcbKey}{before upper}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the color and font settings
   and \emph{before} the content of the upper part.
@@ -1946,8 +1971,8 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
-\clearpage
-\begin{docTcbKey}{after upper}{=\meta{code}}{no default, initially unset}
+
+\begin{docTcbKey}[][doc updated=2015-11-27]{after upper}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the upper part.
 \begin{dispExample}
 \tcbset{after upper={\par\hfill\textit{Read more next week}},
@@ -1959,7 +1984,23 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
+\begin{docTcbKey}[][doc new=2015-11-27]{after upper*}{=\meta{code}}{no default, initially unset}
+  An |\unskip| and the given \meta{code} is placed \emph{after} the content of the upper part.
+\begin{dispExample}
+\begin{tcolorbox}[before upper=\flqq,after upper*=\frqq,
+  colback=red!5!white,colframe=red!75!black]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
 
+\begin{marker}
+Prior to version 3.80, \refKey{/tcb/after upper} had the functionality
+of \refKey{/tcb/after upper*}.
+\end{marker}
+\end{docTcbKey}
+
+
+\clearpage
 \begin{docTcbKey}{before lower}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the color and font settings
   and \emph{before} the content of the lower part.
@@ -1975,18 +2016,34 @@ This is the lower part.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{after lower}{=\meta{code}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2015-11-27]{after lower}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the lower part.
 \begin{dispExample}
-\tcbset{after lower=\ \textit{This is the end.},
-  colback=red!5!white,colframe=red!75!black}
+\begin{tcolorbox}[before lower=$,after lower=$,
+  colback=red!5!white,colframe=red!75!black]
+This is a \textbf{tcolorbox}.
+\tcblower
+\sin^2(x)+\cos^2(x)=1.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
 
-\begin{tcolorbox}
+
+\begin{docTcbKey}[][doc new=2015-11-27]{after lower*}{=\meta{code}}{no default, initially unset}
+  An |\unskip| and the given \meta{code} is placed \emph{after} the content of the lower part.
+\begin{dispExample}
+\begin{tcolorbox}[after lower*=\ \textit{This is the end.},
+  colback=red!5!white,colframe=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
 \end{dispExample}
+
+\begin{marker}
+Prior to version 3.80, \refKey{/tcb/after lower} had the functionality
+of \refKey{/tcb/after lower*}.
+\end{marker}
 \end{docTcbKey}
 
 
@@ -2431,218 +2488,6 @@ are drawn by the codes given with
 \end{docTcbKey}
 
 
-\clearpage
-\subsection{Side by Side}\label{subsec:sidebyside}
-\begin{marker}
-  Further side by side options for code examples are
-  \refKey{/tcb/listing side text},
-  \refKey{/tcb/text side listing},
-  \refKey{/tcb/listing outside text}, and
-  \refKey{/tcb/text outside listing}.
-\end{marker}
-
-\begin{docTcbKey}{sidebyside}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
-Normally, the upper part and the lower part of the box have their positions
-as their names suggest. If |sidebyside| is set to |true|, the upper part
-is drawn \emph{left-handed} and the lower part is drawn \emph{right-handed}.
-Both parts are drawn together with the geometry settings of the upper part but the
-space is divided horizontally according to the following options.
-Colors, fonts, and box content additions are used individually.
-The resulting box is unbreakable.
-
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
-
-\begin{tcolorbox}[title=My title,sidebyside]
-This is the upper (\textit{left-handed}) part.
-\tcblower
-This is the lower (\textit{right-handed}) part.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-
-\begin{docTcbKey}[][doc updated=2015-02-06]{sidebyside align}{=\meta{alignment}}{no default, initially |center|}
-  Sets the vertical \meta{alignment} for the left-handed and right-handed part.
-  Feasible values are \docValue{center}, \docValue{top}, \docValue{bottom},
-  \docValue{center seam}, \docValue{top seam}, and \docValue{bottom seam}.
-\begin{exdispExample}{sidebyside_align}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,nobeforeafter,
-  left=2mm,right=2mm,sidebyside,sidebyside gap=6mm,width=(\linewidth-2mm)/3}
-
-\begin{tcolorbox}[adjusted title=center,sidebyside align=center]
-This is a text which is too long for one line.
-\tcblower
-This is a short text.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=top,sidebyside align=top]
-This is a text which is too long for one line.
-\tcblower
-This is a short text.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=bottom,sidebyside align=bottom]
-This is a text which is too long for one line.
-\tcblower
-This is a short text.
-\end{tcolorbox}
-\end{exdispExample}
-
-\clearpage
-\docValue{center}, \docValue{top}, and \docValue{bottom} are identical
-to the known corresponding |minipage| options. For example, \docValue{top}
-aligns the top lines  of the lefthand and righthand side
-according to their baselines.
-While this is the preferred approach for text content, the result for
-boxed content like tables or images may not be as expected.
-
-For such content, one may use \docValue{center seam}, \docValue{top seam},
-and \docValue{bottom seam}. For example, \docValue{top seam} aligns
-the very top seam of the lefthand and righthand side.
-
-
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-  size=small,righthand width=4cm,sidebyside,sidebyside gap=6mm,lower separated=false}
-
-\begin{tcolorbox}[adjusted title=center seam,sidebyside align=center seam]
-  This is my description text for the pictures displayed on the righthand side.
-  \tcblower
-  \includegraphics[width=\linewidth/2]{goldshade}%
-  \includegraphics[width=\linewidth/2]{blueshade}
-\end{tcolorbox}
-
-\begin{tcolorbox}[adjusted title=top seam,sidebyside align=top seam]
-  This is my description text for the pictures displayed on the righthand side.
-  \tcblower
-  \includegraphics[width=\linewidth/2]{goldshade}%
-  \includegraphics[width=\linewidth/2]{blueshade}
-\end{tcolorbox}
-
-\begin{tcolorbox}[adjusted title=bottom seam,sidebyside align=bottom seam]
-  This is my description text for the pictures displayed on the righthand side.
-  \tcblower
-  \includegraphics[width=\linewidth/2]{goldshade}%
-  \includegraphics[width=\linewidth/2]{blueshade}
-\end{tcolorbox}
-\end{dispExample}
-
-
-
-\end{docTcbKey}
-
-\clearpage
-\begin{docTcbKey}{sidebyside gap}{=\meta{length}}{no default, initially |10mm|}
-Sets the horizontal distance between the left-handed and right-handed part to
-\meta{length}.
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,nobeforeafter,
-  sidebyside,width=(\linewidth-2mm)/2}
-
-\begin{tcolorbox}[adjusted title=Wide gap,sidebyside gap=30mm]
-This is a text which is too long for one line.
-\tcblower
-This is a short text.
-\end{tcolorbox}\hfill
-\begin{tcolorbox}[adjusted title=Narrow gap,sidebyside gap=1mm]
-This is a text which is too long for one line.
-\tcblower
-This is a short text.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-
-\begin{docTcbKey}{lefthand width}{=\meta{length}}{no default, initially unset}
-Sets the width of the left-handed part to the given \meta{length}.
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
-
-\begin{tcolorbox}[title=My title,sidebyside,lefthand width=3cm]
-This is the upper (\textit{left-handed}) part.
-\tcblower
-This is the lower (\textit{right-handed}) part.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-\enlargethispage*{1cm}
-\begin{docTcbKey}{righthand width}{=\meta{length}}{no default, initially unset}
-Sets the width of the right-handed part to the given \meta{length}.
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
-
-\begin{tcolorbox}[title=My title,sidebyside,righthand width=3cm]
-This is the upper (\textit{left-handed}) part.
-\tcblower
-This is the lower (\textit{right-handed}) part.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-\clearpage
-\begin{docTcbKey}{lefthand ratio}{=\meta{fraction}}{no default, initially |0.5|}
-Sets the width of the left-handed part to the given \meta{fraction} of
-the available space. \meta{fraction} is a value between |0| and |1|.
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
-
-\begin{tcolorbox}[title=My title,sidebyside,lefthand ratio=0.25]
-This is the upper (\textit{left-handed}) part.
-\tcblower
-This is the lower (\textit{right-handed}) part.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-
-\begin{docTcbKey}{righthand ratio}{=\meta{fraction}}{no default, initially |0.5|}
-Sets the width of the right-handed part to the given \meta{fraction} of
-the available space. \meta{fraction} is a value between |0| and |1|.
-\begin{dispExample}
-\tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
-
-\begin{tcolorbox}[title=My title,sidebyside,righthand ratio=0.25]
-This is the upper (\textit{left-handed}) part.
-\tcblower
-This is the lower (\textit{right-handed}) part.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-
-\clearpage
-If one side of a side-by-side box should be adapted to the width of
-its content, this width has to be computed beforehand.
-The following example uses a savebox |\mysavebox| to store the picture to determine
-its width.
-
-\begin{dispExample}
-% \tcbuselibrary{skins,xparse}
-% \usepackage{lipsum}
-% \newsavebox\mysavebox  % preamble
-\DeclareTotalTColorBox{\mysidebox}{ O{} +m +m }{
-  bicolor,colback=white,colbacklower=yellow!10,
-  fonttitle=\bfseries,center title,
-  sidebyside,
-  code={\sbox{\mysavebox}{#2}},
-  lefthand width=\wd\mysavebox,
-  drop lifted shadow,
-  #1
-}
-{\usebox{\mysavebox}\tcblower#3}
-
-\mysidebox[title=The Triangle]{%
-  \begin{tikzpicture}
-    \path[fill=red!20,draw=red!50!black]
-      (0,0) node[below]{A} -- (3,1) node[right]{B}
-      -- (1,4) node[above]{C} -- cycle;
-  \end{tikzpicture}%
-}{%
-  \lipsum[1]
-}
-\end{dispExample}
-
-
 
 \clearpage
 \subsection{Embedding into the Surroundings}\label{subsec:surroundings}
@@ -3022,6 +2867,43 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
+
+\begin{docTcbKey}[][doc new=2015-11-20]{flush left}{}{style, no value}
+  Enlarges the bounding box to the right side to fill the line completely.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[flush left,width=5cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-11-20]{flush right}{}{style, no value}
+  Enlarges the bounding box to the left side to fill the line completely.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[flush right,width=5cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-11-20]{center}{}{style, no value}
+  Enlarges the bounding box equally to both sides to fill the line completely.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[center,width=5cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
 \begin{docTcbKey}{grow to left by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the current box width by \meta{length} and
   enlarges (shrinks) the bounding box distance to the left side of the box by
@@ -3058,15 +2940,17 @@ This is a \textbf{tcolorbox}.
 
 
 \clearpage
-\begin{docTcbKey}{toggle enlargement}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
+\begin{docTcbKey}[][doc updated=2015-11-13]{toggle enlargement}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
   According to the \meta{toggle preset}, the left and the right enlargements of
   the bounding box are switched or not. Feasible values are:
   \begin{itemize}
   \item\docValue{none}: no switching.
   \item\docValue{forced}: the values of the left and right enlargement are switched.
   \item\docValue{evenpage}: if the page is an even page, the values of the left and
-    right enlargement are switched. It is recommended that you use this setting in
-    conjunction with \refKey{/tcb/check odd page}.
+    right enlargement are switched. This value also sets
+    \refKey{/tcb/check odd page} to |true|.
+    %It is recommended that you use this setting in
+    %conjunction with \refKey{/tcb/check odd page}.
     %Note that the page number detection may
     %fail in certain cases. For these cases, use the |forced| value.
   \end{itemize}
@@ -3075,7 +2959,6 @@ See \refKey{/tcb/toggle left and right} to toggle geometry settings.
 \end{marker}
 
 \begin{dispExample}
-% \usepackage{changepage} for 'check odd page'
 \tcbset{colframe=blue!75!black,colback=white,
   grow to left by=20mm,grow to right by=-5mm}
 
@@ -3085,22 +2968,20 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[toggle enlargement=forced]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\begin{tcolorbox}[toggle enlargement=evenpage,check odd page]
-  This page is an \ifthenelse{\isodd{\thepage}}{odd}{even} page.
+\begin{tcolorbox}[toggle enlargement=evenpage]
+  This page is an \tcbifoddpage{odd}{even} page.
   Therefore, the left and right enlargements
-  \ifthenelse{\isodd{\thepage}}{are not}{are} toggled.
+  \tcbifoddpage{are not}{are} toggled.
 \end{tcolorbox}
 \end{dispExample}
 
 \begin{dispListing}
-% \usepackage{changepage} for 'check odd page'
-\begin{tcolorbox}[colframe=red!60!black,colback=red!15!white,check odd page,
+\begin{tcolorbox}[colframe=red!60!black,colback=red!15!white,
   fonttitle=\bfseries,title=Floating box from \texttt{toggle enlargement},
-  width=\textwidth,grow to right by=2cm,toggle enlargement=evenpage,float=t]
-  This page is an \ifthenelse{\isodd{\thepage}}{odd}{even} page.
-  Therefore, the left and right enlargements
-  \ifthenelse{\isodd{\thepage}}{are not}{are} toggled (with some luck; otherwise
-  use |forced|). This box stretches to the right margin on odd pages and to the left
+  width=\textwidth,grow to right by=2cm,toggle enlargement,float=t]
+  This page is an \tcbifoddpage{odd}{even} page.
+  Therefore, the left and right enlargements \tcbifoddpage{are not}{are} toggled.
+  This box stretches to the right margin on odd pages and to the left
   margin on even pages. The current document is one-sided -- this feature makes
   sense for two-sided documents only.
 \end{tcolorbox}
@@ -3677,38 +3558,145 @@ This issues:\\
 |\addcontentsline|\marg{list}\marg{type}\marg{entry text}
 \end{docTcbKey}
 
+\subsection{Even and Odd Pages}
 
-\begin{docTcbKey}{check odd page}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
-If set to |true|, the even/odd page testing from the package |changepage|
-is applied. The \refKey{/tcb/toggle enlargement} check
-and the  \refKey{/tcb/toggle left and right} check
-will use the |\ifoddpage| macro from this package or another package like
-|ifoddpage|.
-This options is independent from \refKey{/tcb/phantom}.
-Note that you have to include the package |changepage| by hand\footnote{If |changepage| is
-not included, a compilation error will arise.}:
+\begin{marker}
+Also see
+\refKey{/tcb/toggle left and right} and
+\refKey{/tcb/toggle enlargement}
+for further even/odd options.
+\end{marker}
 
-\begin{dispListing}
-\usepackage{changepage}
-\strictpagecheck
-\end{dispListing}
+\begin{docTcbKey}[][doc updated=2015-11-13]{check odd page}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+If set to |true|, a precise even/odd page testing for the current box
+is applied. This is done by using labels. If a box moves to another page,
+the document has to be compiled twice for the correct settings.
+If set to |false|, even/odd page tests may give wrong results for the first box
+of a page.
 
-\medskip
-The macro |\ifoddpage| can be used inside overlay or watermark code to test if the
-box is on an odd page. This will work also for boxes in a break sequence.
-Note that you cannot use the test inside the normal
-box content.
+\refKey{/tcb/toggle left and right},
+\refKey{/tcb/toggle enlargement}, and
+\refKey{/tcb/if odd page}
+automatically set |check odd page|, but for
+\refCom{tcbifoddpage} this option has to be set explicitely.
+\end{docTcbKey}
+
+\enlargethispage*{1cm}
+\begin{docTcbKey}[][doc new=2015-11-13]{if odd page}{=\marg{odd options}\marg{even options}}{style, no default}
+If the current box is on an odd page, the \meta{odd options} are applied.
+On an even page, the \meta{even options} are applied.
+\refKey{/tcb/check odd page} is automatically set for precise even/odd page testing.
 
 \begin{dispExample}
-% \usepackage{changepage}
-\tcbset{colframe=blue!75!black,colback=white}
+\begin{tcolorbox}[if odd page={colback=yellow!50}{colback=red!50}]
+  This box is colored in yellow on an odd page
+  and is colored in red on an even page.
+\end{tcolorbox}
+\end{dispExample}
 
-\begin{tcolorbox}[enhanced,check odd page,
-  watermark text={\ifoddpage Odd\else Even\fi\ page!}]
-\lipsum[1]
+\begin{marker}
+If a box is \refKey{/tcb/breakable}, using \refKey{/tcb/if odd page}
+only acts upon the \emph{first} box. If the setting should be
+repeated for every partial box of the break sequence, the option should be
+packed into \refKey{/tcb/extras}. In this case, \refKey{/tcb/check odd page}
+has to be set explicitely! Also see \refKey{/tcb/if odd page*}.
+\end{marker}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[][doc new=2015-11-13]{if odd page*}{=\marg{odd options}\marg{even options}}{style, no default}
+\begin{marker}
+This option needs the \mylib{breakable} library, see \Fullref{sec:breakable}.
+\end{marker}
+For breakable boxes, if the current partial box is on an odd page, the \meta{odd options} are applied.
+On an even page, the \meta{even options} are applied.
+\refKey{/tcb/check odd page} is automatically set for precise even/odd page testing.
+
+In contrast to \refKey{/tcb/if odd page}, \refKey{/tcb/if odd page*} is used
+on \emph{every} partial box of a break sequences and not only on the
+\emph{first} box. Another difference is that \refKey{/tcb/if odd page*}
+is applied quite \emph{late} during option processing, while
+\refKey{/tcb/if odd page} is applied immediately.
+
+\refKey{/tcb/if odd page*} is implemented as \refKey{/tcb/if odd page}
+packed into \refKey{/tcb/extras}.
+
+\begin{dispExample}
+% \tcbuselibrary{breakable}
+\begin{tcolorbox}[breakable,if odd page*={colback=yellow!50}{colback=red!50}]
+  This breakable box is colored in yellow on an odd page
+  and is colored in red on an even page. For every partial box, the
+  test is repeated, i.e. this would give a yellow, red, yellow, red, \ldots\
+  sequence for a long content.
 \end{tcolorbox}
 \end{dispExample}
 \end{docTcbKey}
+
+
+\enlargethispage*{2cm}
+\begin{docCommand}[doc new=2015-11-13]{tcbifoddpage}{\marg{odd code}\marg{even code}}
+If the current box is on an odd page, the \meta{odd code} is executed.
+On an even page, the \meta{even code} is executed.
+For precise even/odd page testing, the \refKey{/tcb/check odd page} has to be
+set manually inside the box options.
+
+The macro \refCom{tcbifoddpage} can be used inside underlay, overlay, or watermark code to
+test if the box is on an odd page. This will work also for boxes in a break sequence.
+
+The macro can also be used inside the box \textbf{content text}. For unbreakable boxes,
+the correct page test is applied.
+But for \refKey{/tcb/breakable} boxes, \refCom{tcbifoddpage}
+will always give the result for the page of the \emph{first} box inside
+the box \textbf{content text}. If needed, the methods from the packages
+|changepage| or |ifoddpage| could be used here.
+%To mention it again, for overlays, watermarks, etc, \refCom{tcbifoddpage} gives
+%the correct page test.
+
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white,fonttitle=\bfseries}
+
+\begin{tcolorbox}[enhanced,check odd page,
+  title={Example for a box on an \tcbifoddpage{odd}{even} page},
+  watermark text={\tcbifoddpage{Odd}{Even} page!}]
+\lipsum[1]
+\end{tcolorbox}
+\end{dispExample}
+\end{docCommand}
+
+
+\clearpage
+\begin{docCommand}[doc new=2015-11-13]{thetcolorboxnumber}{}
+This is a unique identifier (arabic number) for a tcolorbox. It is locally
+defined inside boxes and has no meaning outside. It is used for
+precise even/odd page testing, but may also be valuable for elaborate user
+code.
+
+\begin{dispExample}
+\begin{tcolorbox}[colback=yellow!5,title=Box \thetcolorboxnumber]
+  This box is \thetcolorboxnumber.
+  \tcbox[on line,size=fbox]{This box is \thetcolorboxnumber} and
+  \tcbox[on line,size=fbox]{this box is \thetcolorboxnumber}.
+  This box is \thetcolorboxnumber.
+\end{tcolorbox}
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2015-11-13]{thetcolorboxpage}{}
+This macro contains the expanded arabic page number of the current tcolorbox.
+It is locally defined inside boxes and has no meaning outside.
+It is precise only, if \refKey{/tcb/check odd page} was set.
+
+\begin{dispExample}
+\begin{tcolorbox}[colback=yellow!5,check odd page,
+    title=Box on page~\thetcolorboxpage]
+  This box is located on page~\thetcolorboxpage.
+\end{tcolorbox}
+\end{dispExample}
+\end{docCommand}
+
+
+
 
 
 \clearpage
