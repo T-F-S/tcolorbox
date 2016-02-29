@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.80}
+\tcb@set@library@version{3.90}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -276,11 +276,14 @@
 }
 
 \def\tcb@height@fill@unbroken#1{%
-  \tcb@prepare@break@operation%
-  \tcb@breakat@init%
-  \tcbset{compress page=#1}%
-  \tcb@comp@h@page%
-  \tcbset{height=\tcb@h@page-\kvtcb@bbtop@stand-\kvtcb@bbbottom@stand,after=\eject}%
+  \ifnum\c@tcblayer<2\relax%
+    \tcb@ignorenobreaktrue%
+    \tcb@prepare@break@operation%
+    \tcb@breakat@init%
+    \tcbset{compress page=#1}%
+    \tcb@comp@h@page%
+    \tcbset{height=\tcb@h@page-\kvtcb@bbtop@stand-\kvtcb@bbbottom@stand}%
+  \fi%
 }
 
 \def\tcb@height@fill@unbroken@normal{\tcb@height@fill@unbroken{none}}
@@ -305,6 +308,13 @@
   \fi%
 }
 
+\def\tcb@split@pagebreak{%
+  \tcb@undo@before%
+  \iftcb@multicol\columnbreak\else\pagebreak\fi%
+  \tcb@nobreak@warning%
+  \tcb@enlbreak@init\tcb@break@allowedfalse%
+}
+
 \def\tcb@split@start{%
   \tcb@breakat@init%
   \tcb@comp@h@page%
@@ -318,9 +328,7 @@
   \else%
     \iftcb@break@allowed%
       \ifdim\dimexpr\tcb@h@page-\tcb@h@padding-\tcb@h@padtitle<\kvtcb@breakminlines\baselineskip\relax%
-        \iftcb@multicol\columnbreak\else\pagebreak\fi%
-        \tcb@nobreak@warning%
-        \tcb@enlbreak@init\tcb@break@allowedfalse%
+        \tcb@split@pagebreak%
         \tcb@comp@h@page%
         \tcb@check@for@final@box%
         \iftcb@final@box%
@@ -459,9 +467,7 @@
   \tcb@swap{\tcb@totallowerbox}{\tcb@lowerbox}%
   \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
   \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
-  \iftcb@multicol\columnbreak\else\pagebreak\fi%
-  \tcb@nobreak@warning%
-  \tcb@enlbreak@init\tcb@break@allowedfalse%
+  \tcb@split@pagebreak%
   \let\tcb@split@next=\tcb@split@start%
 }
 
@@ -749,6 +755,7 @@
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper+\tcb@h@segment+\tcb@h@lower+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
+  \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
   \tcb@drawing@env@begin%
     \tcb@extensions@preframe%
      % draw frame and interior
@@ -778,6 +785,7 @@
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
+  \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
   \tcb@drawing@env@begin%
     \tcb@extensions@preframe%
     % draw frame and interior
@@ -803,6 +811,7 @@
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@bottom+\kvtcb@boxsep+\tcb@h@segment+\tcb@h@lower+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
+  \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
   \tcb@drawing@env@begin%
     \tcb@extensions@preframe%
     % draw frame and interior
@@ -831,6 +840,7 @@
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\ht\tcb@lowerbox+\dp\tcb@lowerbox+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
+  \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
   \tcb@drawing@env@begin%
     \tcb@extensions@preframe%
     % draw frame and interior

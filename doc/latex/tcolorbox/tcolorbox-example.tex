@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcolorbox-example.tex: an example for tcolorbox
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -189,6 +189,45 @@ We have given Theorem \ref{theorem:summation} on page \pageref{theorem:summation
   drop fuzzy shadow,watermark color=white,watermark text=Fit]
   \lipsum[1-4]
 \end{tcolorbox}
+
+%----------------------------------------------------------
+\clearpage
+\section{Rasters of Boxes}
+
+\begin{tcolorbox}[tile,size=fbox,boxsep=2mm,boxrule=0pt,
+    colback=blue!20!black,colbacktitle=yellow!50!black,
+    title=A Raster of Boxes,center title,
+    height fill]
+  \begin{tcbitemize}[raster columns=3,raster rows=4,raster equal skip=2mm,
+      raster height=\tcbtextheight,
+      title={Box~\thetcbrasternum},fonttitle=\bfseries,
+      enhanced,colframe=blue!50,colback=blue!5]
+    \tcbitem A
+    \tcbitem[flip title={interior hidden}] B
+    \tcbitem[colbacktitle=blue!40!black] C
+    \tcbitem[colbacktitle=blue!40!black,flip title] D
+    \tcbitem[beamer] E
+    \tcbitem[tile,colbacktitle=red!40!black] F
+    \tcbitem[tile,colbacktitle=red!40!black,flip title={sharp corners}] G
+    \tcbitem[blankest]
+      \begin{tcbitemize}[raster columns=2,raster rows=2,raster height=\tcbtextheight,
+          tile,halign=center,valign=center,fontupper=\bfseries\Huge,before upper=\strut,
+          colback=green!20]
+        \tcbitem a
+        \tcbitem b
+        \tcbitem c
+        \tcbitem d
+      \end{tcbitemize}
+    \tcbitem[widget] I
+    \tcbitem[frame style image=goldshade,opacityback=0.5,colback=white] J
+    \tcbitem[frame style image=blueshade,opacityback=0.5,colback=white,
+      center title,flip title={frame hidden,opacityback=0.25,colback=black}] K
+    \tcbitem[octogon arc,arc is angular,halign=center,valign=center,
+      detach title,watermark text={\tcbtitletext}] L
+  \end{tcbitemize}
+\end{tcolorbox}
+
+
 
 \end{document}
 

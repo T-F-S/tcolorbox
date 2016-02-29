@@ -1,7 +1,7 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -848,3 +848,30 @@ version 3.80 (2015/11/27)
 - library 'xparse':
   * new macro:    '\tcbsidebyside'
   * new options:  'sidebyside adapt', 'sidebyside switch'
+
+version 3.90 (2016/02/29)
+- bug fix: 'height fill' after headings (nobreak) produced an error
+- implementation for 'before' and 'before skip' changed to avoid spacing
+  problems when there is a page break before breakable/unbreakable boxes
+- the 'height fill' option can be applied also for boxed inside a tcbraster
+- new options:
+  'add to natural height', 'space to', 'use height from group' (new default)
+- new macros:
+  '\tcbheightspace', '\tcbtextwidth', '\tcbtextheight'
+- library 'skins':
+  * 'halign title' works with 'boxed title' now
+  * 'boxed title style' changed to be stackable
+  * better support for titles at the bottom of the box
+  * new skin: 'tile'
+  * new options:
+    'blankest', 'tile', 'no boxed title style', 'boxed title size',
+    'attach boxed title to bottom', 'attach boxed title to bottom*',
+    'attach boxed title to top', 'attach boxed title to top*',
+    'flip title'
+- library 'raster':
+  * new environment:
+    'tcboxedraster'
+  * new options:
+    'raster multicolumn', 'raster multirow'
+- library 'documentation':
+  removal of some unwanted blanks

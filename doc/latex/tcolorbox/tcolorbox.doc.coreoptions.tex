@@ -1430,7 +1430,7 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}{sharpish corners}{}{style, no value}
   Shortcut for setting \refKey{/tcb/arc} and \refKey{/tcb/outer arc}
-  to |0pt|. With this setting, rounded corners will appear als quasi-sharp,
+  to |0pt|. With this setting, rounded corners will appear as quasi-sharp,
   but e.\,g.\ the shadow will be somewhat rounder than the shadow
   of really sharp corners.
   \begin{marker}
@@ -1683,6 +1683,8 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \begin{docTcbKey}[][doc new=2014-11-07]{add to height}{=\meta{length}}{style, no default}
   Adds \meta{length} to the current height of the colored box.
   \refKey{/tcb/height} has to be set before this key is used!
+  If this option is used several times, then the \refKey{/tcb/height} is
+  also increased several times.
 \begin{dispExample}
 \tcbset{height=1cm,
   valign=center,width=(\linewidth-2mm)/2,
@@ -1698,7 +1700,28 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new and updated={2014-09-22}{2014-12-15}]{height fill}{\colOpt{=true\textbar false\textbar maximum}}{default |true|, initially |false|}
+\begin{docTcbKey}[][doc new=2016-02-16]{add to natural height}{=\meta{length}}{style, no default}
+  The application of this option generates a box with natural height plus
+  the given \meta{length}. If this option is used several times, then the
+  last setting of \meta{length} wins. The resulting box is not considered
+  a fixed height box and the implementation is quite different to
+  \refKey{/tcb/add to height}.
+\begin{dispExample}
+\tcbset{valign=center,width=(\linewidth-2mm)/2,
+  before=,after=\hfill,colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}
+  This box has natural height.
+\end{tcolorbox}
+\begin{tcolorbox}[add to natural height=1cm]
+  This box has natural height plus 1 cm.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new and updated={2014-09-22}{2016-02-17}]{height fill}{\colOpt{=true\textbar false\textbar maximum}}{default |true|, initially |false|}
 If set to \docValue*{true}, the height of the |tcolorbox| is set to the rest of the
 available vertical space of the current page.
 If set to \docValue{maximum}, the page is compressed as much as possible.
@@ -1711,6 +1734,9 @@ Note that the library \mylib{breakable} has to be loaded to use this key!
 This height control key is only applicable to unbreakable boxes but it
 uses code from the library \mylib{breakable}.
 The counterpart for breakable boxes is \refKey{/tcb/height fixed for}.
+
+This option can and should not be used for boxes in boxes, but it can be
+used for boxes inside a \refEnv{tcbraster}.
 
 \begin{dispListing}
 % \usepackage{lipsum}
@@ -1789,6 +1815,47 @@ colframe=blue!75!black,colback=white,height=3cm}
 \end{tcolorbox}}
 \end{exdispExample}
 \end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new=2015-02-15]{space to}{=\meta{macro}}{no default, initially unset}
+  If the height of a |tcolorbox| is not the natural height, the space
+  difference between the forced and the natural size is saved into the
+  given local \meta{macro}. This \meta{macro} can and should be used inside
+  the box content to add content which is vertically sized to match \meta{macro}.
+  \begin{marker}
+    \begin{itemize}
+    \item The actual length saved into \meta{macro} is adapted dynamically
+      during several compilations -- at least two, but maybe more.
+    \item Due to the adaption algorithm, objects can be sized with
+      \meta{macro} plus any offset length.
+    \item Never ever use \meta{macro} multiplied with a factor. The only
+      exception to this rule is that the space can be split into parts which
+      sum to \meta{macro}.
+    \item Never use this in combination with \refKey{/tcb/fit}.
+    \end{itemize}
+  \end{marker}
+\begin{dispExample}
+\begin{tcolorbox}[colframe=blue!75!black,colback=white,height=3cm,
+    space to=\myspace]
+  This is my box of height 3cm. The space is filled with a picture:\\[2mm]
+  \includegraphics[width=\linewidth,height=\myspace]{goldshade.png}\\[1mm]
+  This is some other text.
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+\begin{tcolorbox}[colframe=blue!75!black,colback=white,height=3cm,
+    space to=\myspace]
+  \includegraphics[width=\linewidth,
+    height=0.33\dimexpr\myspace]{blueshade.png}\\[1mm]
+  This is my box of height 3cm.\\[2mm]
+  \includegraphics[width=\linewidth,
+    height=0.67\dimexpr\myspace]{goldshade.png}
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
 
 
 
@@ -1898,11 +1965,13 @@ with a listing.
 \end{dispExample}
 \end{docTcbKey}
 
-
-\begin{docTcbKey}[][doc new=2015-11-27]{use height from group}{=\meta{id}}{style, no default}
+\clearpage
+\begin{docTcbKey}[][doc new and updated={2015-11-27}{2016-02-22}]{use height from group}{\colOpt{=\meta{id}}}{style, default current group}
   Sets the current box to a fixed \refKey{/tcb/height} which is copied from
   an equal height group with the given \meta{id}. If this height is not
-  available during the current compilation, no fixed height setting is used.\par
+  available during the current compilation, no fixed height setting is used.
+  If \meta{id} is omitted, the current equal height group is used which has
+  to be set before by \refKey{/tcb/equal height group}.\par
   Note that the natural height of the current box is not considered for
   computation of the group height. The main application for
   \refKey{/tcb/use height from group} is that the height can be adapted
@@ -1914,9 +1983,25 @@ with a listing.
 Height from group 'C' of the previous example, but reduced by 2cm.
 \end{tcolorbox}%
 \end{dispExample}
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+Every line is inside an equal height group:
+\begin{tcbraster}[raster equal height=rows,
+    title=Box \thetcbrasternum,
+    enhanced,size=small,colframe=red!50!black,colback=red!10!white]
+  \begin{tcolorbox}First line\\second line\\
+    The height of this box rules.\end{tcolorbox}
+  \begin{tcolorbox}[use height from group]Test\end{tcolorbox}
+  \begin{tcolorbox}[use height from group]
+    First line\\second line\end{tcolorbox}
+  \begin{tcolorbox}The height of this box rules.\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
+
+
 \begin{docCommand}[doc new=2015-11-27]{tcbheightfromgroup}{\marg{macro}\marg{id}}
   Saves the height from an equal height group with the given \meta{id}
   to a \meta{macro}. If this height is not available during the current compilation,
@@ -2510,19 +2595,19 @@ This behavior is controlled by the keys |before| and |after|.
 \begin{docTcbKey}{parskip}{}{style, no value}
   Sets the keys |before| and |after| to values which are
   recommended, if the package |parskip| \emph{is} used and there is no better
-  idea for |before| and |after|.
+  idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
                         after={\par}}}
 \end{dispListing}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc updated=2015-03-16]{noparskip}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2016-02-14]{noparskip}{}{style, no value}
   Sets the keys |before| and |after| to values which are
   recommended, if the package |parskip| is \emph{not} used and there is no better
-  idea for |before| and |after|.
+  idea for |before| and |after|. This is similar to:
 \begin{dispListing}
-\tcbset{noparskip/.style={before={\par\smallskip\pagebreak[0]\parindent=0pt},
+\tcbset{noparskip/.style={before={\par\pagebreak[0]\smallskip\parindent=0pt},
                           after={\par\smallskip}}}
 \end{dispListing}
 \end{docTcbKey}

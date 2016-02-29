@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.80}
+\tcb@set@library@version{3.90}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -73,6 +73,23 @@
   raster force size/.default=true,%
   raster force size/true/.code={\let\tcb@raster@set@size\tcbset@late@options},%
   raster force size/false/.code={\let\tcb@raster@set@size\tcbset},%
+  raster multicolumn/.code={%
+    \ifnum\numexpr\c@tcbrastercolumn+#1>\numexpr\kvtcb@raster@columns+1\relax
+      \tcb@warning{'raster multicolumn' combined too much columns}%
+    \else%
+      \tcbset@late@options{%
+        code={\preto\kvtcb@afterbox{\addtocounter{tcbrastercolumn}{\numexpr#1-1}}},
+        width=(\tcb@raster@box@width+\kvtcb@raster@xskip)*#1-\kvtcb@raster@xskip}%
+    \fi%
+  },
+  raster multirow/.code={%
+    \ifdefined\tcb@raster@box@height%
+      \tcbset@late@options{%
+        height=(\tcb@raster@box@height+\kvtcb@raster@yskip)*#1-\kvtcb@raster@yskip}%
+    \else%
+      \tcb@warning{'raster multirow' needs a fixed 'raster height'}%
+    \fi%
+  },
 }
 
 \tcbset{
@@ -94,6 +111,18 @@
 \let\tcb@raster@change@fitbox\@empty
 \def\tcb@raster@change@hbox{\tcbset{capture=minipage}}
 
+\def\tcb@height@fill@unbroken@raster#1{%
+  \ifnum\c@tcblayer<2\relax%
+    \kvtcb@beforebox%
+    \def\kvtcb@beforebox{}%
+    \tcb@breakat@init%
+    \tcbset{compress page=#1}%
+    \tcb@comp@h@page%
+    \ifdim\tcb@h@page<0pt\relax\unkern\pagebreak\tcb@comp@h@page\kern\kvtcb@raster@skip@left\fi%
+    \tcbset{height=\tcb@h@page-\kvtcb@bbtop@stand-\kvtcb@bbbottom@stand}%
+  \fi%
+}
+
 \newenvironment{tcbraster}[1][]{%
   \tcb@layer@pushup%
   \stepcounter{tcbraster}%
@@ -103,6 +132,7 @@
   \let\tcb@raster@change@fitbox\@empty%
   \setcounter{tcbrastercolumn}{1}%
   \setcounter{tcbrasterrow}{1}%
+  \let\tcb@height@fill@unbroken\tcb@height@fill@unbroken@raster%
   \tcbset{every box on layer \the\numexpr\number\c@tcblayer+1\relax/.code={%
     \tcbset{raster every box/.try}%
     \ifodd\c@tcbrastercolumn\relax%
@@ -194,3 +224,7 @@
   \let\tcb@raster@change@fitbox=\tcb@raster@change@hbox%
   \let\tcbitem=\tcbitem@first%
 }{\end{tcolorbox}\end{tcbraster}}
+
+\newenvironment{tcboxedraster}[2][]{%
+  \tcolorbox[#2]\tcbraster[#1]}%
+  {\endtcbraster\endtcolorbox}

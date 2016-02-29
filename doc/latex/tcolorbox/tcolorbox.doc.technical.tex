@@ -649,3 +649,82 @@ Lower part
 \end{dispExample}
 
 \egroup
+
+\clearpage
+\subsection{Useful Properties}\label{subsec:tech_properties}
+
+The following macros describe certain \textit{properties} which may be
+used for the drawing scheme, see \Fullref{subsec:tcolorboxdrawing}.
+Sometimes, they are even available inside the box content. All of them are
+considered to be \textit{read-only} and should never be redefined by the user.
+
+\begin{docCommand}[doc new=2016-02-16]{tcbheightspace}{}
+  If the height of a |tcolorbox| is not the natural height, the space
+  difference between the forced and the natural size is hold by
+  \refCom{tcbheightspace}.
+  This macro is not usable inside the box content, but for skins or
+  inside \refKey{/tcb/underlay}, \refKey{/tcb/overlay}, etc.
+
+  If such a space information is needed inside the box content, see
+  \refKey{/tcb/space to} instead.
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\newtcolorbox{testbox}[2][]{enhanced,size=fbox,
+  colframe=blue!75!black,colback=white,height=#2,
+  underlay={\node[above,inner sep=3pt] at (interior.south){%
+    \includegraphics[width=\tcbtextwidth,height=\tcbheightspace-3pt]{goldshade.png}};
+    },
+  #1}
+\begin{testbox}{3cm}
+  This is my box. The space is filled with a picture.
+\end{testbox}
+\begin{testbox}{2cm}
+  This is my box. The space is filled with a picture.
+\end{testbox}
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}[doc new=2016-02-16]{tcbtextwidth}{}
+  This property describes the box content width.
+  \begin{itemize}
+  \item  If there also is a lower part, it describes the width of the upper part.
+  \item For \refKey{/tcb/sidebyside} boxes, it describes the combined text
+    width plus segmentation.
+  \item This property can be used inside the box content text with exception
+    of \refKey{/tcb/fit} boxes.
+  \item \refCom{tcbtextwidth} can be used for all box types for skins or
+    inside \refKey{/tcb/underlay}, \refKey{/tcb/overlay}, etc.
+  \end{itemize}
+\begin{dispExample}
+\begin{tcolorbox}[colframe=blue!75!black]
+  Inside a box: \tcbtextwidth\ (=\the\linewidth).
+\end{tcolorbox}
+\end{dispExample}
+\end{docCommand}
+
+\pagebreak
+\begin{docCommand}[doc new=2016-02-16]{tcbtextheight}{}
+  This property describes the designated box content height. If the
+  box is larger than the natural height, the actual content will be smaller
+  than \refCom{tcbtextheight}.
+  \begin{itemize}
+  \item For boxes with a fixed \refKey{/tcb/height}, this property can
+    be used inside the box content text. For other boxes, it denotes |0pt|
+    inside the box content.
+  \item \refCom{tcbtextheight} can be used for all box types for skins or
+    inside \refKey{/tcb/underlay}, \refKey{/tcb/overlay}, etc.
+  \end{itemize}
+
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\begin{tcolorbox}[enhanced,colframe=blue!75!black,
+    underlay={\node[left,red] at (frame.east) {Here: \tcbtextheight};}]
+  Inside a box with natural height: \tcbtextheight.
+\end{tcolorbox}
+\begin{tcolorbox}[enhanced,colframe=blue!75!black,height=1cm,
+    underlay={\node[left,red] at (frame.east) {Here: \tcbtextheight};}]
+  Inside a box with fixed height: \tcbtextheight.
+\end{tcolorbox}
+\end{dispExample}
+\end{docCommand}

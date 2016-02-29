@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2015/11/27 version 3.80 text color boxes]
-\def\tcb@version{3.80}
+\ProvidesPackage{tcolorbox}[2016/02/29 version 3.90 text color boxes]
+\def\tcb@version{3.90}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -255,18 +255,28 @@
   float*/.default=\kvtcb@floatplacement,
   every float/.store in=\kvtcb@everyfloat,%
   nofloat/.style={float=},
-  before/.code={\def\kvtcb@beforebox{#1}\let\tcb@use@autoparskip=\relax},
+  before/.code={\def\kvtcb@beforebox{#1}\let\tcb@undo@before=\@empty\let\tcb@use@autoparskip=\relax},
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
   autoparskip/.code={\let\tcb@use@autoparskip=\tcb@use@auto@parskip},
-  parskip/.style={before={\par\pagebreak[0]\parindent=0pt},after={\par}},
-  noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par\smallskip\pagebreak[0]\fi\parindent=0pt},after={\par\smallskip}},
+  parskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
+      \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
+      \def\tcb@undo@before{\addvspace{-\glueexpr\tcb@prevdepth}}%
+      \pagebreak[0]\fi\fi\parindent=0pt},
+    after={\par}},
+  noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
+      \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip}%
+      \def\tcb@undo@before{\addvspace{-\glueexpr\smallskipamount+\tcb@prevdepth}}%
+      \pagebreak[0]\smallskip\fi\fi\parindent=0pt},
+    after={\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
   before skip/.style={before={%
     \ifnum\lastnodetype=-1\relax%
     \else%
-      \par\ifvmode\nointerlineskip%
-      \addvspace{\glueexpr#1-\parskip}%
+      \par%
+      \ifvmode\tcbdimto\tcb@prevdepth{\prevdepth}\nointerlineskip%
+        \addvspace{\glueexpr#1-\parskip}%
+        \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
       \fi%
     \fi%
     \lineskip=0pt\noindent%
@@ -286,23 +296,43 @@
   upperbox/invisible/.code={\tcb@uppervisiblefalse},
   visible/.style={upperbox=visible,lowerbox=visible},
   invisible/.style={upperbox=invisible,lowerbox=invisible},
-  natural height/.code={\tcb@fixedheightfalse\let\tcb@ch=\tcb@ch@natural\let\tcb@height@adjust\@empty},
-  height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed\let\tcb@height@adjust\@empty},
-  text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed\let\tcb@height@adjust\@empty},
-  add to height/.code={\ifdefined\kvtcb@height@fixed\tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+(#1)}\fi},
+%  natural height/.code={\tcb@fixedheightfalse\let\tcb@ch=\tcb@ch@natural\let\tcb@height@adjust\@empty},
+  natural height/.code={\tcb@fixedheightfalse\tcb@@ch@@operation{\tcb@ch@natural}},
+%  height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed\let\tcb@height@adjust\@empty},
+  height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@fixed}},
+%  text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed\let\tcb@height@adjust\@empty},
+  text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@innerfixed}},
+  add to height/.code={\iftcb@fixedheight\tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+(#1)}\fi},
+  add to natural height/.code={\tcb@fixedheightfalse\def\kvtcb@height@natural@plus{#1}\tcb@@ch@@operation{\tcb@ch@natural@plus}},
   height plus/.dimstore in=\kvtcb@height@fixed@plus,%
   height from/.style args={#1 to #2}{height={#1},height plus={#2-(#1)}},%
   height fill/.is choice,%
   height fill/false/.code={\let\tcb@height@adjust\@empty},%
   square/.style={height=\kvtcb@width},
-  equal height group/.code={\edef\tcb@ehgid{#1}\let\tcb@ch=\tcb@ch@equalheight},
+%  equal height group/.code={\edef\tcb@ehgid{#1}\let\tcb@ch=\tcb@ch@equalheight\let\tcb@height@adjust\@empty},
+  equal height group/.code={\tcb@fixedheightfalse\edef\tcb@ehgid{#1}\tcb@@ch@@operation{\tcb@ch@equalheight}},
   minimum for equal height group/.code args={#1:#2}{\edef\tcb@ehgid{#1}\tcb@ehgadd{#2}},
   use height from group/.code={\ifcsundef{tcb@ehg@height@#1}{}{\tcbset{height=\csuse{tcb@ehg@height@#1}}}},
-  space/.code={\def\tcb@height@fraction{#1}\let\tcb@ch@fixed@both=\tcb@ch@fixed@space},
+  use height from group/.default={\csuse{tcb@ehgid}},
+  space/.code={\def\tcb@height@fraction{#1}%
+    \let\tcb@ch@fixed@both=\tcb@ch@fixed@space%
+    \let\tcb@ch@fixed@upper=\tcb@ch@fixed@upper@standard%
+    },
   space to upper/.style={space=1},
   space to lower/.style={space=0},
   space to both/.style={space=0.5},
-  split/.code={\def\tcb@height@fraction{#1}\let\tcb@ch@fixed@both=\tcb@ch@fixed@split},
+  split/.code={\def\tcb@height@fraction{#1}%
+    \let\tcb@ch@fixed@both=\tcb@ch@fixed@space%
+    \let\tcb@ch@fixed@upper=\tcb@ch@fixed@upper@standard%
+    },
+  space to/.code={%
+    \ifcsdef{tcb@space@\thetcolorboxnumber}{%
+      \letcs{\tcb@space}{tcb@space@\thetcolorboxnumber}%
+    }{}%
+    \let#1\tcb@space%
+    \let\tcb@ch@fixed@both=\tcb@ch@fixed@spacesave%
+    \let\tcb@ch@fixed@upper=\tcb@ch@fixed@spacesave%
+  },
   %
   halign/.is choice,
   halign/flush left/.code={\let\kvtcb@halignupper=\raggedright},
@@ -419,7 +449,7 @@
   skin first/.store in=\kvtcb@skin@first,
   skin middle/.store in=\kvtcb@skin@middle,
   skin last/.store in=\kvtcb@skin@last,
-  skin/.style={skin@#1},
+  skin/.style={code={\edef\kvtcb@skin@current{#1}},skin@#1},
   skin first is subskin of/.style 2 args={skin@local@first/.style={skin@#1,#2},skin first=local@first},%
   skin middle is subskin of/.style 2 args={skin@local@middle/.style={skin@#1,#2},skin middle=local@middle},%
   skin last is subskin of/.style 2 args={skin@local@last/.style={skin@#1,#2},skin last=local@last},%
@@ -461,10 +491,10 @@
   after title/.store in=\kvtcb@after@title,%
   before upper/.store in=\kvtcb@before@upper,%
   after upper/.store in=\kvtcb@after@upper,%
-  after upper*/.style={after upper={\unskip#1}},%
+  after upper*/.style={after upper={\ifvmode\else\unskip\fi#1}},%
   before lower/.store in=\kvtcb@before@lower,%
   after lower/.store in=\kvtcb@after@lower,%
-  after lower*/.style={after lower={\unskip#1}},%
+  after lower*/.style={after lower={\ifvmode\else\unskip\fi#1}},%
   center title/.style={halign title=flush center},%
   center upper/.style={halign upper=flush center},%
   center lower/.style={halign lower=flush center},%
@@ -490,13 +520,9 @@
     \begin{varwidth}{\tcb@w@upper}},after upper={\end{varwidth}}},%
   varwidth upper/.default=\kvtcb@width,
   text fill/.style={before upper={%
-    \iftcb@fixedheight%
-      \tcbdimto\tcb@temp{\kvtcb@top@rule@stand+\kvtcb@bottom@rule@stand+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom}%
-      \iftcb@hasTitle%
-        \tcbdimto\tcb@temp{\tcb@temp+\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
-      \fi%
-      \tcbdimto\tcb@temp{\kvtcb@height@fixed-\tcb@temp}%
-      \edef\tcb@temp{\noexpand\minipage[c][\tcb@temp]}%
+    \ifdim\dimexpr\tcbtextheight>0pt\relax%
+    %\iftcb@fixedheight%
+      \edef\tcb@temp{\noexpand\minipage[c][\tcbtextheight]}%
     \else%
       \let\tcb@temp\minipage%
     \fi%
@@ -753,7 +779,16 @@
   \tcbdimto\tcb@width{\kvtcb@width}%
   \tcbdimto\tcb@innerwidth{\tcb@width-\kvtcb@left@rule-\kvtcb@right@rule}%
   \tcbdimto\tcb@w@upper{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftupper-\kvtcb@rightupper}%
+  \let\tcbtextwidth=\tcb@w@upper%
   \tcbdimto\kvtcb@arc{\kvtcb@arc}%
+  % computation of text height
+  \iftcb@fixedheight%
+    \tcbdimto\tcbtextheight{\kvtcb@top@rule@stand+\kvtcb@bottom@rule@stand+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom}%
+    \iftcb@hasTitle%
+      \tcbdimto\tcbtextheight{\tcbtextheight+\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
+    \fi%
+    \tcbdimto\tcbtextheight{\kvtcb@height@fixed-\tcbtextheight}%
+  \fi%
 }
 
 \def\tcb@set@@sidebyside{%
@@ -935,6 +970,9 @@
 }
 
 \long\def\tcb@apply@box@options#1{%
+  \let\tcb@space\tcb@zpt%
+  \let\tcbtextheight\tcb@zpt%
+  \let\tcbtextwidth\tcb@zpt%
   \tcbset{#1}\tcb@lateoptions@hook\tcb@afteroptions@hook%
   \if@nobreak%
     \let\iftcb@nobreak\@firstoftwo%
@@ -968,27 +1006,64 @@
 \let\endtcolorbox=\tcb@endboxanddraw
 
 % height computations
+\def\tcb@@ch@@operation#1{%
+  \let\tcb@ch=#1%
+  \let\tcb@height@adjust\@empty%
+}
+
+
 \def\tcb@ch@natural{%
   \let\tcb@height\tcb@natheight%
+  \let\tcbheightspace\tcb@zpt%
   \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
   \iftcb@lowerspace%
   \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
   \fi%
 }
 
-\def\tcb@ch@fixed@upper{%
-  \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcb@height-\tcb@natheight}%
+\def\tcb@ch@natural@plus{%
+  \tcbdimto\tcbheightspace{\kvtcb@height@natural@plus}%
+  \tcbdimto\tcb@height{\tcb@natheight+\tcbheightspace}%
+  \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
+}
+
+
+\def\tcb@ch@fixed@upper@standard{%
+  \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcbheightspace}%
 }
 
 \def\tcb@ch@fixed@space{%
-  \tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight}%
-  \tcbdimto\tcb@height@spaceupper{\tcb@height@fraction\dimexpr\tcb@height@space\relax}%
+  %\tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight}%
+  \tcbdimto\tcb@height@spaceupper{\tcb@height@fraction\dimexpr\tcbheightspace\relax}%
   \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcb@height@spaceupper}%
-  \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox+\tcb@height@space-\tcb@height@spaceupper}%
+  \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox+\tcbheightspace-\tcb@height@spaceupper}%
+}
+
+\def\tcb@savespace#1#2{%
+  \immediate\write\@auxout{\string\csgdef{tcb@space@#1}{#2}}%
+}
+
+\def\tcb@ch@fixed@spacesave{%
+  %\tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight}%
+  \tcbdimto\tcb@space{\tcb@space+\tcbheightspace}%
+  \ifdim\dimexpr\tcb@space<0pt\relax
+    \let\tcb@space\tcb@zpt%
+  \else%
+    \ifdim\dimexpr\tcb@space>\tcb@height\relax
+      \let\tcb@space\tcb@height%
+    \fi%
+  \fi%
+  \begingroup\edef\x{\endgroup\noexpand\tcb@savespace{\thetcolorboxnumber}{\tcb@space}}\x%
+  \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcbheightspace}%
+  \let\tcbheightspace\tcb@zpt%
+  \iftcb@lowerspace%
+  \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
+  \fi%
 }
 
 \def\tcb@ch@fixed@split{%
-  \tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight+\ht\tcb@upperbox+\dp\tcb@upperbox+\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
+%  \tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight+\ht\tcb@upperbox+\dp\tcb@upperbox+\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
+  \tcbdimto\tcb@height@space{\tcbheightspace+\ht\tcb@upperbox+\dp\tcb@upperbox+\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
   \tcbdimto\tcb@height@upper{\tcb@height@fraction\dimexpr\tcb@height@space\relax}%
   \tcbdimto\tcb@height@lower{\tcb@height@space-\tcb@height@upper}%
 }
@@ -997,6 +1072,7 @@
   \ifdim\tcb@natheight<\dimexpr\kvtcb@height@fixed\relax%
     \tcbdimto\tcb@height{\kvtcb@height@fixed}%
   \else%
+    \tcbdimto\tcb@space{\tcb@space+\kvtcb@height@fixed-\tcb@natheight}%
     \tcbdimto\tcb@temp{\kvtcb@height@fixed+\kvtcb@height@fixed@plus}%
     \ifdim\tcb@natheight>\tcb@temp\relax%
       \let\tcb@height\tcb@temp%
@@ -1004,6 +1080,7 @@
       \let\tcb@height\tcb@natheight%
     \fi%
   \fi%
+  \tcbdimto\tcbheightspace{\tcb@height-\tcb@natheight}%
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
 }
 
@@ -1037,16 +1114,18 @@
 }
 
 \def\tcb@ch@equalheight{%
-  \tcb@ehgadd{\tcb@natheight}%
+  \tcbdimto\tcb@ehg@currentheight{\tcb@natheight-\tcb@space}%
+  \tcb@ehgadd{\tcb@ehg@currentheight}%
   \ifcsdef{tcb@ehg@height@\tcb@ehgid}{%
-    \ifdim\csuse{tcb@ehg@height@\tcb@ehgid}<\tcb@natheight\relax%
-      \let\tcb@height\tcb@natheight%
+    \ifdim\csuse{tcb@ehg@height@\tcb@ehgid}<\tcb@ehg@currentheight\relax%
+      \let\tcb@height\tcb@ehg@currentheight%
     \else%
       \letcs{\tcb@height}{tcb@ehg@height@\tcb@ehgid}%
     \fi%
   }{%
-    \let\tcb@height\tcb@natheight%
+    \let\tcb@height\tcb@ehg@currentheight%
   }%
+  \tcbdimto\tcbheightspace{\tcb@height-\tcb@natheight}%
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
 }
 
@@ -1509,6 +1588,7 @@
   \fi%
   \tcb@ch%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
+  \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
   \tcb@drawing@env@begin%
     \pgfsetbaseline{\the\dimexpr\kvtcb@baseline-\kvtcb@bbbottom\relax}%
     \tcb@extensions@preframe%

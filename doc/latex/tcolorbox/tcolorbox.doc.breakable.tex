@@ -106,7 +106,7 @@ parameters. The differences are:
   boxes are always unbreakable.\par
   After all, in the unlikely case you really want to have the nested box to be breakable,
   use \refKey{/tcb/enforce breakable} for the nested
-  box\footnote{ \refKey{/tcb/enforce breakable} acts like \refKey{/tcb/breakable} until |tcolorbox| 3.04.}.
+  box\footnote{\refKey{/tcb/enforce breakable} acts like \refKey{/tcb/breakable} until |tcolorbox| 3.04.}.
   \textbf{But, a breakable box inside a breakable box will usually give a mess.}
 \item If your text content contains some text color changing commands,
   your color will not survive the break to the next box.
@@ -118,6 +118,12 @@ parameters. The differences are:
   The |perpage| option of the |footmisc| package is deliberately deactivated
   inside a breakable box since all footnotes are placed at the end
   of the box (possibly far away from the reference point).
+\item\tcbdocmarginnote{\tcbdocnew{2016-02-15}}
+  Making a box \refKey{/tcb/breakable} which actually is not broken creates
+  a box which acts \emph{almost} like an unbreakable box. Visual differences
+  are kept as indiscernible as possible, but can appear with certain
+  \refKey{/tcb/before} and \refKey{/tcb/after} settings, especially, if there
+  is an automatic page break before the box.
 \end{itemize}
 
 
@@ -518,12 +524,10 @@ and \refKey{/tcb/enlarge bottom at break by}.
 % \usetikzlibrary{decorations.pathmorphing}
 % \tcbuselibrary{skins}
 \newtcolorbox{mybox}[1][]{
-  enhanced,frame hidden,
-  colframe=yellow,
-  sharp corners,
+  tile,
   colback=green!7,coltitle=blue!50!black,colbacktitle=blue!5,
   center title,
-  boxrule=0pt,toprule=1.25mm,bottomrule=1.25mm,
+  toprule=1.25mm,bottomrule=1.25mm,
   extras unbroken and first={
     borderline north={0.25mm}{0.5mm}{blue,decoration={zigzag,amplitude=0.5mm},decorate}},
   extras unbroken and last={
@@ -680,6 +684,11 @@ the \emph{break sequence} parts are displayed.
 \tcbbreakskininto{bicolorfirst}{bicolorfirst}{bicolormiddle}{bicolormiddle}{bicolor}
 \tcbbreakskininto{bicolormiddle}{bicolormiddle}{bicolormiddle}{bicolormiddle}{bicolor}
 \tcbbreakskininto{bicolorlast}{bicolormiddle}{bicolormiddle}{bicolorlast}{bicolor}
+\clearpage
+\tcbbreakskininto{tile}{tilefirst}{tilemiddle}{tilelast}{tile,colbacktitle=Navy}
+\tcbbreakskininto{tilefirst}{tilefirst}{tilemiddle}{tilemiddle}{tile,colbacktitle=Navy}
+\tcbbreakskininto{tilemiddle}{tilemiddle}{tilemiddle}{tilemiddle}{tile,colbacktitle=Navy}
+\tcbbreakskininto{tilelast}{tilemiddle}{tilemiddle}{tilelast}{tile,colbacktitle=Navy}
 \clearpage
 \tcbbreakskininto{beamer}{beamerfirst}{beamermiddle}{beamerlast}{beamer}
 \tcbbreakskininto{beamerfirst}{beamerfirst}{beamermiddle}{beamermiddle}{beamer}

@@ -422,12 +422,13 @@ This is the lower part.
 \clearpage
 \subsection{Boxed Title Option Keys}\label{subsec:skinboxedtitle}
 
+\subsubsection{Boxed Title Placement}
 The following options place the title text into an own \refCom{tcbox}.
 This boxed title can be customized independently from the main box using
 \refKey{/tcb/boxed title style}.
 The placement can be influenced by \meta{boxtitle options}.
 
-\begin{docTcbKey}{attach boxed title to top left}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
+\begin{docTcbKey}{attach boxed title to top left}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top left corner of the main box.
 \begin{exdispExample*}{attach_boxed_title_to_top_left}{sbs,lefthand ratio=0.66}
@@ -438,7 +439,7 @@ the top left corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}{attach boxed title to top center}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
+\begin{docTcbKey}{attach boxed title to top center}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top of the main box.
 \begin{exdispExample*}{attach_boxed_title_to_top_center}{sbs,lefthand ratio=0.66}
@@ -449,7 +450,7 @@ the top of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}{attach boxed title to top right}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
+\begin{docTcbKey}{attach boxed title to top right}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top right corner of the main box.
 \begin{exdispExample*}{attach_boxed_title_to_top_right}{sbs,lefthand ratio=0.66}
@@ -460,7 +461,7 @@ the top right corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}{attach boxed title to bottom left}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
+\begin{docTcbKey}{attach boxed title to bottom left}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom left corner of the main box.
 \begin{exdispExample*}{attach_boxed_title_to_bottom_left}{sbs,lefthand ratio=0.66}
@@ -471,7 +472,7 @@ the bottom left corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}{attach boxed title to bottom center}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
+\begin{docTcbKey}{attach boxed title to bottom center}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom of the main box.
 \begin{exdispExample*}{attach_boxed_title_to_bottom_center}{sbs,lefthand ratio=0.66}
@@ -482,7 +483,7 @@ the bottom of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}{attach boxed title to bottom right}{\colOpt{=\meta{boxtitle options}}}{style, default empty}
+\begin{docTcbKey}{attach boxed title to bottom right}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom right corner of the main box.
 \begin{exdispExample*}{attach_boxed_title_to_bottom_right}{sbs,lefthand ratio=0.66}
@@ -493,8 +494,78 @@ the bottom right corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
+
+\clearpage
+\begin{docTcbKey}[][doc new=2016-02-26]{attach boxed title to top}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+  This is a convenient style to mimic a standard title.
+  It uses \refKey{/tcb/attach boxed title to top center},
+  \refKey{/tcb/minipage boxed title}, and sizes the boxed title to match
+  the base box.
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  attach boxed title to top,
+  boxed title style={colframe=red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-02-26]{attach boxed title to top*}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+  In contrast to \refKey{/tcb/attach boxed title to top}, this style
+  uses smaller left and right rules to avoid previewer glitches.
+  Typically, one would not use different colors for the frame as in the
+  example below.
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  attach boxed title to top*,
+  boxed title style={colframe=red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-02-26]{attach boxed title to bottom}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+  This is a convenient style to produce a standard-like title at the bottom
+  of the box.
+  It uses \refKey{/tcb/attach boxed title to bottom center},
+  \refKey{/tcb/minipage boxed title}, and sizes the boxed title to match
+  the base box.
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  attach boxed title to bottom,
+  boxed title style={colframe=red}]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-02-26]{attach boxed title to bottom*}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+  In contrast to \refKey{/tcb/attach boxed title to top}, this style
+  uses smaller left and right rules to avoid previewer glitches.
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  attach boxed title to bottom*]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-02-26]{flip title}{\colOpt{=\marg{options}}}{style, default empty}
+  This style combines \refKey{/tcb/attach boxed title to bottom*}
+  with \refKey{/tcb/boxed title style}. The \meta{options} are given to
+  \refKey{/tcb/boxed title style}.
+\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[tile,flip title={sharp corners},
+  title=My title,colback=red!10,
+  colbacktitle=red!75!black]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample*}
+\end{docTcbKey}
+
 \clearpage
 
+\subsubsection{Options for the Boxed Title Placement}
 The \meta{boxtitle options} of the keys described above are shift values.
 The dimensions of the boxed title are stored into two macros
 \docAuxCommand{tcboxedtitleheight} and
@@ -568,6 +639,7 @@ are \emph{not} automatically computed.
 
 
 \clearpage
+\subsubsection{Options for the Boxed Title Box}
 \begin{marker}
   The boxed title options are implemented as an underlay, see \Vref{subsec:skinunderlay}.
   Therefore, a boxed title is not drawn, if a skin does not support underlays
@@ -591,14 +663,47 @@ are \emph{not} automatically computed.
 
 
 
-\begin{docTcbKey}{boxed title style}{=\meta{options}}{style, initially empty}
+\begin{docTcbKey}[][doc new=2016-02-26]{boxed title size}{=\meta{size}}{no default, initially |title|}
+  This setting defines the basic size for the title box. Further settings
+  can be applied using \refKey{/tcb/boxed title style}.
+  Feasible values for \meta{size} are:
+  \begin{itemize}
+  \item\docValue{title}: Sets the size according to \refKey{/tcb/size}|=|\docValue{title}.
+  \item\docValue{standard}: No size setting. Typically, this is identical to
+    \refKey{/tcb/size}|=|\docValue{normal}.
+  \item\docValue{copy}: The size values for a title of the base box are copied
+    for the title box.
+  \end{itemize}
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=3,enhanced,boxrule=0.4pt,
+    title=My title,attach boxed title to top center]
+  \begin{tcolorbox}[boxed title size=title]
+    This is a \textbf{tcolorbox}.
+  \end{tcolorbox}
+  \begin{tcolorbox}[boxed title size=standard]
+    This is a \textbf{tcolorbox}.
+  \end{tcolorbox}
+  \begin{tcolorbox}[boxed title size=copy]
+    This is a \textbf{tcolorbox}.
+  \end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc updated=2016-02-26]{boxed title style}{=\meta{options}}{style, initially empty}
 By default, a boxed title is dimensioned with \refKey{/tcb/size}|=|\docValue*{title}
-and inherits \refKey{/tcb/colframe} of the main box.
+and inherits the \refKey{/tcb/skin} and \refKey{/tcb/colframe} of the main box.
 Also, the \refKey{/tcb/colback} is inherited from the main \refKey{/tcb/colbacktitle}.
 Font and color of the title text are set as usual.
-All other \meta{options} are set by the |boxed title style| key.
+All other \meta{options} are set by the \refKey{/tcb/boxed title style} key.
 Since a boxed title is set by \refCom{tcbox}, all |tcolorbox| options are
-applicable here.
+applicable here. If \refKey{/tcb/boxed title style} is used several times,
+the \meta{options} are is appended.
 
 \begin{exdispExample*}{boxed_title_style_1}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
@@ -619,8 +724,7 @@ applicable here.
   fonttitle=\bfseries,coltitle=red!50!black,
   attach boxed title to top left=
     {xshift=3.2mm,yshift=-0.50mm},
-  boxed title style={enhanced,
-    skin=enhancedfirst jigsaw,
+  boxed title style={skin=enhancedfirst jigsaw,
     size=small,arc=1mm,bottom=-1mm,
     interior style={fill=none,
       top color=red!30!white,
@@ -634,7 +738,7 @@ applicable here.
   colframe=blue!50!black,colback=blue!10!white,colbacktitle=blue!5!yellow!10!white,
   fonttitle=\bfseries,coltitle=black,attach boxed title to top center=
     {yshift=-0.25mm-\tcboxedtitleheight/2,yshifttext=2mm-\tcboxedtitleheight/2},
-  boxed title style={enhanced,boxrule=0.5mm,
+  boxed title style={boxrule=0.5mm,
     frame code={ \path[tcb fill frame] ([xshift=-4mm]frame.west)
     -- (frame.north west) -- (frame.north east) -- ([xshift=4mm]frame.east)
     -- (frame.south east) -- (frame.south west) -- cycle; },
@@ -679,7 +783,7 @@ applicable here.
   fonttitle=\bfseries,varwidth boxed title=0.7\linewidth,
   colbacktitle=green!45!white,coltitle=green!10!black,colframe=green!50!black,
   interior style={top color=yellow!10!white,bottom color=green!10!white},
-  boxed title style={enhanced,boxrule=0.75mm,colframe=white,
+  boxed title style={boxrule=0.75mm,colframe=white,
     borderline={0.1mm}{0mm}{green!50!black},
     borderline={0.1mm}{0.75mm}{green!50!black},
     interior style={top color=green!10!white,bottom color=green!10!white,
@@ -695,12 +799,8 @@ applicable here.
 
 \begin{exdispExample}{boxed_title_style_6}
 \newtcolorbox{flipbox}[2][]{
-  enhanced,sharp corners=south,
-  attach boxed title to bottom center={yshift=0.5mm},
-  minipage boxed title*,
-  boxed title style={enhanced,size=normal,top=0pt,bottom=0pt,
-    interior hidden,sharp corners=north},
-  title={#2},#1}
+  enhanced,colframe=blue!50!black,colback=yellow!5,fonttitle=\bfseries,
+  flip title={interior hidden},title={#2},#1}
 
 \begin{flipbox}{My title}
 \lipsum[2]
@@ -734,6 +834,46 @@ applicable here.
   \lipsum[2]
 \end{mybox}
 \end{exdispExample}
+
+
+\begin{exdispExample}{boxed_title_style_8}
+% \usepackage{varwidth}
+\newtcolorbox{mybox}[2][]{enhanced,
+  before skip=2mm,after skip=2mm,
+  colback=black!5,colframe=black!50,boxrule=0.2mm,
+  attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
+  varwidth boxed title*=-3cm,
+  boxed title style={frame code={
+    \path[fill=tcbcol@back!30!black]
+      ([yshift=-1mm,xshift=-1mm]frame.north west)
+        arc[start angle=0,end angle=180,radius=1mm]
+      ([yshift=-1mm,xshift=1mm]frame.north east)
+        arc[start angle=180,end angle=0,radius=1mm];
+    \path[left color=tcbcol@back!60!black,right color=tcbcol@back!60!black,
+      middle color=tcbcol@back!80!black]
+      ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
+      [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
+      -- (frame.south east) -- (frame.south west)
+      -- ([xshift=-1mm,yshift=-1mm]frame.north west)
+      [sharp corners]-- cycle;
+    },interior engine=empty,
+  },
+  fonttitle=\bfseries,
+  title={#2},#1}
+
+\begin{mybox}[colbacktitle=green]{My title}
+\lipsum[2]
+\end{mybox}
+\begin{mybox}[colbacktitle=red]{My title}
+\lipsum[3]
+\end{mybox}
+\end{exdispExample}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new=2016-02-26]{no boxed title style}{}{style, initially set}
+  Removes all options which were set by \refKey{/tcb/boxed title style}.
 \end{docTcbKey}
 
 
@@ -3521,6 +3661,189 @@ Nevertheless, this skin can be applied independently.
 
 
 \clearpage
+\subsection{Skin Family 'tile'}
+\begin{docSkin}[doc new=2016-02-25]{tile}
+  This skin is a variant of skin \refSkin{bicolor}. Especially, the
+  optional lower part of the box is colored by \refKey{/tcb/colbacklower}.
+  The main difference to \refSkin{bicolor} is that \refSkin{tile} has no
+  frame.
+\begin{tcolorbox}[skintable=tile]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}[][doc new=2016-02-25]{tile}{}{style, no value}
+  This is an abbreviation for setting |skin=tile|.
+  \begin{marker}It also changes the geometry and some style options.\end{marker}
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\begin{tcbraster}[tile,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}[doc new=2016-02-25]{tilefirst}
+This is a flavor of \refSkin{tile} which is used as a \emph{first} part
+in a break sequence for \refSkin{tile}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=tilefirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\begin{tcbraster}[skin=tilefirst,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm,boxrule=0pt]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}[doc new=2016-02-25]{tilemiddle}
+This is a flavor of \refSkin{tile} which is used as a \emph{middle} part
+in a break sequence for \refSkin{tile}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=tilemiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\begin{tcbraster}[skin=tilemiddle,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm,boxrule=0pt]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}[doc new=2016-02-25]{tilelast}
+This is a flavor of \refSkin{tile} which is used as a \emph{last} part
+in a break sequence for \refSkin{tile}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=tilelast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\begin{tcbraster}[skin=tilelast,raster equal height,raster columns=4,
+    colback=LightGreen,colframe=DarkGreen,colbacklower=LimeGreen!75!LightGreen,
+    colbacktitle=LimeGreen!75!DarkGreen,
+    left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm,boxrule=0pt]
+  \begin{tcolorbox}
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+  \end{tcolorbox}
+  \begin{tcolorbox}[adjusted title=My title]
+    This is my content.
+    \tcblower
+    More content.
+  \end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+
+
+\clearpage
 \subsection{Skin Family 'beamer'}
 
 \begin{docSkin}{beamer}
@@ -4006,6 +4329,32 @@ A & B & C\\\hline
 \end{dispExample}
 \end{docTcbKey}
 
+
+
+\clearpage
+\begin{docTcbKey}{blankest}{}{style, initially unset}
+  This style extends \refKey{/tcb/blanker}.
+  All engines are set to empty and all margins are set to |0pt|.
+  In contrast to \refKey{/tcb/blanker}, also title, shadow, underlay,
+  overlay, finish and borderline are removed.
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=3,raster equal height,
+    title=Box \thetcbrasternum,
+    enhanced,size=small,colframe=red!50!black,colback=red!10!white,
+    coltitle=yellow!85!black,
+    drop fuzzy shadow,watermark text={Box \thetcbrasternum},
+    borderline={.25mm}{-0.5mm}{green!40!black},
+    finish={\begin{tcbclipframe}\draw[blue,opacity=0.1,line width=1cm]
+      (frame.south west) -- (frame.north east);\end{tcbclipframe}},
+    ]
+  \begin{tcolorbox}\lipsum[4]\end{tcolorbox}
+  \begin{tcolorbox}[blanker]\lipsum[4]\end{tcolorbox}
+  \begin{tcolorbox}[blankest]\lipsum[4]\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+\end{docTcbKey}
 
 
 \clearpage

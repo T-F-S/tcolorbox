@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.80}
+\tcb@set@library@version{3.90}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -240,6 +240,7 @@
 
 \long\def\tcbox@inner@fitbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
+  \let\tcb@space\tcb@zpt%
   \let\tcb@val@raisebase=\tcb@zpt%
   \unless\ifdefined\kvtcb@height@fixed%
     \tcbset{height=\kvtcb@width}%

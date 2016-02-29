@@ -1,5 +1,8 @@
 % !TeX root = tcolorbox.tex
 % include file (style) of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\renewcommand*\l@subsection{\@dottedtocline{2}{1.5em}{2.7em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{4.2em}{3.2em}}
+
 \RequirePackage[T1]{fontenc}
 \RequirePackage[latin1]{inputenc}
 \RequirePackage[english]{babel}
@@ -36,21 +39,16 @@
 \RequirePackage{amsmath}
 \RequirePackage{lipsum}
 \RequirePackage{empheq}
-
-%\RequirePackage[cache]{minted}% minted 2.0
+\RequirePackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
 
 \providecommand{\tcbpkgprefix}{}
 \RequirePackage{\tcbpkgprefix tcolorbox}
 
 \tcbuselibrary{most,documentation}
-\makeatletter
 \tcbifexternal{}{%
   \tcbuselibrary{minted}%
   \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
 }
-\makeatother
-
-\RequirePackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
 
 \tcbset{skin=enhanced,
   doc head={colback=yellow!10!white,interior style=fill},
@@ -79,9 +77,9 @@
 \newrobustcmd{\tcbIndexPrintSkinC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
 \def\tcb@index@Skin#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}\fi}%
 
-\newenvironment{docSkin}[1]{\begin{tcb@manual@entry}%
-  \begin{tcb@doc@head}{colback=magenta!5!white,interior style=fill}%
-  \hypertarget{skin:#1}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#1}\tcb@index@Skin{#1}\protected@edef\@currentlabel{#1}\label{skin:#1}\hfill(skin)}%
+\newenvironment{docSkin}[2][]{\begin{tcb@manual@entry}%
+  \begin{tcb@doc@head}{colback=magenta!5!white,interior style=fill,#1}%
+  \hypertarget{skin:#2}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#2}\tcb@index@Skin{#2}\protected@edef\@currentlabel{#2}\label{skin:#2}\hfill(skin)}%
   \end{tcb@doc@head}}%
   {\end{tcb@manual@entry}}
 \def\refSkin{\tcb@ref@doc{skin}}
@@ -126,7 +124,7 @@
     tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
     tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
     tcbpatcharcangular,tcbpatcharcround,tcbifoddpage,thetcolorboxnumber,thetcolorboxpage,
-    tcbheightfromgroup,
+    tcbheightfromgroup,tcbheightspace,tcbtextwidth,tcbtextheight,
     % listings
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,
@@ -172,11 +170,7 @@
   classoffset=0% restore default
   }
 
-
 \definecolor{Green_Dark}{rgb}{0.078431,0.407843,0.176471}
-\definecolor{Blue_Dark}{rgb}{0.078431,0.188235,0.615686}
-
-
 \definecolor{Blue_Dark}{rgb}{0.090196,0.211765,0.364706}
 \definecolor{Blue_Bright}{rgb}{0.858824,0.898039,0.945098}
 
@@ -209,7 +203,6 @@
 \newtcbexternalizetcolorbox{exdispExample}{dispExample}{environment with percent=false,minipage}{beforeafter example}
 
 \newtcbexternalizetcolorbox{exdispExample*}{dispExample*}{environment with percent=false,minipage}{beforeafter example}
-
 
 \newcommand{\inputpreamblelisting}[1]{%
   \tcbinputlisting{title=Definition in the preamble:,

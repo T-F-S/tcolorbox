@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.80}
+\tcb@set@library@version{3.90}
 
 \tcbuselibrary{listings,skins,xparse,external}
 
@@ -310,8 +310,8 @@
   \begin{tcb@doc@head}{doc@head@command}%
   \tcb@Print@Com{#2}\tcb@index@Com{#2}\protected@edef\@currentlabel{\noexpand\tcb@cs{#2}}\label{com:#2}{\ttfamily #3}%
   \tcb@doc@do@description%
-  \end{tcb@doc@head}\tcbset{before upper=}\kvtcb@doc@body@command@before}%
-  {\kvtcb@doc@body@command@after\end{tcb@manual@entry}}
+  \end{tcb@doc@head}\nobreak\tcbset{before upper=}\kvtcb@doc@body@command@before\ignorespaces}%
+  {\ifvmode\else\unskip\fi\kvtcb@doc@body@command@after\end{tcb@manual@entry}}
 
 \newenvironment{docCommand*}{\bgroup\tcb@doc@toindexfalse\begin{docCommand}}{\end{docCommand}\egroup}
 
@@ -322,8 +322,8 @@
   \strut~~\meta{\kvtcb@text@envcontent}\par%
   \strut\cs{end}\brackets{\tcb@Print@Env{#2}}%
   \tcb@doc@do@description%
-  \end{tcb@doc@head}\tcbset{before upper=}\kvtcb@doc@body@environment@before}%
-  {\kvtcb@doc@body@environment@after\end{tcb@manual@entry}}
+  \end{tcb@doc@head}\nobreak\tcbset{before upper=}\kvtcb@doc@body@environment@before\ignorespaces}%
+  {\ifvmode\else\unskip\fi\kvtcb@doc@body@environment@after\end{tcb@manual@entry}}
 
 \newenvironment{docEnvironment*}{\bgroup\tcb@doc@toindexfalse\begin{docEnvironment}}{\end{docEnvironment}\egroup}
 
@@ -337,8 +337,8 @@
     \tcb@index@KeyPath{#1}{#3}\protected@edef\@currentlabel{/#1/#3}\label{key:/#1/#3}{\ttfamily #4}%
   }%
   \tcb@doc@do@description%
-  \end{tcb@doc@head}\tcbset{before upper=}\kvtcb@doc@body@key@before}%
-  {\kvtcb@doc@body@key@after\end{tcb@manual@entry}}
+  \end{tcb@doc@head}\nobreak\tcbset{before upper=}\kvtcb@doc@body@key@before\ignorespaces}%
+  {\ifvmode\else\unskip\fi\kvtcb@doc@body@key@after\end{tcb@manual@entry}}
 
 \newenvironment{docKey*}{\bgroup\tcb@doc@toindexfalse\begin{docKey}}{\end{docKey}\egroup}
 

@@ -176,6 +176,48 @@ If \refKey{/tcb/fit} should be used, turn over to \refEnv{tcbraster}.
 
 
 \clearpage
+\begin{docEnvironment}[doc new=2016-02-19]{tcboxedraster}{\oarg{raster options}\marg{box options}}
+  This is a convenience environment which combines a \refEnv{tcolorbox} with
+  an embedded \refEnv{tcbraster}. The \meta{box options} are given to the
+  outer \refEnv{tcolorbox}, while the \meta{raster options} are given to the
+  embedded \refEnv{tcbraster}.
+  This environment is especially useful for rasters inside rasters.
+
+\begin{dispExample}
+\begin{tcboxedraster}[raster columns=3, raster equal height,
+  size=small,colframe=red!50!black,colback=red!10!white,colbacktitle=red!50!white,
+  title={Box \# \thetcbrasternum}]
+  {colback=yellow!10,fonttitle=\bfseries,title=Boxed Raster}
+  \begin{tcolorbox}First box\end{tcolorbox}
+  \begin{tcolorbox}Second box\end{tcolorbox}
+  \begin{tcolorbox}This is a box\\with a second line\end{tcolorbox}
+  \begin{tcolorbox}Another box\end{tcolorbox}
+  \begin{tcolorbox}A box again\end{tcolorbox}
+\end{tcboxedraster}
+\end{dispExample}
+
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\begin{tcbraster}[raster columns=2, raster equal height,
+  raster every box/.style={size=small,colframe=red!50!black,colback=red!10!white,
+    valign=center,halign=center}]
+  \begin{tcolorbox}One\end{tcolorbox}
+  \begin{tcolorbox}Two\end{tcolorbox}
+    \begin{tcboxedraster}{blankest}
+      \begin{tcolorbox}Three\end{tcolorbox}
+      \begin{tcolorbox}Four\end{tcolorbox}
+      \begin{tcolorbox}Five\end{tcolorbox}
+      \begin{tcolorbox}Six\end{tcolorbox}
+    \end{tcboxedraster}
+    \begin{tcolorbox}Seven\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+
+\end{docEnvironment}
+
+
+\clearpage
 \subsection{Option Keys of the Library}\label{subsec:raster_options}
 
 \begin{docTcbKey}[][doc new=2014-11-10]{raster columns}{=\meta{number}}{no default, initially |2|}
@@ -572,6 +614,257 @@ This style is used for the box with number |n|.
 \end{tcbitemize}
 \end{dispExample}
 \end{docTcbKey}
+
+
+\clearpage
+\subsection{Combining Columns or Rows}\label{subsec:raster_multicolrow}
+
+\begin{docTcbKey}[][doc new=2016-02-19]{raster multicolumn}{=\meta{number}}{no default, initially unset}
+  This option has to be set inside the option list of a \refEnv{tcolorbox}
+  inside a \refEnv{tcbraster} or inside \refCom{tcbitem} inside \refEnv{tcbitemize}.
+  It merges the given \meta{number} of boxes into one single box
+  on the same line. The resulting box gets the \docAuxCommand{thetcbrasternum}
+  of the first box.
+  If there are not enough boxes available on the current line, this option
+  is ignored and a warning is given.
+
+\begin{dispExample}
+\begin{tcbitemize}[raster equal height=rows,raster columns=3,
+  title=\thetcbrasternum,colframe=red!50!black,colback=red!10!white]
+\tcbitem[colframe=blue!50!black,colback=blue!10!white,raster multicolumn=1]
+  multicolumn=1
+\tcbitem
+\tcbitem
+\tcbitem[colframe=blue!50!black,colback=blue!10!white,raster multicolumn=2]
+  multicolumn=2
+\tcbitem
+\tcbitem[colframe=blue!50!black,colback=blue!10!white,raster multicolumn=3]
+  multicolumn=3
+\tcbitem
+\tcbitem[colframe=blue!50!black,colback=blue!10!white,raster multicolumn=2]
+  multicolumn=2
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2016-02-19]{raster multirow}{=\meta{number}}{no default, initially unset}
+  This option has to be set inside the option list of a \refEnv{tcolorbox}
+  inside a \refEnv{tcbraster} or inside \refCom{tcbitem} inside \refEnv{tcbitemize}.
+  This option not really merges boxes, but simply sizes the current box to fit
+  the space of \meta{number} rows.
+
+  \begin{marker}
+    \refKey{/tcb/raster multirow} needs \refKey{/tcb/raster height} to be set.
+    How to achieve a similar result for boxes without fixed \refKey{/tcb/raster height}
+    is shown afterwards.
+  \end{marker}
+
+\begin{dispExample}
+\begin{tcbitemize}[raster rows=3,raster columns=3,raster height=6cm,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+\tcbitem
+\tcbitem
+\tcbitem
+\tcbitem[colframe=blue!50!black,colback=blue!10!white,raster multirow=2]
+  multirow=2
+\tcbitem[raster multicolumn=2,raster multirow=2,blankest]
+  \begin{tcbitemize}[raster rows=2,raster columns=2,raster height=\tcbtextheight]
+  \tcbitem
+  \tcbitem
+  \tcbitem
+  \tcbitem
+  \end{tcbitemize}
+\end{tcbitemize}
+\end{dispExample}
+
+
+\clearpage
+For rasters without fixed \refKey{/tcb/raster height}, \refKey{/tcb/raster multirow}
+cannot be used. Note that \refCom{tcbtextheight} also cannot be used like
+in the previous example.
+
+But, with combination of \refKey{/tcb/raster equal height} and
+\refKey{/tcb/space to}, a similar effect can be created:
+
+\begin{dispExample}
+\begin{tcbitemize}[raster columns=3,raster equal height=rows,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+\tcbitem
+\tcbitem
+\tcbitem
+\tcbitem[colframe=blue!50!black,colback=blue!10!white]
+ \lipsum[2]
+\tcbitem[raster multicolumn=2,blankest,space to=\myspace]
+  \begin{tcbitemize}[raster columns=2]
+  \tcbitem This is a box of the inner raster.
+  \tcbitem
+  \tcbitem[height=\myspace]
+  \tcbitem[height=\myspace]
+  \end{tcbitemize}
+\end{tcbitemize}
+\end{dispExample}
+
+\end{docTcbKey}
+
+
+
+\clearpage
+\subsection{Rasters inside Rasters}\label{subsec:raster_insideraster}
+
+A \emph{raster} inside a \emph{raster} cannot be used directly, because
+a \emph{raster} can only contain a \emph{tcolorbox} or something
+derived from a \emph{tcolorbox}. So, a \emph{raster} can be put inside
+a \emph{tcolorbox} inside a \emph{raster}.
+
+Some examples for such constructions can be found at \refEnv{tcboxedraster},
+\refKey{/tcb/raster multicolumn},
+\refKey{/tcb/raster multirow}.
+
+
+\subsubsection{Raster Setup}
+The intermediating \refEnv{tcolorbox} can be made invisible by using
+\refKey{/tcb/blankest}.
+
+\begin{dispExample}
+\begin{tcbraster}[raster equal height=rows,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+  \begin{tcolorbox}[blankest]
+    \begin{tcbraster}[raster columns=1]
+      \begin{tcolorbox}One\end{tcolorbox}
+      \begin{tcolorbox}Two\end{tcolorbox}
+    \end{tcbraster}
+  \end{tcolorbox}
+  \begin{tcolorbox}raster+tcolorbox+raster\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+\enlargethispage*{1cm}
+\begin{dispExample}
+\begin{tcbraster}[raster equal height=rows,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+  \begin{tcboxedraster}[raster columns=1]{blankest}
+    \begin{tcolorbox}One\end{tcolorbox}
+    \begin{tcolorbox}Two\end{tcolorbox}
+  \end{tcboxedraster}
+  \begin{tcolorbox}raster+tcboxedraster\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcbitemize}[raster equal height=rows,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+  \tcbitem[blankest]
+    \begin{tcbitemize}[raster columns=1]
+      \tcbitem One
+      \tcbitem Two
+    \end{tcbitemize}
+  \tcbitem tcbitemize+tcbitem+tcbitemize
+\end{tcbitemize}
+\end{dispExample}
+
+
+\subsubsection{Placing Spaces}
+If the heights of boxes inside staggered rasters should be matched, the
+space has to be distributed accordingly.
+
+\begin{itemize}
+\item For fixed height boxes/rasters using \refKey{/tcb/raster height},
+  the height of boxes is available by \refCom{tcbtextheight}. This can be
+  used to size deeper layered boxes/rasters.
+\item For boxes/rasters layed out using \refKey{/tcb/raster equal height},
+  space can be distributed by \refKey{/tcb/space to}.
+  It can take several compilations until all spaces are distributed correctly.
+\end{itemize}
+
+
+\begin{dispExample}
+\begin{tcbitemize}[raster rows=2,raster height=6cm,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+  \tcbitem[blankest]
+    \begin{tcbitemize}[raster columns=1,raster rows=2,raster height=\tcbtextheight]
+      \tcbitem One
+      \tcbitem Two
+    \end{tcbitemize}
+  \tcbitem This is a fixed height box.
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcbitemize}[raster columns=4,raster rows=4,raster height=0.8\linewidth,
+  raster every box/.style={size=small,beamer,
+    colframe=blue!75!yellow,colback=red!75!yellow!20,
+    center title,title=Box}]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+  \tcbitem[raster multirow=2,blankest]
+    \begin{tcbitemize}[raster columns=1,raster rows=2,raster height=\tcbtextheight]
+      \tcbitem Twelve
+      \tcbitem Eleven
+    \end{tcbitemize}
+  \tcbitem[raster multirow=2,raster multicolumn=2,
+      colframe=red!75!yellow,colback=blue!75!yellow!20]
+    This is an example with fixed height boxes.
+  \tcbitem[raster multirow=2,blankest]
+    \begin{tcbitemize}[raster columns=1,raster rows=2,raster height=\tcbtextheight]
+      \tcbitem Five
+      \tcbitem Six
+    \end{tcbitemize}
+  \tcbitem Ten
+  \tcbitem Nine
+  \tcbitem Eight
+  \tcbitem Seven
+\end{tcbitemize}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcbitemize}[raster equal height=rows,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+  \tcbitem[blankest,space to=\myspace]
+    \begin{tcbitemize}[raster columns=1]
+      \tcbitem One
+      \tcbitem[add to natural height=\myspace]
+        This box will adapt its height.
+    \end{tcbitemize}
+  \tcbitem This is a flexible height box.
+  \tcbitem \lipsum[4]
+  \tcbitem[blankest,space to=\myspace]
+    \begin{tcbitemize}[raster columns=1]
+      \tcbitem One
+      \tcbitem[add to natural height=\myspace]
+        This box will adapt its height.
+    \end{tcbitemize}
+\end{tcbitemize}
+\end{dispExample}
+
+
+
+\begin{dispExample}
+\begin{tcbitemize}[raster equal height=rows,
+  raster every box/.style={colframe=red!50!black,colback=red!10!white}]
+  \tcbitem[blankest,space to=\myspace]
+    \begin{tcbitemize}[raster columns=1]
+      \tcbitem One
+      \tcbitem[add to natural height=\myspace]
+        This box will adapt its height.
+      \tcbitem \lipsum[4]
+    \end{tcbitemize}
+  \tcbitem[blankest,space to=\myspace]
+    \begin{tcbitemize}[raster columns=1]
+      \tcbitem[blankest]\includegraphics[width=\linewidth]{goldshade.png}
+      \tcbitem[add to natural height=\myspace]
+        This box will adapt its height.
+    \end{tcbitemize}
+\end{tcbitemize}
+\end{dispExample}
 
 
 

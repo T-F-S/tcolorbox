@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.80 (2015/11/27)
+%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2015 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.80}
+\tcb@set@library@version{3.90}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -478,7 +478,10 @@
 
 \tcbset{empty/.style={skin=empty},%
   blanker/.style={empty,arc=0pt,outer arc=0pt,boxsep=0pt,top=0pt,bottom=0pt,left=0pt,right=0pt,boxrule=0pt,%
-    bottomtitle=6pt,middle=3pt}}
+    bottomtitle=6pt,middle=3pt},
+  blankest/.style={blanker,notitle,
+    no shadow,no underlay,no overlay,no finish,no borderline},
+  }
 
 \tcb@new@skin{freelance}{base@unbroken,%
   frame engine=freelance,interior titled engine=freelance,interior engine=freelance,segmentation engine=freelance,title engine=freelance,%
@@ -629,6 +632,19 @@
     \tcb@drawspec@sbs@F{fill=tcbcol@backlower}\fi\else\tcb@drawspec@LR{fill=tcbcol@backlower}\fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolorlast}
 
+\tcb@new@skin{tile}{skin@bicolor,frame engine=empty,%
+  skin first=tilefirst,skin middle=tilemiddle,skin last=tilelast}
+
+\tcbset{tile/.style={skin=tile,boxrule=0pt,sharp corners,title filled,fonttitle=\bfseries}}
+
+\tcb@new@skin{tilefirst}{skin@bicolorfirst,frame engine=empty,%
+  skin first=tilefirst,skin middle=tilemiddle,skin last=tilemiddle}
+
+\tcb@new@skin{tilemiddle}{skin@bicolormiddle,frame engine=empty,%
+  skin first=tilemiddle,skin middle=tilemiddle,skin last=tilemiddle}
+
+\tcb@new@skin{tilelast}{skin@bicolorlast,frame engine=empty,%
+  skin first=tilemiddle,skin middle=tilemiddle,skin last=tilelast}
 
 \tikzset{beamer@color/.style={fill=none,top color=tcbcol@back,bottom color=tcbcol@back!85!black}}
 
@@ -949,21 +965,43 @@
   no finish/.style={no finish unbroken,no finish first,no finish middle,no finish last},%
 }
 
+\def\tcb@trans@set@boxedsize@copy@top{%
+  \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcb@trans@boxedsize{%
+    leftrule=\kvtcb@left@rule,rightrule=\kvtcb@right@rule,
+    toprule=\kvtcb@top@rule@stand,bottomrule=\kvtcb@title@rule,
+    boxsep=\kvtcb@boxsep,leftupper=\kvtcb@lefttitle,rightupper=\kvtcb@righttitle,
+    top=\kvtcb@toptitle,bottom=\kvtcb@bottomtitle,arc=\kvtcb@arc,
+    sharp corners=south,
+  }}\x}%
+\def\tcb@trans@set@boxedsize@copy@bottom{%
+  \begingroup\edef\x{\endgroup\noexpand\def\noexpand\tcb@trans@boxedsize{%
+    leftrule=\kvtcb@left@rule,rightrule=\kvtcb@right@rule,
+    toprule=\kvtcb@title@rule,bottomrule=\kvtcb@bottom@rule@stand,
+    boxsep=\kvtcb@boxsep,leftupper=\kvtcb@lefttitle,rightupper=\kvtcb@righttitle,
+    top=\kvtcb@toptitle,bottom=\kvtcb@bottomtitle,arc=\kvtcb@arc,
+    sharp corners=north,
+  }}\x}%
 
 \tcbset{%
+  boxed title size/.is choice,
+  boxed title size/standard/.code={\def\tcb@trans@set@boxedsize##1{\let\tcb@trans@boxedsize\@empty}},
+  boxed title size/title/.code={\def\tcb@trans@set@boxedsize##1{\def\tcb@trans@boxedsize{size=title}}},
+  boxed title size/copy/.code={\def\tcb@trans@set@boxedsize##1{%
+    \ifstrequal{##1}{top}{\tcb@trans@set@boxedsize@copy@top}{\tcb@trans@set@boxedsize@copy@bottom}}},
   before@boxed@title/.store in=\kvtcb@before@boxedtitle,%
   after@boxed@title/.store in=\kvtcb@after@boxedtitle,%
-  boxed title style/.store in=\kvtcb@style@boxedtitle,%
+  boxed title style/.code={\appto\kvtcb@style@boxedtitle{,#1}},%
+  no boxed title style/.code={\let\kvtcb@style@boxedtitle\@empty},%
   %
   varwidth boxed title/.style={before@boxed@title={\tcbdimto\tcb@w@title{#1}\begin{varwidth}{\tcb@w@title}},after@boxed@title={\end{varwidth}}},%
-  varwidth boxed title/.default={\kvtcb@width-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle},
+  varwidth boxed title/.default={\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)},
   varwidth boxed title*/.style={varwidth boxed title={\kvtcb@width+#1}},
-  varwidth boxed title*/.default={-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle},
+  varwidth boxed title*/.default={0pt-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)},
   %
   minipage boxed title/.style={before@boxed@title={\tcbdimto\tcb@w@title{#1}\begin{minipage}{\tcb@w@title}},after@boxed@title={\end{minipage}}},%
-  minipage boxed title/.default={\kvtcb@width-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle},
+  minipage boxed title/.default={\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)},
   minipage boxed title*/.style={minipage boxed title={\kvtcb@width+#1}},
-  minipage boxed title*/.default={-\kvtcb@left@rule-\kvtcb@right@rule-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle},
+  minipage boxed title*/.default={0pt-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)},
   %
   tikznode boxed title/.style={before@boxed@title={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=0pt,outer sep=0pt,#1]\bgroup},after@boxed@title={\egroup;\end{tikzpicture}}},%
   hbox boxed title/.style={before@boxed@title=,after@boxed@title=},%
@@ -998,11 +1036,14 @@
     detach title,
     code={\def\tcb@specialtitle@hook{%
       \ifx\tcbtitletext\@empty\else%
+      \tcb@trans@set@boxedsize{#2}%
       \colorlet{tcbtranscol@frame}{tcbcol@frame}%
       \colorlet{tcbtranscol@back}{tcbcol@backtitle}%
+      \let\tcb@trans@skin@current\kvtcb@skin@current%
       \let\tcb@trans@boxedstyle\kvtcb@style@boxedtitle%
-      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@boxedtitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
-      \setbox\tcb@titlebox\color@hbox\tcbox[colframe=tcbtranscol@frame,colback=tcbtranscol@back,size=title,code={\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\tcbox[skin=\tcb@trans@skin@current,colframe=tcbtranscol@frame,colback=tcbtranscol@back,%
+        code={\pgfkeysalsofrom\tcb@trans@boxedsize\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
       %
       \tcbdimto\tcboxedtitleheight{\ht\tcb@titlebox+\dp\tcb@titlebox}%
       \tcbdimto\tcboxedtitlewidth{\wd\tcb@titlebox}%
@@ -1028,6 +1069,33 @@
   attach boxed title to bottom left/.style={attach@title@boxed@bottom={#1}{below right}{south west}},
   attach boxed title to bottom center/.style={attach@title@boxed@bottom={#1}{below}{south}},
   attach boxed title to bottom right/.style={attach@title@boxed@bottom={#1}{below left}{south east}},
+  reduce@vertical@rules/.code={%
+    \ifdim\dimexpr\kvtcb@left@rule<\dimexpr\kvtcb@right@rule\relax%
+      \tcbdimto\tcb@temp{\kvtcb@left@rule/2}%
+    \else%
+      \tcbdimto\tcb@temp{\kvtcb@right@rule/2}%
+    \fi%
+    \tcbset{leftrule/.expanded=\the\dimexpr\kvtcb@left@rule-\tcb@temp\relax,
+      rightrule/.expanded=\the\dimexpr\kvtcb@right@rule-\tcb@temp\relax}%
+  },
+  attach boxed title to bottom/.style={%
+    attach boxed title to bottom center={yshift*=\tcboxedtitleheight,#1},
+    minipage boxed title,boxed title size=copy,
+  },
+  attach boxed title to bottom*/.style={%
+    attach boxed title to bottom={#1},
+    boxed title style={reduce@vertical@rules},
+  },
+  attach boxed title to top/.style={%
+    attach boxed title to top center={yshift*=-\tcboxedtitleheight,#1},
+    minipage boxed title,boxed title size=copy,
+  },
+  attach boxed title to top*/.style={%
+    attach boxed title to top={#1},
+    boxed title style={reduce@vertical@rules},
+  },
+  flip title/.style={attach boxed title to bottom,
+    boxed title style={reduce@vertical@rules,#1}},
 }
 
 
@@ -1633,25 +1701,19 @@
 \def\tcb@include@graphics{%
   \ifdefstring{\kvtcb@capture}{hbox}{%
     \tcbox{%
-      \edef\tcb@temp{\noexpand\includegraphics[\expandonce\kvtcb@graphics@options]}%
-      \tcb@temp{\imagepath}%
+      \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options]}%
+      \x{\imagepath}%
     }%
   }{%
     \iftcb@fixedheight%
-      \begin{tcolorbox}[underlay={%
-        \begin{tcbclipinterior}%
-        \edef\tcb@temp{\noexpand\tikzset{fill image options={\expandonce\kvtcb@graphics@options}}}%
-        \tcb@temp%
-        \path[fill zoom image={\imagepath}]
-          ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south west) rectangle
-          ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north east);
-        \end{tcbclipinterior}%
-        }]%
+      \begin{tcolorbox}%
+        \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,height=\tcbtextheight]}%
+        \x{\imagepath}%
       \end{tcolorbox}%
     \else%
       \begin{tcolorbox}%
-        \edef\tcb@temp{\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth]}%
-        \tcb@temp{\imagepath}%
+        \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth]}%
+        \x{\imagepath}%
       \end{tcolorbox}%
     \fi%
   }%
@@ -1752,7 +1814,7 @@
     watermark zoom=0.75,clip watermark,%
     clip title=false,clip upper=false,clip lower=false,%
     no borderline,smart shadow arc,no shadow,no underlay,no finish,tikz reset,at begin tikz reset,at end tikz reset,%
-    boxed title style=,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax},%
+    boxed title size=title,no boxed title style,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax},%
     graphics options=,graphics pages={1,...,\pdfpages},graphics directory=,%
   },
   initialize@reset=reset@skins,
