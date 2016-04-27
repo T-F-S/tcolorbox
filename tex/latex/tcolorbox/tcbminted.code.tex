@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.90}
+\tcb@set@library@version{3.91}
 
 \RequirePackage{minted}[2011/09/17]
 
@@ -27,15 +27,14 @@
 \def\tcb@minted@input@listing#1#2#3#4{%
   \edef\temp@a{#4}%
   \ifx\temp@a\@empty%
-  \else
-    %\usemintedstyle{\temp@a}%
+  \else%
     \toks@=\expandafter{#4}%
     \edef\tcb@temp{\noexpand\usemintedstyle{\the\toks@}}%
     \tcb@temp%
   \fi%
   \toks@=\expandafter{#1}%
   \edef\tcb@temp{\noexpand\inputminted[\the\toks@]}%
-  \tcb@temp{#2}{#3}%
+  \tcb@temp{#2}{\minted@outputdir#3}%
 }
 
 \def\tcb@minted@uselistinglisting{%

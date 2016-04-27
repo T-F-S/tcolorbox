@@ -25,7 +25,8 @@ This also loads the package |amsmath|.
   used only in rare cases.
   The first mandatory parameter is the title text for the theorem and
   the second mandatory parameter is a \meta{marker}. The theorem is
-  automatically labeled with \meta{prefix}|:|\meta{marker}.\par
+  automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
+  where \meta{separator} is predefined as '|:|', see \refKey{/tcb/label separator}.\par
   The new environment \meta{name}|*| takes one optional and one mandatory
   parameter and represents an unnumbered variant of the environment \meta{name}.
   This variant is not labeled and not listed in lists of theorems.
@@ -89,7 +90,8 @@ This also loads the package |amsmath|.
   used only in rare cases.
   The first mandatory parameter is the title text for the theorem and
   the second mandatory parameter is a \meta{marker}. The theorem is
-  automatically labeled with \meta{prefix}|:|\meta{marker}.
+  automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
+  where \meta{separator} is predefined as '|:|', see \refKey{/tcb/label separator}.
 \end{deprecated}
 \end{docCommand}
 
@@ -355,6 +357,24 @@ Sets \refKey{/tcb/terminator sign} to the default empty text.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2016-04-19]{label separator}{=\meta{separator}}{no default, initially |:|}
+  The given \meta{separator} is used for labels created with environments which
+  are defined themselves by \refCom{newtcbtheorem}. This \meta{separator} is
+  put between \meta{prefix} (defined by \refCom{newtcbtheorem})
+  and \meta{marker} (defined by an actual theorem environment).
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   label separator=*}{theo}
+\begin{sometheorem}{My example}{myex}
+My theorem text.
+\end{sometheorem}
+See Example~\ref{theo*myex}.
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
 \begin{docTcbKey}{theorem name and number}{}{style, no value, initially set}
 Prints theorem name followed by theorem number inside the title.
 \begin{dispExample}
@@ -367,7 +387,7 @@ My theorem text.
 \end{dispExample}
 \end{docTcbKey}
 
-\clearpage
+
 \begin{docTcbKey}{theorem number and name}{}{style, no value}
 Prints theorem number followed by theorem name inside the title.
 \begin{dispExample}
@@ -392,7 +412,7 @@ My theorem text.
 \end{dispExample}
 \end{docTcbKey}
 
-
+\clearpage
 \begin{docTcbKey}{theorem}{=\marg{display name}\marg{counter}\marg{title}\marg{marker}}{no default}
   This key is internally used by \refCom{tcbmaketheorem}, but can be used
   directly in a |tcolorbox| for a more flexible approach.
@@ -412,7 +432,7 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
 \refCom{newtcbtheorem}.
 \end{docTcbKey}
 
-\clearpage
+
 \begin{docTcbKey}{highlight math}{}{style, no value}
   Predefined style which is used for \refCom{tcbhighmath}.
   It can be changed comfortable with \refKey{/tcb/highlight math style}.
@@ -439,6 +459,7 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
 \end{dispExample}
 \end{docTcbKey}
 
+\clearpage
 \begin{docTcbKey}{math upper}{}{style, no value}
   Sets the upper part to mathematical mode with font |\displaystyle|.
 \end{docTcbKey}
@@ -457,7 +478,6 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
 \end{docTcbKey}
 
 
-\clearpage
 \begin{marker}
   The following styles are only tested to work with the original |amsmath| environments.
   If e.g. the |equation| environment is redefined as |gather|, then
@@ -495,6 +515,7 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
   of the lower part.
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 \begin{docTcbKey}[][doc updated=2014-10-30]{ams equation*}{}{style, no value}
   Adds an |amsmath| |equation*| environment to the start and end
   of the upper \emph{and} lower part.

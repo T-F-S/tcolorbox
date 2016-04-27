@@ -7,7 +7,8 @@ The following pictures were used inside this documentation.
 
 \DeclareTotalTColorBox{\diabox}{ O{} v  m }
   { bicolor,fonttitle=\bfseries\ttfamily,adjusted title={#2},center title,
-    colframe=blue!20!black,leftupper=0mm,rightupper=0mm,colback=black!75!white,#1}
+    colframe=blue!20!black,leftupper=0mm,rightupper=0mm,colback=black!75!white,
+    finish vignette={size=1.5mm},#1}
   { \tikz\path[fill zoom image={#2}] (0,0) rectangle (\linewidth,4cm);%
     \tcblower#3}
 

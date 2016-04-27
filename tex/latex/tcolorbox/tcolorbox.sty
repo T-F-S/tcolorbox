@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2016/02/29 version 3.90 text color boxes]
-\def\tcb@version{3.90}
+\ProvidesPackage{tcolorbox}[2016/04/27 version 3.91 text color boxes]
+\def\tcb@version{3.91}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -296,11 +296,8 @@
   upperbox/invisible/.code={\tcb@uppervisiblefalse},
   visible/.style={upperbox=visible,lowerbox=visible},
   invisible/.style={upperbox=invisible,lowerbox=invisible},
-%  natural height/.code={\tcb@fixedheightfalse\let\tcb@ch=\tcb@ch@natural\let\tcb@height@adjust\@empty},
   natural height/.code={\tcb@fixedheightfalse\tcb@@ch@@operation{\tcb@ch@natural}},
-%  height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@fixed\let\tcb@height@adjust\@empty},
   height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@fixed}},
-%  text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\let\tcb@ch=\tcb@ch@innerfixed\let\tcb@height@adjust\@empty},
   text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@innerfixed}},
   add to height/.code={\iftcb@fixedheight\tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+(#1)}\fi},
   add to natural height/.code={\tcb@fixedheightfalse\def\kvtcb@height@natural@plus{#1}\tcb@@ch@@operation{\tcb@ch@natural@plus}},
@@ -309,9 +306,10 @@
   height fill/.is choice,%
   height fill/false/.code={\let\tcb@height@adjust\@empty},%
   square/.style={height=\kvtcb@width},
-%  equal height group/.code={\edef\tcb@ehgid{#1}\let\tcb@ch=\tcb@ch@equalheight\let\tcb@height@adjust\@empty},
   equal height group/.code={\tcb@fixedheightfalse\edef\tcb@ehgid{#1}\tcb@@ch@@operation{\tcb@ch@equalheight}},
-  minimum for equal height group/.code args={#1:#2}{\edef\tcb@ehgid{#1}\tcb@ehgadd{#2}},
+  minimum for equal height group/.code args={#1:#2}{\bgroup\edef\tcb@ehgid{#1}\tcbdimto\tcb@min@ehg{#2}\tcb@ehgadd{\tcb@min@ehg}\egroup},
+  minimum for current equal height group/.code={\ifcsundef{tcb@ehgid}{}{%
+    \tcbset{minimum for equal height group=\tcb@ehgid:#1}}},
   use height from group/.code={\ifcsundef{tcb@ehg@height@#1}{}{\tcbset{height=\csuse{tcb@ehg@height@#1}}}},
   use height from group/.default={\csuse{tcb@ehgid}},
   space/.code={\def\tcb@height@fraction{#1}%
@@ -521,7 +519,6 @@
   varwidth upper/.default=\kvtcb@width,
   text fill/.style={before upper={%
     \ifdim\dimexpr\tcbtextheight>0pt\relax%
-    %\iftcb@fixedheight%
       \edef\tcb@temp{\noexpand\minipage[c][\tcbtextheight]}%
     \else%
       \let\tcb@temp\minipage%
@@ -1033,7 +1030,6 @@
 }
 
 \def\tcb@ch@fixed@space{%
-  %\tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight}%
   \tcbdimto\tcb@height@spaceupper{\tcb@height@fraction\dimexpr\tcbheightspace\relax}%
   \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcb@height@spaceupper}%
   \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox+\tcbheightspace-\tcb@height@spaceupper}%
@@ -1044,7 +1040,6 @@
 }
 
 \def\tcb@ch@fixed@spacesave{%
-  %\tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight}%
   \tcbdimto\tcb@space{\tcb@space+\tcbheightspace}%
   \ifdim\dimexpr\tcb@space<0pt\relax
     \let\tcb@space\tcb@zpt%
@@ -1062,7 +1057,6 @@
 }
 
 \def\tcb@ch@fixed@split{%
-%  \tcbdimto\tcb@height@space{\tcb@height-\tcb@natheight+\ht\tcb@upperbox+\dp\tcb@upperbox+\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
   \tcbdimto\tcb@height@space{\tcbheightspace+\ht\tcb@upperbox+\dp\tcb@upperbox+\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
   \tcbdimto\tcb@height@upper{\tcb@height@fraction\dimexpr\tcb@height@space\relax}%
   \tcbdimto\tcb@height@lower{\tcb@height@space-\tcb@height@upper}%
@@ -1108,8 +1102,7 @@
     \fi%
   }{%
     \csxdef{tcb@ehg@current@\tcb@ehgid}{#1}%
-    \edef\tcb@temp{\noexpand\AtEndDocument{\noexpand\tcb@saveehg{\tcb@ehgid}}}%
-    \tcb@temp%
+    \begingroup\edef\x{\endgroup\noexpand\AtEndDocument{\noexpand\tcb@saveehg{\tcb@ehgid}}}\x%
   }%
 }
 
@@ -2088,10 +2081,11 @@
 \tcb@add@library{fitting}{tcbfitting.code.tex}
 \tcb@add@library{xparse}{tcbxparse.code.tex}
 \tcb@add@library{external}{tcbexternal.code.tex}
+\tcb@add@library{vignette}{tcbvignette.code.tex}
 
 \tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting,xparse}
-\tcb@add@library@style{most}{many,listingsutf8,external,magazine}
-\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,documentation}
+\tcb@add@library@style{most}{many,listingsutf8,external,magazine,vignette}
+\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,vignette,documentation}
 
 \ProcessOptions*
 \begingroup\edef\x{\endgroup\noexpand\tcbuselibrary{\tcb@optionlist}}\x

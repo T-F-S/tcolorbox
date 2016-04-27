@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.90}
+\tcb@set@library@version{3.91}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -228,3 +228,7 @@
 \newenvironment{tcboxedraster}[2][]{%
   \tcolorbox[#2]\tcbraster[#1]}%
   {\endtcbraster\endtcolorbox}
+
+\newenvironment{tcboxeditemize}[2][]{%
+  \tcolorbox[#2]\tcbitemize[#1]}%
+  {\endtcbitemize\endtcolorbox}

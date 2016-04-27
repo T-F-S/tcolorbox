@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -43,6 +43,7 @@ Contents of the package
   'tcbskins.code.tex'         LaTeX package file (library of tcolorbox)
   'tcbskinsjigsaw.code.tex'   LaTeX package file (library of tcolorbox)
   'tcbtheorems.code.tex'      LaTeX package file (library of tcolorbox)
+  'tcbvignette.code.tex'      LaTeX package file (library of tcolorbox)
   'tcbxparse.code.tex'        LaTeX package file (library of tcolorbox)
   'blueshade.png'             Picture (package)
   'crinklepaper.png'          Picture (package)
@@ -76,6 +77,7 @@ Alternatively, put the files to their respective locations within the TeX instal
   'tcbskins.code.tex'         ->  /tex/latex/tcolorbox
   'tcbskinsjigsaw.code.tex'   ->  /tex/latex/tcolorbox
   'tcbtheorems.code.tex'      ->  /tex/latex/tcolorbox
+  'tcbvignette.code.tex'      ->  /tex/latex/tcolorbox
   'tcbxparse.code.tex'        ->  /tex/latex/tcolorbox
   'blueshade.png'             ->  /tex/latex/tcolorbox
   'crinklepaper.png'          ->  /tex/latex/tcolorbox

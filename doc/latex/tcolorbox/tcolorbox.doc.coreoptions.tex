@@ -1965,6 +1965,25 @@ with a listing.
 \end{dispExample}
 \end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc new=2016-03-24]{minimum for current equal height group}{=\meta{length}}{no default, initially unset}
+  Sets \refKey{/tcb/minimum for equal height group} for the current equal height
+  group. Apparently, this only works for an already known equal height group, i.e.
+  \refKey{/tcb/equal height group} has to be set \emph{before} this option is used.
+  This option is likely to be used in combination with \refKey{/tcb/raster equal height}
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbitemize}[raster equal height,colframe=blue!75!black,colback=white,
+  raster every box/.style={minimum for current equal height group=2cm}]
+  \tcbitem A
+  \tcbitem B
+\end{tcbitemize}
+\end{dispExample}
+
+\end{docTcbKey}
+
+
 \clearpage
 \begin{docTcbKey}[][doc new and updated={2015-11-27}{2016-02-22}]{use height from group}{\colOpt{=\meta{id}}}{style, default current group}
   Sets the current box to a fixed \refKey{/tcb/height} which is copied from

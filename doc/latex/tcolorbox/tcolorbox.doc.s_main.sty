@@ -68,11 +68,11 @@
 \tcbmakedocSubKey{newTcbKey}{tcb/new}
 \tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
 \tcbmakedocSubKey{extTcbKey}{tcb/external}
+\tcbmakedocSubKey{vigTcbKey}{tcb/vig}
 \tcbmakedocSubKey{docTikzKey}{tikz}
 
 \def\tikzname{Ti\emph{k}Z}
 
-\makeatletter
 \newrobustcmd{\tcbIndexPrintSkinCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{Skin}}
 \newrobustcmd{\tcbIndexPrintSkinC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
 \def\tcb@index@Skin#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}\fi}%
@@ -83,7 +83,16 @@
   \end{tcb@doc@head}}%
   {\end{tcb@manual@entry}}
 \def\refSkin{\tcb@ref@doc{skin}}
-\makeatother
+
+\newrobustcmd{\tcbIndexPrintFadCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{fading}}
+\newrobustcmd{\tcbIndexPrintFadC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
+\def\tcb@Print@Fad#1{\textcolor{\kvtcb@col@value}{\bfseries\tcb@scantokens{#1}}}
+\def\tcb@index@Fad#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintFadCA{#1}}\kvtcb@index@command{Fadings\idx@level#1\idx@actual\tcbIndexPrintFadC{#1}}\fi}
+
+\DeclareDocumentCommand\docFading{sm}{%
+  \tcb@Print@Fad{#2}%
+  \IfBooleanTF{#1}{}{\tcb@index@Fad{#2}}%
+}
 
 \newtcolorbox{marker}[1][]{enhanced,
   before skip=2mm,after skip=3mm,
@@ -146,6 +155,8 @@
     tcbincludegraphics,tcbincludepdf,pdfpages,imagepage,imagepath,imagename,
     tcbline,tcboxedtitleheight,tcboxedtitlewidth,
     tcbsettowidthofnode,tcbsetmacrotowidthofnode,tcbsettoheightofnode,tcbsetmacrotoheightofnode,
+    % vignette
+    tcbvignette,
     % xparse
     DeclareTColorBox,NewTColorBox,RenewTColorBox,ProvideTColorBox,
     DeclareTotalTColorBox,NewTotalTColorBox,RenewTotalTColorBox,ProvideTotalTColorBox,
@@ -185,7 +196,7 @@
     after skip=8pt plus 4pt minus 2pt
   },
   base example/.style={bicolor,
-    beforeafter example,arc is angular,
+    beforeafter example,arc is angular,fonttitle=\bfseries,
     fontlower=\footnotesize,
     colframe=Blue_Dark,
     colback=Blue_Bright,

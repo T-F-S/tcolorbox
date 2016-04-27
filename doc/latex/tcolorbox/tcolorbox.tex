@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -29,14 +29,15 @@
 
 \RequirePackage{csquotes}
 \RequirePackage[style=numeric-comp,sorting=nyt,
-  maxnames=8,minnames=8,abbreviate=false,backend=biber]{biblatex}
+  maxnames=8,minnames=8,abbreviate=false,backend=biber,
+  bibencoding=latin1,texencoding=ascii]{biblatex}
 \DeclareFieldFormat{url}{\newline\url{#1}}%
 \DeclareListFormat{language}{}%
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{3.90}%
-\def\datum{2016/02/29}%
+\def\version{3.91}%
+\def\datum{2016/04/27}%
 \makeindex
 
 \hypersetup{
@@ -48,8 +49,17 @@
 
 \usepackage{pgfplots}
 
+%\nocite{*}
+
+%  intermediate hack to compensate a biblatex error (3.4)
+\makeatletter
+\def\ifempty#1{%
+  \protected@edef\z{#1}%
+  \expandafter\ifblank\expandafter{\z}}
+\makeatother
+
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.skins}
+%\includeonly{tcolorbox.doc.intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -66,6 +76,7 @@
 \include{tcolorbox.doc.skins}
 \include{tcolorbox.doc.graphics}
 \include{tcolorbox.doc.filling}
+\include{tcolorbox.doc.vignette}
 \include{tcolorbox.doc.raster}
 \include{tcolorbox.doc.listings}
 \include{tcolorbox.doc.theorems}

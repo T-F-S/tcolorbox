@@ -212,8 +212,29 @@ If \refKey{/tcb/fit} should be used, turn over to \refEnv{tcbraster}.
     \begin{tcolorbox}Seven\end{tcolorbox}
 \end{tcbraster}
 \end{dispExample}
+\end{docEnvironment}
 
 
+\clearpage
+\begin{docEnvironment}[doc new=2016-04-27]{tcboxeditemize}{\oarg{raster options}\marg{box options}}
+  This is a convenience environment which combines a \refEnv{tcolorbox} with
+  an embedded \refEnv{tcbitemize}. The \meta{box options} are given to the
+  outer \refEnv{tcolorbox}, while the \meta{raster options} are given to the
+  embedded \refEnv{tcbitemize}.
+  This environment is especially useful for rasters inside rasters.
+
+\begin{dispExample}
+\begin{tcboxeditemize}[raster columns=3, raster equal height,
+  size=small,colframe=red!50!black,colback=red!10!white,colbacktitle=red!50!white,
+  title={Box \# \thetcbrasternum}]
+  {colback=yellow!10,fonttitle=\bfseries,title=Boxed Itemize}
+  \tcbitem First box
+  \tcbitem Second box
+  \tcbitem This is a box\\with a second line
+  \tcbitem Another box
+  \tcbitem A box again
+\end{tcboxeditemize}
+\end{dispExample}
 \end{docEnvironment}
 
 
@@ -438,6 +459,7 @@ If \refKey{/tcb/fit} should be used, turn over to \refEnv{tcbraster}.
   Puts the enclosed boxes into a common \refKey{/tcb/equal height group}.
   The \meta{id} of the equal height group is chosen automatically, but
   it may be set manually by \refKey{/tcb/raster equal height group}.
+  Also see \refKey{/tcb/minimum for current equal height group}.
 
   Feasible values for \meta{type} are:
   \begin{itemize}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -875,3 +875,30 @@ version 3.90 (2016/02/29)
     'raster multicolumn', 'raster multirow'
 - library 'documentation':
   removal of some unwanted blanks
+
+version 3.91 (2016/04/27)
+- bug fix: '\tcbline' was indented when setting '\parindent' inside a box
+- bug fix: 'minimum for equal height group' changed current equal height group
+    and settings with 'em' or 'ex' units were converted to 0pt
+- bug fix: setting '-output-directory' and 'outputdir=' for the minted package
+    broke \tcblisting for 'listing engine=minted'
+- documentation: biber problem with latin1 encoding circumvented
+- new options:
+  'minimum for current equal height group'
+- library 'theorems':
+  * new option: 'label separator'
+- new library 'vignette' for ornamental frames:
+  * new fadings: 'semi west', 'semi east', 'semi north', 'semi south'
+  * new macros: '\tcbvignette'
+  * new options:
+    'xmin', 'xmax', 'ymin', 'ymax',
+    'lower left corner', 'upper right corner', 'inside node', 'outside node',
+    'over node', 'over node offset', 'north size', 'south size', 'east size',
+    'west size', 'size', 'north style', 'south style', 'east style', 'west style',
+    'draw method', 'fade out', 'semi fade out', 'fade in', 'semi fade in',
+    'base color', 'raised color', 'lowered color',
+    'underlay vignette', 'underlay raised fading vignette',
+    'underlay raised shading vignette', 'underlay shade in vignette',
+    'finish vignette', 'finish raised fading vignette', 'finish fading vignette'
+- library 'raster':
+  * new environment: 'tcboxeditemize'

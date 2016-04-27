@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.90 (2016/02/29)
+%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.90}
+\tcb@set@library@version{3.91}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -175,7 +175,7 @@
 }
 
 \def\tcb@draw@pseudo@segmentation#1{%
-\begingroup\tcb@shield@externalize\begin{tikzpicture}%
+\begingroup\tcb@shield@externalize\noindent\begin{tikzpicture}%
   \path[use as bounding box] (0,{\the\dimexpr-\kvtcb@middle-\kvtcb@boxsep\relax})
      rectangle (\linewidth,{\the\dimexpr\kvtcb@middle+\kvtcb@boxsep\relax});
   \node[line width=0mm,inner sep=0mm,draw=none,fill=none,rectangle,
