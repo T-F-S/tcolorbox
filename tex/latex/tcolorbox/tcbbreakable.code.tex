@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.91 (2016/04/27)
+%% The LaTeX package tcolorbox - version 3.92pre1 (2016/05/25)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.91}
+\tcb@set@library@version{3.92pre1}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -361,11 +361,14 @@
   \tcbdimto\tcb@h@upper{\ht\tcb@upperbox+\dp\tcb@upperbox}%
 }
 
+\def\tcb@vsplit@upper{%
+  \setbox\tcb@upperbox=\vsplit\tcb@totalupperbox to\tcb@split@dim%
+  \edef\tcb@upper@box@badness{\the\badness}%
+}
 
 \def\tcb@split@upper@box@and@assemble{%
   \vfuzz=\maxdimen\vbadness=10000\savingvdiscards=1%
-  \setbox\tcb@upperbox=\vsplit\tcb@totalupperbox to\tcb@split@dim%
-  \edef\tcb@upper@box@badness{\the\badness}%
+  \tcb@vsplit@upper%
   \ifnum\tcb@upper@box@badness=1000000\relax%
     \setbox\tcb@totalupperbox=\vbox{%
       \unvbox\tcb@upperbox%
@@ -377,11 +380,9 @@
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz\savingvdiscards=0%
 }
 
-
 \def\tcb@split@upper@box{%
   \vfuzz=\maxdimen\vbadness=10000%
-  \setbox\tcb@upperbox=\vsplit\tcb@totalupperbox to\tcb@split@dim%
-  \edef\tcb@upper@box@badness{\the\badness}%
+  \tcb@vsplit@upper%
   \ifnum\tcb@upper@box@badness=1000000\relax%
     \tcb@warning{The upper box part has become overfull}%
   \fi%
@@ -389,16 +390,19 @@
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
 }
 
-
 \def\tcb@setbox@lower#1#2{%
   \tcb@setbox\tcb@lowerbox{#1}{#2}%
   \tcbdimto\tcb@h@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
 }
 
-\def\tcb@split@lower@box@and@assemble{%
-  \vfuzz=\maxdimen\vbadness=10000\savingvdiscards=1%
+\def\tcb@vsplit@lower{%
   \setbox\tcb@lowerbox=\vsplit\tcb@totallowerbox to\tcb@split@dim%
   \edef\tcb@lower@box@badness{\the\badness}%
+}
+
+\def\tcb@split@lower@box@and@assemble{%
+  \vfuzz=\maxdimen\vbadness=10000\savingvdiscards=1%
+  \tcb@vsplit@lower%
   \ifnum\tcb@lower@box@badness=1000000\relax%
     \setbox\tcb@totallowerbox=\vbox{%
       \unvbox\tcb@lowerbox%
@@ -413,14 +417,32 @@
 
 \def\tcb@split@lower@box{%
   \vfuzz=\maxdimen\vbadness=10000%
-  \setbox\tcb@lowerbox=\vsplit\tcb@totallowerbox to\tcb@split@dim%
-  \edef\tcb@lower@box@badness{\the\badness}%
+  \tcb@vsplit@lower%
   \ifnum\tcb@lower@box@badness=1000000\relax%
     \tcb@warning{The lower box part has become overfull}%
   \fi%
   \tcb@setbox@lower{\tcb@split@dim}{\tcb@lowerbox}%
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
 }
+
+% patch for luatex 0.95
+% needs package 'ifluatex' to be loaded before 'breakable' is loaded
+\ifcsdef{ifluatex}{\ifluatex\ifnum\luatexversion=95\relax%
+  \def\tcb@vsplit@upper{%
+    \directlua{%
+      local vlist = tex.splitbox("tcb@totalupperbox", tex.sp("\tcb@split@dim"), "exactly")
+      tex.setbox("tcb@upperbox", vlist)
+    }%
+    \edef\tcb@upper@box@badness{\the\badness}%
+  }%
+  \def\tcb@vsplit@lower{%
+    \directlua{%
+      local vlist = tex.splitbox("tcb@totallowerbox", tex.sp("\tcb@split@dim"), "exactly")
+      tex.setbox("tcb@lowerbox", vlist)
+    }%
+    \edef\tcb@lower@box@badness{\the\badness}%
+  }%
+\fi\fi}{}
 
 
 \def\tcb@split@setstate@first{%
