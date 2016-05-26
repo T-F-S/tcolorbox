@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.92pre1 (2016/05/25)
+%% The LaTeX package tcolorbox - version 3.92pre2 (2016/05/26)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.92pre1}
+\tcb@set@library@version{3.92pre2}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -425,25 +425,29 @@
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz%
 }
 
-% patch for luatex 0.95
-% needs package 'ifluatex' to be loaded before 'breakable' is loaded
-\ifcsdef{ifluatex}{\ifluatex\ifnum\luatexversion=95\relax%
+% patch for luatex 0.95 (thanks to Jeremy Engel)
+\expandafter\ifx\csname directlua\endcsname\relax\else
+  \RequirePackage{ifluatex}
+  \ifnum\luatexversion=95\relax
   \def\tcb@vsplit@upper{%
     \directlua{%
+      tex.savingvdiscards = 1
       local vlist = tex.splitbox("tcb@totalupperbox", tex.sp("\tcb@split@dim"), "exactly")
       tex.setbox("tcb@upperbox", vlist)
+      tex.savingvdiscards = 0
     }%
     \edef\tcb@upper@box@badness{\the\badness}%
-  }%
+  }
   \def\tcb@vsplit@lower{%
     \directlua{%
+      tex.savingvdiscards = 1
       local vlist = tex.splitbox("tcb@totallowerbox", tex.sp("\tcb@split@dim"), "exactly")
       tex.setbox("tcb@lowerbox", vlist)
+      tex.savingvdiscards = 0
     }%
     \edef\tcb@lower@box@badness{\the\badness}%
-  }%
-\fi\fi}{}
-
+  }
+\fi\fi
 
 \def\tcb@split@setstate@first{%
   \edef\tcb@split@state{first}%

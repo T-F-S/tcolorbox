@@ -127,8 +127,8 @@ parameters. The differences are:
 \item\tcbdocmarginnote{\tcbdocnew{2016-05-25}}
   Lua\TeX\ version 0.95 changes the behaviour of the basic |\vsplit| (a bug?!)
   resulting in badly broken boxes. Thanks to Jeremy Engel,
-  the \mylib{breakable} library contains a patch for this which is activated
-  by including the |ifluatex| package \emph{\bfseries before} \mylib{breakable} is loaded.
+  the \mylib{breakable} library contains a patch for this which
+  also loads the the |ifluatex| package.
 \end{itemize}
 
 
