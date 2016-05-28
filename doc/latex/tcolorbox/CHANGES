@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.92pre2 (2016/05/26)
+%% The LaTeX package tcolorbox - version 3.92 (2016/05/28)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -903,8 +903,8 @@ version 3.91 (2016/04/27)
 - library 'raster':
   * new environment: 'tcboxeditemize'
 
-version 3.92 (2016/xx/xx)
-- compatibility patch for \vsplit in luatex 0.95 (temporarily?) causing
-  problems with breakable boxes
+version 3.92 (2016/05/28)
+- bug fix: 'compilable listing' used no '.tex' extension causing problems with minted
+- compatibility patch for \vsplit in luatex 0.95 causing problems with breakable boxes
 - settings inside \tcbvignette are now inside a group
 - library 'vignette': new option 'scope'
