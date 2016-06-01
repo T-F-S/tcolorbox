@@ -583,13 +583,14 @@ This is my \LaTeX\ box.
   not created.}\\
   Depending on operating system and compiler, an |external| subdirectory is
   automatically created or not. If not, create such a directory manually
-  or add the following to your document:
+  or add the following to your document\footnote{The |shellesc| package
+  is loaded automatically by the library.}:
 \begin{dispListing}
-\immediate\write18{mkdir external}
+\ShellEscape{mkdir external}
 \end{dispListing}
 or
 \begin{dispListing}
-\immediate\write18{mkdir -p external}
+\ShellEscape{mkdir -p external}
 \end{dispListing}
   If the combination of \refKey{/tcb/external/prefix} and chosen snippet
   name points to another subdirectory than |external|, this has to be

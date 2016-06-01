@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.92 (2016/05/28)
+%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,9 +18,10 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.92}
+\tcb@set@library@version{3.93}
 
 \RequirePackage{pdftexcmds}
+\RequirePackage{shellesc}
 
 \def\tcbuselistingtext@input{\input{\kvtcb@listingfile}}%
 \def\tcbuselistingtext{\tcbuselistingtext@input}%
@@ -171,7 +172,7 @@
   \or\or
     \tcb@warning{System call with restricted shell escape may fail}%
   \fi%
-  \filename@parse{\kvtcb@listingfile}\immediate\write18{#1}%
+  \filename@parse{\kvtcb@listingfile}\ShellEscape{#1}%
   \relax%
 }
 

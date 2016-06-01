@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.92 (2016/05/28)
+%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -908,3 +908,8 @@ version 3.92 (2016/05/28)
 - compatibility patch for \vsplit in luatex 0.95 causing problems with breakable boxes
 - settings inside \tcbvignette are now inside a group
 - library 'vignette': new option 'scope'
+
+version 3.93 (2016/06/01)
+- bug fix: compatibility patch for \vsplit in luatex 0.95 was buggy
+- system commands are now accessed using the 'shellesc' package for
+  compatibility with luatex

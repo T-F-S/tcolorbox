@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.92 (2016/05/28)
+%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.92}
+\tcb@set@library@version{3.93}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -426,7 +426,7 @@
 }
 
 % patch for luatex 0.95 (thanks to Jeremy Engel)
-\expandafter\ifx\csname directlua\endcsname\relax\else
+\ifdefined\directlua
   \RequirePackage{ifluatex}
   \ifnum\luatexversion=95\relax
   \def\tcb@vsplit@upper{%

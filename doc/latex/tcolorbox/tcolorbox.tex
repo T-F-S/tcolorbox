@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.92 (2016/05/28)
+%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -24,8 +24,8 @@
 \tcbEXTERNALIZE
 \usepackage{tcolorbox.doc.s_snippet}
 %\tcbset{external/PassOptionsToPackage={cache=false}{minted}}
-\immediate\write18{mkdir external}
-\immediate\write18{mkdir solutions}
+\ShellEscape{mkdir external}
+\ShellEscape{mkdir solutions}
 
 \RequirePackage{csquotes}
 \RequirePackage[style=numeric-comp,sorting=nyt,
@@ -36,8 +36,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{3.92}%
-\def\datum{2016/05/28}%
+\def\version{3.93}%
+\def\datum{2016/06/01}%
 \makeindex
 
 \hypersetup{
@@ -59,7 +59,7 @@
 %\makeatother
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.abstract}
+%\includeonly{tcolorbox.doc.listings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
