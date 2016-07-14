@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,10 +18,9 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.93}
+\tcb@set@library@version{3.94}
 
-\RequirePackage{pdftexcmds}
-\RequirePackage{shellesc}
+\tcbuselibrary{pro@cessing}
 
 \def\tcbuselistingtext@input{\input{\kvtcb@listingfile}}%
 \def\tcbuselistingtext{\tcbuselistingtext@input}%
@@ -43,7 +42,6 @@
 \newenvironment{tcb@lower@outside}[1]{%
   \tcbset{savedelimiter=tcb@lower@outside}\tcb@minipage{#1}%
   \color{tcbcol@lower}\kvtcb@fontlower\kvtcb@halignlower\kvtcb@before@lower\ignorespaces}%
-%  {\unskip\kvtcb@after@lower\endminipage}
   {\kvtcb@after@lower\endminipage}
 
 \def\tcb@use@listing@other@reset{%
@@ -172,7 +170,7 @@
   \or\or
     \tcb@warning{System call with restricted shell escape may fail}%
   \fi%
-  \filename@parse{\kvtcb@listingfile}\ShellEscape{#1}%
+  \ShellEscape{#1}%
   \relax%
 }
 
@@ -233,10 +231,23 @@
   run latex/.style={run@system@command={latex}{#1}},%
   run dvips/.style={run@system@command={dvips}{#1}},%
   run ps2pdf/.style={run system command={ps2pdf\space#1\space\filename@area\filename@base.ps}},%
+  freeze file/.code={\def\tcbprocess@condition{1}\def\tcbprocess@target{#1}},%
+  freeze none/.code={\def\tcbprocess@condition{0}\def\tcbprocess@target{}},%
+  freeze extension/.style={freeze file={\filename@area\filename@base#1}},%
+  freeze pdf/.style={freeze extension={.pdf}},
+  freeze png/.style={freeze extension={.png}},
+  freeze jpg/.style={freeze extension={.jpg}},
+}
+
+\def\tcb@listing@process@core{%
+  \filename@parse{\kvtcb@listingfile}%
+  \tcbiffileprocess{\tcbprocess@condition}%
+    {\kvtcb@listingfile}{\filename@area\filename@base.md5}{\tcbprocess@target}%
+    {\tcb@listing@process@hook}{}%
 }
 
 \def\tcbinputlisting@core{%
-  \tcb@listing@process@hook%
+  \ifdefempty\tcb@listing@process@hook{}{\tcb@listing@process@core}%
   \let\tcb@listing@capture=\kvtcb@capture%
   \tcb@inputlisting%
 }
@@ -313,7 +324,8 @@
   reset@listingscore/.style={%
     listing file=\jobname.listing,
     comment=, listing and text,
-    no process,comment style=,pdf extension=pdf,
+    no process,freeze none,
+    comment style=,pdf extension=pdf,
   },
   initialize@reset=reset@listingscore,
 }

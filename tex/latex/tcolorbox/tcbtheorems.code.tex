@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{3.93}
+\tcb@set@library@version{3.94}
 
 \RequirePackage{amsmath}
 
@@ -139,6 +139,7 @@
   \@@newtcolorbox[auto counter,#1]{#2}[3][]{#4,%
     title={\tcb@theo@title{#3}{\thetcbcounter}{##2}},%
     list entry={\protect\numberline{\thetcbcounter}##2},%
+    nameref={##2},%
     code={\tcb@theo@label{#5}{##3}},%
     ##1}%
   \@@newtcolorbox[#1,no counter,list inside=]{#2*}[2][]{#4,%

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.93}
+\tcb@set@library@version{3.94}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -156,7 +156,7 @@
   \else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@followingtitle\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\leavevmode\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@followingtitle\end{tcb@savebox}%
     \tcbdimto\tcb@h@title{\ht\tcb@titlebox+\dp\tcb@titlebox}%
     \tcbdimto\tcb@h@padtitle{\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle+\tcb@h@title}%
   \fi%

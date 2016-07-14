@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -913,3 +913,16 @@ version 3.93 (2016/06/01)
 - bug fix: compatibility patch for \vsplit in luatex 0.95 was buggy
 - system commands are now accessed using the 'shellesc' package for
   compatibility with luatex
+
+version 3.94 (2016/07/14)
+- bug fix: '\tcbincludegraphics' for fixed height boxes was broken since v3.90 (2016/02/29)
+- new option 'nameref'
+- library 'theorems':
+  Theorems made nameref-aware
+- library 'listings':
+  * new options:
+  'freeze file', 'freeze none', 'freeze extension',
+  'freeze pdf', 'freeze png', 'freeze jpg'
+- library 'external':
+  * implementation improved for lualatex and xelatex
+  * new macro '\tcbiffileprocess'

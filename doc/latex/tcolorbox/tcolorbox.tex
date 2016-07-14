@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,6 +18,12 @@
 %%
 %% This work consists of all files listed in README
 %%
+% arara: pdflatex: { shell: yes }
+% arara: biber
+% arara: pdflatex: { shell: yes }
+% arara: pdflatex: { shell: yes }
+% arara: pdflatex: { shell: yes, synctex: yes }
+%
 \documentclass[a4paper,11pt]{ltxdoc}
 
 \usepackage{tcolorbox.doc.s_main}
@@ -36,8 +42,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{3.93}%
-\def\datum{2016/06/01}%
+\def\version{3.94}%
+\def\datum{2016/07/14}%
 \makeindex
 
 \hypersetup{
@@ -49,17 +55,9 @@
 
 \usepackage{pgfplots}
 
-%\nocite{*}
-
-%  intermediate hack to compensate a biblatex error (3.4)
-%\makeatletter
-%\def\ifempty#1{%
-%  \protected@edef\z{#1}%
-%  \expandafter\ifblank\expandafter{\z}}
-%\makeatother
-
 %\tcbset{draftmode}
 %\includeonly{tcolorbox.doc.listings}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2016/06/01 version 3.93 text color boxes]
-\def\tcb@version{3.93}
+\ProvidesPackage{tcolorbox}[2016/07/14 version 3.94 text color boxes]
+\def\tcb@version{3.94}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -129,7 +129,7 @@
 \pgfkeys{/handlers/.colorlet/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\colorlet{#1}{##1}}}
 
 \newcommand\tcbtitle{\ifx\tcbtitletext\@empty\else%
-  {\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
+  \leavevmode{\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
 
 \def\tcb@detach@title@code@{%
   \let\tcbtitletext\kvtcb@title%
@@ -147,6 +147,14 @@
   \let\tcb@attach@title@code\@empty%
   \let\tcb@detach@title@code\tcb@detach@title@code@%
   \let\tcb@specialtitle@hook\@empty%
+}
+
+\def\tcb@gettitle#1{\edef\@currentlabelname{#1}}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{nameref}{%
+    \let\tcb@gettitle\NR@gettitle%
+  }{}%
 }
 
 % analog to plain.tex
@@ -580,6 +588,7 @@
   step/.style={phantom={\refstepcounter{#1}}},%
   label/.style={phantom={\tcb@set@label{#1}}},%
   phantomlabel/.style={phantom={\ifdefined\phantomsection\phantomsection\fi\tcb@set@label{#1}}},%
+  nameref/.code={\tcb@gettitle{#1}},%
   label type/.store in=\kvtcb@label@type,%
   no label type/.style={label type=},%
   add to list/.style 2 args={phantom={\tcb@addcontentsline{#1}{#2}}},
@@ -1470,7 +1479,7 @@
     \fi%
     \iftcb@hasLower%
       \tcb@box@align{\tcb@lowerbox}%
-      \iftcb@lowervisible\color{tcbcol@lower}\unhbox\tcb@lowerbox%
+      \iftcb@lowervisible\leavevmode\color{tcbcol@lower}\unhbox\tcb@lowerbox%
       \else%
         \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{0pt}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
       \fi%
@@ -2066,6 +2075,7 @@
   \DeclareOption{#1}{\appto\tcb@optionlist{,#1}}%
 }
 
+\tcb@add@library{pro@cessing}{tcbprocessing.code.tex}
 \tcb@add@library{listings@core}{tcblistingscore.code.tex}
 \tcb@add@library{listings}{tcblistings.code.tex}
 \tcb@add@library{listingsutf8}{tcblistingsutf8.code.tex}

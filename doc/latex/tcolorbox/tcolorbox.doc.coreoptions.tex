@@ -3662,6 +3662,27 @@ This issues:\\
 |\addcontentsline|\marg{list}\marg{type}\marg{entry text}
 \end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc new=2016-06-22]{nameref}{=\meta{text}}{no default, initially unset}
+If the |nameref| package is loaded, the given \meta{text} is used for
+corresponding |\nameref| makros. Typically, the \meta{text} will be chosen
+to be identical or nearly identical to the one for \refKey{/tcb/title}.
+
+\inputpreamblelisting{A}
+
+\begin{dispExample}
+\begin{pabox}[label={mynamelabel},nameref={Title or anything else}]{Title text}
+This is a tcolorbox.
+\end{pabox}
+This box is automatically numbered with \ref{mynamelabel} on page
+\pageref{mynamelabel}.
+
+The box is titled '\nameref{mynamelabel}'.
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
 \subsection{Even and Odd Pages}
 
 \begin{marker}

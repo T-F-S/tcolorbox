@@ -42,7 +42,7 @@ Source snippets are compiled, if their |md5| checksum has changed.
 They are not compiled automatically, if option settings are changed or
 anything outside the snippet is changed.
 Use \refKey{/tcb/external/force remake} to force compilation in this case
-or simply delete the externalized snippets.
+or simply delete the externalized pdf oder md5 files.
 \end{marker}
 
 \begin{marker}
@@ -575,6 +575,27 @@ This is my \LaTeX\ box.
 \end{docCommand}
 
 
+\begin{docCommand}[doc new=2016-07-14]{tcbiffileprocess}{\marg{condition}\marg{source}\marg{md5-file}\marg{target}\marg{true}\marg{false}}
+  This is a low-level macro which is internally used.
+  The MD5 digest of a \meta{source} file is compared with
+  a stored MD5 digest from an auxiliary \meta{md5-file}.
+  If they are not equal, the auxiliary \meta{md5-file} is updated to
+  store the current MD5 digest. Further,
+  \begin{itemize}
+  \item if \meta{condition} equals |0|, \meta{true} is executed.
+  \item if \meta{condition} equals |1|:\\
+    If the current and stored MD5 digests were different, \meta{true} is executed.\\
+    Otherwise, if the \meta{target} file is not existing, \meta{true} is executed.\\
+    Otherwise, if the \meta{target} file is older than the \meta{md5-file}, \meta{true} is executed.\\
+    Otherwise, \meta{false} is executed.
+  \item if \meta{condition} equals |2|, \meta{false} is executed.
+  \end{itemize}
+  The intended processing purpose of the \meta{true} code is to produce a \meta{target}
+  file from the given \meta{source} file.
+\end{docCommand}
+
+
+\clearpage
 \subsection{Troubleshooting and FAQ}\label{subsec:external_troubleshooting}
 
 \begin{itemize}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.93 (2016/06/01)
+%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.93}
+\tcb@set@library@version{3.94}
 
-\RequirePackage{shellesc}
+\tcbuselibrary{pro@cessing}
 
 {
 \catcode`\"=12
@@ -90,6 +90,12 @@
   \endgroup%
 }
 
+\def\tcbexternal@compile#1{%
+  \tcbiffileprocess{#1}%
+    {\tcbexternal@job@source}{\tcbexternal@job@mdfive}{\tcbexternal@job@pdf}%
+    {\tcbexternal@corecompile}{}%
+}
+
 \def\tcbexternal@inputsource{%
   \IfFileExists{\tcbexternal@job@source}%
     {\input{\tcbexternal@job@source}}%
@@ -122,37 +128,12 @@
 \newif\iftcb@externalize
 \tcb@externalizefalse
 
-\def\tcbexternal@generatemdivesum{%
-  \iftcb@externalize%
-    \def\tcbexternallastmdfivesum{}%
-    \IfFileExists{\tcbexternal@job@mdfive}{\input{\tcbexternal@job@mdfive}}{}%
-    \edef\tcbexternalmdfivesum{\pdfmdfivesum file {\tcbexternal@job@source}}%
-  \else%
-    \def\tcbexternallastmdfivesum{x}%
-    \edef\tcbexternalmdfivesum{}%
-  \fi%
-  \immediate\openout\tcb@out=\tcbexternal@job@mdfive%
-  \immediate\write\tcb@out{\string\def\string\tcbexternallastmdfivesum{\tcbexternalmdfivesum}\@percentchar}%
-  \immediate\closeout\tcb@out%
-}
-
-\def\tcbexternal@conditionalcompile{%
-  \IfFileExists{\tcbexternal@job@pdf}{%
-    \ifdefstrequal{\tcbexternallastmdfivesum}{\tcbexternalmdfivesum}{%
-    }{%
-      \tcbexternal@corecompile%
-    }%
-  }{%
-    \tcbexternal@corecompile%
-  }%
-}
-
 \def\tcb@useexternal{%
-  \tcbexternal@generatemdivesum%
   \iftcb@externalize%
-    \tcbexternal@compile%
+    \tcbexternal@compile{\tcbexternal@condition}%
     \tcbexternal@inputpdf%
   \else%
+    \tcbexternal@compile{2}%
     \tcbexternal@inputsource%
   \fi%
 }
@@ -242,8 +223,8 @@
   -/.style={externalize=false},
   %
   force remake/.is choice,
-  force remake/true/.code={\let\tcbexternal@compile=\tcbexternal@corecompile},
-  force remake/false/.code={\let\tcbexternal@compile=\tcbexternal@conditionalcompile},
+  force remake/true/.code={\def\tcbexternal@condition{0}},
+  force remake/false/.code={\def\tcbexternal@condition{1}},
   force remake/.default=true,
   !/.style=force remake,
   %

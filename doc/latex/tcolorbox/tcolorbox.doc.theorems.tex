@@ -11,7 +11,7 @@ This also loads the package |amsmath|.
 
 \subsection{Macros of the Library}
 
-\begin{docCommand}{newtcbtheorem}{\oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix}}
+\begin{docCommand}[doc updated=2016-06-22]{newtcbtheorem}{\oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix}}
   Creates new environments \meta{name} and \meta{name}|*| based on |tcolorbox| to frame a
   (mathematical) theorem. The \meta{display name} is used in the title line
   with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
@@ -24,7 +24,8 @@ This also loads the package |amsmath|.
   parameters. The optional parameter supplements the options and should be
   used only in rare cases.
   The first mandatory parameter is the title text for the theorem and
-  the second mandatory parameter is a \meta{marker}. The theorem is
+  is also set as \refKey{/tcb/nameref} identifier.
+  The second mandatory parameter is a \meta{marker}. The theorem is
   automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
   where \meta{separator} is predefined as '|:|', see \refKey{/tcb/label separator}.\par
   The new environment \meta{name}|*| takes one optional and one mandatory

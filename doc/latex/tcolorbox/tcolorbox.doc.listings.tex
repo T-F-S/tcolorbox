@@ -943,6 +943,8 @@ There already is a file |tcolorbox-example.tex| and a PDF file
   The processing result can be used inside a \refKey{/tcb/comment}.
   Several \refKey{/tcb/process code} options can be given which are
   processed in the given order.
+  Typically, \meta{code} is added by using the following styles
+  \refKey{/tcb/run system command}, \refKey{/tcb/run pdflatex}, etc.
 \end{docTcbKey}
 
 \begin{marker}
@@ -957,6 +959,7 @@ shown in the previous pages.
 Runs a \meta{system command}, if the document is compiled with the
 |-shell-escape| permission.
 The current listing file can be accessed as |\filename@area\filename@base\filename@ext|.
+This \meta{system command} is added to \refKey{/tcb/process code}.
 \end{docTcbKey}
 
 
@@ -988,7 +991,7 @@ Issues a |pdflatex| compilation of the listing with the given \meta{arguments}.
   colframe=red!50!black,colback=yellow!10!white,
   listing options={style=tcblatex,texcsstyle=*\color{red!70!black}},
   listing and comment,
-  pdf comment,
+  pdf comment,freeze pdf,
   compilable listing,
   run pdflatex
 }
@@ -1050,6 +1053,7 @@ Issues a |latex| compilation of the listing with the given \meta{arguments}.
 Issues a |dvips| compilation of the listing with the given \meta{arguments}.
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 \begin{docTcbKey}[][doc new=2014-11-14]{run ps2pdf}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
 Issues a |ps2pdf| compilation of the listing with the given \meta{arguments}.
 \end{docTcbKey}
@@ -1060,11 +1064,12 @@ Issues a |ps2pdf| compilation of the listing with the given \meta{arguments}.
   colframe=red!50!black,colback=yellow!10!white,
   listing options={style=tcblatex,texcsstyle=*\color{red!70!black}},
   lower separated=false,middle=0pt,
-  listing side comment,righthand width=4.5cm,
+  listing side comment,righthand width=4cm,
   compilable listing,
   run latex,run dvips,run ps2pdf,
-  pdf comment,
-  comment style={raster columns=1,graphics options={viewport=0in 8in 4in 11.5in,clip}},
+  pdf comment,freeze pdf,
+  comment style={raster columns=1,
+    graphics options={viewport=0.5in 7.7in 3.5in 10.5in,clip}},
 }
 \documentclass{article}
 \usepackage{pstricks,multido}
@@ -1077,6 +1082,55 @@ Issues a |ps2pdf| compilation of the listing with the given \meta{arguments}.
 \end{tcblisting}
 \end{dispListing*}
 {\tcbusetemp}
+
+\clearpage
+
+\begin{marker}
+  For most applications, you will like to add \refKey{/tcb/freeze pdf} as option,
+  since the included |pdf| file is only refreshed, if the source for this file
+  has changed.
+\end{marker}
+
+\begin{docTcbKey}[][doc new=2016-07-14]{freeze file}{=\meta{file}}{no default, initially unset}
+  Observes some \meta{file}, usually the final file produced by \refKey{/tcb/process code},
+  \refKey{/tcb/run system command}, \refKey{/tcb/run pdflatex}, etc.
+  If the MD5 checksum of the current \refKey{/tcb/listing file} is unchanged
+  and \meta{file} exists, the processing is skipped and
+  the \meta{file} is kept (frozen).
+  Typically, the style \refKey{/tcb/freeze pdf} can be used for
+  convenience.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-07-14]{freeze none}{}{no default, initially set}
+  Freeze no file and always execute the given process commands.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-07-14]{freeze extension}{=\meta{text}}{style, no default}
+  Calls \refKey{/tcb/freeze file} with the current \refKey{/tcb/listing file}
+  stripped with its extension plus \meta{text} as new extension.
+\begin{dispListing}
+  ...
+  listing file=myfile.tex,
+  freeze extension=-modified.pdf,    % ->   myfile-modified.pdf   is observed
+  ...
+\end{dispListing}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-07-14]{freeze pdf}{}{no value}
+  Calls \refKey{/tcb/freeze file} with the current \refKey{/tcb/listing file}
+  stripped with its extension plus |.pdf| as new extension.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-07-14]{freeze png}{}{no value}
+  Calls \refKey{/tcb/freeze file} with the current \refKey{/tcb/listing file}
+  stripped with its extension plus |.png| as new extension.
+  See the examples for \refKey{/tcb/run pdflatex} and \refKey{/tcb/run ps2pdf}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2016-07-14]{freeze jpg}{}{no value}
+  Calls \refKey{/tcb/freeze file} with the current \refKey{/tcb/listing file}
+  stripped with its extension plus |.jpg| as new extension.
+\end{docTcbKey}
 
 
 
