@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
+%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2016/07/14 version 3.94 text color boxes]
-\def\tcb@version{3.94}
+\ProvidesPackage{tcolorbox}[2016/10/21 version 3.95 text color boxes]
+\def\tcb@version{3.95}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -497,10 +497,10 @@
   after title/.store in=\kvtcb@after@title,%
   before upper/.store in=\kvtcb@before@upper,%
   after upper/.store in=\kvtcb@after@upper,%
-  after upper*/.style={after upper={\ifvmode\else\unskip\fi#1}},%
+  after upper*/.style={after upper={#1}},%
   before lower/.store in=\kvtcb@before@lower,%
   after lower/.store in=\kvtcb@after@lower,%
-  after lower*/.style={after lower={\ifvmode\else\unskip\fi#1}},%
+  after lower*/.style={after lower={#1}},%
   center title/.style={halign title=flush center},%
   center upper/.style={halign upper=flush center},%
   center lower/.style={halign lower=flush center},%
@@ -578,6 +578,7 @@
   capture/.store in=\kvtcb@capture,%
   hbox/.style={capture=hbox},%
   minipage/.style={capture=minipage},%
+  void/.style={capture=v@@d,capture/.code=,options@for/.code=,code={\def\tcbinputlisting@core{}}},
   check odd page/.is if=tcb@checkpage,
   if odd page/.code 2 args={%
     \tcbset{check odd page}%
@@ -823,7 +824,7 @@
   \let\tcb@after@box=\kvtcb@after@upper%
   % switch for lower box
   \def\tcblower{%
-    \tcb@after@box%
+    \ifvmode\else\unskip\fi\tcb@after@box%
     \end{tcb@savebox}%
     \tcb@set@color{tcbcol@lower}%
     \unless\iftcb@sidebyside%
@@ -869,6 +870,16 @@
 \def\tcb@@capture@hbox{%
   \let\endtcolorbox=\relax%
   \Collect@Body\tcbox@inner@hbox@collected%
+}
+
+\def\tcb@@end@v@@d{%
+  \endcomment%
+  \tcb@layer@dec%
+}
+
+\def\tcb@@capture@v@@d{%
+  \let\endtcolorbox\tcb@@end@v@@d%
+  \comment%
 }
 
 \long\def\tcbox@inner@hbox@collected#1{%
@@ -997,7 +1008,7 @@
 \let\tcolorbox\tcb@colorbox
 
 \def\tcb@endboxanddraw{%
-  \tcb@after@box%
+  \ifvmode\else\unskip\fi\tcb@after@box%
   \end{tcb@savebox}%
   \tcb@reset@color%
   \tcb@draw@color@box%
@@ -1623,7 +1634,7 @@
   \tcb@set@@phantom%
   \colorlet{tcbcol@origin}{.}%
   \tcb@set@color{tcbcol@upper}%
-  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\kvtcb@after@upper}}%
+  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\ifvmode\else\unskip\fi\kvtcb@after@upper}}%
   \tcb@reset@color%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
@@ -1641,12 +1652,13 @@
   \tcb@set@@dimensions%
   \colorlet{tcbcol@origin}{.}%
   \tcb@set@color{tcbcol@upper}%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\kvtcb@after@upper\end{tcb@savebox}%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\ifvmode\else\unskip\fi\kvtcb@after@upper\end{tcb@savebox}%
   \tcb@reset@color%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
 }
 
+\long\def\tcbox@inner@v@@d#1{}%
 
 \long\def\tcb@ox#1#2{%
   \begingroup%

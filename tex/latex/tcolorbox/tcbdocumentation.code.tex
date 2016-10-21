@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
+%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.94}
+\tcb@set@library@version{3.95}
 
 \tcbuselibrary{listings,skins,xparse,external}
 
@@ -469,8 +469,6 @@
 \tcbset{%
   reset@documentation/.style={%
     index command=\index,%
-    index format=pgf,
-    english language,
     documentation listing style=tcbdocumentation,
     index default settings,
     color option=Option,
@@ -490,6 +488,8 @@
     doc marginnote=,
     },
   initialize@reset=reset@documentation,
+  index format=pgf,
+  english language,
 }
 
 % deprecated

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
+%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.94}
+\tcb@set@library@version{3.95}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -1711,10 +1711,22 @@
         \x{\imagepath}%
       \end{tcolorbox}%
     \else%
-      \begin{tcolorbox}%
-        \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth]}%
-        \x{\imagepath}%
-      \end{tcolorbox}%
+      \ifdefempty\tcb@height@adjust{%
+        \begin{tcolorbox}%
+          \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth]}%
+          \x{\imagepath}%
+        \end{tcolorbox}%
+      }{% height fill
+        \begin{tcolorbox}[underlay={%
+          \begin{tcbclipinterior}%
+          \begingroup\edef\x{\endgroup\noexpand\tikzset{fill image options={\expandonce\kvtcb@graphics@options}}}\x%
+          \path[fill zoom image={\imagepath}]
+            ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south west) rectangle
+            ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north east);
+          \end{tcbclipinterior}%
+          }]%
+        \end{tcolorbox}%
+      }%
     \fi%
   }%
 }

@@ -1686,15 +1686,15 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
   If this option is used several times, then the \refKey{/tcb/height} is
   also increased several times.
 \begin{dispExample}
-\tcbset{height=1cm,
+\tcbset{height=2cm,
   valign=center,width=(\linewidth-2mm)/2,
   before=,after=\hfill,colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}
-  This box has a height of 1cm.
+  This box has a height of 2cm.
 \end{tcolorbox}
 \begin{tcolorbox}[add to height=1cm]
-  This box has a height of 2cm.
+  This box has a height of 3cm.
 \end{tcolorbox}
 \end{dispExample}
 \end{docTcbKey}
@@ -1731,7 +1731,7 @@ Also see \refKey{/tcb/text fill}.
 \begin{marker}
 Note that the library \mylib{breakable} has to be loaded to use this key!
 \end{marker}
-This height control key is only applicable to unbreakable boxes but it
+This height control key is only applicable to unbreakable boxes, but it
 uses code from the library \mylib{breakable}.
 The counterpart for breakable boxes is \refKey{/tcb/height fixed for}.
 
@@ -2076,7 +2076,7 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc updated=2015-11-27]{after upper}{=\meta{code}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2016-10-21]{after upper}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the upper part.
 \begin{dispExample}
 \tcbset{after upper={\par\hfill\textit{Read more next week}},
@@ -2086,21 +2086,26 @@ This is a \textbf{tcolorbox}.
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{dispExample}
-\end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2015-11-27]{after upper*}{=\meta{code}}{no default, initially unset}
-  An |\unskip| and the given \meta{code} is placed \emph{after} the content of the upper part.
 \begin{dispExample}
-\begin{tcolorbox}[before upper=\flqq,after upper*=\frqq,
+\begin{tcolorbox}[before upper=\flqq,after upper=\frqq,
   colback=red!5!white,colframe=red!75!black]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{dispExample}
 
 \begin{marker}
-Prior to version 3.80, \refKey{/tcb/after upper} had the functionality
-of \refKey{/tcb/after upper*}.
+An |\unskip| is placed in front of the given \meta{code}.
+From version 3.80 to 3.94, this |\unskip| was omitted to avoid certain
+problems which (hopefully) should not occur with the new improved code.
 \end{marker}
+
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new and updated={2016-10-21}{2016-10-21}]{after upper*}{=\meta{code}}{no default, initially unset}
+  Alias for \refKey{/tcb/after upper}.
+  From version 3.80 to 3.94, it prepended an |\unskip| to the given \meta{code}.
+  Now, this key is considered to be deprecated.
 \end{docTcbKey}
 
 
@@ -2120,7 +2125,7 @@ This is the lower part.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc updated=2015-11-27]{after lower}{=\meta{code}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2016-10-21]{after lower}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the lower part.
 \begin{dispExample}
 \begin{tcolorbox}[before lower=$,after lower=$,
@@ -2130,13 +2135,9 @@ This is a \textbf{tcolorbox}.
 \sin^2(x)+\cos^2(x)=1.
 \end{tcolorbox}
 \end{dispExample}
-\end{docTcbKey}
 
-
-\begin{docTcbKey}[][doc new=2015-11-27]{after lower*}{=\meta{code}}{no default, initially unset}
-  An |\unskip| and the given \meta{code} is placed \emph{after} the content of the lower part.
 \begin{dispExample}
-\begin{tcolorbox}[after lower*=\ \textit{This is the end.},
+\begin{tcolorbox}[after lower=\ \textit{This is the end.},
   colback=red!5!white,colframe=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
@@ -2145,9 +2146,17 @@ This is the lower part.
 \end{dispExample}
 
 \begin{marker}
-Prior to version 3.80, \refKey{/tcb/after lower} had the functionality
-of \refKey{/tcb/after lower*}.
+An |\unskip| is placed in front of the given \meta{code}.
+From version 3.80 to 3.94, this |\unskip| was omitted to avoid certain
+problems which (hopefully) should not occur with the new improved code.
 \end{marker}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new and updated={2016-10-21}{2016-10-21}]{after lower*}{=\meta{code}}{no default, initially unset}
+  Alias for \refKey{/tcb/after lower}.
+  From version 3.80 to 3.94, it prepended an |\unskip| to the given \meta{code}.
+  Now, this key is considered to be deprecated.
 \end{docTcbKey}
 
 
@@ -3948,4 +3957,37 @@ The \meta{options} will only be used on the specified |beamer| frames.
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2016-10-21]{void}{}{no value, initially unset}
+  Annihilates the current |tcolorbox| as far as possible.
+  Basically, this comments out the whole |tcolorbox| by using a key.
+  If the option list of the current |tcolorbox| contains arbitrary code with global
+  impact (like counter settings), these actions are not undone automatically.
+  Nevertheless, the effects of \refKey{/tcb/phantom}, \refKey{/tcb/step},
+  \refKey{/tcb/new/auto counter}, etc., are removed by \refKey{/tcb/void}.
+
+\begin{dispExample}
+A%
+  \begin{tcolorbox}[
+      title=This box is completely removed by the following key,
+      void
+    ]
+  This is a \textbf{tcolorbox}.
+  \end{tcolorbox}
+B
+\end{dispExample}
+
+\begin{marker}
+  This option key cannot be applied for every situation.
+  For example, if several box environments with the same environment name
+  are nested, for the outer environment \refKey{/tcb/void} cannot be used,
+  since the end of the inner environment will be misinterpreted as
+  end of the outer environment.
+\end{marker}
+
+
+
 \end{docTcbKey}

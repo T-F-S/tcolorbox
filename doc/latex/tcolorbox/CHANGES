@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.94 (2016/07/14)
+%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -926,3 +926,16 @@ version 3.94 (2016/07/14)
 - library 'external':
   * implementation improved for lualatex and xelatex
   * new macro '\tcbiffileprocess'
+
+version 3.95 (2016/10/21)
+- The behaviors of 'after upper' and 'after lower' are reverted back to
+  prior version 3.80 to have an automatic \unskip inserted.
+  Therefore, 'after upper*' and 'after lower*' are deprecated now.
+- new option 'void'
+- library 'skins':
+  '\tcbincludegraphics' made compatible with 'height fill' boxes.
+- library 'minted':
+  now, included source files are searched for in relation to an optional
+  'output-directory' and also locally.
+- library 'documentation':
+  Language settings are not longer reset to English for embedded boxes.
