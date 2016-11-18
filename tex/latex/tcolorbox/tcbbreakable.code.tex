@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
+%% The LaTeX package tcolorbox - version 3.96 (2016/11/18)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.95}
+\tcb@set@library@version{3.96}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -985,6 +985,7 @@
   no extras last/.code={\let\tcb@extras@last\@empty},%
   no extras/.code={\let\tcb@extras@unbroken\@empty\let\tcb@extras@first\@empty\let\tcb@extras@middle\@empty\let\tcb@extras@last\@empty},%
   if odd page*/.style 2 args={check odd page,extras={if odd page={#1}{#2}}},%
+  if odd page or oneside*/.style 2 args={check odd page,extras={if odd page or oneside={#1}{#2}}},%
 }
 
 

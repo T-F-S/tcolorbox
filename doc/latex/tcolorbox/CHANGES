@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
+%% The LaTeX package tcolorbox - version 3.96 (2016/11/18)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -939,3 +939,15 @@ version 3.95 (2016/10/21)
   'output-directory' and also locally.
 - library 'documentation':
   Language settings are not longer reset to English for embedded boxes.
+
+version 3.96 (2016/11/18)
+- bug fix: unprotected definition of the 'nameref' option induced serious errors
+- bug fix: nameref package was not detected if loaded after tcolorbox
+- new macros:
+  '\tcbifoddpageoroneside'
+- new options:
+  'if odd page or oneside', 'if odd page or oneside*',
+- library 'documentation':
+  * Documentation options are not longer reset to default values for embedded
+    boxes. User code may be affected by this change.
+  * marginnotes adapt to twosided documents now

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
+%% The LaTeX package tcolorbox - version 3.96 (2016/11/18)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2016/10/21 version 3.95 text color boxes]
-\def\tcb@version{3.95}
+\ProvidesPackage{tcolorbox}[2016/11/18 version 3.96 text color boxes]
+\def\tcb@version{3.96}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -149,12 +149,12 @@
   \let\tcb@specialtitle@hook\@empty%
 }
 
-\def\tcb@gettitle#1{\edef\@currentlabelname{#1}}
+\def\tcb@gettitle#1{\protected@edef\@currentlabelname{#1}}
 
-\AtBeginDocument{%
-  \@ifpackageloaded{nameref}{%
+\AfterEndPreamble{%
+  \ifdefined\NR@gettitle%
     \let\tcb@gettitle\NR@gettitle%
-  }{}%
+  \fi%
 }
 
 % analog to plain.tex
@@ -582,7 +582,11 @@
   check odd page/.is if=tcb@checkpage,
   if odd page/.code 2 args={%
     \tcbset{check odd page}%
-    \ifodd\thetcolorboxpage\tcbset{#1}\else\tcbset{#2}\fi%
+    \tcbifoddpage{\tcbset{#1}}{\tcbset{#2}}%
+  },
+  if odd page or oneside/.code 2 args={%
+    \tcbset{check odd page}%
+    \tcbifoddpageoroneside{\tcbset{#1}}{\tcbset{#2}}%
   },
   phantom/.code={\appto\kvtcb@phantom{#1}},
   step and label/.style 2 args={phantom={\refstepcounter{#1}\tcb@set@label{#2}}},%
@@ -915,6 +919,19 @@
   \else%
     \expandafter\@secondoftwo%
   \fi%
+}
+
+\def\tcbifoddpageoroneside{%
+  \if@twoside%
+    \ifodd\thetcolorboxpage\relax%
+      \let\reserved@a\@firstoftwo%
+    \else%
+      \let\reserved@a\@secondoftwo%
+    \fi%
+  \else%
+    \let\reserved@a\@firstoftwo%
+  \fi%
+  \expandafter\reserved@a%
 }
 
 \def\tcb@managed@layers@max{0}
@@ -1394,7 +1411,7 @@
 }
 
 \def\tcb@setbb@toggle@evenpage{%
-  \ifodd\thetcolorboxpage\tcb@setbb@toggle@none\else\tcb@setbb@toggle@forced\fi%
+  \tcbifoddpage{\tcb@setbb@toggle@none}{\tcb@setbb@toggle@forced}%
 }
 
 \def\tcb@creategeonodes@false{}
@@ -1415,7 +1432,7 @@
 }
 
 \def\tcb@lrtoggle@evenpage{%
-  \unless\ifodd\thetcolorboxpage\tcb@lrtoggle@forced\fi%
+  \tcbifoddpage{}{\tcb@lrtoggle@forced}%
 }
 
 \def\tcb@bbdraw{%

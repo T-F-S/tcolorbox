@@ -3672,7 +3672,7 @@ This issues:\\
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2016-06-22]{nameref}{=\meta{text}}{no default, initially unset}
+\begin{docTcbKey}[][doc new and updated={2016-06-22}{2016-11-18}]{nameref}{=\meta{text}}{no default, initially unset}
 If the |nameref| package is loaded, the given \meta{text} is used for
 corresponding |\nameref| makros. Typically, the \meta{text} will be chosen
 to be identical or nearly identical to the one for \refKey{/tcb/title}.
@@ -3688,6 +3688,11 @@ This box is automatically numbered with \ref{mynamelabel} on page
 
 The box is titled '\nameref{mynamelabel}'.
 \end{dispExample}
+
+\begin{marker}
+\refKey{/tcb/nameref} is used automatically inside \refCom{newtcbtheorem}.
+\end{marker}
+
 \end{docTcbKey}
 
 
@@ -3737,6 +3742,13 @@ has to be set explicitely! Also see \refKey{/tcb/if odd page*}.
 \end{marker}
 \end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc new=2016-11-18]{if odd page or oneside}{=\marg{odd options}\marg{even options}}{style, no default}
+  For onesided documents, the \meta{odd options} are applied always.
+  For twosided documents, this style is identical to \refKey{/tcb/if odd page}.
+\end{docTcbKey}
+
+
 \clearpage
 \begin{docTcbKey}[][doc new=2015-11-13]{if odd page*}{=\marg{odd options}\marg{even options}}{style, no default}
 \begin{marker}
@@ -3767,7 +3779,13 @@ packed into \refKey{/tcb/extras}.
 \end{docTcbKey}
 
 
-\enlargethispage*{2cm}
+\begin{docTcbKey}[][doc new=2016-11-18]{if odd page or oneside*}{=\marg{odd options}\marg{even options}}{style, no default}
+  For onesided documents, the \meta{odd options} are applied always.
+  For twosided documents, this style is identical to \refKey{/tcb/if odd page*}.
+\end{docTcbKey}
+
+
+\clearpage
 \begin{docCommand}[doc new=2015-11-13]{tcbifoddpage}{\marg{odd code}\marg{even code}}
 If the current box is on an odd page, the \meta{odd code} is executed.
 On an even page, the \meta{even code} is executed.
@@ -3797,6 +3815,11 @@ the box \textbf{content text}. If needed, the methods from the packages
 \end{dispExample}
 \end{docCommand}
 
+
+\begin{docCommand}[doc new=2016-11-18]{tcbifoddpageoroneside}{\marg{odd code}\marg{even code}}
+  For onesided documents, the \meta{odd code} is executed always.
+  For twosided documents, this macro is identical to \refCom{tcbifoddpage}.
+\end{docCommand}
 
 \clearpage
 \begin{docCommand}[doc new=2015-11-13]{thetcolorboxnumber}{}

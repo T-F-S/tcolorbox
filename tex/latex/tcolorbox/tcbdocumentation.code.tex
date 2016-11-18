@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.95 (2016/10/21)
+%% The LaTeX package tcolorbox - version 3.96 (2016/11/18)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.95}
+\tcb@set@library@version{3.96}
 
 \tcbuselibrary{listings,skins,xparse,external}
 
@@ -416,7 +416,8 @@
   \begin{tcolorbox}[enhanced jigsaw,size=fbox,boxrule=1pt,leftrule=0pt,rightrule=0pt,
     arc=0pt,outer arc=1pt,boxsep=1pt,top=1pt,bottom=1pt,
     nobeforeafter,width=\marginparwidth,
-    colframe=red!50!white,colback=red!25!yellow!5!white,fontupper=\scriptsize,before upper=\flushright,
+    colframe=red!50!white,colback=red!25!yellow!5!white,fontupper=\scriptsize,
+    if odd page or oneside={flushright upper}{flushleft upper},
     doc@marginnote,#1]#2\end{tcolorbox}}}
 
 \newcommand*{\tcbdocnew}[1]{\kvtcb@text@new: #1}
@@ -468,27 +469,27 @@
 
 \tcbset{%
   reset@documentation/.style={%
-    index command=\index,%
-    documentation listing style=tcbdocumentation,
-    index default settings,
-    color option=Option,
-    color definition=Definition,
-    color hyperlink=Hyperlink,
-    doc left=2em,
-    doc right=0pt,
-    doc left indent=-2em,
-    doc right indent=0pt,
-    doc head=,
-    before doc body=,
-    after doc body=,
-    doc description=,
-    doc into index=true,
-    index colorize=false,
-    index annotate=true,
-    doc marginnote=,
     },
+  documentation listing style=tcbdocumentation,
+  doc left=2em,
+  doc right=0pt,
+  doc left indent=-2em,
+  doc right indent=0pt,
+  doc head=,
+  before doc body=,
+  after doc body=,
+  doc description=,
+  doc into index=true,
+  doc marginnote=,
   initialize@reset=reset@documentation,
+  color option=Option,
+  color definition=Definition,
+  color hyperlink=Hyperlink,
+  index command=\index,%
   index format=pgf,
+  index default settings,
+  index colorize=false,
+  index annotate=true,
   english language,
 }
 

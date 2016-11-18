@@ -28,6 +28,12 @@ The package |makeidx| is loaded only, if \docAuxCommand*{printindex} is
 The package |marginnote| is loaded only, if \docAuxCommand*{marginnote} is
 \emph{not} already defined.
 \end{marker}
+\begin{marker}
+In contrast to other |tcolorbox| options, the option
+settings for \mylib{documentation} are typically not
+getting reset by \refKey{/tcb/reset}, i.e. they keep their
+values for embedded boxes.
+\end{marker}
 
 For UTF-8 support, load:
 \begin{dispListing}
@@ -672,8 +678,6 @@ instead. Also see \refKey{/tcb/docexample}.
 \clearpage
 The following keys are provided for language specific settings.
 The English language is predefined.
-
-\refKey{/tcb/reset} does not reset these language settings.\tcbdocmarginnote{\tcbdocupdated{2016-10-21}}
 
 \begin{docTcbKey}{english language}{}{style, no value}
   Sets all language specific settings to English.
