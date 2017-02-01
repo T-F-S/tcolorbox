@@ -2620,23 +2620,23 @@ This behavior is controlled by the keys |before| and |after|.
   It is not used for floating boxes.
 \end{docTcbKey}
 
-\begin{docTcbKey}{parskip}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2017-02-01]{parskip}{}{style, no value}
   Sets the keys |before| and |after| to values which are
   recommended, if the package |parskip| \emph{is} used and there is no better
   idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
-                        after={\par}}}
+                        after={\parfillskip 0pt plus 1fil\par}}}
 \end{dispListing}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc updated=2016-02-14]{noparskip}{}{style, no value}
+\begin{docTcbKey}[][doc updated=2017-02-01]{noparskip}{}{style, no value}
   Sets the keys |before| and |after| to values which are
   recommended, if the package |parskip| is \emph{not} used and there is no better
   idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{noparskip/.style={before={\par\pagebreak[0]\smallskip\parindent=0pt},
-                          after={\par\smallskip}}}
+                          after={\parfillskip 0pt plus 1fil\par\smallskip}}}
 \end{dispListing}
 \end{docTcbKey}
 
@@ -2758,7 +2758,7 @@ Some text.
 \end{dispExample*}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2015-03-16}]{after skip}{=\meta{glue}}{style, no default}
+\begin{docTcbKey}[][doc new and updated={2014-10-10}{2017-02-01}]{after skip}{=\meta{glue}}{style, no default}
   Inserts some vertical space of the given \meta{glue} after the colored box.
   This style sets \refKey{/tcb/after}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}

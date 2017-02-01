@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 3.96 (2016/11/18)
+%% The LaTeX package tcolorbox - version 3.97pre1 (2017/02/01)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2016 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2016/11/18 version 3.96 text color boxes]
-\def\tcb@version{3.96}
+\ProvidesPackage{tcolorbox}[2017/02/01 version 3.97pre1 text color boxes]
+\def\tcb@version{3.97pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -270,12 +270,12 @@
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\tcb@prevdepth}}%
       \pagebreak[0]\fi\fi\parindent=0pt},
-    after={\par}},
+    after={\parfillskip\z@\@plus 1fil\par}},
   noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\smallskipamount+\tcb@prevdepth}}%
       \pagebreak[0]\smallskip\fi\fi\parindent=0pt},
-    after={\par\smallskip}},
+    after={\parfillskip\z@\@plus 1fil\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
   before skip/.style={before={%
@@ -290,7 +290,7 @@
     \lineskip=0pt\noindent%
     }},
   after skip/.style={after={%
-    \par\ifvmode\nointerlineskip%
+    \parfillskip\z@\@plus 1fil\par\ifvmode\nointerlineskip%
     \addvspace{\glueexpr#1-\parskip}\fi%
     }},
   beforeafter skip/.style={before skip={#1},after skip={#1}},
