@@ -2667,6 +2667,158 @@ Finishes are intended for special effects like highlights or glosses or text ove
   \refKey{/tcb/finish} overwrites this key.
 \end{docTcbKey}
 
+\clearpage
+\subsection{Hyper Option Keys}\label{subsec:hyper}
+All options of this section need the package |hyperref| \cite{rahtz:2012a}
+to be loaded separately. All these options are implemented as
+\refKey{/tcb/finish} and can be disabled by \refKey{/tcb/no finish}.
+
+\begin{marker}
+If the package |hyperref| \cite{rahtz:2012a} is not loaded or if
+the \refSkin{standard} skin is used, all hyper option are silently ignored.
+\end{marker}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperref}{=\meta{marker}}{no default, initially unset}
+  The whole \textit{frame} of a |tcolorbox| is make an active hyperlink for a
+  \meta{marker} which was given by |\label| or \refKey{/tcb/label} or \refKey{/tcb/phantomlabel}.
+  Such, the |tcolorbox| is made a clickable button (depending on the previewer).
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+% \section{Library skins}\label{sec:skins}%
+\begin{tcolorbox}[beamer,colback=red!50,
+  hyperref=sec:skins]
+Jump to the heading of Section~\ref*{sec:skins}.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperref interior}{=\meta{marker}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperref}, but only the \textit{interior} of a
+  |tcolorbox| is made a hyperlink (without frame and title).
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperref title}{=\meta{marker}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperref}, but only the \textit{title} of a
+  |tcolorbox| is made a hyperlink.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperref node}{=\marg{marker}\marg{node}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperref}, but only the given \tikzname\ \meta{node}
+  is made a hyperlink. This \meta{node} may be |frame|, |interior|, |title|, or
+  any other named node used for drawing the |tcolorbox|.
+  The \meta{node} may be defined inside
+  \refKey{/tcb/underlay}, \refKey{/tcb/overlay} or \refKey{/tcb/finish}.
+  If the later is used, define the node \emph{before} \refKey{/tcb/hyperref node}
+  is applied.
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+% \section{Library skins}\label{sec:skins}%
+\begin{tcolorbox}[enhanced,colback=yellow!10,
+  underlay={\node[red,fill=red!30,inner sep=3mm]
+   (click) at (frame.center) {X};},
+  hyperref node={sec:skins}{click}]
+Jump to the heading of Section~\ref*{sec:skins}
+(X marks the click point).
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperlink}{=\meta{marker}}{no default, initially unset}
+  The whole \textit{frame} of a |tcolorbox| is make an active hyperlink for a
+  \meta{marker} which was given by |\hypertarget| or \refKey{/tcb/hypertarget}.
+  Such, the |tcolorbox| is made a clickable button (depending on the previewer).
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+% \usepackage{hyperref}%
+\begin{tcolorbox}[enhanced,
+  colback=blue!10,colframe=blue!50!black,
+  hypertarget=hypertwinB,
+  hyperlink=hypertwinA,
+  title=Box B]
+Click me to jump to Box A.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperlink interior}{=\meta{marker}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperlink}, but only the \textit{interior} of a
+  |tcolorbox| is made a hyperlink (without frame and title).
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperlink title}{=\meta{marker}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperlink}, but only the \textit{title} of a
+  |tcolorbox| is made a hyperlink.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperlink node}{=\marg{marker}\marg{node}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperlink}, but only the given \tikzname\ \meta{node}
+  is made a hyperlink. This \meta{node} may be |frame|, |interior|, |title|, or
+  any other named node used for drawing the |tcolorbox|.
+  The \meta{node} may be defined inside
+  \refKey{/tcb/underlay}, \refKey{/tcb/overlay} or \refKey{/tcb/finish}.
+  If the later is used, define the node \emph{before} \refKey{/tcb/hyperlink node}
+  is applied.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl}{=\meta{url}}{no default, initially unset}
+  The whole \textit{frame} of a |tcolorbox| is make an active hyperlink for an
+  \meta{url} in the same manner as using |\href| or |\url|.
+  Such, the |tcolorbox| is made a clickable button (depending on the previewer).
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+\begin{tcolorbox}[enhanced,colback=red!50,
+  hyperurl=http://www.ctan.org/pkg/tcolorbox]
+View CTAN with a browser.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl interior}{=\meta{url}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl}, but only the \textit{interior} of a
+  |tcolorbox| is made a hyperlink (without frame and title).
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl title}{=\meta{url}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl}, but only the \textit{title} of a
+  |tcolorbox| is made a hyperlink.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl node}{=\marg{url}\marg{node}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl}, but only the given \tikzname\ \meta{node}
+  is made a hyperlink. This \meta{node} may be |frame|, |interior|, |title|, or
+  any other named node used for drawing the |tcolorbox|.
+  The \meta{node} may be defined inside
+  \refKey{/tcb/underlay}, \refKey{/tcb/overlay} or \refKey{/tcb/finish}.
+  If the later is used, define the node \emph{before} \refKey{/tcb/hyperurl node}
+  is applied.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl*}{=\marg{options}\marg{url}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl}, but additional |hyperref| \cite{rahtz:2012a}
+  \meta{options} are applied.
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+\begin{tcolorbox}[enhanced,colback=green!50,
+  hyperurl*={page=3,pdfnewwindow=true}%
+            {tcolorbox-example.pdf}]
+Open example file on Page~3.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl* interior}{=\marg{options}\marg{url}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl interior}, but additional |hyperref| \cite{rahtz:2012a}
+  \meta{options} are applied.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl* title}{=\marg{options}\marg{url}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl title}, but additional |hyperref| \cite{rahtz:2012a}
+  \meta{options} are applied.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-03]{hyperurl* node}{=\marg{options}\marg{url}\marg{node}}{no default, initially unset}
+  Identical to \refKey{/tcb/hyperurl node}, but additional |hyperref| \cite{rahtz:2012a}
+  \meta{options} are applied.
+\end{docTcbKey}
+
+
 
 \clearpage
 \subsection{Jigsaw Skin Variants}\label{subsec:skinjigsaw}

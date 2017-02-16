@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.97pre1 (2017/02/01)
+%% The LaTeX package tcolorbox - version 4.00 (2017/02/16)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -952,7 +952,20 @@ version 3.96 (2016/11/18)
     boxes. User code may be affected by this change.
   * marginnotes adapt to twosided documents now
 
-version 3.97 (2017/xx/xx)
+version 4.00 (2017/02/16)
 - Code adaptions to support \parfillskip changing packages like KOMA-Script:
   'parskip', 'noparskip', 'after skip', 'breakable', 'raster'
+- 'toggle left and right' toggles corners now
+- new options:
+  'left*', 'right*',
+  'spread inwards', 'spread outwards', 'move upwards', 'move upwards*', 'fill downwards',
+  'spread sidewards', 'spread upwards', 'spread upwards*', 'spread downwards', 'spread',
+  'hypertarget', 'bookmark', 'bookmark*'
+- library 'skins':
+  * new macro '\tcbhypernode'
+  * new options:
+  'hyperref', 'hyperref node', 'hyperref interior', 'hyperref title',
+  'hyperlink', 'hyperlink node', 'hyperlink interior', 'hyperlink title',
+  'hyperurl', 'hyperurl node', 'hyperurl interior', 'hyperurl title',
+  'hyperurl*', 'hyperurl* node', 'hyperurl* interior', 'hyperurl* title'
 

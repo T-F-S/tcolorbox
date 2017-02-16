@@ -494,3 +494,29 @@ and a border is to be drawn, this border width has to be substracted.
 \end{tikzpicture}
 \end{dispExample}
 
+
+\subsection{Hyper Nodes}
+The following auxiliary macro is defined by the \mylib{skins} library.
+\enlargethispage*{1cm}
+
+\begin{docCommand}[doc new=2016-02-03]{tcbhypernode}{\marg{macro}\marg{node}}
+%  Sets the east-to-west dimension of the given \meta{node}
+%  to the \TeX\ \meta{register}.
+  Applies a hyperlink creating \meta{macro} from the package |hyperref| \cite{rahtz:2012a}
+  to an existing |tikz| \meta{node}. \refCom{tcbhypernode} can only
+  be used inside a |tikzpicture| environment.
+  The last argument of the \meta{macro} is to be omitted and should stand
+  for an object (text) which is to be made a hyperlink.
+  For example, use  |\hyperref[name]| instead of |\hyperref[name]{text}|.
+
+\begin{dispExample}
+% \usepackage{hyperref}
+\begin{tikzpicture}
+  \node[align=center,draw=red,fill=red!5] (mybutton)
+    {Click me to jump to Section~\ref*{sec:tikzimagefilling}};
+  \tcbhypernode{\hyperref[sec:tikzimagefilling]}{mybutton}
+\end{tikzpicture}
+\end{dispExample}
+
+\end{docCommand}
+

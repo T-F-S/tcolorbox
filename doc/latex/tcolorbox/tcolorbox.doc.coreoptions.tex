@@ -1046,7 +1046,8 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
-\subsubsection{Spacing}\enlargethispage*{2cm}
+\clearpage
+\subsubsection{Spacing}
 \begin{docTcbKey}{boxsep}{=\meta{length}}{no default, initially \texttt{1mm}}
   Sets a common padding of \meta{length} between the text content and the
   frame of the box. This value is added to the key values of
@@ -1064,8 +1065,6 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
-\clearpage
-
 
 \begin{docTcbKey}{left}{=\meta{length}}{style, no default, initially \texttt{4mm}}
   Sets the left space between all text parts and frame (additional to |boxsep|).
@@ -1080,6 +1079,22 @@ This is a \textbf{tcolorbox}.
 \end{dispExample}
 \end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc new=2017-02-16]{left*}{=\meta{length}}{style, no default}
+  Sets \refKey{/tcb/left} such that \meta{length} is the distance between
+  the left bounding box and the text parts.
+\begin{dispExample}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+This is some text.
+\begin{tcolorbox}[grow to left by=5mm,left*=0mm,
+  enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
 \begin{docTcbKey}{lefttitle}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the left space between title text and frame (additional to |boxsep|).
 \begin{dispExample}
@@ -1117,7 +1132,6 @@ This is the lower part.
 \end{docTcbKey}
 
 
-\clearpage
 \begin{docTcbKey}{right}{=\meta{length}}{style, no default, initially \texttt{4mm}}
   Sets the right space between all text parts and frame (additional to |boxsep|).
   This is an abbreviation for setting
@@ -1126,6 +1140,21 @@ This is the lower part.
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[width=5cm,right=2cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-16]{right*}{=\meta{length}}{style, no default}
+  Sets \refKey{/tcb/right} such that \meta{length} is the distance between
+  the right bounding box and the text parts.
+\begin{dispExample}
+\tcbset{colback=red!5!white,colframe=red!75!black}
+
+\flushright This is some text.
+\begin{tcolorbox}[grow to right by=5mm,right*=0mm,
+  halign=right,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{dispExample}
@@ -1238,6 +1267,7 @@ This is the lower part.
 \end{dispExample}
 \end{docTcbKey}
 
+
 \clearpage
 \subsubsection{Size Shortcuts}
 \begin{docTcbKey}{size}{=\meta{name}}{no default, initially \texttt{normal}}
@@ -1321,14 +1351,15 @@ outer arc   & auto   & auto   & auto  & auto  & 0.0pt & 0.0pt \\
 
 
 \clearpage
-\begin{docTcbKey}[][doc updated=2015-11-13]{toggle left and right}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
-  According to the \meta{toggle preset}, the left and the right settings of
-  the |tcolorbox| are switched or not. Feasible values are:
+\subsubsection{Toggle Left and Right}
+\begin{docTcbKey}[][doc updated=2017-02-16]{toggle left and right}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
+  According to the \meta{toggle preset}, the left and the right settings
+  of the |tcolorbox| are switched or not. Feasible values are:
   \begin{itemize}
   \item\docValue{none}: no switching.
-  \item\docValue{forced}: the values of the left and right rules and spaces are switched.
+  \item\docValue{forced}: the values of the left and right rules, spaces, and corners are switched.
   \item\docValue{evenpage}: if the page is an even page, the values of the left and
-    right rules and spaces are switched. This value also sets
+    right rules, spaces, and corners are switched. This value also sets
     \refKey{/tcb/check odd page} to |true|.
   \end{itemize}
 \begin{marker}
@@ -1340,16 +1371,18 @@ For example, \refKey{/tcb/oversize} changes the bounding box.
 % \usepackage{lipsum}
 % \usetikzlibrary{patterns}
 % \tcbuselibrary{skins,breakable}
-\begin{tcolorbox}[skin=enhancedmiddle,breakable,
-  toggle left and right,
+\begin{tcolorbox}[enhanced,breakable,
+  toggle left and right,sharp corners,
   boxrule=0mm,top=0mm,bottom=0mm,left=1mm,right=1mm,
   rightrule=1cm,colupper=blue!25!black,
   interior style={fill overzoom image=lichtspiel.jpg,fill image opacity=0.25},
   frame style={pattern=crosshatch dots light steel blue},
   overlay={%
+    \begin{tcbclipframe}
     \tcbifoddpage{\coordinate (X) at ([xshift=-5mm]frame.east);}
                  {\coordinate (X) at ([xshift=5mm]frame.west);}
-    \fill[shading=ball,ball color=blue!50!white,opacity=0.5] (X) circle (4mm);}]
+    \fill[shading=ball,ball color=blue!50!white,opacity=0.5] (X) circle (4mm);
+    \end{tcbclipframe}}]
 \lipsum[1-6]
 \end{tcolorbox}
 \end{dispListing}
@@ -2867,6 +2900,8 @@ actual bounding box. For this, the library \mylib{skins} has to be included and
 \refKey{/tcb/enhanced} has to be set.
 \end{marker}
 
+\subsubsection{Shifting Bounding Box Borders}
+
 \begin{docTcbKey}{enlarge top initially by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the bounding box distance to the top of the box by \meta{length}.
   If the box is \emph{breakable}, only the first box of the break sequence
@@ -2981,42 +3016,6 @@ This is a \textbf{tcolorbox}.
 
 
 
-\begin{docTcbKey}[][doc new=2015-11-20]{flush left}{}{style, no value}
-  Enlarges the bounding box to the right side to fill the line completely.
-\begin{dispExample}
-\tcbset{colframe=blue!75!black,colback=white}
-
-\begin{tcolorbox}[flush left,width=5cm,enhanced,show bounding box]
-This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-
-\begin{docTcbKey}[][doc new=2015-11-20]{flush right}{}{style, no value}
-  Enlarges the bounding box to the left side to fill the line completely.
-\begin{dispExample}
-\tcbset{colframe=blue!75!black,colback=white}
-
-\begin{tcolorbox}[flush right,width=5cm,enhanced,show bounding box]
-This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-
-\begin{docTcbKey}[][doc new=2015-11-20]{center}{}{style, no value}
-  Enlarges the bounding box equally to both sides to fill the line completely.
-\begin{dispExample}
-\tcbset{colframe=blue!75!black,colback=white}
-
-\begin{tcolorbox}[center,width=5cm,enhanced,show bounding box]
-This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{dispExample}
-\end{docTcbKey}
-
-\clearpage
 \begin{docTcbKey}{grow to left by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the current box width by \meta{length} and
   enlarges (shrinks) the bounding box distance to the left side of the box by
@@ -3053,6 +3052,47 @@ This is a \textbf{tcolorbox}.
 
 
 \clearpage
+\subsubsection{Box Alignment}
+
+\begin{docTcbKey}[][doc new=2015-11-20]{flush left}{}{style, no value}
+  Enlarges the bounding box to the right side to fill the line completely.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[flush left,width=5cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-11-20]{flush right}{}{style, no value}
+  Enlarges the bounding box to the left side to fill the line completely.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[flush right,width=5cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2015-11-20]{center}{}{style, no value}
+  Enlarges the bounding box equally to both sides to fill the line completely.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[center,width=5cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\subsubsection{Toggle Enlargements}
+
 \begin{docTcbKey}[][doc updated=2015-11-13]{toggle enlargement}{=\meta{toggle preset}}{default |evenpage|, initially |none|}
   According to the \meta{toggle preset}, the left and the right enlargements of
   the bounding box are switched or not. Feasible values are:
@@ -3062,10 +3102,6 @@ This is a \textbf{tcolorbox}.
   \item\docValue{evenpage}: if the page is an even page, the values of the left and
     right enlargement are switched. This value also sets
     \refKey{/tcb/check odd page} to |true|.
-    %It is recommended that you use this setting in
-    %conjunction with \refKey{/tcb/check odd page}.
-    %Note that the page number detection may
-    %fail in certain cases. For these cases, use the |forced| value.
   \end{itemize}
 \begin{marker}
 See \refKey{/tcb/toggle left and right} to toggle geometry settings.
@@ -3103,7 +3139,144 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
+
 \clearpage
+\subsubsection{Spread Box to Page Borders}
+
+\begin{marker}
+The following border options are \emph{not} applicable to nested boxes, boxes insides
+tables, etc.
+For boxes inside lists, the options \emph{may} work, but not necessarily.
+Also, boxes should be set with |\noindent| and full width.
+\end{marker}
+
+\begin{docTcbKey}[][doc new=2017-02-13]{spread inwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Enlarges the current box width to match the inner page border (left-handed side for one-sided
+documents). If the optional \meta{length} is greater than |0pt|, the box
+grows over the border, if \meta{length} is lower than |0pt|, there is a
+margin between box and page border.
+\refKey{/tcb/toggle enlargement} is set automatically.
+\begin{dispListing}
+\begin{tcolorbox}[enhanced,spread inwards,
+  colframe=blue!75!black,colback=white,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispListing}
+{\tcbusetemp}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2017-02-13]{spread outwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Enlarges the current box width to match the outer page border (right-handed side for one-sided
+documents). If the optional \meta{length} is greater than |0pt|, the box
+grows over the border, if \meta{length} is lower than |0pt|, there is a
+margin between box and page border.
+\refKey{/tcb/toggle enlargement} is set automatically.
+\begin{dispListing}
+\begin{tcolorbox}[enhanced,spread outwards,
+  colframe=blue!75!black,colback=white,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispListing}
+{\tcbusetemp}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{move upwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Starts a new page with the box at the very top page border.
+If the optional \meta{length} is greater than |0pt|, the box
+moves over the border, if \meta{length} is lower than |0pt|, there is a
+margin between box and page border.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{move upwards*}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Identical to \refKey{/tcb/move upwards}, but without starting a new page.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{fill downwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Enlarges the height of the box until the very bottom page border.
+The library \mylib{breakable} has to be loaded, and
+\refKey{/tcb/height fill} is set automatically.
+If the optional \meta{length} is greater than |0pt|, the box
+moves over the border, if \meta{length} is lower than |0pt|, there is a
+margin between box and page border.
+\begin{dispListing}
+\begin{tcolorbox}[enhanced,fill downwards,
+  colframe=blue!75!black,colback=white,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispListing}
+{\tcbusetemp}
+\end{docTcbKey}
+
+
+\begin{tcolorbox}[enhanced,spread upwards,sharp corners=north,height=3cm,
+  colframe=blue!75!black,interior style={top color=blue!50,bottom color=white}]
+This is an example for 'spread upwards'.
+\end{tcolorbox}
+\begin{docTcbKey}[][doc new=2017-02-13]{spread upwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Combination of
+\refKey{/tcb/move upwards}, \refKey{/tcb/spread inwards}, and \refKey{/tcb/spread outwards}.
+The optional \meta{length} is used for all these keys.
+\begin{dispListing}
+\begin{tcolorbox}[enhanced,spread upwards,sharp corners=north,height=3cm,
+  colframe=blue!75!black,interior style={top color=blue!50,bottom color=white}]
+This is an example for 'spread upwards'.
+\end{tcolorbox}
+\end{dispListing}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{spread upwards*}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Identical to \refKey{/tcb/move upwards}, but without starting a new page.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{spread sidewards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Combination of \refKey{/tcb/spread inwards} and \refKey{/tcb/spread outwards}.
+The optional \meta{length} is used for all these keys.
+\begin{dispListing}
+\begin{tcolorbox}[enhanced,spread sidewards,
+  colframe=blue!75!black,colback=white,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispListing}
+{\tcbusetemp}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{spread}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Combination of
+\refKey{/tcb/move upwards}, \refKey{/tcb/fill downwards}, \refKey{/tcb/spread inwards},
+and \refKey{/tcb/spread outwards}.
+Such, the box fills the whole page.
+The optional \meta{length} is used for all these keys.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-13]{spread downwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
+Combination of
+\refKey{/tcb/fill downwards}, \refKey{/tcb/spread inwards}, and \refKey{/tcb/spread outwards}.
+The optional \meta{length} is used for all these keys.
+\begin{dispListing}
+\begin{tcolorbox}[enhanced,spread downwards,sharp corners=south,
+  colframe=red!75!black,interior style={top color=white,bottom color=red!50}]
+This is an example for 'spread downwards'.
+\end{tcolorbox}
+\end{dispListing}
+\end{docTcbKey}
+\begin{tcolorbox}[enhanced,spread downwards,sharp corners=south,
+  colframe=red!75!black,interior style={top color=white,bottom color=red!50}]
+This is an example for 'spread downwards'.
+\end{tcolorbox}
+
+
+
+
+\clearpage
+\subsubsection{Box Extrusion}
+
 \begin{marker}
 The following keys should not be used with breakable boxes or boxes with a
 lower part.
@@ -3604,9 +3777,10 @@ from page \pageref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
 
 \begin{docTcbKey}[][doc new=2014-11-28]{phantomlabel}{=\meta{marker}}{no default, initially unset}
 Equivalent to \refKey{/tcb/label} for an \emph{unnumbered} box.
-A |\phantomsection| from the package |hyperref| is used to set a correct
+A |\phantomsection| from the package |hyperref| \cite{rahtz:2012a} is used to set a correct
 hyperlink target. This is not needed for a numbered box.
 \end{docTcbKey}
+
 
 \begin{docTcbKey}{label type}{=\meta{type}}{no default, initially unset}
 This option key can be used only in conjunction with the |cleveref| package
@@ -3636,7 +3810,6 @@ using the convenient automated numbering introduced with version 2.40,
 see Subsection \ref{sec:numberedboxes}
 from page \pageref{sec:numberedboxes}.
 \end{docTcbKey}
-
 
 \clearpage
 \begin{docTcbKey}{list entry}{=\meta{text}}{no default, initially unset}
@@ -3694,6 +3867,67 @@ The box is titled '\nameref{mynamelabel}'.
 \end{marker}
 
 \end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}[][doc new=2017-02-03]{hypertarget}{=\meta{marker}}{no default, initially unset}
+A |\hypertarget| from the package |hyperref| \cite{rahtz:2012a} is used to
+create an internal link of an anchor \meta{marker}.
+This \meta{marker} can be referenced by |\hyperlink| or
+\refKey{/tcb/hyperlink}.
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+% \usepackage{hyperref}%
+\begin{tcolorbox}[enhanced,
+  colback=red!10,colframe=red!50!black,
+  hypertarget=hypertwinA,
+  hyperlink=hypertwinB,
+  title=Box A]
+Click me to jump to Box B.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new=2017-02-10]{bookmark}{=\meta{text}}{no default, initially unset}
+  Sets a PDF bookmark with the given \meta{text}, if the package |bookmark| \cite{oberdiek:2016a}
+  is loaded. This bookmark is set with an automated destination (the current box)
+  and is set one level below the current bookmark level.
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+% \usepackage{bookmark}%
+\begin{tcolorbox}[colback=blue!10,colframe=blue!50!black,
+  bookmark=Example for using a bookmark,
+  title=Example for using a bookmark]
+Open the bookmark view of the previewer
+to see the bookmark.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-10]{bookmark*}{=\marg{options}\marg{text}}{no default, initially unset}
+  Identical to \refKey{/tcb/bookmark}, but additional \meta{options}
+  from the package |bookmark| \cite{oberdiek:2016a} can be given.
+  \begin{dispExample*}{sbs,lefthand ratio=0.7}
+% \usepackage{bookmark}%
+\begin{tcolorbox}[colback=red!10,colframe=red!50!black,
+  bookmark*={color=red,italic,bold}%
+            {Another bookmark example},
+  title=Red and bold bookmark]
+Open the bookmark view of the previewer
+to see the bookmark.
+\end{tcolorbox}
+  \end{dispExample*}
+\end{docTcbKey}
+
+
+
+
+
+
+
+
+
+
 
 
 \clearpage

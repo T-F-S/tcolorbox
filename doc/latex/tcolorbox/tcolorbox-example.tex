@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.97pre1 (2017/02/01)
+%% The LaTeX package tcolorbox - version 4.00 (2017/02/16)
 %% tcolorbox-example.tex: an example for tcolorbox
 %%
 %% -------------------------------------------------------------------------------------------
@@ -191,13 +191,10 @@ We have given Theorem \ref{theorem:summation} on page \pageref{theorem:summation
 \end{tcolorbox}
 
 %----------------------------------------------------------
-\clearpage
-\section{Rasters of Boxes}
-
 \begin{tcolorbox}[tile,size=fbox,boxsep=2mm,boxrule=0pt,
-    colback=blue!20!black,colbacktitle=yellow!50!black,
-    title=A Raster of Boxes,center title,
-    height fill]
+    colback=blue!20!black,colbacktitle=yellow!40!black,
+    phantom={\thispagestyle{empty}},
+    title=\section{Rasters of Boxes},spread=-1cm]
   \begin{tcbitemize}[raster columns=3,raster rows=4,raster equal skip=2mm,
       raster height=\tcbtextheight,
       title={Box~\thetcbrasternum},fonttitle=\bfseries,

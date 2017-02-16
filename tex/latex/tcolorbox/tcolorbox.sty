@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.97pre1 (2017/02/01)
+%% The LaTeX package tcolorbox - version 4.00 (2017/02/16)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2017/02/01 version 3.97pre1 text color boxes]
-\def\tcb@version{3.97pre1}
+\ProvidesPackage{tcolorbox}[2017/02/16 version 4.00 text color boxes]
+\def\tcb@version{4.00}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -229,15 +229,17 @@
     \def\tcb@arc@scale{0.58578644}%
     \let\tcb@apply@graph@patches=\tcbpatcharcangular%
   },
-  sharpish corners/.style={arc=0pt,outer arc=0pt},
+  sharpish corners/.style={arc=\z@,outer arc=\z@},
   lefttitle/.store in=\kvtcb@lefttitle,
   leftupper/.store in=\kvtcb@leftupper,
   leftlower/.store in=\kvtcb@leftlower,
   left/.style={lefttitle=#1,leftupper=#1,leftlower=#1},
+  left*/.style={left={#1-(\kvtcb@left@rule)-(\kvtcb@boxsep)-(\kvtcb@bbleft)}},
   righttitle/.store in=\kvtcb@righttitle,
   rightupper/.store in=\kvtcb@rightupper,
   rightlower/.store in=\kvtcb@rightlower,
   right/.style={righttitle=#1,rightupper=#1,rightlower=#1},
+  right*/.style={right={#1-(\kvtcb@right@rule)-(\kvtcb@boxsep)-(\kvtcb@bbright)}},
   top/.store in=\kvtcb@top,
   toptitle/.store in=\kvtcb@toptitle,
   bottom/.store in=\kvtcb@bottom,
@@ -269,12 +271,12 @@
   parskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\tcb@prevdepth}}%
-      \pagebreak[0]\fi\fi\parindent=0pt},
+      \pagebreak[0]\fi\fi\parindent\z@},
     after={\parfillskip\z@\@plus 1fil\par}},
   noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\smallskipamount+\tcb@prevdepth}}%
-      \pagebreak[0]\smallskip\fi\fi\parindent=0pt},
+      \pagebreak[0]\smallskip\fi\fi\parindent\z@},
     after={\parfillskip\z@\@plus 1fil\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
@@ -287,7 +289,7 @@
         \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
       \fi%
     \fi%
-    \lineskip=0pt\noindent%
+    \lineskip\z@skip\noindent%
     }},
   after skip/.style={after={%
     \parfillskip\z@\@plus 1fil\par\ifvmode\nointerlineskip%
@@ -401,6 +403,37 @@
   left skip/.style={grow to left by={-\dimexpr#1\relax}},
   right skip/.style={grow to right by={-\dimexpr#1\relax}},
   leftright skip/.style={left skip={#1},right skip={#1}},
+  spread inwards/.style={grow to left by=1in+\hoffset+\oddsidemargin+\@totalleftmargin+(#1),code={\if@twoside\tcbset{toggle enlargement}\fi}},
+  spread inwards/.default=\z@,
+  spread outwards/.style={grow to right by=\paperwidth-\textwidth-1in-\hoffset-\oddsidemargin+(#1),code={\if@twoside\tcbset{toggle enlargement}\fi}},
+  spread outwards/.default=\z@,
+  move upwards/.style={before={\clearpage%
+    \lineskip\z@skip%
+    \hrule\@height\z@%
+    \nobreak%
+    \vskip\glueexpr-1in-\voffset-\topmargin-\headheight-\headsep-\topskip-\parskip-(#1)\relax%
+    \noindent}},
+  move upwards/.default=\z@,
+  move upwards*/.style={before={%
+    \lineskip\z@skip%
+    \hrule\@height\z@%
+    \vskip\z@%
+    \bgroup\@nobreakfalse\addpenalty\z@\egroup%
+    \vskip\glueexpr-1in-\voffset-\topmargin-\headheight-\headsep-\parskip+\pagegoal-\textheight-\pagetotal-(#1)\relax%
+    \noindent}},
+  move upwards*/.default=\z@,
+  fill downwards/.style={height fill,enlarge bottom by={\dimexpr-\paperheight+\textheight+1in+\voffset+\topmargin+\headheight+\headsep-(#1)\relax}},
+  fill downwards/.default=\z@,
+  spread sidewards/.style={spread inwards=#1,spread outwards=#1},
+  spread sidewards/.default=\z@,
+  spread upwards/.style={move upwards=#1,spread inwards=#1,spread outwards=#1},
+  spread upwards/.default=\z@,
+  spread upwards*/.style={move upwards*=#1,spread inwards=#1,spread outwards=#1},
+  spread upwards*/.default=\z@,
+  spread downwards/.style={fill downwards=#1,spread inwards=#1,spread outwards=#1},
+  spread downwards/.default=\z@,
+  spread/.style={move upwards=#1,fill downwards=#1,spread inwards=#1,spread outwards=#1},
+  spread/.default=\z@,
   toggle enlargement/.is choice,
   toggle enlargement/none/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@none},
   toggle enlargement/evenpage/.code={\let\tcb@setbb@toggle=\tcb@setbb@toggle@evenpage\tcbset{check odd page}},
@@ -511,7 +544,7 @@
   flushright upper/.style={halign upper=flush right},%
   flushright lower/.style={halign lower=flush right},%
   tabularx*/.style 2 args={%
-    boxsep=0pt,top=0pt,bottom=0pt,leftupper=0pt,rightupper=0pt,
+    boxsep=\z@,top=\z@,bottom=\z@,leftupper=\z@,rightupper=\z@,
     toptitle=1mm,bottomtitle=1mm,boxrule=0.5mm,
     before upper={\arrayrulecolor{tcbcol@frame}\def\arraystretch{1.1}#1%
       \tcb@hack@currenvir\tabularx{\linewidth}{#2}},
@@ -519,14 +552,14 @@
   tabularx/.style={tabularx*={}{#1}},
   tikz upper/.style={before upper=\centering\tcb@shield@externalize\begin{tikzpicture}[#1],after upper=\end{tikzpicture}},%
   tikz lower/.style={before lower=\centering\tcb@shield@externalize\begin{tikzpicture}[#1],after lower=\end{tikzpicture}},%
-  tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=0pt,outer sep=0pt,#1]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
-  tikznode lower/.style={before lower={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=0pt,outer sep=0pt,#1]\bgroup},after lower={\egroup;\end{tikzpicture}}},%
+  tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=\z@,outer sep=\z@,#1]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
+  tikznode lower/.style={before lower={\centering\tcb@shield@externalize\begin{tikzpicture}\node[align=center,inner sep=\z@,outer sep=\z@,#1]\bgroup},after lower={\egroup;\end{tikzpicture}}},%
   tikznode/.style={tikznode upper={#1},tikznode lower={#1}},%
   varwidth upper/.style={before upper={\tcbdimto\tcb@w@upper{#1-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@leftupper+\kvtcb@rightupper)}%
     \begin{varwidth}{\tcb@w@upper}},after upper={\end{varwidth}}},%
   varwidth upper/.default=\kvtcb@width,
   text fill/.style={before upper={%
-    \ifdim\dimexpr\tcbtextheight>0pt\relax%
+    \ifdim\dimexpr\tcbtextheight>\z@\relax%
       \edef\tcb@temp{\noexpand\minipage[c][\tcbtextheight]}%
     \else%
       \let\tcb@temp\minipage%
@@ -537,7 +570,7 @@
     width=\the\dimexpr\dimexpr\linewidth+#1+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule\relax,%
     enlarge left by=-\the\dimexpr\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep+(#1)/2\relax,%
     enlarge right by=-\the\dimexpr\kvtcb@boxsep+\kvtcb@rightupper+\kvtcb@right@rule+(#1)/2\relax},%
-  oversize/.default=0pt,%
+  oversize/.default=\z@,%
   flush right/.style={enlarge left by=\linewidth-(\kvtcb@width)},
   flush left/.style={enlarge right by=\linewidth-(\kvtcb@width)},
   center/.style={enlarge left by=(\linewidth-(\kvtcb@width))/2,enlarge right by=\kvtcb@bbleft},
@@ -545,7 +578,7 @@
   tcbox raise/.style={baseline=-\the\dimexpr#1\relax},%
   tcbox raise base/.style={baseline=\tcb@val@raisebase},%
   box align/.is choice,%
-  box align/bottom/.style={baseline=0pt},%
+  box align/bottom/.style={baseline=\z@},%
   box align/top/.style={baseline=\tcb@height},%
   box align/center/.style={baseline=\tcb@height/2},%
   box align/base/.style={baseline=\tcb@val@raisebase},%
@@ -593,6 +626,12 @@
   step/.style={phantom={\refstepcounter{#1}}},%
   label/.style={phantom={\tcb@set@label{#1}}},%
   phantomlabel/.style={phantom={\ifdefined\phantomsection\phantomsection\fi\tcb@set@label{#1}}},%
+  hypertarget/.style={phantom={\ifdefined\hypertarget\Hy@raisedlink{\hypertarget{#1}{}}\fi}},
+  bookmark*/.style 2 args={phantom={\ifdefined\bookmark%
+    \Hy@raisedlink{\hypertarget{tcb@\thetcolorboxnumber}{}}%
+    \bookmark[dest=tcb@\thetcolorboxnumber,rellevel=1,keeplevel,#1]{#2}%
+    \fi}},
+  bookmark/.style={bookmark*={}{#1}},
   nameref/.code={\tcb@gettitle{#1}},%
   label type/.store in=\kvtcb@label@type,%
   no label type/.style={label type=},%
@@ -730,7 +769,7 @@
     {\edef\ftype@tcbfloat{\the\c@float@type}%
      \addtocounter{float@type}{\value{float@type}}}%
 \def\c@tcbfloat{\c@float@type}% tricking the caption package
-\ifdim\parskip>0pt%
+\ifdim\parskip>\z@%
   \tcbset{autoparskip/.style=parskip}%
 \else%
   \tcbset{autoparskip/.style=noparskip}%
@@ -1295,7 +1334,7 @@
 }
 
 \def\tcb@boundaryframe@standard{%
-  \tcb@boundary@base{0pt}{0pt}%
+  \tcb@boundary@base{\z@}{\z@}%
     {\tcb@width}{\tcb@height}%
     {\tcb@arc@out@SW}{\tcb@arc@out@NW}{\tcb@arc@out@NE}{\tcb@arc@out@SE}%
 }
@@ -1401,12 +1440,12 @@
 }
 
 \def\tcb@setbb@toggle@none{%
-  \pgfpathrectanglecorners{\pgfqpoint{\the\dimexpr0pt-\kvtcb@bbleft\relax}{\the\dimexpr0pt-\kvtcb@bbbottom\relax}}%
+  \pgfpathrectanglecorners{\pgfqpoint{\the\dimexpr\z@-\kvtcb@bbleft\relax}{\the\dimexpr\z@-\kvtcb@bbbottom\relax}}%
      {\pgfqpoint{\the\dimexpr\tcb@width+\kvtcb@bbright\relax}{\the\dimexpr\tcb@height+\kvtcb@bbtop\relax}}%
 }
 
 \def\tcb@setbb@toggle@forced{%
-  \pgfpathrectanglecorners{\pgfqpoint{\the\dimexpr0pt-\kvtcb@bbright\relax}{\the\dimexpr0pt-\kvtcb@bbbottom\relax}}%
+  \pgfpathrectanglecorners{\pgfqpoint{\the\dimexpr\z@-\kvtcb@bbright\relax}{\the\dimexpr\z@-\kvtcb@bbbottom\relax}}%
     {\pgfqpoint{\the\dimexpr\tcb@width+\kvtcb@bbleft\relax}{\the\dimexpr\tcb@height+\kvtcb@bbtop\relax}}%
 }
 
@@ -1429,6 +1468,8 @@
   \tcb@swap{\kvtcb@lefttitle}{\kvtcb@righttitle}%
   \tcb@swap{\kvtcb@leftupper}{\kvtcb@rightupper}%
   \tcb@swap{\kvtcb@leftlower}{\kvtcb@rightlower}%
+  \tcb@swap{\tcb@corner@mode@NW}{\tcb@corner@mode@NE}%
+  \tcb@swap{\tcb@corner@mode@SW}{\tcb@corner@mode@SE}%
 }
 
 \def\tcb@lrtoggle@evenpage{%
@@ -1440,7 +1481,7 @@
   \tcb@setbb@toggle%
   \pgfusepath{use as bounding box}%
   \iftcb@hasPhantom%
-    \pgftext[x=0pt,y=\tcb@height-\baselineskip,left,top]{\box\tcb@phantombox}%
+    \pgftext[x=\z@,y=\tcb@height-\baselineskip,left,top]{\box\tcb@phantombox}%
     \tcb@hasPhantomfalse%
   \fi%
   \csname tcb@creategeonodes@\kvtcb@geonodes\endcsname%
@@ -1503,13 +1544,13 @@
     \else%
       \tcbdimto{\tcb@temp@wd}{\tcb@w@upper+\kvtcb@sbs@gap}%
       \noindent\kern\tcb@temp@wd%
-      \rule[-\dp\tcb@upperbox]{0pt}{\the\dimexpr\ht\tcb@upperbox+\dp\tcb@upperbox\relax}%
+      \rule[-\dp\tcb@upperbox]{\z@}{\the\dimexpr\ht\tcb@upperbox+\dp\tcb@upperbox\relax}%
     \fi%
     \iftcb@hasLower%
       \tcb@box@align{\tcb@lowerbox}%
       \iftcb@lowervisible\leavevmode\color{tcbcol@lower}\unhbox\tcb@lowerbox%
       \else%
-        \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{0pt}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
+        \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{\z@}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
       \fi%
     \fi%
   \end{tcb@savebox}%
@@ -1713,7 +1754,7 @@
     colupper=tcbtranscol@upper,fontupper=\tcb@trans@fontupper,
     boxsep=\tcb@trans@boxsep,left=\tcb@trans@left,right=\tcb@trans@right,
     top=\tcb@trans@top,bottom=\tcb@trans@bottom,
-    boxrule=\tcb@trans@rule,leftrule=0pt,rightrule=0pt,oversize,
+    boxrule=\tcb@trans@rule,leftrule=\z@,rightrule=\z@,oversize,
     code={\pgfkeysalsofrom\tcb@trans@style},#1]%
   #2%
   \end{tcolorbox}%

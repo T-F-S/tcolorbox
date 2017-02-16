@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 3.97pre1 (2017/02/01)
+%% The LaTeX package tcolorbox - version 4.00 (2017/02/16)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{3.97pre1}
+\tcb@set@library@version{4.00}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -1815,6 +1815,33 @@
   graphics directory/.store in=\kvtcb@graphics@directory,
 }
 
+\newcommand{\tcbhypernode}[2]{\ifdefined\hypersetup\@ifundefined{pgf@sh@ns@#2}{}{%
+  \node[inner sep=0pt,outer sep=0pt] at (#2.center){%
+    \tcbsetmacrotowidthofnode\tcb@w@hn{#2}%
+    \tcbsetmacrotoheightofnode\tcb@h@hn{#2}%
+    \hypersetup{pdfborder=0 0 0}%
+    #1{\vtop to \dimexpr\tcb@h@hn-2bp\relax{\hbox to \dimexpr\tcb@w@hn-2bp\relax{}\vfil}}%
+  };%
+}\fi}
+
+\tcbset{%
+  hyperref node/.style 2 args={finish={\tcbhypernode{\hyperref[#1]}{#2}}},
+  hyperref/.style={hyperref node={#1}{frame}},
+  hyperref interior/.style={hyperref node={#1}{interior}},
+  hyperref title/.style={hyperref node={#1}{title}},
+  hyperlink node/.style 2 args={finish={\tcbhypernode{\hyperlink{#1}}{#2}}},
+  hyperlink/.style={hyperlink node={#1}{frame}},
+  hyperlink interior/.style={hyperlink node={#1}{interior}},
+  hyperlink title/.style={hyperlink node={#1}{title}},
+  hyperurl node/.style 2 args={finish={\tcbhypernode{\href{#1}}{#2}}},
+  hyperurl/.style={hyperurl node={#1}{frame}},
+  hyperurl interior/.style={hyperurl node={#1}{interior}},
+  hyperurl title/.style={hyperurl node={#1}{title}},
+  hyperurl* node/.style n args={3}{finish={\tcbhypernode{\href[#1]{#2}}{#3}}},
+  hyperurl*/.style 2 args={hyperurl* node={#1}{#2}{frame}},
+  hyperurl* interior/.style 2 args={hyperurl* node={#1}{#2}{interior}},
+  hyperurl* title/.style 2 args={hyperurl* node={#1}{#2}{title}},
+}
 
 \tcbset{%
   reset@skins/.style={%
