@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.00 (2017/02/16)
+%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.00}
+\tcb@set@library@version{4.01}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -158,7 +158,7 @@
   \tcbset{#1}%
   \tcbset@late@options{%
     before={\ifhmode\unskip\fi\ifnum\c@tcbrastercolumn>1 \kern\kvtcb@raster@xskip\else%
-      \ifnum\c@tcbrasterrow>1 \parindent\z@\parskip\z@\parfillskip\z@\@plus 1fil\par\nointerlineskip\addvspace{\the\dimexpr\kvtcb@raster@yskip\relax}\noindent\fi%
+      \ifnum\c@tcbrasterrow>1 \parindent\z@\parskip\z@\par\nointerlineskip\addvspace{\the\dimexpr\kvtcb@raster@yskip\relax}\noindent\fi%
       \kern\kvtcb@raster@skip@left\fi},
     after={%
       \ifnum\c@tcbrastercolumn=\kvtcb@raster@columns\relax%
@@ -195,14 +195,14 @@
     {\par\nointerlineskip%
     \addvspace{\glueexpr\kvtcb@raster@skip@before-\parskip}}%
   \fi%
-  \kvtcb@raster@halign\noindent%
+  \parfillskip\@flushglue\kvtcb@raster@halign\noindent%
 }{%
   \ifhmode\unskip\fi%
   \ifnum\c@tcbrastercolumn>1 %
     \kern\kvtcb@raster@skip@right%
   \fi%
   \begingroup%
-  \parfillskip\z@\@plus 1fil\par\nointerlineskip%
+  \par\nointerlineskip%
   \addvspace{\glueexpr\kvtcb@raster@skip@after-\parskip}%
   \endgroup%
   \tcb@end@raster%

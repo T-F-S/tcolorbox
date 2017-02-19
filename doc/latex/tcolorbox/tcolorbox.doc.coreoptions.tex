@@ -13,11 +13,11 @@ starting from page~\pageref{sec:latextutorial}.
 \subsection{Title}
 \begin{docTcbKey}{title}{=\meta{text}}{no default, initially empty}
   Creates a heading line with \meta{text} as content.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{title}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[title=My heading line]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{notitle}{}{no value, initially set}
@@ -58,7 +58,7 @@ Now, we try again with adjusted titles:\\
   Creates a single heading line with \meta{text} as content.
   If the \meta{text} is longer than the available space, the text is
   squeezed to fit into the available space.
-\begin{dispExample}
+\begin{exdispExample}{squeezed_title}
 % \tcbuselibrary{raster}
 \begin{tcbitemize}[raster columns=3,raster equal height,
   colframe=red!75!black,colback=red!5!white,fonttitle=\bfseries]
@@ -69,12 +69,12 @@ Now, we try again with adjusted titles:\\
 \tcbitem[squeezed title={This title is clearly to long for this application}]
   Third box
 \end{tcbitemize}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-11-24]{squeezed title*}{=\meta{text}}{style, no default, initially unset}
   This is a combination of \refKey{/tcb/adjusted title} and  \refKey{/tcb/squeezed title}.
-\begin{dispExample}
+\begin{exdispExample}{squeezed_title_2}
 % \tcbuselibrary{raster}
 \begin{tcbitemize}[raster columns=3,raster equal height,
   colframe=red!75!black,colback=red!5!white,fonttitle=\bfseries]
@@ -85,7 +85,7 @@ Now, we try again with adjusted titles:\\
 \tcbitem[squeezed title*={This title is clearly to long for this application}]
   Third box
 \end{tcbitemize}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
@@ -94,7 +94,7 @@ Detaches the title from its normal position. The text of the title is
 stored into \docAuxCommand{tcbtitletext} and the formatted title is
 available by \docAuxCommand{tcbtitle}.
 The main application is to move the title from its usual place to another one.
-\begin{dispExample}
+\begin{exdispExample}{detach_title}
 \newtcolorbox{mybox}[2][]{colbacktitle=red!10!white,
   colback=blue!10!white,coltitle=red!70!black,
   title={#2},fonttitle=\bfseries,#1}
@@ -108,7 +108,7 @@ The main application is to move the title from its usual place to another one.
 \begin{mybox}[detach title,after upper={\par\hfill\tcbtitle}]{My title}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{attach title}{}{no value}
@@ -120,7 +120,7 @@ Attaches the title to its normal position. This option is used to reverse
 \begin{docTcbKey}[][doc updated=2015-07-08]{attach title to upper}{\colOpt{=\meta{text}}}{style, default empty, initially unset}
 Attaches the title to the begin of the upper part of the box content.
 The optional \meta{text} is set between the formatted title and the box content.
-\begin{dispExample}
+\begin{exdispExample}{attach_title_to_upper}
 \newtcolorbox{mybox}[2][]{colbacktitle=red!10!white,
   colback=blue!10!white,coltitle=red!70!black,
   title={#2},fonttitle=\bfseries,#1}
@@ -131,7 +131,7 @@ The optional \meta{text} is set between the formatted title and the box content.
 \begin{mybox}[attach title to upper,after title={:\ }]{My title}
   This is a \textbf{tcolorbox}.
 \end{mybox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -154,7 +154,7 @@ just like any other \refEnv{tcolorbox}.
   This is an independent \refEnv{tcolorbox} which is formatted by several
   inherited properties of the enclosing box, by further settings from
   \refKey{/tcb/subtitle style}, and by the given \meta{options}.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{tcbsubtitle_1}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[title=My title,
     colback=red!5!white,
     colframe=red!75!black,
@@ -164,8 +164,8 @@ just like any other \refEnv{tcolorbox}.
   {My subtitle}
   Further text.
 \end{tcolorbox}
-\end{dispExample*}
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\end{exdispExample*}
+\begin{exdispExample*}{tcbsubtitle_2}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[title=My title,
     colback=red!5!white,
     colframe=red!75!black,
@@ -177,7 +177,7 @@ just like any other \refEnv{tcolorbox}.
   {My subtitle}
   Further text.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docCommand}
 
 \begin{docTcbKey}[][doc new=2014-10-10]{subtitle style}{=\meta{options}}{no default, initially empty}
@@ -2201,7 +2201,7 @@ and the box is unbreakable.
 
 \begin{docTcbKey}[][doc new=2015-07-15]{text fill}{}{style, no value}
   This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
-  to embedd the upper part with a minipage. If a fixed height was applied
+  to embed the upper part with a minipage. If a fixed height was applied
   e.g.\ by \refKey{/tcb/height} or \refKey{/tcb/height fill}, this minipage
   gets a matching height. This allows to use vertical glue macros like
   |\vfill| to act like expected. If the box has no fixed height,

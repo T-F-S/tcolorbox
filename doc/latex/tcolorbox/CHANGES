@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.00 (2017/02/16)
+%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -968,4 +968,7 @@ version 4.00 (2017/02/16)
   'hyperlink', 'hyperlink node', 'hyperlink interior', 'hyperlink title',
   'hyperurl', 'hyperurl node', 'hyperurl interior', 'hyperurl title',
   'hyperurl*', 'hyperurl* node', 'hyperurl* interior', 'hyperurl* title'
+
+version 4.01 (2017/02/19)
+- bug fix: 'raster halign=center' was broken by 4.00 code changes
 
