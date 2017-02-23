@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
+%% The LaTeX package tcolorbox - version 4.02pre1 (2017/02/23)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.01}
+\tcb@set@library@version{4.02pre1}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -515,7 +515,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@path}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithtitle@path}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@path}%
@@ -527,7 +527,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
       \else%
-      {\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@path}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithouttitle@path}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@path}%
@@ -548,7 +548,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathfirst}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithtitle@pathfirst}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathfirst}%
@@ -560,7 +560,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
       \else%
-      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathfirst}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithouttitle@pathfirst}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathfirst}%
@@ -579,7 +579,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathmiddle}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithtitle@pathmiddle}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathmiddle}%
@@ -591,7 +591,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
       \else%
-      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathmiddle}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithouttitle@pathmiddle}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathmiddle}%
@@ -610,7 +610,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithtitle@pathlast}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithtitle@pathlast}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathlast}%
@@ -622,7 +622,7 @@
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
       \else
-      {\tcbset{interior style=}\tcb@spec{fill=tcbcol@backlower}\tcb@drawwithouttitle@pathlast}%
+      {\tcbset{interior style={fill=tcbcol@backlower,segmentation@style}}\tcb@drawwithouttitle@pathlast}%
       \fi%
     \else%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathlast}%

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
+%% The LaTeX package tcolorbox - version 4.02pre1 (2017/02/23)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2017/02/19 version 4.01 text color boxes]
-\def\tcb@version{4.01}
+\ProvidesPackage{tcolorbox}[2017/02/23 version 4.02pre1 text color boxes]
+\def\tcb@version{4.02pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -157,6 +157,8 @@
   \fi%
 }
 
+\def\tcb@parfillskip@restore{\ifdim\parfillskip>0pt\relax\parfillskip\@flushglue\fi}
+
 % analog to plain.tex
 \def\tcb@raggedright@plain{\raggedright\rightskip0pt plus2em \spaceskip.3333em \xspaceskip.5em\relax}
 \def\tcb@raggedleft@plain{\raggedleft\leftskip0pt plus2em \spaceskip.3333em \xspaceskip.5em \hbadness=10000\relax}
@@ -265,6 +267,10 @@
   float*/.default=\kvtcb@floatplacement,
   every float/.store in=\kvtcb@everyfloat,%
   nofloat/.style={float=},
+  parfillskip restore/.is choice,%
+  parfillskip restore/.default=true,%
+  parfillskip restore/true/.code={\let\tcb@parfillskip@check=\tcb@parfillskip@restore},%
+  parfillskip restore/false/.code={\let\tcb@parfillskip@check=\@empty},%
   before/.code={\def\kvtcb@beforebox{#1}\let\tcb@undo@before=\@empty\let\tcb@use@autoparskip=\relax},
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
   autoparskip/.code={\let\tcb@use@autoparskip=\tcb@use@auto@parskip},
@@ -272,12 +278,12 @@
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\tcb@prevdepth}}%
       \pagebreak[0]\fi\fi\parindent\z@},
-    after={\parfillskip\z@\@plus 1fil\par}},
+    after={\tcb@parfillskip@check\par}},
   noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\smallskipamount+\tcb@prevdepth}}%
       \pagebreak[0]\smallskip\fi\fi\parindent\z@},
-    after={\parfillskip\z@\@plus 1fil\par\smallskip}},
+    after={\tcb@parfillskip@check\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
   before skip/.style={before={%
@@ -292,7 +298,7 @@
     \lineskip\z@skip\noindent%
     }},
   after skip/.style={after={%
-    \parfillskip\z@\@plus 1fil\par\ifvmode\nointerlineskip%
+    \tcb@parfillskip@check\par\ifvmode\nointerlineskip%
     \addvspace{\glueexpr#1-\parskip}\fi%
     }},
   beforeafter skip/.style={before skip={#1},after skip={#1}},
@@ -2080,7 +2086,7 @@
     \let\tcb@lateoptions@hook\@empty},
     width=\linewidth,autoparskip,arc is curved,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
-    size=normal,rounded corners,
+    size=normal,rounded corners,parfillskip restore,
     enlarge top by=0mm,enlarge bottom by=0mm,enlarge left by=0mm,enlarge right by=0mm,
     toggle enlargement=none,toggle left and right=none,
     baseline=0pt,adjust text={\"Apgjy},upperbox=visible,lowerbox=visible,lower separated,

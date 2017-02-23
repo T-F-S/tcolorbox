@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
+%% The LaTeX package tcolorbox - version 4.02pre1 (2017/02/23)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -971,4 +971,13 @@ version 4.00 (2017/02/16)
 
 version 4.01 (2017/02/19)
 - bug fix: 'raster halign=center' was broken by 4.00 code changes
+
+version 4.02 (xxxx/xx/xx)
+- Further code adaptions to support \parfillskip changing packages like KOMA-Script
+  and to respect center environments
+  'parskip', 'noparskip', 'after skip', 'breakable', 'raster'
+- new option: 'parfillskip restore'
+- bug fix: 'segmentation style' was not applied correctly to breakable boxes with
+  'bicolor' skin
+
 

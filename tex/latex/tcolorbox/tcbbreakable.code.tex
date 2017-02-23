@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
+%% The LaTeX package tcolorbox - version 4.02pre1 (2017/02/23)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.01}
+\tcb@set@library@version{4.02pre1}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -300,7 +300,7 @@
     \parindent\z@%
     \lineskip\z@skip%
     \topskip\z@skip%
-    \parfillskip\z@\@plus 1fil%
+    \tcb@parfillskip@check%
     \tcb@split@start%
   \endgroup%
   \color{.}% hack for some special cases
