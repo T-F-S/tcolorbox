@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02pre1 (2017/02/23)
+%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.02pre1}
+\tcb@set@library@version{4.02}
 
 \tcbuselibrary{pro@cessing}
 
@@ -220,13 +220,13 @@
   PassOptionsToPackage/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToPackage{#1}{#2}}},
   PassOptionsToClass/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToClass{#1}{#2}}},
   externalize/.code={},
-  -/.style={externalize=false},
+  -/.style={/tcb/external/externalize=false},
   %
   force remake/.is choice,
   force remake/true/.code={\def\tcbexternal@condition{0}},
   force remake/false/.code={\def\tcbexternal@condition{1}},
   force remake/.default=true,
-  !/.style=force remake,
+  !/.style={/tcb/external/force remake},
   %
   input source on error/.is choice,
   input source on error/true/.code={\let\tcbexternal@pdfmissing=\tcbexternal@pdfmissing@warning},

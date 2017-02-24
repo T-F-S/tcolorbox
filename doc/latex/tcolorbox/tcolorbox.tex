@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 4.01 (2017/02/19)
+%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -43,8 +43,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{4.01}%
-\def\datum{2017/02/19}%
+\def\version{4.02}%
+\def\datum{2017/02/24}%
 \makeindex
 
 \hypersetup{
@@ -57,7 +57,8 @@
 \usepackage{pgfplots}
 
 %\tcbset{draftmode}
-%\includeonly{tcolorbox.doc.coreoptions}
+\tcbset{/tcb/external/-}% for final run
+%\includeonly{tcolorbox.doc.external}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

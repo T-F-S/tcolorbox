@@ -386,7 +386,7 @@ This is the lower part.
   this environment. Additionally, the environment definition has to use
   |\tcolorbox| instead of
   |\begin{tcolorbox}| and |\endtcolorbox| instead of |\end{tcolorbox}|.
-\begin{dispExample}
+\begin{exdispExample}{savedelimiter1}
 \newenvironment{mybox}[1]{%
   \tcolorbox[savedelimiter=mybox,
              savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
@@ -404,11 +404,11 @@ Now, the saved part is used:
 \begin{tcolorbox}[colback=green!5]
 \input{\jobname_bspsave2.tex}
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
 The |savedelimiter| is used implicitely with \refCom{newtcolorbox} which
 allows a more convenient usage:
-\begin{dispExample}
+\begin{exdispExample}{savedelimiter2}
 \newtcolorbox{mybox}[1]{%
              savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
              colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
@@ -424,7 +424,7 @@ Now, the saved part is used:
 \begin{tcolorbox}[colback=green!5]
 \input{\jobname_bspsave2.tex}
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -433,20 +433,20 @@ Now, the saved part is used:
 \subsection{Colors and Fonts}
 \begin{docTcbKey}{colframe}{=\meta{color}}{no default, initially \texttt{black!75!white}}
   Sets the frame \meta{color} of the box.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{colframe}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colframe=red!50!white]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}{colback}{=\meta{color}}{no default, initially \texttt{black!5!white}}
   Sets the background \meta{color} of the box.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{colback}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colback=red!50!white]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -456,7 +456,7 @@ This is a \textbf{tcolorbox}.
   \refKey{/tcb/opacitybacktitle}, and \refKey{/tcb/title style},
   and \refKey{/tcb/title code}.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{title_filled}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[title=My title,title filled]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
@@ -464,19 +464,19 @@ This is a \textbf{tcolorbox}.
   title filled=false]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{colbacktitle}{=\meta{color}}{no default, initially \texttt{black!50!white}}
   Sets the background \meta{color} of the title area of the box.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{colbacktitle}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colbacktitle=red!50!white,
   title=My title,coltitle=black,
   fonttitle=\bfseries]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -485,82 +485,82 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}{colupper}{=\meta{color}}{no default, initially \texttt{black}}
   Sets the text \meta{color} of the upper part.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{colupper}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colupper=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{collower}{=\meta{color}}{no default, initially \texttt{black}}
   Sets the text \meta{color} of the lower part.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{collower}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[collower=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{coltext}{=\meta{color}}{style, no default, initially \texttt{black}}
   Sets the text \meta{color} of the box. This is an abbreviation for setting
   |colupper| and |collower| to the same value.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{coltext}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[coltext=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{coltitle}{=\meta{color}}{no default, initially \texttt{white}}
   Sets the title text \meta{color} of the box.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{coltitle}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[coltitle=red!75!black,
   colbacktitle=black!10!white,title=Test]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
 
 \begin{docTcbKey}{fontupper}{=\meta{text}}{no default, initially empty}
   Sets \meta{text} before the content of the upper part (e.\,g.\ font settings).
-\begin{dispExample}
+\begin{exdispExample}{fontupper}
 \begin{tcolorbox}[fontupper=Hello!~\sffamily]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{fontlower}{=\meta{text}}{no default, initially empty}
   Sets \meta{text} before the content of the lower part (e.\,g.\ font settings).
-\begin{dispExample}
+\begin{exdispExample}{fontlower}
 \begin{tcolorbox}[fontlower=\sffamily\bfseries]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{fonttitle}{=\meta{text}}{no default, initially empty}
   Sets \meta{text} before the content of the title text (e.\,g.\ font settings).
-\begin{dispExample}
+\begin{exdispExample}{fonttitle}
 \begin{tcolorbox}[fonttitle=\sffamily\bfseries\large,title=Hello]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \bigskip
@@ -794,31 +794,31 @@ upper part and lower part are set side-by-side.
 \begin{docTcbKey}{width}{=\meta{length}}{no default, initially \cs{linewidth}}
   Sets the total width of the colored box to \meta{length}.
   See also \refKey{/tcb/height}.
-\begin{dispExample}
+\begin{exdispExample}{width}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[width=\linewidth/2]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new=2014-10-31]{text width}{=\meta{length}}{style, no default}
   Sets the text width of the upper part to \meta{length}.
   See also \refKey{/tcb/text height}.
-\begin{dispExample}
+\begin{exdispExample}{text_width}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[text width=4cm]
 This is a \textbf{tcolorbox} where the text has a width of 4cm.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-11-07]{add to width}{=\meta{length}}{style, no default}
   Adds \meta{length} to the current total width of the colored box.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{add_to_width}{sbs,lefthand ratio=0.6}
 \tcbset{width=4cm,colback=red!5!white,
   colframe=red!75!black}
 
@@ -829,7 +829,7 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[add to width=1cm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -840,61 +840,61 @@ See \Fullref{sec:heightcontrol} for setting fixed height values.
 \subsubsection{Rules}
 \begin{docTcbKey}{toprule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the top rule to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{toprule}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[toprule=3mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{bottomrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the bottom rule to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{bottomrule}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[bottomrule=3mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{leftrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the left rule to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{leftrule}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[leftrule=3mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{rightrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the right rule to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{rightrule}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[rightrule=3mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{titlerule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
   Sets the line width of the rule below the title to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{titlerule}
 \tcbset{enhanced,colback=red!5!white,colframe=red!75!black,
   colbacktitle=red!90!black}
 
 \begin{tcolorbox}[titlerule=3mm,title=This is the title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -902,13 +902,13 @@ This is a \textbf{tcolorbox}.
   Sets all rules of the frame to \meta{length}, i.\,e.\ 
   \refKey{/tcb/toprule}, \refKey{/tcb/bottomrule}, \refKey{/tcb/leftrule},
   \refKey{/tcb/rightrule}, and \refKey{/tcb/titlerule}.
-\begin{dispExample}
+\begin{exdispExample}{boxrule}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[boxrule=3mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \bigskip
@@ -1030,13 +1030,13 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}{outer arc}{=\meta{length}}{no default, initially unset}
   Sets the outer radius of the four frame arcs to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{outer_arc}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[arc=4mm,outer arc=1mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1052,7 +1052,7 @@ This is a \textbf{tcolorbox}.
   Sets a common padding of \meta{length} between the text content and the
   frame of the box. This value is added to the key values of
   |left|, |right|, |top|, |bottom|, and |middle| at the appropriate places.
-\begin{dispExample}
+\begin{exdispExample}{boxsep}
 \tcbset{colback=red!5!white,colframe=red!75!black,width=(\linewidth-4mm)/2,
   before=,after=\hfill}
 
@@ -1062,7 +1062,7 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[boxsep=5mm,draft]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1070,20 +1070,20 @@ This is a \textbf{tcolorbox}.
   Sets the left space between all text parts and frame (additional to |boxsep|).
   This is an abbreviation for setting
   |lefttitle|, |leftupper|, and |leftlower| to the same value.
-\begin{dispExample}
+\begin{exdispExample}{left}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[left=0mm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new=2017-02-16]{left*}{=\meta{length}}{style, no default}
   Sets \refKey{/tcb/left} such that \meta{length} is the distance between
   the left bounding box and the text parts.
-\begin{dispExample}
+\begin{exdispExample}{left_star}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 This is some text.
@@ -1091,36 +1091,36 @@ This is some text.
   enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{lefttitle}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the left space between title text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{lefttitle}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[lefttitle=3cm,title=My Title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{leftupper}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the left space between upper text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{leftupper}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[leftupper=3cm,title=My Title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{leftlower}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the left space between lower text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{leftlower}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[leftlower=3cm]
@@ -1128,7 +1128,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1136,20 +1136,20 @@ This is the lower part.
   Sets the right space between all text parts and frame (additional to |boxsep|).
   This is an abbreviation for setting
   |righttitle|, |rightupper|, and |rightlower| to the same value.
-\begin{dispExample}
+\begin{exdispExample}{right}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[width=5cm,right=2cm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new=2017-02-16]{right*}{=\meta{length}}{style, no default}
   Sets \refKey{/tcb/right} such that \meta{length} is the distance between
   the right bounding box and the text parts.
-\begin{dispExample}
+\begin{exdispExample}{right_star}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \flushright This is some text.
@@ -1157,39 +1157,39 @@ This is a \textbf{tcolorbox}.
   halign=right,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 
 \begin{docTcbKey}{righttitle}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the right space between title text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{righttitle}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[width=5cm,righttitle=2cm,title=My very long title text]
 This is a \textbf{tcolorbox} with standard upper box dimensions.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{rightupper}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the right space between upper text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{rightupper}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[width=5cm,rightupper=2cm,title=My very long title text]
 This is a \textbf{tcolorbox} with compressed upper box dimensions.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \clearpage
 \begin{docTcbKey}{rightlower}{=\meta{length}}{no default, initially \texttt{4mm}}
   Sets the right space between lower text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{rightlower}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[width=5cm,rightlower=2cm]
@@ -1197,14 +1197,14 @@ This is a \textbf{tcolorbox} with standard upper box dimensions.
 \tcblower
 This is the lower part with large space at right.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 
 \begin{docTcbKey}{top}{=\meta{length}}{no default, initially \texttt{2mm}}
   Sets the top space between text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{top}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[top=0mm]
@@ -1212,25 +1212,25 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{toptitle}{=\meta{length}}{no default, initially \texttt{0mm}}
   Sets the top space between title and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{toptitle}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[toptitle=3mm,title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{bottom}{=\meta{length}}{no default, initially \texttt{2mm}}
   Sets the bottom space between text and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{bottom}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[bottom=0mm]
@@ -1238,25 +1238,25 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{bottomtitle}{=\meta{length}}{no default, initially \texttt{0mm}}
   Sets the bottom space between title and frame (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{bottomtitle}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[bottomtitle=3mm,title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{middle}{=\meta{length}}{no default, initially \texttt{2mm}}
   Sets the space between upper and lower text to the separation line
   (additional to |boxsep|).
-\begin{dispExample}
+\begin{exdispExample}{middle}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[middle=0mm,boxsep=0mm]
@@ -1264,7 +1264,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1283,7 +1283,7 @@ This is the lower part.
   \item\docValue{minimal}: no padding space, no box rules.
   \end{itemize}
 
-\begin{dispExample}
+\begin{exdispExample}{size_1}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \foreach \s in {minimal,tight,fbox,small,title,normal} {
@@ -1295,7 +1295,7 @@ This is the lower part.
 \foreach \s in {minimal,tight,fbox,small,title,normal} {
   \begin{tcolorbox}[size=\s,on line,title=Test,width=2.2cm]
     \s \tcblower lower\end{tcolorbox} }
-\end{dispExample}
+\end{exdispExample}
 
 \bigskip
 
@@ -1421,20 +1421,20 @@ Feasible values for \meta{position} are:
   enlarge top by=0.5mm,enlarge bottom by=0.5mm,sharp corners=\p]{\docValue{\p}}
 }
 \end{itemize}
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{sharp_corners_1}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colback=red!5!white,
   colframe=red!75!black,
   sharp corners=northwest ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\end{exdispExample*}
+\begin{exdispExample*}{sharp_corners_2}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colback=red!5!white,
   colframe=red!75!black,
   sharp corners ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -1451,13 +1451,13 @@ Feasible values for \meta{position} are\footnote{The graphical examples assume
   enlarge top by=0.5mm,enlarge bottom by=0.5mm,sharp corners,rounded corners=\p]{\docValue{\p}}
 }
 \end{itemize}
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{rounded_corners}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colback=red!5!white,
   colframe=red!75!black,sharp corners,
   rounded corners=northwest ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -1471,13 +1471,13 @@ This is a \textbf{tcolorbox}.
   \emph{sharp}. To switch back to rounded corners, one has to adapt
   \refKey{/tcb/arc} and \refKey{/tcb/outer arc}.
   \end{marker}
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{sharpish_corners}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[colback=red!5!white,
   colframe=red!75!black,
   sharpish corners ]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -1488,8 +1488,9 @@ The later two give the same core box, but \refKey{/tcb/borderline}
 and \refKey{/tcb/shadow} settings are slightly different.
 The following examples use \refKey{/tcb/drop fuzzy shadow}.
 
+\begin{extcolorbox}[minipage]{corners_comparison}[blankest]
 \foreach \n in {rounded corners,sharpish corners,sharp corners}{
-\begin{tcolorbox}[enhanced jigsaw,frame empty,interior empty,fuzzy halo,halign=center]
+\begin{tcolorbox}[enhanced jigsaw,frame empty,interior empty,fuzzy halo,halign=center,beforeafter skip=4mm]
 \begin{tcolorbox}[enhanced,drop fuzzy shadow,width=\linewidth-1cm,
   colback=red!5!white, colframe=red!75!black, fonttitle=\bfseries,
   title=My title,\n,
@@ -1501,7 +1502,7 @@ The following examples use \refKey{/tcb/drop fuzzy shadow}.
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{tcolorbox}}
-
+\end{extcolorbox}
 
 \clearpage
 \subsection{Transparency}
@@ -1639,7 +1640,7 @@ or to fit commonly for several boxes, e.\,g. if boxes are set side by side.
   Sets the total height of the colored box to \meta{length} independent
   of the box content. \meta{length} is the minimum height of the box, if
   \refKey{/tcb/height plus} is larger than zero.
-\begin{dispExample}
+\begin{exdispExample}{height}
 \tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
 colframe=blue!75!black,colback=white}
 
@@ -1654,13 +1655,13 @@ colframe=blue!75!black,colback=white}
   \tcblower
   Lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \enlargethispage*{10mm}
 \begin{docTcbKey}{height plus}{=\meta{length}}{no default, initially |0pt|}
   The box may extend a given fixed \refKey{/tcb/height} up to the given \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{height_plus}
 \tcbset{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,bottom=1mm,
   right=1mm,boxsep=0mm,width=3cm,nobeforeafter}
 
@@ -1673,13 +1674,13 @@ This is a tcolorbox.
 \begin{tcolorbox}[height=1cm,height plus=1cm]
 This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{height from}{=\meta{min} \texttt{to} \meta{max}}{style, no default}
   Sets the box height to a dimension between \meta{min} and \meta{max}.
-\begin{dispExample}
+\begin{exdispExample}{height_from}
 % \usepackage{lipsum}
 \newtcolorbox{mybox}{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
   bottom=1mm,right=1mm,boxsep=0mm,width=4.5cm,nobeforeafter,
@@ -1694,7 +1695,7 @@ This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
 \begin{mybox}
 \lipsum[2]
 \end{mybox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1702,13 +1703,13 @@ This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
   Sets the text height to \meta{length}. This is the length from the top
   of the upper part to the bottom of the optional lower part.
   See also \refKey{/tcb/text width}.
-\begin{dispExample}
+\begin{exdispExample}{text_height}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}[text height=2cm]
 This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
@@ -1718,7 +1719,7 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
   \refKey{/tcb/height} has to be set before this key is used!
   If this option is used several times, then the \refKey{/tcb/height} is
   also increased several times.
-\begin{dispExample}
+\begin{exdispExample}{add_to_height}
 \tcbset{height=2cm,
   valign=center,width=(\linewidth-2mm)/2,
   before=,after=\hfill,colframe=blue!75!black,colback=white}
@@ -1729,7 +1730,7 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \begin{tcolorbox}[add to height=1cm]
   This box has a height of 3cm.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1739,7 +1740,7 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
   last setting of \meta{length} wins. The resulting box is not considered
   a fixed height box and the implementation is quite different to
   \refKey{/tcb/add to height}.
-\begin{dispExample}
+\begin{exdispExample}{add_to_natural_height}
 \tcbset{valign=center,width=(\linewidth-2mm)/2,
   before=,after=\hfill,colframe=blue!75!black,colback=white}
 
@@ -1749,7 +1750,7 @@ This is a \textbf{tcolorbox} where the text area has a height of 2cm.
 \begin{tcolorbox}[add to natural height=1cm]
   This box has natural height plus 1 cm.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1868,16 +1869,16 @@ colframe=blue!75!black,colback=white,height=3cm}
     \item Never use this in combination with \refKey{/tcb/fit}.
     \end{itemize}
   \end{marker}
-\begin{dispExample}
+\begin{exdispExample}[runs=3]{space_to_1}
 \begin{tcolorbox}[colframe=blue!75!black,colback=white,height=3cm,
     space to=\myspace]
   This is my box of height 3cm. The space is filled with a picture:\\[2mm]
   \includegraphics[width=\linewidth,height=\myspace]{goldshade.png}\\[1mm]
   This is some other text.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
-\begin{dispExample}
+\begin{exdispExample}[runs=3]{space_to_2}
 \begin{tcolorbox}[colframe=blue!75!black,colback=white,height=3cm,
     space to=\myspace]
   \includegraphics[width=\linewidth,
@@ -1886,7 +1887,7 @@ colframe=blue!75!black,colback=white,height=3cm}
   \includegraphics[width=\linewidth,
     height=0.67\dimexpr\myspace]{goldshade.png}
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1898,7 +1899,7 @@ colframe=blue!75!black,colback=white,height=3cm}
   of the segmentation between the upper and the lower part. Here, 0 stands
   for top and 1 for bottom. Note that the box is split regardless of
   the actual dimensions of the text parts!
-\begin{dispExample}
+\begin{exdispExample}{split}
 \tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,height=3cm,
 colback=white,colframe=blue!75!black,valign=center,valign lower=center}
 
@@ -1908,7 +1909,7 @@ This is the upper part.
 \tcblower
 This is the lower part with a lot of text in several lines.
 \end{tcolorbox}}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -1926,7 +1927,7 @@ This is the lower part with a lot of text in several lines.
   that height groups are global definitions.
 
 
-\begin{dispExample}
+\begin{exdispExample}[runs=2]{equal_height_group}
 \tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,arc=0mm,
 colframe=blue!75!black,colback=white,fonttitle=\bfseries}
 
@@ -1955,7 +1956,7 @@ colframe=red!75!black,colback=white}
     \int\limits_{0}^{1} x^2 = \frac13.
   \end{equation*}
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \medskip
@@ -2005,14 +2006,14 @@ with a listing.
   \refKey{/tcb/equal height group} has to be set \emph{before} this option is used.
   This option is likely to be used in combination with \refKey{/tcb/raster equal height}
 
-\begin{dispExample}
+\begin{exdispExample}[runs=2]{minimum_for_current_equal_height_group}
 % \tcbuselibrary{raster}
 \begin{tcbitemize}[raster equal height,colframe=blue!75!black,colback=white,
   raster every box/.style={minimum for current equal height group=2cm}]
   \tcbitem A
   \tcbitem B
 \end{tcbitemize}
-\end{dispExample}
+\end{exdispExample}
 
 \end{docTcbKey}
 
@@ -2036,7 +2037,7 @@ Height from group 'C' of the previous example, but reduced by 2cm.
 \end{tcolorbox}%
 \end{dispExample}
 
-\begin{dispExample}
+\begin{exdispExample}[runs=2]{use_height_from_group}
 % \tcbuselibrary{raster}
 Every line is inside an equal height group:
 \begin{tcbraster}[raster equal height=rows,
@@ -2049,7 +2050,7 @@ Every line is inside an equal height group:
     First line\\second line\end{tcolorbox}
   \begin{tcolorbox}The height of this box rules.\end{tcolorbox}
 \end{tcbraster}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -2070,27 +2071,27 @@ of the title, the upper part, or the lower part.
 \begin{docTcbKey}{before title}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the color and font settings
   and \emph{before} the content of the title.
-\begin{dispExample}
+\begin{exdispExample}{before_title}
 \tcbset{before title={\textcolor{yellow}{\large Important:}~},
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{after title}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the title.
-\begin{dispExample}
+\begin{exdispExample}{after_title}
 \tcbset{after title={\hfill\colorbox{Navy}{approved}},
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -2098,34 +2099,34 @@ This is a \textbf{tcolorbox}.
 \begin{docTcbKey}{before upper}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the color and font settings
   and \emph{before} the content of the upper part.
-\begin{dispExample}
+\begin{exdispExample}{before_upper}
 \tcbset{before upper={\textit{The story:}\par},
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc updated=2016-10-21]{after upper}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the upper part.
-\begin{dispExample}
+\begin{exdispExample}{after_upper_1}
 \tcbset{after upper={\par\hfill\textit{Read more next week}},
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
 
 \begin{tcolorbox}[title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
-\begin{dispExample}
+\begin{exdispExample}{after_upper_2}
 \begin{tcolorbox}[before upper=\flqq,after upper=\frqq,
   colback=red!5!white,colframe=red!75!black]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
 \begin{marker}
 An |\unskip| is placed in front of the given \meta{code}.
@@ -2146,7 +2147,7 @@ problems which (hopefully) should not occur with the new improved code.
 \begin{docTcbKey}{before lower}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the color and font settings
   and \emph{before} the content of the lower part.
-\begin{dispExample}
+\begin{exdispExample}{before_lower}
 \tcbset{before lower=\textit{Behold:~},colback=red!5!white,colframe=red!75!black}
 
 \begin{tcolorbox}
@@ -2154,29 +2155,29 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc updated=2016-10-21]{after lower}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the lower part.
-\begin{dispExample}
+\begin{exdispExample}{after_lower_1}
 \begin{tcolorbox}[before lower=$,after lower=$,
   colback=red!5!white,colframe=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
 \sin^2(x)+\cos^2(x)=1.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
-\begin{dispExample}
+\begin{exdispExample}{after_lower_2}
 \begin{tcolorbox}[after lower=\ \textit{This is the end.},
   colback=red!5!white,colframe=red!75!black]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
 \begin{marker}
 An |\unskip| is placed in front of the given \meta{code}.
@@ -2276,7 +2277,7 @@ One     & Two     & Three \\\hline\hline
 \begin{docTcbKey}{tikz upper}{\colOpt{=\meta{options}}}{style}
   This style adds a centered |tikzpicture| environment to the start and end
   of the upper part. The \meta{options} may be given as \tikzname\  picture options.
-\begin{dispExample}
+\begin{exdispExample}{tikz_upper}
 % \usepackage{tikz}
 
 \begin{tcolorbox}[tikz upper,fonttitle=\bfseries,colback=white,colframe=black,
@@ -2286,13 +2287,13 @@ One     & Two     & Three \\\hline\hline
   \fill[red] (135:5mm) circle (1mm);
   \draw[line width=1mm,red] (215:5mm) arc (215:325:5mm);
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{tikz lower}{\colOpt{=\meta{options}}}{style}
   This style adds a centered |tikzpicture| environment to the start and end
   of the lower part. The \meta{options} may be given as \tikzname\  picture options.
-\begin{dispExample}
+\begin{exdispExample}{tikz_lower}
 % \usepackage{tikz}
 % \tcbuselibrary{skins,listings}
 \tcbset{tikz lower,listing side text,fonttitle=\bfseries,
@@ -2307,7 +2308,7 @@ One     & Two     & Three \\\hline\hline
 \draw[line width=1mm,red]
     (215:5mm) arc (215:325:5mm);
 \end{tcblisting}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -2317,21 +2318,21 @@ One     & Two     & Three \\\hline\hline
   \tikzname\  node. The \meta{options} may be given as \tikzname\  node options.
   This style is especially useful for boxes with multiline texts which are
   fitted to the text width.
-\begin{dispExample}
+\begin{exdispExample}{tikznode_upper}
 % \usepackage{tikz}
-\newtcbox{\headline}[1][]{enhanced,before=\begin{center},after=\end{center},
+\newtcbox{\headline}[1][]{enhanced,center,
   ignore nobreak,fontupper=\Large\bfseries,
   colframe=red!50!black,colback=red!10!white,
   drop fuzzy shadow=yellow,tikznode upper,#1}
 
 \headline{Important\\Headline}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{tikznode lower}{\colOpt{=\meta{options}}}{style}
   This style places the lower part content into a centered
   \tikzname\ node. The \meta{options} may be given as \tikzname\  node options.
-\begin{dispExample}
+\begin{exdispExample}{tikznode_lower}
 % \usepackage{tikz}
 \begin{tcolorbox}[bicolor,colback=LightBlue!50!white,colbacklower=white,
   colframe=black,tikznode lower={inner sep=2pt,draw=red,fill=yellow}]
@@ -2339,7 +2340,7 @@ Upper part.
 \tcblower
 Lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{tikznode}{\colOpt{=\meta{options}}}{style}
@@ -2353,7 +2354,7 @@ Lower part.
   This style needs the |varwidth| package \cite{arseneau:2011a} to be loaded manually.
   The resulting box has a maximal width of \meta{length}.
   This option is only senseful for a \refCom{tcbox}.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{varwidth_upper}{sbs,lefthand ratio=0.6}
 % \usepackage{varwidth}
 \newtcbox{\varbox}{colframe=red!50!black,
   colback=red!10!white,varwidth upper}
@@ -2361,7 +2362,7 @@ Lower part.
 \varbox{Short text.}
 \varbox{This box contains is a longer text
   which is broken.}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -2386,7 +2387,7 @@ is recommended which allows |tikz| code and gives access to
   Adds \meta{graphical code} to the box drawing process. This \meta{graphical code}
   is drawn \emph{after} the frame and interior and \emph{before} the text content.
 
-\begin{dispExample}
+\begin{exdispExample}{overlay_1}
 % \tcbuselibrary{skins} % preamble
 \tcbset{frogbox/.style={enhanced,colback=green!10,colframe=green!65!black,
   enlarge top by=5.5mm,
@@ -2399,10 +2400,10 @@ is recommended which allows |tikz| code and gives access to
 \begin{tcolorbox}[frogbox,title=My title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
 \enlargethispage*{5mm}
-\begin{dispExample}
+\begin{exdispExample}{overlay_2}
 % \usetikzlibrary{patterns} % preamble
 % \tcbuselibrary{skins}     % preamble
 \tcbset{ribbonbox/.style={enhanced,colback=red!5!white,colframe=red!75!black,
@@ -2419,7 +2420,7 @@ This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
@@ -2659,7 +2660,7 @@ This behavior is controlled by the keys |before| and |after|.
   idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
-                        after={\parfillskip 0pt plus 1fil\par}}}
+                        after={\par}}}
 \end{dispListing}
 \end{docTcbKey}
 
@@ -2669,7 +2670,7 @@ This behavior is controlled by the keys |before| and |after|.
   idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{noparskip/.style={before={\par\pagebreak[0]\smallskip\parindent=0pt},
-                          after={\parfillskip 0pt plus 1fil\par\smallskip}}}
+                          after={\par\smallskip}}}
 \end{dispListing}
 \end{docTcbKey}
 
@@ -2689,14 +2690,14 @@ This behavior is controlled by the keys |before| and |after|.
 \begin{docTcbKey}{nobeforeafter}{}{style, no value}
   Abbreviation for clearing the keys |before| and |after|. The colored box
   is not put into a paragraph and there is no space before or after the box.
-\begin{dispExample}
+\begin{exdispExample}{nobeforeafter}
 \tcbset{myone/.style={colback=LightGreen,colframe=DarkGreen,
   equal height group=nobefaf,width=\linewidth/4,nobeforeafter}}
 \begin{tcolorbox}[myone,title=Box 1]Box 1\end{tcolorbox}%
 \begin{tcolorbox}[myone,title=Box 2]Box 2\end{tcolorbox}%
 \begin{tcolorbox}[myone,title=Box 3]Box 3\end{tcolorbox}%
 \begin{tcolorbox}[myone,title=Box 4]Box 4\end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \enlargethispage*{1cm}
@@ -2712,7 +2713,7 @@ This behavior is controlled by the keys |before| and |after|.
 
 \begin{docTcbKey}{baseline}{=\meta{length}}{no default, initially |0pt|}
   Used to set the |\pgfsetbaseline| value of the resulting |tcolorbox|.
-\begin{dispExample}
+\begin{exdispExample}{baseline}
 \tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
 Some text\dotfill
 \begin{tcolorbox}[baseline=3mm]
@@ -2721,7 +2722,7 @@ One line.
 \begin{tcolorbox}[baseline=3mm]
 First line.\\Second line.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -2737,7 +2738,7 @@ First line.\\Second line.
     It is an alias for \refKey{/tcb/tcbox raise base}.
   \end{itemize}
 
-\begin{dispExample}
+\begin{exdispExample}{box_align_1}
 \tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
 Some text\dotfill
 \begin{tcolorbox}[box align=bottom]
@@ -2746,9 +2747,9 @@ One line.
 \begin{tcolorbox}[box align=bottom]
 First line.\\Second line.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
-\begin{dispExample}
+\begin{exdispExample}{box_align_2}
 \tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
 Some text\dotfill
 \begin{tcolorbox}[box align=top]
@@ -2757,9 +2758,9 @@ One line.
 \begin{tcolorbox}[box align=top]
 First line.\\Second line.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
-\begin{dispExample}
+\begin{exdispExample}{box_align_3}
 \tcbset{colframe=red!50!white,width=4cm,nobeforeafter}
 Some text\dotfill
 \begin{tcolorbox}[box align=center]
@@ -2768,45 +2769,45 @@ One line.
 \begin{tcolorbox}[box align=center]
 First line.\\Second line.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 
-\begin{dispExample}
+\begin{exdispExample}{box_align_4}
 \tcbset{colframe=red!50!white,nobeforeafter}
 Some text\dotfill
 \tcbox[nobeforeafter,box align=base]{One line}
 \tcbox[nobeforeafter,box align=base,size=fbox]{Another line}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new and updated={2014-10-10}{2015-03-16}]{before skip}{=\meta{glue}}{style, no default}
   Inserts some vertical space of the given \meta{glue} before the colored box.
   This style sets \refKey{/tcb/before}.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{before_skip}{sbs,lefthand ratio=0.6}
 Some text.
 \begin{tcolorbox}[before skip=1cm,
     colframe=red!50!white]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new and updated={2014-10-10}{2017-02-01}]{after skip}{=\meta{glue}}{style, no default}
   Inserts some vertical space of the given \meta{glue} after the colored box.
   This style sets \refKey{/tcb/after}.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{after_skip}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[after skip=1cm,
     colframe=red!50!white]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 Some text.
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-10-10]{beforeafter skip}{=\meta{glue}}{style, no default}
   Inserts some vertical space of the given \meta{glue} before \emph{and} after the colored box.
   This style sets \refKey{/tcb/before} and \refKey{/tcb/after}.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{beforeafter_skip}{sbs,lefthand ratio=0.6}
 \tcbset{beforeafter skip=0pt,
   colframe=red!50!white}
 \begin{tcolorbox}
@@ -2815,7 +2816,7 @@ Some text.
 \begin{tcolorbox}
   Second box.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \clearpage
@@ -2824,41 +2825,41 @@ Some text.
   Inserts some horizontal space of the given \meta{length} before the colored box.
   This style sets \refKey{/tcb/grow to left by} with the negated \meta{length},
   i.e. the bounding box and box width are changed.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{left_skip}{sbs,lefthand ratio=0.6}
 \noindent\rule{\linewidth}{2pt}
 
 \begin{tcolorbox}[left skip=1cm,
     colframe=red!50!white]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-11-07]{right skip}{=\meta{length}}{style, no default, initially |0mm|}
   Inserts some horizontal space of the given \meta{length} after the colored box.
   This style sets \refKey{/tcb/grow to right by} with the negated \meta{length},
   i.e. the bounding box and box width are changed.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{right_skip}{sbs,lefthand ratio=0.6}
 \noindent\rule{\linewidth}{2pt}
 
 \begin{tcolorbox}[right skip=1cm,
     colframe=red!50!white]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-10-10]{leftright skip}{=\meta{length}}{style, no default}
   Inserts some horizontal space of the given \meta{length} before \emph{and} after the colored box.
   This style changes the bounding box and the box width.
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{leftright_skip}{sbs,lefthand ratio=0.6}
 \noindent\rule{\linewidth}{2pt}
 
 \begin{tcolorbox}[leftright skip=1cm,
     colframe=red!50!white]
   This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 \end{docTcbKey}
 
 
@@ -2881,6 +2882,25 @@ enforce the \refKey{/tcb/before} setting.
   is unbreakable, if \refKey{/tcb/ignore nobreak} is not set, and if
   the box follows a heading.
 \end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2017-02-23]{parfillskip restore}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+  If this option is set to be |true|, the minimum value of |\parfillskip| is
+  tested at specific spots, if it is greater than |0pt|.
+  If so, |\parfillskip| is restored to |\@flushglue| which happens to be
+  the default value.
+
+  These tests are executed for
+  \refKey{/tcb/parskip},
+  \refKey{/tcb/noparskip},
+  \refKey{/tcb/after skip},
+  \refKey{/tcb/breakable}, and
+  \refKey{/tcb/raster}.
+
+  This option was created to automatically
+  avoid overfull box warnings with |\parfillskip| changing packages.
+\end{docTcbKey}
+
 
 
 \clearpage
@@ -2906,7 +2926,7 @@ actual bounding box. For this, the library \mylib{skins} has to be included and
   Enlarges the bounding box distance to the top of the box by \meta{length}.
   If the box is \emph{breakable}, only the first box of the break sequence
   gets enlarged. \refKey{/tcb/enlarge top by} overwrites this key.
-\begin{dispExample}
+\begin{exdispExample}{enlarge_top_initially_by}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[enlarge top initially by=-5mm]
@@ -2915,7 +2935,7 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[enlarge top initially by=5mm,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -2924,7 +2944,7 @@ This is a \textbf{tcolorbox}.
   Enlarges the bounding box distance to the bottom of the box by \meta{length}.
   If the box is \emph{breakable}, only the last box of the break sequence
   gets enlarged. \refKey{/tcb/enlarge bottom by} overwrites this key.
-\begin{dispExample}
+\begin{exdispExample}{enlarge_bottom_finally_by}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[enlarge bottom finally by=5mm]
@@ -2933,7 +2953,7 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[enlarge bottom finally by=-5mm,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
@@ -2972,7 +2992,7 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}{enlarge left by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the bounding box distance to the left side of the box by \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}[safety=2cm]{enlarge_left_by}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[enlarge left by=2cm,width=5cm,enhanced,show bounding box]
@@ -2981,12 +3001,12 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[enlarge left by=-2cm,width=\linewidth+2cm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{enlarge right by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the bounding box distance to the right side of the box by \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}[safety=2cm]{enlarge_right_by}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[enlarge right by=-2cm,width=\linewidth+2cm,
@@ -2996,13 +3016,13 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[enlarge right by=2cm,width=\linewidth-2cm]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{enlarge by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the bounding box distance to all sides of the box by \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{enlarge_by}
 \tcbset{colframe=blue!75!black,colback=white,width=5cm,nobeforeafter}
 
 \begin{tcolorbox}
@@ -3011,7 +3031,7 @@ This is a \textbf{tcolorbox}.
 \begin{tcolorbox}[enlarge by=5mm,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -3020,20 +3040,20 @@ This is a \textbf{tcolorbox}.
   Enlarges the current box width by \meta{length} and
   enlarges (shrinks) the bounding box distance to the left side of the box by
   $-$\meta{length}. Also see \refKey{/tcb/left skip}.
-\begin{dispExample}
+\begin{exdispExample}[safety=2cm]{grow_to_left_by}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[width=5cm,grow to left by=2cm,enhanced,show bounding box]
 This is a \textbf{tcolorbox} with a width of 7cm.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{grow to right by}{=\meta{length}}{no default, initially |0mm|}
   Enlarges the current box width by \meta{length} and
   enlarges (shrinks) the bounding box distance to the right side of the box by
   $-$\meta{length}. Also see \refKey{/tcb/right skip}.
-\begin{dispExample}
+\begin{exdispExample}[safety=2cm]{grow_to_right_by}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[grow to right by=2cm,enhanced,show bounding box]
@@ -3047,7 +3067,7 @@ This is a \textbf{tcolorbox}.
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -3056,37 +3076,37 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}[][doc new=2015-11-20]{flush left}{}{style, no value}
   Enlarges the bounding box to the right side to fill the line completely.
-\begin{dispExample}
+\begin{exdispExample}{flush_left}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[flush left,width=5cm,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new=2015-11-20]{flush right}{}{style, no value}
   Enlarges the bounding box to the left side to fill the line completely.
-\begin{dispExample}
+\begin{exdispExample}{flush_right}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[flush right,width=5cm,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new=2015-11-20]{center}{}{style, no value}
   Enlarges the bounding box equally to both sides to fill the line completely.
-\begin{dispExample}
+\begin{exdispExample}{center}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[center,width=5cm,enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -3288,7 +3308,7 @@ lower part.
   This style sets the \refKey{/tcb/boxsep} to |0pt| and other geometry keys
   to fitting values. This option is likely to be used with the following
   extrusion keys.
-\begin{dispExample}
+\begin{exdispExample}{shrink_tight}
 \tcbset{colframe=blue!75!black,colback=white,arc=0mm,boxrule=0.4pt,
         nobeforeafter,tcbox raise base,shrink tight}
 
@@ -3297,14 +3317,14 @@ This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 
 Lorem \tcbox{ipsum} dolor sit amet, consectetuer adipiscing elit.
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc updated=2014-09-19]{extrude left by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the left side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
-\begin{dispExample}
+\begin{exdispExample}{extrude_left_by}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
   nobeforeafter,tcbox raise base,shrink tight,extrude by=2mm}
@@ -3313,14 +3333,14 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
 vestibulum ut, placerat ac, adipiscing vitae, felis.
 \tcbox[extrude left by=1cm]{Curabitur} dictum gravida mauris.
 Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc updated=2014-09-19]{extrude right by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the right side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
-\begin{dispExample}
+\begin{exdispExample}{extrude_right_by}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
   nobeforeafter,tcbox raise base,shrink tight,extrude by=2mm}
@@ -3329,7 +3349,7 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
 vestibulum ut, placerat ac, adipiscing vitae, felis.
 \tcbox[extrude right by=1cm]{Curabitur} dictum gravida mauris.
 Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
@@ -3337,7 +3357,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
   The (upper part of the) colored box is extruded by the given \meta{length} to the top side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
-\begin{dispExample}
+\begin{exdispExample}{extrude_top_by}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
   nobeforeafter,tcbox raise base,shrink tight,extrude by=2mm}
@@ -3346,14 +3366,14 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
 vestibulum ut, placerat ac, adipiscing vitae, felis.
 \tcbox[extrude top by=1cm]{Curabitur} dictum gravida mauris.
 Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{extrude bottom by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to the bottom side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
-\begin{dispExample}
+\begin{exdispExample}[safety=1cm]{extrude_bottom_by}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
   nobeforeafter,tcbox raise base,shrink tight,extrude by=2mm}
@@ -3362,14 +3382,14 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit,
 vestibulum ut, placerat ac, adipiscing vitae, felis.
 \tcbox[extrude bottom by=1cm]{Curabitur} dictum gravida mauris.
 Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{extrude by}{=\meta{length}}{style, no default, initially unset}
   The (upper part of the) colored box is extruded by the given \meta{length} to all sides.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
-\begin{dispExample}
+\begin{exdispExample}{extrude_by}
 \tcbset{enhanced,colframe=red,colback=yellow!25!white,
   frame style={opacity=0.25},interior style={opacity=0.5},
   nobeforeafter,tcbox raise base,shrink tight,extrude by=2mm}
@@ -3380,7 +3400,7 @@ gravida mauris. \tcbox[colframe=Green,interior style={opacity=0.0}]{Nam}
 arcu libero, nonummy eget, consectetuer id, \tcbox{vulputate} a, magna. Donec
 vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus
 et malesuada fames ac turpis egestas. \tcbox{Mauris ut leo.}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \clearpage
@@ -3546,7 +3566,7 @@ Feasible values for \meta{mode} are:
   A shortcut to set this mode is \refKey{/tcb/fit}.
 \end{itemize}
 
-\begin{dispExample}
+\begin{exdispExample}{capture}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[capture=minipage]
@@ -3560,20 +3580,20 @@ This is a tcolorbox.
 \begin{tcolorbox}[capture=fitbox,height=9mm]% needs the 'fitting' library
 This is a tcolorbox.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
 
 \begin{docTcbKey}{hbox}{}{style, no default}
   Shortcut for |capture=hbox|.
-\begin{dispExample}
+\begin{exdispExample}{hbox}
 \tcbset{colframe=blue!75!black,colback=white}
 
 \begin{tcolorbox}[hbox]
 This is a tcolorbox.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -3616,7 +3636,7 @@ This is a tcolorbox.
   will not be hyphenated using |pdflatex|. This problem is circumvented by
   applying the |hyphenationfix| option.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\begin{exdispExample*}{hyphenationfix}{sbs,lefthand ratio=0.6}
 \tcbset{colframe=blue!75!black,
   fontupper=\normalsize,
   colback=blue!5!white,width=4cm}
@@ -3630,7 +3650,7 @@ Statthaltereikonzipist.
 Rechnungsadjunktentochter.\par
 Statthaltereikonzipist.
 \end{tcolorbox}
-\end{dispExample*}
+\end{exdispExample*}
 
 \smallskip
 \begin{marker}
@@ -3653,7 +3673,7 @@ only.
 \begin{docTcbKey}{tcbox raise}{=\meta{length}}{no default, initially \texttt{0pt}}
   Raises the \refCom{tcbox} by the given \meta{length}.
  % Sets the line width of the right rule to \meta{length}.
-\begin{dispExample}
+\begin{exdispExample}{tcbox_raise}
 \tcbset{colframe=blue!50!black,colback=white,colupper=red!50!black,
         fonttitle=\bfseries,nobeforeafter,center title}
 
@@ -3661,7 +3681,7 @@ Test\dotfill
 \tcbox[tcbox raise base]{Hello World 1}\dotfill
 \tcbox{Hello World 2}\dotfill
 \tcbox[tcbox raise=5mm]{Hello World 3}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 \begin{docTcbKey}{tcbox raise base}{}{style, no value, initially unset}
@@ -4204,7 +4224,7 @@ The \meta{options} will only be used on the specified |beamer| frames.
 \begin{docTcbKey}{code}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is executed immediately. This option is useful
   to place some arbitrary code into an option list.
-\begin{dispExample}
+\begin{exdispExample}{code}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   code={Useless at this spot but functional.},
   fonttitle=\bfseries}
@@ -4213,7 +4233,7 @@ The \meta{options} will only be used on the specified |beamer| frames.
   title=My \mycommand\ title]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
-\end{dispExample}
+\end{exdispExample}
 \end{docTcbKey}
 
 
@@ -4226,7 +4246,7 @@ This is a \textbf{tcolorbox}.
   Nevertheless, the effects of \refKey{/tcb/phantom}, \refKey{/tcb/step},
   \refKey{/tcb/new/auto counter}, etc., are removed by \refKey{/tcb/void}.
 
-\begin{dispExample}
+\begin{exdispExample}{void}
 A%
   \begin{tcolorbox}[
       title=This box is completely removed by the following key,
@@ -4235,7 +4255,7 @@ A%
   This is a \textbf{tcolorbox}.
   \end{tcolorbox}
 B
-\end{dispExample}
+\end{exdispExample}
 
 \begin{marker}
   This option key cannot be applied for every situation.

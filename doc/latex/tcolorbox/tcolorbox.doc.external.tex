@@ -131,11 +131,11 @@ The necessity is given, if a compiled pdf file is missing or the
 \end{extTcbKey}
 
 \enlargethispage*{1cm}
-\begin{extTcbKey}[][doc new=2015-03-11]{\tcbexclamation}{}{style}
+\begin{extTcbKey}[][doc new and updated={2015-03-11}{2017-02-24}]{\tcbexclamation}{}{style}
   Shortcut for setting \refKey{/tcb/external/force remake} to |true|.
 \end{extTcbKey}
 
-\begin{extTcbKey}[][doc new=2015-06-12]{-}{}{style}
+\begin{extTcbKey}[][doc new and updated={2015-06-12}{2017-02-24}]{-}{}{style}
   Shortcut for setting \refKey{/tcb/external/externalize} to |false|.
 \end{extTcbKey}
 
@@ -277,6 +277,7 @@ mandatory parameter, see \refEnv{tcbexternal}.
   \meta{options} and \meta{name} are given to the underlying \refEnv{tcbexternal}
   environment, while \meta{tikz options} are given to |tikzpicture|.
 
+\tcbset{/tcb/external/externalize}%----- Do externalization even if switched off globally
 \begin{dispExample}
 \begin{center}
 \begin{extikzpicture}[
