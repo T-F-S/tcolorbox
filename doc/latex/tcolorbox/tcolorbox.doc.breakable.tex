@@ -425,6 +425,21 @@ and \refKey{/tcb/enlarge bottom at break by}.
 \end{docTcbKey}
 
 
+\begin{docTcbKey}[][doc new=2017-03-20]{segmentation at break}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+  If a breakable box contains an \emph{upper part} and a \emph{lower part} and
+  the break happens at the \emph{segmentation} between both parts, then
+  \begin{itemize}
+  \item the segmenation line (or similar) is drawn as first element of the
+    partial box containing the \emph{lower part}, if \refKey{/tcb/segmentation at break}
+    is set to be |true|.
+  \item the segmenation line (or similar) is not drawn at all, if
+    \refKey{/tcb/segmentation at break} is set to be |false|.
+    This may be preferable for skins like \refSkin{bicolor}, \refSkin{tile},
+    or \refSkin{beamer}.
+  \end{itemize}
+\end{docTcbKey}
+
+
 \clearpage
 \subsection{Extra Options for Partial Boxes}\label{subsec:extras}
 

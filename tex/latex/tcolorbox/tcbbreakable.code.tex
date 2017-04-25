@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
+%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.02}
+\tcb@set@library@version{4.03}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -705,7 +705,7 @@
 }
 
 
-\def\tcb@split@SL{%
+\def\tcb@split@SL@displayed{%
   \tcb@nextbreakpart%
   \tcb@comp@h@page%
   \let\tcb@h@upper=\tcb@zpt%
@@ -778,7 +778,7 @@
   \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
   \csuse{tcb@extras@\tcb@split@state}%
   \tcb@afteroptions@hook%
-  \def\tcb@segment@state{1}%
+  \def\tcbsegmentstate{1}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper+\tcb@h@segment+\tcb@h@lower+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
@@ -808,7 +808,7 @@
   \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
   \csuse{tcb@extras@\tcb@split@state}%
   \tcb@afteroptions@hook%
-  \def\tcb@segment@state{0}%
+  \def\tcbsegmentstate{0}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
@@ -834,7 +834,7 @@
   \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
   \csuse{tcb@extras@\tcb@split@state}%
   \tcb@afteroptions@hook%
-  \def\tcb@segment@state{1}%
+  \def\tcbsegmentstate{1}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@bottom+\kvtcb@boxsep+\tcb@h@segment+\tcb@h@lower+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
@@ -863,7 +863,7 @@
   \tcbset{skin=\csname kvtcb@skin@@\tcb@split@state\endcsname}%
   \csuse{tcb@extras@\tcb@split@state}%
   \tcb@afteroptions@hook%
-  \def\tcb@segment@state{2}%
+  \def\tcbsegmentstate{2}%
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\ht\tcb@lowerbox+\dp\tcb@lowerbox+\csname tcb@h@breaksep@\tcb@split@state\endcsname}%
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
@@ -987,6 +987,10 @@
   no extras/.code={\let\tcb@extras@unbroken\@empty\let\tcb@extras@first\@empty\let\tcb@extras@middle\@empty\let\tcb@extras@last\@empty},%
   if odd page*/.style 2 args={check odd page,extras={if odd page={#1}{#2}}},%
   if odd page or oneside*/.style 2 args={check odd page,extras={if odd page or oneside={#1}{#2}}},%
+  segmentation at break/.is choice,%
+  segmentation at break/true/.code={\let\tcb@split@SL\tcb@split@SL@displayed},
+  segmentation at break/false/.code={\let\tcb@split@SL\tcb@split@L},
+  segmentation at break/.default=true,
 }
 
 
@@ -1002,6 +1006,7 @@
     height fixed for=none,
     vfill before first=false,
     no extras,
+    segmentation at break
   },
   initialize@reset=reset@breakable,
 }

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
+%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.02}
+\tcb@set@library@version{4.03}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -62,12 +62,9 @@
   raster equal height group/.store in=\kvtcb@raster@ehgid,%
   raster equal height/.is choice,
   raster equal height/.default=all,
-  raster equal height/none/.code={\let\tcb@raster@ehg@start\@empty%
-    \let\tcb@raster@ehg@continue\@empty},%
-  raster equal height/rows/.code={\let\tcb@raster@ehg@start\tcb@raster@ehg@row%
-    \let\tcb@raster@ehg@continue\tcb@raster@ehg@row},%
-  raster equal height/all/.code={\let\tcb@raster@ehg@start\tcb@raster@ehg@all%
-    \let\tcb@raster@ehg@continue\@empty},%
+  raster equal height/none/.code={\let\tcb@raster@ehg@set\@empty},%
+  raster equal height/rows/.code={\let\tcb@raster@ehg@set\tcb@raster@ehg@row},%
+  raster equal height/all/.code={\let\tcb@raster@ehg@set\tcb@raster@ehg@all},%
   %
   raster force size/.is choice,%
   raster force size/.default=true,%
@@ -134,6 +131,7 @@
   \setcounter{tcbrasterrow}{1}%
   \let\tcb@height@fill@unbroken\tcb@height@fill@unbroken@raster%
   \tcbset{every box on layer \the\numexpr\number\c@tcblayer+1\relax/.code={%
+    \tcb@raster@ehg@set%
     \tcbset{raster every box/.try}%
     \ifodd\c@tcbrastercolumn\relax%
       \tcbset{raster odd column/.try}%
@@ -164,7 +162,6 @@
       \ifnum\c@tcbrastercolumn=\kvtcb@raster@columns\relax%
         \kern\kvtcb@raster@skip@right%
         \setcounter{tcbrastercolumn}{1}\addtocounter{tcbrasterrow}{1}%
-        \aftergroup\tcb@raster@ehg@continue%
       \else%
         \stepcounter{tcbrastercolumn}%
       \fi},%
@@ -179,7 +176,6 @@
     \tcbdimto\tcb@raster@box@height{(\kvtcb@raster@height+\kvtcb@raster@yskip-0.001pt)/\kvtcb@raster@rows-\kvtcb@raster@yskip}%
     \tcb@raster@set@size{height=\tcb@raster@box@height}%
   \fi%
-  \tcb@raster@ehg@start%
   \let\tcb@end@raster\@empty%
   \ifinner\ifhmode%
     \color@vbox%

@@ -728,3 +728,25 @@ considered to be \textit{read-only} and should never be redefined by the user.
 \end{tcolorbox}
 \end{dispExample}
 \end{docCommand}
+
+
+\begin{docCommand}[doc new=2017-04-25]{tcbsegmentstate}{}
+  This macro contains |0|, |1|, or |2|. Itis set for every unbroken box and every broken partial box
+  with the following meaning:
+  \begin{itemize}
+    \item\docValue{0}: The current (partial) box contains only an upper part.
+    \item\docValue{1}: The current (partial) box contains an upper and a lower part.
+      The segmentation node can be used for positioning.
+    \item\docValue{2}: The current (partial) box contains only a lower part.
+      This can only be true for parts of breakable boxes.
+  \end{itemize}
+  Skins like \refSkin{bicolor} use this property to paint the (partial) boxes.
+\begin{dispExample}
+% \tcbuselibrary{skins,raster}
+\begin{tcbraster}[raster equal height,enhanced,
+    watermark text=\tcbsegmentstate]
+  \begin{tcolorbox}Upper part\end{tcolorbox}
+  \begin{tcolorbox}Upper part\tcblower Lower part\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+\end{docCommand}

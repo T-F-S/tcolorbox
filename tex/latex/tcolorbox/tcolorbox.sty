@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
+%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2017/02/24 version 4.02 text color boxes]
-\def\tcb@version{4.02}
+\ProvidesPackage{tcolorbox}[2017/04/25 version 4.03 text color boxes]
+\def\tcb@version{4.03}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -1659,9 +1659,9 @@
   \tcbdimto\tcb@natheight{\tcb@h@padtitle+\kvtcb@top@rule+\kvtcb@bottom@rule+\kvtcb@boxsep*2+\kvtcb@top+\kvtcb@bottom+\tcb@h@upper}%
   \iftcb@lowerspace%
     \tcbdimto\tcb@natheight{\tcb@natheight+\tcb@h@segment+\tcb@h@lower}%
-    \def\tcb@segment@state{1}%
+    \def\tcbsegmentstate{1}%
   \else%
-    \def\tcb@segment@state{0}%
+    \def\tcbsegmentstate{0}%
   \fi%
   \tcb@ch%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%

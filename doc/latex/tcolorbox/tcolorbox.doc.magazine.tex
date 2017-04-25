@@ -432,6 +432,68 @@ Box width: \the\wd\mybox
 \end{exdispExample}
 \end{docCommand}
 
+\clearpage
+\subsection{Leaflet Example}
+The following full application example can be used to create leaflets.
+Obviously, the code can be adapted and customized in many ways.
 
+\begin{tcblisting}{
+  enhanced jigsaw,lower separated=false,breakable,
+  listing style=mydocumentation,base example,
+  listing and comment,
+  pdf comment,freeze pdf,
+  comment style={raster columns=1},
+  compilable listing,
+  run pdflatex}
+\documentclass[a4paper,landscape]{article}
+\usepackage[noheadfoot,margin=0pt]{geometry}
+\usepackage[skins,raster,magazine]{tcolorbox}
+\usepackage{lipsum}
+
+\newenvironment{leaflet}[1][]{%
+  \begin{tcolorbox}[nobeforeafter,empty,colback=white,
+    sharp corners,size=minimal,left=10mm,right=10mm,top=10mm,bottom=10mm,
+    width=\textwidth/3,
+    breakable,
+    break at=\textheight,
+    height fixed for=all,
+    reset box array,
+    store to box array,#1]}
+  {\end{tcolorbox}%
+    \begin{tcbitemize}[raster columns=3,raster equal skip=0pt,blankest]
+      \tcbitem\consumeboxarray{5}
+      \tcbitem\consumeboxarray{6}
+      \tcbitem\consumeboxarray{1}
+      \tcbitem\consumeboxarray{2}
+      \tcbitem\consumeboxarray{3}
+      \tcbitem\consumeboxarray{4}
+    \end{tcbitemize}%
+  }
+
+\pagestyle{empty}
+\begin{document}
+
+\begin{leaflet}[underlay={\node[above=5mm,font=\footnotesize]
+    at (frame.south) {- \arabic{tcbbreakpart} -};}]
+  \includegraphics[width=\linewidth]{Basilica_5.png}
+  \begin{center}
+  \bfseries\LARGE Example
+  \end{center}
+
+  \section{Introduction}
+  \lipsum[1]
+
+  \section{Main Part A}
+  \lipsum[2-8]
+
+  \section{Main Part B}
+  \lipsum[9-15]
+
+  \section{Conclusion}
+  \lipsum[16-18]
+\end{leaflet}
+
+\end{document}
+\end{tcblisting}
 
 

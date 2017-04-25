@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
+%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.02}
+\tcb@set@library@version{4.03}
 
 \RequirePackage{minted}[2011/09/17]
 
@@ -48,7 +48,7 @@
 }%
 
 \def\tcb@minted@doc@usetemplisting{%
-  \tcb@minted@input@listing{\kvtcb@docmintoptions}{latex}{\kvtcb@tempfile}{\kvtcb@docmintstyle}%
+  \tcb@minted@input@listing{\kvtcb@docmintoptions}{\kvtcb@docminted@language}{\kvtcb@tempfile}{\kvtcb@docmintstyle}%
 }
 
 \tcbset{%

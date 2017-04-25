@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
+%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.02}
+\tcb@set@library@version{4.03}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -29,7 +29,7 @@
   \begin{scope}[every node/.style={line width=0mm,inner sep=0mm,outer sep=0mm,draw=none,fill=none,rectangle}]
     \node[name=frame,at={(0,0)},above right,minimum width=\tcb@width,minimum height=\tcb@height]{};
     \node[name=interior,at={({\kvtcb@left@rule},{\kvtcb@bottom@rule})},above right,minimum width=\tcb@innerwidth,minimum height=\tcb@innerheight]{};
-    \ifnum\tcb@segment@state=1%
+    \ifnum\tcbsegmentstate=1%
     \node[name=segmentation,at={({\kvtcb@left@rule},{\the\dimexpr\kvtcb@bottom@rule+\kvtcb@boxsep*2+\tcb@break@bottomsep+\kvtcb@bottom+\tcb@height@lower\relax})},above right,
        minimum width=\tcb@innerwidth,minimum height=\the\dimexpr\kvtcb@middle*2\relax]{};
     \else\iftcb@sidebyside%
@@ -510,7 +510,7 @@
   frame engine=path,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=path,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@path}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
@@ -522,7 +522,7 @@
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@path}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
@@ -543,7 +543,7 @@
   frame engine=pathfirst,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathfirst,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathfirst}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
@@ -555,7 +555,7 @@
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathfirst}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UR%
@@ -574,7 +574,7 @@
   frame engine=pathmiddle,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathmiddle,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathmiddle}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
@@ -586,7 +586,7 @@
     \fi\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathmiddle}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
@@ -605,7 +605,7 @@
   frame engine=pathlast,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathlast,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state
+      \ifcase\tcbsegmentstate
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithtitle@pathlast}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@UT%
@@ -617,7 +617,7 @@
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
-      \ifcase\tcb@segment@state%
+      \ifcase\tcbsegmentstate%
       {\tcb@spec{fill=tcbcol@back}\tcb@drawwithouttitle@pathlast}%
       \or%
       \tcb@spec{fill=tcbcol@back}\tcb@drawspec@US%
@@ -652,7 +652,7 @@
   frame engine=path,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=path,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1%
+      \ifnum\tcbsegmentstate=1%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@path}%
@@ -663,7 +663,7 @@
     \tcb@drawspec@T\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1
+      \ifnum\tcbsegmentstate=1
       \tcb@spec{beamer@color}\tcb@drawspec@UR%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@path}%
@@ -680,7 +680,7 @@
   frame engine=pathfirst,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathfirst,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1%
+      \ifnum\tcbsegmentstate=1%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathfirst}%
@@ -691,7 +691,7 @@
     \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1
+      \ifnum\tcbsegmentstate=1
       \tcb@spec{beamer@color}\tcb@drawspec@UR%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathfirst}%
@@ -706,7 +706,7 @@
   frame engine=pathmiddle,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathmiddle,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1%
+      \ifnum\tcbsegmentstate=1%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathmiddle}%
@@ -717,7 +717,7 @@
     \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1
+      \ifnum\tcbsegmentstate=1
       \tcb@spec{beamer@color}\tcb@drawspec@US%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathmiddle}%
@@ -732,7 +732,7 @@
   frame engine=pathlast,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathlast,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1%
+      \ifnum\tcbsegmentstate=1%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathlast}%
@@ -743,7 +743,7 @@
     \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcb@segment@state=1
+      \ifnum\tcbsegmentstate=1
       \tcb@spec{beamer@color}\tcb@drawspec@US%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathlast}%
@@ -828,7 +828,7 @@
         ([xshift={\kvtcb@left@rule},yshift={\kvtcb@bottom@rule}]frame.south west) rectangle
         ([xshift={-\kvtcb@right@rule},yshift={-\kvtcb@top@rule}]frame.north east);
     \fi%
-    \ifcase\tcb@segment@state
+    \ifcase\tcbsegmentstate
       \path[fill=white,draw,dotted]
         ([xshift={\kvtcb@boxsep},yshift={\kvtcb@boxsep+\tcb@break@bottomsep}]interior.south west) rectangle
         ([xshift={-\kvtcb@boxsep},yshift={-\kvtcb@boxsep-\tcb@break@topsep}]interior.north east);
@@ -1215,6 +1215,8 @@
   \tcbdimto\tcb@ppbb@height{\pgf@yb-\pgf@ya}%
 }
 
+\def\tcb@ppbb@textbox#1{\pgftext[x=\the\dimexpr\pgf@xa+\tcb@ppbb@width/2\relax,y=\pgf@ya+\tcb@ppbb@height/2]{#1}}
+
 \def\tcb@set@waterbox@to@graphics#1{%
   \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}}\endpgfinterruptpicture\color@endbox%
 }
@@ -1231,29 +1233,31 @@
   fill image options/.store in=\tcb@tikz@fill@graphics@options,%
   fill image options=,%
   fill plain image/.style={path picture={%
-    \node at (path picture bounding box.center) {\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}};
+    \tcb@process@ppbb@wh%
+    \tcb@ppbb@textbox{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}}%
   }},
   fill plain picture/.style={path picture={%
+    \tcb@process@ppbb@wh%
     \tcb@set@waterbox@to@picture{#1}%
-    \node at (path picture bounding box.center) {\box\tcb@waterbox};
+    \tcb@ppbb@textbox{\box\tcb@waterbox}%
   }},
   fill stretch image/.style={path picture={%
     \tcb@process@ppbb@wh%
-    \node at (path picture bounding box.center) {\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options,%
+    \tcb@ppbb@textbox{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options,%
       width=\the\dimexpr\tcb@tikz@fill@graphics@scale\dimexpr\tcb@ppbb@width\relax,%
-      height=\the\dimexpr\tcb@tikz@fill@graphics@scale\dimexpr\tcb@ppbb@height\relax]{#1}};
+      height=\the\dimexpr\tcb@tikz@fill@graphics@scale\dimexpr\tcb@ppbb@height\relax]{#1}}%
   }},
   fill stretch picture/.style={path picture={%
     \tcb@process@ppbb@wh%
     \tcb@set@waterbox@to@picture{#1}%
     \tcb@comp@waterbox@stretch{\tcb@tikz@fill@graphics@scale}{\tcb@ppbb@width}{\tcb@ppbb@height}%
-    \node at (path picture bounding box.center) {\tcb@box@scaled@waterbox};%
+    \tcb@ppbb@textbox{\tcb@box@scaled@waterbox}%
   }},
   fill@overzoom/.style={path picture={%
     \tcb@process@ppbb@wh%
     #1%
     \tcb@comp@waterbox@overzoom{\tcb@tikz@fill@graphics@scale}{\tcb@ppbb@width}{\tcb@ppbb@height}%
-    \node at (path picture bounding box.center) {\tcb@box@scaled@waterbox};%
+    \tcb@ppbb@textbox{\tcb@box@scaled@waterbox}%
   }},
   fill overzoom image/.style={fill@overzoom={\tcb@set@waterbox@to@graphics{#1}}},%
   fill overzoom picture/.style={fill@overzoom={\tcb@set@waterbox@to@picture{#1}}},%
@@ -1261,7 +1265,7 @@
     \tcb@process@ppbb@wh%
     #1%
     \tcb@comp@waterbox@zoom{\tcb@tikz@fill@graphics@scale}{\tcb@ppbb@width}{\tcb@ppbb@height}%
-    \node at (path picture bounding box.center) {\tcb@box@scaled@waterbox};%
+    \tcb@ppbb@textbox{\tcb@box@scaled@waterbox}%
   }},
   fill zoom image/.style={fill@zoom={\tcb@set@waterbox@to@graphics{#1}}},%
   fill zoom picture/.style={fill@zoom={\tcb@set@waterbox@to@picture{#1}}},%
@@ -1269,7 +1273,7 @@
     \tcb@process@ppbb@wh%
     #1%
     \tcb@comp@waterbox@shrink{\tcb@tikz@fill@graphics@scale}{\tcb@ppbb@width}{\tcb@ppbb@height}%
-    \node at (path picture bounding box.center) {\tcb@box@scaled@waterbox};%
+    \tcb@ppbb@textbox{\tcb@box@scaled@waterbox}%
   }},
   fill shrink image/.style={fill@shrink={\tcb@set@waterbox@to@graphics{#1}}},%
   fill shrink picture/.style={fill@shrink={\tcb@set@waterbox@to@picture{#1}}},%

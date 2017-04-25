@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.02 (2017/02/24)
+%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.02}
+\tcb@set@library@version{4.03}
 
 \tcbuselibrary{listings,skins,xparse,external}
 
@@ -115,6 +115,7 @@
 \tcbset{
   documentation listing options/.store in=\kvtcb@doclistingoptions,%
   documentation listing style/.style={documentation listing options={style=#1}},%
+  documentation minted language/.store in=\kvtcb@docminted@language,
   documentation minted style/.store in=\kvtcb@docmintstyle,
   documentation minted options/.store in=\kvtcb@docmintoptions,
   color command/.store in=\kvtcb@col@command,
@@ -159,6 +160,10 @@
   doc new/.style={before upper={\tcbdocmarginnote{\tcbdocnew{#1}}}},
   doc new and updated/.style 2 args={before upper={\tcbdocmarginnote{\tcbdocnew{#1}\\\tcbdocupdated{#2}}}},
   doc marginnote/.style={doc@marginnote/.style={#1}},
+  keywords bold/.is choice,%
+  keywords bold/.default=true,%
+  keywords bold/true/.code={\let\tcb@doc@bfseries\bfseries},
+  keywords bold/false/.code={\let\tcb@doc@bfseries\mdseries},
 }
 
 
@@ -167,6 +172,7 @@
   docexample/.style={colframe=ExampleFrame,colback=ExampleBack,
     before skip=\medskipamount,after skip=\medskipamount,
     fontlower=\footnotesize},
+  documentation minted language=latex,
   documentation minted style=,
   documentation minted options={tabsize=2,fontsize=\small},
   index default settings/.style={index actual={@},index quote={"},index level={!}},
@@ -243,31 +249,31 @@
 }
 
 \newrobustcmd{\tcbIndexPrintComC}[1]{\tcb@Index@Print@ComC{#1}{\kvtcb@col@command}}
-\def\tcb@Print@Com#1{\textcolor{\kvtcb@col@command}{\bfseries\tcb@cs{#1}}}
+\def\tcb@Print@Com#1{\textcolor{\kvtcb@col@command}{\tcb@doc@bfseries\tcb@cs{#1}}}
 
 \newrobustcmd{\tcbIndexPrintEnvCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@environment}{\kvtcb@text@env}}
 \newrobustcmd{\tcbIndexPrintEnvC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@environment}}
-\def\tcb@Print@Env#1{\textcolor{\kvtcb@col@environment}{\bfseries\tcb@scantokens{#1}}}
+\def\tcb@Print@Env#1{\textcolor{\kvtcb@col@environment}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
 
 \newrobustcmd{\tcbIndexPrintKeyCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{\kvtcb@text@key}}
 \newrobustcmd{\tcbIndexPrintKeyC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
-\def\tcb@Print@Key#1{\textcolor{\kvtcb@col@key}{\bfseries\tcb@scantokens{#1}}}
+\def\tcb@Print@Key#1{\textcolor{\kvtcb@col@key}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
 
 \newrobustcmd{\tcbIndexPrintValCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{\kvtcb@text@value}}
 \newrobustcmd{\tcbIndexPrintValC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
-\def\tcb@Print@Val#1{\textcolor{\kvtcb@col@value}{\bfseries\tcb@scantokens{#1}}}
+\def\tcb@Print@Val#1{\textcolor{\kvtcb@col@value}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
 
 \newrobustcmd{\tcbIndexPrintColCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@color}{\kvtcb@text@color}}
 \newrobustcmd{\tcbIndexPrintColC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@color}}
-\def\tcb@Print@Col#1{\textcolor{\kvtcb@col@color}{\bfseries\tcb@scantokens{#1}}}
+\def\tcb@Print@Col#1{\textcolor{\kvtcb@col@color}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
 
 \newrobustcmd{\tcbIndexPrintCountCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@counter}{\kvtcb@text@counter}}
 \newrobustcmd{\tcbIndexPrintCountC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@counter}}
-\def\tcb@Print@Count#1{\textcolor{\kvtcb@col@counter}{\bfseries\tcb@scantokens{#1}}}
+\def\tcb@Print@Count#1{\textcolor{\kvtcb@col@counter}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
 
 \newrobustcmd{\tcbIndexPrintLenCA}[1]{\tcb@Index@Print@ComCA{#1}{\kvtcb@col@length}{\kvtcb@text@length}}
 \newrobustcmd{\tcbIndexPrintLenC}[1]{\tcb@Index@Print@ComC{#1}{\kvtcb@col@length}}
-\def\tcb@Print@Len#1{\textcolor{\kvtcb@col@length}{\bfseries\tcb@cs{#1}}}
+\def\tcb@Print@Len#1{\textcolor{\kvtcb@col@length}{\tcb@doc@bfseries\tcb@cs{#1}}}
 
 \def\tcb@index@Com#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintComC{#1}}\fi}
 \def\tcb@index@Env#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintEnvCA{#1}}\kvtcb@index@command{\kvtcb@text@envs\idx@level#1\idx@actual\tcbIndexPrintEnvC{#1}}\fi}
@@ -491,6 +497,7 @@
   index colorize=false,
   index annotate=true,
   english language,
+  keywords bold,
 }
 
 % deprecated
