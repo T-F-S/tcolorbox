@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
+%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.03}
+\tcb@set@library@version{4.10}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -61,6 +61,7 @@
   \fi%
 }
 
+\def\tcb@@break{\par\xleaders\vbox{\rule{0pt}{2\textheight}}\vskip 2\textheight\par}
 
 \def\tcb@vbox#1#2{%
   \edef\reserved@a{%
@@ -71,6 +72,7 @@
       \def\noexpand\@currenvline{\on@line}}%
   \reserved@a%
   \@endpefalse%
+  \let\tcbbreak\tcb@@break%
   \color@begingroup%
   \textwidth\hsize%
   \columnwidth\hsize%
@@ -106,18 +108,29 @@
   \else%
     \ifx\kvtcb@float\@empty%
       \iftcb@multicol%
-        \tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
+        \ifnum\c@tcbbreakpart>1\relax%
+          \tcbdimto\tcb@h@page{\@colroom}%
+        \else%
+          \ifdim\pagegoal=16383.99998pt
+            \tcbdimto\tcb@h@page{\@colroom}%
+          \else%
+            \@tempdima\pagetotal%
+            \@whiledim \@tempdima>\@colroom \do{\advance\@tempdima-\@colroom}%
+            \tcbdimto\tcb@h@page{\@colroom-\@tempdima}%
+          \fi%
+        \fi%
       \else%
         \ifdim\pagegoal=16383.99998pt
-          \tcbdimto\tcb@h@page{\vsize-\kvtcb@shrinkbreakgoal}% detects floating objects
+          \tcbdimto\tcb@h@page{\vsize}% detects floating objects
         \else%
           \tcb@comp@compress%
-          \tcbdimto\tcb@h@page{\pagegoal-\pagetotal+\tcb@compress@height-\kvtcb@shrinkbreakgoal}%
+          \tcbdimto\tcb@h@page{\pagegoal-\pagetotal+\tcb@compress@height}%
         \fi%
       \fi%
     \else%
-      \tcbdimto\tcb@h@page{\textheight-\kvtcb@shrinkbreakgoal}%
+      \tcbdimto\tcb@h@page{\textheight}%
     \fi%
+    \tcbdimto\tcb@h@page{\tcb@h@page+\tcb@breakat@dim-\kvtcb@shrinkbreakgoal}%
   \fi%
 }
 

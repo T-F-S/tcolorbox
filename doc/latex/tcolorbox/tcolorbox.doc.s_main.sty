@@ -70,6 +70,9 @@
 \tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
 \tcbmakedocSubKey{extTcbKey}{tcb/external}
 \tcbmakedocSubKey{vigTcbKey}{tcb/vig}
+\tcbmakedocSubKey{posterTcbKey}{tcb/poster}
+\tcbmakedocSubKey{posterlocTcbKey}{tcb/posterloc}
+\tcbmakedocSubKey{postersetTcbKey}{tcb/posterset}
 \tcbmakedocSubKey{docTikzKey}{tikz}
 
 \def\tikzname{Ti\emph{k}Z}
@@ -141,6 +144,8 @@
     tcbfitdim,tcbfitsteps,
     % raster
     thetcbrasternum,tcbitem,
+    % breakable
+    tcbbreak,
     % theorems
     tcbmaketheorem,tcboxmath,tcbhighmath,thetcbcounter,newtcbtheorem,
     % documentation
@@ -178,7 +183,11 @@
     newboxarray,boxarraygetsize,boxarrayreset,boxarrayclear,
     boxarraygetbox,boxarraygetwidth,boxarraygetheight,boxarraygetdepth,
     boxarraygettotalheight,useboxarray,usetcboxarray,
-    consumeboxarray,consumetcboxarray,
+    consumeboxarray,consumetcboxarray,ifboxarrayempty,
+    % poster
+    posterbox,tcbposterwidth,tcbposterheight,tcbpostercolspacing,
+    tcbposterrowspacing,tcbpostercolumns,tcbposterrows,tcbpostercolwidth,
+    tcbposterrowheight,tcbposterset,
     },
   texcsstyle=*\color{Definition}\bfseries,
   classoffset=0% restore default

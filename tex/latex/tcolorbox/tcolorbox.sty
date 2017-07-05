@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
+%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2017/04/25 version 4.03 text color boxes]
-\def\tcb@version{4.03}
+\ProvidesPackage{tcolorbox}[2017/07/05 version 4.10 text color boxes]
+\def\tcb@version{4.10}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -315,6 +315,14 @@
   natural height/.code={\tcb@fixedheightfalse\tcb@@ch@@operation{\tcb@ch@natural}},
   height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@fixed}},
   text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@innerfixed}},
+  inherit height/.code={%
+    \ifdim\dimexpr\tcb@outer@textheight>\z@\relax%
+      \tcbdimto\tcb@inherited@height{#1\dimexpr\tcb@outer@textheight}%
+      \tcbset{height=\tcb@inherited@height}%
+    \else%
+      \tcbset{natural height}%
+    \fi},
+  inherit height/.default=1,
   add to height/.code={\iftcb@fixedheight\tcbdimto\kvtcb@height@fixed{\kvtcb@height@fixed+(#1)}\fi},
   add to natural height/.code={\tcb@fixedheightfalse\def\kvtcb@height@natural@plus{#1}\tcb@@ch@@operation{\tcb@ch@natural@plus}},
   height plus/.dimstore in=\kvtcb@height@fixed@plus,%
@@ -700,7 +708,11 @@
     \setbox\z@=\color@hbox##1\color@endbox\ifdim\wd\z@<\tcb@w@upper\relax\makebox[\tcb@w@upper][l]{\box\z@}\else\box\z@\fi}},
   tcbox width/minimum right/.code={\tcb@set@embed@tcbox{%
     \setbox\z@=\color@hbox##1\color@endbox\ifdim\wd\z@<\tcb@w@upper\relax\makebox[\tcb@w@upper][r]{\box\z@}\else\box\z@\fi}},
-  }
+  verbatim ignore percent/.is choice,
+  verbatim ignore percent/true/.code={\def\tcb@verbatim@change@percent{\catcode`\^^e=9}},
+  verbatim ignore percent/false/.code={\let\tcb@verbatim@change@percent\@empty},
+  verbatim ignore percent/.default=true,
+}
 
 \def\kvtcb@beforebox{}
 \def\kvtcb@afterbox{}
@@ -754,6 +766,7 @@
     \def\noexpand\@currenvline{\on@line}}%
   \reserved@a
     \@endpefalse
+    \let\tcbbreak\par%
     \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
     \tcb@minipage#2\tcb@hyph@fix\ignorespaces}
 \let\endtcb@lrbox=\endminipage
@@ -1048,8 +1061,11 @@
   \addtocounter{tcblayer}{-1}%
 }
 
+\let\tcbtextheight\tcb@zpt%
+
 \long\def\tcb@apply@box@options#1{%
   \let\tcb@space\tcb@zpt%
+  \let\tcb@outer@textheight\tcbtextheight%
   \let\tcbtextheight\tcb@zpt%
   \let\tcbtextwidth\tcb@zpt%
   \tcbset{#1}\tcb@lateoptions@hook\tcb@afteroptions@hook%
@@ -1977,13 +1993,14 @@
 
 \let\tcb@verbatim@begin@hook\@empty
 \let\tcb@verbatim@end@hook\@empty
+\let\tcb@verbatim@change@percent\@empty
 
 \def\tcbverbatimwrite#1{%
   \@bsphack
   \immediate\openout\tcb@out #1
   \tcb@verbatim@begin@hook%
   \let\do\@makeother\dospecials
-  \catcode`\^^M\active \catcode`\^^I=12
+  \tcb@verbatim@change@percent\catcode`\^^M\active \catcode`\^^I=12
   \def\verbatim@processline{%
     \immediate\write\tcb@out
       {\the\verbatim@line}}%
@@ -2168,10 +2185,11 @@
 \tcb@add@library{xparse}{tcbxparse.code.tex}
 \tcb@add@library{external}{tcbexternal.code.tex}
 \tcb@add@library{vignette}{tcbvignette.code.tex}
+\tcb@add@library{poster}{tcbposter.code.tex}
 
 \tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting,xparse}
-\tcb@add@library@style{most}{many,listingsutf8,external,magazine,vignette}
-\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,vignette,documentation}
+\tcb@add@library@style{most}{many,listingsutf8,external,magazine,vignette,poster}
+\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,vignette,poster,documentation}
 
 \ProcessOptions*
 \begingroup\edef\x{\endgroup\noexpand\tcbuselibrary{\tcb@optionlist}}\x

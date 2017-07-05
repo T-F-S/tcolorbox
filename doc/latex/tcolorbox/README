@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
+%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -26,37 +26,42 @@ saving and reuse of source code and text parts.
 
 Contents of the package
 =======================
-  'README'                    this file
-  'CHANGES'                   log of changes (history)
-  'tcolorbox.sty'             LaTeX package file (style file)
-  'tcbbreakable.code.tex'     LaTeX package file (library of tcolorbox)
-  'tcbdocumenation.code.tex'  LaTeX package file (library of tcolorbox)
-  'tcbexternal.code.tex'      LaTeX package file (library of tcolorbox)
-  'tcbfitting.code.tex'       LaTeX package file (library of tcolorbox)
-  'tcbhooks.code.tex'         LaTeX package file (library of tcolorbox)
-  'tcblistings.code.tex'      LaTeX package file (library of tcolorbox)
-  'tcblistingscore.code.tex'  LaTeX package file (library of tcolorbox)
-  'tcblistingsutf8.code.tex'  LaTeX package file (library of tcolorbox)
-  'tcbmagazine.code.tex'      LaTeX package file (library of tcolorbox)
-  'tcbminted.code.tex'        LaTeX package file (library of tcolorbox)
-  'tcbprocessing.code.tex'    LaTeX package file (library of tcolorbox)
-  'tcbraster.code.tex'        LaTeX package file (library of tcolorbox)
-  'tcbskins.code.tex'         LaTeX package file (library of tcolorbox)
-  'tcbskinsjigsaw.code.tex'   LaTeX package file (library of tcolorbox)
-  'tcbtheorems.code.tex'      LaTeX package file (library of tcolorbox)
-  'tcbvignette.code.tex'      LaTeX package file (library of tcolorbox)
-  'tcbxparse.code.tex'        LaTeX package file (library of tcolorbox)
-  'blueshade.png'             Picture (package)
-  'crinklepaper.png'          Picture (package)
-  'goldshade.png'             Picture (package)
-  'pink_marble.png'           Picture (package)
-  'tcolorbox.pdf'             Documentation for tcolorbox
-  'tcolorbox.tex'             Source code of the documentation (main file)
-  '*.doc.*'                   Source code of the documentation (include files)
-  'tcolorbox-example.tex'     Example file for package usage
-  'tcolorbox-example.pdf'     Compiled example
-  'Basilica_5.png'            Example picture
-  'lichtspiel.jpg'            Example picture
+  'README'                        this file
+  'CHANGES'                       log of changes (history)
+  'tcolorbox.sty'                 LaTeX package file (style file)
+  'tcbbreakable.code.tex'         LaTeX package file (library of tcolorbox)
+  'tcbdocumenation.code.tex'      LaTeX package file (library of tcolorbox)
+  'tcbexternal.code.tex'          LaTeX package file (library of tcolorbox)
+  'tcbfitting.code.tex'           LaTeX package file (library of tcolorbox)
+  'tcbhooks.code.tex'             LaTeX package file (library of tcolorbox)
+  'tcblistings.code.tex'          LaTeX package file (library of tcolorbox)
+  'tcblistingscore.code.tex'      LaTeX package file (library of tcolorbox)
+  'tcblistingsutf8.code.tex'      LaTeX package file (library of tcolorbox)
+  'tcbmagazine.code.tex'          LaTeX package file (library of tcolorbox)
+  'tcbminted.code.tex'            LaTeX package file (library of tcolorbox)
+  'tcbposter.code.tex'            LaTeX package file (library of tcolorbox)
+  'tcbprocessing.code.tex'        LaTeX package file (library of tcolorbox)
+  'tcbraster.code.tex'            LaTeX package file (library of tcolorbox)
+  'tcbskins.code.tex'             LaTeX package file (library of tcolorbox)
+  'tcbskinsjigsaw.code.tex'       LaTeX package file (library of tcolorbox)
+  'tcbtheorems.code.tex'          LaTeX package file (library of tcolorbox)
+  'tcbvignette.code.tex'          LaTeX package file (library of tcolorbox)
+  'tcbxparse.code.tex'            LaTeX package file (library of tcolorbox)
+  'blueshade.png'                 Picture (package)
+  'crinklepaper.png'              Picture (package)
+  'goldshade.png'                 Picture (package)
+  'pink_marble.png'               Picture (package)
+  'tcolorbox.pdf'                 Documentation for tcolorbox
+  'tcolorbox.tex'                 Source code of the documentation (main file)
+  '*.doc.*'                       Source code of the documentation (include files)
+  'tcolorbox-tutorial-poster.pdf' Tutorial for poster creation
+  'tcolorbox-tutorial-poster.tex' Source code of the tutorial
+  'tcolorbox-example.tex'         Example file for package usage
+  'tcolorbox-example.pdf'         Compiled example
+  'tcolorbox-example-poster.tex'  Example file for package usage
+  'tcolorbox-example-poster.pdf'  Compiled example
+  'Basilica_5.png'                Example picture
+  'lichtspiel.jpg'                Example picture
 
 Installation
 ============
@@ -74,6 +79,7 @@ Alternatively, put the files to their respective locations within the TeX instal
   'tcblistingsutf8.code.tex'  ->  /tex/latex/tcolorbox
   'tcbmagazine.code.tex'      ->  /tex/latex/tcolorbox
   'tcbminted.code.tex'        ->  /tex/latex/tcolorbox
+  'tcbposter.code.tex'        ->  /tex/latex/tcolorbox
   'tcbprocessing.code.tex'    ->  /tex/latex/tcolorbox
   'tcbraster.code.tex'        ->  /tex/latex/tcolorbox
   'tcbskins.code.tex'         ->  /tex/latex/tcolorbox

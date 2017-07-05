@@ -353,6 +353,21 @@ Box width: \the\wd\mybox
 \end{docCommand}
 
 
+\begin{docCommand}[doc new=2017-06-27]{ifboxarrayempty}{\oarg{name}\marg{index}\marg{true}\marg{false}}
+  Tests the box with the given \meta{index} number from the box array \meta{name}
+  for emptiness be empty and executes \meta{true} if it is empty, and \meta{false} otherwise.
+  If no \meta{name} is given, the already existing |default| box array is used.
+  It is considered an error, if a not existing box array \meta{name} is used.
+\begin{exdispExample}{ifboxarrayempty}
+\tcbox[size=small,colframe=blue!20,colback=yellow!5,on line,
+  reset and store to box array]{Test}
+
+\ifboxarrayempty{1}{no Box~1}{Box~1: \useboxarray{1}},
+\ifboxarrayempty{2}{no Box~2}{Box~2: \useboxarray{2}}
+\end{exdispExample}
+\end{docCommand}
+
+
 \clearpage
 \subsection{Box Dimensions}\label{subsec:magazine_dimensions}
 

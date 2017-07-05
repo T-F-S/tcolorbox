@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
+%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -993,3 +993,32 @@ version 4.03 (2017/04/25)
 - library 'documentation':
   * new options: 'documentation minted language', 'keywords bold'
 - Creation of leaflets documented
+
+version 4.10 (2017/07/05)
+- new options:
+  'inherit height', 'verbatim ignore percent'
+- library 'skins'
+  * new style 'enhanced standard jigsaw'
+- library 'magazine':
+  * new macro: '\ifboxarrayempty'
+- library 'breakable':
+  * option 'break at' allows negative values now.
+  * the algorithm for breaks inside a multicolumn environment was improved
+    (user code may be affected by this change).
+  * new macro: '\tcbbreak'
+- library 'minted':
+  * the default settings for 'minted options'
+    are supplemented by 'breaklines,autogobble'
+- new library 'poster'
+  * new macros and environments:
+    'tcbposter',  '\tcbposterset', '\posterbox', 'posterboxenv',
+    'tcbposterwidth', 'tcbposterheight', 'tcbpostercolspacing', 'tcbposterrowspacing',
+    'tcbpostercolumns', 'tcbposterrows', 'tcbpostercolwidth', 'tcbposterrowheight'
+  * new options:
+    'poster', 'columns', 'rows', 'colspacing', 'rowspacing', 'spacing',
+    'showframe', 'width', 'height', 'prefix', 'coverage', 'no coverage',
+    'boxes', 'fontsize', 'name', 'column', 'column*', 'span', 'row', 'rowspan',
+    'fixed height', 'below', 'above', 'at', 'between', 'sequence',
+    'placeholder', 'xshift', 'yshift'
+- New example file 'tcolorbox-example-poster'
+- New tutorial 'tcolorbox-tutorial-poster' for poster creation

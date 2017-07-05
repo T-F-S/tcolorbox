@@ -39,6 +39,9 @@ To reactivate this setting, if overwritten by other libraries, use
 \end{dispListing}
 
 \subsubsection{Loading \mylib{listingsutf8}}
+\begin{marker}
+This library is not needed (and troublesome) when using Xe\LaTeX.
+\end{marker}
 To extend |listings| for UTF-8 encoded sources, you can use the support from
 the package |listingsutf8| \cite{oberdiek:2011a} by loading the library
 variant \mylib{listingsutf8}.
@@ -418,6 +421,10 @@ For an combined example of using |\lstinline| inside a |tcolorbox|, see
 
 \clearpage
 \subsection{Option Keys of the \mylib{listingsutf8} Library}
+\begin{marker}
+The \mylib{listingsutf8} library is not needed (and troublesome) when using Xe\LaTeX.
+\end{marker}
+
 The \mylib{listingsutf8} library is an extension of the
 \mylib{listings} library, so
 all options from \Vref{sec:speclistingkeys} are applicable.
@@ -441,36 +448,39 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:2013}.
 \begin{tcblisting}{listing engine=minted,minted style=trac,
   minted language=java,
   colback=red!5!white,colframe=red!75!black,listing only}
-public class HelloWorld {
-  // A 'Hello World' in Java
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
-}
+    public class HelloWorld {
+      // A 'Hello World' in Java
+      public static void main(String[] args) {
+        System.out.println("Hello World!");
+      }
+    }
 \end{tcblisting}
 \end{dispExample}
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{minted options}{=\meta{key list}}{no default, initially |tabsize=2,fontsize=\textbackslash small|}
+\begin{docTcbKey}[][doc updated={2017-07-05}]{minted options}{=\meta{key list}}{no default, initially
+    |tabsize=2,fontsize=\textbackslash small,|\linebreak|breaklines,autogobble|}
   Sets the options from the package |minted| \cite{poore:2015a}
   which are used during typesetting of the listing.
 \begin{dispExample}
 % \tcbuselibrary{skins}
-\newtcblisting{myjava}{listing engine=minted,minted style=colorful,
-  minted language=java,minted options={fontsize=\small,linenos,numbersep=3mm},
+\newtcblisting{myjava}{listing engine=minted,
+  minted style=colorful,
+  minted language=java,
+  minted options={fontsize=\small,breaklines,autogobble,linenos,numbersep=3mm},
   colback=blue!5!white,colframe=blue!75!black,listing only,
   left=5mm,enhanced,
   overlay={\begin{tcbclipinterior}\fill[red!20!blue!20!white] (frame.south west)
     rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}}}
 
 \begin{myjava}
-public class HelloWorld {
-  // A 'Hello World' in Java
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
+  public class HelloWorld {
+    // A 'Hello World' in Java
+    public static void main(String[] args) {
+      System.out.println("Hello World!");
+    }
   }
-}
 \end{myjava}
 \end{dispExample}
 \end{docTcbKey}

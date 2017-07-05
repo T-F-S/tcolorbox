@@ -207,13 +207,19 @@ parameters. The differences are:
 \end{docTcbKey}
 
 \clearpage
-\begin{docTcbKey}{break at}{=\meta{length}\colOpt{/\meta{length}/\ldots/\meta{length}}}{no default, initially |0pt|}
+\begin{docTcbKey}[][doc updated=2017-07-05]{break at}{=\meta{length}\colOpt{/\meta{length}/\ldots/\meta{length}}}{no default, initially |0pt|}
   Defines break points at the given \meta{length} values.
   The first \meta{length} defines the (maximal) height of the first partial box,
   the second \meta{length} defines the (maximal) height of the second partial box,
   and so on. The last \meta{length} value is applied to all following partial boxes if any.
-  Setting a length to |0pt| means that the naturally available space is used
-  for breaking.
+  \begin{itemize}
+  \item Setting a \meta{length} to |0pt| means that the naturally available
+        space is used for breaking.
+  \item Setting a \meta{length} to a negative value means that
+        the sum of this negative value and the naturally available space is used
+        for breaking (boxes will shrink in height).
+        That that before version 4.10 negative values were treated like |0pt|.
+  \end{itemize}
 \begin{dispExample}
 % \usepackage{multicol,lipsum}
 \begin{multicols}{3}\footnotesize
@@ -574,6 +580,13 @@ and \refKey{/tcb/enlarge bottom at break by}.
 
 \clearpage
 \subsection{Breakable boxes and the \texttt{multicol} package}\label{subsec:multicol}
+\begin{marker}
+With version 4.10, the algorithm for detecting the available height
+for a |tcolorbox| inside a |multicol| environment was improved with help
+of Frank Mittelbach. This change \emph{may} impact existing user
+code which \emph{may} have to be adapted.
+\end{marker}
+
 \begin{multicols}{2}
 \begin{tcolorbox}[enhanced jigsaw,size=small,breakable,colback=yellow!10!white,
   colframe=red!50!white,break at=3cm,height fixed for=all]
@@ -583,7 +596,7 @@ Unbreakable |tcolorbox|es can be used without special care inside a
 Since version 3.10, a breakable |tcolorbox| detects, if it is used inside
 a |multicols| environment. But choosing break points for a breakable box
 cannot be done by the balancing routine of |multicols|. By default, boxes
-will break at |\textheight|. To get pleasant results, use the
+will break at maximum column height. To get pleasant results, use the
 \refKey{/tcb/break at} and \refKey{/tcb/height fixed for} options.
 \end{tcolorbox}
 \end{multicols}
@@ -591,12 +604,12 @@ will break at |\textheight|. To get pleasant results, use the
 \enlargethispage{\baselineskip}
 \begin{dispListing}
 % \usepackage{lipsum,multicol}  % preamble
-\small
+\footnotesize
 \begin{multicols}{2}
   \lipsum[1]
   \begin{tcolorbox}[enhanced jigsaw,breakable,size=title,
     colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-    title=My breakable box,pad at break=1mm, break at=7.5cm/0pt ]
+    title=My breakable box,pad at break=1mm, break at=-\baselineskip/0pt ]
   \lipsum[2-4]
   \end{tcolorbox}
   \lipsum[4]
@@ -609,20 +622,21 @@ will break at |\textheight|. To get pleasant results, use the
 \begin{multicols}{2}
 \small
 This example is already set inside a |multicols| environment.
-This time, a \emph{middle} part has full |\textheight|.
+This time, a \emph{middle} part has full column height (here |\textheight|).
 \refKey{/tcb/height fixed for} is used to spread this box part over the full
-height toi align with neighboring columns.
+height to align with neighboring columns.
 \begin{dispListing}
 % \usepackage{lipsum,multicol}
 \lipsum[1]
-\begin{tcolorbox}[enhanced jigsaw,breakable,
+\begin{tcolorbox}[enhanced jigsaw,
+  breakable,
   size=title,
   colback=red!5!white,
   colframe=red!75!black,
   fonttitle=\bfseries,
   title=My breakable box,
   pad at break=2mm,
-  break at=8.2cm/0pt,
+  break at=-\baselineskip/0pt,
   height fixed for=middle ]
 \lipsum[2-7]
 \end{tcolorbox}
@@ -651,6 +665,54 @@ automatically but set manually.
 \end{multicols}
 \end{dispListing}
 {\tcbusetemp}
+
+\clearpage
+\subsection{Break Point Insertion}\label{subsec:breakpoints}
+
+\begin{docCommand}[doc new=2017-07-05]{tcbbreak}{}
+  A \emph{breakable} box is not broken, if there is enough
+  space on the current page or column.
+  Therefore, typical penalty insertion with
+  |\break|, |\pagebreak|, |\columnbreak|, \ldots \emph{may} only work as
+  expected, if the box is broken at least into two parts
+  \emph{without} inserting the penalties.\par\smallskip
+  To \emph{force} a page or column break, \refCom{tcbbreak}
+  starts a new paragraph and inserts an insane tall rule which causes a
+  break and which is immediately discarded. You may ignore this technical
+  information and just use it as you would use |\pagebreak|.\par\smallskip
+  For an \emph{unbreakable box}, \refCom{tcbbreak} is identical to insert |\par|,
+  i.e.\ it just starts a new paragraph.\par\smallskip
+  Also see \refKey{/tcb/break at} for defining height dependend breaks.
+
+\begin{dispListing}
+% \usepackage{lipsum,multicol}  % preamble
+\begin{multicols}{3}
+  \begin{tcolorbox}[breakable,enhanced jigsaw,size=small,
+    colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+    title=Break into parts
+  ]
+  First part\tcbbreak
+  Second part\tcbbreak
+  Third part
+  \end{tcolorbox}
+\end{multicols}
+
+\begin{multicols}{3}
+  \begin{tcolorbox}[enhanced jigsaw,size=small,
+    colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+    title=You shall not break
+  ]
+  First part\tcbbreak
+  Second part\tcbbreak
+  Third part
+  \end{tcolorbox}
+\end{multicols}
+
+\end{dispListing}
+{\tcbusetemp}
+
+\end{docCommand}
+
 
 
 \clearpage

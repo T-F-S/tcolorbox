@@ -1286,13 +1286,13 @@ This is the lower part.
 \begin{exdispExample}{size_1}
 \tcbset{colback=red!5!white,colframe=red!75!black}
 
-\foreach \s in {minimal,tight,fbox,small,title,normal} {
+\foreach \s in {normal,title,small,fbox,tight,minimal} {
   \tcbox[size=\s,on line]{\s} }
 
-\foreach \s in {minimal,tight,fbox,small,title,normal} {
+\foreach \s in {normal,title,small,fbox,tight,minimal} {
   \tcbox[size=\s,on line,title=Test]{\s} }
 
-\foreach \s in {minimal,tight,fbox,small,title,normal} {
+\foreach \s in {normal,title,small,fbox,tight,minimal} {
   \begin{tcolorbox}[size=\s,on line,title=Test,width=2.2cm]
     \s \tcblower lower\end{tcolorbox} }
 \end{exdispExample}
@@ -1783,6 +1783,46 @@ used for boxes inside a \refEnv{tcbraster}.
 \end{dispListing}
 \end{docTcbKey}
 {\tcbusetemp}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new={2017-06-28}]{inherit height}{\colOpt{=fraction}}{default |1|, initially unset}
+  If this option is used for a |tcolorbox| which is embedded inside
+  another (outer) |tcolorbox| \emph{and} if this outer |tcolorbox| has
+  a fixed height, then the given \meta{fraction} of the available text height
+  of the outer |tcolorbox| is used as \refKey{/tcb/height} for the current
+  |tcolorbox|.
+  Otherwise, \refKey{/tcb/natural height} is applied for the current
+  |tcolorbox|.
+
+\begin{exdispExample}{inherit_height}
+\tcbset{colframe=blue!75!black,colback=white,fonttitle=\bfseries}
+
+\begin{tcolorbox}[title=Outer box with fixed height 4cm,height=4cm]
+  \begin{tcolorbox}[title=Inner box,nobeforeafter,inherit height]
+    This inner box matches the available space.
+  \end{tcolorbox}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Outer box with natural height]
+  \begin{tcolorbox}[title=Inner box,nobeforeafter,inherit height]
+    This inner box has its natural height.
+  \end{tcolorbox}
+\end{tcolorbox}
+
+\begin{tcolorbox}[title=Outer box with fixed height 5cm,height=5cm]
+  \begin{tcolorbox}[title=Inner box,nobeforeafter,inherit height]
+    \begin{tcolorbox}[colframe=red,beforeafter skip=0pt,inherit height=0.6]
+      Deeply nested box using 60 percent of the available space.
+    \end{tcolorbox}
+    \begin{tcolorbox}[colframe=red,beforeafter skip=0pt,inherit height=0.4]
+      Deeply nested box using 40 percent of the available space.
+    \end{tcolorbox}
+  \end{tcolorbox}
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
+
 
 \clearpage
 

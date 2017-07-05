@@ -1,0 +1,608 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{poster}}\label{sec:poster}%
+\tcbset{external/prefix=external/poster_}%
+
+The main purpose of this library is to support creation of single page posters
+with |tcolorbox|es.
+
+A \refEnv{tcbposter} is a |tikzpicture| where |tcolorbox|es can be
+placed in a column oriented manner using \refCom{posterbox} commands.
+This base concept is more or less copied from the great |baposter| package.
+
+The \mylib{raster} library, see \Fullref{sec:raster}, can produce
+similar looking results and may be more appropriate
+depending on the actual project.
+\begin{itemize}
+\item The \mylib{raster} library has a flow oriented concept, just like a
+  convential text flow. The text flow (box flow) is a merely endless ribbon
+  which gets broken into lines (and paragraphs) and the lines are broken
+  into pages. \mylib{raster} shapes the boxes to convenient sizes to fill
+  lines and pages in a pleasant way.
+\item The \mylib{tcbposter} library supports a quite free placement of
+  boxes inside a page.
+  Basically, boxes are placed like |node|s are placed inside a |tikzpicture|.
+  In contrast to \mylib{raster}, this is a \emph{single} page
+  and not a flow of pages.
+  The poster is divided into columns and rows.
+  There is a more or less gentle force to use the columns (or spans of columns)
+  for positioning and sizing while the row placement is completely optional.
+\end{itemize}
+The creation of this library was motivated by Ignasi.
+
+\begin{marker}
+Inside a |tikzpicture| there should be no embedded |tikzpicture|s.
+This rule is violated by the \mylib{poster} library. Be aware that there
+may be some unwanted interactions between the main |tikzpicture| and
+the embedded ones inside the |tcolorbox|es.
+\end{marker}
+
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{poster}
+\end{dispListing}
+This also loads the libraries
+\mylib{skins}, see \Fullref{sec:skins},
+\mylib{breakable}, see \Fullref{sec:breakable},
+\mylib{magazine}, see \Fullref{sec:magazine}, and
+\mylib{fitting}, see \Fullref{sec:fitting}.
+
+
+%--------------------------
+\subsection{Overview}\label{subsec:poster_overview}
+
+
+\begin{tcolorbox}[base example,hyperurl={tcolorbox-tutorial-poster.pdf},title=Click me to see the tutorial]
+You get the best overview of the \mylib{poster} library and its facilities,
+if you look at the \textbf{Poster Tutorial} which is part of the |tcolorbox|
+documentation:\par
+\texttt{tcolorbox-tutorial-poster.pdf}
+\end{tcolorbox}
+
+
+
+\clearpage
+%--------------------------
+\subsection{Main Poster Environment}\label{subsec:poster_environment}
+
+\begin{docEnvironment}[doc new=2017-07-03]{tcbposter}{\oarg{options}}
+  This creates a |tikzpicture| environment with suitable additional
+  settings defined by the given \meta{options}.
+  Basically, \refCom{posterbox} and \refEnv{posterboxenv} are
+  used to place |tcolorboxes| as nodes into the environment,
+  but additional \tikzname\ code can also be used.
+  As \meta{options} all |/tcb/posterset/| keys may be applied, namely:
+\begin{itemize}
+\item\refKey{/tcb/posterset/poster}: poster settings like columns, rows, sizes\ldots
+\item\refKey{/tcb/posterset/coverage} and \refKey{/tcb/posterset/no coverage}:
+  settings for a surrounding |tcolorbox| for background and margins.
+\item\refKey{/tcb/posterset/boxes}: style of the |tcolorbox|es used for the poster.
+\item\refKey{/tcb/posterset/fontsize}: scaling of used fonts.
+\end{itemize}
+
+\begin{exdispExample}{tcbposter}
+  \begin{tcbposter}[
+    poster = {showframe,height=10cm,spacing=2mm},
+    boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+  ]
+  \posterbox{name=A,column=3,row=2}{My first box}
+  \posterbox[adjusted title=Second box]
+            {name=B,column=2,span=2,below=A}{My second box}
+  \posterbox[adjusted title=Third box]
+            {name=C,column=2,between=B and bottom}{My third box}
+  \end{tcbposter}
+\end{exdispExample}
+\end{docEnvironment}
+
+\clearpage
+  Inside \refEnv{tcbposter}, there are several predefined \tikzname\ nodes.
+  These nodes share a common \refKey{/tcb/poster/prefix} which is
+  |TCBPOSTER@| by default. This prefix is used to discriminate the
+  poster nodes from local nodes of any embedded |tikzpicture| environment.
+  You will never need this prefix using \refCom{posterbox} and its
+  placement options, but if you want to refer to a predefined node using
+  pure \tikzname\ code.
+  The predefined nodes (shown without prefix) are:
+  \begin{itemize}
+  \item|poster|: defines the bounding box of the poster (without the coverage).
+  \item|top|: top position plus row spacing
+  \item|bottom|: bottom position minus row spacing
+  \item|middle|: vertical middle position
+  \item|col1|, |col2|, \ldots: bounding box of column~1, column~2, \ldots
+  \item|row1|, |row2|, \ldots: bounding box of row~1, row~2, \ldots
+  \end{itemize}
+  Further nodes are defined using the \refKey{/tcb/posterloc/name} option.
+
+  \begin{marker}
+  Never use a \refEnv{tcbposter} inside a \refEnv{tcbposter}.
+  But, if you do anyway, use a different \refKey{/tcb/poster/prefix} for
+  the embedded poster or you surely get a total mess.
+  \end{marker}
+
+  There are several properties inside a \refEnv{tcbposter} which may be useful
+  for advanced code (skip the following on first reading):
+  \begin{itemize}
+  \item\docAuxCommand{tcbposterwidth}: Width of the poster (without margins).
+  \item\docAuxCommand{tcbposterheight}: Height of the poster (without margins).
+  \item\docAuxCommand{tcbpostercolspacing}: Column distance.
+  \item\docAuxCommand{tcbposterrowspacing}: Row distance.
+  \item\docAuxCommand{tcbpostercolumns}: Column quantity.
+  \item\docAuxCommand{tcbposterrows}: Row quantity.
+  \item\docAuxCommand{tcbpostercolwidth}: Width of a column.
+  \item\docAuxCommand{tcbposterrowheight}: Height of a row.
+  \end{itemize}
+
+\medskip
+\begin{docCommand}[doc new=2017-07-03]{tcbposterset}{\marg{options}}
+  Sets options for every following \refEnv{tcbposter} inside the current \TeX\ group.
+  For example, the numbers for rows and columns may be defined for the whole document by this:
+\begin{dispListing}
+\tcbposterset{poster={columns=2,rows=3}}
+\end{dispListing}
+  See \refEnv{tcbposter} for all feasible options.
+\end{docCommand}
+
+
+\clearpage
+%--------------------------
+\subsection{Poster Settings}\label{subsec:poster_settings}
+
+\begin{postersetTcbKey}[][doc new=2017-07-03]{poster}{=\marg{option list}}{style, no default}
+  This option can be applied inside \refEnv{tcbposter} and \refCom{tcbposterset}
+  to set the given poster \meta{option list}, e.g.
+\begin{dispListing}
+\tcbposterset{poster={width=20cm,height=15cm}}
+\end{dispListing}
+  For the \meta{option list}, see the following keys.
+\end{postersetTcbKey}
+
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{columns}{=\meta{number}}{no default, initially |3|}
+  Sets the \meta{number} of columns for a |tcbposter|.
+\begin{exdispExample}{columns}
+  \begin{tcbposter}[
+    poster = {showframe,columns=5,rows=2,spacing=1mm,height=4cm},
+  ]
+  \end{tcbposter}
+\end{exdispExample}
+\end{posterTcbKey}
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{rows}{=\meta{number}}{no default, initially |4|}
+  Sets the \meta{number} of rows for a |tcbposter|.
+\end{posterTcbKey}
+
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{colspacing}{=\meta{length}}{no default, initially |4mm|}
+  Sets \meta{length} as distance between columns.
+\end{posterTcbKey}
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{rowspacing}{=\meta{length}}{no default, initially |4mm|}
+  Sets \meta{length} as distance between rows.
+\end{posterTcbKey}
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{spacing}{=\meta{length}}{style, no default, initially |4mm|}
+  Sets \meta{length} as distance between columns and rows.
+\end{posterTcbKey}
+
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{showframe}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+  Displays a red auxiliary mesh as optical support during poster creation.
+  Also, every \refKey{/tcb/posterloc/name} is displayed.
+\end{posterTcbKey}
+
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{width}{=\meta{length}}{no default, initially \cs{linewidth}}
+  Sets \meta{length} as width of the poster. For a typical poster, this has not
+  to be set manually.
+\end{posterTcbKey}
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{height}{=\meta{length}}{no default, initially unset}
+  Sets \meta{length} as height of the poster. For a typical poster, this has not
+  to be set manually, but is set automatically to an appropriate value.
+\end{posterTcbKey}
+
+
+\begin{posterTcbKey}[][doc new=2017-07-03]{prefix}{=\meta{name}}{no default, initially |TCBPOSTER@|}
+  \meta{name} is set as prefix for any \tikzname\ node which is generated
+  automatically by the \mylib{poster} library. This encompasses predefined
+  nodes like |top|, |bottom|, \ldots, and nodes defined by using
+  \refKey{/tcb/posterloc/name}. Also, see~\Fullref{subsec:poster_environment}.
+  For a typical poster, this value can stay as it is.
+\end{posterTcbKey}
+
+
+%--------------------------
+\subsection{Coverage}\label{subsec:poster_coverage}
+
+\begin{postersetTcbKey}[][doc new=2017-07-03]{coverage}{=\marg{option list}}{style, no default}
+  This option can be applied inside \refEnv{tcbposter} and \refCom{tcbposterset}
+  and it adds an optional coverage for the poster which is a surrounding |tcolorbox|
+  with the given \meta{option list}. Here, margins and background settings
+  for the poster can be given.
+  The \emph{coverage} has several default |tcolorbox| settings
+  suitable for the purpose:
+\begin{dispListing}
+enhanced, frame hidden, sharp corners, boxsep=0pt, boxrule=0pt,
+top=4mm, bottom=4mm, left=4mm, right=4mm,
+toptitle=2mm, bottomtitle=2mm, colback=white
+\end{dispListing}
+
+The \meta{option list} can contain any |tcolorbox| option.
+
+\begin{exdispExample}{coverage}
+\begin{tcbposter}[
+  poster   = {showframe,spacing=1mm},
+  coverage = {height=5cm,
+              interior style={top color=yellow,bottom color=yellow!50!red},
+              watermark text={My Poster},watermark color=white,
+             },
+]
+\end{tcbposter}
+\end{exdispExample}
+
+\begin{itemize}
+\item For a typical poster, the option \refKey{/tcb/spread} will use the
+  whole page for the poster coverage.
+\item Poster margins can be adapted by \refKey{/tcb/left}, \refKey{/tcb/right},
+  \refKey{/tcb/top}, \refKey{/tcb/bottom}.
+\item Poster background can be changed by \refKey{/tcb/colback},
+  \refKey{/tcb/interior style}, \refKey{/tcb/interior style image}, etc.
+\end{itemize}
+\end{postersetTcbKey}
+
+
+\begin{postersetTcbKey}[][doc new=2017-07-03]{no coverage}{}{style, no value, initially set}
+  Removes the surrounding |tcolorbox| completely.
+\end{postersetTcbKey}
+
+\clearpage
+%--------------------------
+\subsection{Common Box Settings}\label{subsec:poster_boxsettings}
+
+
+\begin{postersetTcbKey}[][doc new=2017-07-03]{boxes}{=\marg{option list}}{style, no default}
+  This option can be applied inside \refEnv{tcbposter} and \refCom{tcbposterset}
+  and it is used to set up the style of the |tcolorbox|es inside the poster.
+  The \meta{option list} can contain any |tcolorbox| option, but box size
+  options are not assumed to be useful here, because the size will be
+  determined by the placement options.
+
+\begin{exdispExample}{boxes}
+\begin{tcbposter}[
+  poster   = {spacing=2mm,columns=3,rows=2},
+  coverage = {height=5cm,
+              interior style={top color=yellow,bottom color=yellow!50!red},
+             },
+  boxes    = {sharp corners=downhill,arc=3mm,boxrule=1mm,
+              colback=white,colframe=cyan,
+              title style={left color=black,right color=cyan},
+              fonttitle=\bfseries\scshape}
+]
+  \posterbox[adjusted title=First]{column=1,row=1,span=2}{First box}
+  \posterbox[adjusted title=Second]{column=1,row=2,span=2}{Second box}
+  \posterbox[adjusted title=Third]{column=3,row=1,rowspan=2}{Third box}
+\end{tcbposter}
+\end{exdispExample}
+
+\end{postersetTcbKey}
+
+
+%--------------------------
+\subsection{Font Scaling}\label{subsec:poster_fontsize}
+
+\begin{postersetTcbKey}[][doc new=2017-07-03]{fontsize}{=\meta{length}}{style, no default, initially unset}
+  This option can be applied inside \refEnv{tcbposter} and \refCom{tcbposterset}.
+  It uses \refKey{/tcb/fit basedim} and \refKey{/tcb/fit fontsize macros}
+  to redefine |\normalsize| to \meta{length} and all other standard
+  font size macros like |\small| and |\large| accordingly.\par
+  This needs a freely scalable font family like |lmodern| to work.
+  If \refKey{/tcb/posterset/fontsize} is not applied, there standard
+  font size macros are not changed in any way.
+
+\begin{dispListing}
+\begin{tcbposter}[
+  poster   = {spacing=2mm,columns=3,rows=2},
+  coverage = {height=5cm,
+              interior style={top color=yellow,bottom color=yellow!50!red},
+             },
+  fontsize = 15pt,   % <--- \normalsize is now 15pt
+]
+...
+\end{dispListing}
+\end{postersetTcbKey}
+
+
+\clearpage
+%--------------------------
+\subsection{Box Placement}\label{subsec:poster_boxplacement}
+
+\begin{docCommand}[doc new=2017-07-03]{posterbox}{\oarg{options}\marg{placement}\marg{box content}}
+  Inside a \refEnv{tcbposter} environment, this places a |tcolorbox| with
+  additional |tcolorbox| \meta{options} and the given \meta{box content}
+  at a place determined by \meta{placement}.
+  All \meta{placement} options are described in the following.
+  Note that \meta{box content} cannot contain \emph{verbatim} material,
+  see \refEnv{posterboxenv}.
+\begin{exdispExample}{posterbox}
+\begin{tcbposter}[
+  poster = {showframe,height=4cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox[title=My title]{name=A,column=2,row=2}{My first box}
+\end{tcbposter}
+\end{exdispExample}
+\end{docCommand}
+
+\begin{docEnvironment}[doc new=2017-07-03]{posterboxenv}{\oarg{options}\marg{placement}}
+  This is the environment version of \refCom{posterbox}, i.e.\ inside a
+  \refEnv{tcbposter} environment, this places a |tcolorbox| with
+  additional |tcolorbox| \meta{options} and the given \meta{environment content}
+  at a place determined by \meta{placement}.
+  In contrast to \refCom{posterbox}, the \meta{environment content} is
+  allowed to contain \emph{verbatim} material. Note that the implementation
+  of \refCom{posterbox} is more efficient than the implementation of \refEnv{posterboxenv}.
+
+\enlargethispage*{1cm}
+\begin{exdispExample}{posterboxenv}
+\begin{tcbposter}[
+  poster = {showframe,height=4cm,spacing=2mm,rows=2},
+  boxes  = {size=small,beamer,
+            colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\begin{posterboxenv}[title=My title]{name=A,column=2,between=top and bottom}
+  My first box.
+  \begin{tcblisting}{size=small,colback=yellow!10}
+My \textbf{first}
+poster listing.
+  \end{tcblisting}
+\end{posterboxenv}
+\end{tcbposter}
+\end{exdispExample}
+
+\end{docEnvironment}
+
+
+\clearpage
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{name}{=\meta{name}}{no default, initially |@|}
+  Sets \meta{name} as reference for the current \refCom{posterbox} or
+  \refEnv{posterboxenv}.
+  A \tikzname\ shape name is constructed automatically as combination
+  of \refKey{/tcb/poster/prefix} and \meta{name}.
+\begin{exdispExample}{name}
+\begin{tcbposter}[
+  poster = {showframe,height=2.5cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=2,row=2}{My first box}
+\node[below right=4mm,fill=yellow] (X) at (TCBPOSTER@poster.north west) {Example A};
+\draw[blue,very thick,->] (X) |- (TCBPOSTER@A);
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{column}{=\meta{number}}{no default, initially |1|}
+  Places the box at the column denoted by \meta{number}. If \refKey{/tcb/posterloc/span}
+  is not |1|, the box is aligned to the left side of column \meta{number}.
+\begin{exdispExample}{column}
+\begin{tcbposter}[
+  poster = {showframe,height=2.5cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{row=1,column=2,span=2}{First box}
+\posterbox{row=2,column=2,span=0.8}{Second box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+\enlargethispage*{1cm}
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{column*}{=\meta{number}}{no default, initially unset}
+  Places the box at the column denoted by \meta{number}. If \refKey{/tcb/posterloc/span}
+  is not |1|, the box is aligned to the right side of column \meta{number}.
+\begin{exdispExample}{columnstar}
+\begin{tcbposter}[
+  poster = {showframe,height=2.5cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{row=1,column*=2,span=2}{First box}
+\posterbox{row=2,column*=2,span=0.8}{Second box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\clearpage
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{span}{=\meta{number}}{no default, initially |1|}
+  Sets the width of the current box to span \meta{number} columns.
+  \meta{number} is also allowed to be a real number like |0.5| or |1.7|.
+  See \refKey{/tcb/posterloc/column} and \refKey{/tcb/posterloc/column*}
+  for examples.
+\end{posterlocTcbKey}
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{row}{=\meta{number}}{no default, initially unset}
+  If this option is applied, the box is placed at the row denoted by \meta{number}.
+  Also, the height is set as fixed according to \refKey{/tcb/posterloc/rowspan}.
+\begin{exdispExample}{row}
+\begin{tcbposter}[
+  poster = {showframe,height=2.5cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{row=1,column=1}{First box}
+\posterbox{row=1,column=2,rowspan=2}{Second box}
+\posterbox[natural height]{row=1,column=3}{Third box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{rowspan}{=\meta{number}}{no default, initially |1|}
+  Sets the height of the current box to span \meta{number} rows.
+  \meta{number} is also allowed to be a real number like |0.5| or |1.7|.
+\begin{exdispExample}{rowspan}
+\begin{tcbposter}[
+  poster = {showframe,height=2.5cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{row=1,column=1,rowspan=0.9}{First box}
+\posterbox{row=1,column=2,rowspan=1.5}{Second box}
+\posterbox{row=1,column=3,rowspan=2}{Third box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{fixed height}{}{no value, initially |0pt|}
+  Sets the height of the current box span rows as denoted by
+  \refKey{/tcb/posterloc/rowspan}.
+  This can be used, if not \refKey{/tcb/posterloc/row}, but another
+  height placement option is applied.
+\end{posterlocTcbKey}
+
+
+\clearpage
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{below}{=\meta{name}}{no default, initially |top|}
+  The box is placed below another box with the given \meta{name}. Also,
+  \meta{name} can be a predefined node, see \Fullref{subsec:poster_environment}.
+\begin{exdispExample}{below}
+\begin{tcbposter}[
+  poster = {showframe,height=3cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,below=top}{First box}
+\posterbox{name=B,column=1,below=A}{Second box}
+\posterbox{name=C,column=2,below=B}{Third box}
+\posterbox{name=D,column=3,below=row1}{Fourth box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{above}{=\meta{name}}{no default, initially unset}
+  The box is placed above another box with the given \meta{name}. Also,
+  \meta{name} can be a predefined node, see \Fullref{subsec:poster_environment}.
+\begin{exdispExample}{above}
+\begin{tcbposter}[
+  poster = {showframe,height=3cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,above=bottom}{First box}
+\posterbox{name=B,column=1,above=A}{Second box}
+\posterbox{name=C,column=2,above=B}{Third box}
+\posterbox{name=D,column=3,above=row2}{Fourth box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\clearpage
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{at}{=\meta{name}}{no default, initially unset}
+  The box is placed at the position with the given \meta{name}. This is
+  quite likely a predefined node, see \Fullref{subsec:poster_environment}.
+\begin{exdispExample}{at}
+\begin{tcbposter}[
+  poster = {showframe,height=3cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,at=middle}{First box}
+\posterbox{name=B,column=2,at=row1}{Second box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{between}{=\meta{name1} and \meta{name2}}{no default, initially unset}
+  The box is placed below a box \meta{name1} and above another box \meta{name2}. Also,
+  \meta{name1} and \meta{name2} can be predefined nodes, see \Fullref{subsec:poster_environment}.
+\begin{exdispExample}{between}
+\begin{tcbposter}[
+  poster = {showframe,height=3cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,below=top}{First box}
+\posterbox{name=B,column=1,between=A and bottom}{Second box}
+\posterbox{name=C,column=2,above=bottom}{Third box}
+\posterbox{name=D,column=2,between=top and C,span=2}{Fourth box}
+\posterbox{name=E,column=3,between=D and bottom}{Fifth box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\clearpage
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{sequence}{=\meta{sequence}}{no default, initially unset}
+  The box is broken into partial boxes. These partial boxes are placed
+  following the given \meta{sequence} of placements.
+  The feasible syntax for the \meta{sequence} is:\par\medskip
+  \meta{column a} |between| \meta{name a1} |and| \meta{name a2} |then|\\
+  \meta{column b} |between| \meta{name b1} |and| \meta{name b2} |then|\\
+  \meta{column c} |between| \meta{name c1} |and| \meta{name c2} |then|\ldots\par\medskip
+  Obviously, this places the first part box at \meta{column a} between
+  \meta{name a2} and \meta{name a2}. The second box part is placed
+  at \meta{column b} between
+  \meta{name b2} and \meta{name b2}, and so on.
+
+\begin{exdispExample}{sequence}
+\begin{tcbposter}[
+  poster = {showframe,height=6cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox[adjusted title=A]{name=A,column=1,below=top,span=2}{First box}
+\posterbox{name=B,column=2,above=bottom,span=2}{Second box}
+\posterbox[adjusted title=C,colframe=red!50!black,colback=red!50]{
+  name=C, sequence=1 between A and bottom then
+                   2 between A and B then
+                   3 between top and B
+  }{\lipsum[2]}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+\enlargethispage*{2cm}
+\begin{docTcbKey}[][doc new=2017-07-03]{placeholder}{}{style, no value}
+  If the box content of a \refKey{/tcb/posterloc/sequence} is too short
+  to fill all reserved box parts, the empty boxes are drawn with
+  the \refKey{/tcb/placeholder} style. This style can be redefined, e.g.
+  to \refKey{/tcb/blankest}, if nothing should be drawn for empty boxes.
+\begin{exdispExample}{placeholder}
+\begin{tcbposter}[
+  poster = {showframe,height=2.5cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,below=top,span=2}{First box}
+\posterbox[colframe=red!50!black,colback=red!50]{
+  name=B, sequence=1 between A and bottom then
+                   2 between A and bottom then
+                   3 between top and bottom
+  }{Second box followed by placeholder boxes}
+\end{tcbposter}
+\end{exdispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{xshift}{=\meta{length}}{no default, initially |0pt|}
+  Horizontal shift of a box by \meta{length}.
+\begin{exdispExample}{xshift}
+\begin{tcbposter}[
+  poster = {showframe,height=3cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,row=1,xshift=6mm}{First box}
+\posterbox{name=B,column=2,row=2,xshift=-6mm}{Second box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+
+
+\begin{posterlocTcbKey}[][doc new=2017-07-03]{yshift}{=\meta{length}}{no default, initially |0pt|}
+  Vertical shift of a box by \meta{length}.
+\begin{exdispExample}{yshift}
+\begin{tcbposter}[
+  poster = {showframe,height=3cm,spacing=2mm,rows=2},
+  boxes  = {beamer,colframe=blue!50!black,colback=blue!50,colupper=yellow!50},
+]
+\posterbox{name=A,column=1,row=1,yshift=-4mm}{First box}
+\posterbox{name=B,column=2,row=2,yshift=4mm}{Second box}
+\end{tcbposter}
+\end{exdispExample}
+\end{posterlocTcbKey}
+

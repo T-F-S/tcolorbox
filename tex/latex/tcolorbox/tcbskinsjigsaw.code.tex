@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
+%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.03}
+\tcb@set@library@version{4.10}
 
 \tcbuselibrary{skins}
 
@@ -219,6 +219,8 @@
 
 \tcbset{%
   enhanced jigsaw/.style={skin=enhanced jigsaw},%
+  enhanced standard jigsaw/.style={skin=enhanced jigsaw,
+    skin first=enhanced jigsaw,skin middle=enhanced jigsaw,skin last=enhanced jigsaw},%
   frame engine/pathjigsaw/.style={frame code=\tcb@drawframe@pathjigsaw},
   frame engine/pathfirstjigsaw/.style={frame code=\tcb@drawframe@pathfirstjigsaw},
   frame engine/pathmiddlejigsaw/.style={frame code=\tcb@drawframe@pathmiddlejigsaw},

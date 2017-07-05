@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.03 (2017/04/25)
+%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
 %% tcbmagazine.code.tex: Code for box sets and magazine styles
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.03}
+\tcb@set@library@version{4.10}
 
 \tcbuselibrary{breakable}
 
@@ -132,6 +132,17 @@
   \ifdefined\tcb@box@array@box%
     \tcbox[#3]{\leavevmode\box\tcb@box@array@box\relax}%
   \fi%
+}
+
+\newrobustcmd{\ifboxarrayempty}[2][default]{%
+  \begingroup%
+    \boxarraygetbox[#1]{\tcb@box@array@box}{#2}%
+    \ifdefined\tcb@box@array@box\relax%
+      \aftergroup\@secondoftwo%
+    \else%
+      \aftergroup\@firstoftwo%
+    \fi%
+  \endgroup%
 }
 
 \def\boxarraystore#1{%
