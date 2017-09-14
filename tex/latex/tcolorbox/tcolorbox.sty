@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
+%% The LaTeX package tcolorbox - version 4.11 (2017/09/14)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2017/07/05 version 4.10 text color boxes]
-\def\tcb@version{4.10}
+\ProvidesPackage{tcolorbox}[2017/09/14 version 4.11 text color boxes]
+\def\tcb@version{4.11}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -754,7 +754,7 @@
 \def\tcb@minipage@top{\minipage[t]}
 \let\tcb@minipage@center=\minipage
 \def\tcb@minipage@bottom{\minipage[b]}
-\let\tcb@minipage=\tcb@minipage@center
+\let\tcb@minipage=\tcb@minipage@bottom
 
 % lrbox with integrated minipage
 \def\tcb@lrbox#1#2{%

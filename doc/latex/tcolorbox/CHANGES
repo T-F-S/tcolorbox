@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.10 (2017/07/05)
+%% The LaTeX package tcolorbox - version 4.11 (2017/09/14)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1022,3 +1022,7 @@ version 4.10 (2017/07/05)
     'placeholder', 'xshift', 'yshift'
 - New example file 'tcolorbox-example-poster'
 - New tutorial 'tcolorbox-tutorial-poster' for poster creation
+
+version 4.11 (2017/09/14)
+- Standard internal minipage settings changed from 'c' to 'b' which should
+  fix some glitches
