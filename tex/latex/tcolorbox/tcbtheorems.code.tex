@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.11 (2017/09/14)
+%% The LaTeX package tcolorbox - version 4.12 (2018/01/12)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.11}
+\tcb@set@library@version{4.12}
 
 \RequirePackage{amsmath}
 
@@ -51,7 +51,8 @@
   \def\temp@a{#2}%
   \ifx\temp@a\@empty%
   \else%
-    \tcbset{label={#1\kvtcb@label@sep#2}}%
+    \tcbset{label={#1\kvtcb@label@sep#2},%
+      tcb@theo@full@label@supp={#1\kvtcb@label@sep#2},tcb@theo@label@supp={#2}}%
   \fi%
 }
 
@@ -133,6 +134,8 @@
   theorem style/margin/.style={theorem style=plain,theorem name,before title=\makebox[0pt][r]{\thetcbcounter\ }},
   theorem style/margin apart/.style={theorem style=margin,attach title,terminator sign none},
   theorem style/margin break/.style={theorem style=margin,attach title to upper={\par}},
+  theorem label supplement/.style={tcb@theo@label@supp/.style={#1}},
+  theorem full label supplement/.style={tcb@theo@full@label@supp/.style={#1}},
 }
 
 \newcommand{\new@tcbtheorem}[5][]{%
@@ -153,10 +156,6 @@
 \def\renewtcbtheorem{\let\@@newtcolorbox\renewtcolorbox%
   \new@tcbtheorem}
 
-\newcommand{\tcbmaketheorem}[5]{%
-  \newtcolorbox{#1}[3][]{#3,theorem={#2}{#4}{##2}{#5\kvtcb@label@sep##3},##1}%
-}
-
 \newtcbox{\tcboxmath}[1][]{nobeforeafter,math upper,tcbox raise base,#1}
 \newtcbox{\tcbhighmath}[1][]{highlight math,nobeforeafter,math upper,tcbox raise base,#1}
 
@@ -165,7 +164,12 @@
     description formatter,description color,description font,
     highlight math style={colframe=red,colback=yellow!25!white},%
     theorem style=standard,label separator=:,%
+    theorem label supplement=,theorem full label supplement=,%
   },
   initialize@reset=reset@theorems,
 }
 
+% DEPRECATED
+\newcommand{\tcbmaketheorem}[5]{%
+  \newtcolorbox{#1}[3][]{#3,theorem={#2}{#4}{##2}{#5\kvtcb@label@sep##3},##1}%
+}

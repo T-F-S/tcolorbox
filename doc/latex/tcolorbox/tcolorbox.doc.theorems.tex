@@ -384,6 +384,63 @@ See Example~\ref{theo*myex}.
 
 
 \clearpage
+
+\begin{docTcbKey}[][doc new=2018-01-12]{theorem full label supplement}{=\marg{style}}{no default, initially empty}
+  The given \meta{style} is used in connection with labels created with environments which
+  are defined themselves by \refCom{newtcbtheorem}.
+  This \meta{style} uses one argument which is automatically set to the
+  full label marker of the environment, i.e. a text consisting of
+  \meta{prefix} (defined by \refCom{newtcbtheorem}),
+  \refKey{/tcb/label separator},
+  and \meta{marker} (defined by an actual theorem environment).
+
+\begin{dispExample}
+% The following adds a hyper target to all environments
+% created with \newtcbtheorem
+\tcbset{theorem full label supplement={hypertarget={#1}}}
+
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+   {colback=white,colframe=red!50!black,fonttitle=\bfseries}{theo}
+\begin{sometheorem}{My example}{myex2}
+My theorem text.
+\end{sometheorem}
+This automated \hyperlink{theo:myex2}{hyper target can be linked to with a
+ hyper link}.
+\end{dispExample}
+
+A second usage of \refKey{/tcb/theorem full label supplement} overwrites
+the first setting.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2018-01-12]{theorem label supplement}{=\marg{style}}{no default, initially empty}
+  The given \meta{style} is used in connection with labels created with environments which
+  are defined themselves by \refCom{newtcbtheorem}.
+  This \meta{style} uses one argument which is automatically set to the
+  label \meta{marker} defined by an actual theorem environment.\par
+  A second usage of \refKey{/tcb/theorem label supplement} overwrites
+  the first setting, but
+  \refKey{/tcb/theorem full label supplement}
+  and \refKey{/tcb/theorem label supplement} can be used independently.
+
+\begin{dispExample}
+% 'marginnote' has to be loaded
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+   {colback=white,colframe=red!50!black,fonttitle=\bfseries,
+    theorem label supplement={hypertarget={XYZ-##1}},
+    theorem full label supplement={code={\marginnote{##1}}}
+   }{theo}
+\begin{sometheorem}{My example}{myex3}
+My theorem text.
+\end{sometheorem}
+This automated \hyperlink{XYZ-myex3}{hyper target can be linked to with a
+ hyper link}.
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\clearpage
 \begin{docTcbKey}{theorem name and number}{}{style, no value, initially set}
 Prints theorem name followed by theorem number inside the title.
 \begin{dispExample}

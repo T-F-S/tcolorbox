@@ -3456,7 +3456,7 @@ Here, footnote texts are administrated to find their intended place
 and specific layer dependent options may be set by changing
 \refKey{/tcb/every box on layer n}.
 If needed, the number of managed layers can be increased by setting
-\refCom{tcbsetmanagedlayer} to a higher value than~4.
+\refCom{tcbsetmanagedlayers} to a higher value than~4.
 
 The following styles have a considerable influence on how layered boxes
 are processed. Note especially that nested boxes are getting a
@@ -3536,7 +3536,7 @@ managed layer number (4 by default).
 \end{docTcbKey}
 
 
-\begin{docCommand}{tcbsetmanagedlayer}{\marg{number}}
+\begin{docCommand}{tcbsetmanagedlayers}{\marg{number}}
 Replaces the highest managed layer number by \meta{number} where 4 is
 the default. This macro can only be used inside the preamble.
 Using a \meta{number} lower than 4 typically makes no sense, but is

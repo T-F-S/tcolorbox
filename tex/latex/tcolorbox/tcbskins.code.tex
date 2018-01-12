@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.11 (2017/09/14)
+%% The LaTeX package tcolorbox - version 4.12 (2018/01/12)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2017 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.11}
+\tcb@set@library@version{4.12}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -1443,9 +1443,9 @@
   \draw[line width=#1,#3] ([yshift=-\tcb@border@ts]frame.north west) -- ([yshift=-\tcb@border@ts]frame.north east);%
 }
 
-\def\tcb@bordernorth{%
-  \ifdefstring{\tcb@split@state}{unbroken}{\tcb@bordernorth@draw}{%
-    \ifdefstring{\tcb@split@state}{first}{\tcb@bordernorth@draw}{}}%
+\def\tcb@bordernorth#1#2#3{%
+  \ifdefstring{\tcb@split@state}{unbroken}{\tcb@bordernorth@draw{#1}{#2}{#3}}{%
+    \ifdefstring{\tcb@split@state}{first}{\tcb@bordernorth@draw{#1}{#2}{#3}}{}}%
 }
 
 \def\tcb@bordersouth@draw#1#2#3{%
@@ -1453,9 +1453,9 @@
   \draw[line width=#1,#3] ([yshift=\tcb@border@ts]frame.south west) -- ([yshift=\tcb@border@ts]frame.south east);%
 }
 
-\def\tcb@bordersouth{%
-  \ifdefstring{\tcb@split@state}{unbroken}{\tcb@bordersouth@draw}{%
-    \ifdefstring{\tcb@split@state}{last}{\tcb@bordersouth@draw}{}}%
+\def\tcb@bordersouth#1#2#3{%
+  \ifdefstring{\tcb@split@state}{unbroken}{\tcb@bordersouth@draw{#1}{#2}{#3}}{%
+    \ifdefstring{\tcb@split@state}{last}{\tcb@bordersouth@draw{#1}{#2}{#3}}{}}%
 }
 
 \def\tcb@borderwest#1#2#3{%
