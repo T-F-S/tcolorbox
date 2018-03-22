@@ -691,20 +691,26 @@ This is a \LaTeX\ example.
 
 
 \clearpage
-\begin{docTcbKey}{listing side text}{}{no value}
+\begin{docTcbKey}{listing side text}{}{style, no value}
 Typesets the environment content side by side as listing in the left (upper)
 part and as compiled text in the right (lower) part.
+This is a shortcut for setting \refKey{/tcb/listing and text} and \refKey{/tcb/sidebyside}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing side text}
 This is a \LaTeX\ example.
 \end{tcblisting}
 \end{dispExample}
+\begin{marker}
+Note that |sidebyside=false| has to be added, if the setting of
+\refKey{/tcb/listing side text} is to be annihilated.
+\end{marker}
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{text side listing}{}{no value}
+\begin{docTcbKey}{text side listing}{}{style, no value}
 Typesets the environment content side by side as compiled text in the left (upper)
 part and as listing in the right (lower) part.
+This is a shortcut for setting \refKey{/tcb/text and listing} and \refKey{/tcb/sidebyside}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,text side listing}
 This is a \LaTeX\ example.
@@ -744,9 +750,10 @@ This is a \LaTeX\ example.
 
 
 \clearpage
-\begin{docTcbKey}{listing side comment}{}{no value}
+\begin{docTcbKey}{listing side comment}{}{style, no value}
 Typesets the environment content side by side as listing in the left (upper)
 part and a given comment in the right (lower) part.
+This is a shortcut for setting \refKey{/tcb/listing and comment} and \refKey{/tcb/sidebyside}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing side comment,
   righthand width=1.5cm,image comment={width=1.5cm}{example-image-a.pdf}}
@@ -756,9 +763,10 @@ This is a \LaTeX\ example.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{comment side listing}{}{no value}
+\begin{docTcbKey}{comment side listing}{}{style, no value}
 Typesets the environment content side by side with a given comment in the left (upper)
 part and as listing in the right (lower) part.
+This is a shortcut for setting \refKey{/tcb/comment and listing} and \refKey{/tcb/sidebyside}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,comment side listing,
   lefthand width=1.5cm,image comment={width=1.5cm}{example-image-a.pdf}}

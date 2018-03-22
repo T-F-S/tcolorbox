@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.12 (2018/01/12)
+%% The LaTeX package tcolorbox - version 4.13 (2018/03/22)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.12}
+\tcb@set@library@version{4.13}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -579,6 +579,7 @@
           \fi%
         \else%
           \ifdim\dimexpr\tcb@h@upper=0pt\relax%
+            \tcb@warning{Discard zero height first box part due to break problems (possible loss of zero height content)}%
             \tcb@split@break@to@start%
           \else%
             \tcb@sdraw@U%

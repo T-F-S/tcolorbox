@@ -252,3 +252,10 @@
 }
 
 \newrobustcmd*{\tcbexclamation}{!}
+
+\newtcbox{\section@box}{tile,before=\clearpage\noindent,after=,
+  fontupper=\normalfont\Large\bfseries,capture=minipage,colback=blue!80,coltext=white,
+  boxsep=0mm,top=4mm,bottom=4mm,left=\oddsidemargin+1in,right=\oddsidemargin+1in,
+  spread sidewards,fuzzy halo=1mm with blue!50!gray}
+
+\renewcommand\section{\@startsection{section}{1}{\z@}{\z@}{5mm}{\section@box}}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.12 (2018/01/12)
+%% The LaTeX package tcolorbox - version 4.13 (2018/03/22)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.12}
+\tcb@set@library@version{4.13}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -1218,7 +1218,9 @@
 \def\tcb@ppbb@textbox#1{\pgftext[x=\the\dimexpr\pgf@xa+\tcb@ppbb@width/2\relax,y=\pgf@ya+\tcb@ppbb@height/2]{#1}}
 
 \def\tcb@set@waterbox@to@graphics#1{%
-  \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}}\endpgfinterruptpicture\color@endbox%
+  \setbox\tcb@waterbox=\color@hbox\pgfinterruptpicture%
+    \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@tikz@fill@graphics@options]}\x{#1}%
+    \endpgfinterruptpicture\color@endbox%
 }
 
 \def\tcb@set@waterbox@to@picture#1{%
@@ -1234,7 +1236,7 @@
   fill image options=,%
   fill plain image/.style={path picture={%
     \tcb@process@ppbb@wh%
-    \tcb@ppbb@textbox{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options]{#1}}%
+    \tcb@ppbb@textbox{\begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@tikz@fill@graphics@options]}\x{#1}}%
   }},
   fill plain picture/.style={path picture={%
     \tcb@process@ppbb@wh%
@@ -1243,9 +1245,9 @@
   }},
   fill stretch image/.style={path picture={%
     \tcb@process@ppbb@wh%
-    \tcb@ppbb@textbox{\expandafter\includegraphics\expandafter[\tcb@tikz@fill@graphics@options,%
+    \tcb@ppbb@textbox{\begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@tikz@fill@graphics@options,%
       width=\the\dimexpr\tcb@tikz@fill@graphics@scale\dimexpr\tcb@ppbb@width\relax,%
-      height=\the\dimexpr\tcb@tikz@fill@graphics@scale\dimexpr\tcb@ppbb@height\relax]{#1}}%
+      height=\the\dimexpr\tcb@tikz@fill@graphics@scale\dimexpr\tcb@ppbb@height\relax]}\x{#1}}%
   }},
   fill stretch picture/.style={path picture={%
     \tcb@process@ppbb@wh%
@@ -1703,28 +1705,48 @@
 
 
 \def\tcb@include@graphics{%
+  \let\tcb@graphics@options\kvtcb@graphics@options%
+  \ifnum\kvtcb@graphics@orientation>-1\relax%
+    \setbox\tcb@waterbox=\color@hbox\begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options]}\x{\imagepath}\color@endbox%
+    \ifcase\kvtcb@graphics@orientation\relax%
+      \ifdim\wd\tcb@waterbox<\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
+        \appto\tcb@graphics@options{,angle=90}%
+      \fi%
+    \or%
+      \ifdim\wd\tcb@waterbox<\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
+        \appto\tcb@graphics@options{,angle=-90}%
+      \fi%
+    \or%
+      \ifdim\wd\tcb@waterbox>\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
+        \appto\tcb@graphics@options{,angle=90}%
+      \fi%
+    \or%
+      \ifdim\wd\tcb@waterbox>\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
+        \appto\tcb@graphics@options{,angle=-90}%
+      \fi%
+    \fi%
+  \fi%
   \ifdefstring{\kvtcb@capture}{hbox}{%
     \tcbox{%
-      \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options]}%
+      \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options]}%
       \x{\imagepath}%
     }%
   }{%
     \iftcb@fixedheight%
       \begin{tcolorbox}%
-        \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth,height=\tcbtextheight,keepaspectratio]}%
+        \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options,width=\linewidth,height=\tcbtextheight,keepaspectratio]}%
         \x{\imagepath}%
       \end{tcolorbox}%
     \else%
       \ifdefempty\tcb@height@adjust{%
         \begin{tcolorbox}%
-          \begingroup\edef\x{\endgroup\noexpand\includegraphics[\expandonce\kvtcb@graphics@options,width=\linewidth]}%
+          \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options,width=\linewidth]}%
           \x{\imagepath}%
         \end{tcolorbox}%
       }{% height fill
         \begin{tcolorbox}[underlay={%
           \begin{tcbclipinterior}%
-          \begingroup\edef\x{\endgroup\noexpand\tikzset{fill image options={\expandonce\kvtcb@graphics@options}}}\x%
-          \path[fill zoom image={\imagepath}]
+          \path[fill zoom image*={\tcb@graphics@options}{\imagepath}]
             ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south west) rectangle
             ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north east);
           \end{tcbclipinterior}%
@@ -1817,6 +1839,12 @@
   graphics options/.store in=\kvtcb@graphics@options,
   graphics pages/.store in=\kvtcb@graphics@pages,
   graphics directory/.store in=\kvtcb@graphics@directory,
+  graphics orientation/.is choice,
+  graphics orientation/as-is/.code={\def\kvtcb@graphics@orientation{-1}},
+  graphics orientation/landscape/.code={\def\kvtcb@graphics@orientation{0}},
+  graphics orientation/landscape*/.code={\def\kvtcb@graphics@orientation{1}},
+  graphics orientation/portrait/.code={\def\kvtcb@graphics@orientation{2}},
+  graphics orientation/portrait*/.code={\def\kvtcb@graphics@orientation{3}},
 }
 
 \newcommand{\tcbhypernode}[2]{\ifdefined\hypersetup\@ifundefined{pgf@sh@ns@#2}{}{%
@@ -1858,7 +1886,7 @@
     clip title=false,clip upper=false,clip lower=false,%
     no borderline,smart shadow arc,no shadow,no underlay,no finish,tikz reset,at begin tikz reset,at end tikz reset,%
     boxed title size=title,no boxed title style,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax},%
-    graphics options=,graphics pages={1,...,\pdfpages},graphics directory=,%
+    graphics options=,graphics pages={1,...,\pdfpages},graphics directory=,graphics orientation=as-is,%
   },
   initialize@reset=reset@skins,
 }

@@ -101,7 +101,7 @@ The auxiliary macro \docAuxCommand{imagepage} may be used inside
 \clearpage
 \subsection{Option Keys}
 
-\begin{docTcbKey}[][doc new=2014-11-14]{graphics options}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}[][doc new and updated={2014-11-14}{2018-03-18}]{graphics options}{=\meta{options}}{no default, initially empty}
 Used for \refCom{tcbincludegraphics} and \refCom{tcbincludepdf} to
 specify |\includegraphics| \meta{options}.
 
@@ -110,7 +110,8 @@ specify |\includegraphics| \meta{options}.
 \begin{tcbraster}[raster columns=3,size=fbox,raster equal height,
     colframe=red!50!black,colback=red!20!black,drop fuzzy shadow]
   \tcbincludegraphics{goldshade.png}
-  \tcbincludegraphics[graphics options={angle=20}]{goldshade.png}
+  \newcommand{\myangle}{angle=20}%
+  \tcbincludegraphics[graphics options=\myangle]{goldshade.png}
   \tcbincludegraphics[graphics options={viewport=0cm 0cm 8cm 4cm,clip}]
     {goldshade.png}
 \end{tcbraster}
@@ -150,5 +151,48 @@ The \meta{selection} has to be given using the |\foreach| syntax of \tikzname.
 \end{dispListing}
 \end{docTcbKey}
 
+\clearpage
+
+
+\begin{docTcbKey}[][doc new=2018-03-21]{graphics orientation}{=\meta{orientation}}{no default, initially |as-is|}
+  Used for \refCom{tcbincludegraphics} and \refCom{tcbincludepdf} to
+  guarantee a certain \meta{orientation} of the included image.
+  After all other options for the image are processed, the result is possibly
+  rotated to be in landscape or portrait mode.
+
+  Feasible values for \meta{orientation} are:
+  \begin{itemize}
+  \item\docValue{as-is}: no rotation of the processed image.
+  \item\docValue{landscape}:
+    the processed image is possibly rotated by 90 degrees
+    to ensure that the final width is not smaller than the final height.
+  \item\docValue{landscape*}:
+    the processed image is possibly rotated by -90 degrees
+    to ensure that the final width is not smaller than the final height.
+  \item\docValue{portrait}:
+    the processed image is possibly rotated by 90 degrees
+    to ensure that the final height is not smaller than the final width.
+  \item\docValue{portrait*}:
+    the processed image is possibly rotated by -90 degrees
+    to ensure that the final height is not smaller than the final width.
+  \end{itemize}
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=6,size=fbox,raster equal height,
+    colframe=red!50!black,colback=red!20!black,drop fuzzy shadow]
+  \tcbincludegraphics{Basilica_5.png}
+  \tcbincludegraphics[graphics orientation=landscape]{Basilica_5.png}
+  \tcbincludegraphics[graphics orientation=portrait]{Basilica_5.png}
+  \tcbincludegraphics[graphics orientation=portrait*]{Basilica_5.png}
+  \tcbincludegraphics[graphics options={viewport=0cm 0cm 2cm 3cm,clip}]
+    {goldshade.png}
+  \tcbincludegraphics[graphics options={viewport=0cm 0cm 2cm 3cm,clip},
+    graphics orientation=landscape]{goldshade.png}
+\end{tcbraster}
+\end{dispExample}
+
+
+\end{docTcbKey}
 
 

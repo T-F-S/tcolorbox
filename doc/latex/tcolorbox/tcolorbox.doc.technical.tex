@@ -12,14 +12,6 @@ for most users are documented.
 The following explanations also cover options and settings from the \mylib{skins} library,
 see  \Vref{sec:skins}.
 
-
-%The library is loaded by a package option or inside the preamble by:
-%\begin{dispListing}
-%\tcbuselibrary{skins}
-%\end{dispListing}
-%This also loads the package |tikz| \cite{tantau:2015a}. Typically but not necessarily,
-%the following skins use |tikz| instead of |pgf|.
-
 \subsection{Skins and Drawing Engines}\label{sec:skincorekeys}
 From a technical point of view, a \emph{skin} is a style definition for the
 appearance of a |tcolorbox|. The core package provides some additional
@@ -44,17 +36,6 @@ option from the core package has to be set.
 \end{dispExample}
 \end{docTcbKey}
 
-
-%\begin{marker}
-%  On first read, you may skip the rest of this subsection and proceed to
-%  Subsection \ref{subsec:addstyleoptions} on page \pageref{subsec:addstyleoptions}.
-%  All following keys in this subsection are automatically set by the selected skin
-%  and you may never have to temper with them.
-%  Nevertheless, they can be used after a skin was selected to modify
-%  this skin.
-%\end{marker}
-
-
 \begin{docTcbKey}{skin first}{=\meta{name}}{style, no default, initially \texttt{standard}}
   If the box is set to be \refKey{/tcb/breakable} and \emph{is} broken actually,
   then the skin for the \emph{first} part of the break sequence
@@ -78,6 +59,8 @@ option from the core package has to be set.
   Typically, this key is set by a \refKey{/tcb/skin}.
 \end{docTcbKey}
 
+
+\clearpage
 
 \begin{docTcbKey}{graphical environment}{=\meta{name}}{no default, initially \texttt{pgfpicture}}
   Sets the graphical environment for the |tcolorbox| to \meta{name}.

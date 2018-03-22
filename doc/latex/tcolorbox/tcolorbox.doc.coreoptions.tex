@@ -1331,6 +1331,7 @@ outer arc   & auto   & auto   & auto  & auto  & 0.0pt & 0.0pt \\
   the page.
   Note that this style option has to be given \emph{after} all other
   geometry keys!
+  Also see \refKey{/tcb/grow sidewards by} and \refKey{/tcb/spread sidewards}.
 \begin{dispListing}
 \tcbset{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
 
@@ -2935,7 +2936,7 @@ enforce the \refKey{/tcb/before} setting.
   \refKey{/tcb/noparskip},
   \refKey{/tcb/after skip},
   \refKey{/tcb/breakable}, and
-  \refKey{/tcb/raster}.
+  \refEnv{tcbraster}.
 
   This option was created to automatically
   avoid overfull box warnings with |\parfillskip| changing packages.
@@ -3106,12 +3107,24 @@ This is a \textbf{tcolorbox}.
   enhanced,show bounding box]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
 
+\clearpage
+
+\begin{docTcbKey}[][doc new=2018-03-22]{grow sidewards by}{=\meta{length}}{no default, initially |0mm|}
+  Shortcut for setting \refKey{/tcb/grow to left by} and \refKey{/tcb/grow to right by}
+  to \meta{length}. Also see \refKey{/tcb/oversize} and \refKey{/tcb/spread sidewards}.
+\begin{exdispExample}[safety=2cm]{grow_sidewards_by}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[grow sidewards by=2cm,enhanced,show bounding box]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
 \end{exdispExample}
 \end{docTcbKey}
 
 
-\clearpage
 \subsubsection{Box Alignment}
 
 \begin{docTcbKey}[][doc new=2015-11-20]{flush left}{}{style, no value}
@@ -3296,6 +3309,7 @@ Identical to \refKey{/tcb/move upwards}, but without starting a new page.
 \begin{docTcbKey}[][doc new=2017-02-13]{spread sidewards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
 Combination of \refKey{/tcb/spread inwards} and \refKey{/tcb/spread outwards}.
 The optional \meta{length} is used for all these keys.
+Also see \refKey{/tcb/oversize} and \refKey{/tcb/grow sidewards by}.
 \begin{dispListing}
 \begin{tcolorbox}[enhanced,spread sidewards,
   colframe=blue!75!black,colback=white,show bounding box]
@@ -3907,7 +3921,7 @@ This issues:\\
 
 \begin{docTcbKey}[][doc new and updated={2016-06-22}{2016-11-18}]{nameref}{=\meta{text}}{no default, initially unset}
 If the |nameref| package is loaded, the given \meta{text} is used for
-corresponding |\nameref| makros. Typically, the \meta{text} will be chosen
+corresponding |\nameref| macros. Typically, the \meta{text} will be chosen
 to be identical or nearly identical to the one for \refKey{/tcb/title}.
 
 \inputpreamblelisting{A}

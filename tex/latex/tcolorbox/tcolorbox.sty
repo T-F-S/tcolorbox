@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.12 (2018/01/12)
+%% The LaTeX package tcolorbox - version 4.13 (2018/03/22)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2018/01/12 version 4.12 text color boxes]
-\def\tcb@version{4.12}
+\ProvidesPackage{tcolorbox}[2018/03/22 version 4.13 text color boxes]
+\def\tcb@version{4.13}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -414,6 +414,7 @@
   grow to right by/.code={%
     \tcbdimto\kvtcb@width{\kvtcb@width+#1}%
     \pgfkeysalso{enlarge right by={-\the\dimexpr#1\relax}}},%
+  grow sidewards by/.style={grow to left by={#1},grow to right by={#1}},%
   left skip/.style={grow to left by={-\dimexpr#1\relax}},
   right skip/.style={grow to right by={-\dimexpr#1\relax}},
   leftright skip/.style={left skip={#1},right skip={#1}},
