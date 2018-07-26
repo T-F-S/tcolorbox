@@ -108,7 +108,7 @@ This is a tcolorbox.
 
 \begin{dispExample}
 % counter from previous example
-\DeclareTColorBox[use counter from=pabox]{mybox}{ O{red} m d"" O{} }
+\DeclareTColorBox[use counter from=pabox]{mybox}{ O{red} m d"" !O{} }
   {enhanced,colframe=#1!75!black,colback=#1!5!white,
    fonttitle=\bfseries,title={\thetcbcounter~#2},
    IfValueTF={#3}{watermark text={#3}}{},#4}
@@ -266,7 +266,7 @@ This is a tcolorbox.
   command with the same name.
 
 \begin{dispExample}
-\DeclareTotalTCBox{\myverb}{ O{red} v O{} }
+\DeclareTotalTCBox{\myverb}{ O{red} v !O{} }
 { fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
   top=0pt,bottom=0pt,left=0mm,right=0mm,
   leftrule=0pt,rightrule=0pt,toprule=0.3mm,bottomrule=0.3mm,boxsep=0.5mm,
@@ -399,10 +399,33 @@ This is my
   The environment \meta{name} is only created if it is not already defined.
 \end{docCommand}
 
+\clearpage
+
+
+\begin{marker}
+With date of 2018-05-12, the |xparse| \cite{latexproject:2015a} package
+changed the argument collection process.
+Now, spaces are ignored which leads to a serious change for listing environments
+ending with an optional argument like \verb+O{}+.
+The former behaviour of respecting spaces can be preserved by adding a \flqq\verb+!+\frqq.
+Note that the following code uses \verb+!O{}+ now.
+\begin{itemize}
+\item For older |xparse| versions, the following code is correct when using \verb+O{}+.
+\item For |xparse| of 2018-05-12, only the first two examples of
+  the following code using \verb+O{}+ are really \flqq good\frqq\ -- all others do not work.
+\item For |xparse| of 2018-05-12, the following code is correct when using \verb+!O{}+.
+\item In the future, |xparse| \emph{may} return to the old behaviour for
+  environments.
+\end{itemize}
+\end{marker}
+
+
+
+
 
 \begin{dispListing*}{title={Caveats of using an environment ending with an
   optional argument},fonttitle=\bfseries}
-\DeclareTCBListing{mybox}{ O{} }{listing only,#1}
+\DeclareTCBListing{mybox}{ !O{} }{listing only,#1}
 
 \begin{mybox}[colframe=red]
 \good
@@ -493,7 +516,7 @@ The following commands need the \mylib{fitting} library to be included.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 % \usepackage{lipsum}
 
-\DeclareTCBoxFit{\mybox}{ O{} m o }
+\DeclareTCBoxFit{\mybox}{ O{} m !o }
  {colback=red!5!white,
   colframe=red!75!black,
   width=#2,height=#2/3*2,

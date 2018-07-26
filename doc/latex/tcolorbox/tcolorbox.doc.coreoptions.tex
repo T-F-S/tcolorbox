@@ -3995,7 +3995,19 @@ to see the bookmark.
 
 
 
+\begin{docTcbKey}[][doc new=2018-07-26]{index}{=\meta{entry}}{no default, initially unset}
+  Adds an index \meta{entry} for the box. This is a shortcut for
+  setting |\index|\marg{entry} to \refKey{/tcb/phantom}.
+\end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc new=2018-07-26]{index*}{=\marg{name}\marg{entry}}{no default, initially unset}
+  Adds an \meta{entry} to an index with a specific \meta{name}.
+  This is a shortcut for
+  setting |\index|\oarg{name}\marg{entry} to \refKey{/tcb/phantom}.
+  An index extension package like |imakeidx| has to be loaded to use
+  this option key.
+\end{docTcbKey}
 
 
 

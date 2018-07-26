@@ -434,7 +434,16 @@ all options from \Vref{sec:speclistingkeys} are applicable.
   together with UTF-8 support from the package |listingsutf8| \cite{oberdiek:2011a}.
   This option is available only for the library variant \mylib{listingsutf8}.
   The \meta{one-byte-encoding} is one of
-  the applicable encodings from \cite{oberdiek:2011a}, e.\,g.\ |latin1|.
+  the applicable encodings from \cite{oberdiek:2011a}, e.\,g.\ |latin1|
+  which is the default.\par
+  Be aware that this means restriction to this specific \meta{one-byte-encoding}:
+  e.\,g.\ |latin1| comprises umlauts and other accented characters, but not
+  the Euro sign. If you want to use the |listings| package \emph{and} \flqq real\frqq\
+  UTF-8 source code, then do \emph{not} use \mylib{listingsutf8} but \mylib{listings}
+  with
+  \refKey{/tcb/listing inputencoding}|=utf8|
+  \emph{and} with specific manual hacks for specific UTF-8-encoded characters.
+
 \end{docTcbKey}
 
 See further options in \Vref{sec:commonlistingkeys}.

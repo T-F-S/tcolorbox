@@ -184,10 +184,11 @@ parameters. The differences are:
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{title after break}{=\meta{text}}{no default, initially empty}
+\begin{docTcbKey}[][doc updated=2018-07-26]{title after break}{=\meta{text}}{no default, initially empty}
   The \refKey{/tcb/title} is used only for the \emph{first} part of a
   \emph{break sequence}. Use |title after break| to create a heading line
   with \meta{text} as content for all following parts.
+  Also see \refKey{/tcb/extras title after break} for formatting the title text.
 \end{docTcbKey}
 
 
@@ -545,6 +546,23 @@ and \refKey{/tcb/enlarge bottom at break by}.
 \end{docTcbKey}
 
 \clearpage
+
+\begin{docTcbKey}[][doc new=2018-07-26]{extras title after break}{=\marg{options}}{no default, initially unset}
+  If the box has a \refKey{/tcb/title after break}, then the \meta{options}
+  are added for all titles after the first break, i.e.\ all middle and last.
+  The color, font, and alignment of titles after break can be adapted choosing
+  \meta{options}, e.g.\ by \refKey{/tcb/coltitle}, \refKey{/tcb/fonttitle},
+  \refKey{/tcb/halign title}.
+  Note that \refKey{/tcb/colbacktitle} has to be placed into
+  \refKey{/tcb/extras middle and last}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2018-07-26]{no extras title after break}{}{style, no default, initially set}
+  Removes the title after break extras if set before.
+\end{docTcbKey}
+
+\bigskip
+
 \begin{exdispExample}{extras}
 % \usepackage{lipsum,multicol}
 % \usetikzlibrary{decorations.pathmorphing}

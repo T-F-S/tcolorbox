@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.13 (2018/03/22)
+%% The LaTeX package tcolorbox - version 4.14 (2018/07/26)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.13}
+\tcb@set@library@version{4.14}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -169,7 +169,7 @@
   \else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\leavevmode\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@followingtitle\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\tcb@extras@followingtitle\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@followingtitle\end{tcb@savebox}%
     \tcbdimto\tcb@h@title{\ht\tcb@titlebox+\dp\tcb@titlebox}%
     \tcbdimto\tcb@h@padtitle{\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle+\tcb@h@title}%
   \fi%
@@ -988,6 +988,7 @@
   extras first/.code={\appto\tcb@extras@first{\tcbset{#1}}},%
   extras middle/.code={\appto\tcb@extras@middle{\tcbset{#1}}},%
   extras last/.code={\appto\tcb@extras@last{\tcbset{#1}}},%
+  extras title after break/.code={\appto\tcb@extras@followingtitle{\tcbset{#1}}},%
   extras/.style={extras unbroken={#1},extras first={#1},extras middle={#1},extras last={#1}},%
   extras broken/.style={extras first={#1},extras middle={#1},extras last={#1}},%
   extras unbroken and first/.style={extras unbroken={#1},extras first={#1}},%
@@ -998,7 +999,8 @@
   no extras first/.code={\let\tcb@extras@first\@empty},%
   no extras middle/.code={\let\tcb@extras@middle\@empty},%
   no extras last/.code={\let\tcb@extras@last\@empty},%
-  no extras/.code={\let\tcb@extras@unbroken\@empty\let\tcb@extras@first\@empty\let\tcb@extras@middle\@empty\let\tcb@extras@last\@empty},%
+  no extras title after break/.code={\let\tcb@extras@followingtitle\@empty},
+  no extras/.code={\let\tcb@extras@unbroken\@empty\let\tcb@extras@first\@empty\let\tcb@extras@middle\@empty\let\tcb@extras@last\@empty\let\tcb@extras@followingtitle\@empty},%
   if odd page*/.style 2 args={check odd page,extras={if odd page={#1}{#2}}},%
   if odd page or oneside*/.style 2 args={check odd page,extras={if odd page or oneside={#1}{#2}}},%
   segmentation at break/.is choice,%
