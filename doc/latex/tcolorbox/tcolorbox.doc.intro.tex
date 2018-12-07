@@ -4,7 +4,7 @@
 \section{Introduction}%
 \tcbset{external/prefix=external/intro_}%
 The package originates from the first edition of my book
-\flqq{\citetitle{sturm:2014g}\frqq~\cite{sturm:2014g}
+\flqq{\citetitle{sturm:2016e}\frqq~\cite{sturm:2016e}
 in about 2006.
 For the \LaTeX\ examples and tutorials given there, I wanted to have
 accentuated and colored boxes to display source code and
@@ -52,7 +52,7 @@ for some hints. The short story is: you have to install not only
 \subsection{Loading the Package}
 The base package |tcolorbox| loads the packages
 |pgf| \cite{tantau:2015a}, |verbatim| \cite{schoepf:2001a},
-|etoolbox| \cite{lehmann:2015a},
+|etoolbox| \cite{lehmann:2018a},
 and |environ| \cite{robertson:2014a}.
 |tcolorbox| itself is loaded in the usual manner in the preamble:
 \begin{dispListing}
@@ -101,22 +101,22 @@ The following keys are used inside |\tcbuselibrary| respectively
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{listings}{}{\mylib{listings}}
-  Loads the package |listings| \cite{heinz:2015a} and provides additional
+  Loads the package |listings| \cite{hoffmann:2018a} and provides additional
   macros for typesetting listings which are described in Section~\ref{sec:listings}
   from page~\pageref{sec:listings}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{listingsutf8}{}{\mylib{listingsutf8}}
-  Loads the packages |listings| \cite{heinz:2015a} and
-  |listingsutf8| \cite{oberdiek:2011a} for UTF-8 support.
+  Loads the packages |listings| \cite{hoffmann:2018a} and
+  |listingsutf8| \cite{oberdiek:2016b} for UTF-8 support.
   This is a variant of the library \mylib{listings}
   and is described in Section \ref{sec:listings}
   from page~\pageref{sec:listings}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{minted}{}{\mylib{minted}}
-  Loads the package |minted| \cite{poore:2015a} to
-  typeset listings with the |Pygments| \cite{pygments:2013} tool,
+  Loads the package |minted| \cite{poore:minted} to
+  typeset listings with the |Pygments| \cite{pygments:web} tool,
   also see \Vref{sec:listings}.
 \end{docTcbKey}
 

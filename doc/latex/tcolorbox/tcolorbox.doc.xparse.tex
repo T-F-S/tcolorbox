@@ -7,11 +7,11 @@ The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{xparse}
 \end{dispListing}
-This also loads the package |xparse| \cite{latexproject:2015a}.
+This also loads the package |xparse| \cite{latexproject:xparse}.
 
 The purpose of this library is to give comfortable access to the
 powerful document command production with |xparse| for |tcolorbox|.
-See the |xparse| package documentation \cite{latexproject:2015a}
+See the |xparse| package documentation \cite{latexproject:xparse}
 for details about the argument \meta{specification} used in this section.
 
 %\subsection{Producing Document Commands With \texttt{xparse}}
@@ -403,7 +403,7 @@ This is my
 
 
 \begin{marker}
-With date of 2018-05-12, the |xparse| \cite{latexproject:2015a} package
+With date of 2018-05-12, the |xparse| \cite{latexproject:xparse} package
 changed the argument collection process.
 Now, spaces are ignored which leads to a serious change for listing environments
 ending with an optional argument like \verb+O{}+.
@@ -413,9 +413,7 @@ Note that the following code uses \verb+!O{}+ now.
 \item For older |xparse| versions, the following code is correct when using \verb+O{}+.
 \item For |xparse| of 2018-05-12, only the first two examples of
   the following code using \verb+O{}+ are really \flqq good\frqq\ -- all others do not work.
-\item For |xparse| of 2018-05-12, the following code is correct when using \verb+!O{}+.
-\item In the future, |xparse| \emph{may} return to the old behaviour for
-  environments.
+\item For |xparse| of 2018-05-12 and later, the following code is correct when using \verb+!O{}+.
 \end{itemize}
 \end{marker}
 

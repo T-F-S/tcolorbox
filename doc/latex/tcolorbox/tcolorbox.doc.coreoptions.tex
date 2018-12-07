@@ -6,7 +6,7 @@
 For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
 the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
-the syntax for |pgf| keys, see \cite{tantau:2015a,sturm:2014g} or the examples
+the syntax for |pgf| keys, see \cite{tantau:2015a,sturm:2016e} or the examples
 starting from page~\pageref{sec:latextutorial}.
 
 
@@ -2274,7 +2274,7 @@ have a lower part.
   This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
   and several geometry keys to support a |tabularx| with the
   given \meta{preamble}.
-  The packages |tabularx| \cite {carlisle:2014a}, |array|, and |colortbl|
+  The packages |tabularx| \cite {carlisle:2016a}, |array|, and |colortbl|
   have to be loaded separately.
 \begin{exdispExample}{tabularx_1}
 % \usepackage{array,tabularx}
@@ -3851,14 +3851,14 @@ from page \pageref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
 
 \begin{docTcbKey}[][doc new=2014-11-28]{phantomlabel}{=\meta{marker}}{no default, initially unset}
 Equivalent to \refKey{/tcb/label} for an \emph{unnumbered} box.
-A |\phantomsection| from the package |hyperref| \cite{rahtz:2012a} is used to set a correct
+A |\phantomsection| from the package |hyperref| \cite{rahtz:hyperref} is used to set a correct
 hyperlink target. This is not needed for a numbered box.
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{label type}{=\meta{type}}{no default, initially unset}
 This option key can be used only in conjunction with the |cleveref| package
-\cite{cubitt:2013a} which has to be loaded separately.
+\cite{cubitt:2018a} which has to be loaded separately.
 \meta{type} has to be a cross-reference type \emph{known} to |cleveref|
 like |theorem|, |algorithm|, |result|, etc. References made with |cleveref|
 will use this type. Note that using |label type| will result in compilation
@@ -3944,7 +3944,7 @@ The box is titled '\nameref{mynamelabel}'.
 
 \clearpage
 \begin{docTcbKey}[][doc new=2017-02-03]{hypertarget}{=\meta{marker}}{no default, initially unset}
-A |\hypertarget| from the package |hyperref| \cite{rahtz:2012a} is used to
+A |\hypertarget| from the package |hyperref| \cite{rahtz:hyperref} is used to
 create an internal link of an anchor \meta{marker}.
 This \meta{marker} can be referenced by |\hyperlink| or
 \refKey{/tcb/hyperlink}.

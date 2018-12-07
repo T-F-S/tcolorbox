@@ -7,11 +7,11 @@ The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{raster}
 \end{dispListing}
-%This also loads the package |xparse| \cite{latexproject:2015a}.
+%This also loads the package |xparse| \cite{latexproject:xparse}.
 
 %The purpose of this library is to give comfortable access to the
 %powerful document command production with |xparse| for |tcolorbox|.
-%See the |xparse| package documentation \cite{latexproject:2015a}
+%See the |xparse| package documentation \cite{latexproject:xparse}
 %for details about the argument \meta{specification} used in this section.
 
 \subsection{Concept of Rasters}\label{subsec:raster_overview}
@@ -272,9 +272,63 @@ If \refKey{/tcb/fit} should be used, turn over to \refEnv{tcbraster}.
 \begin{docTcbKey}[][doc new=2014-11-10]{raster width}{=\meta{length}}{no default, initially \cs{linewidth}}
   Sets the total raster width to the given \meta{length}.
   \refKey{/tcb/raster left skip} and \refKey{/tcb/raster right skip} are part
-  of the total width.
+  of the total width. Note that both skip values are not changed by this option.
 \begin{dispExample}
 \begin{tcbitemize}[raster width=\linewidth/2,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}[][doc new=2018-11-30]{raster width flush left}{=\meta{length}}{style, no default}
+  Sets the total \refKey{/tcb/raster width} to \cs{linewidth} and adapts
+  \refKey{/tcb/raster left skip} and \refKey{/tcb/raster right skip} to
+  place the raster on the left hand side
+  with a visual width of the given \meta{length}.
+\begin{dispExample}
+\begin{tcbitemize}[raster width flush left=\linewidth/2,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+Note that the results of \refKey{/tcb/raster width} and \refKey{/tcb/raster width flush left}
+look identical, but differ on technical side since the later always fills
+the available \cs{linewidth}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2018-11-30]{raster width center}{=\meta{length}}{style, no default}
+  Sets the total \refKey{/tcb/raster width} to \cs{linewidth} and adapts
+  \refKey{/tcb/raster left skip} and \refKey{/tcb/raster right skip} to center
+  the raster with a visual width of the given \meta{length}.
+\begin{dispExample}
+\begin{tcbitemize}[raster width center=\linewidth/2,
+  size=small,colframe=red!50!black,colback=red!10!white]
+  \tcbitem One
+  \tcbitem Two
+  \tcbitem Three
+  \tcbitem Four
+\end{tcbitemize}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2018-11-30]{raster width flush right}{=\meta{length}}{style, no default}
+  Sets the total \refKey{/tcb/raster width} to \cs{linewidth} and adapts
+  \refKey{/tcb/raster left skip} and \refKey{/tcb/raster right skip} to
+  place the raster on the right hand side
+  with a visual width of the given \meta{length}.
+\begin{dispExample}
+\begin{tcbitemize}[raster width flush right=\linewidth/2,
   size=small,colframe=red!50!black,colback=red!10!white]
   \tcbitem One
   \tcbitem Two

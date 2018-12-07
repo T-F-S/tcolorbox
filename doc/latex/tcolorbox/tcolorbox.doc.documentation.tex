@@ -43,7 +43,7 @@ For UTF-8 support load (ignore this when using Xe\LaTeX):
   \tcbuselibrary{listingsutf8,documentation}
 \end{dispListing}
 
-For |minted| \cite{poore:2015a} support, load:
+For |minted| \cite{poore:minted} support, load:
 \begin{dispListing}
   \tcbuselibrary{documentation,minted}
   \tcbset{listing engine=minted}
@@ -499,7 +499,7 @@ with another note.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation listing options}{=\meta{key list}}{no default,\\\hspace*{\fill} initially |style=tcbdocumentation|}
-  Sets the options from the package |listings| \cite{heinz:2015a}.
+  Sets the options from the package |listings| \cite{hoffmann:2018a}.
   They are used inside \refEnv{dispExample} and \refEnv{dispListing} to typeset
   the listings. Note that this is not identical to the key
   \refKey{/tcb/listing options} which is used for 'normal' listings.\\
@@ -509,14 +509,14 @@ with another note.
 \begin{docTcbKey}{documentation listing style}{=\meta{listing style}}{no default, initially |tcbdocumentation|}
   Abbreviation for |documentation listing options={style=...}|.
   This key sets a \meta{style}
-  for the |listings| package, see \cite{heinz:2015a}.
+  for the |listings| package, see \cite{hoffmann:2018a}.
   Note that this is not identical to the key
   \refKey{/tcb/listing style} which is used for 'normal' listings.\\
   Used for \refKey{/tcb/listing engine}|=listings| only.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation minted options}{=\meta{minted style}}{no default,\\\hspace*{\fill} initially |tabsize=2,fontsize=\textbackslash small|}
-  Sets the options from the package |minted| \cite{poore:2015a}
+  Sets the options from the package |minted| \cite{poore:minted}
   which are used during typesetting of the listing, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted options} which is used for 'normal' listings.\\
@@ -524,16 +524,16 @@ with another note.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation minted style}{=\meta{key list}}{no default, initially unset}
-  Sets a \meta{style} known to |Pygments| \cite{pygments:2013} for
-  the package |minted| \cite{poore:2015a}, if used.
+  Sets a \meta{style} known to |Pygments| \cite{pygments:web} for
+  the package |minted| \cite{poore:minted}, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted style} which is used for 'normal' listings.\\
   Used for \refKey{/tcb/listing engine}|=minted| only.
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2017-04-24]{documentation minted language}{=\meta{programming language}}{no default, initially |latex|}
-  Sets a \meta{programming language} known to |Pygments| \cite{pygments:2013}
-  for the package |minted| \cite{poore:2015a}, if used.
+  Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}
+  for the package |minted| \cite{poore:minted}, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted language} which is used for 'normal' listings.\\
   Used for \refKey{/tcb/listing engine}|=minted| only.

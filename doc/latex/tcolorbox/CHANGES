@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.14 (2018/07/26)
+%% The LaTeX package tcolorbox - version 4.15 (2018/12/07)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1051,7 +1051,7 @@ version 4.13 (2018/03/22)
     'graphics orientation'
 
 version 4.14 (2018/07/26)
-- bug fix (#40): 'tikzlower' and 'tikzupper' failed to take more than one parameter
+- bug fix (#40): 'tikz lower' and 'tikz upper' failed to take more than one parameter
 - '\tcblistof' issues a warning if tocdepth is lower than 1 (#42)
 - macro definition of \tcolorbox@label removed from aux file (#47)
 - documentation adapted to the changed argument collection of the xparse package (#43)
@@ -1060,3 +1060,14 @@ version 4.14 (2018/07/26)
   * (#41) 'title after break' inherits the title alignment now
     (may change output of existing documents!)
   * new options 'extras title after break', 'no extras title after break'
+
+version 4.15 (2018/12/07)
+- bug fix (#40): 'tikz upper', 'tikz lower' failed to take more than one parameter (again)
+- bug fix: 'tcboxedraster' could not be set to be 'breakable'
+- library 'breakable': Implementation of 'pad after break' changed to be
+  consistent with a boxed title.
+- library 'raster':
+  * dimension settings changed to be more robust
+  * new options (#52) 'raster width center', 'raster width flush left', 'raster width flush right'
+- Example source code of 'tcolorbox-example-poster' and 'tcolorbox-tutorial-poster'
+  adapted to be compatible with lipsum package version 2.0

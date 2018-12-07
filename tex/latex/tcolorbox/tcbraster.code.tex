@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.14 (2018/07/26)
+%% The LaTeX package tcolorbox - version 4.15 (2018/12/07)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.14}
+\tcb@set@library@version{4.15}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -76,17 +76,20 @@
     \else%
       \tcbset@late@options{%
         code={\preto\kvtcb@afterbox{\addtocounter{tcbrastercolumn}{\numexpr#1-1}}},
-        width=(\tcb@raster@box@width+\kvtcb@raster@xskip)*#1-\kvtcb@raster@xskip}%
+        width=(\tcb@raster@box@width+\tcb@raster@xskip)*#1-\tcb@raster@xskip}%
     \fi%
   },
   raster multirow/.code={%
     \ifdefined\tcb@raster@box@height%
       \tcbset@late@options{%
-        height=(\tcb@raster@box@height+\kvtcb@raster@yskip)*#1-\kvtcb@raster@yskip}%
+        height=(\tcb@raster@box@height+\tcb@raster@yskip)*#1-\tcb@raster@yskip}%
     \else%
       \tcb@warning{'raster multirow' needs a fixed 'raster height'}%
     \fi%
   },
+  raster width center/.style={raster width=\linewidth,raster left skip=(\linewidth-(#1))/2,raster right skip=(\linewidth-(#1))/2},
+  raster width flush left/.style={raster width=\linewidth,raster left skip=0pt,raster right skip=\linewidth-(#1)},
+  raster width flush right/.style={raster width=\linewidth,raster left skip=\linewidth-(#1),raster right skip=0pt},
 }
 
 \tcbset{
@@ -115,7 +118,7 @@
     \tcb@breakat@init%
     \tcbset{compress page=#1}%
     \tcb@comp@h@page%
-    \ifdim\tcb@h@page<0pt\relax\unkern\pagebreak\tcb@comp@h@page\kern\kvtcb@raster@skip@left\fi%
+    \ifdim\tcb@h@page<0pt\relax\unkern\pagebreak\tcb@comp@h@page\kern\tcb@raster@skip@left\fi%
     \tcbset{height=\tcb@h@page-\kvtcb@bbtop@stand-\kvtcb@bbbottom@stand}%
   \fi%
 }
@@ -154,52 +157,61 @@
     \tcbset{raster number \thetcbrasternum/.try}%
   }}%
   \tcbset{#1}%
+  % sanitize
+  \tcbdimto\tcb@raster@width{\kvtcb@raster@width}%
+  \tcbdimto\tcb@raster@height{\kvtcb@raster@height}%
+  \tcbdimto\tcb@raster@skip@before{\kvtcb@raster@skip@before}%
+  \tcbdimto\tcb@raster@skip@after{\kvtcb@raster@skip@after}%
+  \tcbdimto\tcb@raster@skip@left{\kvtcb@raster@skip@left}%
+  \tcbdimto\tcb@raster@skip@right{\kvtcb@raster@skip@right}%
+  \tcbdimto\tcb@raster@xskip{\kvtcb@raster@xskip}%
+  \tcbdimto\tcb@raster@yskip{\kvtcb@raster@yskip}%
   \tcbset@late@options{%
-    before={\ifhmode\unskip\fi\ifnum\c@tcbrastercolumn>1 \kern\kvtcb@raster@xskip\else%
-      \ifnum\c@tcbrasterrow>1 \parindent\z@\parskip\z@\par\nointerlineskip\addvspace{\the\dimexpr\kvtcb@raster@yskip\relax}\noindent\fi%
-      \kern\kvtcb@raster@skip@left\fi},
+    before={\ifhmode\unskip\fi\ifnum\c@tcbrastercolumn>1 \kern\tcb@raster@xskip\else%
+      \ifnum\c@tcbrasterrow>1 \parindent\z@\parskip\z@\par\nointerlineskip\addvspace{\the\dimexpr\tcb@raster@yskip\relax}\noindent\fi%
+      \kern\tcb@raster@skip@left\fi},
     after={%
       \ifnum\c@tcbrastercolumn=\kvtcb@raster@columns\relax%
-        \kern\kvtcb@raster@skip@right%
+        \kern\tcb@raster@skip@right%
         \setcounter{tcbrastercolumn}{1}\addtocounter{tcbrasterrow}{1}%
       \else%
         \stepcounter{tcbrastercolumn}%
       \fi},%
     box align=\kvtcb@raster@valign,%
   }%
-  \tcbdimto\tcb@raster@box@width{(\kvtcb@raster@width+\kvtcb@raster@xskip-\kvtcb@raster@skip@left-\kvtcb@raster@skip@right)/\kvtcb@raster@columns-\kvtcb@raster@xskip}%
+  \tcbdimto\tcb@raster@box@width{(\tcb@raster@width+\tcb@raster@xskip-\tcb@raster@skip@left-\tcb@raster@skip@right)/\kvtcb@raster@columns-\tcb@raster@xskip}%
   \tcb@raster@set@size{%
     code={\csuse{tcb@raster@change@\kvtcb@capture}},
     width=\tcb@raster@box@width,
   }%
-  \ifdim\dimexpr\kvtcb@raster@height>0pt\relax%
-    \tcbdimto\tcb@raster@box@height{(\kvtcb@raster@height+\kvtcb@raster@yskip-0.001pt)/\kvtcb@raster@rows-\kvtcb@raster@yskip}%
+  \ifdim\dimexpr\tcb@raster@height>0pt\relax%
+    \tcbdimto\tcb@raster@box@height{(\tcb@raster@height+\tcb@raster@yskip-0.001pt)/\kvtcb@raster@rows-\tcb@raster@yskip}%
     \tcb@raster@set@size{height=\tcb@raster@box@height}%
   \fi%
   \let\tcb@end@raster\@empty%
   \ifinner\ifhmode%
     \color@vbox%
-    \hsize=\kvtcb@raster@width%
+    \hsize=\tcb@raster@width%
     \let\tcb@end@raster\color@endbox%
   \fi\fi%&
   \if@nobreak%
     \iftcb@ignorenobreak%
       {\par\nointerlineskip%
-      \addvspace{\glueexpr\kvtcb@raster@skip@before-\parskip}}%
+      \addvspace{\glueexpr\tcb@raster@skip@before-\parskip}}%
     \fi%
   \else%
     {\par\nointerlineskip%
-    \addvspace{\glueexpr\kvtcb@raster@skip@before-\parskip}}%
+    \addvspace{\glueexpr\tcb@raster@skip@before-\parskip}}%
   \fi%
   \tcb@parfillskip@check\kvtcb@raster@halign\noindent%
 }{%
   \ifhmode\unskip\fi%
   \ifnum\c@tcbrastercolumn>1 %
-    \kern\kvtcb@raster@skip@right%
+    \kern\tcb@raster@skip@right%
   \fi%
   \begingroup%
   \par\nointerlineskip%
-  \addvspace{\glueexpr\kvtcb@raster@skip@after-\parskip}%
+  \addvspace{\glueexpr\tcb@raster@skip@after-\parskip}%
   \endgroup%
   \tcb@end@raster%
   \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%
@@ -222,8 +234,8 @@
 }{\end{tcolorbox}\end{tcbraster}}
 
 \newenvironment{tcboxedraster}[2][]{%
-  \tcolorbox[#2]\tcbraster[#1]}%
-  {\endtcbraster\endtcolorbox}
+  \tcolorbox[#2]\begin{tcbraster}[#1]}%
+  {\end{tcbraster}\endtcolorbox}
 
 \newenvironment{tcboxeditemize}[2][]{%
   \tcolorbox[#2]\tcbitemize[#1]}%

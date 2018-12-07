@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.14 (2018/07/26)
+%% The LaTeX package tcolorbox - version 4.15 (2018/12/07)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.14}
+\tcb@set@library@version{4.15}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -305,6 +305,7 @@
 \def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
 
 \def\tcb@drawcolorbox@breakable{%
+  \tcbdimto\kvtcb@topsep{\kvtcb@topsep}%
   \tcb@prepare@break@operation%
   \global\let\tcb@after@lastbox=\kvtcb@afterbox%
   \let\kvtcb@afterbox=\@empty%
@@ -934,7 +935,7 @@
       \ifdim\tcb@temp>0pt\relax%
         \tcbdimto\kvtcb@enlargepage@flex{\kvtcb@enlargepage@flex+\tcb@temp}\fi}},%
   pad after break/.code={\let\kvtcb@top@rule@break=\tcb@zpt%
-    \tcbdimto\kvtcb@topsep{#1-\kvtcb@top-\kvtcb@boxsep}},%
+    \def\kvtcb@topsep{#1-\kvtcb@top-\kvtcb@boxsep}},%
   pad at break/.style={pad before break={#1},pad after break={#1}},%
   pad at break*/.style={pad before break*={#1},pad after break={#1}},%
   enlargepage/.store in=\kvtcb@enlargepage,%
