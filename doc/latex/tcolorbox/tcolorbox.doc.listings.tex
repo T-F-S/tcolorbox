@@ -14,8 +14,10 @@ they all do the same thing, i.\,e.\ displaying listings with or without typesett
 the listing in \LaTeX\ parallel.
 The difference is the underlying \LaTeX\ package which does the core job for
 displaying a listing. So, typically, you need just \emph{one} of these
-libraries. If you do not have a clue, which one of them you should use,
-you should take \mylib{listingsutf8}.
+libraries. If you do not have a clue which one of them you should use
+and you are using |pdflatex|, you should take \mylib{listingsutf8}.
+If you are using |xelatex| or |lualatex|, you should take \mylib{listings}
+as |xelatex| and |lualatex| are not compatible with \mylib{listingsutf8}.
 
 \begin{marker}
 The order in which the libraries are included influences the default settings and
