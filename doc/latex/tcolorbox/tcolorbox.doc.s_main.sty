@@ -105,8 +105,8 @@
   colframe=yellow!20!black,
   sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
   underlay={%
-    \path[fill=tcbcol@back!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
-    \path[draw=tcbcol@frame,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[fill=tcbcolback!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
+    \path[draw=tcbcolframe,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
     \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
     },
   drop fuzzy shadow,#1}
@@ -259,3 +259,14 @@
   spread sidewards,fuzzy halo=1mm with blue!50!gray}
 
 \renewcommand\section{\@startsection{section}{1}{\z@}{\z@}{5mm}{\section@box}}
+
+\newtcblisting{fulldocumentlisting}[1]{%
+  enhanced jigsaw,lower separated=false,breakable,
+  leftlower=0mm,rightlower=0mm,bottom=0mm,middle=1mm,
+  listing style=mydocumentation,base example,
+  listing and comment,
+  pdf comment,freeze pdf,
+  comment style={raster columns=2,raster equal skip=1mm},
+  compilable listing,
+  run pdflatex,#1
+}

@@ -83,30 +83,30 @@ from page \pageref{subsec:contentadditions}.
 \end{docTcbKey}
 
 \begin{docTcbKey}{before upper app}{=\meta{code}}{no default}
-  Appends the given \meta{code} to \refKey{/tcb/before upper} \emph{after} the color and font settings
+  Appends the given \meta{code} to \refKey{/tcb/before upper} or \refKey{/tcb/before upper*} \emph{after} the color and font settings
   and \emph{before} the content of the upper part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{before upper pre}{=\meta{code}}{no default}
-  Prepends the given \meta{code} to \refKey{/tcb/before upper} \emph{after} the color and font settings
+  Prepends the given \meta{code} to \refKey{/tcb/before upper} or \refKey{/tcb/before upper*} \emph{after} the color and font settings
   and \emph{before} the content of the upper part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{after upper app}{=\meta{code}}{no default}
-  Appends the given \meta{code} to \refKey{/tcb/after upper} \emph{after} the content of the upper part.
+  Appends the given \meta{code} to \refKey{/tcb/after upper} or \refKey{/tcb/after upper*} \emph{after} the content of the upper part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{after upper pre}{=\meta{code}}{no default}
-  Prepends the given \meta{code} to \refKey{/tcb/after upper} \emph{after} the content of the upper part.
+  Prepends the given \meta{code} to \refKey{/tcb/after upper} or \refKey{/tcb/after upper*} \emph{after} the content of the upper part.
 \begin{dispExample}
 % \tcbuselibrary{theorems}
-\tcbset{ams align,%  this sets 'before upper' and 'after upper'
+
+\begin{tcolorbox}[
+  ams align,%  this sets 'before upper*' and 'after upper*'
   colback=yellow!10!white,colframe=red!50!black,
   before upper app={\frac{2}{\sqrt{2}}&=\sqrt{2}.\\},
   after upper pre={\\\sin\left(\frac{\pi}{2}\right)&=1.},
-}
-
-\begin{tcolorbox}
+]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
   \int x^2 ~\text{d}x &= \frac13 x^3 + c.
 \end{tcolorbox}
@@ -115,21 +115,21 @@ from page \pageref{subsec:contentadditions}.
 
 \clearpage
 \begin{docTcbKey}{before lower app}{=\meta{code}}{no default}
-  Appends the given \meta{code} to \refKey{/tcb/before lower} \emph{after} the color and font settings
+  Appends the given \meta{code} to \refKey{/tcb/before lower} or \refKey{/tcb/before lower*} \emph{after} the color and font settings
   and \emph{before} the content of the lower part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{before lower pre}{=\meta{code}}{no default}
-  Prepends the given \meta{code} to \refKey{/tcb/before lower} \emph{after} the color and font settings
+  Prepends the given \meta{code} to \refKey{/tcb/before lower} or \refKey{/tcb/before lower*} \emph{after} the color and font settings
   and \emph{before} the content of the lower part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{after lower app}{=\meta{code}}{no default}
-  Appends the given \meta{code} to \refKey{/tcb/after lower} \emph{after} the content of the lower part.
+  Appends the given \meta{code} to \refKey{/tcb/after lower} or \refKey{/tcb/after lower*} \emph{after} the content of the lower part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{after lower pre}{=\meta{code}}{no default}
-  Prepends the given \meta{code} to \refKey{/tcb/after lower} \emph{after} the content of the lower part.
+  Prepends the given \meta{code} to \refKey{/tcb/after lower} or \refKey{/tcb/after lower*} \emph{after} the content of the lower part.
 \end{docTcbKey}
 
 

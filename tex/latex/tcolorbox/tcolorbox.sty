@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.15 (2018/12/07)
+%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2018/12/07 version 4.15 text color boxes]
-\def\tcb@version{4.15}
+\ProvidesPackage{tcolorbox}[2019/03/02 version 4.20 text color boxes]
+\def\tcb@version{4.20}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -30,6 +30,7 @@
 \newif\iftcb@lowerignored
 \newif\iftcb@lowervisible
 \newif\iftcb@uppervisible
+\newif\iftcb@titlevisible
 \newif\iftcb@hasTitle
 \newif\iftcb@hasLower
 \newif\iftcb@lowerspace
@@ -129,7 +130,7 @@
 \pgfkeys{/handlers/.colorlet/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\colorlet{#1}{##1}}}
 
 \newcommand\tcbtitle{\ifx\tcbtitletext\@empty\else%
-  \leavevmode{\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
+  \leavevmode{\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
 
 \def\tcb@detach@title@code@{%
   \let\tcbtitletext\kvtcb@title%
@@ -163,6 +164,15 @@
 \def\tcb@raggedright@plain{\raggedright\rightskip0pt plus2em \spaceskip.3333em \xspaceskip.5em\relax}
 \def\tcb@raggedleft@plain{\raggedleft\leftskip0pt plus2em \spaceskip.3333em \xspaceskip.5em \hbadness=10000\relax}
 \def\tcb@raggedcenter@plain{\centering\leftskip0pt plus2em\rightskip0pt plus2em\spaceskip.3333em \xspaceskip.5em \hbadness=10000\relax}
+
+\def\tcb@insert@before@upper@ignore{\kvtcb@before@upper\ignorespaces}
+\def\tcb@insert@before@upper@noignore{\kvtcb@before@upper}
+\def\tcb@insert@before@lower@ignore{\kvtcb@before@lower\ignorespaces}
+\def\tcb@insert@before@lower@noignore{\kvtcb@before@lower}
+\def\tcb@insert@after@upper@unskip{\ifvmode\else\unskip\fi\kvtcb@after@upper}
+\def\tcb@insert@after@upper@nounskip{\kvtcb@after@upper}
+\def\tcb@insert@after@lower@unskip{\ifvmode\else\unskip\fi\kvtcb@after@lower}
+\def\tcb@insert@after@lower@nounskip{\kvtcb@after@lower}
 
 \tcbset{%
   title/.store in=\kvtcb@title,
@@ -247,12 +257,12 @@
   bottom/.store in=\kvtcb@bottom,
   bottomtitle/.store in=\kvtcb@bottomtitle,
   middle/.store in=\kvtcb@middle,
-  colback/.colorlet=tcbcol@back,
-  colframe/.colorlet=tcbcol@frame,
-  colupper/.colorlet=tcbcol@upper,
-  collower/.colorlet=tcbcol@lower,
+  colback/.colorlet=tcbcolback,
+  colframe/.colorlet=tcbcolframe,
+  colupper/.colorlet=tcbcolupper,
+  collower/.colorlet=tcbcollower,
   coltext/.style={colupper=#1,collower=#1},
-  coltitle/.colorlet=tcbcol@title,
+  coltitle/.colorlet=tcbcoltitle,
   fonttitle/.store in=\kvtcb@fonttitle,
   fontupper/.store in=\kvtcb@fontupper,
   fontlower/.store in=\kvtcb@fontlower,
@@ -310,8 +320,11 @@
   upperbox/.is choice,
   upperbox/visible/.code={\tcb@uppervisibletrue},
   upperbox/invisible/.code={\tcb@uppervisiblefalse},
-  visible/.style={upperbox=visible,lowerbox=visible},
-  invisible/.style={upperbox=invisible,lowerbox=invisible},
+  titlebox/.is choice,
+  titlebox/visible/.code={\tcb@titlevisibletrue},
+  titlebox/invisible/.code={\tcb@titlevisiblefalse},
+  visible/.style={upperbox=visible,lowerbox=visible,titlebox=visible},
+  invisible/.style={upperbox=invisible,lowerbox=invisible,titlebox=invisible},
   natural height/.code={\tcb@fixedheightfalse\tcb@@ch@@operation{\tcb@ch@natural}},
   height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@fixed}},
   text height/.code={\tcb@fixedheighttrue\tcb@dim@to\kvtcb@height@fixed{#1}\tcb@@ch@@operation{\tcb@ch@innerfixed}},
@@ -543,12 +556,14 @@
   standard jigsaw/.style={skin=standard jigsaw},%
   before title/.store in=\kvtcb@before@title,%
   after title/.store in=\kvtcb@after@title,%
-  before upper/.store in=\kvtcb@before@upper,%
-  after upper/.store in=\kvtcb@after@upper,%
-  after upper*/.style={after upper={#1}},%
-  before lower/.store in=\kvtcb@before@lower,%
-  after lower/.store in=\kvtcb@after@lower,%
-  after lower*/.style={after lower={#1}},%
+  before upper/.code={\def\kvtcb@before@upper{#1}\let\tcb@insert@before@upper\tcb@insert@before@upper@ignore},%
+  before upper*/.code={\def\kvtcb@before@upper{#1}\let\tcb@insert@before@upper\tcb@insert@before@upper@noignore},%
+  after upper/.code={\def\kvtcb@after@upper{#1}\let\tcb@insert@after@upper\tcb@insert@after@upper@unskip},%
+  after upper*/.code={\def\kvtcb@after@upper{#1}\let\tcb@insert@after@upper\tcb@insert@after@upper@nounskip},%
+  before lower/.code={\def\kvtcb@before@lower{#1}\let\tcb@insert@before@lower\tcb@insert@before@lower@ignore},%
+  before lower*/.code={\def\kvtcb@before@lower{#1}\let\tcb@insert@before@lower\tcb@insert@before@lower@noignore},%
+  after lower/.code={\def\kvtcb@after@lower{#1}\let\tcb@insert@after@lower\tcb@insert@after@lower@unskip},%
+  after lower*/.code={\def\kvtcb@after@lower{#1}\let\tcb@insert@after@lower\tcb@insert@after@lower@nounskip},%
   center title/.style={halign title=flush center},%
   center upper/.style={halign upper=flush center},%
   center lower/.style={halign lower=flush center},%
@@ -561,12 +576,12 @@
   tabularx*/.style 2 args={%
     boxsep=\z@,top=\z@,bottom=\z@,leftupper=\z@,rightupper=\z@,
     toptitle=1mm,bottomtitle=1mm,boxrule=0.5mm,
-    before upper={\arrayrulecolor{tcbcol@frame}\def\arraystretch{1.1}#1%
+    before upper*={\arrayrulecolor{tcbcolframe}\def\arraystretch{1.1}#1%
       \tcb@hack@currenvir\tabularx{\linewidth}{#2}},
-    after upper=\endtabularx\arrayrulecolor{black}},
+    after upper*=\endtabularx\arrayrulecolor{black}},
   tabularx/.style={tabularx*={}{#1}},
-  tikz upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after upper=\end{tikzpicture}},%
-  tikz lower/.style={before lower={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after lower=\end{tikzpicture}},%
+  tikz upper/.style={before upper*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after upper*=\end{tikzpicture}},%
+  tikz lower/.style={before lower*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after lower*=\end{tikzpicture}},%
   tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[{align=center,inner sep=\z@,outer sep=\z@,#1}]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
   tikznode lower/.style={before lower={\centering\tcb@shield@externalize\begin{tikzpicture}\node[{align=center,inner sep=\z@,outer sep=\z@,#1}]\bgroup},after lower={\egroup;\end{tikzpicture}}},%
   tikznode/.style={tikznode upper={#1},tikznode lower={#1}},%
@@ -627,6 +642,7 @@
   hbox/.style={capture=hbox},%
   minipage/.style={capture=minipage},%
   void/.style={capture=v@@d,capture/.code=,options@for/.code=,code={\def\tcbinputlisting@core{}}},
+  nirvana/.code={\let\tcb@draw@color@box\@empty},
   check odd page/.is if=tcb@checkpage,
   if odd page/.code 2 args={%
     \tcbset{check odd page}%
@@ -666,7 +682,7 @@
   list entry/.store in=\kvtcb@listentry,
   list text/.style={list entry={\protect\numberline{\thetcbcounter}{\ignorespaces #1}}},
   title filled/.is if=tcb@titlefilled,%
-  @colbacktitle/.colorlet=tcbcol@backtitle,
+  @colbacktitle/.colorlet=tcbcolbacktitle,
   colbacktitle/.style={title filled,@colbacktitle={#1}},
   opacityupper/.store in=\kvtcb@opacityupper,
   opacitylower/.store in=\kvtcb@opacitylower,
@@ -695,7 +711,6 @@
   on line/.style={tcbox raise base,nobeforeafter},
   shape@of@skin/.store in=\tcb@shapeofskin,
   ignore nobreak/.is if=tcb@ignorenobreak,%
-  only/.code args={<#1>#2}{\only<#1>{\tcbset{#2}}},%
   %
   tcbox width/.is choice,
   tcbox width/auto/.code={\def\tcb@embed@tcbox{}},
@@ -778,10 +793,10 @@
 \let\endtcb@savebox=\endtcb@lrbox
 
 \def\tcb@saveupperbox{%
-\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces}
+\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper}
 
 \def\tcb@savelowerbox{%
-\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\kvtcb@fontlower\kvtcb@halignlower\kvtcb@before@lower\ignorespaces}
+\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}
 
 
 % counter for float
@@ -816,7 +831,7 @@
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@lefttitle+\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
   \fi%
 }
 
@@ -886,17 +901,17 @@
 
 \def\tcb@set@@upper@and@lower{%
   \colorlet{tcbcol@origin}{.}%
-  \let\tcb@after@box=\kvtcb@after@upper%
+  \let\tcb@insert@after@part=\tcb@insert@after@upper%
   % switch for lower box
   \def\tcblower{%
-    \ifvmode\else\unskip\fi\tcb@after@box%
+    \tcb@insert@after@part%
     \end{tcb@savebox}%
-    \tcb@set@color{tcbcol@lower}%
+    \tcb@set@color{tcbcollower}%
     \unless\iftcb@sidebyside%
       \tcbdimto\tcb@w@lower{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftlower-\kvtcb@rightlower}%
     \fi%
     \tcb@hasLowertrue%
-    \let\tcb@after@box=\kvtcb@after@lower%
+    \let\tcb@insert@after@part=\tcb@insert@after@lower%
     \ifx\kvtcb@savelowerto\@empty%
       \let\tcb@startbox\tcb@savelowerbox%
       \let\endtcolorbox\tcb@endboxanddraw%
@@ -906,7 +921,7 @@
     \fi%
     \tcb@startbox}%
   % start of upper box
-  \tcb@set@color{tcbcol@upper}%
+  \tcb@set@color{tcbcolupper}%
   \ifx\kvtcb@saveupperto\@empty%
     \let\tcb@startbox\tcb@saveupperbox%
     \let\endtcolorbox\tcb@endboxanddraw%
@@ -1089,7 +1104,7 @@
 \let\tcolorbox\tcb@colorbox
 
 \def\tcb@endboxanddraw{%
-  \ifvmode\else\unskip\fi\tcb@after@box%
+  \tcb@insert@after@part%
   \end{tcb@savebox}%
   \tcb@reset@color%
   \tcb@draw@color@box%
@@ -1399,7 +1414,7 @@
 \def\tcb@drawframe@standard{%
   \begin{pgfscope}%
   \tcb@boundaryframe@standard%
-  \pgfsetfillcolor{tcbcol@frame}%
+  \pgfsetfillcolor{tcbcolframe}%
   \pgfsetfillopacity{\kvtcb@opacityframe}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -1409,7 +1424,7 @@
 \def\tcb@drawframe@standardjigsaw{%
   \begin{pgfscope}%
   \tcb@boundaryframe@standardjigsaw%
-  \pgfsetfillcolor{tcbcol@frame}%
+  \pgfsetfillcolor{tcbcolframe}%
   \pgfsetfillopacity{\kvtcb@opacityframe}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -1419,7 +1434,7 @@
 \def\tcb@drawwithtitle@standard{%
   \begin{pgfscope}%
   \tcb@boundaryinterior@title@standard%
-  \pgfsetfillcolor{tcbcol@back}%
+  \pgfsetfillcolor{tcbcolback}%
   \pgfsetfillopacity{\kvtcb@opacityback}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -1429,7 +1444,7 @@
 \def\tcb@drawwithouttitle@standard{%
   \begin{pgfscope}%
   \tcb@boundaryinterior@notitle@standard%
-  \pgfsetfillcolor{tcbcol@back}%
+  \pgfsetfillcolor{tcbcolback}%
   \pgfsetfillopacity{\kvtcb@opacityback}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -1439,7 +1454,7 @@
 \def\tcb@drawtitle@standard{%
   \begin{pgfscope}%
   \tcb@boundarytitle@standard%
-  \pgfsetfillcolor{tcbcol@backtitle}%
+  \pgfsetfillcolor{tcbcolbacktitle}%
   \pgfsetfillopacity{\kvtcb@opacitybacktitle}%
   \pgfusepath{fill}%
   \end{pgfscope}%
@@ -1458,7 +1473,7 @@
   \pgfpathmoveto{\pgfqpoint{\kvtcb@left@rule}{\tcb@seg@pos}}%
   \pgfpathlineto{\pgfqpoint{\the\dimexpr\tcb@width-\kvtcb@right@rule\relax}{\tcb@seg@pos}}%
   \fi%
-  \pgfsetcolor{tcbcol@frame}%
+  \pgfsetcolor{tcbcolframe}%
   \pgfsetstrokeopacity{\kvtcb@opacityframe}%
   \pgfusepath{stroke}%
   \end{pgfscope}%
@@ -1513,14 +1528,14 @@
 }
 
 \def\tcb@tdraw@title@core{%
-  \iftcb@hasTitle%
+  \iftcb@hasTitle\iftcb@titlevisible%%
     \begin{pgfscope}%
     \pgfsetfillopacity{\kvtcb@opacitytitle}%
     \pgftext[x=\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@lefttitle\relax,
              y=\the\dimexpr\tcb@height-\kvtcb@top@rule-\kvtcb@boxsep-\kvtcb@toptitle\relax,
-             left,top]{\color{tcbcol@title}\box\tcb@titlebox}%
+             left,top]{\color{tcbcoltitle}\box\tcb@titlebox}%
     \end{pgfscope}%
-  \fi%
+  \fi\fi%
 }
 \let\tcb@tdraw@title=\tcb@tdraw@title@core
 
@@ -1530,7 +1545,7 @@
     \pgfsetfillopacity{\kvtcb@opacityupper}%
     \csname tcb@dbox@\kvtcb@valignupper\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper\relax}%
             {\the\dimexpr\tcb@innerheight+\kvtcb@bottom@rule-\kvtcb@boxsep-\tcb@break@topsep-\kvtcb@top-\tcb@height@upper\relax}%
-            {\tcb@height@upper}{\tcb@upperbox}{tcbcol@upper}%
+            {\tcb@height@upper}{\tcb@upperbox}{tcbcolupper}%
     \end{pgfscope}%
   \fi%
 }
@@ -1542,7 +1557,7 @@
     \pgfsetfillopacity{\kvtcb@opacitylower}%
     \csname tcb@dbox@\kvtcb@valignlower\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftlower\relax}%
             {\the\dimexpr\kvtcb@bottom@rule+\kvtcb@boxsep+\tcb@break@bottomsep+\kvtcb@bottom\relax}%
-            {\tcb@height@lower}{\tcb@lowerbox}{tcbcol@lower}%
+            {\tcb@height@lower}{\tcb@lowerbox}{tcbcollower}%
     \end{pgfscope}%
   \fi%
 }
@@ -1573,7 +1588,7 @@
     \fi%
     \iftcb@hasLower%
       \tcb@box@align{\tcb@lowerbox}%
-      \iftcb@lowervisible\leavevmode\color{tcbcol@lower}\unhbox\tcb@lowerbox%
+      \iftcb@lowervisible\leavevmode\color{tcbcollower}\unhbox\tcb@lowerbox%
       \else%
         \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{\z@}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
       \fi%
@@ -1716,8 +1731,8 @@
   \tcbset{breakable@false,sidebyside=false}%
   \tcb@set@@phantom%
   \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcol@upper}%
-  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\ifvmode\else\unskip\fi\kvtcb@after@upper}}%
+  \tcb@set@color{tcbcolupper}%
+  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
   \tcb@reset@color%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
@@ -1734,8 +1749,8 @@
   \tcb@set@@title%
   \tcb@set@@dimensions%
   \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcol@upper}%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\kvtcb@before@upper\ignorespaces#1\ifvmode\else\unskip\fi\kvtcb@after@upper\end{tcb@savebox}%
+  \tcb@set@color{tcbcolupper}%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper\end{tcb@savebox}%
   \tcb@reset@color%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
@@ -1758,13 +1773,13 @@
 
 \newcommand{\tcbsubtitle}[2][]{%
   \begingroup%
-  \colorlet{tcbtranscol@frame}{tcbcol@frame}%
+  \colorlet{tcbtranscol@frame}{tcbcolframe}%
   \iftcb@titlefilled%
-    \colorlet{tcbtranscol@back}{tcbcol@backtitle}%
+    \colorlet{tcbtranscol@back}{tcbcolbacktitle}%
   \else%
-    \colorlet{tcbtranscol@back}{tcbcol@frame}%
+    \colorlet{tcbtranscol@back}{tcbcolframe}%
   \fi%
-  \colorlet{tcbtranscol@upper}{tcbcol@title}%
+  \colorlet{tcbtranscol@upper}{tcbcoltitle}%
   \let\tcb@trans@fontupper\kvtcb@fonttitle%
   \let\tcb@trans@boxsep\kvtcb@boxsep%
   \let\tcb@trans@left\kvtcb@leftupper%
@@ -2112,7 +2127,7 @@
     size=normal,rounded corners,parfillskip restore,
     enlarge top by=0mm,enlarge bottom by=0mm,enlarge left by=0mm,enlarge right by=0mm,
     toggle enlargement=none,toggle left and right=none,
-    baseline=0pt,adjust text={\"Apgjy},upperbox=visible,lowerbox=visible,lower separated,
+    baseline=0pt,adjust text={\"Apgjy},upperbox=visible,lowerbox=visible,titlebox=visible,lower separated,
     colback=black!5!white,colframe=black!75!white,@colbacktitle=black!50!white,coltext=black,coltitle=white,
     fonttitle=,fontupper=,fontlower=,floatplacement=htb,nofloat,saveto=,savelowerto=,
     tempfile={\jobname.tcbtemp},

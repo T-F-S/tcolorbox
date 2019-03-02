@@ -7,7 +7,7 @@ The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{skins}
 \end{dispListing}
-This also loads the package |tikz| \cite{tantau:2015a}. Typically but not necessarily,
+This also loads the package |tikz| \cite{tantau:tikz_and_pgf}. Typically but not necessarily,
 the following skins use |tikz| instead of |pgf|.
 
 \subsection{Style Option Keys}\label{subsec:addstyleoptions}
@@ -844,13 +844,13 @@ the \meta{options} are is appended.
   attach boxed title to top left={xshift=1cm,yshift*=1mm-\tcboxedtitleheight},
   varwidth boxed title*=-3cm,
   boxed title style={frame code={
-    \path[fill=tcbcol@back!30!black]
+    \path[fill=tcbcolback!30!black]
       ([yshift=-1mm,xshift=-1mm]frame.north west)
         arc[start angle=0,end angle=180,radius=1mm]
       ([yshift=-1mm,xshift=1mm]frame.north east)
         arc[start angle=180,end angle=0,radius=1mm];
-    \path[left color=tcbcol@back!60!black,right color=tcbcol@back!60!black,
-      middle color=tcbcol@back!80!black]
+    \path[left color=tcbcolback!60!black,right color=tcbcolback!60!black,
+      middle color=tcbcolback!80!black]
       ([xshift=-2mm]frame.north west) -- ([xshift=2mm]frame.north east)
       [rounded corners=1mm]-- ([xshift=1mm,yshift=-1mm]frame.north east)
       -- (frame.south east) -- (frame.south west)
@@ -2241,7 +2241,7 @@ but most other skins, e.\,g.\ \refSkin{enhanced}.
 
 \begin{docTcbKey}{tikz}{=\meta{tikz option list}}{no default, initially empty}
   Adds the given \meta{tikz option list} to the main |tikzpicture| environment
-  used to draw the color box, see \cite{tantau:2015a}. If this option is
+  used to draw the color box, see \cite{tantau:tikz_and_pgf}. If this option is
   applied a second time, the new \meta{tikz option list} is appended to the
   current option list.
 \begin{dispExample*}{sbs,lefthand ratio=0.66,

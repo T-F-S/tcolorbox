@@ -7,7 +7,7 @@ A LaTeX package to create highly customizable colored boxes.
 
 ```
 The LaTeX package tcolorbox
-Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm
+Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.3

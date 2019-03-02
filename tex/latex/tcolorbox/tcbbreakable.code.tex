@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.15 (2018/12/07)
+%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.15}
+\tcb@set@library@version{4.20}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -169,7 +169,7 @@
   \else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\tcb@extras@followingtitle\color{tcbcol@title}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@followingtitle\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\tcb@extras@followingtitle\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@followingtitle\end{tcb@savebox}%
     \tcbdimto\tcb@h@title{\ht\tcb@titlebox+\dp\tcb@titlebox}%
     \tcbdimto\tcb@h@padtitle{\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle+\tcb@h@title}%
   \fi%

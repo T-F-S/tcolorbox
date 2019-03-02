@@ -633,6 +633,40 @@ Lower part
 
 \egroup
 
+
+\clearpage
+\subsection{Color Names}\label{subsec:tech_colornames}
+Color settings for a |tcolorbox| are saved into named colors which may be
+used inside a box, e.g. for an overlay.
+\tcbdocmarginnote{\tcbdocnew{2019-01-18}}
+These color names are
+\begin{itemize}
+\item\docColor{tcbcolframe} set by \refKey{/tcb/colframe} (frame color)
+\item\docColor{tcbcolback} set by \refKey{/tcb/colback} (background color)
+\item\docColor{tcbcolbacktitle} set by \refKey{/tcb/colbacktitle} (background color of the title)
+\item\docColor{tcbcolbacklower} set by \refKey{/tcb/colbacklower} (skin dependend background color
+  of the lower part; needs \mylib{skins} to be loaded)
+\item\docColor{tcbcolupper} set by \refKey{/tcb/colupper} (text color upper part)
+\item\docColor{tcbcollower} set by \refKey{/tcb/collower} (text color lower part)
+\item\docColor{tcbcoltitle} set by \refKey{/tcb/coltitle} (text color title)
+\end{itemize}
+
+\medskip
+
+\begin{dispExample}
+% \tcbuselibrary{skins}
+\begin{tcolorbox}[title=Color names,
+    colframe=blue!50!black,colback=blue!5,
+    colbacktitle=blue!50,colupper=red!35!black]
+  \foreach \name in {tcbcolframe,tcbcolback,tcbcolbacktitle,tcbcolbacklower,
+    tcbcolupper,tcbcollower,tcbcoltitle}
+  {\tikz\path[draw,fill=\name]
+    (0,0) rectangle node[right=4mm,font=\ttfamily]{\name} (0.8,0.8);\par}
+\end{tcolorbox}
+\end{dispExample}
+
+
+
 \clearpage
 \subsection{Useful Properties}\label{subsec:tech_properties}
 

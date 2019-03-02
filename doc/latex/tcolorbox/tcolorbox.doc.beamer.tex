@@ -1,0 +1,210 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Beamer Support}\label{sec:beamer}%
+\tcbset{external/prefix=external/beamer_}%
+The \mylib{skins} library adds some supporting options for the |beamer| package
+\cite{tantau:beamer}.
+For the following options, the \mylib{skins} library has to be loaded
+by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{skins}
+\end{dispListing}
+
+See \Vref{sec:skins} for the documentation of all other options of the \mylib{skins} library.
+
+\begin{docTcbKey}[][doc new and updated={2015-01-09}{2019-03-01}]{only}{=\textless\meta{overlay specification}\textgreater\marg{options}}{style, no default, initially unset}
+Sets the given |tcolorbox| \meta{options} in dependency of
+a |beamer| \meta{overlay specification}.
+Note that this needs the |beamer| class \cite{tantau:beamer}.
+The \meta{options} will only be used on the specified |beamer| frames.
+
+
+\begin{fulldocumentlisting}{}
+\documentclass{beamer}
+\usepackage[many]{tcolorbox}
+\begin{document}
+
+\begin{frame}
+  \begin{tcolorbox}[title=My title,fonttitle=\bfseries,
+      enhanced,colframe=red!50!black,colback=red!10,colbacktitle=red,
+      sidebyside,righthand width=3cm,
+      lowerbox=invisible,lower separated=false,
+      drop lifted shadow,
+      only=<1>{colbacktitle=yellow,coltitle=red!50!black,colframe=red},
+      only=<3>{colback=yellow!50,watermark text={Attention!}},
+      only=<3->{lowerbox=visible}  ]
+    This is a test.
+    \begin{itemize}[<+->]
+      \item One
+      \item Two
+      \item \alert<3>{Three}
+      \item Four
+    \end{itemize}
+  \tcblower
+    \begin{equation*}
+    \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
+    \end{equation*}
+  \end{tcolorbox}
+\end{frame}
+\end{document}
+\end{fulldocumentlisting}
+
+
+\begin{fulldocumentlisting}{}
+\documentclass{beamer}
+\usepackage[most]{tcolorbox}
+\begin{document}
+
+\begin{frame}[fragile]
+  \begin{tcblisting}{beamer,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
+    title=Example,
+    only=<1>{lowerbox=invisible},only=<2>{}
+  }
+This is an \textbf{example listing}
+  \end{tcblisting}
+\end{frame}
+\end{document}
+\end{fulldocumentlisting}
+
+\begin{marker}
+The option \refKey{/tcb/only} belonged to the base package before version 4.20.
+\end{marker}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new={2019-03-01}]{hide}{=\textless\meta{overlay specification}\textgreater}{style, no default, initially unset}
+Sets the \refKey{/tcb/beamer hidden} style in dependency of
+a |beamer| \meta{overlay specification}.
+\refKey{/tcb/beamer hidden} can be redefined for customization.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new={2019-03-01}]{beamer hidden}{}{style, no options, initially |nirvana|}
+This style is not intended to be used directly, but in concealed way by applying
+\refKey{/tcb/hide}. The style can be redefined.
+\begin{dispListing}
+\tcbset{
+  beamer hidden/.style={invisible,interior hidden,colframe=blue!20!gray!15},
+}
+\end{dispListing}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new={2019-03-01}]{alert}{=\textless\meta{overlay specification}\textgreater}{style, no default, initially unset}
+Sets the \refKey{/tcb/beamer alerted} style in dependency of
+a |beamer| \meta{overlay specification}.
+\refKey{/tcb/beamer alerted} can be redefined for customization.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new={2019-03-01}]{beamer alerted}{}{style, no options, initially |fuzzy halo|}
+This style is not intended to be used directly, but in concealed way by applying
+\refKey{/tcb/alert}. The style can be redefined.
+\begin{dispListing}
+\tcbset{
+  beamer alerted/.style={colframe=red!50!gray},
+}
+\end{dispListing}
+\end{docTcbKey}
+
+
+\bigskip
+
+The following examples use \refEnv{tcbitemize} from \mylib{raster} for
+convenient use of a list of boxes which are uncovered one by one.
+
+
+\begin{fulldocumentlisting}{run pdflatex}
+\documentclass{beamer}
+\usepackage[most]{tcolorbox}
+\begin{document}
+
+\begin{frame}
+  \begin{tcbitemize}[raster equal height=rows,
+    enhanced,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
+    ]
+  \tcbitem[title=One,alert=<1>]
+    First Statement
+  \tcbitem[title=Two,hide=<-1>,alert=<2>]
+    Second Statement
+  \tcbitem[title=Three,hide=<-2>,alert=<3>]
+    Test
+  \tcbitem[title=Four,hide=<-3>,alert=<4>]
+    \begin{equation*}
+    \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
+    \end{equation*}
+  \tcbitem[title=Five,hide=<-4>,alert=<5>]
+    \includegraphics[width=1cm]{goldshade.png}
+  \tcbitem[title=Six,hide=<-5>,alert=<6>]
+    Test
+  \end{tcbitemize}
+\end{frame}
+\end{document}
+\end{fulldocumentlisting}
+
+
+
+\begin{fulldocumentlisting}{run pdflatex}
+\documentclass{beamer}
+\usepackage[most]{tcolorbox}
+\begin{document}
+
+\begin{frame}
+  \begin{tcbitemize}[raster equal height=rows,
+    enhanced,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
+    beamer hidden/.style={invisible,interior hidden,colframe=blue!20!gray!15},
+    beamer alerted/.style={colframe=red!50!gray},
+    ]
+  \tcbitem[title=One,alert=<1>]
+    First Statement
+  \tcbitem[title=Two,hide=<-1>,alert=<2>]
+    Second Statement
+  \tcbitem[title=Three,hide=<-2>,alert=<3>]
+    Test
+  \tcbitem[title=Four,hide=<-3>,alert=<4>]
+    \begin{equation*}
+    \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
+    \end{equation*}
+  \tcbitem[title=Five,hide=<-4>,alert=<5>]
+    \includegraphics[width=1cm]{goldshade.png}
+  \tcbitem[title=Six,hide=<-5>,alert=<6>]
+    Test
+  \end{tcbitemize}
+\end{frame}
+\end{document}
+\end{fulldocumentlisting}
+
+
+
+\begin{fulldocumentlisting}{run pdflatex}
+\documentclass{beamer}
+\usepackage[most]{tcolorbox}
+\begin{document}
+
+\begin{frame}
+  \begin{tcbitemize}[raster equal height=rows,
+    beamer,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
+    beamer hidden/.style={colback=white,colframe=gray!50,opacityupper=0.2,opacitytitle=0.2},
+    beamer alerted/.style={colframe=red!50!gray,fuzzy halo},
+    ]
+  \tcbitem[title=One,alert=<1>]
+    First Statement
+  \tcbitem[title=Two,hide=<-1>,alert=<2>]
+    Second Statement
+  \tcbitem[title=Three,hide=<-2>,alert=<3>]
+    Test
+  \tcbitem[title=Four,hide=<-3>,alert=<4>]
+    \begin{equation*}
+    \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
+    \end{equation*}
+  \tcbitem[title=Five,hide=<-4>,alert=<5>]
+    \includegraphics[width=1cm]{goldshade.png}
+  \tcbitem[title=Six,hide=<-5>,alert=<6>]
+    Test
+  \end{tcbitemize}
+\end{frame}
+\end{document}
+\end{fulldocumentlisting}
+

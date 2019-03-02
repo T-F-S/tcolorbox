@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.15 (2018/12/07)
+%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2018 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.15}
+\tcb@set@library@version{4.20}
 
 \tcbuselibrary{pro@cessing}
 
@@ -41,8 +41,8 @@
 
 \newenvironment{tcb@lower@outside}[1]{%
   \tcbset{savedelimiter=tcb@lower@outside}\tcb@minipage{#1}%
-  \color{tcbcol@lower}\kvtcb@fontlower\kvtcb@halignlower\kvtcb@before@lower\ignorespaces}%
-  {\ifvmode\else\unskip\fi\kvtcb@after@lower\endminipage}
+  \color{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}%
+  {\tcb@insert@after@lower\endminipage}
 
 \def\tcb@use@listing@other@reset{%
   \tcbset{every box on layer 1/.style={reset,every box}}%
