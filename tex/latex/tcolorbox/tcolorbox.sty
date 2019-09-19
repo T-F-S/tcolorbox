@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
+%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2019/03/02 version 4.20 text color boxes]
-\def\tcb@version{4.20}
+\ProvidesPackage{tcolorbox}[2019/09/19 version 4.21 text color boxes]
+\def\tcb@version{4.21}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -431,9 +431,15 @@
   left skip/.style={grow to left by={-\dimexpr#1\relax}},
   right skip/.style={grow to right by={-\dimexpr#1\relax}},
   leftright skip/.style={left skip={#1},right skip={#1}},
-  spread inwards/.style={grow to left by=1in+\hoffset+\oddsidemargin+\@totalleftmargin+(#1),code={\if@twoside\tcbset{toggle enlargement}\fi}},
+  spread inwards/.style={%
+    if odd page={grow to left by=1in+\hoffset+\oddsidemargin+\@totalleftmargin+(#1)}%
+      {grow to right by=\paperwidth-\textwidth-1in-\hoffset-\evensidemargin+(#1)}%
+  },
   spread inwards/.default=\z@,
-  spread outwards/.style={grow to right by=\paperwidth-\textwidth-1in-\hoffset-\oddsidemargin+(#1),code={\if@twoside\tcbset{toggle enlargement}\fi}},
+  spread outwards/.style={%
+    if odd page={grow to right by=\paperwidth-\textwidth-1in-\hoffset-\oddsidemargin+(#1)}%
+      {grow to left by=1in+\hoffset+\evensidemargin+\@totalleftmargin+(#1)}%
+  },
   spread outwards/.default=\z@,
   move upwards/.style={before={\clearpage%
     \lineskip\z@skip%
@@ -576,10 +582,23 @@
   tabularx*/.style 2 args={%
     boxsep=\z@,top=\z@,bottom=\z@,leftupper=\z@,rightupper=\z@,
     toptitle=1mm,bottomtitle=1mm,boxrule=0.5mm,
-    before upper*={\arrayrulecolor{tcbcolframe}\def\arraystretch{1.1}#1%
+    before upper*={%
+      \let\tcb@CT@arc@save\CT@arc@%
+      \arrayrulecolor{tcbcolframe}\def\arraystretch{1.1}#1%
       \tcb@hack@currenvir\tabularx{\linewidth}{#2}},
-    after upper*=\endtabularx\arrayrulecolor{black}},
+    after upper*={\endtabularx\global\let\CT@arc@\tcb@CT@arc@save}%
+  },
   tabularx/.style={tabularx*={}{#1}},
+  tabulars*/.style 2 args={%
+    boxsep=\z@,top=\z@,bottom=\z@,leftupper=\z@,rightupper=\z@,
+    toptitle=1mm,bottomtitle=1mm,boxrule=0.5mm,
+    before upper*={%
+      \let\tcb@CT@arc@save\CT@arc@%
+      \arrayrulecolor{tcbcolframe}\def\arraystretch{1.1}#1%
+      \begin{tabular*}{\linewidth}{#2}},
+    after upper*={\end{tabular*}\global\let\CT@arc@\tcb@CT@arc@save}
+  },
+  tabulars/.style={tabulars*={}{#1}},
   tikz upper/.style={before upper*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after upper*=\end{tikzpicture}},%
   tikz lower/.style={before lower*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after lower*=\end{tikzpicture}},%
   tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[{align=center,inner sep=\z@,outer sep=\z@,#1}]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
@@ -2136,12 +2155,13 @@
     before title=,after title=,before upper=,after upper=,before lower=,after lower=,
     sidebyside=false,sidebyside align=center,sidebyside gap=10mm,
     lefthand ratio=0.5,check odd page=false,nophantom,
-    shield externalize=false,list entry=,no label type,
+    list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
     subtitle style=,title filled=false,every float=,ignore nobreak=false,before nobreak=\noindent,
     tcbox width=auto,
   },
   initialize@reset=reset@core,
+  shield externalize=false,
 }
 
 \def\tcbsetforeverylayer#1{\tcbset{initialize@reset={#1}}}

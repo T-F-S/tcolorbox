@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
+%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1084,3 +1084,25 @@ version 4.20 (2019/03/02)
   * new options: 'beamer hidden', 'beamer alerted', 'hide', 'alert'
   * option 'only' moved from package to skins library
 - new documentation section '13 Beamer Support'
+
+version 4.21 (2019/09/19)
+- bug fix (#71): 'shield externalize' should be effective on all tcolorbox layers
+- bug fix (#76): 'spread inwards', 'spread outwards', 'spread sidewards' gave
+  wrong results for some document geometry settings
+- new options (#75): 'tabulars', 'tabulars*'
+- library 'extras':
+  * bug fix: all 'extras ...' options from library 'hooks' took code instead of options
+  * new options (#73): 'minted options app', 'minted options pre',
+      'listing options app', 'listing options pre'
+- library 'xparse':
+  * bug fix: options 'IfNoValueTF', 'IfValueTF', 'IfBooleanTF' failed
+      to recognize arguments in some code line breaks situations
+- library 'documentation':
+  TikZ path operation documentation (#65):
+  * new color name: 'Fade'
+  * new macros and environments: '\colFade', 'docPathOperation',
+      '\refPathOperation', '\refPathOperation*'
+  * new options: 'color fade', 'color path', 'doc label', 'doc head path',
+      'before doc body path', 'after doc body path'
+  * new language string: 'path', 'paths'
+- documentation: checkerbox for opacity examples was too dark

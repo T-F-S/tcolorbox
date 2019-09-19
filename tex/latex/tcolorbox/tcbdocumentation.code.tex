@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
+%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.20}
+\tcb@set@library@version{4.21}
 
 \tcbuselibrary{listings,skins,xparse,external}
 
@@ -33,9 +33,11 @@
 \definecolor{ExampleFrame}{rgb}{0.628,0.705,0.942}
 \definecolor{ExampleBack}{rgb}{0.963,0.971,0.994}
 \definecolor{Hyperlink}{rgb}{0.281,0.275,0.485}
+\definecolor{Fade}{rgb}{0.5,0.5,0.5}
 
 \def\colDef#1{\textcolor{\kvtcb@col@command}{#1}}
 \def\colOpt#1{\textcolor{\kvtcb@col@opt}{#1}}
+\def\colFade#1{\textcolor{\kvtcb@col@fade}{#1}}
 
 \lstdefinestyle{tcbdocumentation}{language={[LaTeX]TeX},
     aboveskip={0\p@ \@plus 6\p@},
@@ -105,6 +107,8 @@
   length/.store in=\kvtcb@text@length,
   lengths/.store in=\kvtcb@text@lengths,
   new/.store in=\kvtcb@text@new,
+  path/.store in=\kvtcb@text@path,
+  paths/.store in=\kvtcb@text@paths,
   pageshort/.store in=\kvtcb@text@pageshort,
   updated/.store in=\kvtcb@text@updated,
   value/.store in=\kvtcb@text@value,
@@ -125,8 +129,10 @@
   color counter/.store in=\kvtcb@col@counter,
   color length/.store in=\kvtcb@col@length,
   color color/.store in=\kvtcb@col@color,
+  color fade/.store in=\kvtcb@col@fade,
+  color path/.store in=\kvtcb@col@path,
   color definition/.style={color command={#1},color environment={#1},color key={#1},
-    color value={#1},color color={#1},color counter={#1},color length={#1}},
+    color value={#1},color color={#1},color counter={#1},color length={#1}, color path={#1}},
   color option/.store in=\kvtcb@col@opt,
   color hyperlink/.store in=\kvtcb@colhyper,
   color frame/.store in=\kvtcb@colhyper,
@@ -145,15 +151,22 @@
   doc head command/.style={doc@head@command/.style={#1}},
   doc head environment/.style={doc@head@environment/.style={#1}},
   doc head key/.style={doc@head@key/.style={#1}},
-  doc head/.style={doc head command={#1},doc head environment={#1},doc head key={#1}},
+  doc head path/.style={doc@head@path/.style={#1}},
+  doc head/.style={doc head command={#1},doc head environment={#1},doc head key={#1},
+    doc head path={#1}},
+  doc label/.store in=\kvtcb@doc@label,
   before doc body command/.store in=\kvtcb@doc@body@command@before,
   after doc body command/.store in=\kvtcb@doc@body@command@after,
   before doc body environment/.store in=\kvtcb@doc@body@environment@before,
   after doc body environment/.store in=\kvtcb@doc@body@environment@after,
   before doc body key/.store in=\kvtcb@doc@body@key@before,
   after doc body key/.store in=\kvtcb@doc@body@key@after,
-  before doc body/.style={before doc body command={#1},before doc body environment={#1},before doc body key={#1}},
-  after doc body/.style={after doc body command={#1},after doc body environment={#1},after doc body key={#1}},
+  before doc body path/.store in=\kvtcb@doc@body@path@before,
+  after doc body path/.store in=\kvtcb@doc@body@path@after,
+  before doc body/.style={before doc body command={#1},before doc body environment={#1},
+    before doc body key={#1},before doc body path={#1}},
+  after doc body/.style={after doc body command={#1},after doc body environment={#1}
+    ,after doc body key={#1},after doc body path={#1}},
   doc description/.store in=\kvtcb@doc@description,%
   doc into index/.is if=tcb@doc@toindex,%
   doc updated/.style={before upper={\tcbdocmarginnote{\tcbdocupdated{#1}}}},
@@ -182,6 +195,7 @@
     counter=counter,counters=Counters,
     environment content=environment content,
     environment=environment,environments=Environments,
+    path=path operation,paths=Path operations,
     index=Index,
     key=key,keys=Keys,
     length=length,lengths=Lengths,
@@ -259,6 +273,10 @@
 \newrobustcmd{\tcbIndexPrintKeyC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
 \def\tcb@Print@Key#1{\textcolor{\kvtcb@col@key}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
 
+\newrobustcmd{\tcbIndexPrintPathCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@path}{\kvtcb@text@path}}
+\newrobustcmd{\tcbIndexPrintPathC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@path}}
+\def\tcb@Print@Path#1{\textcolor{\kvtcb@col@path}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
+
 \newrobustcmd{\tcbIndexPrintValCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{\kvtcb@text@value}}
 \newrobustcmd{\tcbIndexPrintValC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
 \def\tcb@Print@Val#1{\textcolor{\kvtcb@col@value}{\tcb@doc@bfseries\tcb@scantokens{#1}}}
@@ -279,6 +297,7 @@
 \def\tcb@index@Env#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintEnvCA{#1}}\kvtcb@index@command{\kvtcb@text@envs\idx@level#1\idx@actual\tcbIndexPrintEnvC{#1}}\fi}
 \def\tcb@index@Key#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintKeyCA{#1}}\kvtcb@index@command{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{#1}}\fi}%
 \def\tcb@index@KeyPath#1#2{\iftcb@doc@toindex\kvtcb@index@command{#2\idx@actual\tcbIndexPrintKeyCA{#2}}\kvtcb@index@command{\kvtcb@text@keys\idx@level#1\idx@actual\tcbIndexPrintKeyC{/#1/}\idx@level#2\idx@actual\tcbIndexPrintKeyC{#2}}\fi}%
+\def\tcb@index@Path#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintPathCA{#1}}\kvtcb@index@command{\kvtcb@text@paths\idx@level#1\idx@actual\tcbIndexPrintPathC{#1}}\fi}
 \def\tcb@index@Val#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintValCA{#1}}\kvtcb@index@command{\kvtcb@text@values\idx@level#1\idx@actual\tcbIndexPrintValC{#1}}\fi}
 \def\tcb@index@Col#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintColCA{#1}}\kvtcb@index@command{\kvtcb@text@colors\idx@level#1\idx@actual\tcbIndexPrintColC{#1}}\fi}
 \def\tcb@index@Count#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintCountCA{#1}}\kvtcb@index@command{\kvtcb@text@counters\idx@level#1\idx@actual\tcbIndexPrintCountC{#1}}\fi}
@@ -311,20 +330,20 @@
   enlarge bottom by=-0.2\baselineskip,#1}
 
 % main documentation environments
-\newenvironment{docCommand}[3][]{\tcbset{#1}%
+\newenvironment{docCommand}[3][]{\tcbset{doc label={#2},#1}%
   \begin{tcb@manual@entry}%
   \begin{tcb@doc@head}{doc@head@command}%
-  \tcb@Print@Com{#2}\tcb@index@Com{#2}\protected@edef\@currentlabel{\noexpand\tcb@cs{#2}}\label{com:#2}{\ttfamily #3}%
+  \tcb@Print@Com{#2}\tcb@index@Com{#2}\protected@edef\@currentlabel{\noexpand\tcb@cs{#2}}\label{com:\kvtcb@doc@label}{\ttfamily #3}%
   \tcb@doc@do@description%
   \end{tcb@doc@head}\nobreak\tcbset{before upper=}\kvtcb@doc@body@command@before\ignorespaces}%
   {\ifvmode\else\unskip\fi\kvtcb@doc@body@command@after\end{tcb@manual@entry}}
 
 \newenvironment{docCommand*}{\bgroup\tcb@doc@toindexfalse\begin{docCommand}}{\end{docCommand}\egroup}
 
-\newenvironment{docEnvironment}[3][]{\tcbset{#1}%
+\newenvironment{docEnvironment}[3][]{\tcbset{doc label={#2},#1}%
   \begin{tcb@manual@entry}%
   \begin{tcb@doc@head}{doc@head@environment}%
-  \strut\cs{begin}\brackets{\tcb@Print@Env{#2}}\tcb@index@Env{#2}\protected@edef\@currentlabel{#2}\label{env:#2}{\ttfamily #3}\par%
+  \strut\cs{begin}\brackets{\tcb@Print@Env{#2}}\tcb@index@Env{#2}\protected@edef\@currentlabel{#2}\label{env:\kvtcb@doc@label}{\ttfamily #3}\par%
   \strut~~\meta{\kvtcb@text@envcontent}\par%
   \strut\cs{end}\brackets{\tcb@Print@Env{#2}}%
   \tcb@doc@do@description%
@@ -333,14 +352,14 @@
 
 \newenvironment{docEnvironment*}{\bgroup\tcb@doc@toindexfalse\begin{docEnvironment}}{\end{docEnvironment}\egroup}
 
-\NewDocumentEnvironment{docKey}{ O{} +O{} m m +m }{\tcbset{#2,doc description={#5}}%
+\NewDocumentEnvironment{docKey}{ O{} +O{} m m +m }{\tcbset{doc label={#3},#2,doc description={#5}}%
   \begin{tcb@manual@entry}%
   \begin{tcb@doc@head}{doc@head@key}%
   \ifblank{#1}{%
-    \tcb@Print@Key{#3}\tcb@index@Key{#3}\protected@edef\@currentlabel{#3}\label{key:#3}{\ttfamily #4}%
+    \tcb@Print@Key{#3}\tcb@index@Key{#3}\protected@edef\@currentlabel{#3}\label{key:\kvtcb@doc@label}{\ttfamily #4}%
   }{%
     \tcb@Print@Key{/#1/#3}%
-    \tcb@index@KeyPath{#1}{#3}\protected@edef\@currentlabel{/#1/#3}\label{key:/#1/#3}{\ttfamily #4}%
+    \tcb@index@KeyPath{#1}{#3}\protected@edef\@currentlabel{/#1/#3}\label{key:/#1/\kvtcb@doc@label}{\ttfamily #4}%
   }%
   \tcb@doc@do@description%
   \end{tcb@doc@head}\nobreak\tcbset{before upper=}\kvtcb@doc@body@key@before\ignorespaces}%
@@ -355,6 +374,18 @@
       {\end{docKey}}%
   \newenvironment{#1*}{\bgroup\tcb@doc@toindexfalse\begin{#1}}{\end{#1}\egroup}%
 }
+
+\newenvironment{docPathOperation}[3][]{\tcbset{doc label={#2},#1}%
+  \begin{tcb@manual@entry}%
+  \begin{tcb@doc@head}{doc@head@path}%
+  \colFade{\tcb@cs{path ...}}\
+  \tcb@Print@Path{#2}\tcb@index@Path{#2}\protected@edef\@currentlabel{#2}\label{path:\kvtcb@doc@label}{\ttfamily #3}%
+  \ \colFade{\tcb@scantokens{...;}}
+  \tcb@doc@do@description%
+  \end{tcb@doc@head}\nobreak\tcbset{before upper=}\kvtcb@doc@body@path@before\ignorespaces}%
+  {\ifvmode\else\unskip\fi\kvtcb@doc@body@path@after\end{tcb@manual@entry}}
+
+\newenvironment{docPathOperation*}{\bgroup\tcb@doc@toindexfalse\begin{docPathOperation}}{\end{docPathOperation}\egroup}
 
 \DeclareDocumentCommand\docAuxCommand{sm}{%
   \tcb@Print@Com{#2}%
@@ -408,6 +439,7 @@
 \def\refCom{\tcb@ref@doc{com}}
 \def\refEnv{\tcb@ref@doc{env}}
 \def\refKey{\tcb@ref@doc{key}}
+\def\refPathOperation{\tcb@ref@doc{path}}
 
 \def\refAux#1{\textcolor{\kvtcb@colhyper}{\tcb@scantokens{#1}}}
 \def\refAuxcs#1{\textcolor{\kvtcb@colhyper}{\tcb@cs{#1}}}
@@ -491,6 +523,7 @@
   color option=Option,
   color definition=Definition,
   color hyperlink=Hyperlink,
+  color fade=Fade,
   index command=\index,%
   index format=pgf,
   index default settings,

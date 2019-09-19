@@ -596,7 +596,7 @@ The boxed title is shifted by \meta{length} in the vertical direction.
 \end{boxTcbKey}
 
 \begin{boxTcbKey}{yshifttext}{=\meta{length}}{no default, initially |0pt|}
-The text inside the main box by \meta{length} to give room for e.\,g.\ a sunken title.
+The text inside the main box is shifted by \meta{length} to give room for e.\,g.\ a sunken title.
 \begin{exdispExample*}{yshifttext}{sbs,lefthand ratio=0.66}
 \begin{tcolorbox}[enhanced,title=My title,
   attach boxed title to top center=
@@ -1303,7 +1303,7 @@ Defines a |Tikz| scope which clips to the frame area path.
 \begin{docEnvironment}{tcbinvclipframe}{}
 Defines a |Tikz| scope which clips to the \emph{outside} of the frame area path.
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \tcbset{enhanced jigsaw,fonttitle=\bfseries,opacityback=0.35,colback=blue!5!white,
   frame style={left color=red!75!black,right color=red!10!yellow}}
 
@@ -2245,7 +2245,7 @@ but most other skins, e.\,g.\ \refSkin{enhanced}.
   applied a second time, the new \meta{tikz option list} is appended to the
   current option list.
 \begin{dispExample*}{sbs,lefthand ratio=0.66,
-  segmentation style={pattern=checkerboard light gray}}
+  segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \tcbset{enhanced,colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries}
 
@@ -2837,7 +2837,7 @@ and \refSkin{enhanced}, there are variants called \refSkin{standard jigsaw}
 and \refSkin{enhanced jigsaw}.
 
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \newcommand{\ballexample}{\begin{tikzpicture}
   \path[use as bounding box] (0,0.8) rectangle +(0.1,0.1);
   \shadedraw [shading=ball] (0,0) circle (1cm);
@@ -2863,7 +2863,7 @@ and \refSkin{enhanced jigsaw}.
 \end{dispExample*}
 
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \tcbset{enhanced,colback=red!10!white,coltitle=black,
   frame style={left color=red!75!black,right color=red!10!yellow},
   fonttitle=\bfseries,interior hidden,title hidden}
@@ -2879,7 +2879,7 @@ and \refSkin{enhanced jigsaw}.
 \end{dispExample*}
 
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \newtcolorbox{mybox}{skin=enhancedmiddle jigsaw,leftrule=5mm,rightrule=5mm,
   boxsep=0mm,top=0mm,bottom=0mm,
   frame style={top color=blue,bottom color=red},interior hidden}
@@ -3047,7 +3047,7 @@ This box looks like a box provided by the \texttt{beamer} class.
   This is an abbreviation for setting |skin=standard jigsaw|.
 \end{docTcbKey}
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcbraster}[standard jigsaw,raster equal height,raster columns=4,
     colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
     opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
@@ -3366,7 +3366,7 @@ Nevertheless, this skin can be applied independently.
   This is an abbreviation for setting |skin=enhanced jigsaw|.
 \end{docTcbKey}
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcbraster}[enhanced jigsaw,raster equal height,raster columns=4,
     colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
     opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
@@ -3416,7 +3416,7 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcbraster}[skin=enhancedfirst jigsaw,raster equal height,raster columns=4,
     colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
     opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
@@ -3459,7 +3459,7 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcbraster}[skin=enhancedmiddle jigsaw,raster equal height,raster columns=4,
     colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
     opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
@@ -3557,7 +3557,7 @@ Nevertheless, this skin can be applied independently.
 \end{docSkin}
 
 
-\begin{dispExample*}{segmentation style={pattern=checkerboard light gray}}
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcbraster}[skin=enhancedlast jigsaw,raster equal height,raster columns=4,
     colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
     opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,

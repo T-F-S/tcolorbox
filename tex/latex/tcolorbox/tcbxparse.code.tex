@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
+%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
 %% tcbxparse.code.tex: Code for xparse features
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,14 +18,14 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.20}
+\tcb@set@library@version{4.21}
 
 \RequirePackage{xparse}[2013/12/31]
 
 \tcbset{%
-  IfNoValueTF/.code args={#1#2#3}{\IfNoValueTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
-  IfValueTF/.code args={#1#2#3}{\IfValueTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
-  IfBooleanTF/.code args={#1#2#3}{\IfBooleanTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+  IfNoValueTF/.code n args={3}{\IfNoValueTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+  IfValueTF/.code n args={3}{\IfValueTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+  IfBooleanTF/.code n args={3}{\IfBooleanTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
   verbatim/.style={fontupper=\ttfamily,nobeforeafter,tcbox raise base,top=0pt,bottom=0pt,left=1mm,right=1mm,boxrule=0.3mm}
 }
 

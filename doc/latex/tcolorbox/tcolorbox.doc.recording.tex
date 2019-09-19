@@ -15,6 +15,17 @@ in \Vref{sec:recording-solutions}.
   Opens a file denoted by \meta{file name} for writing the records.
   The default file name is |\jobname.records|.
   See \Vref{sec:recording-exercises} for an example application.
+  \begin{marker}
+  In some situations, a not existing optional parameter may cause parsing
+  problems. If this happens (or just for precaution), use
+\begin{dispListing}
+\tcbstartrecording\relax
+\end{dispListing}
+  or
+\begin{dispListing}
+\tcbstartrecording[\jobname.records]
+\end{dispListing}
+  \end{marker}
 \end{docCommand}
 
 \begin{docCommand}[doc new=2014-11-28]{tcbrecord}{\marg{content}}
@@ -66,7 +77,7 @@ has no solution. Finally, the solutions are input in \Vref{sec:recording-solutio
 \inputpreamblelisting{L}
 
 \begin{dispListing*}{breakable,before upper=}
-\tcbstartrecording
+\tcbstartrecording\relax
 
 \begin{exercise}
   Compute the derivative of the following function:

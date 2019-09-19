@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.20 (2019/03/02)
+%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
 %% tcbhooks.code.tex: Code for adding hooks
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.20}
+\tcb@set@library@version{4.21}
 
 \tcbset{%
   before upper app/.code={\appto\kvtcb@before@upper{#1}},%
@@ -74,10 +74,10 @@
   title code app/.code={\appto\tcb@title@code{#1}},%
   title code pre/.code={\preto\tcb@title@code{#1}},%
   %
-  extras unbroken pre/.code={\preto\tcb@extras@unbroken{#1}},%
-  extras first pre/.code={\preto\tcb@extras@first{#1}},%
-  extras middle pre/.code={\preto\tcb@extras@middle{#1}},%
-  extras last pre/.code={\preto\tcb@extras@last{#1}},%
+  extras unbroken pre/.code={\preto\tcb@extras@unbroken{\tcbset{#1}}},%
+  extras first pre/.code={\preto\tcb@extras@first{\tcbset{#1}}},%
+  extras middle pre/.code={\preto\tcb@extras@middle{\tcbset{#1}}},%
+  extras last pre/.code={\preto\tcb@extras@last{\tcbset{#1}}},%
   extras pre/.style={extras unbroken pre={#1},extras first pre={#1},extras middle pre={#1},extras last pre={#1}},%
   extras broken pre/.style={extras first pre={#1},extras middle pre={#1},extras last pre={#1}},%
   extras unbroken and first pre/.style={extras unbroken pre={#1},extras first pre={#1}},%
@@ -119,5 +119,10 @@
   watermark text pre/.style={overlay pre={\tcb@drawspec@watermark@text{#1}}},
   watermark text app on/.style args={#1 is #2}{overlay #1 app={\tcb@drawspec@watermark@text{#2}}},
   watermark text pre on/.style args={#1 is #2}{overlay #1 pre={\tcb@drawspec@watermark@text{#2}}},
+  %
+  minted options app/.code={\appto\kvtcb@minted@options{,#1}},
+  minted options pre/.code={\preto\kvtcb@minted@options{#1,}},
+  listing options app/.code={\appto\kvtcb@listingoptions{,#1}},
+  listing options pre/.code={\preto\kvtcb@listingoptions{#1,}},
 }
 

@@ -1535,7 +1535,7 @@ skin variants, see \Vref{subsec:skinjigsaw}.
 
 \begin{docTcbKey}{opacityframe}{=\meta{fraction}}{no default, initially \texttt{1.0}}
   Sets the frame opacity of the box to the given \meta{fraction}.
-\begin{exdispExample*}{opacityframe}{sbs,lefthand ratio=0.6,segmentation style={pattern=checkerboard light gray}}
+\begin{exdispExample*}{opacityframe}{sbs,lefthand ratio=0.6,segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcolorbox}[opacityframe=0.25,
   colframe=red]
 This is a \textbf{tcolorbox}.
@@ -1545,7 +1545,7 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}{opacityback}{=\meta{fraction}}{no default, initially \texttt{1.0}}
   Sets the background opacity of the box to the given \meta{fraction}.
-\begin{exdispExample*}{opacityback}{sbs,lefthand ratio=0.6,segmentation style={pattern=checkerboard light gray}}
+\begin{exdispExample*}{opacityback}{sbs,lefthand ratio=0.6,segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcolorbox}[standard jigsaw,colframe=red,
   opacityframe=0.5, opacityback=0.5]
 This is a \textbf{tcolorbox}.
@@ -1556,7 +1556,7 @@ This is a \textbf{tcolorbox}.
 
 \begin{docTcbKey}{opacitybacktitle}{=\meta{fraction}}{no default, initially \texttt{1.0}}
   Sets the title background opacity of the box to the given \meta{fraction}.
-\begin{exdispExample*}{opacitybacktitle}{sbs,lefthand ratio=0.6,segmentation style={pattern=checkerboard light gray}}
+\begin{exdispExample*}{opacitybacktitle}{sbs,lefthand ratio=0.6,segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcolorbox}[standard jigsaw,colframe=red,
   opacityframe=0.5, opacitybacktitle=0.5,
   title filled, title=This is a title]
@@ -1569,7 +1569,7 @@ This is a \textbf{tcolorbox}.
 \begin{docTcbKey}{opacityfill}{=\meta{fraction}}{style, no default, initially \texttt{1.0}}
   Sets the fill opacity for frame, interior and optionally the title background
   to the given \meta{fraction}.
-\begin{exdispExample*}{opacityfill}{sbs,lefthand ratio=0.6,segmentation style={pattern=checkerboard light gray}}
+\begin{exdispExample*}{opacityfill}{sbs,lefthand ratio=0.6,segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcolorbox}[standard jigsaw,colframe=red,
   opacityfill=0.7, title=This is a title]
 This is a \textbf{tcolorbox}.
@@ -1582,7 +1582,7 @@ This is a \textbf{tcolorbox}.
   Sets the text opacity of the upper box part to the given \meta{fraction}.
 \begin{exdispExample*}{opacityupper}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[enhanced,opacityupper=0.5,
-  interior style={pattern=checkerboard light gray}]
+  interior style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{exdispExample*}
@@ -1593,7 +1593,7 @@ This is a \textbf{tcolorbox}.
   Sets the text opacity of the lower box part to the given \meta{fraction}.
 \begin{exdispExample*}{opacitylower}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[enhanced,opacitylower=0.5,
-  interior style={pattern=checkerboard light gray}]
+  interior style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
@@ -1605,7 +1605,7 @@ This is the lower part.
   Sets the text opacity of the upper and the lower box part to the given \meta{fraction}.
 \begin{exdispExample*}{opacitytext}{sbs,lefthand ratio=0.6}
 \begin{tcolorbox}[enhanced,opacitytext=0.5,
-  interior style={pattern=checkerboard light gray}]
+  interior style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
@@ -1620,14 +1620,14 @@ This is the lower part.
 \begin{tcolorbox}[enhanced,opacitytitle=0.7,
   coltitle=black,
   fonttitle=\bfseries,title=This is a title,
-  title style={pattern=checkerboard light gray}]
+  title style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}]
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{exdispExample*}
 \end{docTcbKey}
 
 
-\begin{exdispExample*}{opacity_general}{segmentation style={pattern=checkerboard light gray}}
+\begin{exdispExample*}{opacity_general}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \begin{tcolorbox}[enhanced jigsaw,fonttitle=\bfseries,title=This is a title,
   opacityframe=0.5,opacityback=0.25,opacitybacktitle=0.25,opacitytext=0.8,
   colback=red!5!white,colframe=red!75!black,colbacktitle=yellow!20!red]
@@ -2336,6 +2336,55 @@ This is the end of my box.
 \end{exdispExample}
 \end{docTcbKey}
 
+
+\clearpage
+
+\begin{docTcbKey}[][doc new={2019-09-19}]{tabulars}{=\meta{preamble}}{style}
+  This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
+  and several geometry keys to support a |tabular*| with the
+  given \meta{preamble}.
+  The packages |array| and |colortbl| have to be loaded separately.
+\begin{exdispExample}{tabulars_1}
+% \usepackage{array}
+% \usepackage{colortbl} - or - \usepackage[table]{xcolor}
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+  colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!30!white,
+  coltitle=black,center title}
+
+\begin{tcolorbox}[tabulars={@{\extracolsep{\fill}\hspace{5mm}}lrrrrr@{\hspace{5mm}}},
+  boxrule=0.5pt,title=My table]
+Group & One     & Two     & Three    & Four     & Sum\\\hline\hline
+Red   & 1000.00 & 2000.00 &  3000.00 &  4000.00 & 10000.00\\\hline
+Green & 2000.00 & 3000.00 &  4000.00 &  5000.00 & 14000.00\\\hline
+Blue  & 3000.00 & 4000.00 &  5000.00 &  6000.00 & 18000.00\\\hline\hline
+Sum   & 6000.00 & 9000.00 & 12000.00 & 15000.00 & 42000.00
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new={2019-09-19}]{tabulars*}{=\marg{code}\marg{preamble}}{style}
+  This is a variant of \refKey{/tcb/tabulars} which adds some \meta{code}
+  before the table starts.
+\begin{exdispExample}{tabulars_2}
+% \usepackage{array}
+% \usepackage{colortbl} - or - \usepackage[table]{xcolor}
+\tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
+  colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!30!white,
+  coltitle=black,center title}
+
+\begin{tcolorbox}[tabulars*={\arrayrulewidth0.5mm\renewcommand\arraystretch{1.4}}%
+    {@{\extracolsep{\fill}\hspace{20mm}}lll@{\hspace{20mm}}},
+  title=My table]
+One     & Two     & Three \\\hline\hline
+1000.00 & 2000.00 &  3000.00\\\hline
+2000.00 & 3000.00 &  4000.00
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
+
+
+
 \clearpage
 \begin{marker}
 If \refKey{/tcb/tabularx} or \refKey{/tcb/tabularx*} are used, one cannot
@@ -2384,6 +2433,7 @@ One     & Two     & Three \\\hline\hline
 \end{tcolorbox}
 \end{exdispExample}
 \end{docTcbKey}
+
 
 
 \clearpage
@@ -3547,7 +3597,7 @@ If needed, the number of managed layers can be increased by setting
 The following styles have a considerable influence on how layered boxes
 are processed. Note especially that nested boxes are getting a
 \refKey{/tcb/reset} by default. You can change this, but be prepared for
-suprises if you do.
+surprises if you do.
 
 If the defaults are \emph{not changed}, a |tcolorbox| gets its options
 in the following order. Following options overwrite preceding options.
@@ -4287,6 +4337,11 @@ do \emph{not} use |\tikzexternaldisable| in front of the |tcolorbox|.
 \refKey{/tcb/shield externalize} is deactivated automatically inside a |tikzpicture|.
 \end{marker}
 
+\begin{marker}
+\refKey{/tcb/shield externalize} is applied for every following |tcolorbox|
+inside the current \TeX\ group and is not affected by \refKey{/tcb/reset}.
+\end{marker}
+
 \begin{docTcbKey}{external}{=\meta{file name}}{no default, initially unset}
   Convenience option which calls |\tikzsetnextfilename|\marg{file name}. Typically,
   it may be used inside the option list of a |tcolorbox| to set the
@@ -4310,7 +4365,8 @@ do \emph{not} use |\tikzexternaldisable| in front of the |tcolorbox|.
 \begin{docTcbKey}{reset}{}{no value, initially set}
 Sets (nearly) all |tcolorbox| settings (including loaded libraries) back to their default values
 \emph{plus} any settings given by \refCom{tcbsetforeverylayer}.
-\refKey{/tcb/savedelimiter} and \refKey{/tcb/capture} keep their values.
+\refKey{/tcb/savedelimiter}, \refKey{/tcb/capture}, and
+\refKey{/tcb/shield externalize} keep their values.
 Also, all raster values (see \Vref{sec:raster}) are not resetted.
 
 This option is useful for boxes in boxes where the inner box should not inherit
