@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
+%% The LaTeX package tcolorbox - version 4.22 (2019/11/15)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.21}
+\tcb@set@library@version{4.22}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
@@ -160,8 +160,8 @@
   % sanitize
   \tcbdimto\tcb@raster@width{\kvtcb@raster@width}%
   \tcbdimto\tcb@raster@height{\kvtcb@raster@height}%
-  \tcbdimto\tcb@raster@skip@before{\kvtcb@raster@skip@before}%
-  \tcbdimto\tcb@raster@skip@after{\kvtcb@raster@skip@after}%
+  \tcbglueto\tcb@raster@skip@before{\kvtcb@raster@skip@before}%
+  \tcbglueto\tcb@raster@skip@after{\kvtcb@raster@skip@after}%
   \tcbdimto\tcb@raster@skip@left{\kvtcb@raster@skip@left}%
   \tcbdimto\tcb@raster@skip@right{\kvtcb@raster@skip@right}%
   \tcbdimto\tcb@raster@xskip{\kvtcb@raster@xskip}%

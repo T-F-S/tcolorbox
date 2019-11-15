@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
+%% The LaTeX package tcolorbox - version 4.22 (2019/11/15)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2019/09/19 version 4.21 text color boxes]
-\def\tcb@version{4.21}
+\ProvidesPackage{tcolorbox}[2019/11/15 version 4.22 text color boxes]
+\def\tcb@version{4.22}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -41,6 +41,7 @@
 \newif\iftcb@fixedheight
 \newif\iftcb@ignorenobreak
 \newif\iftcb@checkpage
+\newif\iftcb@resetcounteronoverlays
 
 \newbox\tcb@titlebox
 \newbox\tcb@upperbox
@@ -62,6 +63,7 @@
 
 \def\tcb@dim@to#1#2{\def#1{\the\dimexpr#2\relax}}
 \def\tcbdimto#1#2{\edef#1{\the\dimexpr#2\relax}}
+\def\tcbglueto#1#2{\edef#1{\the\glueexpr#2\relax}}
 
 \def\tcb@defToTotalHeightStandard#1#2{\tcbdimto#1{\ht#2+\dp#2}}
 \let\tcb@defToTotalHeight\tcb@defToTotalHeightStandard
@@ -1844,6 +1846,7 @@
   auto counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@auto},
   use counter from/.code={\edef\kvtcb@new@counter{\csname tcb@cnt@#1\endcsname}\let\tcb@proc@counter=\tcb@proc@counter@from},
   no counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@no},
+  reset counter on overlays/.is if=tcb@resetcounteronoverlays,
   %
   number within/.store in=\kvtcb@new@numberwithin,
   number format/.store in=\kvtcb@new@format,
@@ -1861,7 +1864,8 @@
   blend into/tables/.style={use counter*=table,list inside=lot,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@table}}}}},%
   blend into/listings/.style={use counter*=lstlisting,list inside=lol,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\lstlistingname~\thetcbcounter}}}}},%
   %
-  reset@new/.style={no counter,number within=,number format=\arabic,number freestyle=,list inside=,list type=tcolorbox,init@hook@clear},
+  reset@new/.style={no counter,number within=,number format=\arabic,number freestyle=,
+    list inside=,list type=tcolorbox,init@hook@clear,reset counter on overlays=false},
 }
 
 \def\tcb@proc@counter@autoanduse#1{%
@@ -1904,6 +1908,13 @@
 \long\def\tcb@proc@options@init#1#2{%
   \tcbset{new/.cd,reset@new,#1}%
   \tcb@proc@counter{#2}%
+  \iftcb@resetcounteronoverlays%
+    \ifcsname resetcounteronoverlays\endcsname%
+      \ifcsname tcb@cnt@#2\endcsname%
+        \resetcounteronoverlays{\csname tcb@cnt@#2\endcsname}%
+      \fi%
+    \fi%
+  \fi%
   \ifx\kvtcb@new@listof\@empty%
   \else%
     \csedef{tcb@lstof@#2}{\kvtcb@new@listof}%

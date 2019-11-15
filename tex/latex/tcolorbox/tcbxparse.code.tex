@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.21 (2019/09/19)
+%% The LaTeX package tcolorbox - version 4.22 (2019/11/15)
 %% tcbxparse.code.tex: Code for xparse features
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.21}
+\tcb@set@library@version{4.22}
 
 \RequirePackage{xparse}[2013/12/31]
 
@@ -232,6 +232,19 @@
 \def\tcb@sbs@content@right{\tcb@sbs@text@left\tcblower\box\tcb@lowerbox}
 \def\tcb@sbs@content@both{\box\tcb@upperbox\tcblower\box\tcb@lowerbox}
 
+\def\tcb@sbs@save@upper{%
+  \colorlet{tcbcol@origin}{.}%
+  \tcb@set@color{tcbcolupper}%
+  \sbox{\tcb@upperbox}{\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper\tcb@sbs@text@left\tcb@insert@after@upper}%
+  \tcb@reset@color%
+}
+\def\tcb@sbs@save@lower{%
+  \colorlet{tcbcol@origin}{.}%
+  \tcb@set@color{tcbcollower}%
+  \sbox{\tcb@lowerbox}{\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower\tcb@sbs@text@right\tcb@insert@after@lower}%
+  \tcb@reset@color%
+}
+
 \tcbset{%
   sidebyside adapt/.is choice,
   sidebyside adapt/none/.style={%
@@ -241,19 +254,19 @@
   },
   sidebyside adapt/left/.style={%
     sidebyside@adapt@process/.style={%
-      code={\sbox{\tcb@upperbox}{\tcb@sbs@text@left}\let\tcb@sbs@content\tcb@sbs@content@left},
+      code={\tcb@sbs@save@upper\let\tcb@sbs@content\tcb@sbs@content@left},
       lefthand width=\wd\tcb@upperbox,
     }%
   },
   sidebyside adapt/right/.style={%
     sidebyside@adapt@process/.style={%
-      code={\sbox{\tcb@lowerbox}{\tcb@sbs@text@right}\let\tcb@sbs@content\tcb@sbs@content@right},
+      code={\tcb@sbs@save@lower\let\tcb@sbs@content\tcb@sbs@content@right},
       righthand width=\wd\tcb@lowerbox,
     }%
   },
   sidebyside adapt/both/.style={%
     sidebyside@adapt@process/.style={%
-      code={\sbox{\tcb@upperbox}{\tcb@sbs@text@left}\sbox{\tcb@lowerbox}{\tcb@sbs@text@right}\let\tcb@sbs@content\tcb@sbs@content@both},
+      code={\tcb@sbs@save@upper\tcb@sbs@save@lower\let\tcb@sbs@content\tcb@sbs@content@both},
       text width=\wd\tcb@upperbox+\kvtcb@sbs@gap+\wd\tcb@lowerbox,
       lefthand width=\wd\tcb@upperbox,
     }%

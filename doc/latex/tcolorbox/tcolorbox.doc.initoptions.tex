@@ -106,6 +106,15 @@ The created boxes are not numbered. This is the default. The option may
 be used to overrule a previous option.
 \end{newTcbKey}
 
+
+\begin{newTcbKey}[][doc new=2019-10-18]{reset counter on overlays}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+For |beamer| slides, this invokes the |\resetcounteronoverlays| command
+for the box counter. The counter is automatically reset on subsequent
+overlay slides of a frame.
+Thereby, the counter will be the same on all slides of every frame.
+\end{newTcbKey}
+
+
 \clearpage
 \begin{newTcbKey}{number within}{=\meta{counter}}{no default, initially unset}
 The automatic counter is set to zero, if \meta{counter} is increased.
