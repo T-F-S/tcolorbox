@@ -93,15 +93,45 @@ elaborate methods to create new commands.
   An existing macro is redefined.
 \end{docCommand}
 
-\enlargethispage*{1cm}
+
+\clearpage
+
+\begin{docCommands}[
+    doc name        = tcbfitdim,
+    doc description = {read-only \LaTeX\ length},
+    doc updated     = 2020-04-24,
+  ]{}
+  This is a \LaTeX\ length adapted automatically by most variants of
+  \refKey{/tcb/fit algorithm}. Therefore, it never is to be
+  changed by the user, but may be applied read-only.
+  The \refCom{tcbfitdim} corresponds to the font size and may also
+  be used to calculate box margins or other distances in dependency.
+  The initial and maximum value for \refCom{tcbfitdim} is set by
+  \refKey{/tcb/fit basedim}.
+\end{docCommands}
+
+
 \begin{docCommand}{tcbfontsize}{\marg{factor}}
   Selects a font size inside a tcolorbox which is scaled with the given
-  \meta{factor} relative to \docAuxCommand{tcbfitdim}.%
-  %, see Subsection \ref{subsec:fit} from page \pageref{subsec:fit}.
+  \meta{factor} relative to \refCom{tcbfitdim}.
+  Also see \refKey{/tcb/fit fontsize macros}
 
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
-\tcbset{colback=red!5!white,colframe=red!75!black}
+\tcbset{colback=red!5!white,size=small,
+  colframe=red!75!black}
 \begin{tcolorbox}[fit basedim=10pt]
+  {\tcbfontsize{0.25} Very tiny,}\\
+  {\tcbfontsize{0.5} Small,}\\
+  {\tcbfontsize{1} Normal,}\\
+  {\tcbfontsize{2} Large,}\\
+  {\tcbfontsize{4} Huge.}
+\end{tcolorbox}
+\end{dispExample*}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,size=small,
+  colframe=red!75!black}
+\begin{tcolorbox}[fit basedim=10pt,
+    fit to height=2cm]
   {\tcbfontsize{0.25} Very tiny,}\\
   {\tcbfontsize{0.5} Small,}\\
   {\tcbfontsize{1} Normal,}\\
@@ -124,6 +154,7 @@ The algorithm will fail, if a different selected font size does not change the
 overall size of the box content.
 The \refCom{tcboxfit} macro uses this algorithm by default.
 
+
 \medskip
 \begin{marker}
   The fit control keys are only applicable to unbreakable boxes without
@@ -139,7 +170,7 @@ The \refCom{tcboxfit} macro uses this algorithm by default.
   like \refCom{tcboxfit} where the given \meta{box content} is fitted to
   the width and height of the box. Therefore, the box has to have a fixed height.
   If no fixed height is given, a square box is constructed.
-  The font dimension \docAuxCommand{tcbfitdim} can also be used to adjust
+  The font dimension \refCom{tcbfitdim} can also be used to adjust
   the margins of the box since a box with a tiny font may not need large
   margins. The number of constructed boxes is saved to the macro \docAuxCommand{tcbfitsteps}
   for analysis.
@@ -196,6 +227,8 @@ The \refCom{tcboxfit} macro uses this algorithm by default.
 \begin{docTcbKey}{fit basedim}{=\meta{length}}{no default, initially |10pt|}
   Sets the starting font dimension for the font size adjustment algorithm
   to \meta{length}. The algorithm never enlarges this dimension.
+  Therefore, the final \refCom{tcbfitdim} is identical to or small than
+  \meta{length}.
 
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \tcbset{colback=red!5!white,colframe=red!75!black}
@@ -213,7 +246,7 @@ The \refCom{tcboxfit} macro uses this algorithm by default.
 
 
 \begin{docTcbKey}{fit skip}{=\meta{real value}}{no default, initially |1.2|}
-  Sets the skip value of the selected font to \meta{real value} times \docAuxCommand{tcbfitdim}.
+  Sets the skip value of the selected font to \meta{real value} times \refCom{tcbfitdim}.
 
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 % \usepackage{lipsum}
@@ -236,8 +269,9 @@ The \refCom{tcboxfit} macro uses this algorithm by default.
   |\tiny|, |\scriptsize|, |\footnotesize|, |\small|, |\normalsize|,
   |\large|, |\Large|, |\LARGE|, |\huge|, and |\Huge|,
   to set font sizes relative to
-  the current \docAuxCommand{tcbfitdim}. Note that the display skip values for
+  the current \refCom{tcbfitdim}. Note that the display skip values for
   mathematical formulas are respected by the redefined macros.
+  Also see \refCom{tcbfontsize}.
 
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 % \usepackage{lipsum}
@@ -395,7 +429,8 @@ This is a tcolorbox. This is a tcolorbox. This is a tcolorbox.
 \clearpage
 \begin{docTcbKey}{fit algorithm}{=\meta{name}}{no default, initially |fontsize|}
 Sets the algorithm for the fitting process \emph{after} optionally width and height
-are adapted.
+are adapted. In the following, adapting the font size means adapting
+\refCom{tcbfitdim}.
   Feasible values for \meta{name} are:
   \begin{itemize}
   \item\docValue{fontsize} (initial):

@@ -2764,7 +2764,7 @@ Click me to jump to Box A.
   Such, the |tcolorbox| is made a clickable button (depending on the previewer).
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
 \begin{tcolorbox}[enhanced,colback=red!50,
-  hyperurl=http://www.ctan.org/pkg/tcolorbox]
+  hyperurl=https://www.ctan.org/pkg/tcolorbox]
 View CTAN with a browser.
 \end{tcolorbox}
   \end{dispExample*}
@@ -2812,6 +2812,8 @@ Open example file on Page~3.
   Identical to \refKey{/tcb/hyperurl title}, but additional |hyperref| \cite{rahtz:hyperref}
   \meta{options} are applied.
 \end{docTcbKey}
+
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}[][doc new=2017-02-03]{hyperurl* node}{=\marg{options}\marg{url}\marg{node}}{no default, initially unset}
   Identical to \refKey{/tcb/hyperurl node}, but additional |hyperref| \cite{rahtz:hyperref}
@@ -2945,7 +2947,9 @@ from converting to draft mode.
   \end{marker}
 \end{docCommand}
 
-\enlargethispage*{2cm}
+
+\clearpage
+
 \begin{docTcbKey}{draftmode}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
   If set to |true|, the \emph{draft mode} is started.
   If set to |false|, the \emph{draft mode} is stopped.
@@ -3630,6 +3634,8 @@ Nevertheless, this skin can be applied independently.
   \end{itemize}
 \end{docSkin}
 
+\clearpage
+
 \begin{docTcbKey}{bicolor}{}{style, no value}
   This is an abbreviation for setting |skin=bicolor|.
 \end{docTcbKey}
@@ -3658,6 +3664,8 @@ Nevertheless, this skin can be applied independently.
   \end{tcolorbox}
 \end{tcbraster}
 \end{dispExample}
+
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{colbacklower}{=\meta{color}}{no default, initially \texttt{black!15!white}}
   Sets the background \meta{color} of the lower part. It depends on the skin,
@@ -4659,7 +4667,9 @@ are drawn by the codes given by
 %\tcbuselibrary{skins,breakable}
 \tikzset{coltria/.style={fill=red!15!white}}
 
-\newtcolorbox{freebox}[1][]{empty,breakable,leftrule=5mm,left=2mm,
+\newtcolorbox{freebox}[1][]{empty,
+  breakable,height fixed for=first and middle,
+  leftrule=5mm,left=2mm,
   frame style={fill,top color=red!75!black,bottom color=red!75!black,middle color=red},
   colback=yellow!50!white,
   watermark color=red!50!yellow!75!white,
@@ -4925,6 +4935,8 @@ The \meta{options} are added to the skin definition of \refSkin{freelancemiddle}
 is used as middle part of the break sequence of \refSkin{freelance}.
 See \refKey{/tcb/skin middle is subskin of} for a substitute of this key.
 \end{docTcbKey}
+
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{extend freelancelast}{=\meta{options}}{no default, initially empty}
 The \meta{options} are added to the skin definition of \refSkin{freelancelast} which

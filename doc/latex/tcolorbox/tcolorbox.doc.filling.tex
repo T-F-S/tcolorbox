@@ -18,7 +18,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   Fills the current path with an external image referenced by \meta{file name}.
   The image is put in the center of the path, but it is not resized to fit into
   the path area.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill plain image=goldshade.png]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -34,9 +34,10 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   The image is put in the center of the path, but it is not resized to fit into
   the path area.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
-\path[draw,fill plain image*={width=2.5cm}{goldshade.png}]
+\path[draw,
+    fill plain image*={width=2.5cm}{goldshade.png}]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
   \foreach \w in {45,90,...,315}
     { -- (\w:1.5cm) } -- cycle;
@@ -49,7 +50,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   Fills the current path with the given \meta{graphical code}.
   The result is put in the center of the path, but it is not resized to fit into
   the path area. Note that this is almost identical to the standard |path picture| option.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill plain picture={%
   \draw[red!50!yellow,line width=2mm]
@@ -70,7 +71,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \begin{docTikzKey}{fill stretch image}{=\meta{file name}}{no default, initially unset}
   Fills the current path with an external image referenced by \meta{file name}.
   The image is stretched to fill the path area.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill stretch image=goldshade.png]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -85,7 +86,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   Fills the current path with an external image referenced by \meta{file name}.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
   The image is stretched to fill the path area.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill stretch image*=
   {angle=90,origin=c}{goldshade.png}]
@@ -100,7 +101,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \begin{docTikzKey}{fill stretch picture}{=\meta{graphical code}}{no default, initially unset}
   Fills the current path with the given \meta{graphical code}.
   The result is stretched to fill the path area.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill stretch picture={%
   \draw[red!50!yellow,line width=2mm]
@@ -121,7 +122,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \begin{docTikzKey}{fill overzoom image}{=\meta{file name}}{no default, initially unset}
   Fills the current path with an external image referenced by \meta{file name}.
   The image is zoomed such that the path area fills the image.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill overzoom image=goldshade.png]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -136,7 +137,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   Fills the current path with an external image referenced by \meta{file name}.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
   The image is zoomed such that the path area fills the image.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill overzoom image*=
   {angle=90,origin=c}{goldshade.png}]
@@ -151,7 +152,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \begin{docTikzKey}{fill overzoom picture}{=\meta{graphical code}}{no default, initially unset}
   Fills the current path with the given \meta{graphical code}.
   The result is zoomed such that the path area fills the image.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill overzoom picture={%
   \draw[red!50!yellow,line width=2mm]
@@ -173,7 +174,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   Fills the current path with an external image referenced by \meta{file name}.
   The image is zoomed such that it fits inside the path area.
   Typically, some parts of the path area will stay unfilled.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill zoom image=goldshade.png]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -189,7 +190,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
   The image is zoomed such that it fits inside the path area.
   Typically, some parts of the path area will stay unfilled.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill zoom image*=
   {angle=90,origin=c}{goldshade.png}]
@@ -205,7 +206,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   Fills the current path with the given \meta{graphical code}.
   The result is zoomed such that it fits inside the path area.
   Typically, some parts of the path area will stay unfilled.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill zoom picture={%
   \draw[red!50!yellow,line width=2mm]
@@ -228,7 +229,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   The image is zoomed such that it fits inside the path area, but it never
   gets enlarged.
   Typically, some parts of the path area will stay unfilled.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill shrink image=goldshade.png]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -245,9 +246,10 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   The image is zoomed such that it fits inside the path area, but it never
   gets enlarged.
   Typically, some parts of the path area will stay unfilled.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
-\path[draw,fill shrink image*={width=1.5cm}{goldshade.png}]
+\path[draw,
+    fill shrink image*={width=1.5cm}{goldshade.png}]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
   \foreach \w in {45,90,...,315}
     { -- (\w:1.5cm) } -- cycle;
@@ -261,7 +263,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   The result is zoomed such that it fits inside the path area, but it never
   gets enlarged.
   Typically, some parts of the path area will stay unfilled.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill shrink picture={%
   \draw[red!50!yellow,line width=2mm]
@@ -281,7 +283,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \subsection{Fill Tile}
 \begin{docTikzKey}{fill tile image}{=\meta{file name}}{no default, initially unset}
   Fills the current path with a tile pattern using an external image referenced by \meta{file name}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill tile image=pink_marble.png]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -295,7 +297,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \begin{docTikzKey}{fill tile image*}{=\marg{graphics options}\marg{file name}}{no default, initially unset}
   Fills the current path with a tile pattern using an external image referenced by \meta{file name}.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill tile image*={width=1cm}{pink_marble.png}]
   (2.75,-0.75) -- (3,0) -- (2.75,0.75)
@@ -307,7 +309,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 
 \begin{docTikzKey}{fill tile picture}{=\meta{graphical code}}{no default, initially unset}
   Fills the current path with a tile pattern using the given \meta{graphical code}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill tile picture={%
   \draw[red!50!yellow,line width=2mm]
@@ -326,7 +328,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
 \begin{docTikzKey}{fill tile picture*}{=\marg{fraction}\marg{graphical code}}{no default, initially unset}
   Fills the current path with a tile pattern using the given \meta{graphical code}.
   The graphic is resized by \meta{fraction}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[draw,fill tile picture*={0.25}{%
   \draw[red!50!yellow,line width=2mm]
@@ -384,7 +386,7 @@ See \Vref{sec:skins} for the documentation of all other options of the \mylib{sk
   for the image fill options. This can be just together with
   \refKey{/tikz/fill stretch image}, \refKey{/tikz/fill overzoom image}, \refKey{/tikz/fill zoom image},
   and \refKey{/tikz/fill tile image}.
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
 \path[fill image options={width=1cm},
   fill tile image=pink_marble.png]
@@ -429,7 +431,7 @@ all corners by little arcs. |\tcbpatcharcangular| is a patch which
 straightens the arcs. To say it more prosaic, the little arcs are replaced
 by little straight lines.
 
-\begin{dispExample*}{sbs,lefthand ratio=0.66}
+\begin{dispExample*}{sbs,lefthand ratio=0.66,right=2mm,sidebyside gap=5mm,center lower}
 \begin{tikzpicture}
   \draw[thick,rounded corners=8pt]
     (0,0) -- (0,2) -- (1,3.25) -- (2,2) -- (2,0)

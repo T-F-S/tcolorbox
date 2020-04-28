@@ -239,6 +239,7 @@ The |break at| option can be used to insert better break points by hand.
 \end{dispExample}
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{enlargepage}{=\meta{length}\colOpt{/\meta{length}/\ldots/\meta{length}}}{no default, initially |0pt|}
   Inserts a |\enlargethispage|\marg{length} to the pages of the break sequence,
@@ -366,6 +367,8 @@ The |break at| option can be used to insert better break points by hand.
   Abbreviation for setting \meta{length} to \refKey{/tcb/pad before break}
   and \refKey{/tcb/pad after break}.
 \end{docTcbKey}
+
+\enlargethispage*{5mm}
 
 \begin{docTcbKey}{pad at break*}{=\meta{length}}{style, no default}
   Sets \refKey{/tcb/pad at break} to \meta{length} and
@@ -529,7 +532,6 @@ and \refKey{/tcb/enlarge bottom at break by}.
   \refKey{/tcb/extras} overwrites this key.
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
 \begin{docTcbKey}[][doc new=2015-07-16]{extras unbroken and last}{=\marg{options}}{no default, initially unset}
   This is an abbreviation for setting
   \refKey{/tcb/extras unbroken} and
@@ -537,6 +539,7 @@ and \refKey{/tcb/enlarge bottom at break by}.
   \refKey{/tcb/extras} overwrites this key.
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}[][doc new=2015-07-16]{extras first and middle}{=\marg{options}}{no default, initially unset}
   This is an abbreviation for setting
@@ -545,7 +548,6 @@ and \refKey{/tcb/enlarge bottom at break by}.
   \refKey{/tcb/extras} overwrites this key.
 \end{docTcbKey}
 
-\clearpage
 
 \begin{docTcbKey}[][doc new=2018-07-26]{extras title after break}{=\marg{options}}{no default, initially unset}
   If the box has a \refKey{/tcb/title after break}, then the \meta{options}
@@ -609,7 +611,7 @@ code which \emph{may} have to be adapted.
 \begin{tcolorbox}[enhanced jigsaw,size=small,breakable,colback=yellow!10!white,
   colframe=red!50!white,break at=3cm,height fixed for=all]
 Unbreakable |tcolorbox|es can be used without special care inside a
-|multicols| environment from the |multicol| package \cite{mittelbach:2015a}.
+|multicols| environment from the |multicol| package \cite{mittelbach:multicol}.
 
 Since version 3.10, a breakable |tcolorbox| detects, if it is used inside
 a |multicols| environment. But choosing break points for a breakable box

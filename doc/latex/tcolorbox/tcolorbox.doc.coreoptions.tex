@@ -6,7 +6,7 @@
 For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
 the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
-the syntax for |pgf| keys, see \cite{tantau:tikz_and_pgf,sturm:2016e} or the examples
+the syntax for |pgf| keys, see \cite{tantau:tikz_and_pgf,sturm:latex} or the examples
 starting from page~\pageref{sec:latextutorial}.
 
 
@@ -738,6 +738,7 @@ This is a demonstration text for showing how line breaking works.
   Shortcut for setting \refKey{/tcb/halign lower} to \docValue{flush right}.
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}[][doc updated=2015-05-07]{flushleft title}{}{style, no value}
   Shortcut for setting \refKey{/tcb/halign title} to \docValue{flush left}.
@@ -751,7 +752,6 @@ This is a demonstration text for showing how line breaking works.
   Shortcut for setting \refKey{/tcb/halign title} to \docValue{flush right}.
 \end{docTcbKey}
 
-\clearpage
 
 \begin{marker}
 The vertical alignment settings are only relevant for boxes which are larger
@@ -1151,6 +1151,7 @@ This is the lower part.
 \end{exdispExample}
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{right}{=\meta{length}}{style, no default, initially \texttt{4mm}}
   Sets the right space between all text parts and frame (additional to |boxsep|).
@@ -1165,6 +1166,7 @@ This is a \textbf{tcolorbox}.
 \end{exdispExample}
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}[][doc new=2017-02-16]{right*}{=\meta{length}}{style, no default}
   Sets \refKey{/tcb/right} such that \meta{length} is the distance between
@@ -2395,7 +2397,7 @@ have a lower part.
   This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
   and several geometry keys to support a |tabularx| with the
   given \meta{preamble}.
-  The packages |tabularx| \cite {carlisle:2016a}, |array|, and |colortbl|
+  The packages |tabularx| \cite {carlisle:tabularx}, |array|, and |colortbl|
   have to be loaded separately.
 \begin{exdispExample}{tabularx_1}
 % \usepackage{array,tabularx}
@@ -3046,6 +3048,7 @@ enforce the \refKey{/tcb/before} setting.
   the box follows a heading.
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}[][doc new=2017-02-23]{parfillskip restore}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   If this option is set to be |true|, the minimum value of |\parfillskip| is
@@ -4085,7 +4088,7 @@ Click me to jump to Box B.
 
 
 \begin{docTcbKey}[][doc new=2017-02-10]{bookmark}{=\meta{text}}{no default, initially unset}
-  Sets a PDF bookmark with the given \meta{text}, if the package |bookmark| \cite{oberdiek:2016a}
+  Sets a PDF bookmark with the given \meta{text}, if the package |bookmark| \cite{oberdiek:bookmark}
   is loaded. This bookmark is set with an automated destination (the current box)
   and is set one level below the current bookmark level.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
@@ -4102,7 +4105,7 @@ to see the bookmark.
 
 \begin{docTcbKey}[][doc new=2017-02-10]{bookmark*}{=\marg{options}\marg{text}}{no default, initially unset}
   Identical to \refKey{/tcb/bookmark}, but additional \meta{options}
-  from the package |bookmark| \cite{oberdiek:2016a} can be given.
+  from the package |bookmark| \cite{oberdiek:bookmark} can be given.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
 % \usepackage{bookmark}%
 \begin{tcolorbox}[colback=red!10,colframe=red!50!black,

@@ -4,22 +4,19 @@
 \section{Introduction}%
 \tcbset{external/prefix=external/intro_}%
 The package originates from the first edition of my book
-\flqq{\citetitle{sturm:2016e}\frqq~\cite{sturm:2016e}
+\flqq{\citetitle{sturm:latex}\frqq~\cite{sturm:latex}
 in about 2006.
 For the \LaTeX\ examples and tutorials given there, I wanted to have
 accentuated and colored boxes to display source code and
 compiled text in combination.
 Since, in my opinion, this type of boxes is also quite useful to highlight definitions
 and theorems, I applied them for my lecture notes in
-mathematics \cite{sturm:2007b,sturm:2008b,sturm:2010a}
+mathematics \cite{sturm:mathe1,sturm:mathe2,sturm:mathe3}
 as well.
 With this package, you are invited to apply these boxes for similar projects.
 
-Starting with version 2.00, for all internal calculations
-$\varepsilon$-\TeX\ \cite{breitenlohner:1998a} expressions are used
-in replacement of the package |calc|.
-The breaking news for version 2.00 is the support for breakable boxes.
-This new feature allows new applications of the package without
+The breaking news for version 2.00 was the support for breakable boxes.
+This feature allows new applications of the package without
 affecting the core package too much if you do not need boxes to break automatically.
 With version 2.20, the often requested 'side by side' mode for listings has been added.
 With version 3.00, boxed titles are introduced together with improved
@@ -52,7 +49,7 @@ for some hints. The short story is: you have to install not only
 \subsection{Loading the Package}
 The base package |tcolorbox| loads the packages
 |pgf| \cite{tantau:tikz_and_pgf}, |verbatim| \cite{schoepf:2001a},
-|etoolbox| \cite{lehmann:2018a},
+|etoolbox| \cite{lehmann:etoolbox},
 and |environ| \cite{robertson:2014a}.
 |tcolorbox| itself is loaded in the usual manner in the preamble:
 \begin{dispListing}
@@ -101,14 +98,14 @@ The following keys are used inside |\tcbuselibrary| respectively
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{listings}{}{\mylib{listings}}
-  Loads the package |listings| \cite{hoffmann:2018a} and provides additional
+  Loads the package |listings| \cite{hoffmann:listings} and provides additional
   macros for typesetting listings which are described in Section~\ref{sec:listings}
   from page~\pageref{sec:listings}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{listingsutf8}{}{\mylib{listingsutf8}}
-  Loads the packages |listings| \cite{hoffmann:2018a} and
-  |listingsutf8| \cite{oberdiek:2016b} for UTF-8 support.
+  Loads the packages |listings| \cite{hoffmann:listings} and
+  |listingsutf8| \cite{oberdiek:listingsutf8} for UTF-8 support.
   This is a variant of the library \mylib{listings}
   and is described in Section \ref{sec:listings}
   from page~\pageref{sec:listings}.
@@ -186,7 +183,7 @@ The following keys are used inside |\tcbuselibrary| respectively
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{all}{}{style, no value}
-  Loads all libraries. Use this shortcut only, if you indend to use the
+  Loads all libraries. Use this shortcut only, if you intend to use the
   \mylib{documentation} library.
 \end{docTcbKey}
 

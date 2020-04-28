@@ -194,12 +194,17 @@ documentation:\par
 
 \begin{posterTcbKey}[][doc new=2017-07-03]{width}{=\meta{length}}{no default, initially \cs{linewidth}}
   Sets \meta{length} as width of the poster. For a typical poster, this has not
-  to be set manually.
+  to be set manually. Especially, if \refKey{/tcb/posterset/coverage} is present,
+  use |coverage={width=|\meta{length}|}| instead to change the overall width.
 \end{posterTcbKey}
+
+\enlargethispage*{1cm}
 
 \begin{posterTcbKey}[][doc new=2017-07-03]{height}{=\meta{length}}{no default, initially unset}
   Sets \meta{length} as height of the poster. For a typical poster, this has not
   to be set manually, but is set automatically to an appropriate value.
+  If \refKey{/tcb/posterset/coverage} is present, use only one if any option
+  |coverage={height=|\meta{length}|}| or |poster={height=|\meta{length}|}|.
 \end{posterTcbKey}
 
 
@@ -248,6 +253,11 @@ The \meta{option list} can contain any |tcolorbox| option.
   \refKey{/tcb/top}, \refKey{/tcb/bottom}.
 \item Poster background can be changed by \refKey{/tcb/colback},
   \refKey{/tcb/interior style}, \refKey{/tcb/interior style image}, etc.
+\item Do not use \refKey{/tcb/poster/width} and \refKey{/tcb/poster/height}
+  in combination with a \emph{coverage}. Note that you may use
+  \refKey{/tcb/width} and \refKey{/tcb/height} inside
+  the \emph{coverage} \meta{option list}. Note that this also is not
+  necessary when \refKey{/tcb/spread} is applied.
 \end{itemize}
 \end{postersetTcbKey}
 
@@ -556,7 +566,8 @@ poster listing.
 \end{exdispExample}
 \end{posterlocTcbKey}
 
-\enlargethispage*{2cm}
+\clearpage
+
 \begin{docTcbKey}[][doc new=2017-07-03]{placeholder}{}{style, no value}
   If the box content of a \refKey{/tcb/posterloc/sequence} is too short
   to fill all reserved box parts, the empty boxes are drawn with
@@ -578,7 +589,7 @@ poster listing.
 \end{docTcbKey}
 
 
-\clearpage
+
 \begin{posterlocTcbKey}[][doc new=2017-07-03]{xshift}{=\meta{length}}{no default, initially |0pt|}
   Horizontal shift of a box by \meta{length}.
 \begin{exdispExample}{xshift}
@@ -592,6 +603,7 @@ poster listing.
 \end{exdispExample}
 \end{posterlocTcbKey}
 
+\clearpage
 
 \begin{posterlocTcbKey}[][doc new=2017-07-03]{yshift}{=\meta{length}}{no default, initially |0pt|}
   Vertical shift of a box by \meta{length}.

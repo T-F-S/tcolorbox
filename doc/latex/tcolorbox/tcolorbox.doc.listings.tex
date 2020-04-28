@@ -27,12 +27,12 @@ the settings of a previous loaded library. A library is never loaded twice.
 
 
 \subsubsection{Loading \mylib{listings}}
-This library uses the package |listings| \cite{hoffmann:2018a} to typeset
+This library uses the package |listings| \cite{hoffmann:listings} to typeset
 listings. It is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{listings}
 \end{dispListing}
-This also loads the package |listings| \cite{hoffmann:2018a}.
+This also loads the package |listings| \cite{hoffmann:listings}.
 
 The \refKey{/tcb/listing engine} is set to |listings| by the library.
 To reactivate this setting, if overwritten by other libraries, use
@@ -43,17 +43,19 @@ To reactivate this setting, if overwritten by other libraries, use
 \subsubsection{Loading \mylib{listingsutf8}}
 \begin{marker}
 This library is not needed (and troublesome) when using Xe\LaTeX\ or Lua\LaTeX.
+Therefore, loading this library is automatically replaced by loading
+\mylib{listings} only, if pdf\LaTeX\ is \emph{not} used.
 \end{marker}
 To extend |listings| for UTF-8 encoded sources, you can use the support from
-the package |listingsutf8| \cite{oberdiek:2016b} by loading the library
+the package |listingsutf8| \cite{oberdiek:listingsutf8} by loading the library
 variant \mylib{listingsutf8}.
 \begin{dispListing}
 \tcbuselibrary{listingsutf8}
 \tcbset{listing utf8=latin1}% optional; 'latin1' is the default.
 \end{dispListing}
 This also loads the library \mylib{listings}
-and the packages |listings| \cite{hoffmann:2018a}
-and |listingsutf8| \cite{oberdiek:2016b}.
+and the packages |listings| \cite{hoffmann:listings}
+and |listingsutf8| \cite{oberdiek:listingsutf8}.
 
 The \refKey{/tcb/listing engine} is set to |listings| by the library.
 To reactivate this setting, if overwritten by other libraries, use
@@ -322,7 +324,7 @@ This is my \LaTeX\ box.
 \subsection{Option Keys of the \mylib{listings} Library}\label{sec:speclistingkeys}
 
 \begin{docTcbKey}{listing options}{=\meta{key list}}{no default, initially |style=tcblatex|}
-  Sets the options from the package |listings| \cite{hoffmann:2018a}
+  Sets the options from the package |listings| \cite{hoffmann:listings}
   which are used during typesetting of the listing.
   For \LaTeX\ listings, there is a predefined |listings| style named |tcblatex|
   which can be used.
@@ -352,7 +354,7 @@ All \textit{listings} options removed.
 
 \begin{docTcbKey}{listing style}{=\meta{style}}{no default, initially |tcblatex|}
   Abbreviation for |listing options={style=...}|. This key sets a \meta{style}
-  for the |listings| package, see \cite{hoffmann:2018a}.
+  for the |listings| package, see \cite{hoffmann:listings}.
   For \LaTeX, there is a predefined style named |tcblatex|.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,
@@ -425,6 +427,8 @@ For an combined example of using |\lstinline| inside a |tcolorbox|, see
 \subsection{Option Keys of the \mylib{listingsutf8} Library}
 \begin{marker}
 The \mylib{listingsutf8} library is not needed (and troublesome) when using Xe\LaTeX\ or Lua\LaTeX.
+Therefore, loading this library is automatically replaced by loading
+\mylib{listings} only, if pdf\LaTeX\ is \emph{not} used.
 \end{marker}
 
 The \mylib{listingsutf8} library is an extension of the
@@ -433,10 +437,10 @@ all options from \Vref{sec:speclistingkeys} are applicable.
 
 \begin{docTcbKey}{listing utf8}{=\meta{one-byte-encoding}}{style, no default, initially |latin1|}
   Abbreviation for using \refKey{/tcb/listing inputencoding}
-  together with UTF-8 support from the package |listingsutf8| \cite{oberdiek:2016b}.
+  together with UTF-8 support from the package |listingsutf8| \cite{oberdiek:listingsutf8}.
   This option is available only for the library variant \mylib{listingsutf8}.
   The \meta{one-byte-encoding} is one of
-  the applicable encodings from \cite{oberdiek:2016b}, e.\,g.\ |latin1|
+  the applicable encodings from \cite{oberdiek:listingsutf8}, e.\,g.\ |latin1|
   which is the default.\par
   Be aware that this means restriction to this specific \meta{one-byte-encoding}:
   e.\,g.\ |latin1| comprises umlauts and other accented characters, but not
@@ -635,7 +639,7 @@ This is a \LaTeX\ example.
 \end{dispExample}
 \end{docTcbKey}
 
-%\enlargethispage*{1cm}
+\clearpage
 
 \begin{docTcbKey}[][doc new=2014-11-14]{pdf comment}{\colOpt{=\meta{filename}}}{style, default listing file, initially unset}
   Uses a PDF file denoted by \meta{filename} as \textit{comment} for the listing.
@@ -744,6 +748,7 @@ This is a \LaTeX\ example.
 \end{dispExample}
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}{text outside listing}{}{no value}
 Typesets the environment content side by side as listing in a |tcolorbox|
@@ -760,7 +765,7 @@ This is a \LaTeX\ example.
 \end{docTcbKey}
 
 
-\clearpage
+
 \begin{docTcbKey}{listing side comment}{}{style, no value}
 Typesets the environment content side by side as listing in the left (upper)
 part and a given comment in the right (lower) part.
@@ -786,8 +791,8 @@ This is a \LaTeX\ example.
 \end{dispExample}
 \end{docTcbKey}
 
+\clearpage
 
-\enlargethispage*{2cm}
 \begin{docTcbKey}{listing outside comment}{}{no value}
 Typesets the environment content side by side as listing in a |tcolorbox|
 and a given comment outside the box in the right part of the page.
@@ -820,7 +825,7 @@ This is a \LaTeX\ example.
 \end{docTcbKey}
 
 
-\clearpage
+
 \begin{docTcbKey}{listing above text}{}{no value}
   Typesets the environment content as listing in a |tcolorbox|
   and as compiled text outside and below the box.
@@ -842,6 +847,7 @@ This is a \LaTeX\ example.
   The distance between box and text is controlled by \refKey{/tcb/after}.
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}{text above listing}{}{no value}
   Typesets the environment content as listing in a |tcolorbox|
@@ -865,7 +871,7 @@ This is a \LaTeX\ example.
 \end{docTcbKey}
 
 
-\clearpage
+
 \begin{docTcbKey}{listing above comment}{}{no value}
   Typesets the environment content as listing in a |tcolorbox|
   and a given comment outside and below the box.
@@ -888,6 +894,7 @@ This is a \LaTeX\ example.
   The distance between box and comment is controlled by \refKey{/tcb/after}.
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}{comment above listing}{}{no value}
   Typesets the environment content as listing in a |tcolorbox|

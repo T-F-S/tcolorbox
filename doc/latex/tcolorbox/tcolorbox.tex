@@ -1,9 +1,9 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 4.22 (2019/11/15)
+%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,10 +18,10 @@
 %%
 %% This work consists of all files listed in README
 %%
-% arara: pdflatex: { shell: yes }
+% arara: pdflatex: { shell: yes, synctex: yes }
 % arara: biber
-% arara: pdflatex: { shell: yes }
-% arara: pdflatex: { shell: yes }
+% arara: pdflatex: { shell: yes, synctex: yes }
+% arara: pdflatex: { shell: yes, synctex: yes }
 % arara: pdflatex: { shell: yes, synctex: yes }
 % arara: pdflatex: { shell: yes, synctex: yes }
 %
@@ -43,8 +43,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{4.22}%
-\def\datum{2019/11/15}%
+\def\version{4.30}%
+\def\datum{2020/04/28}%
 \makeindex
 
 \hypersetup{
@@ -55,10 +55,16 @@
 }
 
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
 
+\nocite{breitenlohner:1998a}
+
+%\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.initoptions}
+%\includeonly{tcolorbox.doc.picturecredits}
+
+%\hypersetup{colorlinks=false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}

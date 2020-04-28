@@ -1,7 +1,7 @@
-%% The LaTeX package tcolorbox - version 4.22 (2019/11/15)
+%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -1113,4 +1113,34 @@ version 4.22 (2019/11/15)
 - bug fix (#85) in library 'raster':
   'raster before skip' and 'raster after skip' did not accept glue anymore.
 - new initialization option (#80): 'reset counter on overlays'
+
+version 4.30 (2020/04/28)
+- bug fix (#88): 'parskip' and 'noparskip' had side-effects for the box content
+                 in combination with 'height fill' and 'parbox=false'
+- bug fix (#90) in library 'documentation':
+  initialize 'doc description' for every docXXX to be empty
+- Internal box counter renamed to remove warnings when using \includeonly
+- library 'documentation':
+  * major code overhaul to support simultaneous documentation of
+    similar commands, environments, keys, path operations (#89).
+  * Note that the new code reserves a small additional amount of vertical space
+    for documented macros which may result in changed page breaks.
+  * Note that documentation heads are now embedded inside a 'raster'
+    which requires other customizations for vertical space (if needed)
+  * new macros and environments: 'docCommands', 'docEnvironments',
+      'docKeys', '\tcbmakedocSubKeys', 'docPathOperations'
+  * new options: 'doc index' (#91), 'doc name', 'doc parameter',
+      'doc keypath', 'doc sort index', 'doc no index',
+      'doc raster command', 'doc raster environment', 'doc raster key',
+      'doc raster path', 'doc raster'
+  * additional option setting for: '\docAuxCommand', '\docAuxEnvironment',
+      '\docAuxKey', '\docValue', '\docColor', '\docCounter', '\docLength'
+  * superfluous and undocumented opton 'color frame' removed (#94)
+  * '\refAux' and '\refAuxcs' are not longer colored, if colorlinks=false (#95)
+- library 'listingsutf8':
+  safeguard against compiling with other engines than pdf(la)tex (#92)
+- library 'fitting':
+  '\tcbfitdim' is described in more detail (#96)
+- library 'poster':
+  poster width and height caveats described in more detail (#98)
 

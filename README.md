@@ -3,11 +3,11 @@ tcolorbox
 
 A LaTeX package to create highly customizable colored boxes.
 
-> http://www.ctan.org/pkg/tcolorbox
+> https://www.ctan.org/pkg/tcolorbox
 
 ```
 The LaTeX package tcolorbox
-Copyright (c) 2006-2019 by Prof. Dr. Dr. Thomas F. Sturm
+Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.3

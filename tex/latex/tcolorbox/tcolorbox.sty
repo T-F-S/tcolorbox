@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.22 (2019/11/15)
+%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2019/11/15 version 4.22 text color boxes]
-\def\tcb@version{4.22}
+\ProvidesPackage{tcolorbox}[2020/04/28 version 4.30 text color boxes]
+\def\tcb@version{4.30}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -50,8 +50,9 @@
 
 \newcounter{tcbbreakpart}
 \newcounter{tcblayer}
-\newcount\tcolorbox@number
+\newcounter{tcolorbox@number}
 
+\def\tcb@info#1{\PackageInfo{tcolorbox}{#1}}
 \def\tcb@warning#1{\PackageWarning{tcolorbox}{#1}}
 \def\tcb@error#1#2{\PackageError{tcolorbox}{#1}{#2}}
 
@@ -289,12 +290,12 @@
   parskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\tcb@prevdepth}}%
-      \pagebreak[0]\fi\fi\parindent\z@},
+      \pagebreak[0]\fi\fi\noindent},
     after={\tcb@parfillskip@check\par}},
   noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip}%
       \def\tcb@undo@before{\addvspace{-\glueexpr\smallskipamount+\tcb@prevdepth}}%
-      \pagebreak[0]\smallskip\fi\fi\parindent\z@},
+      \pagebreak[0]\smallskip\fi\fi\noindent},
     after={\tcb@parfillskip@check\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
@@ -973,14 +974,18 @@
   \Collect@Body\tcbox@inner@hbox@collected%
 }
 
+% save 'comment' from 'verbatim'
+\let\tcb@verbatim@comment\comment
+\let\tcb@verbatim@endcomment\endcomment
+
 \def\tcb@@end@v@@d{%
-  \endcomment%
+  \tcb@verbatim@endcomment%
   \tcb@layer@dec%
 }
 
 \def\tcb@@capture@v@@d{%
   \let\endtcolorbox\tcb@@end@v@@d%
-  \comment%
+  \tcb@verbatim@comment%
 }
 
 \long\def\tcbox@inner@hbox@collected#1{%
@@ -989,8 +994,8 @@
 }
 
 \def\tcb@count@boxes{%
-  \global\advance\tcolorbox@number by 1\relax%
-  \edef\thetcolorboxnumber{\number\tcolorbox@number}%
+  \global\advance\c@tcolorbox@number by 1\relax%
+  \edef\thetcolorboxnumber{\number\c@tcolorbox@number}%
   \expandafter\ifx\csname tcolorboxpage@\thetcolorboxnumber\endcsname\relax%
     \edef\thetcolorboxpage{\number\c@page}%
   \else%
@@ -999,8 +1004,6 @@
 }
 
 \def\tcolorbox@label{\@newl@bel{tcolorboxpage}}%
-
-%\write\@auxout{\string\providecommand\string\tcolorbox@label[2]{}}%
 
 \def\tcolorbox@savepage#1{%
     \@bsphack%
@@ -1074,7 +1077,7 @@
 
 \def\tcb@layer@pushup{%
   \tcb@count@boxes%
-  \global\advance\tcolorbox@number by -1\relax%
+  \global\advance\c@tcolorbox@number by -1\relax%
   \stepcounter{tcblayer}%
   \ifnum\c@tcblayer>1%
     \tcbset{breakable@true/.code=}%

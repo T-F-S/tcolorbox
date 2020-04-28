@@ -66,6 +66,7 @@
 \urlstyle{sf}
 
 \tcbmakedocSubKey{docTcbKey}{tcb}
+\tcbmakedocSubKeys{docTcbKeys}{tcb}
 \tcbmakedocSubKey{langTcbKey}{tcb/doclang}
 \tcbmakedocSubKey{newTcbKey}{tcb/new}
 \tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
@@ -78,26 +79,63 @@
 
 \def\tikzname{Ti\emph{k}Z}
 
+
 \newrobustcmd{\tcbIndexPrintSkinCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{Skin}}
 \newrobustcmd{\tcbIndexPrintSkinC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
-\def\tcb@index@Skin#1{\iftcb@doc@toindex\index{#1\idx@actual\tcbIndexPrintSkinCA{#1}}\index{Skins\idx@level#1\idx@actual\tcbIndexPrintSkinC{#1}}\fi}%
-
-\newenvironment{docSkin}[2][]{\begin{tcb@manual@entry}%
-  \begin{tcb@doc@head}{colback=magenta!5!white,interior style=fill,#1}%
-  \hypertarget{skin:#2}{\tcb@Print@Key{/tcb/skin=}\tcb@Print@Val{#2}\tcb@index@Skin{#2}\protected@edef\@currentlabel{#2}\label{skin:#2}\hfill(skin)}%
-  \end{tcb@doc@head}}%
-  {\end{tcb@manual@entry}}
 \def\refSkin{\tcb@ref@doc{skin}}
 
 \newrobustcmd{\tcbIndexPrintFadCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{fading}}
 \newrobustcmd{\tcbIndexPrintFadC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
-\def\tcb@Print@Fad#1{\textcolor{\kvtcb@col@value}{\bfseries\tcb@scantokens{#1}}}
-\def\tcb@index@Fad#1{\iftcb@doc@toindex\kvtcb@index@command{#1\idx@actual\tcbIndexPrintFadCA{#1}}\kvtcb@index@command{Fadings\idx@level#1\idx@actual\tcbIndexPrintFadC{#1}}\fi}
 
-\DeclareDocumentCommand\docFading{sm}{%
-  \tcb@Print@Fad{#2}%
-  \IfBooleanTF{#1}{}{\tcb@index@Fad{#2}}%
-}
+
+\ExplSyntaxOn
+
+\NewDocumentEnvironment{docSkin}{ O{} m }
+  {
+    \__tcobox_doc_entry_begin:nnn
+      {
+        doc~keypath=tcb,
+        doc~name={skin},
+        doc~label={skin=#2},
+        doc~parameter={=\docValue*[nophantom]{#2}},
+        doc~description={skin},
+        #1,
+        doc~no~index,
+        doc~head~key =
+        {
+          colback=magenta!5!white,interior~style=fill,
+          phantom=
+            {
+              \protected@edef\@currentlabel{#2}
+              \label{skin:#2}
+              \index{#2\idx@actual\tcbIndexPrintSkinCA{#2}}
+              \index{Skins\idx@level#2\idx@actual\tcbIndexPrintSkinC{#2}}
+            },
+        }
+      }
+      {}{key}
+  }
+  {
+    \__tcobox_doc_entry_end:n { key }
+  }
+
+
+\NewDocumentCommand \docFading { s +O{} m }
+  {
+    \group_begin:
+    \tcbset{doc~name={#3},#2}
+    \textcolor{\kvtcb@col@value}{\__tcobox_print_docname:}
+    \IfBooleanF{#1}
+      {
+        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintFadCA{\kvtcb@doc@index}}
+        \kvtcb@index@command{Fadings\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintFadC{\kvtcb@doc@index}}
+      }
+    \group_end:
+  }
+
+\ExplSyntaxOff
+
+
 
 \newtcolorbox{marker}[1][]{enhanced,
   before skip=2mm,after skip=3mm,
@@ -202,6 +240,7 @@
   documentation listing style=mydocumentation,%
   sbs/.style={sidebyside,before lower app={\tcbset{sidebyside=false}}},%
   innerbox/.style={reset,documentation listing style=mydocumentation,
+    doc keypath/.store in=\kvtcb@doc@keypath,
     docexample/.style={docexample original},%
     },
   beforeafter example/.style={
