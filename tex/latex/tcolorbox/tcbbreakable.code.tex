@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,16 +17,16 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.30}
+\tcb@set@library@version{4.31}
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
 
 % total height for boxes smaller than 0.4375\maxdimen and 0.4375\maxdimen else (ca 2.5m)
 \def\tcb@defToTotalHeightBreakable#1#2{%
-  \ifnum\ht#2<0 %
+  \ifnum\ht#2<0\relax%
     \edef#1{7168pt}%
-  \else\ifnum\ht#2<469762048 %
+  \else\ifnum\ht#2<469762048\relax%
     \tcbdimto#1{\ht#2+\dp#2}%
   \else%
     \edef#1{7168pt}%
@@ -106,12 +106,12 @@
   \ifdim\tcb@breakat@dim>0pt\relax%
     \tcbdimto\tcb@h@page{\tcb@breakat@dim-\kvtcb@shrinkbreakgoal}%
   \else%
-    \ifx\kvtcb@float\@empty%
+    \ifx\kvtcb@float\@empty\relax%
       \iftcb@multicol%
         \ifnum\c@tcbbreakpart>1\relax%
           \tcbdimto\tcb@h@page{\@colroom}%
         \else%
-          \ifdim\pagegoal=16383.99998pt
+          \ifdim\pagegoal=16383.99998pt\relax%
             \tcbdimto\tcb@h@page{\@colroom}%
           \else%
             \@tempdima\pagetotal%
@@ -120,7 +120,7 @@
           \fi%
         \fi%
       \else%
-        \ifdim\pagegoal=16383.99998pt
+        \ifdim\pagegoal=16383.99998pt\relax%
           \tcbdimto\tcb@h@page{\vsize}% detects floating objects
         \else%
           \tcb@comp@compress%
@@ -162,7 +162,7 @@
 }
 
 \def\tcb@following@title{%
-  \ifx\kvtcb@followingtitle\@empty%
+  \ifx\kvtcb@followingtitle\@empty\relax%
     \tcb@hasTitlefalse%
     \let\tcb@h@title=\tcb@zpt%
     \let\tcb@h@padtitle=\tcb@zpt%
@@ -189,7 +189,7 @@
 \def\tcb@enlbreak@next@scan#1/#2@{%
   \def\temp@a{#2}%
   \tcbdimto\tcb@enlbreak@dim{#1}%
-  \ifx\temp@a\@empty%
+  \ifx\temp@a\@empty\relax%
     \let\tcb@enlbreak@next=\tcb@enlbreak@next@final%
   \else%
      \edef\tcb@enlbreak@seq{\temp@a @}%
@@ -212,7 +212,7 @@
 \def\tcb@breakat@next@scan#1/#2@{%
   \def\temp@a{#2}%
   \tcbdimto\tcb@breakat@dim{#1}%
-  \ifx\temp@a\@empty%
+  \ifx\temp@a\@empty\relax%
     \let\tcb@breakat@next=\@empty%
   \else%
      \edef\tcb@breakat@seq{\temp@a @}%
@@ -264,12 +264,12 @@
   \setcounter{tcbbreakpart}{0}%
   \let\tcb@nobreak@warning\@empty%
   \@ifundefined{columnbreak}{\tcb@multicolfalse}{%
-    \ifnum\doublecol@number>\z@ %
+    \ifnum\doublecol@number>\z@\relax%
       \tcb@multicoltrue%
     \else%
       \tcb@multicolfalse%
     \fi}%
-  \ifx\kvtcb@float\@empty%
+  \ifx\kvtcb@float\@empty\relax%
     \iftcb@nobreak{%
       \let\tcb@nobreak@warning\tcb@do@nobreak@warning%
       \iftcb@ignorenobreak%
@@ -318,7 +318,7 @@
     \tcb@split@start%
   \endgroup%
   \color{.}% hack for some special cases
-  \ifx\kvtcb@float\@empty%
+  \ifx\kvtcb@float\@empty\relax%
     \aftergroup\tcb@use@after@lastbox%
   \fi%
 }
@@ -514,7 +514,7 @@
 
 \def\tcb@split@first{%
   \setcounter{tcbbreakpart}{1}%
-  \ifx\kvtcb@float\@empty%
+  \ifx\kvtcb@float\@empty\relax%
     \iftcb@vfillbeforefirst%
       \let\tcb@before@first=\vfill%
     \else%
@@ -636,7 +636,8 @@
 
 \def\tcb@split@force@last{%
   \tcb@split@setstate@last%
-  \ifdim\tcb@h@total>\tcb@h@page%
+  \ifdim\tcb@h@total>\tcb@h@page\relax%
+    \gdef\tcb@after@lastbox{\clearpage}%
     \tcbdimto\kvtcb@bbbottom{\kvtcb@bbbottom+\tcb@h@page-\tcb@h@total}%
   \fi%
 }
@@ -978,7 +979,7 @@
   compress page/all/.code={\def\tcb@comp@compress{\def\tcb@compress@height{\pageshrink-1sp}}},%
   compress page/none/.code={\def\tcb@comp@compress{\let\tcb@compress@height\tcb@zpt}},%
   compress page/baselineskip/.code={\def\tcb@comp@compress{%
-    \ifdim\pageshrink>\baselineskip%
+    \ifdim\pageshrink>\baselineskip\relax%
       \let\tcb@compress@height\baselineskip%
     \else%
       \def\tcb@compress@height{\pageshrink-1sp}%

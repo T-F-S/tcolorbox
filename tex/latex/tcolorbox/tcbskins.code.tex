@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.30}
+\tcb@set@library@version{4.31}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -29,7 +29,7 @@
   \begin{scope}[every node/.style={line width=0mm,inner sep=0mm,outer sep=0mm,draw=none,fill=none,rectangle}]
     \node[name=frame,at={(0,0)},above right,minimum width=\tcb@width,minimum height=\tcb@height]{};
     \node[name=interior,at={({\kvtcb@left@rule},{\kvtcb@bottom@rule})},above right,minimum width=\tcb@innerwidth,minimum height=\tcb@innerheight]{};
-    \ifnum\tcbsegmentstate=1%
+    \ifnum\tcbsegmentstate=1\relax%
     \node[name=segmentation,at={({\kvtcb@left@rule},{\the\dimexpr\kvtcb@bottom@rule+\kvtcb@boxsep*2+\tcb@break@bottomsep+\kvtcb@bottom+\tcb@height@lower\relax})},above right,
        minimum width=\tcb@innerwidth,minimum height=\the\dimexpr\kvtcb@middle*2\relax]{};
     \else\iftcb@sidebyside%
@@ -652,7 +652,7 @@
   frame engine=path,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=path,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1%
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@path}%
@@ -663,7 +663,7 @@
     \tcb@drawspec@T\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@UR%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@path}%
@@ -680,7 +680,7 @@
   frame engine=pathfirst,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathfirst,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1%
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathfirst}%
@@ -691,7 +691,7 @@
     \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@UR%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathfirst}%
@@ -706,7 +706,7 @@
   frame engine=pathmiddle,interior titled engine=empty,interior engine=empty,segmentation engine=empty,title engine=pathmiddle,%
   interior titled code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1%
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@UT%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithtitle@pathmiddle}%
@@ -717,7 +717,7 @@
     \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@US%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathmiddle}%
@@ -743,7 +743,7 @@
     \tcb@drawspec@T\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
-      \ifnum\tcbsegmentstate=1
+      \ifnum\tcbsegmentstate=1\relax%
       \tcb@spec{beamer@color}\tcb@drawspec@US%
       \else%
       {\tcb@spec{beamer@color}\tcb@drawwithouttitle@pathlast}%
@@ -1021,13 +1021,13 @@
     \ifdim\dimexpr\kvtcb@yinnershift@boxedtitle<0pt\relax\let\kvtcb@yinnershift@boxedtitle\tcb@zpt\fi%
   }},
   boxtitle/adapt@top/.code={%
-    \ifdim\dimexpr\tcboxedtitleheight+\kvtcb@yshift@boxedtitle>0pt\relax
+    \ifdim\dimexpr\tcboxedtitleheight+\kvtcb@yshift@boxedtitle>0pt\relax%
       \tcbdimto\kvtcb@bbtop@stand{\kvtcb@bbtop@stand+\tcboxedtitleheight+\kvtcb@yshift@boxedtitle}%
     \fi%
     \tcbdimto\kvtcb@top{\kvtcb@top-\kvtcb@yinnershift@boxedtitle}%
   },
   boxtitle/adapt@bottom/.code={%
-    \ifdim\dimexpr\tcboxedtitleheight-\kvtcb@yshift@boxedtitle>0pt\relax
+    \ifdim\dimexpr\tcboxedtitleheight-\kvtcb@yshift@boxedtitle>0pt\relax%
       \tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand+\tcboxedtitleheight-\kvtcb@yshift@boxedtitle}%
     \fi%
     \tcbdimto\kvtcb@bottom{\kvtcb@bottom+\kvtcb@yinnershift@boxedtitle}%
@@ -1103,7 +1103,7 @@
 
 \def\tcb@setratio#1#2#3{\edef#1{\strip@pt\dimexpr\number\numexpr\number\dimexpr#2\relax*65536/\number\dimexpr#3\relax\relax sp\relax}}
 
-\def\tcb@setratiorobust#1#2#3{\ifdim\dimexpr#3<1pt\tcb@setratio#1{#2}{1pt}\else\tcb@setratio#1{#2}{#3}\fi}
+\def\tcb@setratiorobust#1#2#3{\ifdim\dimexpr#3<1pt\relax\tcb@setratio#1{#2}{1pt}\else\tcb@setratio#1{#2}{#3}\fi}
 
 \def\tcb@comp@waterbox@stretch#1#2#3{%
   \tcb@setratiorobust\tcb@scale@x{#1\dimexpr#2}{\wd\tcb@waterbox}%
@@ -1288,10 +1288,10 @@
     \pgfutil@loop%
       \pgfutil@loop%
         \pgftext[x=\pgf@xc,y=\pgf@yc,left,top]{\copy\tcb@waterbox}%
-        \ifdim\pgf@xc<\pgf@xb%
+        \ifdim\pgf@xc<\pgf@xb\relax%
         \advance\pgf@xc\tcb@ppbb@tilew%
       \pgfutil@repeat%
-      \ifdim\pgf@yc>\pgf@ya%
+      \ifdim\pgf@yc>\pgf@ya\relax%
       \advance\pgf@yc-\tcb@ppbb@tileh%
       \pgf@xc\pgf@xa%
     \pgfutil@repeat%
@@ -1484,7 +1484,7 @@
 
 
 \def\tcb@shadow@comp@ts@smart#1#2{%
-  \ifdim#2>0pt\relax\tcbdimto\tcb@shadow@ts{#1-#2/2}%%
+  \ifdim#2>0pt\relax\tcbdimto\tcb@shadow@ts{#1-#2/2}%
   \else\tcbdimto\tcb@shadow@ts{#1+#2/2}\fi%
 }
 
@@ -1806,16 +1806,24 @@
 \def\tcb@set@pdfpages#1#2{%
   \IfFileExists{#2}{%
     \ifdef{\pdfximage}{%
+      % pdftex
       \pdfximage{#2}%
       \edef#1{\the\pdflastximagepages}%
     }{%
-      \ifdef{\XeTeXpdfpagecount}{%
-        \edef#1{\the\XeTeXpdfpagecount #2 }%
-        \ifnum#1=0 %
-          \edef#1{1}%
-        \fi%
-      }{\tcb@error{For PDF support run pdflatex, xelatex, or lualatex}{%
-        Your compiler seems not to support PDF include files.}}%
+      \ifdef{\saveimageresource}{%
+        % luatex
+        \saveimageresource{#2}%
+        \edef#1{\the\lastsavedimageresourcepages}%
+      }{%
+        \ifdef{\XeTeXpdfpagecount}{%
+          % xetex
+          \edef#1{\the\XeTeXpdfpagecount #2 }%
+          \ifnum#1=0\relax%
+            \edef#1{1}%
+          \fi%
+        }{\tcb@error{For PDF support run pdflatex, xelatex, or lualatex}{%
+          Your compiler seems not to support PDF include files.}}%
+      }%
     }%
   }{\tcb@error{PDF file `#2' not found}{The PDF file `#2' was not found}}%
   \relax%

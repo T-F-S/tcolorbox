@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.30}
+\tcb@set@library@version{4.31}
 
 \RequirePackage{amsmath}
 
@@ -106,7 +106,7 @@
   terminator sign dash/.style={terminator sign={\ --}},%
   terminator sign none/.style={terminator sign=},%
   label separator/.store in=\kvtcb@label@sep,%
-  description delimiters/.code 2 args={\def\kvtcb@desc@delim@left{#1}\def\kvtcb@desc@delim@right{#2}},%
+  description delimiters/.code n args={2}{\def\kvtcb@desc@delim@left{#1}\def\kvtcb@desc@delim@right{#2}},%
   description delimiters parenthesis/.style={description delimiters=()},
   description delimiters none/.style={description delimiters={}{}},
   description color/.code={\def\temp@a{#1}\ifx\temp@a\@empty\relax%

@@ -177,7 +177,8 @@
   colbacktitle=red!50!yellow,before skip=6pt,after skip=6pt,
   title={#2},#1}
 
-\newtcbexternalizetcolorbox{exmyownlisting}{myownlisting}{minipage}%
+\newtcbexternalizetcolorbox{exmyownlisting}{myownlisting}%
+  {minipage,environment with percent=false}%
   {before skip=6pt,after skip=6pt}% same values as for mylisting
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_M.tex}

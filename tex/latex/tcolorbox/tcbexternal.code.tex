@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.30}
+\tcb@set@library@version{4.31}
 
 \tcbuselibrary{pro@cessing}
 
@@ -217,8 +217,8 @@
   clear preamble/.code={\def\tcbexternal@preamble{}},
   preclass/.code={\appto\tcbexternal@preclass{#1}},
   clear preclass/.code={\def\tcbexternal@preclass{}},
-  PassOptionsToPackage/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToPackage{#1}{#2}}},
-  PassOptionsToClass/.code 2 args={\appto\tcbexternal@preclass{\PassOptionsToClass{#1}{#2}}},
+  PassOptionsToPackage/.code n args={2}{\appto\tcbexternal@preclass{\PassOptionsToPackage{#1}{#2}}},
+  PassOptionsToClass/.code n args={2}{\appto\tcbexternal@preclass{\PassOptionsToClass{#1}{#2}}},
   externalize/.code={},
   -/.style={/tcb/external/externalize=false},
   %

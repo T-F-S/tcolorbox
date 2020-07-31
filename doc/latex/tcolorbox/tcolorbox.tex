@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -31,8 +31,8 @@
 \tcbEXTERNALIZE
 \usepackage{tcolorbox.doc.s_snippet}
 %\tcbset{external/PassOptionsToPackage={cache=false}{minted}}
-\ShellEscape{mkdir external}
-\ShellEscape{mkdir solutions}
+\tcbAUXmkdir{external}
+\tcbAUXmkdir{solutions}
 
 \RequirePackage{csquotes}
 \RequirePackage[style=numeric-comp,sorting=nyt,
@@ -43,8 +43,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{4.30}%
-\def\datum{2020/04/28}%
+\def\version{4.31}%
+\def\datum{2020/07/31}%
 \makeindex
 
 \hypersetup{
@@ -62,7 +62,7 @@
 %\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.picturecredits}
+%\includeonly{tcolorbox.doc.external}
 
 %\hypersetup{colorlinks=false}
 

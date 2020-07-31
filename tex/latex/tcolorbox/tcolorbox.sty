@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2020/04/28 version 4.30 text color boxes]
-\def\tcb@version{4.30}
+\ProvidesPackage{tcolorbox}[2020/07/31 version 4.31 text color boxes]
+\def\tcb@version{4.31}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -666,11 +666,11 @@
   void/.style={capture=v@@d,capture/.code=,options@for/.code=,code={\def\tcbinputlisting@core{}}},
   nirvana/.code={\let\tcb@draw@color@box\@empty},
   check odd page/.is if=tcb@checkpage,
-  if odd page/.code 2 args={%
+  if odd page/.code n args={2}{%
     \tcbset{check odd page}%
     \tcbifoddpage{\tcbset{#1}}{\tcbset{#2}}%
   },
-  if odd page or oneside/.code 2 args={%
+  if odd page or oneside/.code n args={2}{%
     \tcbset{check odd page}%
     \tcbifoddpageoroneside{\tcbset{#1}}{\tcbset{#2}}%
   },
@@ -828,7 +828,7 @@
     {\edef\ftype@tcbfloat{\the\c@float@type}%
      \addtocounter{float@type}{\value{float@type}}}%
 \def\c@tcbfloat{\c@float@type}% tricking the caption package
-\ifdim\parskip>\z@%
+\ifdim\parskip>\z@\relax%
   \tcbset{autoparskip/.style=parskip}%
 \else%
   \tcbset{autoparskip/.style=noparskip}%
@@ -1043,7 +1043,7 @@
       \newbox\tcb@temp%
       \cslet{tcb@footnote@\romannumeral\c@tcblayer}{\tcb@temp}%
       \tcbset{every box on layer \number\c@tcblayer/.style={reset,every box}}
-    \ifnum\c@tcblayer<#1\repeat%
+    \ifnum\c@tcblayer<#1 \repeat%
   \else%
   \fi%
   \xdef\tcb@managed@layers@max{#1}%
@@ -1061,12 +1061,12 @@
 \def\tcb@layer@inc{%
   \tcb@count@boxes%
   \stepcounter{tcblayer}%
-  \ifnum\c@tcblayer>1%
+  \ifnum\c@tcblayer>1\relax%
     \tcbset{breakable@true/.code=}%
   \else%
     \ifinner\ifhmode\tcbset{breakable@true/.code=}\fi\fi%
   \fi%
-  \ifnum\c@tcblayer>\tcb@managed@layers@max%
+  \ifnum\c@tcblayer>\tcb@managed@layers@max\relax%
     \tcbset{every box on higher layers}%
   \else%
     \expandafter\setbox\csname tcb@footnote@\romannumeral\c@tcblayer\endcsname\box\@mpfootins%
@@ -1079,12 +1079,12 @@
   \tcb@count@boxes%
   \global\advance\c@tcolorbox@number by -1\relax%
   \stepcounter{tcblayer}%
-  \ifnum\c@tcblayer>1%
+  \ifnum\c@tcblayer>1\relax%
     \tcbset{breakable@true/.code=}%
   \else%
     \ifinner\ifhmode\tcbset{breakable@true/.code=}\fi\fi%
   \fi%
-  \ifnum\c@tcblayer>\tcb@managed@layers@max%
+  \ifnum\c@tcblayer>\tcb@managed@layers@max\relax%
     \tcbset{every box on higher layers}%
     \tcbset{every box on higher layers/.code=}%
   \else%
@@ -1095,7 +1095,7 @@
 }
 
 \def\tcb@layer@dec{%
-  \ifnum\c@tcblayer>\tcb@managed@layers@max%
+  \ifnum\c@tcblayer>\tcb@managed@layers@max\relax%
   \else%
     \expandafter\global\setbox\@mpfootins\box\csname tcb@footnote@\romannumeral\c@tcblayer\endcsname%
     \setcounter{mpfootnote}{\csname tcb@footnote@cnt@\romannumeral\c@tcblayer\endcsname}%
@@ -1179,22 +1179,31 @@
   \immediate\write\@auxout{\string\csgdef{tcb@space@#1}{#2}}%
 }
 
-\def\tcb@ch@fixed@spacesave{%
-  \tcbdimto\tcb@space{\tcb@space+\tcbheightspace}%
-  \ifdim\dimexpr\tcb@space<0pt\relax
-    \let\tcb@space\tcb@zpt%
-  \else%
-    \ifdim\dimexpr\tcb@space>\tcb@height\relax
-      \let\tcb@space\tcb@height%
-    \fi%
-  \fi%
-  \begingroup\edef\x{\endgroup\noexpand\tcb@savespace{\thetcolorboxnumber}{\tcb@space}}\x%
-  \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcbheightspace}%
-  \let\tcbheightspace\tcb@zpt%
-  \iftcb@lowerspace%
-  \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
-  \fi%
-}
+
+\ExplSyntaxOn
+\def\tcb@ch@fixed@spacesave
+  {
+    \fp_set:Nn \l_tmpa_fp { \tcb@space+\tcbheightspace }
+    \fp_compare:nTF { \l_tmpa_fp < 0 }
+      {
+        \fp_zero_new:N \l_tmpa_fp
+      }
+      {
+        \fp_compare:nT { \l_tmpa_fp > \tcb@height }
+          {
+            \fp_set:Nn \l_tmpa_fp { \tcb@height }
+          }
+      }
+    \tcbdimto\tcb@space { \fp_to_dim:n { trunc(\l_tmpa_fp,2) } }
+    \use:x { \exp_not:N\tcb@savespace{\thetcolorboxnumber}{\tcb@space} }
+    \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcbheightspace}
+    \let\tcbheightspace\tcb@zpt
+    \iftcb@lowerspace
+      \tcbdimto\tcb@height@lower{\ht\tcb@lowerbox+\dp\tcb@lowerbox}
+    \fi
+  }
+\ExplSyntaxOff
+
 
 \def\tcb@ch@fixed@split{%
   \tcbdimto\tcb@height@space{\tcbheightspace+\ht\tcb@upperbox+\dp\tcb@upperbox+\ht\tcb@lowerbox+\dp\tcb@lowerbox}%
@@ -1859,8 +1868,8 @@
   list type/.store in=\kvtcb@new@listtype,
   %
   init@hook@clear/.code={\def\kvtcb@init@hook{}},
-  crefname/.code 2 args={\begingroup\edef\x{\endgroup\noexpand\crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
-  Crefname/.code 2 args={\begingroup\edef\x{\endgroup\noexpand\Crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
+  crefname/.code n args={2}{\begingroup\edef\x{\endgroup\noexpand\crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
+  Crefname/.code n args={2}{\begingroup\edef\x{\endgroup\noexpand\Crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
   %
   blend into/.is choice,%
   blend into/figures/.style={use counter*=figure,list inside=lof,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@figure}}}}},%

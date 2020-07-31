@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.30}
+\tcb@set@library@version{4.31}
 
 \tcbuselibrary{listings,skins,xparse,external,raster}
 
@@ -487,7 +487,7 @@
         \seq_gput_left:NV \g__tcobox_label_seq \kvtcb@doc@label
       }
     {\ttfamily\kvtcb@doc@parameter}\par
-    \strut\nobreakspace\nobreakspace\meta{\kvtcb@text@envcontent}\par
+    \strut{\ttfamily\nobreakspace\nobreakspace}\meta{\kvtcb@text@envcontent}\par
     \strut\cs{end}\brackets{\__tcobox_print_environment:}
     \tcb@doc@do@description
   }
@@ -808,7 +808,7 @@
 \NewDocumentCommand\tcb@ref@doc{msm}{%
   \hyperref[#1:#3]{\texttt{\ref*{#1:#3}}%
   \IfBooleanTF{#2}{}{%
-    \ifnum\getpagerefnumber{#1:#3}=\thepage%
+    \ifnum\getpagerefnumber{#1:#3}=\thepage\relax%
     \else%
       \textsuperscript{\ding{213}\,\kvtcb@text@pageshort\,\pageref*{#1:#3}}%
     \fi}}%

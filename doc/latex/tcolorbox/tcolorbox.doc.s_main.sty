@@ -11,7 +11,7 @@
 \RequirePackage[svgnames,table,hyperref]{xcolor}
 \RequirePackage{tikz}
 \RequirePackage{varioref}
-\RequirePackage[makeindex]{imakeidx}
+%\RequirePackage[makeindex]{imakeidx}
 \RequirePackage[pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks]{hyperref}
 \RequirePackage{bookmark,varwidth,cleveref,incgraph}
 
@@ -310,3 +310,23 @@
   compilable listing,
   run pdflatex,#1
 }
+
+\ExplSyntaxOn
+
+\cs_new:Npn \__tcobox_aux_mkdir:n #1
+  {
+    \file_if_exist:nF { "#1"/dir.marker }
+      {
+        \sys_shell_now:x {mkdir~"#1"}
+        \iow_open:Nn \g_tmpa_iow {"#1"/dir.marker}
+        \iow_close:N \g_tmpa_iow
+      }
+  }
+
+\NewDocumentCommand{ \tcbAUXmkdir }{ m }
+  {
+    \__tcobox_aux_mkdir:n {#1}
+  }
+
+\ExplSyntaxOff
+

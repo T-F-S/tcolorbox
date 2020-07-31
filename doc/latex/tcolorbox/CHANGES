@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.30 (2020/04/28)
+%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1144,3 +1144,12 @@ version 4.30 (2020/04/28)
 - library 'poster':
   poster width and height caveats described in more detail (#98)
 
+version 4.31 (2020/07/31)
+- bug fix (#101): \tcbincludepdf did not work for lualatex
+- bug fix (#103): Several tests had a missing \relax
+- bug fix (#106): Breakable tcolorbox may overlap with following the text
+- bug fix: 'space to' did not result in a stable value
+- Internal change: all 'code 2 args' replaced by 'code n args={2}'
+- documentation typo corrections (#102)
+- library 'documentation':
+  * indention of <environment content> changed to \ttfamily (#100)
