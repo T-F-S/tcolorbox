@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
+%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1153,3 +1153,14 @@ version 4.31 (2020/07/31)
 - documentation typo corrections (#102)
 - library 'documentation':
   * indention of <environment content> changed to \ttfamily (#100)
+
+version 4.32 (2020/09/17)
+- documentation typo corrections (#108) and enhancements (#109)
+- bug fix (#112): 'index format=doc' caused redefinition of '\_'
+    among other errors.
+- bug fix: 'valign=scale*' was erroneous.
+- enhancement (#110): color stack support for breakable boxes (pdflatex and lualatex)
+    to let colors survive a break to the next partial box.
+- library 'xparse':
+  * new options (#111): 'IfNoValueT', 'IfNoValueF', 'IfValueT', 'IfValueF',
+      'IfBooleanT', 'IfBooleanF'

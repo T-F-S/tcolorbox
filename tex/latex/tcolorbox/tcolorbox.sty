@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
+%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2020/07/31 version 4.31 text color boxes]
-\def\tcb@version{4.31}
+\ProvidesPackage{tcolorbox}[2020/09/17 version 4.32 text color boxes]
+\def\tcb@version{4.32}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -400,7 +400,7 @@
   halign title/center/.code={\let\kvtcb@haligntitle=\tcb@raggedcenter@plain},
   halign title/justify/.code={\let\kvtcb@haligntitle=\@empty},
   %
-  valign scale limit/.store in=\kvtcbv@valignscalelimit,
+  valign scale limit/.store in=\kvtcb@valignscalelimit,
   valign scale limit=1.1,
   valign/.is choice,
   valign/top/.code={\def\kvtcb@valignupper{top}},
@@ -815,10 +815,10 @@
 \let\endtcb@savebox=\endtcb@lrbox
 
 \def\tcb@saveupperbox{%
-\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper}
+\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper}
 
 \def\tcb@savelowerbox{%
-\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}
+\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\color{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}
 
 
 % counter for float
@@ -911,24 +911,12 @@
   \fi%
 }
 
-\def\tcb@set@color#1{%
-  \edef\current@color{\@nameuse{\string\color@#1}}%
-  \colorlet{.}{#1}%
-}
-
-\def\tcb@reset@color{%
-  \colorlet{.}{tcbcol@origin}%
-  \edef\current@color{\@nameuse{\string\color@tcbcol@origin}}%
-}
-
 \def\tcb@set@@upper@and@lower{%
-  \colorlet{tcbcol@origin}{.}%
   \let\tcb@insert@after@part=\tcb@insert@after@upper%
   % switch for lower box
   \def\tcblower{%
     \tcb@insert@after@part%
     \end{tcb@savebox}%
-    \tcb@set@color{tcbcollower}%
     \unless\iftcb@sidebyside%
       \tcbdimto\tcb@w@lower{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftlower-\kvtcb@rightlower}%
     \fi%
@@ -943,7 +931,6 @@
     \fi%
     \tcb@startbox}%
   % start of upper box
-  \tcb@set@color{tcbcolupper}%
   \ifx\kvtcb@saveupperto\@empty%
     \let\tcb@startbox\tcb@saveupperbox%
     \let\endtcolorbox\tcb@endboxanddraw%
@@ -1130,13 +1117,11 @@
 \def\tcb@endboxanddraw{%
   \tcb@insert@after@part%
   \end{tcb@savebox}%
-  \tcb@reset@color%
   \tcb@draw@color@box%
   \tcb@finalize@environment%
 }
 
 \def\tcb@finalize@environment{%
-  %\color{.}% hack for some special cases
   \tcb@layer@dec%
 }
 
@@ -1271,11 +1256,11 @@
   \iftcb@lowerspace\tcb@ch@fixed@both\else\tcb@ch@fixed@upper\fi%
 }
 
-\def\tcb@dbox@top#1#2#3#4#5{\pgftext[x=#1,y=#2+#3,left,top]{\color{#5}\box#4}}%
+\def\tcb@dbox@top#1#2#3#4#5{\pgftext[x=#1,y=#2+#3,left,top]{#5}}
 
-\def\tcb@dbox@bottom#1#2#3#4#5{\pgftext[x=#1,y=#2,left,bottom]{\color{#5}\box#4}}%
+\def\tcb@dbox@bottom#1#2#3#4#5{\pgftext[x=#1,y=#2,left,bottom]{#5}}
 
-\def\tcb@dbox@center#1#2#3#4#5{\pgftext[x=#1,y=#2+#3/2,left]{\color{#5}\box#4}}%
+\def\tcb@dbox@center#1#2#3#4#5{\pgftext[x=#1,y=#2+#3/2,left]{#5}}
 
 \def\tcb@resize@box#1#2#3{%
   \setbox#1\hbox{\resizebox*{#2}{#3}{\box#1}}%
@@ -1289,18 +1274,18 @@
     \tcbdimto\tcb@box@h@target{#3}%
     \tcb@resize@box{#4}{\tcb@box@w@target}{\tcb@box@h@target}%
   \fi%
-  \pgftext[x=#1,y=#2+#3,left,top]{\color{#5}\box#4}}%
+  \pgftext[x=#1,y=#2+#3,left,top]{#5}}%
 
 \def\tcb@dbox@resizelimited#1#2#3#4#5{%
   \iftcb@fixedheight%
     \tcbdimto\tcb@box@w@target{\wd#4}%
-    \tcbdimto\tcb@box@h@target{\kvtcbv@valignresizelimit\dimexpr(\ht#4+\dp#4)}%
+    \tcbdimto\tcb@box@h@target{\kvtcb@valignscalelimit\dimexpr(\ht#4+\dp#4)}%
     \ifdim\dimexpr\tcb@box@h@target>#3\relax%
       \tcbdimto\tcb@box@h@target{#3}%
     \fi%
     \tcb@resize@box{#4}{\tcb@box@w@target}{\tcb@box@h@target}%
   \fi%
-  \pgftext[x=#1,y=#2+#3,left,top]{\color{#5}\box#4}}%
+  \pgftext[x=#1,y=#2+#3,left,top]{#5}}%
 
 \let\tcb@pgfprocess@@specialround@orig=\pgfprocess@@specialround
 
@@ -1566,7 +1551,7 @@
     \pgfsetfillopacity{\kvtcb@opacitytitle}%
     \pgftext[x=\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@lefttitle\relax,
              y=\the\dimexpr\tcb@height-\kvtcb@top@rule-\kvtcb@boxsep-\kvtcb@toptitle\relax,
-             left,top]{\color{tcbcoltitle}\box\tcb@titlebox}%
+             left,top]{\box\tcb@titlebox}%
     \end{pgfscope}%
   \fi\fi%
 }
@@ -1578,7 +1563,9 @@
     \pgfsetfillopacity{\kvtcb@opacityupper}%
     \csname tcb@dbox@\kvtcb@valignupper\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper\relax}%
             {\the\dimexpr\tcb@innerheight+\kvtcb@bottom@rule-\kvtcb@boxsep-\tcb@break@topsep-\kvtcb@top-\tcb@height@upper\relax}%
-            {\tcb@height@upper}{\tcb@upperbox}{tcbcolupper}%
+            {\tcb@height@upper}{\tcb@upperbox}{%
+              \color@begingroup\tcb@upperdraw@begin@hook\box\tcb@upperbox\tcb@upperdraw@end@hook\color@endgroup%
+            }%
     \end{pgfscope}%
   \fi%
 }
@@ -1590,7 +1577,9 @@
     \pgfsetfillopacity{\kvtcb@opacitylower}%
     \csname tcb@dbox@\kvtcb@valignlower\endcsname{\the\dimexpr\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftlower\relax}%
             {\the\dimexpr\kvtcb@bottom@rule+\kvtcb@boxsep+\tcb@break@bottomsep+\kvtcb@bottom\relax}%
-            {\tcb@height@lower}{\tcb@lowerbox}{tcbcollower}%
+            {\tcb@height@lower}{\tcb@lowerbox}{%
+              \color@begingroup\tcb@lowerdraw@begin@hook\box\tcb@lowerbox\tcb@lowerdraw@end@hook\color@endgroup%
+            }%
     \end{pgfscope}%
   \fi%
 }
@@ -1621,7 +1610,7 @@
     \fi%
     \iftcb@hasLower%
       \tcb@box@align{\tcb@lowerbox}%
-      \iftcb@lowervisible\leavevmode\color{tcbcollower}\unhbox\tcb@lowerbox%
+      \iftcb@lowervisible\leavevmode\unhbox\tcb@lowerbox%
       \else%
         \iftcb@lowerignored\else\rule[-\dp\tcb@lowerbox]{\z@}{\the\dimexpr\ht\tcb@lowerbox+\dp\tcb@lowerbox\relax}\fi%
       \fi%
@@ -1763,10 +1752,7 @@
 \long\def\tcbox@inner@hbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
   \tcb@set@@phantom%
-  \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcolupper}%
-  \sbox\tcb@upperbox{\tcb@embed@tcbox{\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
-  \tcb@reset@color%
+  \sbox\tcb@upperbox{\tcb@embed@tcbox{\color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
   \tcb@hasLowerfalse%
@@ -1781,10 +1767,7 @@
   \tcb@set@@phantom%
   \tcb@set@@title%
   \tcb@set@@dimensions%
-  \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcolupper}%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper\end{tcb@savebox}%
-  \tcb@reset@color%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper\end{tcb@savebox}%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
 }
@@ -2162,8 +2145,15 @@
 \tcbset{%
   initialize@reset/.code={\tcbset{#1}\appto\tcb@reset{\tcbset{#1}}},%
   reset/.code={\tcb@reset},%
-  reset@core/.style={code={\let\tcbtitletext\@empty\tcb@attach@title@code@%
-    \let\tcb@lateoptions@hook\@empty},
+  reset@core/.style={code={%
+      \let\tcbtitletext\@empty%
+      \tcb@attach@title@code@%
+      \let\tcb@lateoptions@hook\@empty%
+      \let\tcb@upperdraw@begin@hook\@empty%
+      \let\tcb@upperdraw@end@hook\@empty%
+      \let\tcb@lowerdraw@begin@hook\@empty%
+      \let\tcb@lowerdraw@end@hook\@empty%
+    },
     width=\linewidth,autoparskip,arc is curved,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
     size=normal,rounded corners,parfillskip restore,

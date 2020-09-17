@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
+%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.31}
+\tcb@set@library@version{4.32}
 
 \tcbuselibrary{listings,skins,xparse,external,raster}
 
@@ -878,10 +878,11 @@
   \tcb@doc@index@pgf@%
 }
 
-\let\tcb@doc@index@pgf=\tcb@doc@index@pgfsection%
+\let\tcb@doc@index@pgf=\tcb@doc@index@pgfsection
 
-\def\tcb@doc@index@doc{%
-  \ExplSyntaxOn
+
+\ExplSyntaxOn
+\def\tcb@doc@index@doc{
   \def \__tcobox_index_command:
   {
     \iftcb@doc@toindex
@@ -891,16 +892,16 @@
   \def \__tcobox_index_environment:
   {
     \iftcb@doc@toindex
-      SpecialMainEnvIndex{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvC{\kvtcb@doc@index}}
+      \SpecialMainEnvIndex{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvC{\kvtcb@doc@index}}
     \fi
   }
-  \ExplSyntaxOff
-  \tcbset{index german settings}%
-  \EnableCrossrefs%
-  \PageIndex%
+  \tcbset{index~german~settings}
+  \EnableCrossrefs
+  \PageIndex
 }
+\ExplSyntaxOff
 
-\def\tcb@doc@index@off{}%
+\def\tcb@doc@index@off{}
 
 \tcbset{%
   reset@documentation/.style={%

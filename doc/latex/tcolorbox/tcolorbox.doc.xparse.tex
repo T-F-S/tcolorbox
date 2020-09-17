@@ -33,8 +33,24 @@ for details about the argument \meta{specification} used in this section.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{IfNoValueTF}{=\marg{argument}\marg{true options}\marg{false options}}{no default}
-  Wraps the |\IfNoValueTF| command of |xparse| for option setting.
+\begin{docTcbKeys}[doc description = {no default}]
+  {
+    {
+      doc name        = IfNoValueTF,
+      doc parameter   = {=\marg{argument}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfNoValueT,
+      doc parameter   = {=\marg{argument}\marg{true options}},
+      doc new         = 2020-09-16,
+    },
+    {
+      doc name        = IfNoValueF,
+      doc parameter   = {=\marg{argument}\marg{false options}},
+      doc new         = 2020-09-16,
+    }
+  }
+  Wraps the |\IfNoValue(TF)| command(s) of |xparse| for option setting.
   If the \meta{argument} has no value, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
@@ -49,16 +65,34 @@ This is a tcolorbox.
 This is a tcolorbox.
 \end{mybox}
 \end{dispExample}
-\end{docTcbKey}
+\end{docTcbKeys}
 
 \clearpage
-\begin{docTcbKey}{IfValueTF}{=\marg{argument}\marg{true options}\marg{false options}}{no default}
-  Wraps the |\IfValueTF| command of |xparse| for option setting.
+
+
+\begin{docTcbKeys}[doc description = {no default}]
+  {
+    {
+      doc name        = IfValueTF,
+      doc parameter   = {=\marg{argument}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfValueT,
+      doc parameter   = {=\marg{argument}\marg{true options}},
+      doc new         = 2020-09-16,
+    },
+    {
+      doc name        = IfValueF,
+      doc parameter   = {=\marg{argument}\marg{false options}},
+      doc new         = 2020-09-16,
+    }
+  }
+  Wraps the |\IfValue(TF)| command(s) of |xparse| for option setting.
   If the \meta{argument} has a value, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
 \DeclareTColorBox{mybox}{ o }{colframe=red!75!black,colback=red!5!white,
-  IfValueTF={#1}{title={\flqq #1\frqq},fonttitle=\bfseries}{}}
+  IfValueT={#1}{title={\flqq #1\frqq},fonttitle=\bfseries}}
 
 \begin{mybox}
 This is a tcolorbox.
@@ -68,10 +102,28 @@ This is a tcolorbox.
 This is a tcolorbox.
 \end{mybox}
 \end{dispExample}
-\end{docTcbKey}
+\end{docTcbKeys}
 
-\begin{docTcbKey}{IfBooleanTF}{=\marg{argument}\marg{true options}\marg{false options}}{no default}
-  Wraps the |\IfBooleanTF| command of |xparse| for option setting.
+\medskip
+
+\begin{docTcbKeys}[doc description = {no default}]
+  {
+    {
+      doc name        = IfBooleanTF,
+      doc parameter   = {=\marg{argument}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfBooleanT,
+      doc parameter   = {=\marg{argument}\marg{true options}},
+      doc new         = 2020-09-16,
+    },
+    {
+      doc name        = IfBooleanF,
+      doc parameter   = {=\marg{argument}\marg{false options}},
+      doc new         = 2020-09-16,
+    }
+  }
+  Wraps the |\IfBoolean(TF)| command(s) of |xparse| for option setting.
   If the \meta{argument} is |\BooleanTue|, the \meta{true options} are set.
   If the \meta{argument} is |\BooleanFalse|, the \meta{false options} are set.
 
@@ -87,7 +139,7 @@ This is a tcolorbox.
 This is a tcolorbox.
 \end{mybox}
 \end{dispExample}
-\end{docTcbKey}
+\end{docTcbKeys}
 
 
 

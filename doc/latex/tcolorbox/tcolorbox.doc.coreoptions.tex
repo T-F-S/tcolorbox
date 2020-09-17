@@ -49,7 +49,7 @@ Now, we try again with adjusted titles:\\
 
 \begin{docTcbKey}{adjust text}{=\meta{text}}{no default, initially \texttt{\"Apgjy}}
   This sets the reference text for \refKey{/tcb/adjusted title}. If your texts
-  never exceed '\"Apgjy' in depth and height you don't need to care about this option.
+  never exceed \enquote{\"Apgjy} in depth and height you don't need to care about this option.
 \end{docTcbKey}
 
 \clearpage
@@ -1809,7 +1809,7 @@ used for boxes inside a \refEnv{tcbraster}.
 
 
 \clearpage
-\begin{docTcbKey}[][doc new={2017-06-28}]{inherit height}{\colOpt{=fraction}}{default |1|, initially unset}
+\begin{docTcbKey}[][doc new={2017-06-28}]{inherit height}{\colOpt{=\meta{fraction}}}{default |1|, initially unset}
   If this option is used for a |tcolorbox| which is embedded inside
   another (outer) |tcolorbox| \emph{and} if this outer |tcolorbox| has
   a fixed height, then the given \meta{fraction} of the available text height
@@ -2096,7 +2096,7 @@ with a listing.
 \begin{dispExample}
 \begin{tcolorbox}[use height from group=C,add to height=-2cm,
   colframe=blue!75!black,colback=white]
-Height from group 'C' of the previous example, but reduced by 2cm.
+Height from group \enquote{C} of the previous example, but reduced by 2cm.
 \end{tcolorbox}%
 \end{dispExample}
 
@@ -2866,7 +2866,7 @@ This behavior is controlled by the keys |before| and |after|.
 \end{docTcbKey}
 
 \enlargethispage*{1cm}
-\begin{docTcbKey}{forces nobeforeafter}{}{style, no value}
+\begin{docTcbKey}{force nobeforeafter}{}{style, no value}
   Forces the setting of \refKey{/tcb/nobeforeafter} even if
   \refKey{/tcb/before} and \refKey{/tcb/after} are set to other values
   later. Do not use this option globally unless you \emph{really} know what you do.
@@ -3411,7 +3411,7 @@ This is a \textbf{tcolorbox}.
 
 \begin{tcolorbox}[enhanced,spread upwards,sharp corners=north,height=3cm,
   colframe=blue!75!black,interior style={top color=blue!50,bottom color=white}]
-This is an example for 'spread upwards'.
+This is an example for \enquote{spread upwards}.
 \end{tcolorbox}
 \begin{docTcbKey}[][doc new=2017-02-13]{spread upwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
 Combination of
@@ -3420,7 +3420,7 @@ The optional \meta{length} is used for all these keys.
 \begin{dispListing}
 \begin{tcolorbox}[enhanced,spread upwards,sharp corners=north,height=3cm,
   colframe=blue!75!black,interior style={top color=blue!50,bottom color=white}]
-This is an example for 'spread upwards'.
+This is an example for \enquote{spread upwards}.
 \end{tcolorbox}
 \end{dispListing}
 \end{docTcbKey}
@@ -3461,13 +3461,13 @@ The optional \meta{length} is used for all these keys.
 \begin{dispListing}
 \begin{tcolorbox}[enhanced,spread downwards,sharp corners=south,
   colframe=red!75!black,interior style={top color=white,bottom color=red!50}]
-This is an example for 'spread downwards'.
+This is an example for \enquote{spread downwards}.
 \end{tcolorbox}
 \end{dispListing}
 \end{docTcbKey}
 \begin{tcolorbox}[enhanced,spread downwards,sharp corners=south,
   colframe=red!75!black,interior style={top color=white,bottom color=red!50}]
-This is an example for 'spread downwards'.
+This is an example for \enquote{spread downwards}.
 \end{tcolorbox}
 
 
@@ -3756,7 +3756,7 @@ This is a tcolorbox.
 This is a tcolorbox.
 \end{tcolorbox}
 
-\begin{tcolorbox}[capture=fitbox,height=9mm]% needs the 'fitting' library
+\begin{tcolorbox}[capture=fitbox,height=9mm]% needs the `fitting' library
 This is a tcolorbox.
 \end{tcolorbox}
 \end{exdispExample}
@@ -4058,7 +4058,7 @@ This is a tcolorbox.
 This box is automatically numbered with \ref{mynamelabel} on page
 \pageref{mynamelabel}.
 
-The box is titled '\nameref{mynamelabel}'.
+The box is titled \enquote{\nameref{mynamelabel}}.
 \end{dispExample}
 
 \begin{marker}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.31 (2020/07/31)
+%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
 %% tcbxparse.code.tex: Code for xparse features
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,14 +18,20 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.31}
+\tcb@set@library@version{4.32}
 
 \RequirePackage{xparse}[2013/12/31]
 
 \tcbset{%
   IfNoValueTF/.code n args={3}{\IfNoValueTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+  IfNoValueT/.code n args={2}{\IfNoValueT{#1}{\pgfkeysalso{#2}}},
+  IfNoValueF/.code n args={2}{\IfNoValueF{#1}{\pgfkeysalso{#2}}},
   IfValueTF/.code n args={3}{\IfValueTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+  IfValueT/.code n args={2}{\IfValueT{#1}{\pgfkeysalso{#2}}},
+  IfValueF/.code n args={2}{\IfValueF{#1}{\pgfkeysalso{#2}}},
   IfBooleanTF/.code n args={3}{\IfBooleanTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+  IfBooleanT/.code n args={3}{\IfBooleanT{#1}{\pgfkeysalso{#2}}},
+  IfBooleanF/.code n args={3}{\IfBooleanF{#1}{\pgfkeysalso{#2}}},
   verbatim/.style={fontupper=\ttfamily,nobeforeafter,tcbox raise base,top=0pt,bottom=0pt,left=1mm,right=1mm,boxrule=0.3mm}
 }
 
@@ -233,16 +239,10 @@
 \def\tcb@sbs@content@both{\box\tcb@upperbox\tcblower\box\tcb@lowerbox}
 
 \def\tcb@sbs@save@upper{%
-  \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcolupper}%
-  \sbox{\tcb@upperbox}{\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper\tcb@sbs@text@left\tcb@insert@after@upper}%
-  \tcb@reset@color%
+  \sbox{\tcb@upperbox}{\color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper\tcb@sbs@text@left\tcb@insert@after@upper}%
 }
 \def\tcb@sbs@save@lower{%
-  \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcollower}%
-  \sbox{\tcb@lowerbox}{\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower\tcb@sbs@text@right\tcb@insert@after@lower}%
-  \tcb@reset@color%
+  \sbox{\tcb@lowerbox}{\color{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower\tcb@sbs@text@right\tcb@insert@after@lower}%
 }
 
 \tcbset{%

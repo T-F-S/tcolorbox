@@ -27,14 +27,14 @@ This also loads the package |amsmath|.
   is also set as \refKey{/tcb/nameref} identifier.
   The second mandatory parameter is a \meta{marker}. The theorem is
   automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
-  where \meta{separator} is predefined as '|:|', see \refKey{/tcb/label separator}.\par
+  where \meta{separator} is predefined as \enquote{|:|}, see \refKey{/tcb/label separator}.\par
   The new environment \meta{name}|*| takes one optional and one mandatory
   parameter and represents an unnumbered variant of the environment \meta{name}.
   This variant is not labeled and not listed in lists of theorems.
 \enlargethispage*{20mm}
 \inputpreamblelisting{F}
 \begin{dispExample}
-% usage of '\nameref' needs 'nameref' or 'hyperref' to be loaded
+% usage of `\nameref' needs `nameref' or `hyperref' to be loaded
 \begin{mytheo}{This is my title}{theoexample}
   This is the text of the theorem. The counter is automatically assigned and,
   in this example, prefixed with the section number. This theorem is numbered with
@@ -52,7 +52,7 @@ This also loads the package |amsmath|.
 
 \begin{dispExample}
 \begin{mytheo}{}{}
-  The title can also be left empty without problem. Note that the ':'
+  The title can also be left empty without problem. Note that the \enquote{:}
   vanished magically.
 \end{mytheo}
 \end{dispExample}
@@ -100,7 +100,7 @@ To switch off the \texttt{nameref} feature permanently, add
   The first mandatory parameter is the title text for the theorem and
   the second mandatory parameter is a \meta{marker}. The theorem is
   automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
-  where \meta{separator} is predefined as '|:|', see \refKey{/tcb/label separator}.
+  where \meta{separator} is predefined as \enquote{|:|}, see \refKey{/tcb/label separator}.
 \end{deprecated}
 \end{docCommand}
 
@@ -424,7 +424,7 @@ the first setting.
   and \refKey{/tcb/theorem label supplement} can be used independently.
 
 \begin{dispExample}
-% 'marginnote' has to be loaded
+% `marginnote' has to be loaded
 \newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
    {colback=white,colframe=red!50!black,fonttitle=\bfseries,
     theorem label supplement={hypertarget={XYZ-##1}},
@@ -498,19 +498,31 @@ created by hand or using \refCom{tcbmaketheorem} or using its successor
 \refCom{newtcbtheorem}.
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}{highlight math}{}{style, no value}
-  Predefined style which is used for \refCom{tcbhighmath}.
-  It can be changed comfortable with \refKey{/tcb/highlight math style}.
+  A style which is used for \refCom{tcbhighmath} and which is
+  predefined as |notitle,nophantom,colframe=red,colback=yellow!25!white|.\par
+  It can be changed with the usual |pgf| techniques or
+  with \refKey{/tcb/highlight math style}.
+\begin{dispExample}
+\begin{align*}
+  \tcbhighmath{1} + 1 &= 2,\\
+  \tcbset{highlight math/.append style={left=0mm,right=0mm,top=0mm,bottom=0mm}}
+  \tcbhighmath{1} + 1 &= 2.
+\end{align*}
+\end{dispExample}
+
 \end{docTcbKey}
 
 
 \begin{docTcbKey}{highlight math style}{=\meta{style definition}}{style, no default}
-  Changes the definition for \refKey{/tcb/highlight math} to the given
-  \meta{style definition}. See \refCom{tcbhighmath} for another example.
+  Changes the definition for \refKey{/tcb/highlight math} to
+  |notitle,nophantom| plus the given \meta{style definition}.
+  See \refCom{tcbhighmath} for another example.
 \begin{dispExample}
 % \tcbuselibrary{skins}
-\tcbset{highlight math style={enhanced,%<-- needed for the 'remember' options
+\tcbset{highlight math style={enhanced,%<-- needed for the `remember' options
   colframe=red,colback=red!10!white,boxsep=0pt}}
 \begin{align*}
 \tcbhighmath[remember as=fx]{f(x)}

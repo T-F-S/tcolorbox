@@ -23,9 +23,9 @@ places code before the content of the upper part. A following usage of this
 key overwrites any prior settings.
 
 The library \mylib{hooks} extends \refKey{/tcb/before upper} and several more
-existing keys to 'hookable' versions, e.\,g.\ 
+existing keys to \enquote{hookable} versions, e.\,g.\ 
 \refKey{/tcb/before upper app} and \refKey{/tcb/before upper pre}.
-The 'hookable' keys don't overwrite prior settings but either \emph{app}end
+The \enquote{hookable} keys don't overwrite prior settings but either \emph{app}end
 or \emph{pre}pend the newly given code to the existing code.
 
 The general naming convention (with some small exceptions) is:
@@ -46,7 +46,7 @@ Therefore, the order of the option key usage is crucial.
 \tcbset{enhanced,fonttitle=\bfseries\large,fontupper=\normalsize\sffamily,
   colback=yellow!10!white,colframe=red!50!black,colbacktitle=Salmon!30!white,
   coltitle=black,center title,
-  tabularx={X||Y|Y|Y|Y||Y},% this sets 'before upper' and 'after upper'
+  tabularx={X||Y|Y|Y|Y||Y},% this sets `before upper' and `after upper'
   before upper app={Group & One & Two & Three & Four & Sum\\\hline\hline}  }
 
 \begin{tcolorbox}[title=My table]
@@ -102,7 +102,7 @@ from page \pageref{subsec:contentadditions}.
 % \tcbuselibrary{theorems}
 
 \begin{tcolorbox}[
-  ams align,%  this sets 'before upper*' and 'after upper*'
+  ams align,%  this sets `before upper*' and `after upper*'
   colback=yellow!10!white,colframe=red!50!black,
   before upper app={\frac{2}{\sqrt{2}}&=\sqrt{2}.\\},
   after upper pre={\\\sin\left(\frac{\pi}{2}\right)&=1.},
@@ -138,7 +138,7 @@ The following option keys extend the options given in Subsection \ref{subsec:sur
 from page \pageref{subsec:surroundings}.
 
 \begin{marker}
-The 'hookable' versions are usable inside the document.
+The \enquote{hookable} versions are usable inside the document.
 In the preamble, they can only be used after explicit setting of
 \refKey{/tcb/before} and \refKey{/tcb/after} or by e.\,g.\ \refKey{/tcb/parskip}.
 \end{marker}
