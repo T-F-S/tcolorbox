@@ -124,7 +124,7 @@ This is a tcolorbox.
     }
   }
   Wraps the |\IfBoolean(TF)| command(s) of |xparse| for option setting.
-  If the \meta{argument} is |\BooleanTue|, the \meta{true options} are set.
+  If the \meta{argument} is |\BooleanTrue|, the \meta{true options} are set.
   If the \meta{argument} is |\BooleanFalse|, the \meta{false options} are set.
 
 \begin{dispExample}
@@ -163,7 +163,7 @@ This is a tcolorbox.
 \DeclareTColorBox[use counter from=pabox]{mybox}{ O{red} m d"" !O{} }
   {enhanced,colframe=#1!75!black,colback=#1!5!white,
    fonttitle=\bfseries,title={\thetcbcounter~#2},
-   IfValueTF={#3}{watermark text={#3}}{},#4}
+   IfValueT={#3}{watermark text={#3}},#4}
 
 \begin{mybox}{My title}
 This is a tcolorbox.
@@ -271,8 +271,8 @@ This is a tcolorbox.
 \DeclareTCBox[use counter from=pabox]{\mybox}{ s m s }
 { nobeforeafter,colback=red!5!white,colframe=red!75!black,
   title={#2 (Box \thetcbcounter)},fonttitle=\bfseries,
-  IfBooleanTF={#1}{enhanced,drop shadow}{},
-  IfBooleanTF={#3}{colbacktitle=red!50!white}{}  }
+  IfBooleanT={#1}{enhanced,drop shadow},
+  IfBooleanT={#3}{colbacktitle=red!50!white} }
 
 \mybox{Bird}{This is my first box.}
   \hfill
@@ -339,7 +339,7 @@ typeset the verbatim content.
 % \usepackage{listings} or \tcbuselibrary{listings}
 \DeclareTotalTCBox{\commandbox}{ s v }
 {verbatim,colupper=white,colback=black!75!white,colframe=black}
-{\IfBooleanTF{#1}{\textcolor{red}{\ttfamily\bfseries > }}{}%
+{\IfBooleanT{#1}{\textcolor{red}{\ttfamily\bfseries > }}%
   \lstinline[language=command.com,keywordstyle=\color{blue!35!white}\bfseries]^#2^}
 
 \commandbox*{cd "My Documents"} changes to directory \commandbox{My Documents}.
@@ -459,7 +459,7 @@ With date of 2018-05-12, the |xparse| \cite{latexproject:xparse} package
 changed the argument collection process.
 Now, spaces are ignored which leads to a serious change for listing environments
 ending with an optional argument like \verb+O{}+.
-The former behaviour of respecting spaces can be preserved by adding a \flqq\verb+!+\frqq.
+The former behavior of respecting spaces can be preserved by adding a \flqq\verb+!+\frqq.
 Note that the following code uses \verb+!O{}+ now.
 \begin{itemize}
 \item For older |xparse| versions, the following code is correct when using \verb+O{}+.
@@ -570,7 +570,7 @@ The following commands need the \mylib{fitting} library to be included.
  {colback=red!5!white,
   colframe=red!75!black,
   width=#2,height=#2/3*2,
-  IfValueTF={#3}{height=#3}{},
+  IfValueT={#3}{height=#3},
   #1}
 
 \mybox[colback=yellow]{5cm}%

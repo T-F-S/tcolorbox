@@ -138,7 +138,7 @@
 
 
 \newtcolorbox{marker}[1][]{enhanced,
-  before skip=2mm,after skip=3mm,
+  before skip balanced=2mm,after skip balanced=3mm,
   boxrule=0.4pt,left=5mm,right=2mm,top=1mm,bottom=1mm,
   colback=yellow!50,
   colframe=yellow!20!black,
@@ -244,8 +244,8 @@
     docexample/.style={docexample original},%
     },
   beforeafter example/.style={
-    before skip=4pt plus 2pt minus 1pt,
-    after skip=8pt plus 4pt minus 2pt
+    before skip balanced=4pt plus 2pt minus 1pt,
+    after skip balanced=5pt plus 2pt minus 1pt
   },
   base example/.style={bicolor,
     beforeafter example,arc is angular,fonttitle=\bfseries,
@@ -272,7 +272,9 @@
     base example,coltitle=black,fonttitle=\itshape,titlerule=0pt,
     colbacktitle=Navy!15!ExampleBack,
     top=0mm,
-    before=\par\smallskip,%
+    %before=\par\smallskip,%
+    before skip balanced=4pt plus 2pt minus 1pt,
+    after skip balanced=5pt plus 2pt minus 1pt,
     listing style=mydocumentation,
     listing only,listing file={\jobname_preamble_#1.tex}}%
 }

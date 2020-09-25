@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
+%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2020/09/17 version 4.32 text color boxes]
-\def\tcb@version{4.32}
+\ProvidesPackage{tcolorbox}[2020/09/25 version 4.40 text color boxes]
+\def\tcb@version{4.40}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -286,6 +286,46 @@
   parfillskip restore/false/.code={\let\tcb@parfillskip@check=\@empty},%
   before/.code={\def\kvtcb@beforebox{#1}\let\tcb@undo@before=\@empty\let\tcb@use@autoparskip=\relax},
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
+  before skip balanced/.style={before={%
+    \ifnum\lastnodetype=-1\relax%
+    \else%
+      \par%
+      \ifvmode%
+        \iftcb@minipage%
+          \ifdim\parskip>\z@\relax%
+            \addvspace{-\parskip}%
+          \fi%
+        \else%
+          \ifdim\prevdepth<\z@\relax%
+            \tcbdimto\tcb@prevdepth{\prevdepth}%
+            \addvspace{\glueexpr#1-\parskip}%
+            \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
+          \else%
+            \ifdim\prevdepth>.3\baselineskip\relax%
+              \tcbdimto\tcb@prevdepth{\prevdepth}%
+              \addvspace{\glueexpr#1-\parskip}%
+            \else%
+              \tcbdimto\tcb@prevdepth{.3\baselineskip}%
+              \addvspace{\glueexpr#1+.3\baselineskip-\prevdepth-\parskip}%
+            \fi%
+            \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
+          \fi%
+        \fi%
+        \nointerlineskip%
+      \fi%
+    \fi%
+    \lineskip\z@skip%
+    \noindent%
+  }},
+  after skip balanced/.style={after={%
+    \tcb@parfillskip@check%
+    \par%
+    \ifvmode%
+      \prevdepth=.3\baselineskip%
+      \addvspace{\glueexpr#1-\parskip}%
+    \fi%
+  }},
+  beforeafter skip balanced/.style={before skip balanced={#1},after skip balanced={#1}},
   autoparskip/.code={\let\tcb@use@autoparskip=\tcb@use@auto@parskip},
   parskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
       \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
@@ -303,16 +343,29 @@
     \ifnum\lastnodetype=-1\relax%
     \else%
       \par%
-      \ifvmode\tcbdimto\tcb@prevdepth{\prevdepth}\nointerlineskip%
-        \addvspace{\glueexpr#1-\parskip}%
-        \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
+      \ifvmode%
+        \iftcb@minipage%
+          \ifdim\parskip>\z@\relax%
+            \addvspace{-\parskip}%
+          \fi%
+        \else%
+          \tcbdimto\tcb@prevdepth{\prevdepth}%
+          \addvspace{\glueexpr#1-\parskip}%
+          \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
+        \fi%
+        \nointerlineskip%
       \fi%
     \fi%
-    \lineskip\z@skip\noindent%
+    \lineskip\z@skip%
+    \noindent%
     }},
   after skip/.style={after={%
-    \tcb@parfillskip@check\par\ifvmode\nointerlineskip%
-    \addvspace{\glueexpr#1-\parskip}\fi%
+    \tcb@parfillskip@check%
+    \par%
+    \ifvmode%
+      \nointerlineskip%
+      \addvspace{\glueexpr#1-\parskip}%
+    \fi%
     }},
   beforeafter skip/.style={before skip={#1},after skip={#1}},
   before nobreak/.store in=\kvtcb@beforebox@nobreak,
@@ -1098,11 +1151,8 @@
   \let\tcbtextheight\tcb@zpt%
   \let\tcbtextwidth\tcb@zpt%
   \tcbset{#1}\tcb@lateoptions@hook\tcb@afteroptions@hook%
-  \if@nobreak%
-    \let\iftcb@nobreak\@firstoftwo%
-  \else%
-    \let\iftcb@nobreak\@secondoftwo%
-  \fi%
+  \let\iftcb@minipage\if@minipage%
+  \let\iftcb@nobreak\if@nobreak%
 }
 
 \long\def\tcb@@icolorbox[#1]{%
@@ -1684,11 +1734,11 @@
 
 \def\tcb@set@normal@unbroken@beforeafter{%
   \let\tcb@before@unbroken=\kvtcb@beforebox%
-  \iftcb@nobreak{%
+  \iftcb@nobreak%
     \iftcb@ignorenobreak\else%
       \let\tcb@before@unbroken=\kvtcb@beforebox@nobreak%
     \fi%
-  }{}%
+  \fi%
   \let\tcb@after@unbroken=\kvtcb@afterbox%
 }
 
@@ -1752,7 +1802,10 @@
 \long\def\tcbox@inner@hbox#1{%
   \tcbset{breakable@false,sidebyside=false}%
   \tcb@set@@phantom%
-  \sbox\tcb@upperbox{\tcb@embed@tcbox{\color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
+  \sbox\tcb@upperbox{\tcb@embed@tcbox{%
+    \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
+    \@parboxrestore%
+    \color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
   \tcb@hasLowerfalse%
@@ -2154,7 +2207,7 @@
       \let\tcb@lowerdraw@begin@hook\@empty%
       \let\tcb@lowerdraw@end@hook\@empty%
     },
-    width=\linewidth,autoparskip,arc is curved,
+    width=\linewidth,beforeafter skip balanced=0.5\baselineskip plus 2pt,arc is curved,
     natural height,height plus=0pt,space to lower,valign=top,valign lower=top,
     size=normal,rounded corners,parfillskip restore,
     enlarge top by=0mm,enlarge bottom by=0mm,enlarge left by=0mm,enlarge right by=0mm,

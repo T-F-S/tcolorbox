@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
+%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.32}
+\tcb@set@library@version{4.40}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -771,7 +771,7 @@
   segmentation code={\tcb@drawspec@widgetsegment},%
   skin first=widgetfirst,skin middle=widgetmiddle,skin last=widgetlast}
 
-\tcbset{widget/.style={skin=widget,arc=0.5mm,fonttitle=\bfseries,titlerule=0mm,toprule at break=0mm}}
+\tcbset{widget/.style={skin=widget,arc=0.5mm,fonttitle=\bfseries,titlerule=0mm}}
 
 \tcb@new@skin{widgetfirst}{base@first,%
   frame engine=pathfirst,interior titled engine=pathfirst,interior engine=pathfirst,segmentation engine=empty,title engine=empty,%
@@ -1336,7 +1336,7 @@
 
 \tcbset{marker/.style={%
   skin=enhancedmiddle jigsaw,
-  breakable,parbox=false,
+  parbox=false,
   boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,
   left=3mm,right=3mm,top=1mm,bottom=1mm,
   toptitle=1mm,bottomtitle=1mm,fonttitle=\bfseries,

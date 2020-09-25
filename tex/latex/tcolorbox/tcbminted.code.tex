@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
+%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,9 +18,12 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.32}
+\tcb@set@library@version{4.40}
 
 \RequirePackage{minted}[2011/09/17]
+
+% to be removed, if integrated into the minted package (#281)
+\minted@def@optcl{envname}{-P envname}{#1}
 
 \tcbuselibrary{listings@core}
 
@@ -32,7 +35,11 @@
     \edef\tcb@temp{\noexpand\usemintedstyle{\the\toks@}}%
     \tcb@temp%
   \fi%
-  \toks@=\expandafter{#1}%
+  \ifdefstring{\tcb@listing@capture}{hbox}{%
+    \toks@=\expandafter{#1,envname=BVerbatim}%
+  }{%
+    \toks@=\expandafter{#1}%
+  }%
   \edef\tcb@temp{\noexpand\inputminted[\the\toks@]}%
   \IfFileExists{\minted@outputdir#3}%
     {\tcb@temp{#2}{\minted@outputdir#3}}%

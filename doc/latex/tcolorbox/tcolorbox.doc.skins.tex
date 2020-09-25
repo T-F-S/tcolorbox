@@ -472,6 +472,8 @@ the bottom left corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
+\enlargethispage*{1cm}
+
 \begin{docTcbKey}{attach boxed title to bottom center}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom of the main box.
@@ -1168,7 +1170,8 @@ This example uses a public domain picture from\\
 \end{dispExample}
 \end{docTcbKey}
 
-\enlargethispage{5mm}
+\enlargethispage*{1cm}
+
 \begin{docTcbKey}{watermark zoom}{=\meta{fraction}}{no default, initially |0.75|}
   Sets the zoom value for a watermark. The zoom respects the aspect ratio.
   The value $1.0$ means to fill the whole box until the watermark touches the frame.
@@ -3688,7 +3691,7 @@ Nevertheless, this skin can be applied independently.
               as seen in the third line.}}
 git commit
 git commit -a
-git commit -am `changes to my example'
+git commit -am 'changes to my example'
 \end{tcblisting}
 \end{dispExample}
 
@@ -3847,9 +3850,10 @@ Nevertheless, this skin can be applied independently.
 \end{tcolorbox}
 \end{docSkin}
 
-\begin{docTcbKey}[][doc new=2016-02-25]{tile}{}{style, no value}
-  This is an abbreviation for setting |skin=tile|.
-  \begin{marker}It also changes the geometry and some style options.\end{marker}
+\begin{docTcbKey}[][doc new=2016-02-25]{tile}{}{style, initially\\
+  |skin=tile,boxrule=0pt,sharp corners,title filled,fonttitle=\textbackslash bfseries|
+}
+  This key applies |skin=tile| and in addition changes the geometry and some style options.
 \end{docTcbKey}
 
 
@@ -4016,11 +4020,7 @@ Nevertheless, this skin can be applied independently.
 \begin{docSkin}{beamer}
   This skin resembles boxes known from the |beamer| class and therefore is
   called \enquote{beamer}. It uses the normal colors from the core package but shades
-  them a little bit. To use this skin, the |tikz| library |shadings|
-  has to be included in the preamble by:
-\begin{dispListing}
-\usetikzlibrary{shadings}
-\end{dispListing}
+  them a little bit.
 \begin{tcolorbox}[skintable=beamer]
   \begin{tabbing}
     \refKey{/tcb/interior titled engine}: \=\kill
@@ -4036,9 +4036,11 @@ Nevertheless, this skin can be applied independently.
 
 
 
-\begin{docTcbKey}{beamer}{}{style, no value}
-  This is an abbreviation for setting |skin=beamer|.
-  \begin{marker}It also changes the geometry and some style options.\end{marker}
+\begin{docTcbKey}{beamer}{}{style, initially\\
+  |skin=beamer,boxrule=0mm,titlerule=1mm,toptitle=0.5mm,|\\
+  |arc=2mm,fonttitle=\textbackslash bfseries,drop fuzzy shadow|
+}
+  This key applies |skin=beamer| and in addition changes the geometry and some style options.
 \end{docTcbKey}
 
 
@@ -4230,14 +4232,10 @@ Nevertheless, this skin can be applied independently.
 \subsection{Skin Family \enquote{widget}}
 \begin{docSkin}{widget}
   This skin uses the normal colors from the core package but shades
-  them a little bit. To use this skin, the |tikz| library |shadings|
-  has to be included in the preamble by:
-\begin{dispListing}
-\usetikzlibrary{shadings}
-\end{dispListing}
-The appearance of the skin can be controlled by \refKey{/tcb/frame style},
-\refKey{/tcb/interior style}, and \refKey{/tcb/segmentation style},
-if needed.
+  them a little bit.
+  The appearance of the skin can be controlled by \refKey{/tcb/frame style},
+  \refKey{/tcb/interior style}, and \refKey{/tcb/segmentation style},
+  if needed.
 \begin{tcolorbox}[skintable=widget]
   \begin{tabbing}
     \refKey{/tcb/interior titled engine}: \=\kill
@@ -4252,10 +4250,12 @@ if needed.
 \end{docSkin}
 
 
-\begin{docTcbKey}{widget}{}{style, no value}
-  This is an abbreviation for setting |skin=widget|.
-  \begin{marker}It also changes the geometry and some style options.\end{marker}
+\begin{docTcbKey}[][doc updated={2020-09-23}]{widget}{}{style, initially\\
+  |skin=widget,arc=0.5mm,fonttitle=\bfseries,titlerule=0mm|
+}
+  This key applies |skin=widget| and in addition changes the geometry and some style options.
 \end{docTcbKey}
+
 
 
 \begin{dispExample}
@@ -4289,7 +4289,7 @@ This is my content.
 \end{tcolorbox}
 \end{dispExample}
 
-
+\clearpage
 
 \begin{docSkin}{widgetfirst}
 This is a flavor of \refSkin{widget} which is used as a \emph{first} part

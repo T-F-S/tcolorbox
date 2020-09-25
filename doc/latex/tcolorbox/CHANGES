@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.32 (2020/09/17)
+%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1164,3 +1164,20 @@ version 4.32 (2020/09/17)
 - library 'xparse':
   * new options (#111): 'IfNoValueT', 'IfNoValueF', 'IfValueT', 'IfValueF',
       'IfBooleanT', 'IfBooleanF'
+
+version 4.40 (2020/09/25)
+- bug fix (#114): 'IfBooleanT', 'IfBooleanF'
+- bug fix (#117): 'widget' set 'toprule at break' and needed the breakable library
+- (bug) fix: style 'marker' set 'breakable' and needed the breakable library
+- (#113) 'capture=hbox' applies '\@parboxrestore' now to allow e.g. hbox style
+    listings inside indented environments like itemize
+- (#2) support 'hbox' for 'minted' listings
+- (#115) New default vertical space options
+        'before skip balanced', 'after skip balanced', 'beforeafter skip balanced'
+  NOTE: These options replace the current default options
+        'parskip', 'noparskip', 'autoparskip'
+  WARNING: Old documents may need adapted manual page breaks where used.
+           Otherwise: Use \tcbsetforeverylayer{autoparskip}
+           to restore the old behavior!
+- 'before skip' and 'before skip balanced' do not insert glue now, if
+  the tcolorbox is the first element in a minipage (or sourrounding tcolorbox)

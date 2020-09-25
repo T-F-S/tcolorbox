@@ -240,8 +240,6 @@ and an optional \emph{lower part}. These parts are separated by
 This is a \textbf{tcolorbox} (but invisible).
 \end{tcolorbox}
 
-\bigskip
-
 \begin{tcolorbox}[upperbox=invisible,colback=white]
 This is a \textbf{tcolorbox} (but invisible).
 \tcblower
@@ -425,6 +423,8 @@ Now, the saved part is used:
 \input{\jobname_bspsave2.tex}
 \end{tcolorbox}
 \end{exdispExample}
+
+\enlargethispage*{1cm}
 
 The |savedelimiter| is used implicitely with \refCom{newtcolorbox} which
 allows a more convenient usage:
@@ -2805,52 +2805,34 @@ are drawn by the codes given with
 \subsection{Embedding into the Surroundings}\label{subsec:surroundings}
 Typically, but not necessarily, a |tcolorbox| is put inside a separate paragraph
 and has some vertical space before and after it.
-This behavior is controlled by the keys |before| and |after|.
+This behavior is controlled by the keys \refKey{/tcb/before} and \refKey{/tcb/after}.
 
-\begin{docTcbKey}{before}{=\meta{code}}{no default, initially see \refKey{/tcb/autoparskip}}
+\begin{marker}
+Before version 4.40, the default setting for \refKey{/tcb/before}
+and \refKey{/tcb/after} was given by \refKey{/tcb/autoparskip}.
+Starting with version 4.40, the default setting is given by
+\refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}.\par
+Note that old documents may need adaptions of page breaks.\par
+Alternatively, the old default setting can be restored by using
+\begin{dispListing}
+\tcbsetforeverylayer{autoparskip}
+\end{dispListing}
+inside the document preamble.
+\end{marker}
+
+
+\begin{docTcbKey}{before}{=\meta{code}}{no default, initially see \refKey{/tcb/before skip balanced}}
   Sets the \meta{code} which is executed before the colored box.
   It is not used for floating boxes.
   Also, it is not used, if the box follows a heading immediately
   and \refKey{/tcb/ignore nobreak} is set to \docValue{false}.
 \end{docTcbKey}
 
-\begin{docTcbKey}{after}{=\meta{code}}{no default, initially see \refKey{/tcb/autoparskip}}
+\begin{docTcbKey}{after}{=\meta{code}}{no default, initially see \refKey{/tcb/after skip balanced}}
   Sets the \meta{code} which is executed after the colored box.
   It is not used for floating boxes.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc updated=2017-02-01]{parskip}{}{style, no value}
-  Sets the keys |before| and |after| to values which are
-  recommended, if the package |parskip| \emph{is} used and there is no better
-  idea for |before| and |after|. This is similar to:
-\begin{dispListing}
-\tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
-                        after={\par}}}
-\end{dispListing}
-\end{docTcbKey}
-
-\begin{docTcbKey}[][doc updated=2017-02-01]{noparskip}{}{style, no value}
-  Sets the keys |before| and |after| to values which are
-  recommended, if the package |parskip| is \emph{not} used and there is no better
-  idea for |before| and |after|. This is similar to:
-\begin{dispListing}
-\tcbset{noparskip/.style={before={\par\pagebreak[0]\smallskip\parindent=0pt},
-                          after={\par\smallskip}}}
-\end{dispListing}
-\end{docTcbKey}
-
-\begin{docTcbKey}{autoparskip}{}{style, no value, initially set}
-  Tries to detect the usage of the package |parskip| and sets
-  the keys |before| and |after| accordingly. Actually, the following is done:
-  \begin{itemize}
-  \item If the length of |\parskip| is greater than |0pt| at the beginning of the document,
-    \refKey{/tcb/parskip} is executed. Here, the usage of package |parskip| is \emph{assumed}.
-  \item Otherwise, if the length of |\parskip| is not greater than |0pt| at the beginning of the document,
-    \refKey{/tcb/noparskip} is executed. Here, the absence of package |parskip| is \emph{assumed}.
-  \end{itemize}
-  |autoparskip| is the default for the package |tcolorbox|, if |before| or |after|
-  are not changed otherwise.
-\end{docTcbKey}
 
 \begin{docTcbKey}{nobeforeafter}{}{style, no value}
   Abbreviation for clearing the keys |before| and |after|. The colored box
@@ -2865,12 +2847,216 @@ This behavior is controlled by the keys |before| and |after|.
 \end{exdispExample}
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
 \begin{docTcbKey}{force nobeforeafter}{}{style, no value}
   Forces the setting of \refKey{/tcb/nobeforeafter} even if
   \refKey{/tcb/before} and \refKey{/tcb/after} are set to other values
   later. Do not use this option globally unless you \emph{really} know what you do.
   Note that embedded boxes do not inherit this forced clearance.
+\end{docTcbKey}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc new={2020-09-25}]{before skip balanced}{=\meta{glue}}{no default, initially |0.5\textbackslash baselineskip plus 2pt|}
+  Inserts some vertical space before the colored box. This style sets \refKey{/tcb/before}.\par
+  If the depth of the
+  preceeding \TeX\ box is between |0pt| and |0.3\baselineskip|,
+  the distance between the \emph{baseline} of the preceeding \TeX\ box and the tcolorbox
+  ist set to \meta{glue}$+$|0.3\baselineskip|.\par
+  If the depth is larger, the distance of the preceeding \TeX\ box and the tcolorbox
+  ist set to \meta{glue}.\par
+  Alternatively, see \refKey{/tcb/before skip} which ignores the \emph{baseline}.
+
+\begin{exdispExample*}{before_skip_balanced}{sbs,lefthand ratio=0.6}
+Some text.
+\begin{tcolorbox}[before skip balanced=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new={2020-09-25}]{after skip balanced}{=\meta{glue}}{no default, initially |0.5\textbackslash baselineskip plus 2pt|}
+  Inserts some vertical space of the given \meta{glue} after the colored box.
+  This style sets \refKey{/tcb/after}.
+  Additionally, |\prevdepth| is set to |0.3\baselineskip|. The following
+  \TeX\ box may enlarge the space by further glue to adjust its \emph{baseline}.
+  Alternatively, see \refKey{/tcb/after skip} which ignores the \emph{baseline}.
+
+\begin{exdispExample*}{after_skip_balanced}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[after skip balanced=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+Some text.
+\end{exdispExample*}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new={2020-09-25}]{beforeafter skip balanced}{=\meta{glue}}{no default, initially |0.5\textbackslash baselineskip plus 2pt|}
+  Inserts some vertical space of the given \meta{glue} before \emph{and} after the colored box.
+  This style sets \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}.
+\begin{exdispExample*}{beforeafter_skip_balanced}{sbs,lefthand ratio=0.6}
+\newtcolorbox{doubleline}[1][]{
+  beforeafter skip balanced=0pt,
+  height=1.8\baselineskip,
+  enlarge top by=.1\baselineskip,
+  enlarge bottom by=.1\baselineskip,
+  colframe=blue!20,colback=blue!5,
+  size=small,valign upper=center,#1 }
+
+\noindent\begin{tikzpicture}
+\path[use as bounding box] (0,0)
+  rectangle (0.1,0.1);
+\foreach \y in {0,1,...,9}  {
+  \draw[very thin,red]
+    (-0.2,-\y*\baselineskip) --
+    (\linewidth+0.2cm,-\y*\baselineskip); }
+\end{tikzpicture}
+line 1\par
+\begin{doubleline}  Abc  \end{doubleline}
+\begin{doubleline}  Def  \end{doubleline}
+line 2g\par
+\begin{doubleline}  Ghi  \end{doubleline}
+line 3\par
+line 4 g
+\end{exdispExample*}
+\end{docTcbKey}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc new and updated={2020-09-25}{2015-03-16}]{before skip}{=\meta{glue}}{style, no default}
+  Inserts some vertical space of the given \meta{glue} before the colored box.
+  This style sets \refKey{/tcb/before}.
+  In contrast to \refKey{/tcb/before skip balanced}, this \meta{glue} is
+  relative to the lower edge of the preceeding box and not to the baseline.
+\begin{exdispExample*}{before_skip}{sbs,lefthand ratio=0.6}
+Some text.
+\begin{tcolorbox}[before skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new and updated={2020-09-25}{2017-02-01}]{after skip}{=\meta{glue}}{style, no default}
+  Inserts some vertical space of the given \meta{glue} after the colored box.
+  This style sets \refKey{/tcb/after}.
+  In contrast to \refKey{/tcb/after skip balanced}, this \meta{glue} is
+  relative to the upper edge of the following box and not to the baseline.
+\begin{exdispExample*}{after_skip}{sbs,lefthand ratio=0.6}
+\begin{tcolorbox}[after skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+Some text.
+\end{exdispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-10]{beforeafter skip}{=\meta{glue}}{style, no default}
+  Inserts some vertical space of the given \meta{glue} before \emph{and} after the colored box.
+  This style sets \refKey{/tcb/before skip} and \refKey{/tcb/after skip}.
+\begin{exdispExample*}{beforeafter_skip}{sbs,lefthand ratio=0.6}
+\tcbset{beforeafter skip=0pt,
+  colframe=red!50!white}
+
+text before
+\begin{tcolorbox}
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}
+  Second box.
+\end{tcolorbox}
+text after
+\end{exdispExample*}
+\end{docTcbKey}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2014-11-07]{left skip}{=\meta{length}}{style, no default, initially |0mm|}
+  Inserts some horizontal space of the given \meta{length} before the colored box.
+  This style sets \refKey{/tcb/grow to left by} with the negated \meta{length},
+  i.e. the bounding box and box width are changed.
+\begin{exdispExample*}{left_skip}{sbs,lefthand ratio=0.6}
+\noindent\rule{\linewidth}{2pt}
+
+\begin{tcolorbox}[left skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-11-07]{right skip}{=\meta{length}}{style, no default, initially |0mm|}
+  Inserts some horizontal space of the given \meta{length} after the colored box.
+  This style sets \refKey{/tcb/grow to right by} with the negated \meta{length},
+  i.e. the bounding box and box width are changed.
+\begin{exdispExample*}{right_skip}{sbs,lefthand ratio=0.6}
+\noindent\rule{\linewidth}{2pt}
+
+\begin{tcolorbox}[right skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2014-10-10]{leftright skip}{=\meta{length}}{style, no default}
+  Inserts some horizontal space of the given \meta{length} before \emph{and} after the colored box.
+  This style changes the bounding box and the box width.
+\begin{exdispExample*}{leftright_skip}{sbs,lefthand ratio=0.6}
+\noindent\rule{\linewidth}{2pt}
+
+\begin{tcolorbox}[leftright skip=1cm,
+    colframe=red!50!white]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc updated=2017-02-01]{parskip}{}{style, no value}
+  This options is considered to be superseded by
+  \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}
+  (see note on page~\pageref{subsec:surroundings}).\par
+  Sets the keys |before| and |after| to values which are
+  recommended, if the package |parskip| \emph{is} used and there is no better
+  idea for |before| and |after|. This is similar to:
+\begin{dispListing}
+\tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
+                        after={\par}}}
+\end{dispListing}
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc updated=2017-02-01]{noparskip}{}{style, no value}
+  This options is considered to be superseded by
+  \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}
+  (see note on page~\pageref{subsec:surroundings}).\par
+  Sets the keys |before| and |after| to values which are
+  recommended, if the package |parskip| is \emph{not} used and there is no better
+  idea for |before| and |after|. This is similar to:
+\begin{dispListing}
+\tcbset{noparskip/.style={before={\par\pagebreak[0]\smallskip\parindent=0pt},
+                          after={\par\smallskip}}}
+\end{dispListing}
+\end{docTcbKey}
+
+\begin{docTcbKey}{autoparskip}{}{style, no value}
+  This options is considered to be superseded by
+  \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}
+  (see note on page~\pageref{subsec:surroundings}).\par
+  Tries to detect the usage of the package |parskip| and sets
+  the keys |before| and |after| accordingly. Actually, the following is done:
+  \begin{itemize}
+  \item If the length of |\parskip| is greater than |0pt| at the beginning of the document,
+    \refKey{/tcb/parskip} is executed. Here, the usage of package |parskip| is \emph{assumed}.
+  \item Otherwise, if the length of |\parskip| is not greater than |0pt| at the beginning of the document,
+    \refKey{/tcb/noparskip} is executed. Here, the absence of package |parskip| is \emph{assumed}.
+  \end{itemize}
 \end{docTcbKey}
 
 
@@ -2945,87 +3131,6 @@ Some text\dotfill
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2015-03-16}]{before skip}{=\meta{glue}}{style, no default}
-  Inserts some vertical space of the given \meta{glue} before the colored box.
-  This style sets \refKey{/tcb/before}.
-\begin{exdispExample*}{before_skip}{sbs,lefthand ratio=0.6}
-Some text.
-\begin{tcolorbox}[before skip=1cm,
-    colframe=red!50!white]
-  This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{exdispExample*}
-\end{docTcbKey}
-
-\begin{docTcbKey}[][doc new and updated={2014-10-10}{2017-02-01}]{after skip}{=\meta{glue}}{style, no default}
-  Inserts some vertical space of the given \meta{glue} after the colored box.
-  This style sets \refKey{/tcb/after}.
-\begin{exdispExample*}{after_skip}{sbs,lefthand ratio=0.6}
-\begin{tcolorbox}[after skip=1cm,
-    colframe=red!50!white]
-  This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-Some text.
-\end{exdispExample*}
-\end{docTcbKey}
-
-\begin{docTcbKey}[][doc new=2014-10-10]{beforeafter skip}{=\meta{glue}}{style, no default}
-  Inserts some vertical space of the given \meta{glue} before \emph{and} after the colored box.
-  This style sets \refKey{/tcb/before} and \refKey{/tcb/after}.
-\begin{exdispExample*}{beforeafter_skip}{sbs,lefthand ratio=0.6}
-\tcbset{beforeafter skip=0pt,
-  colframe=red!50!white}
-\begin{tcolorbox}
-  This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\begin{tcolorbox}
-  Second box.
-\end{tcolorbox}
-\end{exdispExample*}
-\end{docTcbKey}
-
-\clearpage
-
-\begin{docTcbKey}[][doc new=2014-11-07]{left skip}{=\meta{length}}{style, no default, initially |0mm|}
-  Inserts some horizontal space of the given \meta{length} before the colored box.
-  This style sets \refKey{/tcb/grow to left by} with the negated \meta{length},
-  i.e. the bounding box and box width are changed.
-\begin{exdispExample*}{left_skip}{sbs,lefthand ratio=0.6}
-\noindent\rule{\linewidth}{2pt}
-
-\begin{tcolorbox}[left skip=1cm,
-    colframe=red!50!white]
-  This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{exdispExample*}
-\end{docTcbKey}
-
-\begin{docTcbKey}[][doc new=2014-11-07]{right skip}{=\meta{length}}{style, no default, initially |0mm|}
-  Inserts some horizontal space of the given \meta{length} after the colored box.
-  This style sets \refKey{/tcb/grow to right by} with the negated \meta{length},
-  i.e. the bounding box and box width are changed.
-\begin{exdispExample*}{right_skip}{sbs,lefthand ratio=0.6}
-\noindent\rule{\linewidth}{2pt}
-
-\begin{tcolorbox}[right skip=1cm,
-    colframe=red!50!white]
-  This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{exdispExample*}
-\end{docTcbKey}
-
-\begin{docTcbKey}[][doc new=2014-10-10]{leftright skip}{=\meta{length}}{style, no default}
-  Inserts some horizontal space of the given \meta{length} before \emph{and} after the colored box.
-  This style changes the bounding box and the box width.
-\begin{exdispExample*}{leftright_skip}{sbs,lefthand ratio=0.6}
-\noindent\rule{\linewidth}{2pt}
-
-\begin{tcolorbox}[leftright skip=1cm,
-    colframe=red!50!white]
-  This is a \textbf{tcolorbox}.
-\end{tcolorbox}
-\end{exdispExample*}
-\end{docTcbKey}
 
 
 \begin{docTcbKey}[][doc new=2014-12-11]{ignore nobreak}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
@@ -3048,7 +3153,6 @@ enforce the \refKey{/tcb/before} setting.
   the box follows a heading.
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
 
 \begin{docTcbKey}[][doc new=2017-02-23]{parfillskip restore}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   If this option is set to be |true|, the minimum value of |\parfillskip| is
