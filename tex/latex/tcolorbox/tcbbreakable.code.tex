@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
+%% The LaTeX package tcolorbox - version 4.41 (2020/09/29)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.40}
+\tcb@set@library@version{4.41}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -308,7 +308,14 @@
 \def\tcb@height@fill@unbroken@normal{\tcb@height@fill@unbroken{none}}
 \def\tcb@height@fill@unbroken@compressed{\tcb@height@fill@unbroken{all}}
 
-\def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
+\pdfcolIfStackExists{tcb@breakable}{%
+  \def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
+}{%
+  \def\tcb@use@after@lastbox{%
+    \everypar=\expandafter{\the\everypar\everypar{}\color{.}}%
+    \bgroup\tcb@after@lastbox\egroup%
+  }%
+}
 
 \def\tcb@drawcolorbox@breakable{%
   \tcbdimto\kvtcb@topsep{\kvtcb@topsep}%

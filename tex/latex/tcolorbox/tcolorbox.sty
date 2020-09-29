@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
+%% The LaTeX package tcolorbox - version 4.41 (2020/09/29)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2020/09/25 version 4.40 text color boxes]
-\def\tcb@version{4.40}
+\ProvidesPackage{tcolorbox}[2020/09/29 version 4.41 text color boxes]
+\def\tcb@version{4.41}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -1172,6 +1172,7 @@
 }
 
 \def\tcb@finalize@environment{%
+  %\color{.}% hack for xelatex
   \tcb@layer@dec%
 }
 

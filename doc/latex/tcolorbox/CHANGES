@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.40 (2020/09/25)
+%% The LaTeX package tcolorbox - version 4.41 (2020/09/29)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1181,3 +1181,6 @@ version 4.40 (2020/09/25)
            to restore the old behavior!
 - 'before skip' and 'before skip balanced' do not insert glue now, if
   the tcolorbox is the first element in a minipage (or sourrounding tcolorbox)
+
+version 4.41 (2020/09/29)
+- bug fix (#120): color bleeding for xelatex and breakable boxes (since 4.32)
