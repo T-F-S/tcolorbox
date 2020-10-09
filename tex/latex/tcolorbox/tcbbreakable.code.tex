@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.41 (2020/09/29)
+%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,10 +17,12 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.41}
+\tcb@set@library@version{4.42}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
+
+\newif\iftcb@usecolorstack
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -66,6 +68,7 @@
 
 \def\tcb@@break{\par\xleaders\vbox{\rule{0pt}{2\textheight}}\vskip 2\textheight\par}
 
+
 \def\tcb@vbox#1#2{%
   \edef\reserved@a{%
     \endgroup%
@@ -76,7 +79,10 @@
   \reserved@a%
   \@endpefalse%
   \let\tcbbreak\tcb@@break%
-  \pdfcolSwitchStack{tcb@breakable}%
+  \iftcb@usecolorstack%
+    \pdfcolSwitchStack{tcb@breakable}%
+    \pdfcolSetCurrentColor%
+  \fi%
   \color@begingroup%
   \textwidth\hsize%
   \columnwidth\hsize%
@@ -274,7 +280,7 @@
       \tcb@multicolfalse%
     \fi}%
   \ifx\kvtcb@float\@empty\relax%
-    \iftcb@nobreak
+    \iftcb@nobreak%
       \let\tcb@nobreak@warning\tcb@do@nobreak@warning%
       \iftcb@ignorenobreak%
         \kvtcb@beforebox%
@@ -308,14 +314,7 @@
 \def\tcb@height@fill@unbroken@normal{\tcb@height@fill@unbroken{none}}
 \def\tcb@height@fill@unbroken@compressed{\tcb@height@fill@unbroken{all}}
 
-\pdfcolIfStackExists{tcb@breakable}{%
-  \def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
-}{%
-  \def\tcb@use@after@lastbox{%
-    \everypar=\expandafter{\the\everypar\everypar{}\color{.}}%
-    \bgroup\tcb@after@lastbox\egroup%
-  }%
-}
+\def\tcb@use@after@lastbox{\bgroup\tcb@after@lastbox\egroup}
 
 \def\tcb@drawcolorbox@breakable{%
   \tcbdimto\kvtcb@topsep{\kvtcb@topsep}%
@@ -330,6 +329,7 @@
     \tcb@parfillskip@check%
     \tcb@split@start%
   \endgroup%
+  \color{.}% hack for some special cases
   \ifx\kvtcb@float\@empty\relax%
     \aftergroup\tcb@use@after@lastbox%
   \fi%
@@ -916,13 +916,13 @@
   \let\tcb@savebox=\tcb@vbox%
   \let\endtcb@savebox=\endtcb@vbox%
   \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable%
-  \pdfcolIfStackExists{tcb@breakable}{%
-    \appto\tcb@upperdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
-    \appto\tcb@lowerdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
-  }{%
-    \appto\tcb@upperdraw@begin@hook{\color{tcbcolupper}}%
-    \appto\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
-  }%
+  \iftcb@usecolorstack%
+    \def\tcb@upperdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
+    \def\tcb@lowerdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
+  \else%
+    \def\tcb@upperdraw@begin@hook{\color{tcbcolupper}}%
+    \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
+  \fi%
 }
 
 \tcbset{%
@@ -1027,12 +1027,19 @@
   segmentation at break/true/.code={\let\tcb@split@SL\tcb@split@SL@displayed},
   segmentation at break/false/.code={\let\tcb@split@SL\tcb@split@L},
   segmentation at break/.default=true,
+  use color stack/.is choice,%
+  use color stack/true/.code={%
+    \pdfcolIfStackExists{tcb@breakable}{\tcb@usecolorstacktrue}{\tcb@usecolorstackfalse}%
+  },%
+  use color stack/false/.code={\tcb@usecolorstackfalse},%
+  use color stack/.default=true,%
 }
 
 
 \tcbset{%
   reset@breakable/.style={%
     unbreakable,notitle after break,
+    use color stack=false,
     shrink break goal=0pt,
     lines before break=2,
     topsep at break=0pt,

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.41 (2020/09/29)
+%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
 %%
 %% -------------------------------------------------------------------------------------------
 %% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
@@ -1184,3 +1184,11 @@ version 4.40 (2020/09/25)
 
 version 4.41 (2020/09/29)
 - bug fix (#120): color bleeding for xelatex and breakable boxes (since 4.32)
+
+version 4.42 (2020/10/09)
+- due to several problems with the color algorithm introduced with version 4.32,
+  essentially reversion to the proven pre 4.32 method.
+  * support of luacolor persists (since 4.32)
+  * color stacks (by pdfcol) are not mandatory any more,
+    but are optional now with 'use color stack'. Note that effects of whatsits
+    on the vertical space have to be expected.

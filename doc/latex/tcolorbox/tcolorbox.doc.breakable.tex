@@ -110,13 +110,9 @@ parameters. The differences are:
   box\footnote{\refKey{/tcb/enforce breakable} acts like \refKey{/tcb/breakable} until |tcolorbox| 3.04.}.
   \textbf{But, a breakable box inside a breakable box will usually give a mess.}
 \item\tcbdocmarginnote{\tcbdocnew{2020-09-17}}
-  Depending on the \LaTeX\ compiler, if your text content contains some text
+  Depending on the \LaTeX\ engine, if your text content contains some text
   color changing commands, your color may not survive the break to the next box.
-  Since |tcolorbox|~4.32, |pdflatex| and |lualatex| should not have that
-  problem. For |xelatex|, with the |fontspec| package,
-  you can use
-  |\addfontfeatures{Color=mycolor}|
-  to add a font color which survives the break.
+  See the documentation for \refKey{/tcb/use color stack} for more information.
 \item\tcbdocmarginnote{\tcbdocnew{2014-10-30}}
   The |perpage| option of the |footmisc| package is deliberately deactivated
   inside a breakable box since all footnotes are placed at the end
@@ -222,7 +218,7 @@ parameters. The differences are:
   \item Setting a \meta{length} to a negative value means that
         the sum of this negative value and the naturally available space is used
         for breaking (boxes will shrink in height).
-        That that before version 4.10 negative values were treated like |0pt|.
+        Note that before version 4.10 negative values were treated like |0pt|.
   \end{itemize}
 \begin{dispExample}
 % \usepackage{multicol,lipsum}
@@ -311,6 +307,72 @@ The |break at| option can be used to insert better break points by hand.
   which may result in smaller boxes. Never use negative values.
   \emph{Usually, this option will never be needed at all.}
 \end{docTcbKey}
+
+
+
+\begin{docTcbKey}[][doc new=2020-10-09]{use color stack}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+  Depending on the \LaTeX\ engine and loaded packages, if your text contains some
+  color changing commands, your color may not survive the break to the next box.
+  For some engines, there is support for additional color stacks which
+  allow colors to survive breaks. Such an color stack  can be activated
+  by \refKey{/tcb/use color stack} with help of the |pdfcol| package.
+  This can be done globally or per box.
+  \begin{marker}
+  Note that activating \refKey{/tcb/use color stack} inserts a color command with a \emph{whatsit}
+  at the begin of the upper part and of the lower part of a \refEnv{tcolorbox}.
+  This \emph{may} add additional vertical space, e.g. if your box text starts
+  with a list like \emph{enumerate}!
+  \end{marker}
+  \begin{itemize}
+  \item pdf\TeX: color stacks supported.
+  \item Lua\TeX: color stacks supported, but you should consider loading the
+     |luacolor| package \emph{instead} which avoids the spacing problem.
+  \item Xe\TeX: color stacks not supported (yet?). From hearsay,
+    with the |fontspec| package, you may use |\addfontfeatures{Color=mycolor}|
+    to add a font color which survives the break.
+  \end{itemize}
+  If |pdfcol| cannot initialize an additional color stack for the used engine,
+  \refKey{/tcb/use color stack} is silently ignored.
+
+\clearpage
+\begin{dispExample}
+% \usepackage{multicol,lipsum}
+\begin{multicols}{2}\footnotesize
+Breakable box without color stack.
+\begin{tcolorbox}[enhanced jigsaw,
+  size=small, colframe=gray, colback=yellow!10!white, colupper=blue,
+  enforce breakable,% use only breakable in the real world!
+  vfill before first, pad at break=1mm, break at=3.3cm ]
+    \begin{itemize}\item Some blue text.\end{itemize}
+    {\color{red}\itshape\lipsum[2]}\par
+    More blue text.
+\end{tcolorbox}
+Text after box.
+\end{multicols}
+\end{dispExample}
+
+We do again with \refKey{/tcb/use color stack}. Observe the additional spacing
+at the begin of the box:
+
+\begin{dispExample}
+% \usepackage{multicol,lipsum}
+\begin{multicols}{2}\footnotesize
+Breakable box with color stack.
+\begin{tcolorbox}[enhanced jigsaw, use color stack,
+  size=small, colframe=gray, colback=yellow!10!white, colupper=blue,
+  enforce breakable,% use only breakable in the real world!
+  vfill before first, pad at break=1mm, break at=3.3cm ]
+    \begin{itemize}\item Some blue text.\end{itemize}
+    {\color{red}\itshape\lipsum[2]}\par
+    More blue text.
+\end{tcolorbox}
+Text after box.
+\end{multicols}
+\end{dispExample}
+
+\end{docTcbKey}
+
+
 
 
 \clearpage
