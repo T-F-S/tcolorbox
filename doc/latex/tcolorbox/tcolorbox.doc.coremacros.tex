@@ -173,7 +173,7 @@ This is my own box.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \newtcolorbox{mybox}[1]{colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
-  title=#1}
+  title={#1}}
 
 \begin{mybox}{Hello there}
 This is my own box with a mandatory title.
@@ -185,7 +185,7 @@ This is my own box with a mandatory title.
   colframe=red!75!black,fonttitle=\bfseries,
   colbacktitle=red!85!black,enhanced,
 attach boxed title to top center={yshift=-2mm},
-  title=#2,#1}
+  title={#2},#1}
 
 \begin{mybox}[colback=yellow]{Hello there}
 This is my own box with a mandatory title
@@ -229,7 +229,7 @@ numbered title and options.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \newtcbox{\mybox}[1]{colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
-  title=#1}
+  title={#1}}
 
 \mybox{Hello there}{This is my own box.}
 \end{dispExample*}
@@ -237,7 +237,7 @@ numbered title and options.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 \newtcbox{\mybox}[2][]{colback=red!5!white,
   colframe=red!75!black,fonttitle=\bfseries,
-  title=#2,#1}
+  title={#2},#1}
 
 \mybox[colback=yellow]{Hello there}%
   {This is my own box.}

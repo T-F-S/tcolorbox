@@ -409,7 +409,7 @@ This is the lower part.
   \tcolorbox[savedelimiter=mybox,
              savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
              colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-             title=#1]}%
+             title={#1}]}%
   {\endtcolorbox}
 
 \begin{mybox}{My Example}
@@ -432,7 +432,7 @@ allows a more convenient usage:
 \newtcolorbox{mybox}[1]{%
              savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
              colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
-             title=#1}%
+             title={#1}}%
 
 \begin{mybox}{My Example}
 Upper part.

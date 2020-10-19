@@ -497,7 +497,7 @@ are adapted. In the following, adapting the font size means adapting
   bottom=1mm,right=1mm,boxsep=0mm,width=3.5cm,height=7cm,nobeforeafter,
   before upper=\textcolor{blue}{\rule{5mm}{5mm}}\ ,
   enhanced,watermark text={\tcbfitsteps},
-  fonttitle=\bfseries,adjusted title=#1,fit algorithm=#1}
+  fonttitle=\bfseries,adjusted title={#1},fit algorithm=#1}
 
 \mybox{fontsize}{\lipsum[2]}\hfill
 \mybox{hybrid}{\lipsum[2]}\hfill
@@ -513,7 +513,7 @@ Quality \dotfill versus \dotfill Speed
 \newtcboxfit{mybox}[2]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
   size=tight,width=7.2cm,height=5cm,nobeforeafter,
   before upper=\textcolor{blue}{\rule{5mm}{5mm}}\ ,
-  enhanced,fonttitle=\bfseries,adjusted title=#2,fit algorithm=#1}
+  enhanced,fonttitle=\bfseries,adjusted title={#2},fit algorithm=#1}
 
 \mybox{hybrid}{hybrid (possible gap at end)}{\lipsum[1]}\hfill
 \mybox{hybrid*}{hybrid* (no gap but possibly squeezed)}{\lipsum[1]}
