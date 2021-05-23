@@ -1,0 +1,1636 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Library \mylib{skins} - Catalog of Skins}\label{sec:skincatalog}%
+\tcbset{external/prefix=external/skincatalog_}%
+The \mylib{skins} library provides a catalog of skins to choose from which
+is documented in the following. The \mylib{skins} library has to be loaded
+by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{skins}
+\end{dispListing}
+
+See \Vref{sec:skins} for the documentation of all other options of the \mylib{skins} library.
+
+\begin{itemize}
+\item In principle, a skin is applied by choosing a value for
+  \refKey{/tcb/skin}, e.g. \docValue*{enhanced}.
+  Since the parts of a breakable box should look different,
+  there are individual skins for breakable boxes, also see \Vref{subsec:breaksequence}.
+  Skins for breakable boxes derived from a base skin are called a skin family
+  in the following.
+\item Instead of setting values for \refKey{/tcb/skin}, equally named options
+  can be used which are shortcuts and which sometimes also change some
+  geometry or style settings. These are the intended options for normal users.
+  Typically, one of the following options is sufficient to select a skin:
+  \begin{itemize}
+  \item \refKey{/tcb/standard}
+  \item \refKey{/tcb/standard jigsaw}
+  \item \refKey{/tcb/enhanced}
+  \item \refKey{/tcb/enhanced jigsaw}
+  \item \refKey{/tcb/enhanced standard}
+  \item \refKey{/tcb/enhanced standard jigsaw}
+  \item \refKey{/tcb/bicolor}
+  \item \refKey{/tcb/tile}
+  \item \refKey{/tcb/beamer}
+  \item \refKey{/tcb/widget}
+  \item \refKey{/tcb/empty}
+  \item \refKey{/tcb/spartan}
+  \item \refKey{/tcb/draft}
+  \end{itemize}
+  Additionally, there are some special applications:
+  \begin{itemize}
+  \item \refKey{/tcb/marker}
+  \item \refKey{/tcb/blank}
+  \item \refKey{/tcb/blanker}
+  \item \refKey{/tcb/blankest}
+  \end{itemize}
+\end{itemize}
+
+
+
+\clearpage
+
+The auxiliary macro \docAuxCommand{skinExampleSet} is used for the
+following examples to display skin applications. Note that
+\docAuxCommand{skinExampleSet} is not part of the package, but is
+defined just for this documentation.
+
+\begin{dispListing}
+\NewDocumentCommand{\skinExampleSet}{m}{%
+  \begin{tcbraster}[raster equal height,raster columns=3,
+      colback=LightGreen,colframe=DarkGreen,colbacktitle=LimeGreen!75!DarkGreen,
+      #1,
+      left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm,
+      sidebyside gap=4mm]
+    \begin{tcolorbox}
+      This is my content.
+    \end{tcolorbox}
+    \begin{tcolorbox}
+      This is my content.
+      \tcblower
+      More content.
+    \end{tcolorbox}
+    \begin{tcolorbox}[sidebyside]
+      My content.
+      \tcblower
+      More content.
+    \end{tcolorbox}
+    \begin{tcolorbox}[adjusted title=My title]
+      This is my content.
+    \end{tcolorbox}
+    \begin{tcolorbox}[adjusted title=My title]
+      This is my content.
+      \tcblower
+      More content.
+    \end{tcolorbox}
+    \begin{tcolorbox}[adjusted title=My title,sidebyside]
+      My content.
+      \tcblower
+      More content.
+    \end{tcolorbox}
+  \end{tcbraster}
+}
+\end{dispListing}
+\tcbusetemp
+
+
+\clearpage
+\tcbset{skintable/.style={colframe=red!50!yellow!50!black,
+  colback=red!50!yellow!5!white,coltitle=red!50!yellow!3!white,
+  fonttitle=\bfseries,before=\par\smallskip,
+  title=Environment and engines for the skin \enquote{\texttt{#1}}}}
+
+\subsection{Skin Family \enquote{standard}}\label{subsec:skinstandard}
+\begin{marker}Note that the option keys \refKey{/tcb/frame style},
+  \refKey{/tcb/interior style},
+  \refKey{/tcb/segmentation style}, and
+  \refKey{/tcb/title style} are not be applicable to the standard skin.
+  Also, watermarks (see Subsection \ref{subsec:watermarks})
+  are not usable with the standard skin.
+\end{marker}
+
+\begin{docSkin}{standard}
+  This is the standard skin from the core package. All drawing engines
+  are set to type |standard|. The drawing is based on |pgf| commands and
+  does not need the |tikz| package.
+\begin{tcolorbox}[skintable=standard]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |pgfpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |standard|\\
+    \refKey{/tcb/interior titled engine}: \> |standard|\\ 
+    \refKey{/tcb/interior engine}:        \> |standard|\\
+    \refKey{/tcb/segmentation engine}:    \> |standard|\\
+    \refKey{/tcb/title engine}:           \> |standard|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}{standard}{}{style, no value}
+  This is an abbreviation for setting |skin=standard|.
+\end{docTcbKey}
+
+\begin{dispExample}
+\skinExampleSet{standard}
+\end{dispExample}
+
+\clearpage
+
+\begin{docSkin}{standard jigsaw}
+  This is the standard jigsaw skin from the core package. It differs from
+  the skin \refSkin{standard} by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=standard jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |pgfpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |standardjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> |standard|\\ 
+    \refKey{/tcb/interior engine}:        \> |standard|\\
+    \refKey{/tcb/segmentation engine}:    \> |standard|\\
+    \refKey{/tcb/title engine}:           \> |standard|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}{standard jigsaw}{}{style, no value}
+  This is an abbreviation for setting |skin=standard jigsaw|.
+\end{docTcbKey}
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{standard jigsaw,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+}
+\end{dispExample*}
+
+
+\clearpage
+\subsection{Skin Family \enquote{enhanced}}
+\begin{marker}
+If you like the standard appearance of a |tcolorbox| but you want to
+have some \enquote{enhanced} features, the |enhanced| skin is what you are looking for.
+\end{marker}
+
+\begin{docSkin}{enhanced}
+  This skin translates the drawing commands of the core package into |tikz|
+  path commands. Therefore, it allows all |tikz| high level options for
+  these paths and has more flexibility compared to the \refSkin{standard} skin.
+  You pay for this with some prolonged compilation time.
+  The |tikz| path options can
+  be given with the option keys
+  \refKey{/tcb/frame style},
+  \refKey{/tcb/interior style},
+  \refKey{/tcb/segmentation style}, and
+  \refKey{/tcb/title style}.
+\begin{tcolorbox}[skintable=enhanced]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |path|\\
+    \refKey{/tcb/interior titled engine}: \> |path|\\ 
+    \refKey{/tcb/interior engine}:        \> |path|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{docTcbKey}{enhanced}{}{style, no value}
+  This is an abbreviation for setting |skin=enhanced|.
+\end{docTcbKey}
+
+\begin{dispExample}
+\skinExampleSet{enhanced}
+\end{dispExample}
+
+\clearpage
+
+\begin{dispExample}
+% \usetikzlibrary{shadings}         % preamble
+\tcbset{skin=enhanced,fonttitle=\bfseries,
+  frame style={upper left=blue,upper right=red,lower left=yellow,lower right=green},
+  interior style={white,opacity=0.5},
+  segmentation style={black,solid,opacity=0.2,line width=1pt}}
+
+\begin{tcolorbox}[title=Nice box in rainbow colors]
+  With the \enquote{enhanced} skin, it is quite easy to produce fancy looking effects.
+  \tcblower
+  Note that this is still a \texttt{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+
+
+\begin{dispExample}
+% \usetikzlibrary{decorations.pathmorphing} % preamble
+\tcbset{skin=enhanced,fonttitle=\bfseries,boxrule=1mm,
+  frame style={draw=FireBrick,fill=Salmon},drop fuzzy shadow,
+  interior style={draw=FireBrick,top color=Salmon!10,bottom color=Salmon!20},
+  segmentation style={draw=FireBrick,solid,decorate,
+        decoration={coil,aspect=0,segment length=10.1mm}}}
+
+\begin{tcblisting}{title=A listing box with shadow and some specials}
+Of course, skins can be used for listings also.
+\begin{equation}
+  \int\limits_1^2 \frac{1}{x}~dx = \ln(2).
+\end{equation}
+\end{tcblisting}
+\end{dispExample}
+
+
+\clearpage
+
+
+\begin{docTcbKey}{enhanced standard}{}{style, no value}
+  For unbreakable boxes, this is identical to using \refKey{/tcb/enhanced}.
+  But, for breakable boxes, the \emph{break sequence} is identical to the \refSkin{standard} skin,
+  see Section \ref{subsec:breaksequence} from page \pageref{subsec:breaksequence}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{blank}{}{style, initially unset}
+  This style relies on the skin \refSkin{enhanced}. All drawing operations
+  are hidden and all margins are set to |0pt|. See \refKey{/tcb/blanker}
+  for switching off the drawing engines.
+\begin{dispExample}
+\begin{tcolorbox}[blank,watermark text=A blank box]
+\lipsum[1]
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docCommand}{tcbline}{}
+  Sometimes, a line is only a line. With \refCom{tcblower} you separate
+  the box content into two functional units. |\tcbline| draws only a line
+  which looks like the segmentation line between upper and lower part.
+  Furthermore, you can use |\tcbline| more than just once.
+  |\tcbline| always uses the |path| drawing engine. Therefore,
+  the \refKey{/tcb/segmentation style} can be applied.
+
+\begin{dispExample}
+\tcbset{enhanced,colframe=blue!50!black,colback=white}
+
+\begin{tcolorbox}[colupper=red!50!black,collower=green!50!black]
+\lipsum[1]
+\tcbline
+\lipsum[2]
+\tcblower
+\lipsum[3]
+\tcbline
+\lipsum[4]
+\end{tcolorbox}
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{tcbline*}{}
+  Equivalent to \refCom{tcbline}, but in a breakable box, \refCom{tcbline*}
+  is removed if at a page/box break. Also, it is removed at the end
+  of a box.
+\end{docCommand}
+
+\clearpage
+\begin{docSkin}{enhancedfirst}
+This is a flavor of \refSkin{enhanced} which is used as a \emph{first} part
+in a break sequence for \refSkin{enhanced}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=enhancedfirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathfirst|\\
+    \refKey{/tcb/interior titled engine}: \> |pathfirst|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathfirst|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=enhancedfirst}
+\end{dispExample}
+
+\medskip
+
+%\clearpage
+\begin{docSkin}{enhancedmiddle}
+This is a flavor of \refSkin{enhanced} which is used as a \emph{middle} part
+in a break sequence for \refSkin{enhanced}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=enhancedmiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathmiddle|\\
+    \refKey{/tcb/interior titled engine}: \> |pathmiddle|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathmiddle|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=enhancedmiddle}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}{enhancedlast}
+This is a flavor of \refSkin{enhanced} which is used as a \emph{last} part
+in a break sequence for \refSkin{enhanced}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=enhancedlast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathlast|\\
+    \refKey{/tcb/interior titled engine}: \> |pathlast|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathlast|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\skinExampleSet{skin=enhancedlast}
+\end{dispExample}
+
+\clearpage
+
+\begin{docSkin}{enhanced jigsaw}
+  This is the jigsaw variant of skin \refSkin{enhanced}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=enhanced jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> |path|\\ 
+    \refKey{/tcb/interior engine}:        \> |path|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}{enhanced jigsaw}{}{style, no value}
+  This is an abbreviation for setting |skin=enhanced jigsaw|.
+\end{docTcbKey}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{enhanced jigsaw,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+}
+\end{dispExample*}
+
+
+\begin{docTcbKey}[][doc new=2017-07-01]{enhanced standard jigsaw}{}{style, no value}
+  For unbreakable boxes, this is identical to using \refKey{/tcb/enhanced jigsaw}.
+  But, for breakable boxes, the \emph{break sequence} is identical to the \refSkin{standard jigsaw} skin,
+  see Section \ref{subsec:breaksequence} from page \pageref{subsec:breaksequence}.
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docSkin}{enhancedfirst jigsaw}
+  This is the jigsaw variant of skin \refSkin{enhancedfirst}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=enhancedfirst jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathfirstjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> |pathfirst|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathfirst|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{skin=enhancedfirst jigsaw,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+}
+\end{dispExample*}
+
+
+\clearpage
+\begin{docSkin}{enhancedmiddle jigsaw}
+  This is the jigsaw variant of skin \refSkin{enhancedmiddle}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=enhancedmiddle jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathmiddlejigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> |pathmiddle|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathmiddle|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{skin=enhancedmiddle jigsaw,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+}
+\end{dispExample*}
+
+
+\begin{docTcbKey}{marker}{}{style, no value}
+  This styles relies on the skin \refSkin{enhancedmiddle jigsaw}. It is
+  intended to be used as an optical marker like a highlighter pen.
+\begin{dispExample}
+\begin{tcolorbox}[marker]
+\lipsum[2]
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+
+\begin{dispListing*}{before upper={This examples demonstrates the creation of several
+  \emph{text marker} environments based on \refSkin{enhancedmiddle}.\par\medskip}}
+\tcbset{textmarker/.style={%
+    skin=enhancedmiddle jigsaw,breakable,parbox=false,
+    boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm,
+    left=3mm,right=3mm,top=1mm,bottom=1mm,toptitle=1mm,bottomtitle=1mm,oversize}}
+
+\newtcolorbox{yellow}{textmarker,colback=yellow!5!white,colframe=yellow}
+\newtcolorbox{orange}{textmarker,colback=DarkOrange!5!white,
+                        colframe=DarkOrange!75!yellow}
+\newtcolorbox{red}{textmarker,colback=red!5!white,colframe=red}
+\newtcolorbox{blue}{textmarker,colback=DeepSkyBlue!5!white,colframe=DeepSkyBlue}
+\newtcolorbox{green}{textmarker,colback=Chartreuse!5!white,colframe=Chartreuse}
+\newtcolorbox{rainbow}{textmarker,interior hidden,
+  frame style={top color=blue,bottom color=red,middle color=green}}
+
+\begin{yellow}
+  \lipsum[1-3]
+\end{yellow}
+
+\begin{orange}
+  \lipsum[4]
+\end{orange}
+
+\begin{red}
+  \lipsum[5]
+\end{red}
+
+\begin{green}
+  \lipsum[6]
+\end{green}
+
+\begin{blue}
+  \lipsum[7]
+\end{blue}
+
+\begin{rainbow}
+  \lipsum[8]
+\end{rainbow}
+\end{dispListing*}
+{\tcbusetemp}
+
+
+\clearpage
+\begin{docSkin}{enhancedlast jigsaw}
+  This is the jigsaw variant of skin \refSkin{enhancedlast}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=enhancedlast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathlastjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> |pathlast|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathlast|\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{skin=enhancedlast jigsaw,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+}
+\end{dispExample*}
+
+
+
+\clearpage
+\subsection{Skin Family \enquote{bicolor}}
+\begin{docSkin}{bicolor}
+  This skin is quite similar to the \refSkin{standard} and \refSkin{enhanced} skin.
+  But instead of a segmentation line, the optional lower part of the box is filled with a
+  different color or drawn with a different style.
+\begin{tcolorbox}[skintable=bicolor]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |path|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+  \begin{itemize}
+  \item The most basic usage of this skin is to set the background color of
+    the lower part by \refKey{/tcb/colbacklower} and all other options like for
+    the \refSkin{standard} skin.
+\begin{dispExample}
+\begin{tcolorbox}[skin=bicolor,title=The title,
+    colframe=FireBrick!75!black,colback=Salmon!50!white,colbacklower=Salmon]
+  The upper part.
+  \tcblower
+  The lower part.
+\end{tcolorbox}
+\end{dispExample}
+  \item The more advanced usage of this skin is to apply the \refKey{/tcb/frame style}
+    and the \refKey{/tcb/interior style} like for
+    the \refSkin{enhanced} skin. Also, the \refKey{/tcb/segmentation style} can be
+    used, but it is applied to the whole lower part.
+\begin{dispExample}
+\begin{tcolorbox}[skin=bicolor,title=The title,
+    frame style={top color=FireBrick,
+                 bottom color=FireBrick!15!white,draw=black},
+    interior style={left color=Salmon,right color=Salmon!50!white},
+    segmentation style={right color=Salmon,left color=Salmon!50!white}]
+  The upper part.
+  \tcblower
+  The lower part.
+\end{tcolorbox}
+\end{dispExample}
+  \end{itemize}
+\end{docSkin}
+
+\clearpage
+
+\begin{docTcbKey}{bicolor}{}{style, no value}
+  This is an abbreviation for setting |skin=bicolor|.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\skinExampleSet{bicolor,
+  colbacklower=LimeGreen!75!LightGreen,
+}
+\end{dispExample}
+
+\clearpage
+
+
+\begin{marker}
+  The following options \refKey{/tcb/colbacklower} and \refKey{/tcb/opacitybacklower}
+  are executed before \refKey{/tcb/segmentation style}, i.e.
+  \refKey{/tcb/segmentation style} overrules them.
+\end{marker}
+
+\begin{docTcbKey}{colbacklower}{=\meta{color}}{no default, initially \texttt{black!15!white}}
+  Sets the background \meta{color} of the lower part. It depends on the skin,
+  if this value is used.
+\end{docTcbKey}
+
+\begin{dispExample}
+\tcbset{gitexample/.style={listing and comment,comment={#1},
+  skin=bicolor,boxrule=1mm,fonttitle=\bfseries,coltitle=black,
+  frame style={draw=black,left color=Gold,right color=Goldenrod!50!Gold},
+  colback=black,colbacklower=Goldenrod!75!Gold,
+  colupper=white,collower=black,
+  listing options={language={bash},aboveskip=0pt,belowskip=0pt,nolol,
+  basicstyle=\ttfamily\bfseries,extendedchars=true}}}
+
+\begin{tcblisting}{title={Snapshot of the staging area},
+  gitexample={The option `-a' automatically stages all tracked and modified
+              files before the commit.\par
+              This can be combined with the message option `-m'
+              as seen in the third line.}}
+git commit
+git commit -a
+git commit -am 'changes to my example'
+\end{tcblisting}
+\end{dispExample}
+
+\smallskip
+
+\begin{docTcbKey}[][doc new=2021-05-21]{opacitybacklower}{=\meta{fraction}}{no default, initially \texttt{1.0}}
+  Sets the background opacity of the lower part to the given \meta{fraction}.
+  It depends on the skin, if this value is used.
+\end{docTcbKey}
+
+\begin{dispExample}
+\begin{tcolorbox}[bicolor,
+  frame style={preaction={fill=blue!50!black},
+    pattern=checkerboard,pattern color=blue!50!gray},
+  fonttitle=\bfseries,
+  colback=blue!10, colbacklower=white, opacitybacklower=0.65,
+  title={Example for a semilucent lower part}]
+This is the upper part.
+\tcblower
+And that is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+
+\clearpage
+
+\begin{docSkin}{bicolorfirst}
+This is a flavor of \refSkin{bicolor} which is used as a \emph{first} part
+in a break sequence for \refSkin{bicolor}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=bicolorfirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathfirst|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\skinExampleSet{skin=bicolorfirst,
+  colbacklower=LimeGreen!75!LightGreen,
+}
+\end{dispExample}
+
+
+\clearpage
+
+\begin{docSkin}{bicolormiddle}
+This is a flavor of \refSkin{bicolor} which is used as a \emph{middle} part
+in a break sequence for \refSkin{bicolor}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=bicolormiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathmiddle|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=bicolormiddle,
+  colbacklower=LimeGreen!75!LightGreen,
+}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}{bicolorlast}
+This is a flavor of \refSkin{bicolor} which is used as a \emph{last} part
+in a break sequence for \refSkin{bicolor}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=bicolorlast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathlast|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=bicolorlast,
+  colbacklower=LimeGreen!75!LightGreen,
+}
+\end{dispExample}
+
+
+\clearpage
+
+\begin{docSkin}[doc new=2021-05-21]{bicolor jigsaw}
+  This is the jigsaw variant of skin \refSkin{bicolor}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=bicolor jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}{bicolor jigsaw}{}{style, no value}
+  This is an abbreviation for setting |skin=enhanced jigsaw|.
+\end{docTcbKey}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{bicolor jigsaw,
+  colbacklower=LimeGreen!75!LightGreen,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+  opacitybacklower=0.5,
+}
+\end{dispExample*}
+
+
+\clearpage
+
+
+\begin{docSkin}[doc new=2021-05-21]{bicolorfirst jigsaw}
+  This is the jigsaw variant of skin \refSkin{bicolorfirst}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=bicolorfirst jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathfirstjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{skin=bicolorfirst jigsaw,
+  colbacklower=LimeGreen!75!LightGreen,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+  opacitybacklower=0.5,
+}
+\end{dispExample*}
+
+
+
+\clearpage
+
+\begin{docSkin}[doc new=2021-05-21]{bicolormiddle jigsaw}
+  This is the jigsaw variant of skin \refSkin{bicolormiddle}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=bicolormiddle jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathmiddlejigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{skin=bicolormiddle jigsaw,
+  colbacklower=LimeGreen!75!LightGreen,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+  opacitybacklower=0.5,
+}
+\end{dispExample*}
+
+
+\clearpage
+\begin{docSkin}[doc new=2021-05-21]{bicolorlast jigsaw}
+  This is the jigsaw variant of skin \refSkin{bicolorlast}.
+  It differs by its frame engine, see \Vref{subsec:skinjigsaw}.
+\begin{tcolorbox}[skintable=bicolorlast jigsaw]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathlastjigsaw|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
+\skinExampleSet{skin=bicolorlast jigsaw,
+  colbacklower=LimeGreen!75!LightGreen,
+  opacityframe=0.5,opacityback=0.5,opacitybacktitle=0.5,
+  opacitybacklower=0.5,
+}
+\end{dispExample*}
+
+
+
+\clearpage
+\subsection{Skin Family \enquote{tile}}
+\begin{docSkin}[doc new=2016-02-25]{tile}
+  This skin is a variant of skin \refSkin{bicolor}. Especially, the
+  optional lower part of the box is colored by \refKey{/tcb/colbacklower}.
+  The main difference to \refSkin{bicolor} is that \refSkin{tile} has no
+  frame.
+\begin{tcolorbox}[skintable=tile]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}[][doc new=2016-02-25]{tile}{}{style, initially\\
+  |skin=tile,boxrule=0pt,sharp corners,title filled,fonttitle=\textbackslash bfseries|
+}
+  This key applies |skin=tile| and in addition changes the geometry and some style options.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\skinExampleSet{tile,
+  colbacklower=LimeGreen!75!LightGreen,
+}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}[doc new=2016-02-25]{tilefirst}
+This is a flavor of \refSkin{tile} which is used as a \emph{first} part
+in a break sequence for \refSkin{tile}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=tilefirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\skinExampleSet{skin=tilefirst,
+  colbacklower=LimeGreen!75!LightGreen,
+  boxrule=0pt,
+}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}[doc new=2016-02-25]{tilemiddle}
+This is a flavor of \refSkin{tile} which is used as a \emph{middle} part
+in a break sequence for \refSkin{tile}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=tilemiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=tilemiddle,
+  colbacklower=LimeGreen!75!LightGreen,
+  boxrule=0pt,
+}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}[doc new=2016-02-25]{tilelast}
+This is a flavor of \refSkin{tile} which is used as a \emph{last} part
+in a break sequence for \refSkin{tile}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=tilelast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=tilelast,
+  colbacklower=LimeGreen!75!LightGreen,
+  boxrule=0pt,
+}
+\end{dispExample}
+
+
+
+\clearpage
+\subsection{Skin Family \enquote{beamer}}
+
+\begin{docSkin}{beamer}
+  This skin resembles boxes known from the |beamer| class and therefore is
+  called \enquote{beamer}. It uses the normal colors from the core package but shades
+  them a little bit.
+\begin{tcolorbox}[skintable=beamer]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |path|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+
+\begin{docTcbKey}{beamer}{}{style, initially\\
+  |skin=beamer,boxrule=0mm,titlerule=1mm,toptitle=0.5mm,|\\
+  |arc=2mm,fonttitle=\textbackslash bfseries,drop fuzzy shadow|
+}
+  This key applies |skin=beamer| and in addition changes the geometry and some style options.
+\end{docTcbKey}
+
+
+
+\begin{dispExample}
+\skinExampleSet{beamer,title filled=false}
+\end{dispExample}
+
+
+
+\begin{dispExample}
+\begin{tcolorbox}[beamer,colback=Salmon!50!white,colframe=FireBrick!75!black,
+  adjusted title=A colored box with the \enquote{beamer} skin]
+This box looks like a box provided by the \texttt{beamer} class.
+\end{tcolorbox}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcolorbox}[beamer,colframe=blue,colback=black,
+  watermark graphics=lichtspiel.jpg,
+  coltext=white,watermark opacity=0.75,watermark stretch=1.0,
+  title=Beamer Box with background picture]
+\lipsum[1]
+\end{tcolorbox}
+\end{dispExample}
+
+
+\begin{dispExample}
+\newtcolorbox{myblock}[2][]{%
+  beamer,breakable,colback=LightBlue,colframe=DarkBlue,#1,title={#2}}%
+
+\begin{myblock}{Beamerish \texttt{block}: \texttt{myblock}}
+\lipsum[1]
+\end{myblock}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}{beamerfirst}
+This is a flavor of \refSkin{beamer} which is used as a \emph{first} part
+in a break sequence for \refSkin{beamer}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=beamerfirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathfirst|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathfirst|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{beamer,title filled=false,skin=beamerfirst}
+\end{dispExample}
+
+
+\medskip
+
+\begin{docSkin}{beamermiddle}
+This is a flavor of \refSkin{beamer} which is used as a \emph{middle} part
+in a break sequence for \refSkin{beamer}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=beamermiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathmiddle|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathmiddle|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{beamer,title filled=false,skin=beamermiddle}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}{beamerlast}
+This is a flavor of \refSkin{beamer} which is used as a \emph{last} part
+in a break sequence for \refSkin{beamer}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=beamerlast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathlast|\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> |pathlast|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\skinExampleSet{beamer,title filled=false,skin=beamerlast}
+\end{dispExample}
+
+
+
+\clearpage
+\subsection{Skin Family \enquote{widget}}
+\begin{docSkin}{widget}
+  This skin uses the normal colors from the core package but shades
+  them a little bit.
+  The appearance of the skin can be controlled by \refKey{/tcb/frame style},
+  \refKey{/tcb/interior style}, and \refKey{/tcb/segmentation style},
+  if needed.
+\begin{tcolorbox}[skintable=widget]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |path|\\
+    \refKey{/tcb/interior titled engine}: \> |path|\\ 
+    \refKey{/tcb/interior engine}:        \> |path|\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> \emph{special}
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{docTcbKey}[][doc updated={2020-09-23}]{widget}{}{style, initially\\
+  |skin=widget,arc=0.5mm,fonttitle=\bfseries,titlerule=0mm|
+}
+  This key applies |skin=widget| and in addition changes the geometry and some style options.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\skinExampleSet{widget}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcolorbox}[widget,colback=Salmon!50!white,colframe=FireBrick!75!black,
+  adjusted title=A colored box with the \enquote{widget} skin]
+This is my content.
+\end{tcolorbox}
+\end{dispExample}
+
+\clearpage
+
+\begin{docSkin}{widgetfirst}
+This is a flavor of \refSkin{widget} which is used as a \emph{first} part
+in a break sequence for \refSkin{widget}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=widgetfirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathfirst|\\
+    \refKey{/tcb/interior titled engine}: \> |pathfirst|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathfirst|\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> \emph{special}
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{widget,skin=widgetfirst}
+\end{dispExample}
+
+\medskip
+
+\begin{docSkin}{widgetmiddle}
+This is a flavor of \refSkin{widget} which is used as a \emph{middle} part
+in a break sequence for \refSkin{widget}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=widgetmiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathmiddle|\\
+    \refKey{/tcb/interior titled engine}: \> |pathmiddle|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathmiddle|\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> \emph{special}
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\skinExampleSet{widget,skin=widgetmiddle}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}{widgetlast}
+This is a flavor of \refSkin{widget} which is used as a \emph{last} part
+in a break sequence for \refSkin{widget}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=widgetlast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |pathlast|\\
+    \refKey{/tcb/interior titled engine}: \> |pathlast|\\ 
+    \refKey{/tcb/interior engine}:        \> |pathlast|\\
+    \refKey{/tcb/segmentation engine}:    \> \emph{special}\\
+    \refKey{/tcb/title engine}:           \> \emph{special}
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{widget,skin=widgetlast}
+\end{dispExample}
+
+
+\clearpage
+\subsection{Skin Family \enquote{empty}}
+
+\begin{docSkin}{empty}
+  This skin sets all engines to |empty|, i.\,e.\ nothing is drawn at all.
+  Therefore, this skin is a good starting point to create a complete
+  new style by yourself.
+\begin{tcolorbox}[skintable=empty]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> |empty|\\ 
+    \refKey{/tcb/interior engine}:        \> |empty|\\
+    \refKey{/tcb/segmentation engine}:    \> |empty|\\
+    \refKey{/tcb/title engine}:           \> |empty|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{marker}
+  Note that the text colors stay unchanged when a skin is applied.
+  Since the standard title color
+  is white, the title of a box with skin \docValue*{empty} becomes
+  invisible, if not set to another color by \refKey{/tcb/coltitle}.
+\end{marker}
+
+
+\begin{docTcbKey}{empty}{}{style, no value}
+  This is an abbreviation for setting |skin=empty|.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\skinExampleSet{empty,
+  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+}
+\end{dispExample}
+
+
+\clearpage
+\begin{docTcbKey}{blanker}{}{style, initially unset}
+  This style relies on the skin \refSkin{empty}. All engines
+  are set to empty and all margins are set to |0pt|.
+  In contrast to \refKey{/tcb/blank}, the graphical paths are
+  not constructed with exception of the geometry nodes.
+\begin{dispExample}
+\begin{tcolorbox}[blanker,watermark text=A blank box]
+\lipsum[1]
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+% \tcbuselibrary{fitting}
+\newtcboxfit{\mybox}[1]{blanker,width=4cm,height=7cm,top=4pt,
+  watermark text=#1}
+
+\begin{tabular}{|c|c|c|}\hline
+A & B & C\\\hline
+\mybox{A}{\lipsum[1]} & \mybox{B}{\lipsum[2]} & \mybox{C}{\lipsum[3]}\\\hline
+\end{tabular}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\clearpage
+\begin{docTcbKey}{blankest}{}{style, initially unset}
+  This style extends \refKey{/tcb/blanker}.
+  All engines are set to empty and all margins are set to |0pt|.
+  In contrast to \refKey{/tcb/blanker}, also title, shadow, underlay,
+  overlay, finish and borderline are removed.
+
+\begin{dispExample}
+% \tcbuselibrary{raster}
+\begin{tcbraster}[raster columns=3,raster equal height,
+    title=Box \thetcbrasternum,
+    enhanced,size=small,colframe=red!50!black,colback=red!10!white,
+    coltitle=yellow!85!black,
+    drop fuzzy shadow,watermark text={Box \thetcbrasternum},
+    borderline={.25mm}{-0.5mm}{green!40!black},
+    finish={\begin{tcbclipframe}\draw[blue,opacity=0.1,line width=1cm]
+      (frame.south west) -- (frame.north east);\end{tcbclipframe}},
+    ]
+  \begin{tcolorbox}\lipsum[4]\end{tcolorbox}
+  \begin{tcolorbox}[blanker]\lipsum[4]\end{tcolorbox}
+  \begin{tcolorbox}[blankest]\lipsum[4]\end{tcolorbox}
+\end{tcbraster}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docSkin}{emptyfirst}
+This is a flavor of \refSkin{empty} which is used as a \emph{first} part
+in a break sequence for \refSkin{empty}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=emptyfirst]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> |empty|\\ 
+    \refKey{/tcb/interior engine}:        \> |empty|\\
+    \refKey{/tcb/segmentation engine}:    \> |empty|\\
+    \refKey{/tcb/title engine}:           \> |empty|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=emptyfirst,
+  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+}
+\end{dispExample}
+
+
+\clearpage
+
+\begin{docSkin}{emptymiddle}
+This is a flavor of \refSkin{empty} which is used as a \emph{middle} part
+in a break sequence for \refSkin{empty}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=emptymiddle]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> |empty|\\ 
+    \refKey{/tcb/interior engine}:        \> |empty|\\
+    \refKey{/tcb/segmentation engine}:    \> |empty|\\
+    \refKey{/tcb/title engine}:           \> |empty|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{dispExample}
+\skinExampleSet{skin=emptymiddle,
+  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+}
+\end{dispExample}
+
+
+\clearpage
+\begin{docSkin}{emptylast}
+This is a flavor of \refSkin{empty} which is used as a \emph{last} part
+in a break sequence for \refSkin{empty}.
+Nevertheless, this skin can be applied independently.
+\begin{tcolorbox}[skintable=emptylast]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |empty|\\
+    \refKey{/tcb/interior titled engine}: \> |empty|\\ 
+    \refKey{/tcb/interior engine}:        \> |empty|\\
+    \refKey{/tcb/segmentation engine}:    \> |empty|\\
+    \refKey{/tcb/title engine}:           \> |empty|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{dispExample}
+\skinExampleSet{skin=emptylast,
+  coltitle=Navy,borderline={2pt}{0pt}{black!10!white},
+}
+\end{dispExample}
+
+\clearpage
+\begin{dispListing*}{breakable,phantomlabel=freeboxexample,before upper={This example demonstrates
+a breakable customized box. Here, we define an environment |freebox|.
+The first application of |freebox| produces an unbroken |tcolorbox|.
+The box is drawn by the code given by \refKey{/tcb/frame code}
+and \refKey{/tcb/interior code}.\par
+The second application of |freebox| is broken into several parts which
+are drawn by the codes given by
+\refKey{/tcb/skin first is subskin of},
+\refKey{/tcb/skin middle is subskin of}, and
+\refKey{/tcb/skin last is subskin of}.
+\par\bigskip
+}}
+% Preamble:
+%\usepackage{tikz,lipsum}
+%\tcbuselibrary{skins,breakable}
+\tikzset{coltria/.style={fill=red!15!white}}
+
+\newtcolorbox{freebox}[1][]{empty,
+  breakable,height fixed for=first and middle,
+  leftrule=5mm,left=2mm,
+  frame style={fill,top color=red!75!black,bottom color=red!75!black,middle color=red},
+  colback=yellow!50!white,
+  watermark color=red!50!yellow!75!white,
+  watermark text on=unbroken is unbroken box,
+  watermark text on=first is first part,
+  watermark text on=middle is middle part,
+  watermark text on=last is last part,
+  % code for unbroken boxes:
+  frame code={\path[tcb fill frame] (frame.south west)--(frame.north west)
+    --([xshift=-5mm]frame.north east)--([yshift=-5mm]frame.north east)
+    --([yshift=5mm]frame.south east)--([xshift=-5mm]frame.south east)--cycle; },
+  interior code={\path[tcb fill interior] (interior.south west)--(interior.north west)
+    --([xshift=-4.8mm]interior.north east)--([yshift=-4.8mm]interior.north east)
+    --([yshift=4.8mm]interior.south east)--([xshift=-4.8mm]interior.south east)
+    --cycle; },
+  % code for the first part of a break sequence:
+  skin first is subskin of={emptyfirst}{%
+    frame code={\path[tcb fill frame] (frame.south west)--(frame.north west)
+      --([xshift=-5mm]frame.north east)--([yshift=-5mm]frame.north east)
+      --(frame.south east)--cycle;
+      \path[coltria] ([xshift=2.5mm,yshift=1mm]frame.south west) -- +(120:2mm)
+      -- +(60:2mm)-- cycle; },
+    interior code={\path[tcb fill interior] (interior.south west|-frame.south)
+      --(interior.north west)--([xshift=-4.8mm]interior.north east)
+      --([yshift=-4.8mm]interior.north east)--(interior.south east|-frame.south)
+      --cycle; },
+  },%
+  % code for the middle part of a break sequence:
+  skin middle is subskin of={emptymiddle}{%
+    frame code={\path[tcb fill frame] (frame.south west)--(frame.north west)
+      --(frame.north east)--(frame.south east)--cycle;
+      \path[coltria] ([xshift=2.5mm,yshift=-1mm]frame.north west) -- +(240:2mm)
+        -- +(300:2mm) -- cycle;
+      \path[coltria] ([xshift=2.5mm,yshift=1mm]frame.south west) -- +(120:2mm)
+        -- +(60:2mm) -- cycle;
+      },
+    interior code={\path[tcb fill interior] (interior.south west|-frame.south)
+      --(interior.north west|-frame.north)--(interior.north east|-frame.north)
+      --(interior.south east|-frame.south)--cycle; },
+    },
+  % code for the last part of a break sequence:
+  skin last is subskin of={emptylast}{%
+    frame code={\path[tcb fill frame] (frame.south west)--(frame.north west)
+      --(frame.north east)--([yshift=5mm]frame.south east)
+      --([xshift=-5mm]frame.south east)--cycle;
+      \path[coltria] ([xshift=2.5mm,yshift=-1mm]frame.north west) -- +(240:2mm)
+      -- +(300:2mm) -- cycle;
+      },
+    interior code={\path[tcb fill interior] (interior.south west)
+      --(interior.north west|-frame.north)--(interior.north east|-frame.north)
+      --([yshift=4.8mm]interior.south east)--([xshift=-4.8mm]interior.south east)
+      --cycle; },
+    },
+  #1}
+
+\begin{freebox}
+\lipsum[1]
+\end{freebox}
+
+\begin{freebox}
+\lipsum[1-12]
+\end{freebox}
+\end{dispListing*}
+{\tcbusetemp}
+
+
+\clearpage
+
+\subsection{Skin \enquote{spartan}}\label{subsec:spartan}
+
+\begin{docSkin}{spartan}
+  This skin is quite \ldots\ spartan.
+  It supports no rounded corners, no overlays, no shadows, no borderlines,
+  and no finishes. The only exception are underlays.
+  One cannot do very fancy things with this skin, but it compiles very fast.
+  Therefore, the |spartan| skin is
+  used for the draft mode, see \Vref{subsec:draftmode}.
+  Nevertheless, it can be used as a normal skin.
+
+\begin{tcolorbox}[skintable=spartan]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |spartan|\\
+    \refKey{/tcb/interior titled engine}: \> |spartan|\\ 
+    \refKey{/tcb/interior engine}:        \> |spartan|\\
+    \refKey{/tcb/segmentation engine}:    \> |spartan|\\
+    \refKey{/tcb/title engine}:           \> |spartan|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+
+\begin{docTcbKey}{spartan}{}{style, no value}
+  This is an abbreviation for setting |skin=spartan|.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\skinExampleSet{spartan}
+\end{dispExample}
+
+
+\clearpage
+
+\subsection{Skin \enquote{draft}}\label{subsec:draft}
+
+\begin{docSkin}{draft}
+  This skin is intended to be used while drafting new geometric settings
+  for a |tcolorbox|.
+\begin{tcolorbox}[skintable=draft]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> \emph{special}\\
+    \refKey{/tcb/interior titled engine}: \> \emph{special}\\ 
+    \refKey{/tcb/interior engine}:        \> \emph{special}\\
+    \refKey{/tcb/segmentation engine}:    \> |path|\\
+    \refKey{/tcb/title engine}:           \> |path|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}{draft}{}{style, no value}
+  This is an abbreviation for setting |skin=draft|.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\skinExampleSet{draft}
+\end{dispExample}
+
+
+
+\begin{dispExample}
+\vspace*{3mm}
+\begin{tcolorbox}[draft,title=A colored box with the \enquote{draft} skin]
+\lipsum[1-3]
+\tcblower
+\lipsum[4-6]
+\end{tcolorbox}
+\end{dispExample}
+
+
+
+\clearpage
+\subsection{Skin Family \enquote{freelance}}
+\begin{marker}
+This skin family \enquote{freelance} is deprecated with |tcolorbox| 3.00.
+It is not longer needed, because
+\refKey{/tcb/frame code},
+\refKey{/tcb/interior code},
+\refKey{/tcb/interior titled code}, and
+\refKey{/tcb/title code}
+can be applied to every skin now. In this sense, everything has become
+\emph{freelance} now.\par
+For users of \refKey{/tcb/freelance}: Old code should continue to work. There may be
+exceptions for breakable freelance boxes under certain circumstances.
+For new code, use \refKey{/tcb/empty} or \refKey{/tcb/enhanced} where
+you would have used \refKey{/tcb/freelance} before.
+\end{marker}
+
+\begin{docSkin}{freelance}
+  This skin gives full freedom for the appearance of the |tcolorbox|.
+  All drawing engines are set to type |freelance|; they use the |tikz| package
+  and compute the \refKey{/tcb/geometry nodes}.
+  %This skin is useful for boxes which should differ much from the normal
+  %appearance. Note that this difference has to be programmed by the user.
+  %The drawing code can be given
+  %with the following option keys. As default value, the code from the |standard|
+  %skin is set.
+\begin{tcolorbox}[skintable=freelance]
+  \begin{tabbing}
+    \refKey{/tcb/interior titled engine}: \=\kill
+    \refKey{/tcb/graphical environment}:  \> |tikzpicture|\\ 
+    \refKey{/tcb/frame engine}:           \> |freelance|\\
+    \refKey{/tcb/interior titled engine}: \> |freelance|\\ 
+    \refKey{/tcb/interior engine}:        \> |freelance|\\
+    \refKey{/tcb/segmentation engine}:    \> |freelance|\\
+    \refKey{/tcb/title engine}:           \> |freelance|
+  \end{tabbing}
+\end{tcolorbox}
+\end{docSkin}
+
+\begin{docTcbKey}{freelance}{}{style, no value}
+  This is an abbreviation for setting |skin=freelance|.
+\end{docTcbKey}
+
+\begin{docSkin}{freelancefirst}
+  This skin equals \refSkin{freelance} with exception of the break sequence,
+  see \Vref{subsec:breaksequence}.
+  %It is used as first part of the
+  %break sequence of \refSkin{freelance}. \refKey{/tcb/extend freelancefirst}
+  %can be used to customize this part.
+\end{docSkin}
+
+\begin{docSkin}{freelancemiddle}
+  This skin equals \refSkin{freelance} with exception of the break sequence,
+  see \Vref{subsec:breaksequence}.
+  %It is used as middle part of the
+  %break sequence of \refSkin{freelance}. \refKey{/tcb/extend freelancemiddle}
+  %can be used to customize this part.
+\end{docSkin}
+
+\begin{docSkin}{freelancelast}
+  This skin equals \refSkin{freelance} with exception of the break sequence,
+  see \Vref{subsec:breaksequence}.
+  %It is used as last part of the
+  %break sequence of \refSkin{freelance}. \refKey{/tcb/extend freelancelast}
+  %can be used to customize this part.
+\end{docSkin}
+
+
+\begin{docTcbKey}{extend freelance}{=\meta{options}}{no default, initially empty}
+The \meta{options} are added to the skin definition of \refSkin{freelance}.
+\end{docTcbKey}
+
+\begin{docTcbKey}{extend freelancefirst}{=\meta{options}}{no default, initially empty}
+The \meta{options} are added to the skin definition of \refSkin{freelancefirst} which
+is used as first part of the break sequence of \refSkin{freelance}.
+See \refKey{/tcb/skin first is subskin of} for a substitute of this key.
+\end{docTcbKey}
+
+\begin{docTcbKey}{extend freelancemiddle}{=\meta{options}}{no default, initially empty}
+The \meta{options} are added to the skin definition of \refSkin{freelancemiddle} which
+is used as middle part of the break sequence of \refSkin{freelance}.
+See \refKey{/tcb/skin middle is subskin of} for a substitute of this key.
+\end{docTcbKey}
+
+\enlargethispage*{1cm}
+
+\begin{docTcbKey}{extend freelancelast}{=\meta{options}}{no default, initially empty}
+The \meta{options} are added to the skin definition of \refSkin{freelancelast} which
+is used as last part of the break sequence of \refSkin{freelance}.
+See \refKey{/tcb/skin last is subskin of} for a substitute of this key.
+\end{docTcbKey}
+
+
+

@@ -108,7 +108,12 @@ parameters and to set the properties for the enclosed boxes.
 \item The boxes inside a raster are numbered automatically.
   \docAuxCommand{thetcbrasternum} may be used inside a box to access
   this number.
+  The \LaTeX\ counter \docCounter{tcbrastercolumn} holds the current column,
+  the counter \docCounter{tcbrasterrow} holds the current row,
+  and the counter \docCounter{tcbrasternum} holds the current box number.
 \end{itemize}
+
+\enlargethispage*{1cm}
 
 \begin{dispExample}
 \begin{tcbraster}[raster columns=3, raster equal height,

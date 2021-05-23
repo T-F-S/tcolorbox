@@ -439,6 +439,43 @@ This automated \hyperlink{XYZ-myex3}{hyper target can be linked to with a
 \end{docTcbKey}
 
 
+\clearpage
+
+\begin{docTcbKey}[][doc new=2020-10-21]{theorem hanging indent}{\colOpt{=\docValue*{auto}\textbar \meta{length}}}{default \docValue*{auto}, initially \docValue*{auto}}
+  Sets the hanging indent of the theorem title to \docValue{auto} or the
+  given \meta{length}.
+  For \docValue{auto}, the hanging indent matches the display name, number and
+  separator sign of the theorem.
+  If \meta{length} is negative, the theorem title is indented positively
+  without hanging indent.
+
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {colback=white,colframe=red!50!black,fonttitle=\bfseries}{theo}
+
+\begin{sometheorem}{This is a very long and complicated title for a quite
+  short and nearly empty theorem}{myexA1}
+My theorem text.
+\end{sometheorem}
+
+\begin{sometheorem}[theorem hanging indent=5mm]{This is a very long and
+  complicated title for a quite short and nearly empty theorem}{myexA2}
+My theorem text.
+\end{sometheorem}
+
+\begin{sometheorem}[theorem hanging indent=0pt]{This is a very long and
+  complicated title for a quite short and nearly empty theorem}{myexA3}
+My theorem text.
+\end{sometheorem}
+
+\begin{sometheorem}[theorem hanging indent=-5mm]{This is a very long and
+  complicated title for a quite short and nearly empty theorem}{myexA4}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
 
 \clearpage
 \begin{docTcbKey}{theorem name and number}{}{style, no value, initially set}

@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
+%% The LaTeX package tcolorbox - version 4.50 (2021/05/21)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.42}
+\tcb@set@library@version{4.50}
 
 \RequirePackage{amsmath}
 
@@ -30,6 +30,8 @@
 
 \def\tcb@theo@desc@form@std#1{\tcb@desc@col\kvtcb@desc@font\kvtcb@desc@delim@left#1\kvtcb@desc@delim@right}
 
+\def\tcb@theo@title@indent@std#1{\hangindent#1\hangafter=1\relax}
+
 \def\tcb@theo@title#1#2#3{%
   \ifdefempty{#2}{\setbox\z@=\color@hbox#1\color@endbox}{\setbox\z@=\tcb@theo@form{#1}{#2}}%
   \def\temp@a{#3}%
@@ -37,8 +39,7 @@
     \unhbox\z@\kvtcb@terminatorsign%
   \else%
     \setbox\z@=\hbox{\unhbox\z@\kvtcb@separatorsign\ }%
-    \hangindent\wd\z@%
-    \hangafter=1%
+    \tcb@theo@title@indent{\wd\z@}%
     \mbox{\unhbox\z@}{\tcb@theo@desc@form{#3}}\kvtcb@terminatorsign%
   \fi%
 }
@@ -136,6 +137,23 @@
   theorem style/margin break/.style={theorem style=margin,attach title to upper={\par}},
   theorem label supplement/.style={tcb@theo@label@supp/.style={#1}},
   theorem full label supplement/.style={tcb@theo@full@label@supp/.style={#1}},
+  theorem hanging indent/.code={%
+    \ifstrequal{#1}{auto}{%
+      \let\tcb@theo@title@indent\tcb@theo@title@indent@std%
+    }{%
+      \def\tcb@theo@title@indent##1{%
+        \ifdim#1=0pt\relax%
+        \else%
+          \ifdim#1>0pt\relax%
+            \hangindent#1\hangafter=1\relax%
+          \else%
+            \hangindent\dimexpr-#1\relax\hangafter=-1\relax%
+          \fi%
+        \fi
+      }%
+    }%
+  },
+  theorem hanging indent/.default=auto,
 }
 
 \newcommand{\new@tcbtheorem}[5][]{%
@@ -165,6 +183,7 @@
     highlight math style={colframe=red,colback=yellow!25!white},%
     theorem style=standard,label separator=:,%
     theorem label supplement=,theorem full label supplement=,%
+    theorem hanging indent%
   },
   initialize@reset=reset@theorems,
 }

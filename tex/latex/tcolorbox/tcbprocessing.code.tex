@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
+%% The LaTeX package tcolorbox - version 4.50 (2021/05/21)
 %% tcbprocessing.code.tex: Code for conditional processing
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.42}
+\tcb@set@library@version{4.50}
 
 \RequirePackage{pdftexcmds}
 \RequirePackage{shellesc}
@@ -35,6 +35,7 @@
 }
 
 \def\tcbproc@writemdfive#1{%
+  \tcb@allocate@tcb@out%
   \immediate\openout\tcb@out=#1%
   \immediate\write\tcb@out{\string\def\string\tcbproclastmdfivesum{\tcbprocmdfivesum}\@percentchar}%
   \immediate\closeout\tcb@out%

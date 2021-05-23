@@ -1,7 +1,7 @@
-%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
+%% The LaTeX package tcolorbox - version 4.50 (2021/05/21)
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -1192,3 +1192,30 @@ version 4.42 (2020/10/09)
   * color stacks (by pdfcol) are not mandatory any more,
     but are optional now with 'use color stack'. Note that effects of whatsits
     on the vertical space have to be expected.
+
+version 4.50 (2021/05/21)
+- bug fix (#128): 'tcbincludepdf' ignored some raster options
+- bug fix (#138): visible seam for 'bicolor' and 'tile' in 'sidebyside' mode
+    around the lower (i.e. rightward) part
+- (#125) Using group around arguments for title in the examples
+- (#134) Allocate write registers \tcb@out and \tcb@record@out only when needed
+- (#135) Documentation: recommend to use initialization options after loading hyperref
+- (#118) Documentation: warn user about white title color becoming invisible
+         for the skin 'empty'
+- documentation correction (#127)
+- documentation of library skins is split into a general part and the catalog of skins
+- (#124) '\tcblistof' enhanced to take an optional short title and mimic
+  '\listoffigures' where applicable
+- library 'skins':
+  * new option 'opacitybacklower'
+  * new jigsaw variant of 'bicolor':
+    'bicolor jigsaw', 'bicolorfirst jigsaw', 'bicolormiddle jigsaw', 'bicolorlast jigsaw'
+  * implementation of bicolor overhauled
+  * skin documentation complemented with sidebyside examples.
+- library 'theorems':
+  * (#126) new option 'theorem hanging indent'
+- library 'vignette':
+  * (#133) documentation examples for fading styles for every side added
+- library 'raster':
+  * (#119) '\thetcbrasternum' changed output the content of a counter.
+    LaTeX counter 'tcbrasterrow', 'tcbrastercolumn', 'tcbrasternum' documented.

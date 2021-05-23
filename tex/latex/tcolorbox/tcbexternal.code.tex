@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
+%% The LaTeX package tcolorbox - version 4.50 (2021/05/21)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.42}
+\tcb@set@library@version{4.50}
 
 \tcbuselibrary{pro@cessing}
 
@@ -69,6 +69,7 @@
   \begingroup%
   \ifnum\the\catcode`\"=13 \tcbexternal@activate@normal@dq\fi%
   \message{=== Compile external '\tcbexternal@job@name': }%
+  \tcb@allocate@tcb@out%
   \immediate\openout\tcb@out="\tcbexternal@run@tex"
   \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALINPUT{"\tcbexternal@job@source"}}%
   \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALSAFETY{\tcbexternal@safety}}%

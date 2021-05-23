@@ -533,7 +533,42 @@ These fadings are much \emph{weaker} than the normal fadings.
 \end{dispExample*}
 \end{vigTcbKey}
 
+\clearpage
 
+It is possible to assign different fadings for each side of the vignette,
+if needed. Therefore, the fadings have to be applied individually with
+the four style options
+  \refKey{/tcb/vig/north style},
+  \refKey{/tcb/vig/south style},
+  \refKey{/tcb/vig/east style}, and
+  \refKey{/tcb/vig/west style}.
+\begin{dispExample*}{sbs,righthand width=3cm,center lower}
+\begin{tikzpicture}
+  \fill [black!20] (-0.5,-0.5) rectangle (1.5,1.5);
+  \path [pattern=checkerboard,pattern color=black!30]
+    (-0.5,-0.5) rectangle (1.5,1.5);
+  \tcbvignette{
+    north style={blue,path fading=south},
+    east style ={blue,path fading=semi west},
+    south style={blue,path fading=semi north},
+    west style ={blue,path fading=east}
+  }
+\end{tikzpicture}
+\end{dispExample*}
+
+\begin{dispExample*}{sbs,righthand width=3cm,center lower}
+\begin{tikzpicture}
+  \fill [black!20] (-0.5,-0.5) rectangle (1.5,1.5);
+  \path [pattern=checkerboard,pattern color=black!30]
+    (-0.5,-0.5) rectangle (1.5,1.5);
+  \tcbvignette{
+    north style={blue,path fading=west},
+    east style ={blue,path fading=south},
+    south style={red,path fading=east},
+    west style ={red,path fading=north}
+  }
+\end{tikzpicture}
+\end{dispExample*}
 
 
 \clearpage

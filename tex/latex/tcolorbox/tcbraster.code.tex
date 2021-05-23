@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
+%% The LaTeX package tcolorbox - version 4.50 (2021/05/21)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,13 +17,12 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.42}
+\tcb@set@library@version{4.50}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
+\newcounter{tcbrasternum}
 \newcounter{tcbraster}
-
-\newrobustcmd{\thetcbrasternum}{\the\numexpr(\c@tcbrasterrow-1)*\kvtcb@raster@columns+\c@tcbrastercolumn\relax}
 
 \def\tcb@raster@ehg@all{%
   \tcbset{equal height group={\kvtcb@raster@ehgid}}%
@@ -75,7 +74,7 @@
       \tcb@warning{'raster multicolumn' combined too much columns}%
     \else%
       \tcbset@late@options{%
-        code={\preto\kvtcb@afterbox{\addtocounter{tcbrastercolumn}{\numexpr#1-1}}},
+        code={\preto\kvtcb@afterbox{\addtocounter{tcbrastercolumn}{\numexpr#1-1}\addtocounter{tcbrasternum}{\numexpr#1-1}}},
         width=(\tcb@raster@box@width+\tcb@raster@xskip)*#1-\tcb@raster@xskip}%
     \fi%
   },
@@ -130,10 +129,11 @@
   \edef\tcb@raster@save@column{\number\c@tcbrastercolumn}%
   \edef\tcb@raster@save@row{\number\c@tcbrasterrow}%
   \let\tcb@raster@change@fitbox\@empty%
+  \setcounter{tcbrasternum}{1}%
   \setcounter{tcbrastercolumn}{1}%
   \setcounter{tcbrasterrow}{1}%
   \let\tcb@height@fill@unbroken\tcb@height@fill@unbroken@raster%
-  \tcbset{every box on layer \the\numexpr\number\c@tcblayer+1\relax/.code={%
+  \tcbset{every box on layer \the\numexpr\number\c@tcblayer+1\relax/.append code={%
     \tcb@raster@ehg@set%
     \tcbset{raster every box/.try}%
     \ifodd\c@tcbrastercolumn\relax%
@@ -148,13 +148,13 @@
       \tcbset{raster even row/.try}%
     \fi%
     \tcbset{raster row \number\c@tcbrasterrow/.try}%
-    \ifodd\thetcbrasternum\relax%
+    \ifodd\c@tcbrasternum\relax%
       \tcbset{raster odd number/.try}%
     \else%
       \tcbset{raster even number/.try}%
     \fi%
     \tcbset{raster row \number\c@tcbrasterrow\space column \number\c@tcbrastercolumn/.try}%
-    \tcbset{raster number \thetcbrasternum/.try}%
+    \tcbset{raster number \number\c@tcbrasternum/.try}%
   }}%
   \tcbset{#1}%
   % sanitize
@@ -171,9 +171,10 @@
       \ifnum\c@tcbrasterrow>1 \parindent\z@\parskip\z@\par\nointerlineskip\addvspace{\the\dimexpr\tcb@raster@yskip\relax}\noindent\fi%
       \kern\tcb@raster@skip@left\fi},
     after={%
+      \stepcounter{tcbrasternum}%
       \ifnum\c@tcbrastercolumn=\kvtcb@raster@columns\relax%
         \kern\tcb@raster@skip@right%
-        \setcounter{tcbrastercolumn}{1}\addtocounter{tcbrasterrow}{1}%
+        \setcounter{tcbrastercolumn}{1}\stepcounter{tcbrasterrow}%
       \else%
         \stepcounter{tcbrastercolumn}%
       \fi},%
@@ -216,6 +217,7 @@
   \tcb@end@raster%
   \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%
   \setcounter{tcbrasterrow}{\tcb@raster@save@row}%
+  \setcounter{tcbrasternum}{\the\numexpr(\c@tcbrasterrow-1)*\kvtcb@raster@columns+\c@tcbrastercolumn\relax}%
 }
 
 \newcommand{\tcbitem@following}[1][]{%

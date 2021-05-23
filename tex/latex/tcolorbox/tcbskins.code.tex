@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 4.42 (2020/10/09)
+%% The LaTeX package tcolorbox - version 4.50 (2021/05/21)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2020 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.42}
+\tcb@set@library@version{4.50}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -111,6 +111,7 @@
 \tikzset{%
   tcb fill frame/.style={fill=tcbcolframe,fill opacity=\kvtcb@opacityframe,tcb@spec,frame@style},%
   tcb fill interior/.style={fill=tcbcolback,fill opacity=\kvtcb@opacityback,tcb@spec,interior@style},%
+  tcb fill lower bicolor/.style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,tcb@spec,segmentation@style},%
   tcb fill title/.style={fill=tcbcolbacktitle,fill opacity=\kvtcb@opacitybacktitle,tcb@spec,title@style},%
 }
 
@@ -225,33 +226,63 @@
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
 }
 
-\def\tcb@drawspec@sbs@A#1{%
-  \tcb@pathbase{#1,segmentation@style}{segmentation.south}{interior.north east}%
+\def\tcb@drawspec@sbs@a{%
+  \tcb@pathbase{tcb fill interior}{interior.south west}{segmentation.north}%
+    {\tcb@arc@ins@SW}{\tcb@arc@ins@NW}{\tcb@arc@zpt}{\tcb@arc@zpt}%
+}
+
+\def\tcb@drawspec@sbs@A{%
+  \tcb@pathbase{tcb fill lower bicolor}{segmentation.south}{interior.north east}%
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@NE}{\tcb@arc@ins@SE}%
 }
 
-\def\tcb@drawspec@sbs@B#1{%
-  \tcb@pathbase{#1,segmentation@style}{segmentation.south}{interior.north east}%
+\def\tcb@drawspec@sbs@b{%
+  \tcb@pathbase{tcb fill interior}{interior.south west}{segmentation.north}%
+    {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
+}
+
+\def\tcb@drawspec@sbs@B{%
+  \tcb@pathbase{tcb fill lower bicolor}{segmentation.south}{interior.north east}%
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
-\def\tcb@drawspec@sbs@C#1{%
-  \tcb@pathbase{#1,segmentation@style}{segmentation.south|-frame.south}{interior.north east}%
+\def\tcb@drawspec@sbs@c{%
+  \tcb@pathbase{tcb fill interior}{interior.south west|-frame.south}{segmentation.north}%
+    {\tcb@arc@zpt}{\tcb@arc@ins@NW}{\tcb@arc@zpt}{\tcb@arc@zpt}%
+}
+
+\def\tcb@drawspec@sbs@C{%
+  \tcb@pathbase{tcb fill lower bicolor}{segmentation.south|-frame.south}{interior.north east}%
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@NE}{\tcb@arc@zpt}%
 }
 
-\def\tcb@drawspec@sbs@D#1{%
-  \tcb@pathbase{#1,segmentation@style}{segmentation.south|-frame.south}{interior.north east}%
+\def\tcb@drawspec@sbs@d{%
+  \tcb@pathbase{tcb fill interior}{interior.south west|-frame.south}{segmentation.north}%
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
 }
 
-\def\tcb@drawspec@sbs@E#1{%
-  \tcb@pathbase{#1,segmentation@style}{segmentation.south|-frame.south}{interior.east|-frame.north}%
+\def\tcb@drawspec@sbs@D{%
+  \tcb@pathbase{tcb fill lower bicolor}{segmentation.south|-frame.south}{interior.north east}%
+    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
+}
+
+\def\tcb@drawspec@sbs@e{%
+  \tcb@pathbase{tcb fill interior}{interior.south west|-frame.south}{segmentation.north|-frame.north}%
+    {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
+}
+
+\def\tcb@drawspec@sbs@E{%
+  \tcb@pathbase{tcb fill lower bicolor}{segmentation.south|-frame.south}{interior.east|-frame.north}%
   {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
 }
 
-\def\tcb@drawspec@sbs@F#1{%
-  \tcb@pathbase{#1,segmentation@style}{segmentation.south}{interior.east|-frame.north}%
+\def\tcb@drawspec@sbs@f{%
+  \tcb@pathbase{tcb fill interior}{interior.south west}{segmentation.north|-frame.north}%
+    {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
+}
+
+\def\tcb@drawspec@sbs@F{%
+  \tcb@pathbase{tcb fill lower bicolor}{segmentation.south}{interior.east|-frame.north}%
   {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
@@ -377,6 +408,7 @@
         ([yshift=-\kvtcb@title@rule/2]title.south west)--([yshift=-\kvtcb@title@rule/2]title.south east);
     \fi}},%
   colbacklower/.colorlet=tcbcolbacklower,%
+  opacitybacklower/.store in=\kvtcb@opacitybacklower,
   clear@spec/.code={\tcb@spec{}},%
   tikz/.code={\appto\tcb@tikz@option@hook{,#1}},%
   tikz reset/.code={\let\tcb@tikz@option@hook\@empty},%
@@ -511,30 +543,45 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@path}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@b%
+        \else%
+          \tcb@drawwithtitle@path%
+        \fi
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@UT%
+        \tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithtitle@path}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithtitle@path}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@path}%
+      \tcb@drawwithtitle@path%
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@path}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@a%
+        \else%
+          \tcb@drawwithouttitle@path%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@UR%
+        \tcb@drawspec@UR%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithouttitle@path}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithouttitle@path}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@path}%
+      \tcb@drawwithouttitle@path%
     \fi\tcb@spec{}},
-  segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=tcbcolbacklower}\else%
-    \tcb@drawspec@sbs@A{fill=tcbcolbacklower}\fi\else\tcb@drawspec@LR{fill=tcbcolbacklower}\fi\tcb@spec{}},%
+  segmentation code={%
+    \iftcb@sidebyside%
+      \iftcb@hasTitle%
+        \tcb@drawspec@sbs@B%
+      \else%
+        \tcb@drawspec@sbs@A%
+      \fi%
+    \else%
+      \tcb@drawspec@LR{fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower}%
+    \fi\tcb@spec{}},%
   skin first=bicolorfirst,skin middle=bicolormiddle,skin last=bicolorlast}
 
 \tcbset{bicolor/.style={skin=bicolor}}
@@ -544,30 +591,45 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@pathfirst}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@d%
+        \else%
+          \tcb@drawwithtitle@pathfirst%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@UT%
+        \tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithtitle@pathfirst}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithtitle@pathfirst}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@pathfirst}%
+      \tcb@drawwithtitle@pathfirst%
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@pathfirst}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@c%
+        \else%
+          \tcb@drawwithouttitle@pathfirst%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@UR%
+        \tcb@drawspec@UR%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithouttitle@pathfirst}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithouttitle@pathfirst}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@pathfirst}%
+      \tcb@drawwithouttitle@pathfirst%
     \fi\tcb@spec{}},
-  segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=tcbcolbacklower}\else%
-    \tcb@drawspec@sbs@C{fill=tcbcolbacklower}\fi\else\tcb@drawspec@LS{fill=tcbcolbacklower}\fi\tcb@spec{}},%
+  segmentation code={%
+    \iftcb@sidebyside%
+      \iftcb@hasTitle%
+        \tcb@drawspec@sbs@D%
+      \else%
+        \tcb@drawspec@sbs@C
+      \fi%
+    \else%
+      \tcb@drawspec@LS{fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower}%
+    \fi\tcb@spec{}},%
   skin first=bicolorfirst,skin middle=bicolormiddle,skin last=bicolormiddle}
 
 \tcb@new@skin{bicolormiddle}{base@middle,%
@@ -575,30 +637,45 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@pathmiddle}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@d%
+        \else%
+          \tcb@drawwithtitle@pathmiddle%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@UT%
+        \tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithtitle@pathmiddle}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithtitle@pathmiddle}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@pathmiddle}%
+      \tcb@drawwithtitle@pathmiddle%
     \fi\tcb@spec{}},%
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@pathmiddle}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@e%
+        \else%
+          \tcb@drawwithouttitle@pathmiddle%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@US%
+        \tcb@drawspec@US%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithouttitle@pathmiddle}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithouttitle@pathmiddle}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@pathmiddle}%
+      \tcb@drawwithouttitle@pathmiddle%
     \fi\tcb@spec{}},
-  segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@D{fill=tcbcolbacklower}\else%
-    \tcb@drawspec@sbs@E{fill=tcbcolbacklower}\fi\else\tcb@drawspec@LS{fill=tcbcolbacklower}\fi\tcb@spec{}},%
+  segmentation code={%
+    \iftcb@sidebyside%
+      \iftcb@hasTitle%
+        \tcb@drawspec@sbs@D%
+      \else%
+        \tcb@drawspec@sbs@E%
+      \fi%
+    \else%
+      \tcb@drawspec@LS{fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower}%
+    \fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolormiddle}
 
 \tcb@new@skin{bicolorlast}{base@last,%
@@ -606,30 +683,45 @@
   interior titled code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@pathlast}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@b%
+        \else%
+          \tcb@drawwithtitle@pathlast%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@UT%
+        \tcb@drawspec@UT%
       \else%
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithtitle@pathlast}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithtitle@pathlast}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithtitle@pathlast}%
+      \tcb@drawwithtitle@pathlast%
     \fi\tcb@spec{}},
   interior code={%
     \iftcb@lowerseparated%
       \ifcase\tcbsegmentstate%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@pathlast}%
+        \iftcb@sidebyside%
+          \tcb@drawspec@sbs@f%
+        \else%
+          \tcb@drawwithouttitle@pathlast%
+        \fi%
       \or%
-      \tcb@spec{fill=tcbcolback}\tcb@drawspec@US%
+        \tcb@drawspec@US%
       \else
-      {\tcbset{interior style={fill=tcbcolbacklower,segmentation@style}}\tcb@drawwithouttitle@pathlast}%
+        {\tcbset{interior style={fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower,segmentation@style}}\tcb@drawwithouttitle@pathlast}%
       \fi%
     \else%
-      {\tcb@spec{fill=tcbcolback}\tcb@drawwithouttitle@pathlast}%
+      \tcb@drawwithouttitle@pathlast%
     \fi\tcb@spec{}},%
-  segmentation code={\iftcb@sidebyside%
-    \iftcb@hasTitle\tcb@drawspec@sbs@B{fill=tcbcolbacklower}\else%
-    \tcb@drawspec@sbs@F{fill=tcbcolbacklower}\fi\else\tcb@drawspec@LR{fill=tcbcolbacklower}\fi\tcb@spec{}},%
+  segmentation code={%
+    \iftcb@sidebyside%
+      \iftcb@hasTitle%
+        \tcb@drawspec@sbs@B%
+      \else%
+        \tcb@drawspec@sbs@F%
+      \fi%
+    \else%
+      \tcb@drawspec@LR{fill=tcbcolbacklower,fill opacity=\kvtcb@opacitybacklower}%
+    \fi\tcb@spec{}},%
   skin first=bicolormiddle,skin middle=bicolormiddle,skin last=bicolorlast}
 
 \tcb@new@skin{tile}{skin@bicolor,frame engine=empty,%
@@ -1830,17 +1922,17 @@
 }
 
 \newcommand{\tcbincludepdf}[2][]{%
-  \begingroup%
-  \tcb@layer@pushup%
-  \tcb@apply@box@options{enhanced,clip upper=true,valign=center,center upper,#1}%
-  \appto\kvtcb@graphics@options{,page=\imagepage}%
   \tcb@include@graphics@preparefile{#2}%
   \tcb@set@pdfpages\pdfpages{\imagepath}%
   \foreach \imagepage in \kvtcb@graphics@pages%
   {%
+    \begingroup%
+    \tcb@layer@pushup%
+    \tcb@apply@box@options{enhanced,clip upper=true,valign=center,center upper,#1}%
+    \appto\kvtcb@graphics@options{,page=\imagepage}%
     \tcb@include@graphics%
+    \endgroup%
   }%
-  \endgroup%
 }
 
 \tcbset{%
@@ -1891,7 +1983,7 @@
 \tcbset{%
   reset@skins/.style={%
     frame style=,interior style=,segmentation style=,@title style=,%
-    colbacklower=black!15!white,%
+    colbacklower=black!15!white,opacitybacklower=1.0,%
     extend freelance=,extend freelancefirst=,extend freelancemiddle=,extend freelancelast=,%
     clear@spec,%
     watermark opacity=1.00,watermark color=tcbcolback!85!tcbcolframe,%
