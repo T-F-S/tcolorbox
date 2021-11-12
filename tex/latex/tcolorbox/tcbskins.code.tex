@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.51 (2021/06/14)
+%% The LaTeX package tcolorbox - version 4.52pre4 (2021/11/12)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.51}
+\tcb@set@library@version{4.52pre4}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -1124,7 +1124,7 @@
     \fi%
     \tcbdimto\kvtcb@bottom{\kvtcb@bottom+\kvtcb@yinnershift@boxedtitle}%
   },
-  attach@title@boxed/.style n args={5}{%
+  attach@title@boxed/.style n args={6}{%
     detach title,
     code={\def\tcb@specialtitle@hook{%
       \ifx\tcbtitletext\@empty\else%
@@ -1135,7 +1135,15 @@
       \let\tcb@trans@boxedstyle\kvtcb@style@boxedtitle%
       \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
       \setbox\tcb@titlebox\color@hbox\tcbox[skin=\tcb@trans@skin@current,colframe=tcbtranscol@frame,colback=tcbtranscol@back,%
-        code={\pgfkeysalsofrom\tcb@trans@boxedsize\pgfkeysalsofrom\tcb@trans@boxedstyle}]{\box\tcb@titlebox}\color@endbox%
+          code={\pgfkeysalsofrom\tcb@trans@boxedsize\pgfkeysalsofrom\tcb@trans@boxedstyle%
+            \ifcase#6
+            \or%
+              \global\tcbdimto\tcb@xshift@boxedtitle@delta{\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper}%
+            \else%
+              \global\tcbdimto\tcb@xshift@boxedtitle@delta{\kvtcb@right@rule+\kvtcb@boxsep+\kvtcb@rightupper}%
+            \fi%
+          }%
+        ]{\box\tcb@titlebox}\color@endbox%
       %
       \tcbdimto\tcboxedtitleheight{\ht\tcb@titlebox+\dp\tcb@titlebox}%
       \tcbdimto\tcboxedtitlewidth{\wd\tcb@titlebox}%
@@ -1143,8 +1151,16 @@
       \let\tcb@specialgeonodes@first\relax%
       \let\tcb@specialgeonodes@middle\relax%
       \let\tcb@specialgeonodes@last\relax%
+      \ifcase#6
+        \tcbdimto\tcb@xshift@boxedtitle{\kvtcb@xshift@boxedtitle}%
+      \or%
+        \tcbdimto\tcb@xshift@boxedtitle{\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper-\tcb@xshift@boxedtitle@delta}%
+      \else%
+        \tcbdimto\tcb@xshift@boxedtitle{\tcb@xshift@boxedtitle@delta-(\kvtcb@right@rule+\kvtcb@boxsep+\kvtcb@rightupper)}%
+      \fi%
       \def\tcb@specialgeonodes@unbroken{%
-        \node[#4,name=title,at={([xshift=\kvtcb@xshift@boxedtitle,yshift=\kvtcb@yshift@boxedtitle]frame.#5)},
+        \node[#4,name=title,at={([xshift=\tcb@xshift@boxedtitle,yshift=\kvtcb@yshift@boxedtitle]frame.#5)},
+                line width=0mm,inner sep=0mm,outer sep=0mm,draw=none,fill=none,rectangle,
                 minimum width=\tcboxedtitlewidth,minimum height=\tcboxedtitleheight]{};}%
       \cslet{tcb@specialgeonodes@#3}{\tcb@specialgeonodes@unbroken}%
       \def\tcb@specialgeonodes@hook{\csname tcb@specialgeonodes@\tcb@split@state\endcsname}%
@@ -1152,15 +1168,17 @@
       \cspreto{tcb@underlay@#3}{\tcb@underlay@boxedtitle\pgftext[at={\pgfpointanchor{title}{center}}]{\box\tcb@titlebox}}%
       \fi}}%
     },
-  attach@title@boxed@top/.style n args={3}{attach@title@boxed={#1}{top}{first}{#2}{#3}},%
-  attach@title@boxed@bottom/.style n args={3}{attach@title@boxed={#1}{bottom}{last}{#2}{#3}},%
   %
-  attach boxed title to top left/.style={attach@title@boxed@top={#1}{above right}{north west}},
-  attach boxed title to top center/.style={attach@title@boxed@top={#1}{above}{north}},
-  attach boxed title to top right/.style={attach@title@boxed@top={#1}{above left}{north east}},
-  attach boxed title to bottom left/.style={attach@title@boxed@bottom={#1}{below right}{south west}},
-  attach boxed title to bottom center/.style={attach@title@boxed@bottom={#1}{below}{south}},
-  attach boxed title to bottom right/.style={attach@title@boxed@bottom={#1}{below left}{south east}},
+  attach boxed title to top left/.style          = {attach@title@boxed={#1}{top}{first}{above right}{north west}{0}},
+  attach boxed title to top text left/.style     = {attach@title@boxed={#1}{top}{first}{above right}{north west}{1}},
+  attach boxed title to top center/.style        = {attach@title@boxed={#1}{top}{first}{above}{north}{0}},
+  attach boxed title to top text right/.style    = {attach@title@boxed={#1}{top}{first}{above left}{north east}{2}},
+  attach boxed title to top right/.style         = {attach@title@boxed={#1}{top}{first}{above left}{north east}{0}},
+  attach boxed title to bottom left/.style       = {attach@title@boxed={#1}{bottom}{last}{below right}{south west}{0}},
+  attach boxed title to bottom text left/.style  = {attach@title@boxed={#1}{bottom}{last}{below right}{south west}{1}},
+  attach boxed title to bottom center/.style     = {attach@title@boxed={#1}{bottom}{last}{below}{south}{0}},
+  attach boxed title to bottom text right/.style = {attach@title@boxed={#1}{bottom}{last}{below left}{south east}{2}},
+  attach boxed title to bottom right/.style      = {attach@title@boxed={#1}{bottom}{last}{below left}{south east}{0}},
   reduce@vertical@rules/.code={%
     \ifdim\dimexpr\kvtcb@left@rule<\dimexpr\kvtcb@right@rule\relax%
       \tcbdimto\tcb@temp{\kvtcb@left@rule/2}%

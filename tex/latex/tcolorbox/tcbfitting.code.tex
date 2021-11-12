@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.51 (2021/06/14)
+%% The LaTeX package tcolorbox - version 4.52pre4 (2021/11/12)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{4.51}
+\tcb@set@library@version{4.52pre4}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -71,7 +71,21 @@
 
 \def\tcb@@capture@fitbox{%
   \let\endtcolorbox=\relax%
-  \Collect@Body\tcbox@inner@fitbox@collected%
+  \iftcb@wrap@environment%
+    \expandafter\@firstoftwo%
+  \else%
+    \expandafter\@secondoftwo%
+  \fi%
+  {\begingroup\tcb@hack@currenvir%
+   \Collect@Body\tcbox@inner@fitbox@collected@for@wrapping}%
+  {\Collect@Body\tcbox@inner@fitbox@collected}%
+}
+
+\long\def\tcbox@inner@fitbox@collected@for@wrapping#1\end#2{%
+  \endgroup%
+  \let\tcb@end@tcolorboxenvironment\relax%
+  \tcbox@inner@fitbox@collected{#1\end{#2}}%
+  \end{tcolorbox}%
 }
 
 \def\tcbfontsize#1{\fontsize{#1\tcbfitdim}{#1\dimexpr\kvtcb@fit@skip\tcbfitdim}\selectfont}

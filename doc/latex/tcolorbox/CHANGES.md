@@ -1,21 +1,94 @@
-%% The LaTeX package tcolorbox - version 4.51 (2021/06/14)
-%%
-%% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
-%% -------------------------------------------------------------------------------------------
-%%
-%% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3
-%% of this license or (at your option) any later version.
-%% The latest version of this license is in
-%%   http://www.latex-project.org/lppl.txt
-%% and version 1.3 or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later.
-%%
-%% This work has the LPPL maintenance status `author-maintained'.
-%%
-%% This work consists of all files listed in README
-%%
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on
+[Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+
+## [4.52] - 2021-xx-xx
+
+### Added
+- Library `skins`: Option `attach boxed title to top text left`
+- Library `skins`: Option `attach boxed title to top text right`
+- Library `skins`: Option `attach boxed title to bottom text left`
+- Library `skins`: Option `attach boxed title to bottom text right`
+
+### Changed
+- Library `documentation`: warn about not installed `marvosym` and `pifont` (issue #153)
+- Changelog is switched to Markdown for entries from 2021 on
+- Environments wrapped with `\tcolorboxenvironment` are now compatible with 
+  all three capture modes `minipage`, `hbox`, and `fitbox` (issue #154)
+- Meaningful error prompts when using unknown capture modes (issue #156)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Library `documentation`: Inconsistent local/global assignment corrected (issue #144)
+- Documentation: Changed bibtex link corrected (issue #145)
+
+### Security
+
+
+
+## [4.51] - 2021-06-14
+
+### Changed
+- Library `documentation`: Package loading of `marvosym` and `pifont`
+    removed. Symbols are accessed directly now by `documentation`.
+
+### Fixed
+- Allocation error for write registers
+
+
+
+## [4.50] - 2021-05-21
+
+### Added
+- Library `skins`: Option `opacitybacklower`
+- Library `skins`: Option `bicolor jigsaw`
+- Library `skins`: Option `bicolorfirst jigsaw`
+- Library `skins`: Option `bicolormiddle jigsaw`
+- Library `skins`: Option `bicolorlast jigsaw`
+- Library `theorems`: Option `theorem hanging indent` (issue #126)
+
+### Changed
+- Documentation: Using group around arguments for title in the examples (issue #125)
+- Documentation: Recommend to use initialization options after loading hyperref (issue #135)
+- Documentation: Warn user about white title color becoming invisible
+         for the skin `empty` (issue #118)
+- Documentation: Corrections (issue #127)      
+- Documentation of library `skins` is split into a general part and the catalog of skins
+- Allocate write registers `\tcb@out` and `\tcb@record@out` only when needed (issue #134)
+- `\tcblistof` enhanced to take an optional short title and mimic
+  `\listoffigures` where applicable (issue #124)
+- Library `skins`: Implementation of bicolor overhauled
+- Skin documentation complemented with sidebyside examples
+- Library `vignette`: Documentation examples for fading styles for every side added (issue #136)
+- Library `raster`: `\thetcbrasternum` changed to output the content of a counter (issue #119)
+- LaTeX counter `tcbrasterrow`, `tcbrastercolumn`, `tcbrasternum` documented.
+
+
+
+The following entries are following the old style (no Markdown, switched timeflow)
+==================================================================================
+
 
 (2006-2011): pre publication usage
 
@@ -1193,34 +1266,3 @@ version 4.42 (2020/10/09)
     but are optional now with 'use color stack'. Note that effects of whatsits
     on the vertical space have to be expected.
 
-version 4.50 (2021/05/21)
-- bug fix (#128): 'tcbincludepdf' ignored some raster options
-- bug fix (#138): visible seam for 'bicolor' and 'tile' in 'sidebyside' mode
-    around the lower (i.e. rightward) part
-- (#125) Using group around arguments for title in the examples
-- (#134) Allocate write registers \tcb@out and \tcb@record@out only when needed
-- (#135) Documentation: recommend to use initialization options after loading hyperref
-- (#118) Documentation: warn user about white title color becoming invisible
-         for the skin 'empty'
-- documentation correction (#127)
-- documentation of library skins is split into a general part and the catalog of skins
-- (#124) '\tcblistof' enhanced to take an optional short title and mimic
-  '\listoffigures' where applicable
-- library 'skins':
-  * new option 'opacitybacklower'
-  * new jigsaw variant of 'bicolor':
-    'bicolor jigsaw', 'bicolorfirst jigsaw', 'bicolormiddle jigsaw', 'bicolorlast jigsaw'
-  * implementation of bicolor overhauled
-  * skin documentation complemented with sidebyside examples.
-- library 'theorems':
-  * (#126) new option 'theorem hanging indent'
-- library 'vignette':
-  * (#133) documentation examples for fading styles for every side added
-- library 'raster':
-  * (#119) '\thetcbrasternum' changed output the content of a counter.
-    LaTeX counter 'tcbrasterrow', 'tcbrastercolumn', 'tcbrasternum' documented.
-
-version 4.51 (2021/06/14)
-- bug fix: allocation error for write registers
-- (#139) library 'documentation': package loading of 'marvosym' and 'pifont'
-    removed. Symbols are accessed directly now by 'documentation'.

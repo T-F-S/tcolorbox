@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.51 (2021/06/14)
+%% The LaTeX package tcolorbox - version 4.52pre4 (2021/11/12)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2021/06/14 version 4.51 text color boxes]
-\def\tcb@version{4.51}
+\ProvidesPackage{tcolorbox}[2021/11/12 version 4.52pre4 text color boxes]
+\def\tcb@version{4.52pre4}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -42,6 +42,7 @@
 \newif\iftcb@ignorenobreak
 \newif\iftcb@checkpage
 \newif\iftcb@resetcounteronoverlays
+\newif\iftcb@wrap@environment
 
 \newbox\tcb@titlebox
 \newbox\tcb@upperbox
@@ -90,7 +91,7 @@
   \tcbset{autoparskip}%
 }
 
-\def\tcb@hack@currenvir{\edef\tcb@temp{\noexpand\def\noexpand\@currenvir{\kvtcb@savedelimiter}}\tcb@temp}
+\def\tcb@hack@currenvir{\edef\@currenvir{\kvtcb@savedelimiter}}
 
 \def\tcb@sbs@quota@leftwidth{%
   \tcbdimto\tcb@w@upper{\kvtcb@sbs@ratio}%
@@ -716,7 +717,13 @@
     \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
   },
   code/.code={#1},
-  capture/.store in=\kvtcb@capture,%
+  capture/.code={%
+    \def\kvtcb@capture{#1}%
+    \ifcsname tcb@@capture@\kvtcb@capture\endcsname\else%
+      \tcb@error{Unknown capture mode `\kvtcb@capture'. Use `minipage', `hbox', or `fitbox'}{}%
+      \def\kvtcb@capture{minipage}%
+    \fi%
+  },%
   hbox/.style={capture=hbox},%
   minipage/.style={capture=minipage},%
   void/.style={capture=v@@d,capture/.code=,options@for/.code=,code={\def\tcbinputlisting@core{}}},
@@ -808,15 +815,11 @@
   verbatim ignore percent/true/.code={\def\tcb@verbatim@change@percent{\catcode`\^^e=9}},
   verbatim ignore percent/false/.code={\let\tcb@verbatim@change@percent\@empty},
   verbatim ignore percent/.default=true,
+  wrap@environment/.is if=tcb@wrap@environment,
 }
 
 \def\kvtcb@beforebox{}
 \def\kvtcb@afterbox{}
-
-\tcbset{%
-  autoparskip,minipage,savedelimiter=tcolorbox,%
-  set@extensions@preframe=,set@extensions@postframe=,set@extensions@final=,%
-}%
 
 \def\tcb@set@label#1{%
   \ifx\kvtcb@label@type\@empty%
@@ -1031,8 +1034,29 @@
 }
 
 \def\tcb@@capture@hbox{%
-  \let\endtcolorbox=\relax%
-  \Collect@Body\tcbox@inner@hbox@collected%
+  \let\endtcolorbox\relax%
+  \iftcb@wrap@environment%
+    \expandafter\@firstoftwo%
+  \else%
+    \expandafter\@secondoftwo%
+  \fi%
+  {\begingroup\tcb@hack@currenvir%
+   \Collect@Body\tcbox@inner@hbox@collected@for@wrapping}%
+  {\Collect@Body\tcbox@inner@hbox@collected}%
+}
+
+\long\def\tcbox@inner@hbox@collected@for@wrapping#1\end#2{%
+  \endgroup%
+  \let\tcb@end@tcolorboxenvironment\relax%
+  \tcbox@inner@hbox@collected{#1\end{#2}}%
+  \end{tcolorbox}%
+}
+
+% will be overwritten in `fitting` library
+\def\tcb@@capture@fitbox{%
+  \tcb@error{You need to load `fitting' library to use capture mode `fitbox'}{}%
+  % fallback
+  \tcb@@capture@minipage%
 }
 
 % save 'comment' from 'verbatim'
@@ -2041,8 +2065,13 @@
   \tcb@process@newenvironment}
 
 \newcommand{\tcolorboxenvironment}[2]{%
-  \BeforeBeginEnvironment{#1}{\begin{tcolorbox}[savedelimiter={#1},#2]}%
-  \AfterEndEnvironment{#1}{\end{tcolorbox}}%
+  \AddToHook{env/#1/before}{%
+    \begin{tcolorbox}[savedelimiter={#1},#2,wrap@environment,
+      code={\def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}}]%
+  }%
+  \AddToHook{env/#1/after}{%
+    \tcb@end@tcolorboxenvironment%
+  }%
 }
 
 % auxiliary code to remove a leading backspace
@@ -2299,11 +2328,16 @@
     list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
     subtitle style=,title filled=false,every float=,ignore nobreak=false,before nobreak=\noindent,
-    tcbox width=auto,
+    tcbox width=auto,wrap@environment=false,
   },
   initialize@reset=reset@core,
   shield externalize=false,
 }
+
+\tcbset{%
+  autoparskip,minipage,savedelimiter=tcolorbox,%
+  set@extensions@preframe=,set@extensions@postframe=,set@extensions@final=,%
+}%
 
 \def\tcbsetforeverylayer#1{\tcbset{initialize@reset={#1}}}
 

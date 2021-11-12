@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.51 (2021/06/14)
+%% The LaTeX package tcolorbox - version 4.52pre4 (2021/11/12)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.51}
+\tcb@set@library@version{4.52pre4}
 
 \tcbuselibrary{listings,skins,xparse,external,raster}
 
@@ -25,6 +25,8 @@
 \RequirePackage{refcount}[2011/10/16]
 \RequirePackage{hyperref}[2012/02/06]
 \ifdefined\marginnote\else\RequirePackage{marginnote}[2012/03/29]\fi
+\IfFileExists{pifont.sty}{}{\tcb@warning{Library 'documentation' may need symbols from package 'pifont' (not installed)}}
+\IfFileExists{marvosym.sty}{}{\tcb@warning{Library 'documentation' may need symbols from package 'marvosym' (not installed)}}
 
 \definecolor{Option}{rgb}{0.118,0.546,0.222}
 \definecolor{Definition}{rgb}{0.784,0.06,0.176}
@@ -371,7 +373,7 @@
   {
     \tcbset{doc~name=, doc~parameter=, doc~description=, #1}
     \begin{tcb@manual@entry}
-    \seq_clear:N \g__tcobox_label_seq
+    \seq_gclear:N \g__tcobox_label_seq
     \begin{tcbraster}[raster~columns=1,raster~row~skip=0pt,
       raster~after~skip=4.1pt,raster~force~size=false,doc@raster@#3]
     \seq_set_from_clist:Nn \l_tmpa_seq {#2}
@@ -391,7 +393,7 @@
         \group_end:
       }
     \end{tcbraster}
-    \seq_clear:N \g__tcobox_label_seq
+    \seq_gclear:N \g__tcobox_label_seq
     \nobreak
     \tcbset{before~upper=}
     \use:c { kvtcb@doc@body@#3@before }
