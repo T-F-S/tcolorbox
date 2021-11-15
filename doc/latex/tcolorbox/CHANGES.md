@@ -34,6 +34,8 @@ The format is based on
 - Environments wrapped with `\tcolorboxenvironment` are now compatible with 
   all three capture modes `minipage`, `hbox`, and `fitbox` (issue #154)
 - Meaningful error prompts when using unknown capture modes (issue #156)
+- Library `raster`: Inside a raster, `tcbrasternum` can now be 
+    referenced using `label={mylabel}`, if the box is not numbered otherwise (issue #81 and #119)
 
 ### Deprecated
 

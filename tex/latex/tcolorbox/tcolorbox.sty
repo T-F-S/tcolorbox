@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.52pre4 (2021/11/12)
+%% The LaTeX package tcolorbox - version 4.52pre5 (2021/11/15)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2021/11/12 version 4.52pre4 text color boxes]
-\def\tcb@version{4.52pre4}
+\ProvidesPackage{tcolorbox}[2021/11/15 version 4.52pre5 text color boxes]
+\def\tcb@version{4.52pre5}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -2066,7 +2066,7 @@
 
 \newcommand{\tcolorboxenvironment}[2]{%
   \AddToHook{env/#1/before}{%
-    \begin{tcolorbox}[savedelimiter={#1},#2,wrap@environment,
+    \begin{tcolorbox}[savedelimiter={#1},#2,wrap@environment,%
       code={\def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}}]%
   }%
   \AddToHook{env/#1/after}{%
