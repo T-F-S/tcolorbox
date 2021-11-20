@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.52pre5 (2021/11/15)
+%% The LaTeX package tcolorbox - version 5.0.0pre6 (2021/11/20)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,12 +17,18 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.52pre5}
+\tcb@set@library@version{5.0.0pre6}
 
 \newcounter{tcbrastercolumn}
 \newcounter{tcbrasterrow}
 \newcounter{tcbrasternum}
 \newcounter{tcbraster}
+\def\tcb@raster@number{\@arabic\c@tcbraster}%
+\def\theHtcbrasternum{\tcb@raster@number.\@arabic\c@tcbrasternum}
+
+\setcounter{tcbrasternum}{1}
+\setcounter{tcbrastercolumn}{1}
+\setcounter{tcbrasterrow}{1}
 
 \def\tcb@raster@ehg@all{%
   \tcbset{equal height group={\kvtcb@raster@ehgid}}%
@@ -126,6 +132,7 @@
   \tcb@layer@pushup%
   \stepcounter{tcbraster}%
   \edef\tcb@raster@number{\number\c@tcbraster}%
+  \edef\tcb@raster@save@num{\number\c@tcbrasternum}%
   \edef\tcb@raster@save@column{\number\c@tcbrastercolumn}%
   \edef\tcb@raster@save@row{\number\c@tcbrasterrow}%
   \let\tcb@raster@change@fitbox\@empty%
@@ -216,9 +223,9 @@
   \addvspace{\glueexpr\tcb@raster@skip@after-\parskip}%
   \endgroup%
   \tcb@end@raster%
+  \setcounter{tcbrasternum}{\tcb@raster@save@num}%
   \setcounter{tcbrastercolumn}{\tcb@raster@save@column}%
   \setcounter{tcbrasterrow}{\tcb@raster@save@row}%
-  \setcounter{tcbrasternum}{\the\numexpr(\c@tcbrasterrow-1)*\kvtcb@raster@columns+\c@tcbrastercolumn\relax}%
 }
 
 \newcommand{\tcbitem@following}[1][]{%

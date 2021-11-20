@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.52pre5 (2021/11/15)
+%% The LaTeX package tcolorbox - version 5.0.0pre6 (2021/11/20)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{4.52pre5}
+\tcb@set@library@version{5.0.0pre6}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -912,7 +912,7 @@
 }
 
 
-\def\tcb@init@breakability{%
+\def\tcb@init@breakable{%
   \let\tcb@savebox=\tcb@vbox%
   \let\endtcb@savebox=\endtcb@vbox%
   \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable%
@@ -927,16 +927,16 @@
 
 \tcbset{%
   breakable@true/.code={%
-    \tcb@init@breakability%
+    \tcb@isbreakabletrue%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightBreakable},
   breakable@unlimited/.code={%
-    \tcb@init@breakability%
+    \tcb@isbreakabletrue%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightUnlimited},
   breakable/.style={breakable@#1},
   breakable/.default=true,%
   unbreakable/.style={breakable=false},%
   enforce breakable/.code={%
-    \tcb@init@breakability%
+    \tcb@isbreakabletrue%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightBreakable},
   title after break/.store in=\kvtcb@followingtitle,%
   notitle after break/.style={title after break=},%

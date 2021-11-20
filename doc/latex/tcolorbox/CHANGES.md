@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on
-[Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+[Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to
+[Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
@@ -20,7 +22,7 @@ The format is based on
 
 
 
-## [4.52] - 2021-xx-xx
+## [5.0.0] - 2021-xx-xx
 
 ### Added
 - Library `skins`: Option `attach boxed title to top text left`
@@ -29,8 +31,11 @@ The format is based on
 - Library `skins`: Option `attach boxed title to bottom text right`
 
 ### Changed
-- Library `documentation`: warn about not installed `marvosym` and `pifont` (issue #153)
 - Changelog is switched to Markdown for entries from 2021 on
+  [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+- From now on version numbers adhere to
+  [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
+- Library `documentation`: warn about not installed `marvosym` and `pifont` (issue #153)
 - Environments wrapped with `\tcolorboxenvironment` are now compatible with 
   all three capture modes `minipage`, `hbox`, and `fitbox` (issue #154)
 - Meaningful error prompts when using unknown capture modes (issue #156)
@@ -44,6 +49,9 @@ The format is based on
 ### Fixed
 - Library `documentation`: Inconsistent local/global assignment corrected (issue #144)
 - Documentation: Changed bibtex link corrected (issue #145)
+- Library `breakable`: Option `use color stack` was order dependant (issue #157)
+- Library `raster`: Numbering for rasters inside rasters
+- In certain situations options were set twice
 
 ### Security
 
@@ -86,6 +94,27 @@ The format is based on
 - Library `raster`: `\thetcbrasternum` changed to output the content of a counter (issue #119)
 - LaTeX counter `tcbrasterrow`, `tcbrastercolumn`, `tcbrasternum` documented.
 
+
+
+## [4.42] - 2020-10-09
+
+### Added
+- Library `breakble`: Option `use color stack`
+
+### Changed
+- Due to several problems with the color algorithm introduced with version 4.32,
+  essentially reversion to the proven pre 4.32 method.
+  - support of luacolor persists (since 4.32)
+  - color stacks (by pdfcol) are not mandatory any more,
+    but are optional now with `use color stack`. Note that effects of whatsits
+    on the vertical space have to be expected.
+
+
+
+## [4.41] - 2020-09-29
+
+### Fixed
+- Color bleeding for xelatex and breakable boxes (since 4.32) (issue #120)
 
 
 The following entries are following the old style (no Markdown, switched timeflow)
@@ -1257,14 +1286,4 @@ version 4.40 (2020/09/25)
 - 'before skip' and 'before skip balanced' do not insert glue now, if
   the tcolorbox is the first element in a minipage (or sourrounding tcolorbox)
 
-version 4.41 (2020/09/29)
-- bug fix (#120): color bleeding for xelatex and breakable boxes (since 4.32)
-
-version 4.42 (2020/10/09)
-- due to several problems with the color algorithm introduced with version 4.32,
-  essentially reversion to the proven pre 4.32 method.
-  * support of luacolor persists (since 4.32)
-  * color stacks (by pdfcol) are not mandatory any more,
-    but are optional now with 'use color stack'. Note that effects of whatsits
-    on the vertical space have to be expected.
 

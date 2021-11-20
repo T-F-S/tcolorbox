@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 4.52pre5 (2021/11/15)
+%% The LaTeX package tcolorbox - version 5.0.0pre6 (2021/11/20)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2021/11/15 version 4.52pre5 text color boxes]
-\def\tcb@version{4.52pre5}
+\ProvidesPackage{tcolorbox}[2021/11/20 version 5.0.0pre6 text color boxes]
+\def\tcb@version{5.0.0pre6}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -43,6 +43,7 @@
 \newif\iftcb@checkpage
 \newif\iftcb@resetcounteronoverlays
 \newif\iftcb@wrap@environment
+\newif\iftcb@isbreakable
 
 \newbox\tcb@titlebox
 \newbox\tcb@upperbox
@@ -709,12 +710,8 @@
   lefthand ratio/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@leftratio},
   righthand ratio/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@rightratio},
   breakable@false/.code={%
-    \let\tcb@savebox=\tcb@lrbox%
-    \let\endtcb@savebox=\endtcb@lrbox%
+    \tcb@isbreakablefalse%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightStandard%
-    \let\tcb@drawcolorbox=\tcb@drawcolorbox@standalone%
-    \def\tcb@upperdraw@begin@hook{\color{tcbcolupper}}%
-    \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
   },
   code/.code={#1},
   capture/.code={%
@@ -1190,12 +1187,29 @@
 
 \let\tcbtextheight\tcb@zpt%
 
+\def\tcb@init@breakable{}
+
+\def\tcb@init@unbreakable{%
+  \let\tcb@savebox=\tcb@lrbox%
+  \let\endtcb@savebox=\endtcb@lrbox%
+  \let\tcb@drawcolorbox=\tcb@drawcolorbox@standalone%
+  \def\tcb@upperdraw@begin@hook{\color{tcbcolupper}}%
+  \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
+}%
+
 \long\def\tcb@apply@box@options#1{%
   \let\tcb@space\tcb@zpt%
   \let\tcb@outer@textheight\tcbtextheight%
   \let\tcbtextheight\tcb@zpt%
   \let\tcbtextwidth\tcb@zpt%
-  \tcbset{#1}\tcb@lateoptions@hook\tcb@afteroptions@hook%
+  \tcbset{#1}%
+  \tcb@lateoptions@hook\let\tcb@lateoptions@hook\@empty%
+  \tcb@afteroptions@hook%
+  \iftcb@isbreakable%
+    \tcb@init@breakable%
+  \else%
+    \tcb@init@unbreakable%
+  \fi%
   \let\iftcb@minipage\if@minipage%
   \let\iftcb@nobreak\if@nobreak%
 }

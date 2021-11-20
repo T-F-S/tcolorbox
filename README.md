@@ -1,4 +1,4 @@
-# The LaTeX package tcolorbox - version 4.52pre5 (2021/11/15)
+# The LaTeX package tcolorbox - version 5.0.0pre6 (2021/11/20)
 
 
 > Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
