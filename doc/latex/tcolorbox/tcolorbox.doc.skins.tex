@@ -443,6 +443,18 @@ the top left corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
+\begin{docTcbKey}[][doc new=2021-07-30]{attach boxed title to top text left}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+The title is boxed with a \refCom{tcbox} and attached to
+the top left corner of the main box
+and shifted to match title text and box text.
+\begin{exdispExample*}{attach_boxed_title_to_top_text_left}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  attach boxed title to top text left]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
 \begin{docTcbKey}{attach boxed title to top center}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the top of the main box.
@@ -453,6 +465,20 @@ the top of the main box.
 \end{tcolorbox}
 \end{exdispExample*}
 \end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2021-07-30]{attach boxed title to top text right}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+The title is boxed with a \refCom{tcbox} and attached to
+the top right corner of the main box
+and shifted to match title text and box text.
+\begin{exdispExample*}{attach_boxed_title_to_top_text_right}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  halign=right,
+  attach boxed title to top text right]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
 
 \begin{docTcbKey}{attach boxed title to top right}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
@@ -465,6 +491,8 @@ the top right corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
+\clearpage
+
 \begin{docTcbKey}{attach boxed title to bottom left}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
 the bottom left corner of the main box.
@@ -476,7 +504,20 @@ the bottom left corner of the main box.
 \end{exdispExample*}
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
+
+\begin{docTcbKey}[][doc new=2021-07-30]{attach boxed title to bottom text left}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+The title is boxed with a \refCom{tcbox} and attached to
+the bottom left corner of the main box
+and shifted to match title text and box text.
+Note that this matches the \emph{upper} part, even, if there is a \emph{lower} part.
+\begin{exdispExample*}{attach_boxed_title_to_bottom_text_left}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  attach boxed title to bottom text left]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
 
 \begin{docTcbKey}{attach boxed title to bottom center}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
@@ -488,6 +529,22 @@ the bottom of the main box.
 \end{tcolorbox}
 \end{exdispExample*}
 \end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2021-07-30]{attach boxed title to bottom text right}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
+The title is boxed with a \refCom{tcbox} and attached to
+the bottom right corner of the main box
+and shifted to match title text and box text.
+Note that this matches the \emph{upper} part, even, if there is a \emph{lower} part.
+\begin{exdispExample*}{attach_boxed_title_to_bottom_text_right}{sbs,lefthand ratio=0.66}
+\begin{tcolorbox}[enhanced,title=My title,
+  halign=right,
+  attach boxed title to bottom text right]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTcbKey}
+
 
 \begin{docTcbKey}{attach boxed title to bottom right}{\colOpt{=\marg{boxtitle options}}}{style, default empty}
 The title is boxed with a \refCom{tcbox} and attached to
@@ -728,8 +785,8 @@ the \meta{options} are is appended.
   colframe=red!50!black,colback=red!10!white,
   arc=1mm,colbacktitle=red!10!white,
   fonttitle=\bfseries,coltitle=red!50!black,
-  attach boxed title to top left=
-    {xshift=3.2mm,yshift=-0.50mm},
+  attach boxed title to top text left=
+    {yshift=-0.50mm},
   boxed title style={skin=enhancedfirst jigsaw,
     size=small,arc=1mm,bottom=-1mm,
     interior style={fill=none,

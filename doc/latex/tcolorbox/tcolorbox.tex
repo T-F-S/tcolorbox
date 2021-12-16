@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 4.51 (2021/06/14)
+%% The LaTeX package tcolorbox - version 5.0.0 (2021/12/16)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -25,6 +25,7 @@
 % arara: pdflatex: { shell: yes, synctex: yes }
 % arara: pdflatex: { shell: yes, synctex: yes }
 %
+\PassOptionsToPackage{pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks}{hyperref}
 \documentclass[a4paper,11pt]{ltxdoc}
 
 \usepackage{tcolorbox.doc.s_main}
@@ -43,8 +44,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{4.51}%
-\def\datum{2021/06/14}%
+\def\version{5.0.0}%
+\def\datum{2021/12/16}%
 \makeindex
 
 \hypersetup{
@@ -62,7 +63,7 @@
 %\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.documentation}
+%\includeonly{tcolorbox.doc.listings}
 
 %\hypersetup{colorlinks=false}
 

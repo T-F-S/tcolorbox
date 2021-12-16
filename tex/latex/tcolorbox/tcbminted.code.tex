@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.0pre6 (2021/11/20)
+%% The LaTeX package tcolorbox - version 5.0.0 (2021/12/16)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,60 +18,128 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.0.0pre6}
+\tcb@set@library@version{5.0.0}
 
 \RequirePackage{minted}[2011/09/17]
 
 % to be removed, if integrated into the minted package (#281)
 \minted@def@optcl{envname}{-P envname}{#1}
 
+% to be removed, if minted becomes newer than v2.5 (2017/07/19)
+% and resolves the package clash with fancyvrb
+\ProvideDocumentCommand\tcbTemporaryPatchMintedFancyvrb{}{%
+  \@ifpackagelater{minted}{2021/12/01}{}{\@ifpackagelater{fancyvrb}{2021/11/19}{%
+    % patch from muzimuzhi
+    \RequirePackage{regexpatch}%
+    \def\minted@use@FancyVerbStartNum{\the\numexpr\FancyVerbStartNum}%
+    \def\minted@use@FancyVerbStopNum{\the\numexpr\FancyVerbStopNum}%
+    % patch for fivesum computation
+    \xpatchcmd*\minted@pygmentize%
+      {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}%
+      {\minted@use@FancyVerbStartNum}%
+      {}{}%
+    \xpatchcmd*\minted@pygmentize%
+      {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}%
+      {\minted@use@FancyVerbStopNum}%
+      {}{}%
+    % patch for option "autogobble"
+    \xpatchcmd\minted@autogobble%
+      {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}%
+      {\minted@use@FancyVerbStartNum}%
+      {}{}%
+    \xpatchcmd\minted@autogobble%
+      {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}%
+      {\minted@use@FancyVerbStopNum}%
+      {}{}%
+}{}}}
+
+\tcbTemporaryPatchMintedFancyvrb
+
 \tcbuselibrary{listings@core}
 
-\def\tcb@minted@input@listing#1#2#3#4{%
-  \edef\temp@a{#4}%
-  \ifx\temp@a\@empty%
-  \else%
-    \toks@=\expandafter{#4}%
-    \edef\tcb@temp{\noexpand\usemintedstyle{\the\toks@}}%
-    \tcb@temp%
-  \fi%
-  \ifdefstring{\tcb@listing@capture}{hbox}{%
-    \toks@=\expandafter{#1,envname=BVerbatim}%
-  }{%
-    \toks@=\expandafter{#1}%
-  }%
-  \edef\tcb@temp{\noexpand\inputminted[\the\toks@]}%
-  \IfFileExists{\minted@outputdir#3}%
-    {\tcb@temp{#2}{\minted@outputdir#3}}%
-    {\tcb@temp{#2}{#3}}%
-}
+\ExplSyntaxOn
 
-\def\tcb@minted@uselistinglisting{%
-  \tcb@minted@input@listing{\kvtcb@minted@options}{\kvtcb@minted@language}{\kvtcb@listingfile}{\kvtcb@minted@style}%
-}%
+\cs_new_nopar:Npn \__tcobox_minted_input_listing:nnnn #1#2#3#4
+  {
+    \tl_if_empty:nF { #4 }
+      {
+        \usemintedstyle { #4 }
+      }
+    \tl_set:Nn \l_tmpa_tl { \inputminted[#1 }
+    \str_if_eq:VnT \tcb@listing@capture { hbox }
+      {
+        \tl_put_right:Nn \l_tmpa_tl { ,envname=BVerbatim }
+      }
+    \tl_put_right:Nn \l_tmpa_tl { ] }
+    \file_if_exist:nTF { \minted@outputdir #3 }
+      {
+        \l_tmpa_tl { #2 }{ \minted@outputdir #3 }
+      }
+      {
+        \l_tmpa_tl { #2 }{ #3 }
+      }
+  }
 
-\def\tcb@minted@usetemplisting{%
-  \tcb@minted@input@listing{\kvtcb@minted@options}{\kvtcb@minted@language}{\kvtcb@tempfile}{\kvtcb@minted@style}%
-}%
+\cs_generate_variant:Nn \__tcobox_minted_input_listing:nnnn {VVVV}
 
-\def\tcb@minted@doc@usetemplisting{%
-  \tcb@minted@input@listing{\kvtcb@docmintoptions}{\kvtcb@docminted@language}{\kvtcb@tempfile}{\kvtcb@docmintstyle}%
-}
+
+\cs_new_nopar:Npn \__tcbbox_minted_uselistinglisting:
+  {
+    \__tcobox_minted_input_listing:VVVV
+      \kvtcb@minted@options
+      \kvtcb@minted@language
+      \kvtcb@listingfile
+      \kvtcb@minted@style
+  }
+
+
+\cs_new_nopar:Npn \__tcbbox_minted_usetemplisting:
+  {
+    \__tcobox_minted_input_listing:VVVV
+      \kvtcb@minted@options
+      \kvtcb@minted@language
+      \kvtcb@tempfile
+      \kvtcb@minted@style
+  }
+
+
+\cs_new_nopar:Npn \__tcbbox_minted_doc_usetemplisting:
+  {
+    \__tcobox_minted_input_listing:VVVV
+      \kvtcb@docmintoptions
+      \kvtcb@docminted@language
+      \kvtcb@tempfile
+      \kvtcb@docmintstyle
+  }
+
+
+\tcbset
+  {
+    listing~engine/minted/.code=
+      {
+        \cs_set_eq:NN \tcbuselistinglisting   \__tcbbox_minted_uselistinglisting:
+        \cs_set_eq:NN \tcbusetemplisting      \__tcbbox_minted_usetemplisting:
+        \cs_set_eq:NN \tcb@doc@usetemplisting \__tcbbox_minted_doc_usetemplisting:
+      },
+  }
+
+\ExplSyntaxOff
+
 
 \tcbset{%
   minted language/.store in=\kvtcb@minted@language,
   minted options/.store in=\kvtcb@minted@options,
+  default@minted@options/.store in=\kvtcb@default@minted@options,
+  default minted options/.style={default@minted@options={#1},minted options={#1}},
   minted style/.store in=\kvtcb@minted@style,
-  listing engine/minted/.code={\let\tcbuselistinglisting\tcb@minted@uselistinglisting%
-    \let\tcbusetemplisting\tcb@minted@usetemplisting%
-    \let\tcb@doc@usetemplisting\tcb@minted@doc@usetemplisting},
 }
 
 
 \tcbset{%
+  default@minted@options={tabsize=2,fontsize=\small,breaklines,autogobble},
   reset@minted/.style={%
     minted language=latex,
-    minted options={tabsize=2,fontsize=\small,breaklines,autogobble},
+    code={\let\kvtcb@minted@options\kvtcb@default@minted@options},
     minted style=,
     listing engine=minted,
   },

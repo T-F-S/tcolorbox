@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.0pre6 (2021/11/20)
+%% The LaTeX package tcolorbox - version 5.0.0 (2021/12/16)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2021/11/20 version 5.0.0pre6 text color boxes]
-\def\tcb@version{5.0.0pre6}
+\ProvidesPackage{tcolorbox}[2021/12/16 version 5.0.0 text color boxes]
+\def\tcb@version{5.0.0}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -133,6 +133,13 @@
 
 \pgfkeys{/handlers/.dimstore in/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\def#1{\the\dimexpr##1\relax}}}
 \pgfkeys{/handlers/.colorlet/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\colorlet{#1}{##1}}}
+
+\ExplSyntaxOn
+
+\pgfkeys{/handlers/.tl_set:N/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\tl_set:Nn#1{##1}}}
+
+\ExplSyntaxOff
+
 
 \newcommand\tcbtitle{\ifx\tcbtitletext\@empty\else%
   \leavevmode{\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
@@ -1076,7 +1083,7 @@
 }
 
 \def\tcb@count@boxes{%
-  \global\advance\c@tcolorbox@number by 1\relax%
+  \global\advance\c@tcolorbox@number 1\relax%
   \edef\thetcolorboxnumber{\number\c@tcolorbox@number}%
   \expandafter\ifx\csname tcolorboxpage@\thetcolorboxnumber\endcsname\relax%
     \edef\thetcolorboxpage{\number\c@page}%
@@ -1118,10 +1125,10 @@
 
 \def\tcb@managed@layers@max{0}
 \def\tcbsetmanagedlayers#1{%
-  \setcounter{tcblayer}{\tcb@managed@layers@max}%
+  \global\c@tcblayer\tcb@managed@layers@max\relax%
   \ifnum\c@tcblayer<#1\relax%
     \loop
-      \stepcounter{tcblayer}%
+      \global\advance\c@tcblayer 1\relax%
       \newbox\tcb@temp%
       \cslet{tcb@footnote@\romannumeral\c@tcblayer}{\tcb@temp}%
       \tcbset{every box on layer \number\c@tcblayer/.style={reset,every box}}
@@ -1129,7 +1136,7 @@
   \else%
   \fi%
   \xdef\tcb@managed@layers@max{#1}%
-  \setcounter{tcblayer}{0}%
+  \global\c@tcblayer 0\relax%
 }
 \@onlypreamble\tcbsetmanagedlayers
 \tcbsetmanagedlayers{4}%
@@ -1142,7 +1149,7 @@
 
 \def\tcb@layer@inc{%
   \tcb@count@boxes%
-  \stepcounter{tcblayer}%
+  \global\advance\c@tcblayer 1\relax%
   \ifnum\c@tcblayer>1\relax%
     \tcbset{breakable@true/.code=}%
   \else%
@@ -1159,8 +1166,8 @@
 
 \def\tcb@layer@pushup{%
   \tcb@count@boxes%
-  \global\advance\c@tcolorbox@number by -1\relax%
-  \stepcounter{tcblayer}%
+  \global\advance\c@tcolorbox@number -1\relax%
+  \global\advance\c@tcblayer 1\relax%
   \ifnum\c@tcblayer>1\relax%
     \tcbset{breakable@true/.code=}%
   \else%
@@ -1173,7 +1180,7 @@
     \tcbset{every box on layer \number\c@tcblayer}%
     \tcbset{every box on layer \number\c@tcblayer/.code=}%
   \fi%
-  \addtocounter{tcblayer}{-1}%
+  \global\advance\c@tcblayer -1\relax%
 }
 
 \def\tcb@layer@dec{%
@@ -1182,7 +1189,7 @@
     \expandafter\global\setbox\@mpfootins\box\csname tcb@footnote@\romannumeral\c@tcblayer\endcsname%
     \setcounter{mpfootnote}{\csname tcb@footnote@cnt@\romannumeral\c@tcblayer\endcsname}%
   \fi%
-  \addtocounter{tcblayer}{-1}%
+  \global\advance\c@tcblayer -1\relax%
 }
 
 \let\tcbtextheight\tcb@zpt%

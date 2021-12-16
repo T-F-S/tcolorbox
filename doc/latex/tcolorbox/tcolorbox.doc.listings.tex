@@ -474,10 +474,11 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc updated={2017-07-05}]{minted options}{=\meta{key list}}{no default, initially
-    |tabsize=2,fontsize=\textbackslash small,|\linebreak|breaklines,autogobble|}
+\begin{docTcbKey}[][doc updated={2021-12-15}]{minted options}{=\meta{key list}}{no default, initially
+    \linebreak see \refKey{/tcb/default minted options}}
   Sets the options from the package |minted| \cite{poore:minted}
   which are used during typesetting of the listing.
+  Also see \refKey{/tcb/minted options app} and \refKey{/tcb/minted options pre}.
 \begin{dispExample}
 % \tcbuselibrary{skins}
 \newtcblisting{myjava}{listing engine=minted,
@@ -500,7 +501,25 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
 \end{dispExample}
 \end{docTcbKey}
 
+
 \clearpage
+\begin{docTcbKey}[][doc new={2021-12-15}]{default minted options}{=\meta{key list}}{no default, initially
+    |tabsize=2,fontsize=\textbackslash small,|\linebreak|breaklines,autogobble|}
+  Sets the options from the package |minted| \cite{poore:minted}
+  which are used during typesetting of the listing, if
+  \refKey{/tcb/minted options} are \emph{not} used. The intended use is
+  inside the preamble to change the default behavior.
+  Note that setting \refKey{/tcb/default minted options} also resets \refKey{/tcb/minted options}.
+\begin{dispListing}
+% inside the preamble
+\tcbset{%
+  default minted options={tabsize=4,fontsize=\normalsize},
+}
+\end{dispListing}
+\end{docTcbKey}
+
+
+
 \begin{docTcbKey}{minted style}{=\meta{style}}{no default, initially unset}
 Sets a \meta{style} known to |Pygments| \cite{pygments:web}. This is
 independent from \refKey{/tcb/minted options}. Note that styles are always
@@ -513,6 +532,27 @@ For examples of different styles, see
 \end{docTcbKey}
 
 See further options in \Vref{sec:commonlistingkeys}.
+
+\medskip
+
+\begin{docCommand}[doc new=2021-12-16]{tcbTemporaryPatchMintedFancyvrb}{}
+  \begin{marker}
+    There is a package clash between the package |minted| (version 2.5)
+    and the package |fancyvrb| (from version 4.0 on) which is used by
+    package |minted|. This is results in compilation errors, if the
+    |autogobble| option is used by the \mylib{minted} library.
+    At the time of writing this package clash is unresolved by official releases.
+    Therefore, the \mylib{minted} library contains a patch
+    \refCom{tcbTemporaryPatchMintedFancyvrb} which is automatically applied
+    (do not use this manually).\par
+    To deactivate the patch, define \refCom{tcbTemporaryPatchMintedFancyvrb}
+    with any content \emph{before} the \mylib{minted} library is loaded.\par
+    This patch is going to be removed as soon as the package clash is
+    resolved by official releases of |minted| (or |fancyvrb|).
+  \end{marker}
+\end{docCommand}
+
+
 
 
 \clearpage

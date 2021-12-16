@@ -22,13 +22,17 @@ and this project adheres to
 
 
 
-## [5.0.0] - 2021-xx-xx
+## [5.0.0] - 2021-12-16
 
 ### Added
 - Library `skins`: Option `attach boxed title to top text left`
 - Library `skins`: Option `attach boxed title to top text right`
 - Library `skins`: Option `attach boxed title to bottom text left`
 - Library `skins`: Option `attach boxed title to bottom text right`
+- Library `theorems`: Option `theorem number`
+- Library `minted`: Option `default minted options`
+- Library `minted`: Temporary patch `\tcbTemporaryPatchMintedFancyvrb`
+    for the current minted/fancyvrb package clash (issue #158)
 
 ### Changed
 - Changelog is switched to Markdown for entries from 2021 on
@@ -41,10 +45,16 @@ and this project adheres to
 - Meaningful error prompts when using unknown capture modes (issue #156)
 - Library `raster`: Inside a raster, `tcbrasternum` can now be 
     referenced using `label={mylabel}`, if the box is not numbered otherwise (issue #81 and #119)
-
-### Deprecated
+- Library `theorem`: Theorems with empty display name are now possible without glitches
+- Library `theorem`: Major code parts rewritten in expl3 code
+- Internal layer accounting changed from LaTeX to TeX code to avoid problems with counter macro
+    manipulations by amsmath alignment environments (issue #160)
+- Library `minted`: Option `minted options` now initialized with `default minted options`
+- Library `minted`: Code parts rewritten in expl3 code
 
 ### Removed
+- Library 'theorems': `\tcbmaketheorem` removed which is deprecated since version 2.40 (2013/07/15).
+  Use `\newtcbtheorem` instead.
 
 ### Fixed
 - Library `documentation`: Inconsistent local/global assignment corrected (issue #144)
@@ -52,8 +62,6 @@ and this project adheres to
 - Library `breakable`: Option `use color stack` was order dependant (issue #157)
 - Library `raster`: Numbering for rasters inside rasters
 - In certain situations options were set twice
-
-### Security
 
 
 
@@ -115,6 +123,39 @@ and this project adheres to
 
 ### Fixed
 - Color bleeding for xelatex and breakable boxes (since 4.32) (issue #120)
+
+
+
+## [4.40] - 2020-09-25
+
+### Added
+- Support `hbox` for `minted` listings (issue #2)
+- New default vertical space options (issue #115)
+  - Option `before skip balanced`
+  - Option `after skip balanced`
+  - Option `beforeafter skip balanced`
+  - NOTE: These options replace the current default options
+        `parskip`, `noparskip`, `autoparskip`
+  - WARNING: Old documents may need adapted manual page breaks where used.
+           Otherwise: Use `\tcbsetforeverylayer{autoparskip}`
+           to restore the old behavior!
+
+### Changed
+- `capture=hbox` applies `\@parboxrestore` now to allow e.g. hbox style
+    listings inside indented environments like itemize (issue #113)
+- `before skip` and `before skip balanced` do not insert glue now, if
+  the tcolorbox is the first element in a minipage (or sourrounding tcolorbox)
+
+### Deprecated
+- Option `parskip`
+- Option `noparskip`
+- Option `autoparskip`
+
+### Fixed
+- `IfBooleanT`, `IfBooleanF` (issue #114)
+- `widget` set `toprule at break` and needed the breakable library (issue #117)
+- `marker` set `breakable` and needed the breakable library
+
 
 
 The following entries are following the old style (no Markdown, switched timeflow)
@@ -1268,22 +1309,4 @@ version 4.32 (2020/09/17)
 - library 'xparse':
   * new options (#111): 'IfNoValueT', 'IfNoValueF', 'IfValueT', 'IfValueF',
       'IfBooleanT', 'IfBooleanF'
-
-version 4.40 (2020/09/25)
-- bug fix (#114): 'IfBooleanT', 'IfBooleanF'
-- bug fix (#117): 'widget' set 'toprule at break' and needed the breakable library
-- (bug) fix: style 'marker' set 'breakable' and needed the breakable library
-- (#113) 'capture=hbox' applies '\@parboxrestore' now to allow e.g. hbox style
-    listings inside indented environments like itemize
-- (#2) support 'hbox' for 'minted' listings
-- (#115) New default vertical space options
-        'before skip balanced', 'after skip balanced', 'beforeafter skip balanced'
-  NOTE: These options replace the current default options
-        'parskip', 'noparskip', 'autoparskip'
-  WARNING: Old documents may need adapted manual page breaks where used.
-           Otherwise: Use \tcbsetforeverylayer{autoparskip}
-           to restore the old behavior!
-- 'before skip' and 'before skip balanced' do not insert glue now, if
-  the tcolorbox is the first element in a minipage (or sourrounding tcolorbox)
-
 

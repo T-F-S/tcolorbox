@@ -21,6 +21,8 @@ the library \mylib{listings}, see \Vref{sec:listings},
 the library \mylib{xparse}, see \Vref{sec:xparse},
 and a bunch of packages, namely
 |makeidx|, |marginnote|, |refcount|, and |hyperref|.
+The packages |pifont| and |marvosym| should be installed for some symbols, but
+need not to be loaded.
 
 \begin{marker}
 The package |makeidx| is loaded only, if \docAuxCommand*{printindex} is
@@ -1241,7 +1243,7 @@ keys to insert code before (or after) the description texts.
   Used for \refKey{/tcb/listing engine}|=listings| only.
 \end{docTcbKey}
 
-\begin{docTcbKey}{documentation minted options}{=\meta{minted style}}{no default,\\\hspace*{\fill} initially |tabsize=2,fontsize=\textbackslash small|}
+\begin{docTcbKey}{documentation minted options}{=\meta{key list}}{no default,\\\hspace*{\fill} initially |tabsize=2,fontsize=\textbackslash small|}
   Sets the options from the package |minted| \cite{poore:minted}
   which are used during typesetting of the listing, if used.
   Note that this is not identical to the key

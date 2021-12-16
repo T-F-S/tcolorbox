@@ -83,27 +83,6 @@ To switch off the \texttt{nameref} feature permanently, add
 \end{docCommand}
 
 
-\begin{docCommand}{tcbmaketheorem}{\marg{name}\marg{display name}\marg{options}\marg{counter}\marg{prefix}}
-\smallskip\begin{marker}
-\refCom{newtcbtheorem} supersedes this macro.
-\end{marker}
-\begin{deprecated}
-  Creates a new environment \meta{name} based on |tcolorbox| to frame a
-  (mathematical) theorem. The \meta{display name} is used in the title line
-  with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
-  The \meta{options} are given to the underlying |tcolorbox| to control
-  the appearance.
-  The \meta{counter} is used for automatic numbering.
-  The new environment \meta{name} takes one optional and two mandatory
-  parameters. The optional parameter supplements the options and should be
-  used only in rare cases.
-  The first mandatory parameter is the title text for the theorem and
-  the second mandatory parameter is a \meta{marker}. The theorem is
-  automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
-  where \meta{separator} is predefined as \enquote{|:|}, see \refKey{/tcb/label separator}.
-\end{deprecated}
-\end{docCommand}
-
 \clearpage
 \begin{docCommand}{tcboxmath}{\oarg{options}\marg{mathematical box content}}
   Creates a \refEnv{tcolorbox} which is fitted to the width of the given
@@ -507,18 +486,34 @@ My theorem text.
 Prints theorem name without number inside the title.
 \begin{dispExample}
 \newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
-  {colback=white,colframe=red!50!black,fonttitle=\bfseries,
-   theorem name,enhanced,watermark text={\thetcbcounter}}{theo}
+  {enhanced,colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   theorem name,watermark text={\thetcbcounter}}{theo}
 \begin{sometheorem}{My example}{}
 My theorem text.
 \end{sometheorem}
 \end{dispExample}
 \end{docTcbKey}
 
+\enlargethispage*{20mm}
+
+\begin{docTcbKey}[][doc new=2021-12-03]{theorem number}{}{style, no value}
+Prints theorem name without name inside the title.
+\begin{dispExample}
+\newtcbtheorem[use counter from=mytheo]{sometheorem}{Theorem}%
+  {enhanced,colback=white,colframe=red!50!black,fonttitle=\bfseries,
+   theorem number}{theo}
+\begin{sometheorem}{My example}{}
+My theorem text.
+\end{sometheorem}
+\end{dispExample}
+\end{docTcbKey}
+
+
 \clearpage
 \begin{docTcbKey}{theorem}{=\marg{display name}\marg{counter}\marg{title}\marg{marker}}{no default}
-  This key is internally used by \refCom{tcbmaketheorem}, but can be used
-  directly in a |tcolorbox| for a more flexible approach.
+  This key can be used
+  directly in a |tcolorbox| for a more flexible approach to create a
+  theorem type box.
   The \meta{display name} is used together with the increased \meta{counter} value
   and the \meta{title} for the title line of the box. Additionally, a
   |\label| with the given \meta{marker} is created.
@@ -531,8 +526,7 @@ Here, we see the test \ref{myMarker}.
 \end{dispExample}
 For a common appearance inside the document, the key |theorem| should not be
 used directly as in the example above, but as part of a new environment
-created by hand or using \refCom{tcbmaketheorem} or using its successor
-\refCom{newtcbtheorem}.
+created by hand or using \refCom{newtcbtheorem}.
 \end{docTcbKey}
 
 \clearpage
@@ -896,7 +890,7 @@ This is my theorem. \begin{equation*} a^2 + b^2 = c^2. \end{equation*}
 %
 \clearpage
 \subsection{Examples for Definitions and Theorems}
-In the following, the application of \refCom{tcbmaketheorem}
+In the following, the application of \refCom{newtcbtheorem}
 to highlight mathematical definitions, theorems, or the like is demonstrated.
 
 At first, additional |tcb| keys are created for the appearance of
@@ -917,7 +911,7 @@ Now, everything is prepared for the following examples.
 
 \begin{dispExample}
 The following theorem is numbered as \Cref{theo:diffbarstetig} and
-referenced with the marker \texttt{theo:diffbarstetig}.\bigskip
+referenced with the marker \texttt{theo:diffbarstetig}.
 
 \begin{Theorem}{Differenzierbarkeit bedingt Stetigkeit, wobei diese Benennung
   zu Testzwecken ungew\"{o}hnlich lang ist}{diffbarstetig}%

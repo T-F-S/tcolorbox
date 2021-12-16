@@ -4,16 +4,40 @@
 \renewcommand*\l@subsubsection{\@dottedtocline{3}{4.2em}{3.2em}}
 
 \RequirePackage[T1]{fontenc}
-\RequirePackage[latin1]{inputenc}
+\RequirePackage[utf8]{inputenc}
 \RequirePackage[english]{babel}
 \RequirePackage{lmodern,parskip,array,ifthen,calc}
 \RequirePackage{amsmath,amssymb}
 \RequirePackage[svgnames,table,hyperref]{xcolor}
+
 \RequirePackage{tikz}
-\RequirePackage{varioref}
-%\RequirePackage[makeindex]{imakeidx}
-\RequirePackage[pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks]{hyperref}
-\RequirePackage{bookmark,varwidth,cleveref,incgraph}
+\usetikzlibrary{shadings,shadows}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{patterns}
+\usetikzlibrary{spy}
+\usetikzlibrary{arrows.meta}
+
+\RequirePackage[nospace]{varioref}
+
+\RequirePackage{bookmark,varwidth,incgraph}
+\RequirePackage{array,tabularx}
+\RequirePackage{amsmath}
+\RequirePackage{lipsum}
+\RequirePackage{empheq}
+\RequirePackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
+
+\providecommand{\tcbpkgprefix}{}
+\RequirePackage{\tcbpkgprefix tcolorbox}
+
+\tcbuselibrary{most,documentation}
+
+\tcbifexternal{}{%
+  \tcbuselibrary{minted}%
+  \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
+}
+
+\RequirePackage{hyperref}
+
 
 \RequirePackage[a4paper,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm,
     marginparsep=3mm,marginparwidth=18mm,
@@ -29,27 +53,8 @@
 \tolerance=2000%
 \setlength{\emergencystretch}{20pt}%
 
+\RequirePackage{cleveref}
 
-\usetikzlibrary{shadings,shadows}
-\usetikzlibrary{decorations.pathmorphing}
-\usetikzlibrary{patterns}
-\usetikzlibrary{spy}
-\usetikzlibrary{arrows.meta}
-
-\RequirePackage{array,tabularx}
-\RequirePackage{amsmath}
-\RequirePackage{lipsum}
-\RequirePackage{empheq}
-\RequirePackage[extendedchars,encoding,filenameencoding=utf-8]{grffile}
-
-\providecommand{\tcbpkgprefix}{}
-\RequirePackage{\tcbpkgprefix tcolorbox}
-
-\tcbuselibrary{most,documentation}
-\tcbifexternal{}{%
-  \tcbuselibrary{minted}%
-  \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
-}
 
 \tcbset{skin=enhanced,
   doc head={colback=yellow!10!white,interior style=fill},
