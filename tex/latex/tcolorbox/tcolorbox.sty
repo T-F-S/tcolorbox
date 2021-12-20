@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.0 (2021/12/16)
+%% The LaTeX package tcolorbox - version 5.0.1 (2021/12/20)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2021/12/16 version 5.0.0 text color boxes]
-\def\tcb@version{5.0.0}
+\ProvidesPackage{tcolorbox}[2021/12/20 version 5.0.1 text color boxes]
+\def\tcb@version{5.0.1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -703,7 +703,12 @@
   extrude top by/.code={\tcbdimto\kvtcb@top{\kvtcb@top+#1}\tcbdimto\kvtcb@bbtop@stand{\kvtcb@bbtop@stand-(#1)}},%
   extrude bottom by/.code={\tcbdimto\kvtcb@bottom{\kvtcb@bottom+#1}\tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand-(#1)}},%
   extrude by/.style={extrude left by=#1,extrude right by=#1,extrude top by=#1,extrude bottom by=#1},%
-  sidebyside/.is if=tcb@sidebyside,%
+  sidebyside@true/.code={%
+    \tcb@sidebysidetrue%
+    \tcb@isbreakablefalse},%
+  sidebyside@false/.code={\tcb@sidebysidefalse},%
+  sidebyside/.style={sidebyside@#1},%
+  sidebyside/.default=true,%
   sidebyside align/.is choice,%
   sidebyside align/top/.code={\def\kvtcb@sbs@align{top}\def\tcb@box@align##1{}},%
   sidebyside align/center/.code={\def\kvtcb@sbs@align{center}\def\tcb@box@align##1{}},%
@@ -970,7 +975,6 @@
 
 \def\tcb@set@@sidebyside{%
   \iftcb@sidebyside%
-    \tcbset{breakable@false}%
     \def\tcb@minipage{\csname tcb@minipage@\kvtcb@sbs@align\endcsname}%
     \tcbdimto\tcb@w@upper@real{\tcb@w@upper}%
     \tcbdimto\kvtcb@sbs@gap{\kvtcb@sbs@gap}%
@@ -1868,7 +1872,6 @@
 \def\tcb@draw@border#1{}
 
 \long\def\tcbox@inner@hbox#1{%
-  \tcbset{breakable@false,sidebyside=false}%
   \tcb@set@@phantom%
   \colorlet{tcbcol@origin}{.}%
   \tcb@set@color{tcbcolupper}%
@@ -1886,7 +1889,6 @@
 }
 
 \long\def\tcbox@inner@minipage#1{%
-  \tcbset{breakable@false,sidebyside=false}%
   \let\tcb@val@raisebase=\tcb@zpt%
   \tcb@set@@phantom%
   \tcb@set@@title%
@@ -1904,7 +1906,7 @@
 \long\def\tcb@ox#1#2{%
   \begingroup%
   \tcb@layer@inc%
-  \tcb@apply@box@options{#1}\tcb@height@adjust%
+  \tcb@apply@box@options{#1,breakable@false,sidebyside@false}\tcb@height@adjust%
   \csname tcbox@inner@\kvtcb@capture\endcsname{#2}%
   \tcb@layer@dec%
   \endgroup%

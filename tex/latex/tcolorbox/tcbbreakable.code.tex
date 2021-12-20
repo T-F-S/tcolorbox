@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.0 (2021/12/16)
+%% The LaTeX package tcolorbox - version 5.0.1 (2021/12/20)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{5.0.0}
+\tcb@set@library@version{5.0.1}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -928,15 +928,18 @@
 \tcbset{%
   breakable@true/.code={%
     \tcb@isbreakabletrue%
+    \tcb@sidebysidefalse%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightBreakable},
   breakable@unlimited/.code={%
     \tcb@isbreakabletrue%
+    \tcb@sidebysidefalse%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightUnlimited},
   breakable/.style={breakable@#1},
   breakable/.default=true,%
   unbreakable/.style={breakable=false},%
   enforce breakable/.code={%
     \tcb@isbreakabletrue%
+    \tcb@sidebysidefalse%
     \let\tcb@defToTotalHeight=\tcb@defToTotalHeightBreakable},
   title after break/.store in=\kvtcb@followingtitle,%
   notitle after break/.style={title after break=},%

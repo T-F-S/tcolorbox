@@ -22,6 +22,14 @@ and this project adheres to
 
 
 
+## [5.0.1] - 2021-12-20
+
+### Fixed
+- Library `minted`: Patch `\tcbTemporaryPatchMintedFancyvrb` fixed (issue #158)
+- Fix for issue #157 disabled unbreakability for hbox type boxes (issue #162)
+    This also affected boxes with sidebyside content
+
+
 ## [5.0.0] - 2021-12-16
 
 ### Added

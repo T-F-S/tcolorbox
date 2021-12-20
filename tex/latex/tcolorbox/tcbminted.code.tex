@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.0 (2021/12/16)
+%% The LaTeX package tcolorbox - version 5.0.1 (2021/12/20)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.0.0}
+\tcb@set@library@version{5.0.1}
 
 \RequirePackage{minted}[2011/09/17]
 
@@ -36,11 +36,11 @@
     % patch for fivesum computation
     \xpatchcmd*\minted@pygmentize%
       {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}%
-      {\minted@use@FancyVerbStartNum}%
+      {\minted@use@FancyVerbStartNum\relax}%
       {}{}%
     \xpatchcmd*\minted@pygmentize%
       {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}%
-      {\minted@use@FancyVerbStopNum}%
+      {\minted@use@FancyVerbStopNum\relax}%
       {}{}%
     % patch for option "autogobble"
     \xpatchcmd\minted@autogobble%
