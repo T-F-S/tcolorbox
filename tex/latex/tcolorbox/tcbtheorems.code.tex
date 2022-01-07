@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.1 (2021/12/20)
+%% The LaTeX package tcolorbox - version 5.0.2 (2022/01/07)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.0.1}
+\tcb@set@library@version{5.0.2}
 
 \RequirePackage{amsmath}
 
@@ -33,15 +33,21 @@
 \tl_new:N \l__tcobox_theo_label_separator_tl
 \tl_new:N \l__tcobox_theo_separatorsign_tl
 \tl_new:N \l__tcobox_theo_terminatorsign_tl
+\bool_new:N \l__tcobox_theo_headempty_bool
 
 
 \cs_new_nopar:Npn \__tcobox_theo_format_name_number:nn #1#2
   {
     \tl_if_empty:nTF { #1 }
       {
-        #2
+        \tl_if_empty:nF { #2 }
+          {
+            \bool_set_false:N \l__tcobox_theo_headempty_bool
+            #2
+          }
       }
       {
+        \bool_set_false:N \l__tcobox_theo_headempty_bool
         #1
         \tl_if_empty:nF { #2 }
           {
@@ -58,6 +64,26 @@
   }
 
 
+\cs_new_nopar:Npn \__tcobox_theo_format_name:nn #1#2
+  {
+    \tl_if_empty:nF { #1 }
+      {
+        \bool_set_false:N \l__tcobox_theo_headempty_bool
+        #1
+      }
+  }
+
+
+\cs_new_nopar:Npn \__tcobox_theo_format_number:nn #1#2
+  {
+    \tl_if_empty:nF { #2 }
+      {
+        \bool_set_false:N \l__tcobox_theo_headempty_bool
+        #2
+      }
+  }
+
+
 \cs_new:Npn \__tcobox_theo_format_description_standard:n #1
   {
     \l__tcobox_theo_description_color_tl
@@ -68,26 +94,24 @@
   }
 
 
+
 \cs_new:Npn \__tcobox_theo_title:nnn #1#2#3
   {
     % format and save display name and number
-    \tl_set:Nx \l_tmpa_tl { \__tcobox_theo_format:nn{#1}{#2} }
+    \bool_set_true:N \l__tcobox_theo_headempty_bool
     \tl_if_empty:nTF { #3 }
       {
         % no theorem title; insert name and number
-        \l_tmpa_tl
+        \__tcobox_theo_format:nn{#1}{#2}
         \l__tcobox_theo_terminatorsign_tl
       }
       {
         % box display name and number
-        \tl_if_empty:NTF \l_tmpa_tl
+        \hbox_set:Nn \l_tmpa_box
           {
-            \box_clear:N \l_tmpa_box
-          }
-          {
-            \hbox_set:Nn \l_tmpa_box
+            \__tcobox_theo_format:nn{#1}{#2}
+            \bool_if:NF \l__tcobox_theo_headempty_bool
               {
-                \tl_use:N \l_tmpa_tl
                 \l__tcobox_theo_separatorsign_tl
                 \nobreakspace
               }
@@ -186,11 +210,11 @@
       },
     theorem~name/.code =
       {
-        \cs_set_eq:NN \__tcobox_theo_format:nn \use_i:nn
+        \cs_set_eq:NN \__tcobox_theo_format:nn \__tcobox_theo_format_name:nn
       },
     theorem~number/.code =
       {
-        \cs_set_eq:NN \__tcobox_theo_format:nn \use_ii:nn
+        \cs_set_eq:NN \__tcobox_theo_format:nn \__tcobox_theo_format_number:nn
       },
     separator~sign/         .tl_set:N = \l__tcobox_theo_separatorsign_tl,
     terminator~sign/        .tl_set:N = \l__tcobox_theo_terminatorsign_tl,

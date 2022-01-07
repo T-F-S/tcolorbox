@@ -533,26 +533,6 @@ For examples of different styles, see
 
 See further options in \Vref{sec:commonlistingkeys}.
 
-\medskip
-
-\begin{docCommand}[doc new=2021-12-16]{tcbTemporaryPatchMintedFancyvrb}{}
-  \begin{marker}
-    There is a package clash between the package |minted| (version 2.5)
-    and the package |fancyvrb| (from version 4.0 on) which is used by
-    package |minted|. This is results in compilation errors, if the
-    |autogobble| option is used by the \mylib{minted} library.
-    At the time of writing this package clash is unresolved by official releases.
-    Therefore, the \mylib{minted} library contains a patch
-    \refCom{tcbTemporaryPatchMintedFancyvrb} which is automatically applied
-    (do not use this manually).\par
-    To deactivate the patch, define \refCom{tcbTemporaryPatchMintedFancyvrb}
-    with any content \emph{before} the \mylib{minted} library is loaded.\par
-    This patch is going to be removed as soon as the package clash is
-    resolved by official releases of |minted| (or |fancyvrb|).
-  \end{marker}
-\end{docCommand}
-
-
 
 
 \clearpage

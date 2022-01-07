@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.1 (2021/12/20)
+%% The LaTeX package tcolorbox - version 5.0.2 (2022/01/07)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,42 +18,12 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.0.1}
+\tcb@set@library@version{5.0.2}
 
-\RequirePackage{minted}[2011/09/17]
+\RequirePackage{minted}[2021/12/24]
 
 % to be removed, if integrated into the minted package (#281)
 \minted@def@optcl{envname}{-P envname}{#1}
-
-% to be removed, if minted becomes newer than v2.5 (2017/07/19)
-% and resolves the package clash with fancyvrb
-\ProvideDocumentCommand\tcbTemporaryPatchMintedFancyvrb{}{%
-  \@ifpackagelater{minted}{2021/12/01}{}{\@ifpackagelater{fancyvrb}{2021/11/19}{%
-    % patch from muzimuzhi
-    \RequirePackage{regexpatch}%
-    \def\minted@use@FancyVerbStartNum{\the\numexpr\FancyVerbStartNum}%
-    \def\minted@use@FancyVerbStopNum{\the\numexpr\FancyVerbStopNum}%
-    % patch for fivesum computation
-    \xpatchcmd*\minted@pygmentize%
-      {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}%
-      {\minted@use@FancyVerbStartNum\relax}%
-      {}{}%
-    \xpatchcmd*\minted@pygmentize%
-      {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}%
-      {\minted@use@FancyVerbStopNum\relax}%
-      {}{}%
-    % patch for option "autogobble"
-    \xpatchcmd\minted@autogobble%
-      {\ifx\FancyVerbStartNum\z@ 0\else\FancyVerbStartNum\fi}%
-      {\minted@use@FancyVerbStartNum}%
-      {}{}%
-    \xpatchcmd\minted@autogobble%
-      {\ifx\FancyVerbStopNum\z@ 0\else\FancyVerbStopNum\fi}%
-      {\minted@use@FancyVerbStopNum}%
-      {}{}%
-}{}}}
-
-\tcbTemporaryPatchMintedFancyvrb
 
 \tcbuselibrary{listings@core}
 
@@ -66,9 +36,12 @@
         \usemintedstyle { #4 }
       }
     \tl_set:Nn \l_tmpa_tl { \inputminted[#1 }
-    \str_if_eq:VnT \tcb@listing@capture { hbox }
+    \cs_if_exist:NT \tcb@listing@capture
       {
-        \tl_put_right:Nn \l_tmpa_tl { ,envname=BVerbatim }
+        \str_if_eq:VnT \tcb@listing@capture { hbox }
+          {
+            \tl_put_right:Nn \l_tmpa_tl { ,envname=BVerbatim }
+          }
       }
     \tl_put_right:Nn \l_tmpa_tl { ] }
     \file_if_exist:nTF { \minted@outputdir #3 }

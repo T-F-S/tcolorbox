@@ -22,6 +22,20 @@ and this project adheres to
 
 
 
+## [5.0.2] - 2022-01-07
+
+### Changed
+- Library `minted`: Temporary patch `\tcbTemporaryPatchMintedFancyvrb` removed
+    because of update for package `minted` (2021/12/24). This is now the required
+    version for `tcolorbox` (issue #158)
+
+### Fixed
+- Using the `documentation` library with `minted` was broken
+- Library `theorems`: New implementation had title expansion with problems (issue #165)
+
+
+
+
 ## [5.0.1] - 2021-12-20
 
 ### Fixed
