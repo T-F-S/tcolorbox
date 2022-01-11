@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.0.2 (2022/01/07)
+%% The LaTeX package tcolorbox - version 5.1.0pre1 (2022/01/11)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{5.0.2}
+\tcb@set@library@version{5.1.0pre1}
 
 \RequirePackage{tikz}[2010/10/13]
 
@@ -217,12 +217,12 @@
 }
 
 \def\tcb@drawspec@LR#1{%
-  \tcb@pathbase{#1,segmentation@style}{interior.south west}{[yshift=0.1mm]segmentation.east}%
+  \tcb@pathbase{#1,segmentation@style}{interior.south west}{[yshift=\tcboverlaplower]segmentation.east}%
     {\tcb@arc@ins@SW}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@ins@SE}%
 }
 
 \def\tcb@drawspec@LS#1{%
-  \tcb@pathbase{#1,segmentation@style}{interior.west|-frame.south}{[yshift=0.1mm]segmentation.east}%
+  \tcb@pathbase{#1,segmentation@style}{interior.west|-frame.south}{[yshift=\tcboverlaplower]segmentation.east}%
     {\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}{\tcb@arc@zpt}%
 }
 
@@ -409,6 +409,7 @@
     \fi}},%
   colbacklower/.colorlet=tcbcolbacklower,%
   opacitybacklower/.store in=\kvtcb@opacitybacklower,
+  overlaplower/.dimstore in=\tcboverlaplower,
   clear@spec/.code={\tcb@spec{}},%
   tikz/.code={\appto\tcb@tikz@option@hook{,#1}},%
   tikz reset/.code={\let\tcb@tikz@option@hook\@empty},%
@@ -2001,7 +2002,7 @@
 \tcbset{%
   reset@skins/.style={%
     frame style=,interior style=,segmentation style=,@title style=,%
-    colbacklower=black!15!white,opacitybacklower=1.0,%
+    colbacklower=black!15!white,opacitybacklower=1.0,overlaplower=0.1mm,%
     extend freelance=,extend freelancefirst=,extend freelancemiddle=,extend freelancelast=,%
     clear@spec,%
     watermark opacity=1.00,watermark color=tcbcolback!85!tcbcolframe,%

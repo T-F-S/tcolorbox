@@ -22,6 +22,26 @@ and this project adheres to
 
 
 
+## [5.1.0] - 2022-xx-xx
+
+### Added
+- Library `skins`: overlap of lower part for `bicolor`, `tile`, and `beamer`
+    made configurable (issue #166) by
+    + Option `overlaplower`
+    + `\tcboverlaplower`
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+
 ## [5.0.2] - 2022-01-07
 
 ### Changed
