@@ -29,14 +29,19 @@ and this project adheres to
     made configurable (issue #166) by
     + Option `overlaplower`
     + `\tcboverlaplower`
+- Library `documentation`: package warning, if `imakeidx` is loaded after the 
+    library is loaded (issue #173)
 
 ### Changed
+- Required latex2e specified \NeedsTeXFormat{LaTeX2e}[2020/10/01] (issue #170)
+- Documentation: comment `default setting` for `every box on higher layers` (issue #168)
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- With `parbox=false`, `before skip` was ignored in inner box (issue #171)
 
 ### Security
 

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.0pre1 (2022/01/11)
+%% The LaTeX package tcolorbox - version 5.1.0pre2 (2022/03/09)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tcolorbox}[2022/01/11 version 5.1.0pre1 text color boxes]
-\def\tcb@version{5.1.0pre1}
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{tcolorbox}[2022/03/09 version 5.1.0pre2 text color boxes]
+\def\tcb@version{5.1.0pre2}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -591,7 +591,14 @@
   skin first is subskin of/.style 2 args={skin@local@first/.style={skin@#1,#2},skin first=local@first},%
   skin middle is subskin of/.style 2 args={skin@local@middle/.style={skin@#1,#2},skin middle=local@middle},%
   skin last is subskin of/.style 2 args={skin@local@last/.style={skin@#1,#2},skin last=local@last},%
-  parbox/.store in=\kvtcb@parbox,
+  parbox/.is choice,
+  parbox/true/.code={%
+    \def\kvtcb@parbox{true}%
+    },
+  parbox/false/.code={%
+    \def\kvtcb@parbox{false}%
+    \appto\tcb@lateoptions@hook{\csname tcb@parbox@\kvtcb@parbox @indent\endcsname}%
+    },
   parbox/.default=true,%
   hyphenationfix/.is choice,%
   hyphenationfix/.default=true,%
@@ -838,10 +845,16 @@
   \fi%
 }
 
+\def\tcb@parbox@true@indent{}%
+\def\tcb@parbox@false@indent{%
+  \preto\kvtcb@before@title{\noindent}%
+  \preto\kvtcb@before@upper{\noindent}%
+  \preto\kvtcb@before@lower{\noindent}%
+}%
+
 \let\tcb@parboxrestore=\@parboxrestore
 
 \def\tcb@parbox@false@settings{%
-  \noindent%
   \linewidth\hsize%
   \@totalleftmargin\z@%
   \leftskip\z@skip%
@@ -926,7 +939,7 @@
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@lefttitle+\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\tcb@lua@color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
   \fi%
 }
 
