@@ -3778,6 +3778,7 @@ managed layer number (4 by default).
 Higher layers are layers above the highest
 managed layer number (4 by default).
 \begin{dispListing}
+% default setting:
 \tcbset{every box on higher layers/.style={reset,every box}}
 \end{dispListing}
 \end{docTcbKey}
@@ -3791,14 +3792,12 @@ not forbidden.
 \end{docCommand}
 
 \begin{tcboutputlisting}
-% \usepackage{lipsum}
-% \tcbuselibrary{skins,breakable}
+% \usepackage{lipsum}   \tcbuselibrary{skins,breakable}
 \tcbset{colframe=red!75!black,fonttitle=\bfseries,
   colback=red!5!white,
   every box/.style={enhanced,watermark text=\thetcblayer,
     before=\par\smallskip,after=\par\smallskip},
-  every box on layer 2/.style={reset,every box,colback=yellow!10!white,
-    drop fuzzy shadow}}
+  every box on layer 2/.append style={colback=yellow!10!white,drop fuzzy shadow}}
 \begin{tcolorbox}[enhanced jigsaw,breakable,title=Layer 1 Box]
 Here comes a footnote\footnote{Footnote from layer 1 box}.
 \lipsum[2]
