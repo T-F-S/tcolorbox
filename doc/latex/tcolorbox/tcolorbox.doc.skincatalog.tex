@@ -633,7 +633,7 @@ git commit -am 'changes to my example'
 \begin{tcolorbox}[bicolor,
   frame style={preaction={fill=blue!50!black},
     pattern=checkerboard,pattern color=blue!50!gray},
-  fonttitle=\bfseries,
+  fonttitle=\bfseries, overlaplower=0mm,
   colback=blue!10, colbacklower=white, opacitybacklower=0.65,
   title={Example for a semilucent lower part}]
 This is the upper part.
@@ -641,6 +641,49 @@ This is the upper part.
 And that is the lower part.
 \end{tcolorbox}
 \end{dispExample}
+
+\clearpage
+
+\begin{docTcbKey}[][doc new=2022-01-11]{overlaplower}{=\meta{length}}{no default, initially \texttt{0.1mm}}
+  The backgrounds of the lower parts for the skin families \enquote{bicolor}, \enquote{tile}, and \enquote{beamer}
+  are drawn differently than the backgrounds of the upper parts. If the distance between these
+  backgrounds of upper and lower parts is |0pt|, some previewers show the
+  frame color as thin line between upper and lower part. To avoid this glitch,
+  the lower part is drawn with an overlap of \meta{length} over the upper part.\par
+  This value can be adapted for special applications. For example,
+  semilucent lower parts better use |0pt|, see \refKey{/tcb/opacitybacklower}.
+  Also see \refCom{tcboverlaplower} for using a larger value.
+\end{docTcbKey}
+
+
+\begin{docCommand}[doc new=2022-01-11]{tcboverlaplower}{}
+  Macro which contains the length value set by \refKey{/tcb/overlaplower}.
+  May be used for fine positioning at the segmentation between upper and
+  lower part and should be seen \emph{read-only}.
+
+\begin{dispExample}
+\begin{tcolorbox}[bicolor, sharp corners,
+    colframe=blue!50!black, colback=blue!10, colbacklower=red!10,
+    top=5mm, bottom=2mm, middle=3.5mm, overlaplower=1.5mm,
+    underlay={
+      \node[minimum width=1cm,minimum height=0.5cm,outer sep=auto,
+        anchor=north east,fill=white] at (interior.north east)
+        {\itshape\small upper};
+      \node[minimum width=1cm,minimum height=0.5cm,outer sep=auto,
+        anchor=north east,fill=white]
+        at ([yshift=\tcboverlaplower]segmentation.east)
+        {\itshape\small lower};
+    }
+  ]
+This is the upper part.
+\tcblower
+And that is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+
+\end{docCommand}
+
+
 
 \clearpage
 

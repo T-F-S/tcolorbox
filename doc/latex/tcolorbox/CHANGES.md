@@ -22,28 +22,56 @@ and this project adheres to
 
 
 
-## [5.1.0] - 2022-xx-xx
+## [5.1.0] - 2022-06-22
 
 ### Added
+- Options wrapping `\tl_if_blank:nTF` and `\tl_if_empty:nTF` (issue #179)
+    - Option `IfBlankTF`
+    - Option `IfBlankT`
+    - Option `IfBlankF`
+    - Option `IfEmptyTF`
+    - Option `IfEmptyT`
+    - Option `IfEmptyF`
+- Options to insert code at begin and end of floats (issue #172)    
+    - Option `before float`
+    - Option `after float`
+    - Option `before float app`
+    - Option `before float pre`
+    - Option `after float app`
+    - Option `after float pre`    
 - Library `skins`: overlap of lower part for `bicolor`, `tile`, and `beamer`
     made configurable (issue #166) by
-    + Option `overlaplower`
-    + `\tcboverlaplower`
+    - Option `overlaplower`
+    - `\tcboverlaplower`
 - Library `documentation`: package warning, if `imakeidx` is loaded after the 
     library is loaded (issue #173)
+- Library `documentation`: gather index LaTeX macros and configure gathering (issue #174) 
+    - Option `doclang/commands`
+    - Option `index gather colors`
+    - Option `index gather commands`
+    - Option `index gather counters`
+    - Option `index gather environments`
+    - Option `index gather keys`
+    - Option `index gather lengths`
+    - Option `index gather paths`
+    - Option `index gather values`    
+    - Option `index gather all`    
+    - Option `index gather none`    
 
 ### Changed
-- Required latex2e specified \NeedsTeXFormat{LaTeX2e}[2020/10/01] (issue #170)
+- Required latex2e specified `\NeedsTeXFormat{LaTeX2e}[2020/10/01]` (issue #170)
 - Documentation: comment `default setting` for `every box on higher layers` (issue #168)
-
-### Deprecated
-
-### Removed
+- Documentation: hyperlinking keys and commands where not already done inside
+    the listings section (part of issue #175)
+- All contents of library `xparse` are moved to the `tcolorbox` main package and
+    to libraries `listings` and `fitting` respectively. `xparse` now only loads
+    the package `xparse` (issue #180)
+- Internal implementation of all `\new*` commands, e.g. `\newtcolorbox` changed.
+    Note that a missing backlash for `tcbox`-like commands 
+    e.g. `\newtcbox{mybox}` instead of `\newtcbox{\mybox}` is no longer tolerated.
 
 ### Fixed
 - With `parbox=false`, `before skip` was ignored in inner box (issue #171)
-
-### Security
 
 
 
@@ -60,13 +88,13 @@ and this project adheres to
 
 
 
-
 ## [5.0.1] - 2021-12-20
 
 ### Fixed
 - Library `minted`: Patch `\tcbTemporaryPatchMintedFancyvrb` fixed (issue #158)
 - Fix for issue #157 disabled unbreakability for hbox type boxes (issue #162)
     This also affected boxes with sidebyside content
+
 
 
 ## [5.0.0] - 2021-12-16

@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.0pre2 (2022/03/09)
+%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
 %% tcbhooks.code.tex: Code for adding hooks
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.0pre2}
+\tcb@set@library@version{5.1.0}
 
 \tcbset{%
   before upper app/.code={\appto\kvtcb@before@upper{#1}},%
@@ -39,6 +39,11 @@
   before pre/.code={\preto\kvtcb@beforebox{#1}},%
   after app/.code={\appto\kvtcb@afterbox{#1}},%
   after pre/.code={\preto\kvtcb@afterbox{#1}},%
+  %
+  before float app/.code={\appto\kvtcb@beforefloat{#1}},%
+  before float pre/.code={\preto\kvtcb@beforefloat{#1}},%
+  after float app/.code={\appto\kvtcb@afterfloat{#1}},%
+  after float pre/.code={\preto\kvtcb@afterfloat{#1}},%
   %
   overlay unbroken app/.code={\appto\tcb@overlay@unbroken{#1}},%
   overlay unbroken pre/.code={\preto\tcb@overlay@unbroken{#1}},%

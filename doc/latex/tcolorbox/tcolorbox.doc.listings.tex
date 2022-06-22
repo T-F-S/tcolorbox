@@ -8,7 +8,7 @@
 \tcbset{external/prefix=external/listings_}%
 
 \subsection{Loading the Libraries}
-In contrast to other |tcolorbox| libraries, the libraries
+In contrast to other \refEnv{tcolorbox} libraries, the libraries
 \mylib{listings}, \mylib{listingsutf8}, and \mylib{minted} are concurrent in the sense that
 they all do the same thing, i.\,e.\ displaying listings with or without typesetting
 the listing in \LaTeX\ parallel.
@@ -77,7 +77,7 @@ This also loads the package |minted| \cite{poore:minted}.
 The |minted| package uses the external tool |Pygments| \cite{pygments:web}
 to apply syntax highlighting. It has to be installed and set up, before the
 library can be used, see \cite{poore:minted} and \cite{pygments:web}.
-The |tcolorbox| library \mylib{minted} does not work, if the package
+The \refEnv{tcolorbox} library \mylib{minted} does not work, if the package
 |minted| \cite{poore:minted} does not work.
 \end{marker}
 
@@ -95,7 +95,7 @@ To reactivate this setting, if overwritten by other libraries, use
   Controlled by the given \meta{options}, the
   environment content is typeset normally and/or as a listing.
   Furthermore, the \meta{options} control appearance and functions of
-  the |tcolorbox|.
+  the \refEnv{tcolorbox}.
   By default, the listing is interpreted as a \LaTeX\ listing.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black}
@@ -154,8 +154,8 @@ and in compiled form.
 \clearpage
 \begin{docEnvironment}{tcboutputlisting}{}
   Saves the environment content to a file which is named by the key value of
-  |listing file|. Later, this file can be loaded by
-  |\tcbinputlisting| or |\tcbuselistingtext| or |\tcbuselistinglisting|.
+  \refKey{/tcb/listing file}. Later, this file can be loaded by
+  \refCom{tcbinputlisting} or \refCom{tcbuselistingtext} or \refCom{tcbuselistinglisting}.
 \begin{dispListing}
 \begin{tcboutputlisting}
 This \textbf{text} is written to a standardized file for later usage.
@@ -165,8 +165,8 @@ This \textbf{text} is written to a standardized file for later usage.
 
 
 \begin{docCommand}{tcbinputlisting}{\marg{options}}
-  Creates a colored boxed based on a |tcolorbox|. The text content is read
-  from a file named by the key value of |listing file|. Apart from that,
+  Creates a colored boxed based on a \refEnv{tcolorbox}. The text content is read
+  from a file named by the key value of \refKey{/tcb/listing file}. Apart from that,
   the function is equal to that of \refEnv{tcblisting}.
 \begin{dispExample}
 \tcbinputlisting{colback=red!5!white,colframe=red!75!black,text only}
@@ -175,7 +175,7 @@ This \textbf{text} is written to a standardized file for later usage.
 \end{docCommand}
 
 \begin{docCommand}{tcbuselistingtext}{}
-  Loads text from a file named by the key value of |listing file|.
+  Loads text from a file named by the key value of \refKey{/tcb/listing file}.
 \begin{dispExample}
 \tcbuselistingtext
 \end{dispExample}
@@ -183,7 +183,7 @@ This \textbf{text} is written to a standardized file for later usage.
 
 
 \begin{docCommand}{tcbuselistinglisting}{}
-  Typesets text as listing from a file named by the key value of |listing file|.
+  Typesets text as listing from a file named by the key value of \refKey{/tcb/listing file}.
 \begin{dispExample}
 \tcbuselistinglisting
 \end{dispExample}
@@ -197,12 +197,10 @@ This \textbf{text} is written to a standardized file for later usage.
 
 
 \clearpage
+\subsection{Producing \texttt{tcblisting} Environments}\label{subsec:listing_newlistings}
+
 \begin{marker}
-See \Vref{subsec:xparse_listing} and \Vref{subsec:xparse_inputlisting} for more
-elaborate methods to create new environments and commands.
-\end{marker}
-\begin{marker}
-If a new sort of |tcblisting| environments should be created with
+If a new sort of \refEnv{tcblisting} environments should be created with
 one optional argument only, one is highly recommended to use
 \refCom{DeclareTCBListing} or \refCom{NewTCBListing}
 instead of \refCom{newtcblisting} to
@@ -211,10 +209,10 @@ avoid content scanning problems.
 
 \begin{docCommand}{newtcblisting}{\oarg{init options}\marg{name}\oarg{number}\oarg{default}\marg{options}}
   Creates a new environment \meta{name} based on \refEnv{tcblisting}.
-  Basically, |\newtcblisting| operates like |\newenvironment|. This means,
+  Basically, \refCom{newtcblisting} operates like |\newenvironment|. This means,
   the new environment \meta{name} optionally takes \meta{number} arguments, where
   \meta{default} is the default value for the optional first argument.
-  The \meta{options} are given to the underlying |tcblisting|.
+  The \meta{options} are given to the underlying \refEnv{tcblisting}.
   Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
   automatically.
   The \meta{init options} allow setting up automatic numbering,
@@ -280,12 +278,119 @@ This is my \LaTeX\ box.
 
 
 \clearpage
+
+\begin{docCommand}{DeclareTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Creates a new environment \meta{name} based on \refEnv{tcblisting}.\\
+  Basically, |\DeclareTCBListing| operates like |\DeclareDocumentEnvironment|. This means,
+  the new environment \meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refEnv{tcblisting}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new environment is always created, irrespective of an already existing
+  environment with the same name.
+
+\begin{dispExample*}{sbs,lefthand ratio=0.5}
+\DeclareTCBListing{mybox}{ s O{} m }{%
+  colback=red!5!white,
+  colframe=red!75!black,
+  fonttitle=\bfseries,
+  IfBooleanTF={#1}
+    {listing side text}
+    {text side listing},
+  title={#3},#2}
+
+\begin{mybox}{Listing Box}
+This is my
+\LaTeX\ box.
+\end{mybox}
+\bigskip
+
+\begin{mybox}*{Listing Box}
+This is my
+\LaTeX\ box.
+\end{mybox}
+\bigskip
+
+\begin{mybox}[colback=yellow]
+  {Listing Box}
+This is my
+\LaTeX\ box.
+\end{mybox}
+\end{dispExample*}
+\end{docCommand}
+
+\begin{docCommand}{NewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBListing}, but based on |\NewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  An error is issued if \meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBListing}, but based on |\RenewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  An existing environment is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBListing}, but based on |\ProvideDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  The environment \meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\clearpage
+
+\begin{marker}
+With date of 2018-05-12, the |xparse| \cite{latexproject:xparse} package
+changed the argument collection process (now part of the \LaTeX\ kernel).
+Spaces are ignored which leads to a serious change for listing environments
+ending with an optional argument like \verb+O{}+.
+The former behavior of respecting spaces can be preserved by adding a \flqq\verb+!+\frqq.
+Note that the following code uses \verb+!O{}+ now.
+\begin{itemize}
+\item For older |xparse| versions, the following code is correct when using \verb+O{}+.
+\item For |xparse| of 2018-05-12, only the first two examples of
+  the following code using \verb+O{}+ are really \flqq good\frqq\ -- all others do not work.
+\item For |xparse| of 2018-05-12 and later, the following code is correct when using \verb+!O{}+.
+\end{itemize}
+\end{marker}
+
+\begin{dispListing*}{title={Caveats of using an environment ending with an
+  optional argument},fonttitle=\bfseries}
+\DeclareTCBListing{mybox}{ !O{} }{listing only,#1}
+
+\begin{mybox}[colframe=red]
+\good
+\end{mybox}
+
+\begin{mybox}[colframe=red]\good\end{mybox}
+
+\begin{mybox}
+\good
+\end{mybox}
+
+\begin{mybox} \good\end{mybox}
+
+\begin{mybox}\bad!\end{mybox}
+
+\begin{mybox}
+[\good]
+\end{mybox}
+
+\begin{mybox} [\good]\end{mybox}
+
+\begin{mybox}[\bad!]\end{mybox}
+\end{dispListing*}
+
+
+\clearpage
+\subsection{Producing \texttt{tcbinputlisting} Commands}\label{subsec:listings_inputlisting}
+\enlargethispage*{1cm}
+
 \begin{docCommand}{newtcbinputlisting}{\oarg{init options}\brackets{\texttt{\textbackslash}\rmfamily\meta{name}}\oarg{number}\oarg{default}\marg{options}}
   Creates a new macro \texttt{\textbackslash}\meta{name} based on \refCom{tcbinputlisting}.
-  Basically, |\newtcbinputlisting| operates like |\newcommand|.
+  Basically, \refCom{newtcbinputlisting} operates like |\newcommand|.
   The new macro \texttt{\textbackslash}\meta{name} optionally takes \meta{number} arguments, where
   \meta{default} is the default value for the optional first argument.
-  The \meta{options} are given to the underlying |tcbinputlisting|.
+  The \meta{options} are given to the underlying \refCom{tcbinputlisting}.
   The \meta{init options} allow setting up automatic numbering,
   see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
 
@@ -319,6 +424,46 @@ This is my \LaTeX\ box.
   An existing macro is redefined.
 \end{docCommand}
 
+\clearpage
+
+\begin{docCommand}{DeclareTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbinputlisting}.
+  Basically, |\DeclareTCBInputListing| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcbinputlisting}.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+% counter from previous example
+\DeclareTCBInputListing[use counter from=pabox]{\mylisting}{ O{} O{red} m }{%
+  listing file={#3},title=Listing~\thetcbcounter,
+  colback=#2!5!white,colframe=#2!50!black,colbacktitle=#2!75!black,
+  fonttitle=\bfseries,listing only,#1}
+
+\mylisting[before upper=\textit{This is the included file content:}]
+  [blue]{\jobname.tcbtemp}
+\end{dispExample}
+  \end{docCommand}
+
+\begin{docCommand}{NewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBInputListing}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBInputListing}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBInputListing}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+
 
 \clearpage
 \subsection{Option Keys of the \mylib{listings} Library}\label{sec:speclistingkeys}
@@ -341,8 +486,8 @@ and in compiled form. Additionally, we use line numbers here.
 \begin{docTcbKey}{no listing options}{}{no value, initially unset}
   Abbreviation for |listing options={}|.
   This removes all options for the |listings| package.
-  This includes the |tcblisting| standard style |tcblatex| and the encoding presets.
-  Use this option, if you want to set the |listings| options outside of |tcblisting|, e.\,g.\ globally in
+  This includes the \refEnv{tcblisting} standard style |tcblatex| and the encoding presets.
+  Use this option, if you want to set the |listings| options outside of \refEnv{tcblisting}, e.\,g.\ globally in
   the preamble.
 \begin{dispExample}
 \begin{tcblisting}{no listing options}
@@ -419,7 +564,7 @@ cd /usr/lib
 See further options in \Vref{sec:commonlistingkeys}.
 
 \begin{marker}
-For an combined example of using |\lstinline| inside a |tcolorbox|, see
+For an combined example of using |\lstinline| inside a \refEnv{tcolorbox}, see
 \refCom{DeclareTotalTCBox}.
 \end{marker}
 
@@ -693,7 +838,7 @@ This is a \LaTeX\ example.
 
 \begin{docTcbKey}[][doc new=2014-11-14]{comment style}{=\meta{options}}{no default, initially empty}
   Sets the \meta{options} for \refKey{/tcb/tcbimage comment} and \refKey{/tcb/pdf comment}.
-  These are |tcolorbox| options to customize the colored box drawn around the
+  These are \refEnv{tcolorbox} options to customize the colored box drawn around the
   image(s), also image options encapsulated by \refKey{/tcb/graphics options},
   and \refEnv{tcbraster} options for \refKey{/tcb/pdf comment}.
 \end{docTcbKey}
@@ -755,10 +900,10 @@ This is a \LaTeX\ example.
 
 
 \begin{docTcbKey}{listing outside text}{}{no value}
-Typesets the environment content side by side as listing in a |tcolorbox|
+Typesets the environment content side by side as listing in a \refEnv{tcolorbox}
 and as compiled text outside the box in the right part of the page.
 Nevertheless, the outside text is treated as \emph{lower} part of the
-|tcolorbox| and can be formatted with all lower part options.
+\refEnv{tcolorbox} and can be formatted with all lower part options.
 The space partitioning is done with the side by side options from
 \Fullref{sec:sidebyside}.
 \begin{dispExample}
@@ -771,10 +916,10 @@ This is a \LaTeX\ example.
 \clearpage
 
 \begin{docTcbKey}{text outside listing}{}{no value}
-Typesets the environment content side by side as listing in a |tcolorbox|
+Typesets the environment content side by side as listing in a \refEnv{tcolorbox}
 and as compiled text outside the box in the left part of the page.
 Nevertheless, the outside text is treated as \emph{lower} part of the
-|tcolorbox| and can be formatted with all lower part options.
+\refEnv{tcolorbox} and can be formatted with all lower part options.
 The space partitioning is done with the side by side options from
 \Fullref{sec:sidebyside}.
 \begin{dispExample}
@@ -814,10 +959,10 @@ This is a \LaTeX\ example.
 \clearpage
 
 \begin{docTcbKey}{listing outside comment}{}{no value}
-Typesets the environment content side by side as listing in a |tcolorbox|
+Typesets the environment content side by side as listing in a \refEnv{tcolorbox}
 and a given comment outside the box in the right part of the page.
 Nevertheless, the outside text is treated as \emph{lower} part of the
-|tcolorbox| and can be formatted with all lower part options.
+\refEnv{tcolorbox} and can be formatted with all lower part options.
 The space partitioning is done with the side by side options from
 \Fullref{sec:sidebyside}.
 \begin{dispExample}
@@ -830,10 +975,10 @@ This is a \LaTeX\ example.
 
 
 \begin{docTcbKey}{comment outside listing}{}{no value}
-Typesets the environment content side by side as listing in a |tcolorbox|
+Typesets the environment content side by side as listing in a \refEnv{tcolorbox}
 and a given comment outside the box in the left part of the page.
 Nevertheless, the outside text is treated as \emph{lower} part of the
-|tcolorbox| and can be formatted with all lower part options.
+\refEnv{tcolorbox} and can be formatted with all lower part options.
 The space partitioning is done with the side by side options from
 \Fullref{sec:sidebyside}.
 \begin{dispExample}
@@ -847,10 +992,10 @@ This is a \LaTeX\ example.
 
 
 \begin{docTcbKey}{listing above text}{}{no value}
-  Typesets the environment content as listing in a |tcolorbox|
+  Typesets the environment content as listing in a \refEnv{tcolorbox}
   and as compiled text outside and below the box.
   The outside text is treated as \emph{lower} part of the
-  |tcolorbox| and can be formatted with all lower part options.
+  \refEnv{tcolorbox} and can be formatted with all lower part options.
   The distance between box and text is controlled by \refKey{/tcb/middle}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing above text}
@@ -870,10 +1015,10 @@ This is a \LaTeX\ example.
 \clearpage
 
 \begin{docTcbKey}{text above listing}{}{no value}
-  Typesets the environment content as listing in a |tcolorbox|
+  Typesets the environment content as listing in a \refEnv{tcolorbox}
   and as compiled text outside and above the box.
   The outside text is treated as \emph{lower} part of the
-  |tcolorbox| and can be formatted with all lower part options.
+  \refEnv{tcolorbox} and can be formatted with all lower part options.
   The distance between box and text is controlled by \refKey{/tcb/middle}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,text above listing}
@@ -893,10 +1038,10 @@ This is a \LaTeX\ example.
 
 
 \begin{docTcbKey}{listing above comment}{}{no value}
-  Typesets the environment content as listing in a |tcolorbox|
+  Typesets the environment content as listing in a \refEnv{tcolorbox}
   and a given comment outside and below the box.
   The outside text is treated as \emph{lower} part of the
-  |tcolorbox| and can be formatted with all lower part options.
+  \refEnv{tcolorbox} and can be formatted with all lower part options.
   The distance between box and comment is controlled by \refKey{/tcb/middle}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,listing above comment,
@@ -917,10 +1062,10 @@ This is a \LaTeX\ example.
 \clearpage
 
 \begin{docTcbKey}{comment above listing}{}{no value}
-  Typesets the environment content as listing in a |tcolorbox|
+  Typesets the environment content as listing in a \refEnv{tcolorbox}
   and a given comment outside and above the box.
   The outside text is treated as \emph{lower} part of the
-  |tcolorbox| and can be formatted with all lower part options.
+  \refEnv{tcolorbox} and can be formatted with all lower part options.
   The distance between box and comment is controlled by \refKey{/tcb/middle}.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,comment above listing,
@@ -942,7 +1087,7 @@ This is a \LaTeX\ example.
 \clearpage
 \subsection{Option Keys for Processing and Full Document Examples}\label{sec:proclistingkeys}
 A complete \LaTeX\ document including |\documentclass|, |\begin{document}|
-and |\end{document}| cannot be processed directly by |tcolorbox|.
+and |\end{document}| cannot be processed directly by \refEnv{tcolorbox}.
 It always has to be compiled separately. There are two methods supported
 by the package to process and display such a full document example:
 \begin{itemize}

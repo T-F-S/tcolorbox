@@ -1378,6 +1378,7 @@ instead. Also see \refKey{/tcb/docexample}.
 \end{docTcbKey}
 
 \clearpage
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{index annotate}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   If set to |true|, the index entries are annotated with short descriptions
@@ -1390,6 +1391,63 @@ instead. Also see \refKey{/tcb/docexample}.
   settings given by \refKey{/tcb/color environment}, \refKey{/tcb/color key},
   and others.
 \end{docTcbKey}
+
+
+\begin{docTcbKeys}[
+    doc new={2022-06-20},
+    doc parameter = {\colOpt{=true\textbar false}},
+    doc description = {default |true|, initially |true|}
+  ]
+  {
+    {
+      doc name        = index gather colors,
+    },
+    {
+      doc name        = index gather commands,
+    },
+    {
+      doc name        = index gather counters,
+    },
+    {
+      doc name        = index gather environments,
+    },
+    {
+      doc name        = index gather keys,
+    },
+    {
+      doc name        = index gather lengths,
+    },
+    {
+      doc name        = index gather paths,
+    },
+    {
+      doc name        = index gather values,
+    }
+  }
+  If set to |true|, an additional index grouping is created where entries
+  are gathered, e.g. \refKey{/tcb/index gather counters} creates an index
+  entry `Colors', see \refKey{/tcb/doclang/colors}, which gets all colors
+  as sub entries.
+\end{docTcbKeys}
+
+
+\begin{docTcbKeys}[
+    doc new={2022-06-20},
+    doc parameter = {},
+  ]
+  {
+    {
+      doc name        = index gather all,
+      doc description = {style, initially set}
+    },
+    {
+      doc name        = index gather none,
+      doc description = {style}
+    },
+  }
+  Switches all index gather options from above to |true| (all) or |false| (none).
+\end{docTcbKeys}
+
 
 
 \begin{docTcbKey}{color command}{=\meta{color}}{no default, initially |Definition|}
@@ -1464,6 +1522,10 @@ The English language is predefined.
   Heading text in the index for colors.
 \end{langTcbKey}
 
+\begin{langTcbKey}[][doc new={2022-06-20}]{commands}{=\meta{text}}{no default, initially |Commands|}
+  Heading text in the index for commands.
+\end{langTcbKey}
+
 \begin{langTcbKey}[][doc new={2015-01-08}]{counter}{=\meta{text}}{no default, initially |counter|}
   Text used in the index for counters.
 \end{langTcbKey}
@@ -1524,6 +1586,8 @@ The English language is predefined.
   Announcement text for updated content.
 \end{langTcbKey}
 
+\clearpage
+
 \begin{langTcbKey}{value}{=\meta{text}}{no default, initially |value|}
   Text used in the index for values.
 \end{langTcbKey}
@@ -1531,13 +1595,6 @@ The English language is predefined.
 \begin{langTcbKey}{values}{=\meta{text}}{no default, initially |Values|}
   Heading text in the index for values.
 \end{langTcbKey}
-
-
-
-
-
-
-\clearpage
 
 
 

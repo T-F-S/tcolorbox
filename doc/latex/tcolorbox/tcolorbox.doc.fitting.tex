@@ -36,13 +36,59 @@ The library is loaded by a package option or inside the preamble by:
 \end{dispExample}
 \end{docCommand}
 
-\clearpage
-\begin{marker}
-See \Vref{subsec:xparse_tcboxfit} for more
-elaborate methods to create new commands.
-\end{marker}
 
-\enlargethispage*{2cm}
+\clearpage
+
+
+\begin{docCommands}[
+    doc name        = tcbfitdim,
+    doc description = {read-only \LaTeX\ length},
+    doc updated     = 2020-04-24,
+  ]{}
+  This is a \LaTeX\ length adapted automatically by most variants of
+  \refKey{/tcb/fit algorithm}. Therefore, it never is to be
+  changed by the user, but may be applied read-only.
+  The \refCom{tcbfitdim} corresponds to the font size and may also
+  be used to calculate box margins or other distances in dependency.
+  The initial and maximum value for \refCom{tcbfitdim} is set by
+  \refKey{/tcb/fit basedim}.
+\end{docCommands}
+
+
+\begin{docCommand}{tcbfontsize}{\marg{factor}}
+  Selects a font size inside a tcolorbox which is scaled with the given
+  \meta{factor} relative to \refCom{tcbfitdim}.
+  Also see \refKey{/tcb/fit fontsize macros}
+
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,size=small,
+  colframe=red!75!black}
+\begin{tcolorbox}[fit basedim=10pt]
+  {\tcbfontsize{0.25} Very tiny,}\\
+  {\tcbfontsize{0.5} Small,}\\
+  {\tcbfontsize{1} Normal,}\\
+  {\tcbfontsize{2} Large,}\\
+  {\tcbfontsize{4} Huge.}
+\end{tcolorbox}
+\end{dispExample*}
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\tcbset{colback=red!5!white,size=small,
+  colframe=red!75!black}
+\begin{tcolorbox}[fit basedim=10pt,
+    fit to height=2cm]
+  {\tcbfontsize{0.25} Very tiny,}\\
+  {\tcbfontsize{0.5} Small,}\\
+  {\tcbfontsize{1} Normal,}\\
+  {\tcbfontsize{2} Large,}\\
+  {\tcbfontsize{4} Huge.}
+\end{tcolorbox}
+\end{dispExample*}
+\end{docCommand}
+
+
+\clearpage
+\subsection{Producing \texttt{tcboxfit} Commands}\label{subsec:fitting_new}
+
 
 \begin{docCommand}{newtcboxfit}{\oarg{init options}\brackets{\texttt{\textbackslash}\rmfamily\meta{name}}\oarg{number}\oarg{default}\marg{options}}
   Creates a new macro \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
@@ -96,49 +142,93 @@ elaborate methods to create new commands.
 
 \clearpage
 
-\begin{docCommands}[
-    doc name        = tcbfitdim,
-    doc description = {read-only \LaTeX\ length},
-    doc updated     = 2020-04-24,
-  ]{}
-  This is a \LaTeX\ length adapted automatically by most variants of
-  \refKey{/tcb/fit algorithm}. Therefore, it never is to be
-  changed by the user, but may be applied read-only.
-  The \refCom{tcbfitdim} corresponds to the font size and may also
-  be used to calculate box margins or other distances in dependency.
-  The initial and maximum value for \refCom{tcbfitdim} is set by
-  \refKey{/tcb/fit basedim}.
-\end{docCommands}
-
-
-\begin{docCommand}{tcbfontsize}{\marg{factor}}
-  Selects a font size inside a tcolorbox which is scaled with the given
-  \meta{factor} relative to \refCom{tcbfitdim}.
-  Also see \refKey{/tcb/fit fontsize macros}
+\begin{docCommand}{DeclareTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
+  Basically, |\DeclareTCBoxFit| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcboxfit}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
 
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
-\tcbset{colback=red!5!white,size=small,
-  colframe=red!75!black}
-\begin{tcolorbox}[fit basedim=10pt]
-  {\tcbfontsize{0.25} Very tiny,}\\
-  {\tcbfontsize{0.5} Small,}\\
-  {\tcbfontsize{1} Normal,}\\
-  {\tcbfontsize{2} Large,}\\
-  {\tcbfontsize{4} Huge.}
-\end{tcolorbox}
+% \usepackage{lipsum}
+
+\DeclareTCBoxFit{\mybox}{ O{} m !o }
+ {colback=red!5!white,
+  colframe=red!75!black,
+  width=#2,height=#2/3*2,
+  IfValueT={#3}{height=#3},
+  #1}
+
+\mybox[colback=yellow]{5cm}%
+  {\lipsum[2]}
+
+\mybox[colback=yellow]{5cm}[4cm]{\lipsum[2]}
 \end{dispExample*}
-\begin{dispExample*}{sbs,lefthand ratio=0.6}
-\tcbset{colback=red!5!white,size=small,
-  colframe=red!75!black}
-\begin{tcolorbox}[fit basedim=10pt,
-    fit to height=2cm]
-  {\tcbfontsize{0.25} Very tiny,}\\
-  {\tcbfontsize{0.5} Small,}\\
-  {\tcbfontsize{1} Normal,}\\
-  {\tcbfontsize{2} Large,}\\
-  {\tcbfontsize{4} Huge.}
-\end{tcolorbox}
-\end{dispExample*}
+\end{docCommand}
+
+\begin{docCommand}{NewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBoxFit}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{DeclareTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\clearpage
+
+\begin{docCommand}{DeclareTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
+  In contrast to \refCom{DeclareTCBoxFit}, also the \meta{content} of the |tcboxfit| is specified.\\
+  Basically, |\DeclareTotalTCBoxFit| operates like |\DeclareDocumentCommand|. This means,
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  The \meta{options} are given to the underlying \refCom{tcboxfit} which is filled with
+  the specified \meta{content}.\\
+  Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
+  automatically.\\
+  The \meta{init options} allow setting up automatic numbering,
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
+  The new command is always created, irrespective of an already existing
+  command with the same name.
+
+\begin{dispExample}
+% \usepackage{lipsum}
+
+\DeclareTotalTCBoxFit{\multibox}{ O{} m O{10} m }
+ {nobeforeafter,colback=red!5!white,colframe=red!75!black,width=#2,height=#2/3*2,
+  valign=center,#1}
+ { \foreach \n in {1,...,#3} { #4} }
+
+\multibox{5cm}{I shall not repeat.}
+\multibox[colframe=blue!75!white]{5cm}[20]{I shall not repeat.}\\
+\multibox[colback=yellow,height=5cm]{14cm}[100]{I shall not repeat.}
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{NewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
+\end{docCommand}
+
+\begin{docCommand}{RenewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  An existing command is redefined.
+\end{docCommand}
+
+\begin{docCommand}{ProvideTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
 \end{docCommand}
 
 
@@ -493,7 +583,7 @@ are adapted. In the following, adapting the font size means adapting
 \end{docTcbKey}
 \begin{dispExample}
 % \usepackage{lipsum}
-\newtcboxfit{mybox}[1]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
+\newtcboxfit{\mybox}[1]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
   bottom=1mm,right=1mm,boxsep=0mm,width=3.5cm,height=7cm,nobeforeafter,
   before upper=\textcolor{blue}{\rule{5mm}{5mm}}\ ,
   enhanced,watermark text={\tcbfitsteps},
@@ -510,7 +600,7 @@ Quality \dotfill versus \dotfill Speed
 
 \begin{dispExample}
 % \usepackage{lipsum}
-\newtcboxfit{mybox}[2]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
+\newtcboxfit{\mybox}[2]{colback=red!5!white,colframe=red!75!black,left=1mm,top=1mm,
   size=tight,width=7.2cm,height=5cm,nobeforeafter,
   before upper=\textcolor{blue}{\rule{5mm}{5mm}}\ ,
   enhanced,fonttitle=\bfseries,adjusted title={#2},fit algorithm=#1}

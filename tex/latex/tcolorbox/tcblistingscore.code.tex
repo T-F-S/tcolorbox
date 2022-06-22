@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.0pre2 (2022/03/09)
+%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.0pre2}
+\tcb@set@library@version{5.1.0}
 
 \tcbuselibrary{pro@cessing}
 
@@ -276,49 +276,122 @@
   \begingroup\tcbverbatimwrite{\kvtcb@listingfile}%
 }{\endtcbverbatimwrite\endgroup}
 
-\long\def\tcb@newtcblisting#1#2{\tcb@newenvironment{#1}{\tcblisting{#2,options@for=#1}}{\endtcblisting}}
 
-\long\def\tcb@newtcblisting@#1[#2]#3{\tcb@newenvironment{#1}[#2]{\tcblisting{#3,options@for=#1}}{\endtcblisting}}
+\ExplSyntaxOn
 
-\long\def\tcb@newtcblisting@@#1[#2][#3]#4{\tcb@newenvironment{#1}[#2][#3]{\tcblisting{#4,options@for=#1}}{\endtcblisting}}
 
-\long\def\tcb@new@tcblisting@#1[#2]{%
-  \@ifnextchar[{\tcb@newtcblisting@@{#1}[#2]}{\tcb@newtcblisting@{#1}[#2]}}
+\NewDocumentCommand \__tcobox_new_tcblisting:w { m +o m o +o +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \tl_if_novalue:nTF { #4 }
+      {
+        #1 { #3 }{ \tcblisting{#6,options@for=#3} }{ \endtcblisting }
+      }
+      {
+        \tl_if_novalue:nTF { #5 }
+        {
+          #1 { #3 }[ #4 ]{ \tcblisting{#6,options@for=#3} }{ \endtcblisting }
+        }
+        {
+          #1 { #3 }[ #4 ][ #5 ]{ \tcblisting{#6,options@for=#3} }{ \endtcblisting }
+        }
+      }
+  }
+\NewDocumentCommand \newtcblisting { }
+  {
+    \__tcobox_new_tcblisting:w \newenvironment
+  }
+\NewDocumentCommand \renewtcblisting { }
+  {
+    \__tcobox_new_tcblisting:w \renewenvironment
+  }
 
-\def\tcb@new@tcblisting#1{%
-  \@ifnextchar[{\tcb@new@tcblisting@{#1}}{\tcb@newtcblisting{#1}}}
 
-\def\newtcblisting{%
-  \let\tcb@newenvironment\newenvironment%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcblisting%
-  \tcb@process@newenvironment}
+\NewDocumentCommand \__tcobox_new_TCBListing:w { m +o m +m +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    #1 { #3 }{ #4 }{ \tcblisting{#5,options@for=#3} }{ \endtcblisting }
+  }
+\NewDocumentCommand \DeclareTCBListing { }
+  {
+    \__tcobox_new_TCBListing:w \DeclareDocumentEnvironment
+  }
+\NewDocumentCommand \NewTCBListing { }
+  {
+    \__tcobox_new_TCBListing:w \NewDocumentEnvironment
+  }
+\NewDocumentCommand \RenewTCBListing { }
+  {
+    \__tcobox_new_TCBListing:w \RenewDocumentEnvironment
+  }
+\NewDocumentCommand \ProvideTCBListing { }
+  {
+    \__tcobox_new_TCBListing:w \ProvideDocumentEnvironment
+  }
 
-\def\renewtcblisting{%
-  \let\tcb@newenvironment\renewenvironment%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcblisting%
-  \tcb@process@newenvironment}
 
-\long\def\tcb@newtcbinputlisting#1#2{\expandafter\tcb@newcommand\csname#1\endcsname{\tcbinputlisting{#2,options@for=#1}}}
+\NewDocumentCommand \__tcobox_new_tcbinputlisting_ii:w { m +m m o +o +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \tl_if_novalue:nTF { #4 }
+      {
+        \exp_args:Nc #1 { #3 }{ \tcbinputlisting{#6,options@for=#3} }
+      }
+      {
+        \tl_if_novalue:nTF { #5 }
+        {
+          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcbinputlisting{#6,options@for=#3} }
+        }
+        {
+          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcbinputlisting{#6,options@for=#3} }
+        }
+      }
+  }
+\NewDocumentCommand \__tcobox_new_tcbinputlisting_i:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_tcbinputlisting_ii:w #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \newtcbinputlisting { }
+  {
+    \__tcobox_new_tcbinputlisting_i:w \newcommand
+  }
+\NewDocumentCommand \renewtcbinputlisting { }
+  {
+    \__tcobox_new_tcbinputlisting_i:w \renewcommand
+  }
 
-\long\def\tcb@newtcbinputlisting@#1[#2]#3{\expandafter\tcb@newcommand\csname#1\endcsname[#2]{\tcbinputlisting{#3,options@for=#1}}}
 
-\long\def\tcb@newtcbinputlisting@@#1[#2][#3]#4{\expandafter\tcb@newcommand\csname#1\endcsname[#2][#3]{\tcbinputlisting{#4,options@for=#1}}}
+\cs_new:Npn \__tcobox_new_TCBInputListing:Nnnnn #1#2#3#4#5
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbinputlisting{#5,options@for=#3} }
+  }
+\NewDocumentCommand \__tcobox_new_TCBInputListing:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TCBInputListing:Nnnnn #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \DeclareTCBInputListing { }
+  {
+    \__tcobox_new_TCBInputListing:w \DeclareDocumentCommand
+  }
+\NewDocumentCommand \NewTCBInputListing { }
+  {
+    \__tcobox_new_TCBInputListing:w \NewDocumentCommand
+  }
+\NewDocumentCommand \RenewTCBInputListing { }
+  {
+    \__tcobox_new_TCBInputListing:w \RewewDocumentCommand
+  }
+\NewDocumentCommand \ProvideTCBInputListing { }
+  {
+    \__tcobox_new_TCBInputListing:w \ProvideDocumentCommand
+  }
 
-\long\def\tcb@new@tcbinputlisting@#1[#2]{%
-  \@ifnextchar[{\tcb@newtcbinputlisting@@{#1}[#2]}{\tcb@newtcbinputlisting@{#1}[#2]}}
 
-\def\tcb@new@tcbinputlisting#1{%
-  \@ifnextchar[{\tcb@new@tcbinputlisting@{#1}}{\tcb@newtcbinputlisting{#1}}}
+\ExplSyntaxOff
 
-\def\newtcbinputlisting{%
-  \let\tcb@newcommand\newcommand%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcbinputlisting%
-  \tcb@process@newcommand}
-
-\def\renewtcbinputlisting{%
-  \let\tcb@newcommand\renewcommand%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcbinputlisting%
-  \tcb@process@newcommand}
 
 \tcbset{%
   reset@listingscore/.style={%

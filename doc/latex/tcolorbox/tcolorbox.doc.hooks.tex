@@ -133,6 +133,7 @@ from page \pageref{subsec:contentadditions}.
 \end{docTcbKey}
 
 
+\clearpage
 \subsection{Embedding into the Surroundings}
 The following option keys extend the options given in Subsection \ref{subsec:surroundings}
 from page \pageref{subsec:surroundings}.
@@ -167,6 +168,24 @@ In the preamble, they can only be used after explicit setting of
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{dispExample}
+
+\medskip
+
+\begin{docTcbKey}{before float app}{=\meta{code}}{no default}
+  Appends the given \meta{code} to \refKey{/tcb/before float} before the colored box.
+\end{docTcbKey}
+
+\begin{docTcbKey}{before float pre}{=\meta{code}}{no default}
+  Prepends the given \meta{code} to \refKey{/tcb/before float} before the colored box.
+\end{docTcbKey}
+
+\begin{docTcbKey}{after float app}{=\meta{code}}{no default}
+  Appends the given \meta{code} to \refKey{/tcb/after float} after the colored box.
+\end{docTcbKey}
+
+\begin{docTcbKey}{after float pre}{=\meta{code}}{no default}
+  Prepends the given \meta{code} to \refKey{/tcb/after float} after the colored box.
+\end{docTcbKey}
 
 
 \clearpage

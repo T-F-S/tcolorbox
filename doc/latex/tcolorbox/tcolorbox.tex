@@ -1,9 +1,9 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 5.0.2 (2022/01/07)
+%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -25,8 +25,9 @@
 % arara: pdflatex: { shell: yes, synctex: yes }
 % arara: pdflatex: { shell: yes, synctex: yes }
 %
-\PassOptionsToPackage{pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks}{hyperref}
+\PassOptionsToPackage{pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks,pdfusetitle,pdfpagelabels}{hyperref}
 \documentclass[a4paper,11pt]{ltxdoc}
+
 
 \usepackage{tcolorbox.doc.s_main}
 \tcbEXTERNALIZE
@@ -35,8 +36,8 @@
 \tcbAUXmkdir{external}
 \tcbAUXmkdir{solutions}
 
-\RequirePackage{csquotes}
-\RequirePackage[style=numeric-comp,sorting=nyt,
+%\usepackage{csquotes}
+\usepackage[style=numeric-comp,sorting=nyt,
   maxnames=8,minnames=8,abbreviate=false,backend=biber,
   bibencoding=latin1,texencoding=ascii]{biblatex}
 \DeclareFieldFormat{url}{\newline\url{#1}}%
@@ -44,8 +45,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{5.0.2}%
-\def\datum{2022/01/07}%
+\def\version{5.1.0}%
+\def\datum{2022/06/22}%
 \makeindex
 
 \hypersetup{
@@ -63,7 +64,7 @@
 %\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.listings}
+%\includeonly{tcolorbox.doc.fitting,tcolorbox.doc.index}
 
 %\hypersetup{colorlinks=false}
 

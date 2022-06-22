@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.0pre2 (2022/03/09)
+%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2022/03/09 version 5.1.0pre2 text color boxes]
-\def\tcb@version{5.1.0pre2}
+\ProvidesPackage{tcolorbox}[2022/06/22 version 5.1.0 text color boxes]
+\def\tcb@version{5.1.0}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -378,6 +378,8 @@
     }},
   beforeafter skip/.style={before skip={#1},after skip={#1}},
   before nobreak/.store in=\kvtcb@beforebox@nobreak,
+  before float/.store in=\kvtcb@beforefloat,
+  after float/.store in=\kvtcb@afterfloat,
   lowerbox/.is choice,
   lowerbox/visible/.code={\tcb@lowerignoredfalse\tcb@lowervisibletrue},
   lowerbox/invisible/.code={\tcb@lowerignoredfalse\tcb@lowervisiblefalse},
@@ -724,6 +726,41 @@
   sidebyside align/center seam/.code={\def\kvtcb@sbs@align{center}\let\tcb@box@align\tcb@box@align@center},%
   sidebyside align/bottom seam/.code={\def\kvtcb@sbs@align{bottom}\let\tcb@box@align\tcb@box@align@bottom},%
   sidebyside gap/.dimstore in=\kvtcb@sbs@gap,%
+  sidebyside adapt/.is choice,
+  sidebyside adapt/none/.style={%
+    sidebyside@adapt@process/.style={%
+      code={\let\tcb@sbs@content\tcb@sbs@content@none},
+    }%
+  },
+  sidebyside adapt/left/.style={%
+    sidebyside@adapt@process/.style={%
+      code={\tcb@sbs@save@upper\let\tcb@sbs@content\tcb@sbs@content@left},
+      lefthand width=\wd\tcb@upperbox,
+    }%
+  },
+  sidebyside adapt/right/.style={%
+    sidebyside@adapt@process/.style={%
+      code={\tcb@sbs@save@lower\let\tcb@sbs@content\tcb@sbs@content@right},
+      righthand width=\wd\tcb@lowerbox,
+    }%
+  },
+  sidebyside adapt/both/.style={%
+    sidebyside@adapt@process/.style={%
+      code={\tcb@sbs@save@upper\tcb@sbs@save@lower\let\tcb@sbs@content\tcb@sbs@content@both},
+      text width=\wd\tcb@upperbox+\kvtcb@sbs@gap+\wd\tcb@lowerbox,
+      lefthand width=\wd\tcb@upperbox,
+    }%
+  },
+  sidebyside switch/.is choice,
+  sidebyside switch/true/.style={%
+    sidebyside@switch/.code={%
+      \tcb@swap{\tcb@sbs@text@left}{\tcb@sbs@text@right}
+    }%
+  },
+  sidebyside switch/false/.style={%
+    sidebyside@switch/.style=%
+  },
+  sidebyside switch/.default=true,
   lefthand width/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@leftwidth},
   righthand width/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@rightwidth},
   lefthand ratio/.code={\def\kvtcb@sbs@ratio{#1}\let\tcb@sbs@quota=\tcb@sbs@quota@leftratio},
@@ -831,8 +868,30 @@
   verbatim ignore percent/true/.code={\def\tcb@verbatim@change@percent{\catcode`\^^e=9}},
   verbatim ignore percent/false/.code={\let\tcb@verbatim@change@percent\@empty},
   verbatim ignore percent/.default=true,
+  verbatim/.style={fontupper=\ttfamily,nobeforeafter,tcbox raise base,top=0pt,bottom=0pt,left=1mm,right=1mm,boxrule=0.3mm},
   wrap@environment/.is if=tcb@wrap@environment,
 }
+
+\ExplSyntaxOn
+\tcbset
+  {
+    IfBlankTF/.code~n~args={3}{\tl_if_blank:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+    IfBlankT/.code~n~args={2}{\tl_if_blank:nT{#1}{\pgfkeysalso{#2}}},
+    IfBlankF/.code~n~args={2}{\tl_if_blank:nF{#1}{\pgfkeysalso{#2}}},
+    IfEmptyTF/.code~n~args={3}{\tl_if_empty:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+    IfEmptyT/.code~n~args={2}{\tl_if_empty:nT{#1}{\pgfkeysalso{#2}}},
+    IfEmptyF/.code~n~args={2}{\tl_if_empty:nF{#1}{\pgfkeysalso{#2}}},
+    IfNoValueTF/.code~n~args={3}{\tl_if_novalue:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+    IfNoValueT/.code~n~args={2}{\tl_if_novalue:nT{#1}{\pgfkeysalso{#2}}},
+    IfNoValueF/.code~n~args={2}{\tl_if_novalue:nF{#1}{\pgfkeysalso{#2}}},
+    IfValueTF/.code~n~args={3}{\tl_if_novalue:nTF{#1}{\pgfkeysalso{#3}}{\pgfkeysalso{#2}}},
+    IfValueT/.code~n~args={2}{\tl_if_novalue:nF{#1}{\pgfkeysalso{#2}}},
+    IfValueF/.code~n~args={2}{\tl_if_novalue:nT{#1}{\pgfkeysalso{#2}}},
+    IfBooleanTF/.code~n~args={3}{\IfBooleanTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
+    IfBooleanT/.code~n~args={2}{\IfBooleanT{#1}{\pgfkeysalso{#2}}},
+    IfBooleanF/.code~n~args={2}{\IfBooleanF{#1}{\pgfkeysalso{#2}}},
+  }
+\ExplSyntaxOff
 
 \def\kvtcb@beforebox{}
 \def\kvtcb@afterbox{}
@@ -994,6 +1053,18 @@
     \tcbdimto\tcb@w@sbs{\tcb@w@upper@real-\kvtcb@sbs@gap}%
     \tcb@sbs@quota%
   \fi%
+}
+
+\def\tcb@sbs@content@none{\tcb@sbs@text@left\tcblower\tcb@sbs@text@right}
+\def\tcb@sbs@content@left{\box\tcb@upperbox\tcblower\tcb@sbs@text@right}
+\def\tcb@sbs@content@right{\tcb@sbs@text@left\tcblower\box\tcb@lowerbox}
+\def\tcb@sbs@content@both{\box\tcb@upperbox\tcblower\box\tcb@lowerbox}
+
+\def\tcb@sbs@save@upper{%
+  \sbox{\tcb@upperbox}{\color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper\tcb@sbs@text@left\tcb@insert@after@upper}%
+}
+\def\tcb@sbs@save@lower{%
+  \sbox{\tcb@lowerbox}{\color{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower\tcb@sbs@text@right\tcb@insert@after@lower}%
 }
 
 \def\tcb@set@color#1{%
@@ -1842,8 +1913,8 @@
   \ifx\kvtcb@float\@empty%
     \tcb@set@normal@unbroken@beforeafter%
   \else%
-    \edef\tcb@before@unbroken{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]\noexpand\kvtcb@everyfloat}%
-    \let\tcb@after@unbroken=\tcb@float@env@end%
+    \edef\tcb@before@unbroken{\noexpand\tcb@float@env@begin{tcbfloat}[\kvtcb@float]\noexpand\kvtcb@beforefloat\noexpand\kvtcb@everyfloat}%
+    \def\tcb@after@unbroken{\kvtcb@afterfloat\tcb@float@env@end}%
   \fi%
   \setcounter{tcbbreakpart}{1}%
   % computation of total height
@@ -2061,44 +2132,198 @@
   \kvtcb@init@hook%
 }%
 
-\long\def\tcb@process@newtcolorbox#1#2{%
-  \edef\tcb@new@boxname{#1}%
-  \def\tcb@new@colopt{}%
-  \long\def\temp@a{#2}%
-  \ifx\temp@a\@empty\relax%
-  \else%
-    \tcb@proc@options@init{#2}{#1}%
-  \fi%
-  \preto\tcb@new@colopt{savedelimiter=#1}%
-  \cslet{tcb@opt@#1}{\tcb@new@colopt}%
-  \tcb@process@newtcolorbox@continue{#1}%
-}
 
-\newcommand\tcb@process@newenvironment[2][]{%
-  \tcb@process@newtcolorbox{#2}{#1}%
-}
+\ExplSyntaxOn
 
-\long\def\tcb@newtcolorbox#1#2{\tcb@newenvironment{#1}{\tcolorbox[#2,options@for=#1]}{\endtcolorbox}}
+\cs_new:Npn \__tcobox_process_newtcolorbox:nn #1#2
+  {
+    \edef\tcb@new@boxname{#2}
+    \def\tcb@new@colopt{}
+    \tl_if_novalue:nF { #1 }
+      {
+        \tcb@proc@options@init{#1}{#2}
+      }
+    \preto\tcb@new@colopt{savedelimiter=#2}
+    \exp_args:Nc \cs_set_eq:NN { tcb@opt@#2 } \tcb@new@colopt
+  }
 
-\long\def\tcb@newtcolorbox@#1[#2]#3{\tcb@newenvironment{#1}[#2]{\tcolorbox[#3,options@for=#1]}{\endtcolorbox}}
 
-\long\def\tcb@newtcolorbox@@#1[#2][#3]#4{\tcb@newenvironment{#1}[#2][#3]{\tcolorbox[#4,options@for=#1]}{\endtcolorbox}}
+\cs_new:Npn \__tcobox_set_backslash_removed:Nn #1#2
+  {
+    \tl_set:Nn #1 { #2 }
+    \tl_trim_spaces:N #1
+    \tl_set:Nx #1 { \exp_last_unbraced:NV \cs_to_str:N #1 }
+  }
 
-\long\def\tcb@new@tcolorbox@#1[#2]{%
-  \@ifnextchar[{\tcb@newtcolorbox@@{#1}[#2]}{\tcb@newtcolorbox@{#1}[#2]}}
 
-\def\tcb@new@tcolorbox#1{%
-  \@ifnextchar[{\tcb@new@tcolorbox@{#1}}{\tcb@newtcolorbox{#1}}}
+\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +o m o +o +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \tl_if_novalue:nTF { #4 }
+      {
+        #1 { #3 }{ \tcolorbox[#6,options@for=#3] }{ \endtcolorbox }
+      }
+      {
+        \tl_if_novalue:nTF { #5 }
+        {
+          #1 { #3 }[ #4 ]{ \tcolorbox[#6,options@for=#3] }{ \endtcolorbox }
+        }
+        {
+          #1 { #3 }[ #4 ][ #5 ]{ \tcolorbox[#6,options@for=#3] }{ \endtcolorbox }
+        }
+      }
+  }
+\NewDocumentCommand \newtcolorbox { }
+  {
+    \__tcobox_new_tcolorbox:w \newenvironment
+  }
+\NewDocumentCommand \renewtcolorbox { }
+  {
+    \__tcobox_new_tcolorbox:w \renewenvironment
+  }
 
-\def\newtcolorbox{%
-  \let\tcb@newenvironment\newenvironment%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcolorbox%
-  \tcb@process@newenvironment}
 
-\def\renewtcolorbox{%
-  \let\tcb@newenvironment\renewenvironment%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcolorbox%
-  \tcb@process@newenvironment}
+\NewDocumentCommand \__tcobox_new_TColorBox:w { m +o m +m +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    #1 { #3 }{ #4 }{ \tcolorbox[#5,options@for=#3] }{ \endtcolorbox }
+  }
+\NewDocumentCommand \DeclareTColorBox { }
+  {
+    \__tcobox_new_TColorBox:w \DeclareDocumentEnvironment
+  }
+\NewDocumentCommand \NewTColorBox { }
+  {
+    \__tcobox_new_TColorBox:w \NewDocumentEnvironment
+  }
+\NewDocumentCommand \RenewTColorBox { }
+  {
+    \__tcobox_new_TColorBox:w \RenewDocumentEnvironment
+  }
+\NewDocumentCommand \ProvideTColorBox { }
+  {
+    \__tcobox_new_TColorBox:w \ProvideDocumentEnvironment
+  }
+
+
+\cs_new:Npn \__tcobox_new_TotalTColorBox:Nnnnnn #1#2#3#4#5#6
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \begin{tcolorbox}[#5,options@for=#3]#6\end{tcolorbox} }
+  }
+\NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TotalTColorBox:Nnnnnn #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \DeclareTotalTColorBox { }
+  {
+    \__tcobox_new_TotalTColorBox:w \DeclareDocumentCommand
+  }
+\NewDocumentCommand \NewTotalTColorBox { }
+  {
+    \__tcobox_new_TotalTColorBox:w \NewDocumentCommand
+  }
+\NewDocumentCommand \RenewTotalTColorBox { }
+  {
+    \__tcobox_new_TotalTColorBox:w \RenewDocumentCommand
+  }
+\NewDocumentCommand \ProvideTotalTColorBox { }
+  {
+    \__tcobox_new_TotalTColorBox:w \ProvideDocumentCommand
+  }
+
+
+\NewDocumentCommand \__tcobox_new_tcbox_ii:w { m +m m o +o +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \tl_if_novalue:nTF { #4 }
+      {
+        \exp_args:Nc #1 { #3 }{ \tcbox[#6,options@for=#3] }
+      }
+      {
+        \tl_if_novalue:nTF { #5 }
+        {
+          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcbox[#6,options@for=#3] }
+        }
+        {
+          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcbox[#6,options@for=#3] }
+        }
+      }
+  }
+\NewDocumentCommand \__tcobox_new_tcbox_i:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_tcbox_ii:w #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \newtcbox { }
+  {
+    \__tcobox_new_tcbox_i:w \newcommand
+  }
+\NewDocumentCommand \renewtcbox { }
+  {
+    \__tcobox_new_tcbox_i:w \renewcommand
+  }
+
+
+\cs_new:Npn \__tcobox_new_TCBox:Nnnnn #1#2#3#4#5
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[#5,options@for=#3] }
+  }
+\NewDocumentCommand \__tcobox_new_TCBox:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TCBox:Nnnnn #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \DeclareTCBox { }
+  {
+    \__tcobox_new_TCBox:w \DeclareDocumentCommand
+  }
+\NewDocumentCommand \NewTCBox { }
+  {
+    \__tcobox_new_TCBox:w \NewDocumentCommand
+  }
+\NewDocumentCommand \RenewTCBox { }
+  {
+    \__tcobox_new_TCBox:w \RewewDocumentCommand
+  }
+\NewDocumentCommand \ProvideTCBox { }
+  {
+    \__tcobox_new_TCBox:w \ProvideDocumentCommand
+  }
+
+
+\cs_new:Npn \__tcobox_new_TotalTCBox:Nnnnnn #1#2#3#4#5#6
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[#5,options@for=#3]{#6} }
+  }
+\NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TotalTCBox:Nnnnnn #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \DeclareTotalTCBox { }
+  {
+    \__tcobox_new_TotalTCBox:w \DeclareDocumentCommand
+  }
+\NewDocumentCommand \NewTotalTCBox { }
+  {
+    \__tcobox_new_TotalTCBox:w \NewDocumentCommand
+  }
+\NewDocumentCommand \RenewTotalTCBox { }
+  {
+    \__tcobox_new_TotalTCBox:w \RewewDocumentCommand
+  }
+\NewDocumentCommand \ProvideTotalTCBox { }
+  {
+    \__tcobox_new_TotalTCBox:w \ProvideDocumentCommand
+  }
+
+
+\ExplSyntaxOff
+
 
 \newcommand{\tcolorboxenvironment}[2]{%
   \AddToHook{env/#1/before}{%
@@ -2110,46 +2335,14 @@
   }%
 }
 
-% auxiliary code to remove a leading backspace
-\newcommand{\tcb@remove@bs}[1]{%
-  \ifcat\relax\noexpand#1%
-    \expandafter\tcb@remove@bs@aux@i%
-  \fi
-  #1}
-\newcommand*{\tcb@remove@bs@aux@i}{%
-  \romannumeral%
-    \if\string\ \tcb@remove@bs@aux@ii\fi%
-    \expandafter\tcb@remove@bs@aux@iii\string}
-\newcommand{\tcb@remove@bs@aux@ii}{}
-\long\def\tcb@remove@bs@aux@ii#1\tcb@remove@bs@aux@iii{%
-  -\number\fi\expandafter\z@}
-\newcommand{\tcb@remove@bs@aux@iii}[1]{\z@}
+\DeclareTotalTCBox{\tcboxverb}{ O{} v }{verbatim,#1}{#2}
 
-\newcommand\tcb@process@newcommand[2][]{%
-  \begingroup\edef\x{\endgroup\noexpand\tcb@process@newtcolorbox{\tcb@remove@bs{#2}}}\x{#1}%
-}
-
-\long\def\tcb@newtcbox#1#2{\expandafter\tcb@newcommand\csname#1\endcsname{\tcbox[#2,options@for=#1]}}
-
-\long\def\tcb@newtcbox@#1[#2]#3{\expandafter\tcb@newcommand\csname#1\endcsname[#2]{\tcbox[#3,options@for=#1]}}
-
-\long\def\tcb@newtcbox@@#1[#2][#3]#4{\expandafter\tcb@newcommand\csname#1\endcsname[#2][#3]{\tcbox[#4,options@for=#1]}}
-
-\long\def\tcb@new@tcbox@#1[#2]{%
-  \@ifnextchar[{\tcb@newtcbox@@{#1}[#2]}{\tcb@newtcbox@{#1}[#2]}}
-
-\def\tcb@new@tcbox#1{%
-  \@ifnextchar[{\tcb@new@tcbox@{#1}}{\tcb@newtcbox{#1}}}
-
-\def\newtcbox{%
-  \let\tcb@newcommand\newcommand%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcbox%
-  \tcb@process@newcommand}
-
-\def\renewtcbox{%
-  \let\tcb@newcommand\renewcommand%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcbox%
-  \tcb@process@newcommand}
+\DeclareTotalTColorBox{\tcbsidebyside}{ +O{} +m +m }{%
+  code={\long\def\tcb@sbs@text@left{#2}\long\def\tcb@sbs@text@right{#3}},%
+  #1,%
+  sidebyside,%
+  sidebyside@switch,sidebyside@adapt@process%
+}{\tcb@sbs@content}
 
 
 \def\tcb@addcontentsline#1#2{%
@@ -2359,7 +2552,9 @@
     standard,parbox,hyphenationfix=false,overlay=,
     halign=justify,halign lower=justify,halign title=justify,
     before title=,after title=,before upper=,after upper=,before lower=,after lower=,
+    before float=,after float=,
     sidebyside=false,sidebyside align=center,sidebyside gap=10mm,
+    sidebyside adapt=none,sidebyside switch=false,%
     lefthand ratio=0.5,check odd page=false,nophantom,
     list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,

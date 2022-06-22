@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.0pre2 (2022/03/09)
+%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.0pre2}
+\tcb@set@library@version{5.1.0}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -371,27 +371,100 @@
   \tcb@ox{capture=fitbox,#1}{#2}%
 }
 
-\long\def\tcb@newtcboxfit#1#2{\expandafter\tcb@newcommand\csname#1\endcsname{\tcboxfit[#2,options@for=#1]}}
 
-\long\def\tcb@newtcboxfit@#1[#2]#3{\expandafter\tcb@newcommand\csname#1\endcsname[#2]{\tcboxfit[#3,options@for=#1]}}
+\ExplSyntaxOn
 
-\long\def\tcb@newtcboxfit@@#1[#2][#3]#4{\expandafter\tcb@newcommand\csname#1\endcsname[#2][#3]{\tcboxfit[#4,options@for=#1]}}
 
-\long\def\tcb@new@tcboxfit@#1[#2]{%
-  \@ifnextchar[{\tcb@newtcboxfit@@{#1}[#2]}{\tcb@newtcboxfit@{#1}[#2]}}
+\NewDocumentCommand \__tcobox_new_tcboxfit_ii:w { m +m m o +o +m }
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \tl_if_novalue:nTF { #4 }
+      {
+        \exp_args:Nc #1 { #3 }{ \tcboxfit[#6,options@for=#3] }
+      }
+      {
+        \tl_if_novalue:nTF { #5 }
+        {
+          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcboxfit[#6,options@for=#3] }
+        }
+        {
+          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcboxfit[#6,options@for=#3] }
+        }
+      }
+  }
+\NewDocumentCommand \__tcobox_new_tcboxfit_i:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_tcboxfit_ii:w #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \newtcboxfit { }
+  {
+    \__tcobox_new_tcboxfit_i:w \newcommand
+  }
+\NewDocumentCommand \renewtcboxfit { }
+  {
+    \__tcobox_new_tcboxfit_i:w \renewcommand
+  }
 
-\long\def\tcb@new@tcboxfit#1{%
-  \@ifnextchar[{\tcb@new@tcboxfit@{#1}}{\tcb@newtcboxfit{#1}}}
 
-\def\newtcboxfit{%
-  \let\tcb@newcommand\newcommand%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcboxfit%
-  \tcb@process@newcommand}
+\cs_new:Npn \__tcobox_new_TCBoxFit:Nnnnn #1#2#3#4#5
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcboxfit[#5,options@for=#3] }
+  }
+\NewDocumentCommand \__tcobox_new_TCBoxFit:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TCBoxFit:Nnnnn #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \DeclareTCBoxFit { }
+  {
+    \__tcobox_new_TCBoxFit:w \DeclareDocumentCommand
+  }
+\NewDocumentCommand \NewTCBoxFit { }
+  {
+    \__tcobox_new_TCBoxFit:w \NewDocumentCommand
+  }
+\NewDocumentCommand \RenewTCBoxFit { }
+  {
+    \__tcobox_new_TCBoxFit:w \RewewDocumentCommand
+  }
+\NewDocumentCommand \ProvideTCBoxFit { }
+  {
+    \__tcobox_new_TCBoxFit:w \ProvideDocumentCommand
+  }
 
-\def\renewtcboxfit{%
-  \let\tcb@newcommand\renewcommand%
-  \let\tcb@process@newtcolorbox@continue\tcb@new@tcboxfit%
-  \tcb@process@newcommand}
+
+\cs_new:Npn \__tcobox_new_TotalTCBoxFit:Nnnnnn #1#2#3#4#5#6
+  {
+    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcboxfit[#5,options@for=#3]{#6} }
+  }
+\NewDocumentCommand \__tcobox_new_TotalTCBoxFit:w { m +o m }
+  {
+    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TotalTCBoxFit:Nnnnnn #1 {#2} \l_tmpa_tl
+  }
+\NewDocumentCommand \DeclareTotalTCBoxFit { }
+  {
+    \__tcobox_new_TotalTCBoxFit:w \DeclareDocumentCommand
+  }
+\NewDocumentCommand \NewTotalTCBoxFit { }
+  {
+    \__tcobox_new_TotalTCBoxFit:w \NewDocumentCommand
+  }
+\NewDocumentCommand \RenewTotalTCBoxFit { }
+  {
+    \__tcobox_new_TotalTCBoxFit:w \RewewDocumentCommand
+  }
+\NewDocumentCommand \ProvideTotalTCBoxFit { }
+  {
+    \__tcobox_new_TotalTCBoxFit:w \ProvideDocumentCommand
+  }
+
+
+\ExplSyntaxOff
+
 
 \tcbset{%
   reset@fitting/.style={%

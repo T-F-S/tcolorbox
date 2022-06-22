@@ -2786,9 +2786,10 @@ are drawn by the codes given with
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2014-09-19]{every float}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2014-09-19]{every float}{=\marg{code}}{no default, initially empty}
   For floating objects, the \refKey{/tcb/before} and \refKey{/tcb/after}
-  settings are ignored. Instead, the given \meta{code} is inserted before
+  settings are ignored. Instead, \refKey{/tcb/before float} and \refKey{/tcb/after float}
+  can be used. Further, with \refKey{/tcb/every float}, the given \meta{code} is inserted before
   a floating box. If the box is \refKey{/tcb/breakable}, the given \meta{code} is
   inserted before every part of the break sequence.
   The most common use case is |every float=\centering|.
@@ -2802,6 +2803,32 @@ are drawn by the codes given with
 {\tcbset{reset}\tcbusetemp}
 
 \end{docTcbKey}
+
+
+\begin{docTcbKeys}[
+    doc parameter   = {=\marg{code}},
+    doc description = {no default, initially empty},
+    doc new         = 2022-06-21,
+  ]
+  {
+    {
+      doc name        = before float,
+    },
+    {
+      doc name        = after float,
+    }
+  }
+  For floating objects, the \refKey{/tcb/before} and \refKey{/tcb/after}
+  settings are ignored. Code can be inserted after the begin of the float
+  environment and before \refKey{/tcb/every float} with
+  \refKey{/tcb/before float} and between the end of the box and the end
+  of the float environment with \refKey{/tcb/after float}.
+  \begin{marker}
+  These options are not compatible with \refKey{/tcb/breakable} floating objects
+  and are ignored, if the box is set to be breakable.
+  \end{marker}
+\end{docTcbKeys}
+
 
 
 
@@ -3952,6 +3979,7 @@ targeting different box types and they do not blend very well.
   \refEnv{tcbwritetemp} and \refCom{tcbusetemp} implicitely.
 \end{docTcbKey}
 
+\clearpage
 \subsection{\texttt{\textbackslash tcbox} Specials}
 The following options are applicable for \refCom{tcbox} and \refCom{tcboxmath}
 only.
@@ -3979,6 +4007,21 @@ Test\dotfill
   Combines \refKey{/tcb/tcbox raise base} with \refKey{/tcb/nobeforeafter}.
   The resulting box behaves analogue to |\fbox|.
 \end{docTcbKey}
+
+\begin{docTcbKey}{verbatim}{}{style, no value}
+  Sets options for a \textit{verbatim} style \refCom{tcbox}.
+  Since the indented boxes may contain only very few words, the
+  dimensions are made smaller and \refKey{/tcb/nobeforeafter}
+  and \refKey{/tcb/tcbox raise base} are set.
+\begin{dispExample*}{sbs,lefthand ratio=0.6}
+\DeclareTotalTCBox{\myverb}{ v }{verbatim,
+  colframe=red!75!black,colupper=blue}{#1}
+
+\myverb{\textbf} is a \myverb{\LaTeX} command.
+\end{dispExample*}
+\end{docTcbKey}
+
+
 
 \clearpage
 \begin{docTcbKey}[][doc new=2015-03-23]{tcbox width}{=\meta{mode}}{no default, initially \texttt{auto}}
@@ -4504,6 +4547,185 @@ This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{exdispExample}
 \end{docTcbKey}
+
+\clearpage
+
+\begin{docTcbKeys}[doc description = {no default}, doc new = 2022-05-25 ]
+  {
+    {
+      doc name        = IfBlankTF,
+      doc parameter   = {=\marg{token list}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfBlankT,
+      doc parameter   = {=\marg{token list}\marg{true options}},
+    },
+    {
+      doc name        = IfBlankF,
+      doc parameter   = {=\marg{token list}\marg{false options}},
+    }
+  }
+  Wraps the |\tl_if_blank:n(TF)| command(s) of \textsf{expl3} for option setting.
+  If the \meta{token list} consists only of blank spaces, the \meta{true options} are set.
+  Otherwise, the \meta{false options} are set.
+\begin{dispExample}
+\newtcolorbox{mybox}[1]{ IfBlankF={#1}{title=`#1'} }
+
+\begin{mybox}{My title}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}{    }
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKeys}
+
+\medskip
+
+\begin{docTcbKeys}[doc description = {no default}, doc new = 2022-05-25 ]
+  {
+    {
+      doc name        = IfEmptyTF,
+      doc parameter   = {=\marg{token list}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfEmptyT,
+      doc parameter   = {=\marg{token list}\marg{true options}},
+    },
+    {
+      doc name        = IfEmptyF,
+      doc parameter   = {=\marg{token list}\marg{false options}},
+    }
+  }
+  Wraps the |\tl_if_empty:n(TF)| command(s) of \textsf{expl3} for option setting.
+  If the \meta{token list} is entirely empty, the \meta{true options} are set.
+  Otherwise, the \meta{false options} are set.
+\begin{dispExample}
+\newtcolorbox{mybox}[1]{ IfEmptyTF={#1}{colframe=red}{title=`#1'} }
+
+\begin{mybox}{My title}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}{}
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+\clearpage
+
+\begin{docTcbKeys}[doc description = {no default}]
+  {
+    {
+      doc name        = IfNoValueTF,
+      doc parameter   = {=\marg{argument}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfNoValueT,
+      doc parameter   = {=\marg{argument}\marg{true options}},
+      doc new         = 2020-09-16,
+    },
+    {
+      doc name        = IfNoValueF,
+      doc parameter   = {=\marg{argument}\marg{false options}},
+      doc new         = 2020-09-16,
+    }
+  }
+  Wraps the |\IfNoValue(TF)| command(s) of |xparse| for option setting.
+  If the \meta{argument} has no value, the \meta{true options} are set.
+  Otherwise, the \meta{false options} are set.
+\begin{dispExample}
+\DeclareTColorBox{mybox}{ o }{colframe=red!75!black,
+  IfNoValueTF={#1}{colback=red!5!white}{enhanced,interior style image=#1}}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[goldshade.png]
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKeys}
+
+\medskip
+
+\begin{docTcbKeys}[doc description = {no default}]
+  {
+    {
+      doc name        = IfValueTF,
+      doc parameter   = {=\marg{argument}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfValueT,
+      doc parameter   = {=\marg{argument}\marg{true options}},
+      doc new         = 2020-09-16,
+    },
+    {
+      doc name        = IfValueF,
+      doc parameter   = {=\marg{argument}\marg{false options}},
+      doc new         = 2020-09-16,
+    }
+  }
+  Wraps the |\IfValue(TF)| command(s) of |xparse| for option setting.
+  If the \meta{argument} has a value, the \meta{true options} are set.
+  Otherwise, the \meta{false options} are set.
+\begin{dispExample}
+\DeclareTColorBox{mybox}{ o }{colframe=red!75!black,colback=red!5!white,
+  IfValueT={#1}{title={\flqq #1\frqq},fonttitle=\bfseries}}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}[My title]
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKeys}
+
+%\medskip
+\clearpage
+
+\begin{docTcbKeys}[doc description = {no default}]
+  {
+    {
+      doc name        = IfBooleanTF,
+      doc parameter   = {=\marg{argument}\marg{true options}\marg{false options}},
+    },
+    {
+      doc name        = IfBooleanT,
+      doc parameter   = {=\marg{argument}\marg{true options}},
+      doc new         = 2020-09-16,
+    },
+    {
+      doc name        = IfBooleanF,
+      doc parameter   = {=\marg{argument}\marg{false options}},
+      doc new         = 2020-09-16,
+    }
+  }
+  Wraps the |\IfBoolean(TF)| command(s) of |xparse| for option setting.
+  If the \meta{argument} is |\BooleanTrue|, the \meta{true options} are set.
+  If the \meta{argument} is |\BooleanFalse|, the \meta{false options} are set.
+
+\begin{dispExample}
+\DeclareTColorBox{mybox}{ s }{colframe=red!75!black,
+  IfBooleanTF={#1}{colback=yellow!50!red}{colback=red!5!white}}
+
+\begin{mybox}
+This is a tcolorbox.
+\end{mybox}
+
+\begin{mybox}*
+This is a tcolorbox.
+\end{mybox}
+\end{dispExample}
+\end{docTcbKeys}
+
+
 
 
 \clearpage

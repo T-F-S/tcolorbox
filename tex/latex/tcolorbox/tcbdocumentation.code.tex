@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.0pre2 (2022/03/09)
+%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2021 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{5.1.0pre2}
+\tcb@set@library@version{5.1.0}
 
 \tcbuselibrary{listings,skins,xparse,external,raster}
 
@@ -94,7 +94,6 @@
   \colOpt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
 \def\brackets#1{{\ttfamily\char`\{}#1{\ttfamily\char`\}}}
 
-\newif\iftcb@doc@toindex
 \newif\iftcb@doc@colorize
 \newif\iftcb@doc@annotate
 
@@ -108,6 +107,7 @@
   environment content/.store in=\kvtcb@text@envcontent,
   environment/.store in=\kvtcb@text@env,
   environments/.store in=\kvtcb@text@envs,
+  commands/.store in=\kvtcb@text@coms,
   index/.store in=\kvtcb@text@index,
   key/.store in=\kvtcb@text@key,
   keys/.store in=\kvtcb@text@keys,
@@ -188,7 +188,6 @@
   after doc body/.style={after doc body command={#1},after doc body environment={#1}
     ,after doc body key={#1},after doc body path={#1}},
   doc description/.store in=\kvtcb@doc@description,%
-  doc into index/.is if=tcb@doc@toindex,%
   doc no index/.style={doc into index=false},
   doc updated/.style={before upper={\tcbdocmarginnote{\tcbdocupdated{#1}}}},
   doc new/.style={before upper={\tcbdocmarginnote{\tcbdocnew{#1}}}},
@@ -216,6 +215,7 @@
     counter=counter,counters=Counters,
     environment content=environment content,
     environment=environment,environments=Environments,
+    commands=Commands,
     path=path operation,paths=Path operations,
     index=Index,
     key=key,keys=Keys,
@@ -283,28 +283,28 @@
   \iftcb@doc@colorize\textcolor{#2}{\tcb@cs{#1}}\else\tcb@cs{#1}\fi%
 }
 
-\newrobustcmd{\tcbIndexPrintComC}[1]{\tcb@Index@Print@ComC{#1}{\kvtcb@col@command}}
+\NewDocumentCommand{\tcbIndexPrintComC}{m}{\tcb@Index@Print@ComC{#1}{\kvtcb@col@command}}
 
-\newrobustcmd{\tcbIndexPrintEnvCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@environment}{\kvtcb@text@env}}
-\newrobustcmd{\tcbIndexPrintEnvC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@environment}}
+\NewDocumentCommand{\tcbIndexPrintEnvCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@environment}{\kvtcb@text@env}}
+\NewDocumentCommand{\tcbIndexPrintEnvC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@environment}}
 
-\newrobustcmd{\tcbIndexPrintKeyCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{\kvtcb@text@key}}
-\newrobustcmd{\tcbIndexPrintKeyC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
+\NewDocumentCommand{\tcbIndexPrintKeyCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{\kvtcb@text@key}}
+\NewDocumentCommand{\tcbIndexPrintKeyC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
 
-\newrobustcmd{\tcbIndexPrintPathCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@path}{\kvtcb@text@path}}
-\newrobustcmd{\tcbIndexPrintPathC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@path}}
+\NewDocumentCommand{\tcbIndexPrintPathCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@path}{\kvtcb@text@path}}
+\NewDocumentCommand{\tcbIndexPrintPathC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@path}}
 
-\newrobustcmd{\tcbIndexPrintValCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{\kvtcb@text@value}}
-\newrobustcmd{\tcbIndexPrintValC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
+\NewDocumentCommand{\tcbIndexPrintValCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@value}{\kvtcb@text@value}}
+\NewDocumentCommand{\tcbIndexPrintValC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@value}}
 
-\newrobustcmd{\tcbIndexPrintColCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@color}{\kvtcb@text@color}}
-\newrobustcmd{\tcbIndexPrintColC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@color}}
+\NewDocumentCommand{\tcbIndexPrintColCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@color}{\kvtcb@text@color}}
+\NewDocumentCommand{\tcbIndexPrintColC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@color}}
 
-\newrobustcmd{\tcbIndexPrintCountCA}[1]{\tcb@Index@Print@CA{#1}{\kvtcb@col@counter}{\kvtcb@text@counter}}
-\newrobustcmd{\tcbIndexPrintCountC}[1]{\tcb@Index@Print@C{#1}{\kvtcb@col@counter}}
+\NewDocumentCommand{\tcbIndexPrintCountCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@counter}{\kvtcb@text@counter}}
+\NewDocumentCommand{\tcbIndexPrintCountC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@counter}}
 
-\newrobustcmd{\tcbIndexPrintLenCA}[1]{\tcb@Index@Print@ComCA{#1}{\kvtcb@col@length}{\kvtcb@text@length}}
-\newrobustcmd{\tcbIndexPrintLenC}[1]{\tcb@Index@Print@ComC{#1}{\kvtcb@col@length}}
+\NewDocumentCommand{\tcbIndexPrintLenCA}{m}{\tcb@Index@Print@ComCA{#1}{\kvtcb@col@length}{\kvtcb@text@length}}
+\NewDocumentCommand{\tcbIndexPrintLenC}{m}{\tcb@Index@Print@ComC{#1}{\kvtcb@col@length}}
 
 
 \newenvironment{tcb@manual@entry}{\begin{list}{}{%
@@ -330,6 +330,29 @@
 
 
 \ExplSyntaxOn
+
+
+\cs_new_nopar:Npn \__tcobox_new_bool_key:nn #1 #2
+  {
+    \bool_new:N #1
+    \tcbset
+      {
+        #2/.is~choice,
+        #2/true/.code  = { \bool_set_true:N  #1 },
+        #2/false/.code = { \bool_set_false:N #1 },
+        #2/.default = true,
+      }
+  }
+
+\__tcobox_new_bool_key:nn \l__tcobox_doc_toindex_bool { doc~into~index }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_colors_bool       { index~gather~colors }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_commands_bool     { index~gather~commands }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_counters_bool     { index~gather~counters }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_environments_bool { index~gather~environments }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_keys_bool         { index~gather~keys }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_lengths_bool      { index~gather~lengths }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_paths_bool        { index~gather~paths }
+\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_values_bool       { index~gather~values }
 
 
 \cs_new_nopar:Npn \__tcobox_sanitize_tl:n #1
@@ -422,9 +445,14 @@
 
 \cs_new_nopar:Npn \__tcobox_index_command:
   {
-    \iftcb@doc@toindex
-      \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintComC{\kvtcb@doc@index}}
-    \fi
+    \bool_if:NT \l__tcobox_doc_toindex_bool
+      {
+        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintComC{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_commands_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@coms\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintComC{\kvtcb@doc@index}}
+          }
+      }
   }
 
 \cs_new:Npn \__tcobox_doc_head_command:
@@ -463,7 +491,7 @@
 \NewDocumentEnvironment{docCommand*}{}
   {
     \group_begin:
-    \tcb@doc@toindexfalse
+    \bool_set_false:N \l__tcobox_doc_toindex_bool
     \begin{docCommand}
   }
   {
@@ -479,10 +507,14 @@
 
 \cs_new_nopar:Npn \__tcobox_index_environment:
   {
-    \iftcb@doc@toindex
-      \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvCA{\kvtcb@doc@index}}
-      \kvtcb@index@command{\kvtcb@text@envs\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvC{\kvtcb@doc@index}}
-    \fi
+    \bool_if:NT \l__tcobox_doc_toindex_bool
+      {
+        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvCA{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_environments_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@envs\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvC{\kvtcb@doc@index}}
+          }
+      }
   }
 
 \cs_new:Npn \__tcobox_doc_head_environment:
@@ -523,7 +555,7 @@
 \NewDocumentEnvironment{docEnvironment*}{}
   {
     \group_begin:
-    \tcb@doc@toindexfalse
+    \bool_set_false:N \l__tcobox_doc_toindex_bool
     \begin{docEnvironment}
   }
   {
@@ -544,17 +576,21 @@
 
 \cs_new_nopar:Npn \__tcobox_index_key:
   {
-    \iftcb@doc@toindex
-      \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyCA{\kvtcb@doc@index}}
-      \tl_if_empty:NTF \kvtcb@doc@keypath
-        {
-          \kvtcb@index@command{\kvtcb@text@keys\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
-        }
-        {
-          \kvtcb@index@command{\kvtcb@text@keys\idx@level\kvtcb@doc@keypath\idx@actual\tcbIndexPrintKeyC{/\kvtcb@doc@keypath/}
-            \idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
-        }
-    \fi
+    \bool_if:NT \l__tcobox_doc_toindex_bool
+      {
+        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyCA{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_keys_bool
+          {
+            \tl_if_empty:NTF \kvtcb@doc@keypath
+              {
+                \kvtcb@index@command{\kvtcb@text@keys\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
+              }
+              {
+                \kvtcb@index@command{\kvtcb@text@keys\idx@level\kvtcb@doc@keypath\idx@actual\tcbIndexPrintKeyC{/\kvtcb@doc@keypath/}
+                  \idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
+              }
+          }
+      }
   }
 
 \cs_new:Npn \__tcobox_doc_head_key:
@@ -609,7 +645,7 @@
 \NewDocumentEnvironment{docKey*}{}
   {
     \group_begin:
-    \tcb@doc@toindexfalse
+    \bool_set_false:N \l__tcobox_doc_toindex_bool
     \begin{docKey}
   }
   {
@@ -639,7 +675,7 @@
     \NewDocumentEnvironment{#1*}{}
       {
         \group_begin:
-        \tcb@doc@toindexfalse
+        \bool_set_false:N \l__tcobox_doc_toindex_bool
         \begin{#1}
       }
       {
@@ -674,10 +710,14 @@
 
 \cs_new_nopar:Npn \__tcobox_index_path:
   {
-    \iftcb@doc@toindex
-      \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintPathCA{\kvtcb@doc@index}}
-      \kvtcb@index@command{\kvtcb@text@paths\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintPathC{\kvtcb@doc@index}}
-    \fi
+    \bool_if:NT \l__tcobox_doc_toindex_bool
+      {
+        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintPathCA{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_paths_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@paths\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintPathC{\kvtcb@doc@index}}
+          }
+      }
   }
 
 \cs_new:Npn \__tcobox_doc_head_path:
@@ -716,7 +756,7 @@
 \NewDocumentEnvironment{docPathOperation*}{}
   {
     \group_begin:
-    \tcb@doc@toindexfalse
+    \bool_set_false:N \l__tcobox_doc_toindex_bool
     \begin{docPathOperation}
   }
   {
@@ -762,7 +802,10 @@
     \IfBooleanF{#1}
       {
         \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintValCA{\kvtcb@doc@index}}
-        \kvtcb@index@command{\kvtcb@text@values\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintValC{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_values_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@values\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintValC{\kvtcb@doc@index}}
+          }
       }
     \group_end:
   }
@@ -776,7 +819,10 @@
     \IfBooleanF{#1}
       {
         \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintColCA{\kvtcb@doc@index}}
-        \kvtcb@index@command{\kvtcb@text@colors\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintColC{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_colors_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@colors\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintColC{\kvtcb@doc@index}}
+          }
       }
     \group_end:
   }
@@ -790,7 +836,10 @@
     \IfBooleanF{#1}
       {
         \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintCountCA{\kvtcb@doc@index}}
-        \kvtcb@index@command{\kvtcb@text@counters\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintCountC{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_counters_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@counters\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintCountC{\kvtcb@doc@index}}
+          }
       }
     \group_end:
   }
@@ -804,7 +853,10 @@
     \IfBooleanF{#1}
       {
         \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintLenCA{\kvtcb@doc@index}}
-        \kvtcb@index@command{\kvtcb@text@lengths\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintLenC{\kvtcb@doc@index}}
+        \bool_if:NT \l__tcobox_doc_gather_lengths_bool
+          {
+            \kvtcb@index@command{\kvtcb@text@lengths\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintLenC{\kvtcb@doc@index}}
+          }
       }
     \group_end:
   }
@@ -893,17 +945,19 @@
 
 \ExplSyntaxOn
 \def\tcb@doc@index@doc{
-  \def \__tcobox_index_command:
+  \cs_set_nopar:Npn \__tcobox_index_command:
   {
-    \iftcb@doc@toindex
-      \SpecialMainIndex{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintComC{\kvtcb@doc@index}}
-    \fi
+    \bool_if:NT \l__tcobox_doc_toindex_bool
+      {
+        \SpecialMainIndex{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintComC{\kvtcb@doc@index}}
+      }
   }
-  \def \__tcobox_index_environment:
+  \cs_set_nopar:Npn \__tcobox_index_environment:
   {
-    \iftcb@doc@toindex
-      \SpecialMainEnvIndex{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvC{\kvtcb@doc@index}}
-    \fi
+    \bool_if:NT \l__tcobox_doc_toindex_bool
+      {
+        \SpecialMainEnvIndex{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintEnvC{\kvtcb@doc@index}}
+      }
   }
   \tcbset{index~german~settings}
   \EnableCrossrefs
@@ -912,6 +966,28 @@
 \ExplSyntaxOff
 
 \def\tcb@doc@index@off{}
+
+\tcbset{%
+  index gather all/.style={%
+    index gather colors=true,
+    index gather commands=true,
+    index gather counters=true,
+    index gather environments=true,
+    index gather keys=true,
+    index gather lengths=true,
+    index gather paths=true,
+    index gather values=true},
+  index gather none/.style={%
+    index gather colors=false,
+    index gather commands=false,
+    index gather counters=false,
+    index gather environments=false,
+    index gather keys=false,
+    index gather lengths=false,
+    index gather paths=false,
+    index gather values=false},
+}
+
 
 \tcbset{%
   reset@documentation/.style={%
@@ -927,6 +1003,7 @@
   after doc body=,
   documentation listing style=tcbdocumentation,
   doc into index=true,
+  index gather all,
   doc marginnote=,
   color option=Option,
   color definition=Definition,
