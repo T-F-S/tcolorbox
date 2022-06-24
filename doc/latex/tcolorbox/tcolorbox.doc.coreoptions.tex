@@ -4566,7 +4566,7 @@ This is a \textbf{tcolorbox}.
     }
   }
   Wraps the |\tl_if_blank:n(TF)| command(s) of \textsf{expl3} for option setting.
-  If the \meta{token list} consists only of blank spaces, the \meta{true options} are set.
+  If the \meta{token list} consists only of blank spaces or is entirely empty, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
 \newtcolorbox{mybox}[1]{ IfBlankF={#1}{title=`#1'} }

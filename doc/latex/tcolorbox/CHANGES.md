@@ -22,6 +22,20 @@ and this project adheres to
 
 
 
+## [5.1.1] - 2022-06-24
+
+### Changed
+- Some documentation improvements
+- Library `xparse` removed from settings `many` and `most`
+- Slight implemenation change for `\newtcbtheorem` and `\renewtcbtheorem`
+
+### Fixed
+- Regression bug introduced with v5.0.0 2021-12-16 (issue #182) 
+    Instead of `beforeafter skip balanced`, `autoparskip` was set as default, restoring
+    the situation before v4.40 (with some inconsistencies)
+
+
+
 ## [5.1.0] - 2022-06-22
 
 ### Added

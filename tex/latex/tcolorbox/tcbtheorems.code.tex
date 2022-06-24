@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
+%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.0}
+\tcb@set@library@version{5.1.1}
 
 \RequirePackage{amsmath}
 
@@ -147,21 +147,21 @@
   }
 
 
-\NewDocumentCommand \new@tcbtheorem { O{} m m +m m }
+\NewDocumentCommand \__tcobox_new_tcbtheorem:w { m O{} m m +m m }
   {
-    \@@newtcolorbox[auto~counter,#1]{#2}[3][]
+    #1 [auto~counter,#2]{#3}[3][]
       {
-        #4,
-        title      = {\__tcobox_theo_title:nnn{#3}{\thetcbcounter}{##2}},
+        #5,
+        title      = {\__tcobox_theo_title:nnn{#4}{\thetcbcounter}{##2}},
         list~entry = {\protect\numberline{\thetcbcounter}##2},
         nameref    = {##2},
-        theo@label = {#5}{##3},
+        theo@label = {#6}{##3},
         ##1
       }
-    \@@newtcolorbox[#1,no~counter,list~inside=]{#2*}[2][]
+    #1 [#2,no~counter,list~inside=]{#3*}[2][]
       {
-        #4,
-        title = {\__tcobox_theo_title:nnn{#3}{}{##2}},
+        #5,
+        title = {\__tcobox_theo_title:nnn{#4}{}{##2}},
         ##1
       }
   }
@@ -169,15 +169,13 @@
 
 \NewDocumentCommand \newtcbtheorem {}
   {
-    \cs_set_eq:NN \@@newtcolorbox \newtcolorbox
-    \new@tcbtheorem
+    \__tcobox_new_tcbtheorem:w \newtcolorbox
   }
 
 
 \NewDocumentCommand \renewtcbtheorem {}
   {
-    \cs_set_eq:NN \@@newtcolorbox \renewtcolorbox
-    \new@tcbtheorem
+    \__tcobox_new_tcbtheorem:w \renewtcolorbox
   }
 
 

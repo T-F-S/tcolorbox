@@ -3,7 +3,8 @@
 \clearpage
 \section{Macros for Box Creation}%
 \tcbset{external/prefix=external/coremacros_}%
-\subsection{Using \texttt{tcolorbox} and \texttt{tcbox}}\label{subsec:macros_using}
+%\subsection{Using \texttt{tcolorbox} and \texttt{\texorpdfstring{\char`\\}{\textbackslash}tcbox}}\label{subsec:macros_using}
+\subsection{Using \texttt{tcolorbox} and \texttt{\textbackslash tcbox}}\label{subsec:macros_using}
 \begin{docEnvironment}{tcolorbox}{\oarg{options}}
   This is the main environment to create an accentuated colored text box with
   rounded corners and, optionally, two parts. The appearance of this box
@@ -316,7 +317,7 @@ This is a tcolorbox.
 
 
 \clearpage
-\subsection{Producing \texttt{tcbox} Commands}\label{subsec:macros_tcbox}
+\subsection{Producing \texttt{\textbackslash tcbox} Commands}\label{subsec:macros_tcbox}
 
 \begin{docCommand}{newtcbox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\oarg{number}\oarg{default}\marg{options}}
   Creates a new macro \texttt{\textbackslash}\meta{name} based on \refCom{tcbox}.

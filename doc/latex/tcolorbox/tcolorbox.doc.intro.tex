@@ -151,7 +151,7 @@ The following keys are used inside |\tcbuselibrary| respectively
 
 \clearpage
 \begin{docTcbKey}[library]{xparse}{}{\mylib{xparse}}
-  Provides document command production with |xparse| for |tcolorbox|;
+  Loads |xparse| and is considered a legacy library kept for compatibility;
   see Section~\ref{sec:xparse} from page~\pageref{sec:xparse}.
 \end{docTcbKey}
 
@@ -169,14 +169,14 @@ The following keys are used inside |\tcbuselibrary| respectively
 
 \begin{docTcbKey}[library]{many}{}{style, no value}
   Loads the libraries \mylib{skins}, \mylib{breakable}, \mylib{raster}, \mylib{hooks},
-  \mylib{theorems}, \mylib{fitting}, and \mylib{xparse}.
+  \mylib{theorems}, and \mylib{fitting}.
   Use this shortcut, if you want to use all features of |tcolorbox|
   with exception of typesetting listings and using
   the specialized \mylib{documentation} library.
 \end{docTcbKey}
 
 \begin{docTcbKey}[library]{most}{}{style, no value}
-  Loads all libraries except \mylib{minted} and \mylib{documentation}.
+  Loads all libraries except \mylib{minted}, \mylib{documentation}, and \mylib{xparse}.
   Use this shortcut, if you want to use all features of |tcolorbox|
   with exception of using the |minted| package and using
   the specialized \mylib{documentation} library.
@@ -208,8 +208,7 @@ The following keys are used inside |\tcbuselibrary| respectively
     \mylib{raster}\\ 
     \mylib{skins}\\
     \mylib{theorems}\\
-    \mylib{vignette}\\
-    \mylib{xparse}
+    \mylib{vignette}
   \tcbitem[adjusted title=Advanced Listings]
     \mylib{listings}\\
     \mylib{listingsutf8}
@@ -218,5 +217,8 @@ The following keys are used inside |\tcbuselibrary| respectively
   \tcbitem[adjusted title=Documentation]
     \mylib{documentation}
   \end{tcbitemize}
+  \begin{tcolorbox}[beamer,adjusted title=Legacy,colframe=blue!50!black,colback=blue!10!white]
+    \mylib{xparse}
+  \end{tcolorbox}
 \end{extcolorbox}
 

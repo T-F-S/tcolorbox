@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.0 (2022/06/22)
+%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2022/06/22 version 5.1.0 text color boxes]
-\def\tcb@version{5.1.0}
+\ProvidesPackage{tcolorbox}[2022/06/24 version 5.1.1 text color boxes]
+\def\tcb@version{5.1.1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -2566,7 +2566,7 @@
 }
 
 \tcbset{%
-  autoparskip,minipage,savedelimiter=tcolorbox,%
+  minipage,savedelimiter=tcolorbox,%
   set@extensions@preframe=,set@extensions@postframe=,set@extensions@final=,%
 }%
 
@@ -2634,9 +2634,9 @@
 \tcb@add@library{vignette}{tcbvignette.code.tex}
 \tcb@add@library{poster}{tcbposter.code.tex}
 
-\tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting,xparse}
+\tcb@add@library@style{many}{raster,skins,breakable,hooks,theorems,fitting}
 \tcb@add@library@style{most}{many,listingsutf8,external,magazine,vignette,poster}
-\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,vignette,poster,documentation}
+\tcb@add@library@style{all}{many,minted,listingsutf8,external,magazine,vignette,poster,documentation,xparse}
 
 \ProcessOptions*
 \begingroup\edef\x{\endgroup\noexpand\tcbuselibrary{\tcb@optionlist}}\x
