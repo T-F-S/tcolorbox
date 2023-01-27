@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
+%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2022/06/24 version 5.1.1 text color boxes]
-\def\tcb@version{5.1.1}
+\ProvidesPackage{tcolorbox}[2023/01/27 version 5.1.2pre1 text color boxes]
+\def\tcb@version{5.1.2pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -445,6 +445,8 @@
   halign/center/.code={\let\kvtcb@halignupper=\tcb@raggedcenter@plain},
   halign/justify/.code={\let\kvtcb@halignupper=\@empty},
   halign upper/.style={halign=#1},
+  halign upper code/.store in=\kvtcb@halignupper,
+  halign code/.store in=\kvtcb@halignupper,
   %
   halign lower/.is choice,
   halign lower/flush left/.code={\let\kvtcb@halignlower=\raggedright},
@@ -454,6 +456,7 @@
   halign lower/right/.code={\let\kvtcb@halignlower=\tcb@raggedleft@plain},
   halign lower/center/.code={\let\kvtcb@halignlower=\tcb@raggedcenter@plain},
   halign lower/justify/.code={\let\kvtcb@halignlower=\@empty},
+  halign lower code/.store in=\kvtcb@halignlower,
   %
   halign title/.is choice,
   halign title/flush left/.code={\let\kvtcb@haligntitle=\raggedright},
@@ -463,6 +466,7 @@
   halign title/right/.code={\let\kvtcb@haligntitle=\tcb@raggedleft@plain},
   halign title/center/.code={\let\kvtcb@haligntitle=\tcb@raggedcenter@plain},
   halign title/justify/.code={\let\kvtcb@haligntitle=\@empty},
+  halign title code/.store in=\kvtcb@haligntitle,
   %
   valign scale limit/.store in=\kvtcb@valignscalelimit,
   valign scale limit=1.1,
@@ -819,6 +823,7 @@
   options@for/.code={\letcs\tcb@new@colop{tcb@opt@#1}\pgfkeysalsofrom\tcb@new@colop},
   list entry/.store in=\kvtcb@listentry,
   list text/.style={list entry={\protect\numberline{\thetcbcounter}{\ignorespaces #1}}},
+  short title/.style={list text={#1},nameref={#1}},
   title filled/.is if=tcb@titlefilled,%
   @colbacktitle/.colorlet=tcbcolbacktitle,
   colbacktitle/.style={title filled,@colbacktitle={#1}},
@@ -906,9 +911,9 @@
 
 \def\tcb@parbox@true@indent{}%
 \def\tcb@parbox@false@indent{%
-  \preto\kvtcb@before@title{\noindent}%
-  \preto\kvtcb@before@upper{\noindent}%
-  \preto\kvtcb@before@lower{\noindent}%
+  \preto\kvtcb@before@title{\vspace{-\parskip}\noindent}%
+  \preto\kvtcb@before@upper{\vspace{-\parskip}\noindent}%
+  \preto\kvtcb@before@lower{\vspace{-\parskip}\noindent}%
 }%
 
 \let\tcb@parboxrestore=\@parboxrestore
@@ -937,7 +942,10 @@
 \let\tcb@minipage=\tcb@minipage@bottom
 
 % lrbox with integrated minipage
-\def\tcb@lrbox#1#2{%
+% #1 box
+% #2 width
+% #3 color (for color stack)
+\def\tcb@lrbox#1#2#3{%
   \edef\reserved@a{%
     \endgroup
     \setbox#1\hbox{%
@@ -945,20 +953,22 @@
     \def\noexpand\@currenvir{\@currenvir}%
     \def\noexpand\@currenvline{\on@line}}%
   \reserved@a
-    \@endpefalse
+    \@endpefalse%
     \let\tcbbreak\par%
     \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
-    \tcb@minipage#2\tcb@hyph@fix\ignorespaces}
+    \tcb@minipage{#2}%
+    \color{#3}%
+    \tcb@hyph@fix\ignorespaces}
 \let\endtcb@lrbox=\endminipage
 
 \let\tcb@savebox=\tcb@lrbox
 \let\endtcb@savebox=\endtcb@lrbox
 
 \def\tcb@saveupperbox{%
-\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\tcb@lua@color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper}
+\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper}
 
 \def\tcb@savelowerbox{%
-\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}\tcb@lua@color{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}
+\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}
 
 
 % counter for float
@@ -974,11 +984,11 @@
   \tcbset{autoparskip/.style=noparskip}%
 \fi%
 \tcb@use@autoparskip%
-\ifx\luacolorProcessBox\@undefined%
-  \def\tcb@lua@color#1{}%
-\else%
-  \def\tcb@lua@color#1{\color{#1}}%
-\fi%
+%\ifx\luacolorProcessBox\@undefined%
+%  \def\tcb@lua@color#1{}%
+%\else%
+%  \def\tcb@lua@color#1{\color{#1}}%
+%\fi%
 }
 
 \long\def\tcb@colorbox{%
@@ -998,7 +1008,7 @@
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@lefttitle+\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\tcb@lua@color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
   \fi%
 }
 
@@ -1067,24 +1077,12 @@
   \sbox{\tcb@lowerbox}{\color{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower\tcb@sbs@text@right\tcb@insert@after@lower}%
 }
 
-\def\tcb@set@color#1{%
-  \edef\current@color{\@nameuse{\string\color@#1}}%
-  \colorlet{.}{#1}%
-}
-
-\def\tcb@reset@color{%
-  \colorlet{.}{tcbcol@origin}%
-  \edef\current@color{\@nameuse{\string\color@tcbcol@origin}}%
-}
-
 \def\tcb@set@@upper@and@lower{%
-  \colorlet{tcbcol@origin}{.}%
   \let\tcb@insert@after@part=\tcb@insert@after@upper%
   % switch for lower box
   \def\tcblower{%
     \tcb@insert@after@part%
     \end{tcb@savebox}%
-    \tcb@set@color{tcbcollower}%
     \unless\iftcb@sidebyside%
       \tcbdimto\tcb@w@lower{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@leftlower-\kvtcb@rightlower}%
     \fi%
@@ -1099,7 +1097,6 @@
     \fi%
     \tcb@startbox}%
   % start of upper box
-  \tcb@set@color{tcbcolupper}%
   \ifx\kvtcb@saveupperto\@empty%
     \let\tcb@startbox\tcb@saveupperbox%
     \let\endtcolorbox\tcb@endboxanddraw%
@@ -1321,7 +1318,6 @@
 \def\tcb@endboxanddraw{%
   \tcb@insert@after@part%
   \end{tcb@savebox}%
-  \tcb@reset@color%
   \tcb@draw@color@box%
   \tcb@finalize@environment%
 }
@@ -1804,7 +1800,7 @@
 }
 
 \def\tcb@sbs@mix{%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper@real}%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper@real}{tcbcolupper}%
     \tcb@box@align{\tcb@upperbox}%
     \iftcb@uppervisible%
       \tcbdimto{\tcb@temp@wd}{\tcb@w@upper-\wd\tcb@upperbox+\kvtcb@sbs@gap}%
@@ -1957,13 +1953,11 @@
 
 \long\def\tcbox@inner@hbox#1{%
   \tcb@set@@phantom%
-  \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcolupper}%
   \sbox\tcb@upperbox{\tcb@embed@tcbox{%
     \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
     \@parboxrestore%
-    \tcb@lua@color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
-  \tcb@reset@color%
+    \color{tcbcolupper}%
+    \kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper}}%
   \tcbdimto\tcb@val@raisebase{\the\dimexpr\dp\tcb@upperbox+\kvtcb@bottom+\kvtcb@boxsep+\kvtcb@bottom@rule@stand+\kvtcb@bbbottom@stand\relax}%
   \tcbdimto\kvtcb@width{\wd\tcb@upperbox+\kvtcb@left@rule+\kvtcb@leftupper+\kvtcb@boxsep*2+\kvtcb@rightupper+\kvtcb@right@rule}%
   \tcb@hasLowerfalse%
@@ -1977,10 +1971,7 @@
   \tcb@set@@phantom%
   \tcb@set@@title%
   \tcb@set@@dimensions%
-  \colorlet{tcbcol@origin}{.}%
-  \tcb@set@color{tcbcolupper}%
-  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}\tcb@lua@color{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper\end{tcb@savebox}%
-  \tcb@reset@color%
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper\end{tcb@savebox}%
   \tcb@hasLowerfalse%
   \tcb@draw@color@box%
 }
@@ -2135,16 +2126,23 @@
 
 \ExplSyntaxOn
 
+\bool_new:N \l__tcobox_prevent_init_overwrite_bool
+
 \cs_new:Npn \__tcobox_process_newtcolorbox:nn #1#2
   {
-    \edef\tcb@new@boxname{#2}
-    \def\tcb@new@colopt{}
-    \tl_if_novalue:nF { #1 }
+    \bool_lazy_and:nnF
+      { \l__tcobox_prevent_init_overwrite_bool }
+      { \cs_if_exist_p:c { tcb@opt@#2 } }
       {
-        \tcb@proc@options@init{#1}{#2}
+        \edef\tcb@new@boxname{#2}
+        \def\tcb@new@colopt{}
+        \tl_if_novalue:nF { #1 }
+          {
+            \tcb@proc@options@init{#1}{#2}
+          }
+        \preto\tcb@new@colopt{savedelimiter=#2}
+        \exp_args:Nc \cs_set_eq:NN { tcb@opt@#2 } \tcb@new@colopt
       }
-    \preto\tcb@new@colopt{savedelimiter=#2}
-    \exp_args:Nc \cs_set_eq:NN { tcb@opt@#2 } \tcb@new@colopt
   }
 
 
@@ -2156,7 +2154,7 @@
   }
 
 
-\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +o m o +o +m }
+\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +o >{\TrimSpaces} m o +o +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \tl_if_novalue:nTF { #4 }
@@ -2175,33 +2173,39 @@
   }
 \NewDocumentCommand \newtcolorbox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_tcolorbox:w \newenvironment
   }
 \NewDocumentCommand \renewtcolorbox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_tcolorbox:w \renewenvironment
   }
 
 
-\NewDocumentCommand \__tcobox_new_TColorBox:w { m +o m +m +m }
+\NewDocumentCommand \__tcobox_new_TColorBox:w { m +o >{\TrimSpaces} m +m +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     #1 { #3 }{ #4 }{ \tcolorbox[#5,options@for=#3] }{ \endtcolorbox }
   }
 \NewDocumentCommand \DeclareTColorBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TColorBox:w \DeclareDocumentEnvironment
   }
 \NewDocumentCommand \NewTColorBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TColorBox:w \NewDocumentEnvironment
   }
 \NewDocumentCommand \RenewTColorBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TColorBox:w \RenewDocumentEnvironment
   }
 \NewDocumentCommand \ProvideTColorBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TColorBox:w \ProvideDocumentEnvironment
   }
 
@@ -2218,18 +2222,22 @@
   }
 \NewDocumentCommand \DeclareTotalTColorBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTColorBox:w \DeclareDocumentCommand
   }
 \NewDocumentCommand \NewTotalTColorBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTColorBox:w \NewDocumentCommand
   }
 \NewDocumentCommand \RenewTotalTColorBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTColorBox:w \RenewDocumentCommand
   }
 \NewDocumentCommand \ProvideTotalTColorBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTColorBox:w \ProvideDocumentCommand
   }
 
@@ -2258,10 +2266,12 @@
   }
 \NewDocumentCommand \newtcbox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_tcbox_i:w \newcommand
   }
 \NewDocumentCommand \renewtcbox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_tcbox_i:w \renewcommand
   }
 
@@ -2278,18 +2288,22 @@
   }
 \NewDocumentCommand \DeclareTCBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBox:w \DeclareDocumentCommand
   }
 \NewDocumentCommand \NewTCBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBox:w \NewDocumentCommand
   }
 \NewDocumentCommand \RenewTCBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBox:w \RenewDocumentCommand
   }
 \NewDocumentCommand \ProvideTCBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBox:w \ProvideDocumentCommand
   }
 
@@ -2306,18 +2320,22 @@
   }
 \NewDocumentCommand \DeclareTotalTCBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBox:w \DeclareDocumentCommand
   }
 \NewDocumentCommand \NewTotalTCBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBox:w \NewDocumentCommand
   }
 \NewDocumentCommand \RenewTotalTCBox { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBox:w \RenewDocumentCommand
   }
 \NewDocumentCommand \ProvideTotalTCBox { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBox:w \ProvideDocumentCommand
   }
 

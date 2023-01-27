@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
+%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{5.1.1}
+\tcb@set@library@version{5.1.2pre1}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -69,7 +69,10 @@
 \def\tcb@@break{\par\xleaders\vbox{\rule{0pt}{2\textheight}}\vskip 2\textheight\par}
 
 
-\def\tcb@vbox#1#2{%
+% #1 box
+% #2 width
+% #3 color (for color stack)
+\def\tcb@vbox#1#2#3{%
   \edef\reserved@a{%
     \endgroup%
     \setbox#1\vbox{\hsize=#2%
@@ -81,9 +84,11 @@
   \let\tcbbreak\tcb@@break%
   \iftcb@usecolorstack%
     \pdfcolSwitchStack{tcb@breakable}%
-    \pdfcolSetCurrentColor%
   \fi%
   \color@begingroup%
+  %\iftcb@usecolorstack%---------------------------
+  %  \color{#3}%---------------------------
+  %\fi%---------------------------
   \textwidth\hsize%
   \columnwidth\hsize%
   \csname tcb@parboxrestore@\kvtcb@parbox\endcsname%
@@ -92,7 +97,9 @@
   \c@mpfootnote\z@%
   \let\@footnotetext\@mpfootnotetext%
   \let\@listdepth\@mplistdepth \@mplistdepth\z@%
-  \@setminipage\tcb@hyph@fix%
+  \@setminipage%
+  \color{#3}%---------------------------
+  \tcb@hyph@fix%
   \let\tcb@drawcolorbox\tcb@drawcolorbox@standalone%
   \let\FN@pp@footnote\@empty% disable perpage mode of 'footmisc' package
 }
@@ -178,7 +185,7 @@
   \else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\tcb@innerwidth-\kvtcb@boxsep*2-\kvtcb@lefttitle-\kvtcb@righttitle}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\tcb@extras@followingtitle\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@followingtitle\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\tcb@extras@followingtitle\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@followingtitle\end{tcb@savebox}%
     \tcbdimto\tcb@h@title{\ht\tcb@titlebox+\dp\tcb@titlebox}%
     \tcbdimto\tcb@h@padtitle{\kvtcb@title@rule+\kvtcb@boxsep*2+\kvtcb@toptitle+\kvtcb@bottomtitle+\tcb@h@title}%
   \fi%

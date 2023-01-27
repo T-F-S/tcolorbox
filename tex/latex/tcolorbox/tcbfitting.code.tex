@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
+%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.1}
+\tcb@set@library@version{5.1.2pre1}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -240,7 +240,7 @@
 \def\tcb@fit@@box{%
   \iftcb@hasTitle%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
     \tcbdimto\tcb@h@titletotal{\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+(\kvtcb@boxsep)*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
   \else%
     \let\tcb@h@titletotal=\tcb@zpt%
@@ -266,8 +266,8 @@
   %
   \def\tcb@fit@@boxsave##1{%
     \tcbdimto\tcb@innerwidth{\kvtcb@width-\kvtcb@left@rule-\kvtcb@right@rule}%
-    \begin{tcb@savebox}{\tcb@upperbox}{##1}%
-      \color{tcbcolupper}\kvtcb@fontupper\fontsize{\tcbfitdim}{\tcb@fit@@line}\selectfont%
+    \begin{tcb@savebox}{\tcb@upperbox}{##1}{tcbcolupper}%
+      \kvtcb@fontupper\fontsize{\tcbfitdim}{\tcb@fit@@line}\selectfont%
       \kvtcb@halignupper\tcb@insert@before@upper#1\tcb@insert@after@upper%
     \end{tcb@savebox}%
     \advance\count@ 1\relax%
@@ -399,10 +399,12 @@
   }
 \NewDocumentCommand \newtcboxfit { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_tcboxfit_i:w \newcommand
   }
 \NewDocumentCommand \renewtcboxfit { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_tcboxfit_i:w \renewcommand
   }
 
@@ -419,18 +421,22 @@
   }
 \NewDocumentCommand \DeclareTCBoxFit { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBoxFit:w \DeclareDocumentCommand
   }
 \NewDocumentCommand \NewTCBoxFit { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBoxFit:w \NewDocumentCommand
   }
 \NewDocumentCommand \RenewTCBoxFit { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBoxFit:w \RewewDocumentCommand
   }
 \NewDocumentCommand \ProvideTCBoxFit { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TCBoxFit:w \ProvideDocumentCommand
   }
 
@@ -447,18 +453,22 @@
   }
 \NewDocumentCommand \DeclareTotalTCBoxFit { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBoxFit:w \DeclareDocumentCommand
   }
 \NewDocumentCommand \NewTotalTCBoxFit { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBoxFit:w \NewDocumentCommand
   }
 \NewDocumentCommand \RenewTotalTCBoxFit { }
   {
+    \bool_set_false:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBoxFit:w \RewewDocumentCommand
   }
 \NewDocumentCommand \ProvideTotalTCBoxFit { }
   {
+    \bool_set_true:N \l__tcobox_prevent_init_overwrite_bool
     \__tcobox_new_TotalTCBoxFit:w \ProvideDocumentCommand
   }
 

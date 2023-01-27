@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
+%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
 %% tcbhooks.code.tex: Code for adding hooks
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.1}
+\tcb@set@library@version{5.1.2pre1}
 
 \tcbset{%
   before upper app/.code={\appto\kvtcb@before@upper{#1}},%
@@ -112,18 +112,23 @@
   finish middle and last pre/.style={finish middle pre={#1},finish last pre={#1}},%
   finish first and middle pre/.style={finish first pre={#1},finish middle pre={#1}},%
   %
-  watermark tikz app/.style={overlay app={\tcb@drawspec@watermark@tikz{#1}}},
-  watermark tikz pre/.style={overlay pre={\tcb@drawspec@watermark@tikz{#1}}},
-  watermark tikz app on/.style args={#1 is #2}{overlay #1 app={\tcb@drawspec@watermark@tikz{#2}}},%
-  watermark tikz pre on/.style args={#1 is #2}{overlay #1 pre={\tcb@drawspec@watermark@tikz{#2}}},%
-  watermark graphics app/.style={overlay app={\tcb@drawspec@watermark@graphics{#1}}},
-  watermark graphics pre/.style={overlay pre={\tcb@drawspec@watermark@graphics{#1}}},
-  watermark graphics app on/.style args={#1 is #2}{overlay #1 app={\tcb@drawspec@watermark@graphics{#2}}},
-  watermark graphics pre on/.style args={#1 is #2}{overlay #1 pre={\tcb@drawspec@watermark@graphics{#2}}},
-  watermark text app/.style={overlay app={\tcb@drawspec@watermark@text{#1}}},
-  watermark text pre/.style={overlay pre={\tcb@drawspec@watermark@text{#1}}},
-  watermark text app on/.style args={#1 is #2}{overlay #1 app={\tcb@drawspec@watermark@text{#2}}},
-  watermark text pre on/.style args={#1 is #2}{overlay #1 pre={\tcb@drawspec@watermark@text{#2}}},
+  watermark@overlay app/.style={overlay app={\tcb@drawspec@watermark{#1}}},
+  watermark@overlay pre/.style={overlay pre={\tcb@drawspec@watermark{#1}}},
+  watermark@overlay@on app/.style n args={2}{overlay #1 app={\tcb@drawspec@watermark{#2}}},
+  watermark@overlay@on pre/.style n args={2}{overlay #1 pred={\tcb@drawspec@watermark{#2}}},
+  %
+  watermark tikz app/.style={watermark@overlay app={fill@picture={#1}}},
+  watermark tikz pre/.style={watermark@overlay pre={fill@picture={#1}}},
+  watermark tikz app on/.style args={#1 is #2}{watermark@overlay@on app={#1}{fill@picture={#2}}},
+  watermark tikz pre on/.style args={#1 is #2}{watermark@overlay@on pre={#1}{fill@picture={#2}}},
+  watermark graphics app/.style={watermark@overlay app={fill@image={#1}}},
+  watermark graphics pre/.style={watermark@overlay pre={fill@image={#1}}},
+  watermark graphics app on/.style args={#1 is #2}{watermark@overlay@on app={#1}{fill@image={#2}}},
+  watermark graphics pre on/.style args={#1 is #2}{watermark@overlay@on pre={#1}{fill@image={#2}}},
+  watermark text app/.style={watermark@overlay app={fill@picture={\node[inner sep=0pt,align=flush center]{#1};}}},
+  watermark text pre/.style={watermark@overlay pre={fill@picture={\node[inner sep=0pt,align=flush center]{#1};}}},
+  watermark text app on/.style args={#1 is #2}{watermark@overlay@on app={#1}{fill@picture={\node[inner sep=0pt,align=flush center]{#2};}}},
+  watermark text pre on/.style args={#1 is #2}{watermark@overlay@on pre={#1}{fill@picture={\node[inner sep=0pt,align=flush center]{#2};}}},
   %
   minted options app/.code={\appto\kvtcb@minted@options{,#1}},
   minted options pre/.code={\preto\kvtcb@minted@options{#1,}},
