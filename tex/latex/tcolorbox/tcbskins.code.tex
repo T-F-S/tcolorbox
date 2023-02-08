@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
+%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{5.1.2pre1}
+\tcb@set@library@version{5.1.2pre2}
 
 \RequirePackage{tikz}[2010/10/13]
 \RequirePackage{tikzfill.image}
@@ -1135,7 +1135,7 @@
       \colorlet{tcbtranscol@back}{tcbcolbacktitle}%
       \let\tcb@trans@skin@current\kvtcb@skin@current%
       \let\tcb@trans@boxedstyle\kvtcb@style@boxedtitle%
-      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
+      \setbox\tcb@titlebox\color@hbox\bgroup\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@before@boxedtitle\kvtcb@haligntitle\tcb@insert@before@title\tcbtitletext\tcb@insert@after@title\kvtcb@after@boxedtitle\egroup\color@endbox%
       \setbox\tcb@titlebox\color@hbox\tcbox[skin=\tcb@trans@skin@current,colframe=tcbtranscol@frame,colback=tcbtranscol@back,%
           code={\pgfkeysalsofrom\tcb@trans@boxedsize\pgfkeysalsofrom\tcb@trans@boxedstyle%
             \ifcase#6
@@ -1684,106 +1684,7 @@
   draftmode/false/.code=\tcbstopdraftmode,%
 }
 
-\newbox\tcb@waterbox
 
-\def\tcb@include@graphics{%
-  \let\tcb@graphics@options\kvtcb@graphics@options%
-  \ifnum\kvtcb@graphics@orientation>-1\relax%
-    \setbox\tcb@waterbox=\color@hbox\begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options]}\x{\imagepath}\color@endbox%
-    \ifcase\kvtcb@graphics@orientation\relax%
-      \ifdim\wd\tcb@waterbox<\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
-        \appto\tcb@graphics@options{,angle=90}%
-      \fi%
-    \or%
-      \ifdim\wd\tcb@waterbox<\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
-        \appto\tcb@graphics@options{,angle=-90}%
-      \fi%
-    \or%
-      \ifdim\wd\tcb@waterbox>\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
-        \appto\tcb@graphics@options{,angle=90}%
-      \fi%
-    \or%
-      \ifdim\wd\tcb@waterbox>\dimexpr\ht\tcb@waterbox+\dp\tcb@waterbox\relax%
-        \appto\tcb@graphics@options{,angle=-90}%
-      \fi%
-    \fi%
-  \fi%
-  \ifdefstring{\kvtcb@capture}{hbox}{%
-    \tcbox{%
-      \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options]}%
-      \x{\imagepath}%
-    }%
-  }{%
-    \iftcb@fixedheight%
-      \begin{tcolorbox}%
-        \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options,width=\linewidth,height=\tcbtextheight,keepaspectratio]}%
-        \x{\imagepath}%
-      \end{tcolorbox}%
-    \else%
-      \ifdefempty\tcb@height@adjust{%
-        \begin{tcolorbox}%
-          \begingroup\edef\x{\endgroup\noexpand\includegraphics[\tcb@graphics@options,width=\linewidth]}%
-          \x{\imagepath}%
-        \end{tcolorbox}%
-      }{% height fill
-        \begin{tcolorbox}[underlay={%
-          \begin{tcbclipinterior}%
-          \path[fill zoom image*={\tcb@graphics@options}{\imagepath}]
-            ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south west) rectangle
-            ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north east);
-          \end{tcbclipinterior}%
-          }]%
-        \end{tcolorbox}%
-      }%
-    \fi%
-  }%
-}
-
-\def\tcb@scanfilename#1#2{%
-  \begingroup%
-    \everyeof{\noexpand}%
-    \endlinechar -1%
-    \catcode`\_=11%
-    \catcode`\~=11%
-    \edef\x{\scantokens\expandafter{#2}}%
-  \expandafter\endgroup%
-  \expandafter\def\expandafter #1\expandafter{\x}%
-}%
-
-
-\def\tcb@include@graphics@preparefile#1{%
-  \tcb@scanfilename\tcb@temp{#1}%
-  \filename@parse{\tcb@temp}%
-  \ifx\filename@ext\relax%
-    \let\imagename\filename@base%
-  \else%
-    \def\imagename{\filename@base\Gin@sepdefault\filename@ext}%
-  \fi%
-  \ifdefined\grffile@Ginclude@graphics%
-    % grffile package loaded
-    \ifx\kvtcb@graphics@directory\@empty%
-      \def\imagepath{#1}%
-    \else%
-      \def\imagepath{\kvtcb@graphics@directory/#1}%
-    \fi%
-  \else%
-    \ifx\kvtcb@graphics@directory\@empty%
-      \edef\imagepath{#1}%
-    \else%
-      \edef\imagepath{\kvtcb@graphics@directory/#1}%
-    \fi%
-  \fi%
-}
-
-\newcommand{\tcbincludegraphics}[2][]{%
-  \begingroup%
-  \tcb@layer@pushup%
-  \tcb@apply@box@options{enhanced,clip upper=true,valign=center,center upper,#1}%
-  \tcb@include@graphics@preparefile{#2}%
-  \edef\imagepage{1}%
-  \tcb@include@graphics%
-  \endgroup%
-}
 
 \def\tcb@set@pdfpages#1#2{%
   \IfFileExists{#2}{%
@@ -1811,19 +1712,157 @@
   \relax%
 }
 
-\newcommand{\tcbincludepdf}[2][]{%
-  \tcb@include@graphics@preparefile{#2}%
-  \tcb@set@pdfpages\pdfpages{\imagepath}%
-  \foreach \imagepage in \kvtcb@graphics@pages%
-  {%
-    \begingroup%
-    \tcb@layer@pushup%
-    \tcb@apply@box@options{enhanced,clip upper=true,valign=center,center upper,#1}%
-    \appto\kvtcb@graphics@options{,page=\imagepage}%
-    \tcb@include@graphics%
-    \endgroup%
-  }%
+
+\ExplSyntaxOn
+
+\tl_new:N \l__tcobox_graphics_options_tl
+
+
+\cs_new:Npn \__tcobox_include_graphics:nn #1#2
+  {
+    \tl_set:Nn \l_tmpa_tl { \includegraphics }
+    \tl_put_right:Nx \l_tmpa_tl { [#1] }
+    \l_tmpa_tl {#2}
+  }
+
+
+\cs_new:Npn \__tcobox_include_graphics:
+  {
+    \tl_set_eq:NN \l__tcobox_graphics_options_tl \kvtcb@graphics@options
+
+    \int_compare:nNnT \kvtcb@graphics@orientation > {-1}
+      {
+        \hbox_set:Nn \l_tmpa_box
+          {
+            \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl }{ \imagepath }
+          }
+        \if_case:w \kvtcb@graphics@orientation
+          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} < {\box_ht_plus_dp:N \l_tmpa_box}
+            {
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=90}
+            }
+        \or:
+          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} < {\box_ht_plus_dp:N \l_tmpa_box}
+            {
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=-90}
+            }
+        \or:
+          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} > {\box_ht_plus_dp:N \l_tmpa_box}
+            {
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=90}
+            }
+        \or:
+          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} > {\box_ht_plus_dp:N \l_tmpa_box}
+            {
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=-90}
+            }
+        \fi:
+      }
+
+    \tl_if_eq:NnTF \kvtcb@capture {hbox}
+      {
+        \tcbox
+          {
+            \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl }{ \imagepath }
+          }
+      }
+      {
+        \legacy_if:nTF {tcb@fixedheight}
+          {
+            \begin{tcolorbox}
+              \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl,width=\linewidth,height=\tcbtextheight,keepaspectratio }{ \imagepath }
+          \end{tcolorbox}
+          }
+          {
+            \tl_if_empty:NTF \tcb@height@adjust
+            {
+              \begin{tcolorbox}
+                \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl,width=\linewidth }{ \imagepath }
+              \end{tcolorbox}%
+            }{% height fill
+              \begin{tcolorbox}[
+                underlay=
+                {
+                  \begin{tcbclipinterior}
+                  \path[fill~zoom~image*={\l__tcobox_graphics_options_tl}{\imagepath}]
+                    ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south~west)~rectangle~
+                    ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north~east);
+                  \end{tcbclipinterior}
+                }]
+              \end{tcolorbox}
+            }
+          }
+      }
+  }
+
+
+\cs_new:Npn \__tcobox_include_graphics_preparefile:n #1
+  {
+    \file_parse_full_name:nNNN {#1} \l_tmpa_tl \imagename \l_tmpb_tl
+    \tl_put_right:NV \imagename \l_tmpb_tl
+    \tl_set_eq:NN \imagepath \imagename
+    \tl_if_empty:NF \l_tmpa_tl
+      {
+        \tl_put_left:Nn \imagepath {/}
+        \tl_if_eq:NnF \l_tmpa_tl {/}
+          {
+            \tl_put_left:NV \imagepath \l_tmpa_tl
+          }
+      }
+    \tl_if_empty:NF \kvtcb@graphics@directory
+      {
+        \tl_put_left:Nn \imagepath {/}
+        \tl_if_eq:NnF \kvtcb@graphics@directory {/}
+          {
+            \tl_put_left:NV \imagepath \kvtcb@graphics@directory
+          }
+      }
+    \tl_set_rescan:Nno \imagename
+      {
+        \char_set_catcode_letter:N \_
+        \char_set_catcode_letter:N \~
+        \char_set_catcode_letter:N \{
+        \char_set_catcode_letter:N \}
+        \char_set_catcode_letter:N \$
+        \char_set_catcode_letter:N \^
+        \char_set_catcode_letter:N \#
+        \char_set_catcode_letter:N \%
+      }
+      {
+        \imagename
+      }
+  }
+
+
+\NewDocumentCommand \tcbincludegraphics { +O{} m }
+  {
+    \group_begin:
+    \tcb@layer@pushup
+    \tcb@apply@box@options{enhanced,clip~upper=true,valign=center,center~upper,#1}
+    \__tcobox_include_graphics_preparefile:n {#2}
+    \cs_set:Npn \imagepage {1}
+    \__tcobox_include_graphics:
+    \group_end:
+  }
+
+
+\NewDocumentCommand \tcbincludepdf { +O{} m }
+  {
+    \__tcobox_include_graphics_preparefile:n {#2}
+    \tcb@set@pdfpages\pdfpages{\imagepath}
+    \foreach~\imagepage~in~\kvtcb@graphics@pages
+    {
+      \group_begin:
+      \tcb@layer@pushup
+      \tcb@apply@box@options{enhanced,clip~upper=true,valign=center,center~upper,#1}
+      \tl_put_right:Nn \kvtcb@graphics@options {,page=\imagepage}
+      \__tcobox_include_graphics:
+      \group_end:
+    }
 }
+
+\ExplSyntaxOff
+
 
 \tcbset{%
   graphics options/.store in=\kvtcb@graphics@options,

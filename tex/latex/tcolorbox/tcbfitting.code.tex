@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
+%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.2pre1}
+\tcb@set@library@version{5.1.2pre2}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -240,7 +240,7 @@
 \def\tcb@fit@@box{%
   \iftcb@hasTitle%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule)-(\kvtcb@right@rule)-(\kvtcb@boxsep)*2-(\kvtcb@lefttitle)-(\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\tcb@insert@before@title\kvtcb@title\tcb@insert@after@title\end{tcb@savebox}%
     \tcbdimto\tcb@h@titletotal{\ht\tcb@titlebox+\dp\tcb@titlebox+\kvtcb@title@rule+(\kvtcb@boxsep)*2+\kvtcb@toptitle+\kvtcb@bottomtitle}%
   \else%
     \let\tcb@h@titletotal=\tcb@zpt%

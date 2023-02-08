@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre1 (2023/01/27)
+%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/01/27 version 5.1.2pre1 text color boxes]
-\def\tcb@version{5.1.2pre1}
+\ProvidesPackage{tcolorbox}[2023/02/08 version 5.1.2pre2 text color boxes]
+\def\tcb@version{5.1.2pre2}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -142,7 +142,7 @@
 
 
 \newcommand\tcbtitle{\ifx\tcbtitletext\@empty\else%
-  \leavevmode{\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\tcbtitletext\kvtcb@after@title}\fi}
+  \leavevmode{\color{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\tcb@insert@before@title\tcbtitletext\tcb@insert@after@title}\fi}
 
 \def\tcb@detach@title@code@{%
   \let\tcbtitletext\kvtcb@title%
@@ -181,10 +181,16 @@
 \def\tcb@insert@before@upper@noignore{\kvtcb@before@upper}
 \def\tcb@insert@before@lower@ignore{\kvtcb@before@lower\ignorespaces}
 \def\tcb@insert@before@lower@noignore{\kvtcb@before@lower}
+\def\tcb@insert@before@title@ignore{\kvtcb@before@title\ignorespaces}
+\def\tcb@insert@before@title@noignore{\kvtcb@before@title}
+
 \def\tcb@insert@after@upper@unskip{\ifvmode\else\unskip\fi\kvtcb@after@upper}
 \def\tcb@insert@after@upper@nounskip{\kvtcb@after@upper}
 \def\tcb@insert@after@lower@unskip{\ifvmode\else\unskip\fi\kvtcb@after@lower}
 \def\tcb@insert@after@lower@nounskip{\kvtcb@after@lower}
+\def\tcb@insert@after@title@unskip{\ifvmode\else\unskip\fi\kvtcb@after@title}
+\def\tcb@insert@after@title@nounskip{\kvtcb@after@title}
+
 
 \tcbset{%
   title/.store in=\kvtcb@title,
@@ -638,8 +644,6 @@
   no overlay/.style={overlay=},%
   standard/.style={skin=standard},%
   standard jigsaw/.style={skin=standard jigsaw},%
-  before title/.store in=\kvtcb@before@title,%
-  after title/.store in=\kvtcb@after@title,%
   before upper/.code={\def\kvtcb@before@upper{#1}\let\tcb@insert@before@upper\tcb@insert@before@upper@ignore},%
   before upper*/.code={\def\kvtcb@before@upper{#1}\let\tcb@insert@before@upper\tcb@insert@before@upper@noignore},%
   after upper/.code={\def\kvtcb@after@upper{#1}\let\tcb@insert@after@upper\tcb@insert@after@upper@unskip},%
@@ -648,6 +652,10 @@
   before lower*/.code={\def\kvtcb@before@lower{#1}\let\tcb@insert@before@lower\tcb@insert@before@lower@noignore},%
   after lower/.code={\def\kvtcb@after@lower{#1}\let\tcb@insert@after@lower\tcb@insert@after@lower@unskip},%
   after lower*/.code={\def\kvtcb@after@lower{#1}\let\tcb@insert@after@lower\tcb@insert@after@lower@nounskip},%
+  before title/.code={\def\kvtcb@before@title{#1}\let\tcb@insert@before@title\tcb@insert@before@title@ignore},%
+  before title*/.code={\def\kvtcb@before@title{#1}\let\tcb@insert@before@title\tcb@insert@before@title@noignore},%
+  after title/.code={\def\kvtcb@after@title{#1}\let\tcb@insert@after@title\tcb@insert@after@title@unskip},%
+  after title*/.code={\def\kvtcb@after@title{#1}\let\tcb@insert@after@title\tcb@insert@after@title@nounskip},%
   center title/.style={halign title=flush center},%
   center upper/.style={halign upper=flush center},%
   center lower/.style={halign lower=flush center},%
@@ -795,10 +803,7 @@
     \tcbifoddpageoroneside{\tcbset{#1}}{\tcbset{#2}}%
   },
   phantom/.code={\appto\kvtcb@phantom{#1}},
-  step and label/.style 2 args={phantom={\refstepcounter{#1}\tcb@set@label{#2}}},%
   step/.style={phantom={\refstepcounter{#1}}},%
-  label/.style={phantom={\tcb@set@label{#1}}},%
-  phantomlabel/.style={phantom={\ifdefined\phantomsection\phantomsection\fi\tcb@set@label{#1}}},%
   hypertarget/.style={phantom={\ifdefined\hypertarget\Hy@raisedlink{\hypertarget{#1}{}}\fi}},
   bookmark*/.style 2 args={phantom={\ifdefined\bookmark%
     \Hy@raisedlink{\hypertarget{tcb@\thetcolorboxnumber}{}}%
@@ -807,9 +812,6 @@
   bookmark/.style={bookmark*={}{#1}},
   index/.style={phantom={\index{#1}}},%
   index*/.style 2 args={phantom={\index[#1]{#2}}},%
-  nameref/.code={\tcb@gettitle{#1}},%
-  label type/.store in=\kvtcb@label@type,%
-  no label type/.style={label type=},%
   add to list/.style 2 args={phantom={\tcb@addcontentsline{#1}{#2}}},
   nophantom/.code={\def\kvtcb@phantom{}},%
   shield externalize/.is choice,
@@ -878,8 +880,64 @@
 }
 
 \ExplSyntaxOn
+
+\tl_new:N \l__tcobox_kv_labeltype_tl
+\tl_new:N \l__tcobox_kv_zc_countertype_tl
+
+
+\cs_new:Npn \__tcobox_label_label:n #1
+  {
+    \tl_if_empty:nTF \l__tcobox_kv_labeltype_tl
+      {
+        \label{#1}
+      }
+      {
+        \exp_last_unbraced:NNV \label[\l__tcobox_kv_labeltype_tl]{#1}
+      }
+  }
+
+
+\cs_new:Npn \__tcobox_zcsetup_countertype:nn #1#2
+  {
+    \zcsetup{countertype={#1={#2}}}
+  }
+
+
+\cs_new:Npn \__tcobox_label_zlabel:n #1
+  {
+    \quark_if_nil:NF \l__tcobox_kv_zc_countertype_tl
+      {
+        \cs_if_exist:NT \tcbcounter
+          {
+            \exp_args:NVV \__tcobox_zcsetup_countertype:nn \tcbcounter \l__tcobox_kv_zc_countertype_tl
+          }
+      }
+    \zlabel{#1}
+  }
+
+
 \tcbset
   {
+    label          /.style = { phantom={\__tcobox_label:n{#1}} },
+    phantomlabel   /.style = { phantom={\cs_if_exist_use:N\phantomsection\__tcobox_label:n{#1}} },
+    step~and~label /.style~n~args = { 2 }{ phantom={\refstepcounter{#1}\__tcobox_label:n{#2}} },
+    nameref        /.code =
+      {
+        \tcb@gettitle{#1}
+        \cs_if_exist:NT \zref@titleref@setcurrent { \zref@titleref@setcurrent{#1} }
+      },
+    label~type    / .store~in = \l__tcobox_kv_labeltype_tl,
+    no~label~type / .style    = {label~type=},
+    zref-clever~countertype    /.store~in = \l__tcobox_kv_zc_countertype_tl,
+    no~zref-clever~countertype /.style    = { zref-clever~countertype=\q_nil },
+    label~is~label/.code=
+      {
+        \cs_set_eq:NN \__tcobox_label:n \__tcobox_label_label:n
+      },
+    label~is~zlabel/.code=
+      {
+        \cs_set_eq:NN \__tcobox_label:n \__tcobox_label_zlabel:n
+      },
     IfBlankTF/.code~n~args={3}{\tl_if_blank:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
     IfBlankT/.code~n~args={2}{\tl_if_blank:nT{#1}{\pgfkeysalso{#2}}},
     IfBlankF/.code~n~args={2}{\tl_if_blank:nF{#1}{\pgfkeysalso{#2}}},
@@ -900,14 +958,6 @@
 
 \def\kvtcb@beforebox{}
 \def\kvtcb@afterbox{}
-
-\def\tcb@set@label#1{%
-  \ifx\kvtcb@label@type\@empty%
-    \label{#1}%
-  \else%
-    \label[\kvtcb@label@type]{#1}%
-  \fi%
-}
 
 \def\tcb@parbox@true@indent{}%
 \def\tcb@parbox@false@indent{%
@@ -1008,7 +1058,7 @@
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@lefttitle+\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\kvtcb@before@title\kvtcb@title\kvtcb@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\tcb@insert@before@title\kvtcb@title\tcb@insert@after@title\end{tcb@savebox}%
   \fi%
 }
 
@@ -2068,6 +2118,7 @@
 }
 
 \def\tcb@proc@counter@autoanduse#1{%
+  \let\tcb@tcbcounter@savetemp=\tcbcounter%
   \letcs\tcbcounter{tcb@cnt@#1}%
   \ifx\kvtcb@new@numberwithin\@empty%
     \csxdef{the\tcbcounter}{\expandafter\noexpand\kvtcb@new@format{\tcbcounter}}%
@@ -2081,6 +2132,7 @@
   \fi%
   \global\csletcs{thetcb@cnt@#1}{the\tcbcounter}%
   \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\stepcounter{\tcbcounter}\preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}}}%
+  \let\tcbcounter=\tcb@tcbcounter@savetemp%
 }
 
 \def\tcb@proc@counter@auto#1{%
@@ -2574,7 +2626,7 @@
     sidebyside=false,sidebyside align=center,sidebyside gap=10mm,
     sidebyside adapt=none,sidebyside switch=false,%
     lefthand ratio=0.5,check odd page=false,nophantom,
-    list entry=,no label type,
+    list entry=,no label type,no zref-clever countertype,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
     subtitle style=,title filled=false,every float=,ignore nobreak=false,before nobreak=\noindent,
     tcbox width=auto,wrap@environment=false,
@@ -2586,6 +2638,7 @@
 \tcbset{%
   minipage,savedelimiter=tcolorbox,%
   set@extensions@preframe=,set@extensions@postframe=,set@extensions@final=,%
+  label is label,
 }%
 
 \def\tcbsetforeverylayer#1{\tcbset{initialize@reset={#1}}}
