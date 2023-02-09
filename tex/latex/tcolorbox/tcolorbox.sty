@@ -882,12 +882,11 @@
 \ExplSyntaxOn
 
 \tl_new:N \l__tcobox_kv_labeltype_tl
-\tl_new:N \l__tcobox_kv_zc_countertype_tl
 
 
 \cs_new:Npn \__tcobox_label_label:n #1
   {
-    \tl_if_empty:NTF \l__tcobox_kv_labeltype_tl
+    \quark_if_nil:NTF \l__tcobox_kv_labeltype_tl
       {
         \label{#1}
       }
@@ -908,11 +907,11 @@
 
 \cs_new:Npn \__tcobox_label_zlabel:n #1
   {
-    \quark_if_nil:NF \l__tcobox_kv_zc_countertype_tl
+    \quark_if_nil:NF \l__tcobox_kv_labeltype_tl
       {
         \cs_if_exist:NT \tcbcounter
           {
-            \exp_args:NVV \__tcobox_zcsetup_countertype:nn \tcbcounter \l__tcobox_kv_zc_countertype_tl
+            \exp_args:NVV \__tcobox_zcsetup_countertype:nn \tcbcounter \l__tcobox_kv_labeltype_tl
           }
       }
     \cs_if_exist:NT \zlabel
@@ -933,9 +932,7 @@
         \cs_if_exist:NT \zref@titleref@setcurrent { \zref@titleref@setcurrent{#1} }
       },
     label~type    / .store~in = \l__tcobox_kv_labeltype_tl,
-    no~label~type / .style    = {label~type=},
-    zref-clever~countertype    /.store~in = \l__tcobox_kv_zc_countertype_tl,
-    no~zref-clever~countertype /.style    = { zref-clever~countertype=\q_nil },
+    no~label~type / .style    = { label~type=\q_nil },
     label~is~label/.code=
       {
         \cs_set_eq:NN \__tcobox_label:n \__tcobox_label_label:n
@@ -2632,7 +2629,7 @@
     sidebyside=false,sidebyside align=center,sidebyside gap=10mm,
     sidebyside adapt=none,sidebyside switch=false,%
     lefthand ratio=0.5,check odd page=false,nophantom,
-    list entry=,no label type,no zref-clever countertype,
+    list entry=,no label type,
     opacityupper=1.0,opacitylower=1.0,opacitytitle=1.0,opacityframe=1.0,opacityback=1.0,@opacitybacktitle=1.0,
     subtitle style=,title filled=false,every float=,ignore nobreak=false,before nobreak=\noindent,
     tcbox width=auto,wrap@environment=false,
