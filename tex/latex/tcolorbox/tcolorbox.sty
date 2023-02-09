@@ -887,7 +887,7 @@
 
 \cs_new:Npn \__tcobox_label_label:n #1
   {
-    \tl_if_empty:nTF \l__tcobox_kv_labeltype_tl
+    \tl_if_empty:NTF \l__tcobox_kv_labeltype_tl
       {
         \label{#1}
       }
@@ -899,7 +899,10 @@
 
 \cs_new:Npn \__tcobox_zcsetup_countertype:nn #1#2
   {
-    \zcsetup{countertype={#1={#2}}}
+    \cs_if_exist:NT \zcsetup
+      {
+        \zcsetup { countertype={#1={#2}} }
+      }
   }
 
 
@@ -912,7 +915,10 @@
             \exp_args:NVV \__tcobox_zcsetup_countertype:nn \tcbcounter \l__tcobox_kv_zc_countertype_tl
           }
       }
-    \zlabel{#1}
+    \cs_if_exist:NT \zlabel
+      {
+        \zlabel { #1 }
+      }
   }
 
 
