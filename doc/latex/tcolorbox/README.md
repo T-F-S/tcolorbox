@@ -1,7 +1,7 @@
-# The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
+# The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
 
 
-> Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+> Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 
 > This work may be distributed and/or modified under the
 > conditions of the LaTeX Project Public License, either version 1.3
@@ -72,7 +72,7 @@ Alternatively, put the files to their respective locations within the TeX instal
 
 - `tcolorbox.sty`             ->  /tex/latex/tcolorbox
 - `tcbbreakable.code.tex`     ->  /tex/latex/tcolorbox
-- `tcbdocumenation.code.tex`  ->  /tex/latex/tcolorbox
+- `tcbdocumentation.code.tex` ->  /tex/latex/tcolorbox
 - `tcbexternal.code.tex`      ->  /tex/latex/tcolorbox
 - `tcbfitting.code.tex`       ->  /tex/latex/tcolorbox
 - `tcbhooks.code.tex`         ->  /tex/latex/tcolorbox

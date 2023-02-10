@@ -142,22 +142,21 @@ The library is loaded by a package option or inside the preamble by:
 
 \clearpage
 
-\begin{docCommand}{DeclareTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+\begin{docCommand}{NewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
   Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
-  Basically, |\DeclareTCBoxFit| operates like |\DeclareDocumentCommand|. This means,
+  Basically, \refCom{NewTCBoxFit} operates like |\NewDocumentCommand|. This means,
   the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
   The \meta{options} are given to the underlying \refCom{tcboxfit}.\\
   Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
   automatically.\\
   The \meta{init options} allow setting up automatic numbering,
-  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
-  The new command is always created, irrespective of an already existing
-  command with the same name.
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
 
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
 % \usepackage{lipsum}
 
-\DeclareTCBoxFit{\mybox}{ O{} m !o }
+\NewTCBoxFit{\mybox}{ O{} m !o }
  {colback=red!5!white,
   colframe=red!75!black,
   width=#2,height=#2/3*2,
@@ -171,41 +170,41 @@ The library is loaded by a package option or inside the preamble by:
 \end{dispExample*}
 \end{docCommand}
 
-\begin{docCommand}{NewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBoxFit}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
-  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
-\end{docCommand}
-
 \begin{docCommand}{RenewTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  Operates like \refCom{NewTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\NewDocumentCommand|.
   An existing command is redefined.
 \end{docCommand}
 
 \begin{docCommand}{ProvideTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  Operates like \refCom{NewTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\NewDocumentCommand|.
   The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\begin{docCommand}{DeclareTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{NewTCBoxFit}, but based on |\DeclareDocumentCommand| instead of |\NewDocumentCommand|.
+  The new command \texttt{\textbackslash}\meta{name} is always created, irrespective of an already existing
+  command with the same name.
 \end{docCommand}
 
 \clearpage
 
-\begin{docCommand}{DeclareTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+\begin{docCommand}{NewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
   Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
-  In contrast to \refCom{DeclareTCBoxFit}, also the \meta{content} of the |tcboxfit| is specified.\\
-  Basically, |\DeclareTotalTCBoxFit| operates like |\DeclareDocumentCommand|. This means,
+  In contrast to \refCom{NewTCBoxFit}, also the \meta{content} of the |tcboxfit| is specified.\\
+  Basically, \refCom{NewTotalTCBoxFit} operates like |\NewDocumentCommand|. This means,
   the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
   The \meta{options} are given to the underlying \refCom{tcboxfit} which is filled with
   the specified \meta{content}.\\
   Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
   automatically.\\
   The \meta{init options} allow setting up automatic numbering,
-  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
-  The new command is always created, irrespective of an already existing
-  command with the same name.
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
 
 \begin{dispExample}
 % \usepackage{lipsum}
 
-\DeclareTotalTCBoxFit{\multibox}{ O{} m O{10} m }
+\NewTotalTCBoxFit{\multibox}{ O{} m O{10} m }
  {nobeforeafter,colback=red!5!white,colframe=red!75!black,width=#2,height=#2/3*2,
   valign=center,#1}
  { \foreach \n in {1,...,#3} { #4} }
@@ -216,19 +215,20 @@ The library is loaded by a package option or inside the preamble by:
 \end{dispExample}
 \end{docCommand}
 
-\begin{docCommand}{NewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
-  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
-  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
-\end{docCommand}
-
 \begin{docCommand}{RenewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
-  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  Operates like \refCom{NewTotalTCBoxFit}, but based on |\RenewDocumentCommand| instead of |\NewDocumentCommand|.
   An existing command is redefined.
 \end{docCommand}
 
 \begin{docCommand}{ProvideTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
-  Operates like \refCom{DeclareTotalTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  Operates like \refCom{NewTotalTCBoxFit}, but based on |\ProvideDocumentCommand| instead of |\NewDocumentCommand|.
   The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\begin{docCommand}{DeclareTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
+  Operates like \refCom{NewTotalTCBoxFit}, but based on |\DeclareDocumentCommand| instead of |\NewDocumentCommand|.
+  The new command \texttt{\textbackslash}\meta{name} is always created, irrespective of an already existing
+  command with the same name.
 \end{docCommand}
 
 

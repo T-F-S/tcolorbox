@@ -279,20 +279,19 @@ This is my \LaTeX\ box.
 
 \clearpage
 
-\begin{docCommand}{DeclareTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+\begin{docCommand}{NewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
   Creates a new environment \meta{name} based on \refEnv{tcblisting}.\\
-  Basically, |\DeclareTCBListing| operates like |\DeclareDocumentEnvironment|. This means,
+  Basically, \refCom{NewTCBListing} operates like |\NewDocumentEnvironment|. This means,
   the new environment \meta{name} is constructed with the given argument \meta{specification}.
+  An error is issued if \meta{name} has already been defined.
   The \meta{options} are given to the underlying \refEnv{tcblisting}.\\
   Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
   automatically.\\
   The \meta{init options} allow setting up automatic numbering,
-  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
-  The new environment is always created, irrespective of an already existing
-  environment with the same name.
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
 
 \begin{dispExample*}{sbs,lefthand ratio=0.5}
-\DeclareTCBListing{mybox}{ s O{} m }{%
+\NewTCBListing{mybox}{ s O{} m }{%
   colback=red!5!white,
   colframe=red!75!black,
   fonttitle=\bfseries,
@@ -321,19 +320,20 @@ This is my
 \end{dispExample*}
 \end{docCommand}
 
-\begin{docCommand}{NewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBListing}, but based on |\NewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
-  An error is issued if \meta{name} has already been defined.
-\end{docCommand}
-
 \begin{docCommand}{RenewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBListing}, but based on |\RenewDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  Operates like \refCom{NewTCBListing}, but based on |\RenewDocumentEnvironment| instead of |\NewDocumentEnvironment|.
   An existing environment is redefined.
 \end{docCommand}
 
 \begin{docCommand}{ProvideTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBListing}, but based on |\ProvideDocumentEnvironment| instead of |\DeclareDocumentEnvironment|.
+  Operates like \refCom{NewTCBListing}, but based on |\ProvideDocumentEnvironment| instead of |\NewDocumentEnvironment|.
   The environment \meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\begin{docCommand}{DeclareTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
+  Operates like \refCom{NewTCBListing}, but based on |\DeclareDocumentEnvironment| instead of |\NewDocumentEnvironment|.
+  The new environment is always created, irrespective of an already existing
+  environment with the same name.
 \end{docCommand}
 
 \clearpage
@@ -426,19 +426,18 @@ Note that the following code uses \verb+!O{}+ now.
 
 \clearpage
 
-\begin{docCommand}{DeclareTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+\begin{docCommand}{NewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
   Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbinputlisting}.
-  Basically, |\DeclareTCBInputListing| operates like |\DeclareDocumentCommand|. This means,
+  Basically, \refCom{NewTCBInputListing} operates like |\NewDocumentCommand|. This means,
   the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
   The \meta{options} are given to the underlying \refCom{tcbinputlisting}.\\
   The \meta{init options} allow setting up automatic numbering,
-  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.\\
-  The new command is always created, irrespective of an already existing
-  command with the same name.
+  see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
 
 \begin{dispExample}
 % counter from previous example
-\DeclareTCBInputListing[use counter from=pabox]{\mylisting}{ O{} O{red} m }{%
+\NewTCBInputListing[use counter from=pabox]{\mylisting}{ O{} O{red} m }{%
   listing file={#3},title=Listing~\thetcbcounter,
   colback=#2!5!white,colframe=#2!50!black,colbacktitle=#2!75!black,
   fonttitle=\bfseries,listing only,#1}
@@ -448,19 +447,20 @@ Note that the following code uses \verb+!O{}+ now.
 \end{dispExample}
   \end{docCommand}
 
-\begin{docCommand}{NewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBInputListing}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
-  An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
-\end{docCommand}
-
 \begin{docCommand}{RenewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBInputListing}, but based on |\RenewDocumentCommand| instead of |\DeclareDocumentCommand|.
+  Operates like \refCom{NewTCBInputListing}, but based on |\RenewDocumentCommand| instead of |\NewDocumentCommand|.
   An existing command is redefined.
 \end{docCommand}
 
 \begin{docCommand}{ProvideTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
-  Operates like \refCom{DeclareTCBInputListing}, but based on |\ProvideDocumentCommand| instead of |\DeclareDocumentCommand|.
+  Operates like \refCom{NewTCBInputListing}, but based on |\ProvideDocumentCommand| instead of |\NewDocumentCommand|.
   The command \texttt{\textbackslash}\meta{name} is only created if it is not already defined.
+\end{docCommand}
+
+\begin{docCommand}{DeclareTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
+  Operates like \refCom{NewTCBInputListing}, but based on |\DeclareDocumentCommand| instead of |\NewDocumentCommand|.
+  The new command is always created, irrespective of an already existing
+  command with the same name.
 \end{docCommand}
 
 
@@ -655,6 +655,8 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
   \refKey{/tcb/minted options} are \emph{not} used. The intended use is
   inside the preamble to change the default behavior.
   Note that setting \refKey{/tcb/default minted options} also resets \refKey{/tcb/minted options}.
+  Since |minted| \cite{poore:minted} v2.6 set |stripnl=false|, adding
+  |stripnl| could be helpful to remove leading and trailing blank lines.
 \begin{dispListing}
 % inside the preamble
 \tcbset{%

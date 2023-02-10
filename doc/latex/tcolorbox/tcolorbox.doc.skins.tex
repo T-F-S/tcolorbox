@@ -42,8 +42,6 @@ This is the lower part.
 
 \begin{docTcbKey}{frame style image}{=\meta{file name}}{no default, initially unset}
   Fills the frame with an external image referenced by \meta{file name}.
-  For advanced features like blending of a picture with the background,
-  use \refKey{/tcb/frame style} together with \refKey{/tikz/fill stretch image}.
 \begin{exdispExample*}{frame_style_image}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,fonttitle=\bfseries}
 
@@ -60,8 +58,6 @@ This is the lower part.
 \begin{docTcbKey}{frame style tile}{=\marg{graphics options}\marg{file name}}{no default, initially unset}
   Fills the frame with a tile pattern based on an external image referenced by \meta{file name}.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
-  For advanced features like blending of a picture with the background,
-  use \refKey{/tcb/frame style} together with \refKey{/tikz/fill tile image}.
 \begin{exdispExample*}{frame_style_tile}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,coltitle=red!30!black,
   opacityback=0.75,fonttitle=\bfseries}
@@ -119,8 +115,6 @@ This is the lower part.
 \clearpage
 \begin{docTcbKey}{interior style image}{=\meta{file name}}{no default, initially unset}
   Fills the interior with an external image referenced by \meta{file name}.
-  For advanced features like blending of a picture with the background,
-  use \refKey{/tcb/interior style} together with \refKey{/tikz/fill stretch image}.
 \begin{exdispExample*}{interior_style_image}{sbs,lefthand ratio=0.66}
 \tcbset{colframe=red!75!black,fonttitle=\bfseries}
 
@@ -137,9 +131,6 @@ This is the lower part.
 \begin{docTcbKey}{interior style tile}{=\marg{graphics options}\marg{file name}}{no default, initially unset}
   Fills the interior with a tile pattern based on an external image referenced by \meta{file name}.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
-  For advanced features like blending of a picture with the background,
-  use \refKey{/tcb/interior style} together with \refKey{/tikz/fill tile image}.
-
 \begin{exdispExample*}{interior_style_tile}{sbs,lefthand ratio=0.66}
 \tcbset{colframe=red!75!black,fonttitle=\bfseries}
 
@@ -237,9 +228,6 @@ This is the lower part.
 \clearpage
 \begin{docTcbKey}{title style image}{=\meta{file name}}{no default, initially unset}
   Fills the title area with an external image referenced by \meta{file name}.
-  For advanced features like blending of a picture with the background,
-  use \refKey{/tcb/title style} together with \refKey{/tikz/fill stretch image}.
-
 \begin{exdispExample*}{title_style_image}{sbs,lefthand ratio=0.66}
 \tcbset{colback=blue!5!white,colframe=blue!75!black,
   fonttitle=\bfseries}
@@ -257,9 +245,6 @@ This is the lower part.
 \begin{docTcbKey}{title style tile}{=\marg{graphics options}\marg{file name}}{no default, initially unset}
   Fills the title area with a tile pattern based on an external image referenced by \meta{file name}.
   The \meta{graphics options} are given to the underlying \docAuxCommand*{includegraphics} command.
-  For advanced features like blending of a picture with the background,
-  use \refKey{/tcb/title style} together with \refKey{/tikz/fill tile image}.
-
 \begin{exdispExample*}{title_style_tile}{sbs,lefthand ratio=0.66}
 \tcbset{colback=red!5!white,colframe=red!75!black,
   coltitle=blue!50!black,fonttitle=\bfseries}
@@ -1233,7 +1218,7 @@ This example uses a public domain picture from\\
 
 \enlargethispage*{1cm}
 
-\begin{docTcbKey}{watermark zoom}{=\meta{fraction}}{no default, initially |0.75|}
+\begin{docTcbKey}[][doc updated=2022-07-21]{watermark zoom}{=\meta{fraction}}{default |1|, initially |0.75|}
   Sets the zoom value for a watermark. The zoom respects the aspect ratio.
   The value $1.0$ means to fill the whole box until the watermark touches the frame.
 \begin{dispExample}
@@ -1251,13 +1236,13 @@ This example uses a public domain picture from\\
 
 \clearpage
 
-\begin{docTcbKey}{watermark shrink}{=\meta{fraction}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2022-07-21]{watermark shrink}{=\meta{fraction}}{default |1|, initially unset}
   Identically to \refKey{/tcb/watermark zoom}, but the watermark
   never gets enlarged. Thus, the watermark keeps its original size or is shrunk.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{watermark overzoom}{=\meta{fraction}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2022-07-21]{watermark overzoom}{=\meta{fraction}}{default |1|, initially unset}
   Sets the overzoom value for a watermark. The overzoom respects the aspect ratio.
   The value $1.0$ means to fill the whole box until the watermark touches
   all four sides of the frame.
@@ -1284,7 +1269,7 @@ To avoid this optical glitch, just set \refKey{/tcb/pad at break} to any desired
 \end{marker}
 
 \clearpage
-\begin{docTcbKey}{watermark stretch}{=\meta{fraction}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2022-07-21]{watermark stretch}{=\meta{fraction}}{default |1|, initially unset}
   Sets the stretch value for a watermark. The stretch value is applied to width
   and height in relation to the box dimensions. It does not respect the aspect ratio.
   The value $1.0$ means to fill the whole box.
@@ -1333,6 +1318,16 @@ To avoid this optical glitch, just set \refKey{/tcb/pad at break} to any desired
 \end{dispExample}
 \end{docTcbKey}
 
+\begin{marker}
+Removing the clipping should be necessary only in very rare situations. Until
+version 5.1.1 (2022/06/24), theoretically, the watermark could be extended
+over the boundaries of the box without limit. Newer versions restrict the
+watermark to a box scaled 4 times the actual |tcolorbox|.
+If you really need to extend further, you are strongly advised to implement
+this by using \refKey{/tcb/overlay} or \refKey{/tcb/underlay} directly
+where no restrictions apply.
+Note that a watermark is just a special \refKey{/tcb/overlay}.
+\end{marker}
 
 
 \clearpage
@@ -2506,6 +2501,8 @@ The differences between underlays and overlays are:
   then the \meta{graphical code} is added to the box drawing process.
   \refKey{/tcb/underlay} overwrites this key.
 \end{docTcbKey}
+
+\enlargethispage*{1cm}
 
 \begin{docTcbKey}{underlay unbroken}{=\meta{graphical code}}{no default, initially unset}
   If the box is set to be \refKey{/tcb/breakable} but \emph{is not} broken actually

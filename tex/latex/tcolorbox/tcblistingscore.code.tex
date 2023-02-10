@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
+%% The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.2pre2}
+\tcb@set@library@version{6.0.0}
 
 \tcbuselibrary{pro@cessing}
 
@@ -280,7 +280,7 @@
 \ExplSyntaxOn
 
 
-\NewDocumentCommand \__tcobox_new_tcblisting:w { m +o >{\TrimSpaces} m o +o +m }
+\NewDocumentCommand \__tcobox_new_tcblisting:w { m +O{} >{\TrimSpaces} m o +o +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \tl_if_novalue:nTF { #4 }
@@ -309,7 +309,7 @@
   }
 
 
-\NewDocumentCommand \__tcobox_new_TCBListing:w { m +o >{\TrimSpaces} m +m +m }
+\NewDocumentCommand \__tcobox_new_TCBListing:w { m +O{} >{\TrimSpaces} m +m +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     #1 { #3 }{ #4 }{ \tcblisting{#5,options@for=#3} }{ \endtcblisting }
@@ -353,7 +353,7 @@
         }
       }
   }
-\NewDocumentCommand \__tcobox_new_tcbinputlisting_i:w { m +o m }
+\NewDocumentCommand \__tcobox_new_tcbinputlisting_i:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_tcbinputlisting_ii:w #1 {#2} \l_tmpa_tl

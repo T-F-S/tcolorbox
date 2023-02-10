@@ -22,6 +22,80 @@ and this project adheres to
 
 
 
+## [6.0.0] - 2023-02-10
+
+### Added
+- Generalized text alignment options (issue #184)
+    - Option `halign code`
+    - Option `halign upper code`
+    - Option `halign lower code`
+    - Option `halign title code`
+- New Options:
+    - Option `before title*` (equals `before title` until 5.1.1)
+    - Option `after title*`  (equals `after title` until 5.1.1)
+- New option for verbatim output and listings:
+    - Option `verbatim ignore indention at end`
+- Option `short title` (part of issue #186)
+- Support for zref / zref-titleref / zref-clever (issue #206)
+    - Option `label is label`
+    - Option `label is zlabel`
+- Library `theorems`: New theorem generation macros. Generated theorema
+    support an optional short title now (part of issue #186):
+    - `\NewTcbTheorem`
+    - `\RenewTcbTheorem`
+    - `\ProvideTcbTheorem`
+    - `\DeclareTcbTheorem`
+- Library `skins`: Default values added to the options
+    - `watermark zoom`
+    - `watermark shrink`
+    - `watermark overzoom`
+    - `watermark stretch`
+
+### Changed
+- Possible visible change: previous hacks of current color handling are removed (issue #204)
+    and color is now inserted at begin of all internal `\box`es. This inserts a whatsit and can 
+    give additional space at begin of a box which starts with an `itemize` or a similar environment.
+    If necessary, such a space may be removed by a manual `\vspace{-\parsep}`, see issue #123
+    Note: lualatex with package luacolor removes all spacing problems
+- While producing new types of tcolorbox environment by `\newtcolorbox`
+    leading and trailing spaces are now removed from the environment name
+- `before title` appends `\ignorespaces` now
+- `after title` prepends `\unskip` now
+- `tcbverbatimwrite` sets `verbatim ignore indention at end` to remove spaces from  
+    indention of the end of environment
+- `nameref` also sets zref-titleref reference
+- `label type` is used for cleveref and zref-clever
+- The 'TikZ Image and Picture Fill Extensions' are extracted from library `skins`
+    into an `tcolorbox` indendent TikZ library `tikzfill.image` and made part
+    of a new package `tikzfill`. Also, the respective documentation is moved into
+    this new package (issue #185)
+- Library `skins`: The implementation of all watermark options is changed and
+    adapted to `tikzfill`. `clip watermark=false` has now some restrictions (see documentation)
+- Library `skins`: `\tcbincludegraphics` implementation changed to LaTeX3 code
+    (should be more robust; inspired by issue #209)
+- Temporary `\tcbcounter` in `\newtcolorbox[auto counter]` undefined/restored after usage (issue #203)
+- Color setting example of subtitle inside `subtitle style` (issue #189)
+- Documentation: 
+    - The documentation orders now `\New...`, `\Renew...`, `\Provide...`, `\Declare...`.
+        Previously, `\Declare...` was often used first.
+    - `NewTotalTColorBox` cannot be used with `saveto` or `savelowerto` (issue #205)
+    - Replacing `\tikzname` by TikZ in a comment line (issue #207)
+    - `list entry`, `list text`, `add to list` moved from *Counters, Labels, and References*
+        to *Lists of tcolorboxes* for clarification (issue #194)
+
+### Removed
+- Code `\tcb@undo@before` which tried to undo vertical space for a breakable box
+    which does not fit partially on the current page but needs to go to the following page.
+    This code did not achieve the goal and was error-prone (issue #200, hint inside issue #183)
+
+### Fixed
+- `\Provide...` commands and environments process initialization options (issue #187)
+- Default initialization options were not issued, if `\newtcolorbox` was used without options (issue #194)
+- Typo in `\RenewTCBox` and `\RenewTotalTCBox` caused errors (issue #201)
+- Typo in README.md (issue #196)
+
+
+
 ## [5.1.1] - 2022-06-24
 
 ### Changed
@@ -30,7 +104,7 @@ and this project adheres to
 - Slight implemenation change for `\newtcbtheorem` and `\renewtcbtheorem`
 
 ### Fixed
-- Regression bug introduced with v5.0.0 2021-12-16 (issue #182) 
+- Regression bug introduced with v5.0.0 2021-12-16 (issue #182)
     Instead of `beforeafter skip balanced`, `autoparskip` was set as default, restoring
     the situation before v4.40 (with some inconsistencies)
 
@@ -46,20 +120,20 @@ and this project adheres to
     - Option `IfEmptyTF`
     - Option `IfEmptyT`
     - Option `IfEmptyF`
-- Options to insert code at begin and end of floats (issue #172)    
+- Options to insert code at begin and end of floats (issue #172)
     - Option `before float`
     - Option `after float`
     - Option `before float app`
     - Option `before float pre`
     - Option `after float app`
-    - Option `after float pre`    
+    - Option `after float pre`
 - Library `skins`: overlap of lower part for `bicolor`, `tile`, and `beamer`
     made configurable (issue #166) by
     - Option `overlaplower`
     - `\tcboverlaplower`
-- Library `documentation`: package warning, if `imakeidx` is loaded after the 
+- Library `documentation`: package warning, if `imakeidx` is loaded after the
     library is loaded (issue #173)
-- Library `documentation`: gather index LaTeX macros and configure gathering (issue #174) 
+- Library `documentation`: gather index LaTeX macros and configure gathering (issue #174)
     - Option `doclang/commands`
     - Option `index gather colors`
     - Option `index gather commands`
@@ -68,9 +142,9 @@ and this project adheres to
     - Option `index gather keys`
     - Option `index gather lengths`
     - Option `index gather paths`
-    - Option `index gather values`    
-    - Option `index gather all`    
-    - Option `index gather none`    
+    - Option `index gather values`
+    - Option `index gather all`
+    - Option `index gather none`
 
 ### Changed
 - Required latex2e specified `\NeedsTeXFormat{LaTeX2e}[2020/10/01]` (issue #170)
@@ -81,7 +155,7 @@ and this project adheres to
     to libraries `listings` and `fitting` respectively. `xparse` now only loads
     the package `xparse` (issue #180)
 - Internal implementation of all `\new*` commands, e.g. `\newtcolorbox` changed.
-    Note that a missing backlash for `tcbox`-like commands 
+    Note that a missing backlash for `tcbox`-like commands
     e.g. `\newtcbox{mybox}` instead of `\newtcbox{\mybox}` is no longer tolerated.
 
 ### Fixed
@@ -129,10 +203,10 @@ and this project adheres to
 - From now on version numbers adhere to
   [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 - Library `documentation`: warn about not installed `marvosym` and `pifont` (issue #153)
-- Environments wrapped with `\tcolorboxenvironment` are now compatible with 
+- Environments wrapped with `\tcolorboxenvironment` are now compatible with
   all three capture modes `minipage`, `hbox`, and `fitbox` (issue #154)
 - Meaningful error prompts when using unknown capture modes (issue #156)
-- Library `raster`: Inside a raster, `tcbrasternum` can now be 
+- Library `raster`: Inside a raster, `tcbrasternum` can now be
     referenced using `label={mylabel}`, if the box is not numbered otherwise (issue #81 and #119)
 - Library `theorem`: Theorems with empty display name are now possible without glitches
 - Library `theorem`: Major code parts rewritten in expl3 code
@@ -180,7 +254,7 @@ and this project adheres to
 - Documentation: Recommend to use initialization options after loading hyperref (issue #135)
 - Documentation: Warn user about white title color becoming invisible
          for the skin `empty` (issue #118)
-- Documentation: Corrections (issue #127)      
+- Documentation: Corrections (issue #127)
 - Documentation of library `skins` is split into a general part and the catalog of skins
 - Allocate write registers `\tcb@out` and `\tcb@record@out` only when needed (issue #134)
 - `\tcblistof` enhanced to take an optional short title and mimic
@@ -196,7 +270,7 @@ and this project adheres to
 ## [4.42] - 2020-10-09
 
 ### Added
-- Library `breakble`: Option `use color stack`
+- Library `breakable`: Option `use color stack`
 
 ### Changed
 - Due to several problems with the color algorithm introduced with version 4.32,

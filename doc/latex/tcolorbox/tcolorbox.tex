@@ -1,9 +1,9 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 5.1.1 (2022/06/24)
+%% The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2022 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -29,6 +29,12 @@
 \documentclass[a4paper,11pt]{ltxdoc}
 
 
+\RequirePackage{l3benchmark}
+\ExplSyntaxOn
+\AtEndDocument { \benchmark_toc: }
+\benchmark_tic:
+\ExplSyntaxOff
+
 \usepackage{tcolorbox.doc.s_main}
 \tcbEXTERNALIZE
 \usepackage{tcolorbox.doc.s_snippet}
@@ -36,7 +42,7 @@
 \tcbAUXmkdir{external}
 \tcbAUXmkdir{solutions}
 
-%\usepackage{csquotes}
+\usepackage{csquotes}
 \usepackage[style=numeric-comp,sorting=nyt,
   maxnames=8,minnames=8,abbreviate=false,backend=biber,
   bibencoding=latin1,texencoding=ascii]{biblatex}
@@ -45,8 +51,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{5.1.1}%
-\def\datum{2022/06/24}%
+\def\version{6.0.0}%
+\def\datum{2023/02/10}%
 \makeindex
 
 \hypersetup{
@@ -64,8 +70,7 @@
 %\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.theorems}
-
+%\includeonly{tcolorbox.doc.breakable}
 %\hypersetup{colorlinks=false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

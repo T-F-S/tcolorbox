@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
+%% The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{5.1.2pre2}
+\tcb@set@library@version{6.0.0}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -86,9 +86,6 @@
     \pdfcolSwitchStack{tcb@breakable}%
   \fi%
   \color@begingroup%
-  %\iftcb@usecolorstack%---------------------------
-  %  \color{#3}%---------------------------
-  %\fi%---------------------------
   \textwidth\hsize%
   \columnwidth\hsize%
   \csname tcb@parboxrestore@\kvtcb@parbox\endcsname%
@@ -98,7 +95,7 @@
   \let\@footnotetext\@mpfootnotetext%
   \let\@listdepth\@mplistdepth \@mplistdepth\z@%
   \@setminipage%
-  \color{#3}%---------------------------
+  \color{#3}%
   \tcb@hyph@fix%
   \let\tcb@drawcolorbox\tcb@drawcolorbox@standalone%
   \let\FN@pp@footnote\@empty% disable perpage mode of 'footmisc' package
@@ -335,14 +332,12 @@
     \tcb@parfillskip@check%
     \tcb@split@start%
   \endgroup%
-  \color{.}% hack for some special cases
   \ifx\kvtcb@float\@empty\relax%
     \aftergroup\tcb@use@after@lastbox%
   \fi%
 }
 
 \def\tcb@split@pagebreak{%
-  \tcb@undo@before%
   \iftcb@multicol\columnbreak\else\pagebreak\fi%
   \tcb@nobreak@warning%
   \tcb@enlbreak@init\tcb@break@allowedfalse%

@@ -210,7 +210,8 @@ just like any other \refEnv{tcolorbox}.
   coltitle=red!25!black,
   fonttitle=\bfseries,
   subtitle style={boxrule=0.4pt,
-    colback=yellow!50!red!25!white} ]
+    colback=yellow!50!red!25!white,
+    colupper=red!75!gray} ]
   This is a \textbf{tcolorbox}.
 \tcbsubtitle{My subtitle}
   Further text.
@@ -594,7 +595,20 @@ This is a \textbf{tcolorbox}.
 \clearpage
 \subsection{Text Alignment}
 
-\begin{docTcbKey}[][doc new=2015-05-07]{halign}{=\meta{alignment}}{no default, initially \texttt{justify}}
+\begin{docTcbKeys}[
+    doc parameter   = {=\meta{alignment}},
+    doc description = {no default, initially \texttt{justify}},
+    doc new         = 2015-05-07,
+  ]
+  {
+    {
+      doc name = halign,
+    },
+    {
+      doc name = halign upper,
+    }
+  }
+%\begin{docTcbKey}[][doc new=2015-05-07]{halign}{=\meta{alignment}}{no default, initially \texttt{justify}}
   If there is no lower part, |halign| determines the horizontal \meta{alignment}
   of the text content.
   Otherwise, |halign| determines the horizontal \meta{alignment}
@@ -614,6 +628,7 @@ This is a \textbf{tcolorbox}.
   detail in the \tikzname\ manual \cite{tantau:tikz_and_pgf}. The short story is that
   the non-flush versions will often look more balanced but with more
   hyphenations.
+  \refKey{/tcb/halign upper} is an alias for \refKey{/tcb/halign}.
 
 \begin{exdispExample}{halign}
 \tcbset{colback=red!5!white,colframe=red!75!black,size=small,
@@ -641,14 +656,30 @@ This is a demonstration text for showing how line breaking works.
 \end{tcolorbox}
 \end{exdispExample}
 
-\end{docTcbKey}
+\end{docTcbKeys}
+
+\clearpage
+
+\begin{docTcbKeys}[
+    doc parameter   = {=\marg{code}},
+    doc description = {no default},
+    doc new         = 2022-07-07,
+  ]
+  {
+    {
+      doc name = halign code,
+    },
+    {
+      doc name = halign upper code,
+    }
+  }
+  If \refKey{/tcb/halign} resp. \refKey{/tcb/halign upper} is not flexible enough,
+  \refKey{/tcb/halign code} resp. \refKey{/tcb/halign upper code} allows to set
+  arbitrary \meta{code} to configure the horizontal alignment of the text content,
+  e.g. using alignments from specialized packages.
+\end{docTcbKeys}
 
 
-\begin{docTcbKey}[][doc new=2015-05-07]{halign upper}{=\meta{alignment}}{no default, initially \texttt{justify}}
-  Alias for \refKey{/tcb/halign}.
-\end{docTcbKey}
-
-\newpage
 \begin{docTcbKey}[][doc new=2015-05-07]{halign lower}{=\meta{alignment}}{no default, initially \texttt{justify}}
   |halign lower| determines the horizontal \meta{alignment} of the lower part of the box.
   The feasible values for \meta{alignment} are the same as for \refKey{/tcb/halign}.
@@ -679,6 +710,19 @@ This is a demonstration text for showing how line breaking works.
 \end{tcbraster}
 \end{exdispExample}
 \end{docTcbKey}
+
+
+\begin{docTcbKeys}[
+    doc parameter   = {=\marg{code}},
+    doc description = {no default},
+    doc new         = 2022-07-07,
+    doc name        = halign lower code,
+  ]{}
+  If \refKey{/tcb/halign lower} is not flexible enough,
+  \refKey{/tcb/halign lower code} allows to set
+  arbitrary \meta{code} to configure the horizontal alignment of the lower
+  part of the box.
+\end{docTcbKeys}
 
 
 \clearpage
@@ -713,7 +757,20 @@ This is a demonstration text for showing how line breaking works.
 \end{exdispExample}
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
+
+\begin{docTcbKeys}[
+    doc parameter   = {=\marg{code}},
+    doc description = {no default},
+    doc new         = 2022-07-07,
+    doc name        = halign title code,
+  ]{}
+  If \refKey{/tcb/halign title} is not flexible enough,
+  \refKey{/tcb/halign title code} allows to set
+  arbitrary \meta{code} to configure the horizontal alignment of the title
+  of the box.
+\end{docTcbKeys}
+
+
 
 \begin{docTcbKey}[][doc updated=2015-05-07]{flushleft upper}{}{style, no value}
   Shortcut for setting \refKey{/tcb/halign} to \docValue{flush left}.
@@ -1825,7 +1882,7 @@ used for boxes inside a \refEnv{tcbraster}.
 \begin{exdispExample}{inherit_height}
 \tcbset{colframe=blue!75!black,colback=white,fonttitle=\bfseries}
 
-\begin{tcolorbox}[title=Outer box with fixed height 4cm,height=4cm]
+\begin{tcolorbox}[title=Outer box with fixed height 3.5cm,height=3.5cm]
   \begin{tcolorbox}[title=Inner box,nobeforeafter,inherit height]
     This inner box matches the available space.
   \end{tcolorbox}
@@ -2135,9 +2192,10 @@ The following options introduce some arbitrary \meta{code} to the content
 of a |tcolorbox|. These additions can be given at the beginning or at the ending
 of the title, the upper part, or the lower part.
 
-\begin{docTcbKey}{before title}{=\meta{code}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2023-01-27]{before title}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the color and font settings
   and \emph{before} the content of the title.
+  The \meta{code} is appended by a final |\ignorespaces|.
 \begin{exdispExample}{before_title}
 \tcbset{before title={\textcolor{yellow}{\large Important:}~},
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
@@ -2149,8 +2207,16 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{after title}{=\meta{code}}{no default, initially unset}
+\begin{docTcbKey}[][doc new=2023-01-27]{before title*}{=\meta{code}}{no default, initially unset}
+  The given \meta{code} is placed \emph{after} the color and font settings
+  and \emph{before} the content of the title.
+  In contrast to \refKey{/tcb/before title}, no |\ignorespaces| is appended.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc updated=2023-01-27]{after title}{=\meta{code}}{no default, initially unset}
   The given \meta{code} is placed \emph{after} the content of the title.
+  The \meta{code} is prepended by a leading |\unskip|.
 \begin{exdispExample}{after_title}
 \tcbset{after title={\hfill\colorbox{Navy}{approved}},
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries}
@@ -2159,6 +2225,12 @@ This is a \textbf{tcolorbox}.
 This is a \textbf{tcolorbox}.
 \end{tcolorbox}
 \end{exdispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2023-01-27]{after title*}{=\meta{code}}{no default, initially unset}
+  The given \meta{code} is placed \emph{after} the content of the title.
+  In contrast to \refKey{/tcb/after title}, no |\unskip| is prepended.
 \end{docTcbKey}
 
 
@@ -3923,7 +3995,7 @@ This is a tcolorbox.
   a |minipage|. In a |minipage| or |parbox|, paragraphs are formatted slightly different
   as the main text. If the key value is set to |false|, the normal main text
   behavior is restored. In some situations, this has some unwanted side
-  effects. It is recommended that you use this experimental setting only
+  effects. It is recommended that you use this \textbf{experimental setting} only
   where you really want to have this feature.
 \end{docTcbKey}
 
@@ -4118,11 +4190,35 @@ Example \ref{exe:tabular_example} on page \pageref{exe:tabular_example}.
 Removes the phantom code if set before.
 \end{docTcbKey}
 
-\begin{docTcbKey}{label}{=\meta{marker}}{no default, initially unset}
-The \meta{marker} is set as label text for a reference with the |\ref| macro.
+
+\begin{docTcbKey}[][doc new=2023-02-08]{label is label}{}{no value, initially set}
+Sets |\label| as labelling for |tcolorbox| (global or per box).
+When \refKey{/tcb/label} and friends are used, the underlying labeling macro is |\label|.
+References can be made by |\ref|, |\pageref|, and similar macros. This is the
+default \LaTeX\ behaviour.
+Note that this option is not getting reset by \refKey{/tcb/reset}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2023-02-08]{label is zlabel}{}{no value, initially unset}
+Sets |\zlabel| as labelling for |tcolorbox| (global or per box).
+When \refKey{/tcb/label} and friends are used, the underlying labeling macro is |\zlabel|.
+This needs the |zref| package \cite{oberdiek:zref} or packages building upon |zref| to be loaded.
+References can be made by |\zref|. If the |zref-clever| package \cite{barros:zref-clever} is loaded,
+|\zcref|, |\zcpageref|, and similar macros can be applied.
+Note that this option is not getting reset by \refKey{/tcb/reset}.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc updated=2023-02-08]{label}{=\meta{marker}}{no default, initially unset}
+The \meta{marker} is set as label text with |\label| for a reference with the |\ref| macro,
+if \refKey{/tcb/label is label} is active,
+or as label text with |\zlabel| for a reference with the |\zref| macro and similar,
+if \refKey{/tcb/label is zlabel} is active.
 Typically, this option is used for numbered boxes, see Subsection \ref{sec:numberedboxes}
 from page \pageref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
 \end{docTcbKey}
+
 
 \begin{docTcbKey}[][doc new=2014-11-28]{phantomlabel}{=\meta{marker}}{no default, initially unset}
 Equivalent to \refKey{/tcb/label} for an \emph{unnumbered} box.
@@ -4130,20 +4226,7 @@ A |\phantomsection| from the package |hyperref| \cite{rahtz:hyperref} is used to
 hyperlink target. This is not needed for a numbered box.
 \end{docTcbKey}
 
-
-\begin{docTcbKey}{label type}{=\meta{type}}{no default, initially unset}
-This option key can be used only in conjunction with the |cleveref| package
-\cite{cubitt:2018a} which has to be loaded separately.
-\meta{type} has to be a cross-reference type \emph{known} to |cleveref|
-like |theorem|, |algorithm|, |result|, etc. References made with |cleveref|
-will use this type. Note that using |label type| will result in compilation
-errors, if |cleveref| is not loaded.
-For an example, see \Vref{theo:meanvaluetheorem}.
-\end{docTcbKey}
-
-\begin{docTcbKey}{no label type}{}{no value, initially set}
-Removes a \refKey{/tcb/label type}, if set before.
-\end{docTcbKey}
+\clearpage
 
 \begin{docTcbKey}{step}{=\meta{counter}}{no default, initially unset}
 Shortcut for |phantom={\refstepcounter{#1}}|. The given \meta{counter} is
@@ -4160,43 +4243,46 @@ see Subsection \ref{sec:numberedboxes}
 from page \pageref{sec:numberedboxes}.
 \end{docTcbKey}
 
+
+\begin{docTcbKey}[][doc updated=2023-02-09]{label type}{=\meta{type}}{no default, initially unset}
+This option has a different meaning based upon the chosen labeling mechanism.
+\begin{itemize}
+\item If \refKey{/tcb/label is label} is active:\par
+  The option key \refKey{/tcb/label type} can be used only in conjunction with the |cleveref| package
+  \cite{cubitt:2018a} which has to be loaded separately.
+  \meta{type} has to be a cross-reference type \emph{known} to |cleveref|
+  like |theorem|, |algorithm|, |result|, etc. References made with |cleveref|
+  will use this type. Note that using |label type| will result in compilation
+  errors, if |cleveref| is not loaded.
+  For an example, see \Vref{theo:meanvaluetheorem}.
+\item If \refKey{/tcb/label is zlabel} is active:\par
+  The option key \refKey{/tcb/label type} can be used only in conjunction with the |zref-clever| package
+  \cite{barros:zref-clever}
+  which has to be loaded separately.
+  \meta{type} has to be a cross-reference type \emph{known} to |zref-clever|.
+  This \meta{type} is bound to an automatic |tcolorbox| counter which has to be set up using
+  \refKey{/tcb/new/auto counter},
+  \refKey{/tcb/new/use counter from},
+  \refKey{/tcb/new/use counter}, or
+  \refKey{/tcb/new/use counter*}.
+  If \refKey{/tcb/label is zlabel} is set, but |zref-clever| is not loaded,
+  using |zref-clever countertype| will be silently ignored.
+\end{itemize}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc updated=2023-02-09]{no label type}{}{no value, initially set}
+Removes a \refKey{/tcb/label type}, if set before.
+\end{docTcbKey}
+
+
 \clearpage
-\begin{docTcbKey}{list entry}{=\meta{text}}{no default, initially unset}
-If the \flqq list of tcolorbox(es)\frqq\ feature described in Subsection
-\ref{sec:listsof} from page \pageref{sec:listsof} is used, this key
-describes the \meta{text} for an entry into the generated list, e.\,g.
-\begin{dispListing}
-list entry={\protect\numberline{\thetcbcounter}My beautiful Example}
-\end{dispListing}
-See Section \ref{listing:exercises} from page \pageref{listing:exercises}
-for a complete example.
-\end{docTcbKey}
-
-\begin{docTcbKey}[][doc new=2014-09-19]{list text}{=\meta{text}}{style, no default}
-This is a shortcut for setting \refKey{/tcb/list entry} to\\
-|\protect\numberline{\thetcbcounter}|\meta{text}.
-So, the following settings are identical:
-\begin{dispListing}
-list text={My beautiful Example},
-list entry={\protect\numberline{\thetcbcounter}My beautiful Example}
-\end{dispListing}
-See Section \ref{listing:exercises} from page \pageref{listing:exercises}
-for a complete example.
-\end{docTcbKey}
-
-\begin{docTcbKey}{add to list}{=\marg{list}\marg{type}}{no default, initially unset}
-If the \flqq list of tcolorbox(es)\frqq\ feature described in Subsection
-\ref{sec:listsof} from page \pageref{sec:listsof} is used, list entries are
-generated automatically. With this key, you can enforce an entry to the
-given \meta{list} with the given \meta{type}.
-This issues:\\
-|\addcontentsline|\marg{list}\marg{type}\marg{entry text}
-\end{docTcbKey}
-
-
-\begin{docTcbKey}[][doc new and updated={2016-06-22}{2016-11-18}]{nameref}{=\meta{text}}{no default, initially unset}
+\begin{docTcbKey}[][doc new and updated={2016-06-22}{2023-02-08}]{nameref}{=\meta{text}}{no default, initially unset}
 If the |nameref| package is loaded, the given \meta{text} is used for
-corresponding |\nameref| macros. Typically, the \meta{text} will be chosen
+corresponding |\nameref| macros.
+If the |zref-titleref| package is loaded, the given \meta{text} is used to
+set the reference text for |\ztitleref|.
+Typically, the \meta{text} will be chosen
 to be identical or nearly identical to the one for \refKey{/tcb/title}.
 
 \inputpreamblelisting{A}
@@ -4216,6 +4302,14 @@ The box is titled \enquote{\nameref{mynamelabel}}.
 \end{marker}
 
 \end{docTcbKey}
+
+
+\begin{docTcbKey}[][doc new=2022-07-18]{short title}{=\meta{text}}{style, no default}
+Sets both \refKey{/tcb/list entry} and \refKey{/tcb/nameref} to \meta{text}.
+The most likely use case is to set a \emph{short title} for the
+\flqq list of tcolorbox(es)\frqq\ and for box referencing.
+\end{docTcbKey}
+
 
 \clearpage
 \begin{docTcbKey}[][doc new=2017-02-03]{hypertarget}{=\meta{marker}}{no default, initially unset}

@@ -9,9 +9,19 @@ The library is loaded by a package option or inside the preamble by:
 \end{dispListing}
 This also loads the package |amsmath|.
 
+Denis Bitouz\'e, Muzimuzhi, and many others provided very valuable input for this library.
+
+
 \subsection{Macros of the Library}
 
-\begin{docCommand}[doc updated=2016-06-22]{newtcbtheorem}{\oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix}}
+\begin{docCommands}[
+    doc parameter = \oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix},
+    doc updated=2022-07-18
+    ]
+    {
+      { doc name = NewTcbTheorem },
+      { doc name = newtcbtheorem }
+    }
   Creates new environments \meta{name} and \meta{name}|*| based on |tcolorbox| to frame a
   (mathematical) theorem. The \meta{display name} is used in the title line
   with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
@@ -19,19 +29,40 @@ This also loads the package |amsmath|.
   the appearance.
   %The \meta{counter} is used for automatic numbering.
   The \meta{init options} allow setting up automatic numbering,
-  see \Vref{sec:initkeys}.\par
-  The new environment \meta{name} takes one optional and two mandatory
-  parameters. The optional parameter supplements the options and should be
-  used only in rare cases.
-  The first mandatory parameter is the title text for the theorem and
-  is also set as \refKey{/tcb/nameref} identifier.
-  The second mandatory parameter is a \meta{marker}. The theorem is
-  automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
-  where \meta{separator} is predefined as \enquote{|:|}, see \refKey{/tcb/label separator}.\par
-  The new environment \meta{name}|*| takes one optional and one mandatory
-  parameter and represents an unnumbered variant of the environment \meta{name}.
-  This variant is not labeled and not listed in lists of theorems.
-\enlargethispage*{20mm}
+  see \Vref{sec:initkeys}.\par\medskip
+
+  If \meta{name} is chosen as |footheorem|, the new environments are described by
+  \begin{docEnvironments}[
+      doc no index,
+      doc name = footheorem,
+      doc parameter = \oarg{keys}\oarg{short}\marg{title}\marg{marker}
+    ]{}
+    Here, \meta{title} is the title text for the theorem and
+    is also set as \refKey{/tcb/nameref} identifier.
+    Optionally, the \meta{short} title used instead as \refKey{/tcb/nameref} identifier
+    and in lists of theorems.
+    \meta{keys} supplement the \meta{options} and may be
+    used only in rare cases. The theorem is
+    automatically labeled with \meta{prefix}\meta{separator}\meta{marker}
+    where \meta{separator} is predefined as \enquote{|:|}, see \refKey{/tcb/label separator}.
+  \end{docEnvironments}
+  \begin{docEnvironments}[
+      doc no index,
+      doc name = footheorem*,
+      doc parameter = \oarg{keys}\marg{title}
+    ]{}
+    This represents an unnumbered variant. Again, \meta{title} is the title text for the theorem
+    and \meta{keys} supplement the \meta{options}.
+    This variant is not labeled and not listed in lists of theorems.
+  \end{docEnvironments}
+
+  \begin{marker}
+  \refCom{NewTcbTheorem} and \refCom{newtcbtheorem} are identical and both
+  rely on \refCom{NewTColorBox} based on |\NewDocumentCommand|.
+  \end{marker}
+\clearpage
+
+
 \inputpreamblelisting{F}
 \begin{dispExample}
 % usage of `\nameref' needs `nameref' or `hyperref' to be loaded
@@ -40,6 +71,17 @@ This also loads the package |amsmath|.
   in this example, prefixed with the section number. This theorem is numbered with
   \ref{th:theoexample}, it is given on page~\pageref{th:theoexample},
   and it is titled \flqq\nameref{th:theoexample}\frqq.
+\end{mytheo}
+\end{dispExample}
+
+
+\begin{dispExample}
+% usage of `\nameref' needs `nameref' or `hyperref' to be loaded
+\begin{mytheo}[][Concise title]{This my very long theorem title with
+    too much words}{theoexample2}
+  Here we have a long and a short title. This theorem is numbered with
+  \ref{th:theoexample2}, it is given on page~\pageref{th:theoexample2},
+  and it is titled \flqq\nameref{th:theoexample2}\frqq.
 \end{mytheo}
 \end{dispExample}
 
@@ -74,13 +116,41 @@ To switch off the \texttt{nameref} feature permanently, add
 \mbox{\texttt{nameref/.style=\{\}}} inside the \meta{options} list.
 \end{marker}
 
-\end{docCommand}
+\end{docCommands}
+
+\medskip
+
+\begin{docCommands}[
+    doc parameter = \oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix},
+    doc updated=2022-07-18
+    ]
+    {
+      { doc name = RenewTcbTheorem },
+      { doc name = renewtcbtheorem }
+    }
+  Operates like \refCom{NewTcbTheorem}, but based on |\RenewDocumentEnvironment| instead of |\NewDocumentEnvironment|.
+  Existing environments are redefined.
+\end{docCommands}
 
 
-\begin{docCommand}{renewtcbtheorem}{\oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix}}
-  Operates like \refCom{newtcbtheorem}, but based on |\renewenvironment| instead of |\newenvironment|.
-  An existing environment is redefined.
-\end{docCommand}
+\begin{docCommands}[
+    doc parameter = \oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix},
+    doc new       = 2022-07-18,
+    doc name      = ProvideTcbTheorem,
+    ]{}
+  Operates like \refCom{NewTcbTheorem}, but based on |\ProvideDocumentEnvironment| instead of |\NewDocumentEnvironment|.
+  New environments are is only created if they are not already defined.
+\end{docCommands}
+
+
+\begin{docCommands}[
+    doc parameter = \oarg{init options}\marg{name}\marg{display name}\marg{options}\marg{prefix},
+    doc new       = 2022-07-18,
+    doc name      = DeclareTcbTheorem,
+    ]{}
+  Operates like \refCom{NewTcbTheorem}, but based on |\DeclareDocumentEnvironment| instead of |\NewDocumentEnvironment|.
+  New environments are always created and possibly redefine existing ones.
+\end{docCommands}
 
 
 \clearpage

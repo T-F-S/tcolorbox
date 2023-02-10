@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
+%% The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/02/08 version 5.1.2pre2 text color boxes]
-\def\tcb@version{5.1.2pre2}
+\ProvidesPackage{tcolorbox}[2023/02/10 version 6.0.0 text color boxes]
+\def\tcb@version{6.0.0}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -299,7 +299,7 @@
   parfillskip restore/.default=true,%
   parfillskip restore/true/.code={\let\tcb@parfillskip@check=\tcb@parfillskip@restore},%
   parfillskip restore/false/.code={\let\tcb@parfillskip@check=\@empty},%
-  before/.code={\def\kvtcb@beforebox{#1}\let\tcb@undo@before=\@empty\let\tcb@use@autoparskip=\relax},
+  before/.code={\def\kvtcb@beforebox{#1}\let\tcb@use@autoparskip=\relax},
   after/.code={\def\kvtcb@afterbox{#1}\let\tcb@use@autoparskip=\relax},
   before skip balanced/.style={before={%
     \ifnum\lastnodetype=-1\relax%
@@ -312,18 +312,13 @@
           \fi%
         \else%
           \ifdim\prevdepth<\z@\relax%
-            \tcbdimto\tcb@prevdepth{\prevdepth}%
             \addvspace{\glueexpr#1-\parskip}%
-            \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
           \else%
             \ifdim\prevdepth>.3\baselineskip\relax%
-              \tcbdimto\tcb@prevdepth{\prevdepth}%
               \addvspace{\glueexpr#1-\parskip}%
             \else%
-              \tcbdimto\tcb@prevdepth{.3\baselineskip}%
               \addvspace{\glueexpr#1+.3\baselineskip-\prevdepth-\parskip}%
             \fi%
-            \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
           \fi%
         \fi%
         \nointerlineskip%
@@ -342,15 +337,13 @@
   }},
   beforeafter skip balanced/.style={before skip balanced={#1},after skip balanced={#1}},
   autoparskip/.code={\let\tcb@use@autoparskip=\tcb@use@auto@parskip},
-  parskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
-      \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip+\parskip}%
-      \def\tcb@undo@before{\addvspace{-\glueexpr\tcb@prevdepth}}%
-      \pagebreak[0]\fi\fi\noindent},
+  parskip/.style={%
+    before={\ifnum\lastnodetype=-1\relax\else\par%
+            \ifvmode\pagebreak[0]\fi\fi\noindent},
     after={\tcb@parfillskip@check\par}},
-  noparskip/.style={before={\ifnum\lastnodetype=-1\relax\else\par%
-      \ifvmode\edef\tcb@prevdepth{\the\glueexpr\prevdepth+\lineskip}%
-      \def\tcb@undo@before{\addvspace{-\glueexpr\smallskipamount+\tcb@prevdepth}}%
-      \pagebreak[0]\smallskip\fi\fi\noindent},
+  noparskip/.style={%
+    before={\ifnum\lastnodetype=-1\relax\else\par%
+            \ifvmode\pagebreak[0]\smallskip\fi\fi\noindent},
     after={\tcb@parfillskip@check\par\smallskip}},
   nobeforeafter/.style={before=,after=},
   force nobeforeafter/.code={\tcbset@late@options{nobeforeafter}},
@@ -364,9 +357,7 @@
             \addvspace{-\parskip}%
           \fi%
         \else%
-          \tcbdimto\tcb@prevdepth{\prevdepth}%
           \addvspace{\glueexpr#1-\parskip}%
-          \def\tcb@undo@before{\addvspace{-\glueexpr#1+\tcb@prevdepth}}%
         \fi%
         \nointerlineskip%
       \fi%
@@ -2191,10 +2182,7 @@
       {
         \edef\tcb@new@boxname{#2}
         \def\tcb@new@colopt{}
-        \tl_if_novalue:nF { #1 }
-          {
-            \tcb@proc@options@init{#1}{#2}
-          }
+        \tcb@proc@options@init{#1}{#2}
         \preto\tcb@new@colopt{savedelimiter=#2}
         \exp_args:Nc \cs_set_eq:NN { tcb@opt@#2 } \tcb@new@colopt
       }
@@ -2209,7 +2197,7 @@
   }
 
 
-\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +o >{\TrimSpaces} m o +o +m }
+\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +O{} >{\TrimSpaces} m o +o +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \tl_if_novalue:nTF { #4 }
@@ -2238,7 +2226,7 @@
   }
 
 
-\NewDocumentCommand \__tcobox_new_TColorBox:w { m +o >{\TrimSpaces} m +m +m }
+\NewDocumentCommand \__tcobox_new_TColorBox:w { m +O{} >{\TrimSpaces} m +m +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     #1 { #3 }{ #4 }{ \tcolorbox[#5,options@for=#3] }{ \endtcolorbox }
@@ -2270,7 +2258,7 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \exp_args:Nc #1 { #3 }{ #4 }{ \begin{tcolorbox}[#5,options@for=#3]#6\end{tcolorbox} }
   }
-\NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +o m }
+\NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TotalTColorBox:Nnnnnn #1 {#2} \l_tmpa_tl
@@ -2314,7 +2302,7 @@
         }
       }
   }
-\NewDocumentCommand \__tcobox_new_tcbox_i:w { m +o m }
+\NewDocumentCommand \__tcobox_new_tcbox_i:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_tcbox_ii:w #1 {#2} \l_tmpa_tl
@@ -2336,7 +2324,7 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[#5,options@for=#3] }
   }
-\NewDocumentCommand \__tcobox_new_TCBox:w { m +o m }
+\NewDocumentCommand \__tcobox_new_TCBox:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TCBox:Nnnnn #1 {#2} \l_tmpa_tl
@@ -2368,7 +2356,7 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[#5,options@for=#3]{#6} }
   }
-\NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +o m }
+\NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TotalTCBox:Nnnnnn #1 {#2} \l_tmpa_tl
@@ -2491,9 +2479,11 @@
 \let\tcb@verbatim@begin@hook\@empty
 \let\tcb@verbatim@end@hook\@empty
 \let\tcb@verbatim@change@percent\@empty
+\let\tcb@set@verbatim@finish\@empty
 
 \def\tcbverbatimwrite#1{%
   \@bsphack
+  \tcb@set@verbatim@finish%
   \tcb@allocate@tcb@out%
   \immediate\openout\tcb@out #1
   \tcb@verbatim@begin@hook%
@@ -2510,6 +2500,41 @@
   \immediate\closeout\tcb@out
   \@esphack%
 }
+
+
+\ExplSyntaxOn
+
+\cs_new_nopar:Npn \__tcobox_verbatim_finish:
+  {
+    \tl_set_rescan:Nnx \l_tmpa_tl
+      {
+        \char_set_catcode_space:n { 9 }
+        \char_set_catcode_space:n { 32 }
+      } { \the\verbatim@line }
+    \tl_if_blank:VF \l_tmpa_tl
+      {
+        \verbatim@processline
+      }
+  }
+
+\tcbset{%
+  verbatim~ignore~indention~at~end/.is~choice,
+  verbatim~ignore~indention~at~end/true/.code=
+    {
+      \cs_set:Npn \tcb@set@verbatim@finish
+        {
+          \cs_set_eq:NN \verbatim@finish \__tcobox_verbatim_finish:
+        }
+    },
+  verbatim~ignore~indention~at~end/false/.code=
+    {
+      \cs_set_eq:NN \tcb@set@verbatim@finish \prg_do_nothing:
+    },
+  verbatim~ignore~indention~at~end/.default=true,
+  verbatim~ignore~indention~at~end
+}
+
+\ExplSyntaxOff
 
 
 % saving of the lower box

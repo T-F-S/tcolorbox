@@ -58,7 +58,7 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_F.tex}
-\newtcbtheorem[number within=section]{mytheo}{My Theorem}%
+\NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
   {colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_F.tex}
@@ -72,11 +72,11 @@
   theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
                colback=red!10!white,colframe=red!75!black},
 }
-\newtcbtheorem[number within=subsection,crefname={definition}{definitions}]%
+\NewTcbTheorem[number within=subsection,crefname={definition}{definitions}]%
   {Definition}{Definition}{defstyle}{def}
-\newtcbtheorem[use counter from=Definition,crefname={theorem}{theorems}]%
+\NewTcbTheorem[use counter from=Definition,crefname={theorem}{theorems}]%
   {Theorem}{Theorem}{theostyle}{theo}
-\newtcbtheorem[use counter from=Definition,crefname={corollary}{corollaries}]%
+\NewTcbTheorem[use counter from=Definition,crefname={corollary}{corollaries}]%
   {Corollary}{Corollary}{theostyle}{cor}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_G.tex}
@@ -103,7 +103,7 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_J.tex}
-\newtcbtheorem[use counter from=mytheo]{theorem}{Theorem}{%
+\NewTcbTheorem[use counter from=mytheo]{theorem}{Theorem}{%
   fonttitle=\bfseries\upshape,fontupper=\itshape,
   colframe=green!50!black,colback=green!10!white,
   colbacktitle=green!20!white,coltitle=blue!75!black}{theo}

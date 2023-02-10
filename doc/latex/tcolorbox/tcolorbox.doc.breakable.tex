@@ -335,6 +335,11 @@ The |break at| option can be used to insert better break points by hand.
   \refKey{/tcb/use color stack} is silently ignored.
 
 \clearpage
+The result of the following example depends on the used  \LaTeX\ engine and
+loaded packages. The right-hand side is blue, if compiled using
+pdf\TeX, Lua\TeX{} without |luacolor|, and  Xe\TeX.
+Lua\TeX{} with |luacolor| gives the next but one result.
+
 \begin{dispExample}
 % \usepackage{multicol,lipsum}
 \begin{multicols}{2}\footnotesize
@@ -342,17 +347,18 @@ Breakable box without color stack.
 \begin{tcolorbox}[enhanced jigsaw,
   size=small, colframe=gray, colback=yellow!10!white, colupper=blue,
   enforce breakable,% use only breakable in the real world!
-  vfill before first, pad at break=1mm, break at=3.3cm ]
-    \begin{itemize}\item Some blue text.\end{itemize}
-    {\color{red}\itshape\lipsum[2]}\par
+  vfill before first, pad at break=1mm, break at=33mm ]
+    Some blue text.\par\smallskip
+    {\color{red}\itshape\lipsum[2]}\par\smallskip
     More blue text.
 \end{tcolorbox}
 Text after box.
 \end{multicols}
 \end{dispExample}
 
-We do again with \refKey{/tcb/use color stack}. Observe the additional spacing
-at the begin of the box:
+We do again with \refKey{/tcb/use color stack}. Again, the result depends on
+the used \LaTeX\ engine. The right-hand side stays blue for Xe\TeX{} and
+and is red and blue for pdf\TeX{} and Lua\TeX{}.
 
 \begin{dispExample}
 % \usepackage{multicol,lipsum}
@@ -361,9 +367,9 @@ Breakable box with color stack.
 \begin{tcolorbox}[enhanced jigsaw, use color stack,
   size=small, colframe=gray, colback=yellow!10!white, colupper=blue,
   enforce breakable,% use only breakable in the real world!
-  vfill before first, pad at break=1mm, break at=3.3cm ]
-    \begin{itemize}\item Some blue text.\end{itemize}
-    {\color{red}\itshape\lipsum[2]}\par
+  vfill before first, pad at break=1mm, break at=33mm ]
+    Some blue text.\par\smallskip
+    {\color{red}\itshape\lipsum[2]}\par\smallskip
     More blue text.
 \end{tcolorbox}
 Text after box.
@@ -433,7 +439,7 @@ Text after box.
   and \refKey{/tcb/pad after break}.
 \end{docTcbKey}
 
-\enlargethispage*{5mm}
+\enlargethispage*{10mm}
 
 \begin{docTcbKey}{pad at break*}{=\meta{length}}{style, no default}
   Sets \refKey{/tcb/pad at break} to \meta{length} and

@@ -115,3 +115,42 @@ and this is my 10\% text.
 
 \end{docTcbKey}
 
+\clearpage
+
+\begin{docTcbKey}[][doc new=2023-02-10]{verbatim ignore indention at end}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+  If this option is set to be |true|, spaces and tabs before |\end{tcbverbatimwrite}|
+  on the same line are ignored. The same is true for all environments based
+  on \refEnv{tcbverbatimwrite}. If anything else precedes |\end{tcbverbatimwrite}|
+  on the same line, the complete content is written.\par
+  If this option is set to be |false|, everything preceding |\end{tcbverbatimwrite}|
+  is written. This was the default behavior before version 6.0.0.\par
+  The idea of \refKey{/tcb/verbatim ignore indention at end} is that the
+  environment can be indented. The creation of this option was inspired by Yukai Chou.
+
+\begin{dispExample}
+% \tcbuselibrary{minted}
+\texttt{verbatim ignore indention at end=false}
+
+    \begin{tcblisting}{listing engine=minted, listing only,
+                       verbatim ignore indention at end=false}
+      int a;
+    \end{tcblisting}
+
+    \begin{tcblisting}{listing engine=minted, listing only,
+                       verbatim ignore indention at end=false}
+      int a;
+      int b;  \end{tcblisting}
+
+\texttt{verbatim ignore indention at end=true}
+
+    \begin{tcblisting}{listing engine=minted, listing only,
+                       verbatim ignore indention at end}
+      int a;
+    \end{tcblisting}
+
+    \begin{tcblisting}{listing engine=minted, listing only,
+                       verbatim ignore indention at end}
+      int a;
+      int b;  \end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}

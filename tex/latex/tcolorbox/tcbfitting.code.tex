@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 5.1.2pre2 (2023/02/08)
+%% The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
 %% tcbfitting.code.tex: Code for fit boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{5.1.2pre2}
+\tcb@set@library@version{6.0.0}
 
 \newdimen\tcbfitdim
 \newdimen\tcb@lowerfitdim
@@ -392,7 +392,7 @@
         }
       }
   }
-\NewDocumentCommand \__tcobox_new_tcboxfit_i:w { m +o m }
+\NewDocumentCommand \__tcobox_new_tcboxfit_i:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_tcboxfit_ii:w #1 {#2} \l_tmpa_tl
@@ -414,7 +414,7 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \exp_args:Nc #1 { #3 }{ #4 }{ \tcboxfit[#5,options@for=#3] }
   }
-\NewDocumentCommand \__tcobox_new_TCBoxFit:w { m +o m }
+\NewDocumentCommand \__tcobox_new_TCBoxFit:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TCBoxFit:Nnnnn #1 {#2} \l_tmpa_tl
@@ -446,7 +446,7 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \exp_args:Nc #1 { #3 }{ #4 }{ \tcboxfit[#5,options@for=#3]{#6} }
   }
-\NewDocumentCommand \__tcobox_new_TotalTCBoxFit:w { m +o m }
+\NewDocumentCommand \__tcobox_new_TotalTCBoxFit:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TotalTCBoxFit:Nnnnnn #1 {#2} \l_tmpa_tl

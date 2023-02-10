@@ -238,7 +238,7 @@ be any \tikzname\ code.
 
 \begin{tcolorbox}[enhanced,frame code={
   \foreach \n in {north east,north west,south east,south west}
-  {\path [fill=red!75!black] (interior.\n) circle (3mm); }; }]
+  {\path [fill=red!75!black] (interior.\n) circle (3mm); } }]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.
@@ -701,6 +701,7 @@ considered to be \textit{read-only} and should never be redefined by the user.
 \end{dispExample}
 \end{docCommand}
 
+\enlargethispage*{1cm}
 
 \begin{docCommand}[doc new=2016-02-16]{tcbtextwidth}{}
   This property describes the box content width.
