@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.0 (2023/02/10)
+%% The LaTeX package tcolorbox - version 6.0.1 (2023/02/12)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.0.0}
+\tcb@set@library@version{6.0.1}
 
 \tcbuselibrary{pro@cessing}
 
@@ -375,7 +375,7 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \exp_args:Nc #1 { #3 }{ #4 }{ \tcbinputlisting{#5,options@for=#3} }
   }
-\NewDocumentCommand \__tcobox_new_TCBInputListing:w { m +o m }
+\NewDocumentCommand \__tcobox_new_TCBInputListing:w { m +O{} m }
   {
     \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TCBInputListing:Nnnnn #1 {#2} \l_tmpa_tl

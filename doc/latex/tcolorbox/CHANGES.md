@@ -22,6 +22,14 @@ and this project adheres to
 
 
 
+## [6.0.1] - 2023-02-12
+
+### Fixed
+- Typo in CHANGES.md (issue #211)
+- Regression bug: `\NewTCBInputListing` without initialization options produces an error 
+
+
+
 ## [6.0.0] - 2023-02-10
 
 ### Added
@@ -39,7 +47,7 @@ and this project adheres to
 - Support for zref / zref-titleref / zref-clever (issue #206)
     - Option `label is label`
     - Option `label is zlabel`
-- Library `theorems`: New theorem generation macros. Generated theorema
+- Library `theorems`: New theorem generation macros. Generated theorems
     support an optional short title now (part of issue #186):
     - `\NewTcbTheorem`
     - `\RenewTcbTheorem`
