@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.1 (2023/02/12)
+%% The LaTeX package tcolorbox - version 6.0.2pre1 (2023/03/07)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/02/12 version 6.0.1 text color boxes]
-\def\tcb@version{6.0.1}
+\ProvidesPackage{tcolorbox}[2023/03/07 version 6.0.2pre1 text color boxes]
+\def\tcb@version{6.0.2pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -953,11 +953,16 @@
 \def\kvtcb@beforebox{}
 \def\kvtcb@afterbox{}
 
+\def\tcb@set@parbox@indent@{%
+  \vspace{-\parskip}\noindent%
+  \let\tcb@set@parbox@indent\@empty%
+}
+
 \def\tcb@parbox@true@indent{}%
 \def\tcb@parbox@false@indent{%
-  \preto\kvtcb@before@title{\vspace{-\parskip}\noindent}%
-  \preto\kvtcb@before@upper{\vspace{-\parskip}\noindent}%
-  \preto\kvtcb@before@lower{\vspace{-\parskip}\noindent}%
+  \preto\kvtcb@before@title{\tcb@set@parbox@indent}%
+  \preto\kvtcb@before@upper{\tcb@set@parbox@indent}%
+  \preto\kvtcb@before@lower{\tcb@set@parbox@indent}%
 }%
 
 \let\tcb@parboxrestore=\@parboxrestore
@@ -1192,6 +1197,13 @@
   \tcb@@capture@minipage%
 }
 
+% will be overwritten in `fitting` library
+\def\tcbox@inner@fitbox{%
+  \tcb@error{You need to load `fitting' library to use capture mode `fitbox'}{}%
+  % fallback
+  \tcbox@inner@hbox%
+}
+
 % save 'comment' from 'verbatim'
 \let\tcb@verbatim@comment\comment
 \let\tcb@verbatim@endcomment\endcomment
@@ -1333,6 +1345,11 @@
   \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
 }%
 
+\def\tcb@error@nolower{\tcb@error{%
+  \string\tcblower\space cannot be used for \string\tcbox, \string\tcboxfit, and similar box macros,
+  also not for capture=hbox, capture=fitbox, etc.
+  I'll drop this `\string\tcblower'}{}}
+
 \long\def\tcb@apply@box@options#1{%
   \let\tcb@space\tcb@zpt%
   \let\tcb@outer@textheight\tcbtextheight%
@@ -1348,6 +1365,7 @@
   \fi%
   \let\iftcb@minipage\if@minipage%
   \let\iftcb@nobreak\if@nobreak%
+  \let\tcblower\tcb@error@nolower%
 }
 
 \long\def\tcb@@icolorbox[#1]{%
@@ -2636,6 +2654,7 @@
       \let\tcb@upperdraw@end@hook\@empty%
       \let\tcb@lowerdraw@begin@hook\@empty%
       \let\tcb@lowerdraw@end@hook\@empty%
+      \let\tcb@set@parbox@indent\tcb@set@parbox@indent@%
     },
     breakable@false,
     width=\linewidth,beforeafter skip balanced=0.5\baselineskip plus 2pt,arc is curved,

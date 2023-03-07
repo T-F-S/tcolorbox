@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.1 (2023/02/12)
+%% The LaTeX package tcolorbox - version 6.0.2pre1 (2023/03/07)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.0.1}
+\tcb@set@library@version{6.0.2pre1}
 
 \tcbuselibrary{listings,skins,xparse,external,raster}
 
@@ -92,6 +92,7 @@
   {\ttfamily\char`\{}\meta{#1}{\ttfamily\char`\}}}
 \def\oarg#1{%
   \colOpt{{\ttfamily[}\meta{#1}{\ttfamily]}}}
+\def\sarg{\colOpt{\ttfamily*}}
 \def\brackets#1{{\ttfamily\char`\{}#1{\ttfamily\char`\}}}
 
 \newif\iftcb@doc@colorize

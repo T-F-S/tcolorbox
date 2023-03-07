@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.1 (2023/02/12)
+%% The LaTeX package tcolorbox - version 6.0.2pre1 (2023/03/07)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.0.1}
+\tcb@set@library@version{6.0.2pre1}
 
 \RequirePackage{tikz}[2010/10/13]
 \RequirePackage{tikzfill.image}
@@ -1861,6 +1861,18 @@
     }
 }
 
+\sys_if_engine_xetex:TF
+  {
+    \cs_set:Npn \tcb@XeTeXLinkBox
+      {
+        \setlength{\XeTeXLinkMargin}{0pt}
+        \XeTeXLinkBox
+      }
+  }
+  {
+    \cs_set_eq:NN \tcb@XeTeXLinkBox \use:n
+  }
+
 \ExplSyntaxOff
 
 
@@ -1876,12 +1888,13 @@
   graphics orientation/portrait*/.code={\def\kvtcb@graphics@orientation{3}},
 }
 
+
 \newcommand{\tcbhypernode}[2]{\ifdefined\hypersetup\@ifundefined{pgf@sh@ns@#2}{}{%
   \node[inner sep=0pt,outer sep=0pt] at (#2.center){%
     \tcbsetmacrotowidthofnode\tcb@w@hn{#2}%
     \tcbsetmacrotoheightofnode\tcb@h@hn{#2}%
     \hypersetup{pdfborder=0 0 0}%
-    #1{\vtop to \dimexpr\tcb@h@hn-2bp\relax{\hbox to \dimexpr\tcb@w@hn-2bp\relax{}\vfil}}%
+    #1{\tcb@XeTeXLinkBox{\vtop to \dimexpr\tcb@h@hn-2bp\relax{\hbox to \dimexpr\tcb@w@hn-2bp\relax{}\vfil}}}%
   };%
 }\fi}
 
