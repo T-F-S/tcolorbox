@@ -1,4 +1,4 @@
-# The LaTeX package tcolorbox - version 6.0.1 (2023/02/12)
+# The LaTeX package tcolorbox - version 6.0.3 (2023/03/17)
 
 
 > Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>

@@ -22,11 +22,36 @@ and this project adheres to
 
 
 
+## [6.0.2] - 2023-03-17
+
+### Added
+- Usage of `\tcblower` where not applicable gives a more helpful error message (issue #215)
+- Usage of `capture=fitbox` for `\tcbox` gives an error message (issue #217)
+- Library documentation:
+    - Macro `\sarg` (issue #193)
+
+### Changed
+- Documentation: 
+    - List of initialization option macros enlarged (issue #213)
+    - Removed `xparse` references (issue #214)
+    - Typo correction (issue #216, issue #219)   
+- Library `skins`:
+    - `\tcbhypernode` made compatible for xelatex (issue #221)
+
+### Fixed
+- `parbox=false` accumulated negative `\parskip` values, if called several times
+    or used with `attach title to upper` (issue #222)
+- Library `breakable`:
+    - Reverting to `\color{.}` hack to avoid color bleeding after the box
+    - `Discard zero height first box part` problem hopefully solved (issue #218)
+
+
+
 ## [6.0.1] - 2023-02-12
 
 ### Fixed
 - Typo in CHANGES.md (issue #211)
-- Regression bug: `\NewTCBInputListing` without initialization options produces an error 
+- Regression bug: `\NewTCBInputListing` without initialization options produces an error (issue #212)
 
 
 

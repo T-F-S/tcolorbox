@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.2pre1 (2023/03/07)
+%% The LaTeX package tcolorbox - version 6.0.3 (2023/03/17)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.0.2pre1}
+\tcb@set@library@version{6.0.3}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -332,6 +332,7 @@
     \tcb@parfillskip@check%
     \tcb@split@start%
   \endgroup%
+  \color{.}% hack for some special cases
   \ifx\kvtcb@float\@empty\relax%
     \aftergroup\tcb@use@after@lastbox%
   \fi%
@@ -404,6 +405,13 @@
       \unvbox\tcb@totalupperbox}%
   \else%
     \tcb@setbox@upper{\tcb@split@dim}{\tcb@upperbox}%
+    \ifdim\dimexpr\tcb@h@upper=0pt\relax%
+      \setbox\tcb@totalupperbox=\vbox{%
+        \unvbox\tcb@upperbox%
+        \splitdiscards%
+        \unvbox\tcb@totalupperbox}%
+      \def\tcb@upper@box@badness{1000000}%
+    \fi%
   \fi%
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz\savingvdiscards=0%
 }
@@ -438,10 +446,16 @@
       \unvbox\tcb@totallowerbox}%
   \else%
     \tcb@setbox@lower{\tcb@split@dim}{\tcb@lowerbox}%
+    \ifdim\dimexpr\tcb@h@lower=0pt\relax%
+      \setbox\tcb@totallowerbox=\vbox{%
+        \unvbox\tcb@lowerbox%
+        \splitdiscards%
+        \unvbox\tcb@totallowerbox}%
+      \def\tcb@lower@box@badness{1000000}%
+    \fi%
   \fi%
   \vbadness=\tcb@thevbadness\vfuzz=\tcb@thevfuzz\savingvdiscards=0%
 }
-
 
 \def\tcb@split@lower@box{%
   \vfuzz=\maxdimen\vbadness=10000%
@@ -592,13 +606,13 @@
             \tcb@drawcolorbox@standalone%
           \fi%
         \else%
-          \ifdim\dimexpr\tcb@h@upper=0pt\relax%
-            \tcb@warning{Discard zero height first box part due to break problems (possible loss of zero height content)}%
-            \tcb@split@break@to@start%
-          \else%
+          %\ifdim\dimexpr\tcb@h@upper=0pt\relax%
+          %  \tcb@warning{Discard zero height first box part due to break problems (possible loss of zero height content)}%
+          %  \tcb@split@break@to@start%
+          %\else%
             \tcb@sdraw@U%
             \let\tcb@split@next=\tcb@split@USL%
-          \fi%
+          %\fi%
         \fi%
       \fi%
     \else%
