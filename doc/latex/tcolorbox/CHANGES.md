@@ -22,7 +22,24 @@ and this project adheres to
 
 
 
-## [6.0.2] - 2023-03-17
+## [6.0.4] - 2023-06-19
+
+### Changed
+- Documentation title page background made non-selectable (PDF reader dependent!) (issue #225)
+- Implementation for zref-clever support improved (issue #230)
+- Wrong option name inside the documentation for `halign title` (issue #231)
+- `extrude left by` and `extrude right by` now also change spacing for title and lower part (issue #228)
+- `\newtcbox` and similar macros needed curly braces to protect square brackets for key values.
+    The implementation is adapted to avoid such a need at several places (issue #229)
+
+### Fixed
+- The last version war inconsistently numbered 6.0.2 and/or 6.0.3 (issue #224)
+- New LaTeX versions (from 2023-06-01) remove `\parskip` at top of `minipage`.
+    Therefore, `parbox=false` has to be adapted (issue #232)
+
+
+
+## [6.0.2/6.0.3] - 2023-03-17
 
 ### Added
 - Usage of `\tcblower` where not applicable gives a more helpful error message (issue #215)

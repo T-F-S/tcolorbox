@@ -727,7 +727,7 @@ This is a demonstration text for showing how line breaking works.
 
 \clearpage
 \begin{docTcbKey}[][doc new=2015-05-07]{halign title}{=\meta{alignment}}{no default, initially \texttt{justify}}
-  |halign lower| determines the horizontal \meta{alignment} of the title of the box.
+  |halign title| determines the horizontal \meta{alignment} of the title of the box.
   The feasible values for \meta{alignment} are the same as for \refKey{/tcb/halign}.
 
 \begin{exdispExample}{halign_title}
@@ -3684,8 +3684,7 @@ This is an example for \enquote{spread downwards}.
 \subsubsection{Box Extrusion}
 
 \begin{marker}
-The following keys should not be used with breakable boxes or boxes with a
-lower part.
+The following keys should not be used with breakable boxes.
 \end{marker}
 
 \begin{docTcbKey}{shrink tight}{}{style, no value, initially unset}
@@ -3707,7 +3706,7 @@ Lorem \tcbox{ipsum} dolor sit amet, consectetuer adipiscing elit.
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc updated=2014-09-19]{extrude left by}{=\meta{length}}{style, no default, initially unset}
-  The (upper part of the) colored box is extruded by the given \meta{length} to the left side.
+  The colored box is extruded by the given \meta{length} to the left side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
 \begin{exdispExample}{extrude_left_by}
@@ -3723,7 +3722,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc updated=2014-09-19]{extrude right by}{=\meta{length}}{style, no default, initially unset}
-  The (upper part of the) colored box is extruded by the given \meta{length} to the right side.
+  The colored box is extruded by the given \meta{length} to the right side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
 \begin{exdispExample}{extrude_right_by}
@@ -3740,7 +3739,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 
 \clearpage
 \begin{docTcbKey}{extrude top by}{=\meta{length}}{style, no default, initially unset}
-  The (upper part of the) colored box is extruded by the given \meta{length} to the top side.
+  The colored box is extruded by the given \meta{length} to the top side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
 \begin{exdispExample}{extrude_top_by}
@@ -3756,7 +3755,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \end{docTcbKey}
 
 \begin{docTcbKey}{extrude bottom by}{=\meta{length}}{style, no default, initially unset}
-  The (upper part of the) colored box is extruded by the given \meta{length} to the bottom side.
+  The colored box is extruded by the given \meta{length} to the bottom side.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
 \begin{exdispExample}[safety=1cm]{extrude_bottom_by}
@@ -3772,7 +3771,7 @@ Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
 \end{docTcbKey}
 
 \begin{docTcbKey}{extrude by}{=\meta{length}}{style, no default, initially unset}
-  The (upper part of the) colored box is extruded by the given \meta{length} to all sides.
+  The colored box is extruded by the given \meta{length} to all sides.
   The inner width and the bounding box is kept unchanged and the operation
   is additive!
 \begin{exdispExample}{extrude_by}

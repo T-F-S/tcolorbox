@@ -9,6 +9,7 @@
 \coordinate (A) at (0,0); \coordinate (B) at (21,29.7);
 \path[use as bounding box] (A) rectangle coordinate (C) (B);
 \node[transform shape,xslant=0.7,rotate=-10,xshift=0cm] at (C) {%
+  \BeginAccSupp{method=plain,ActualText={}}%
   \begin{tcbraster}[raster columns=4,title=tcolorbox \version,
     fonttitle=\small\bfseries,raster width=50cm]
   \foreach \b in {1,...,28} {\begin{tcolorbox}[enhanced,
@@ -18,6 +19,7 @@
     colbacktitle=boxcol!!+!50!black!30!white,
     colupper=black!30!white]\lipsum[2]\end{tcolorbox}}
   \end{tcbraster}%
+  \EndAccSupp{}%
 };
 \node at (C) {%
   \begin{tcbitemize}[title=tcolorbox \version,fonttitle=\small\bfseries,

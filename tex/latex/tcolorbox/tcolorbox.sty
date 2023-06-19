@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.3 (2023/03/17)
+%% The LaTeX package tcolorbox - version 6.0.4 (2023/06/19)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/03/17 version 6.0.3 text color boxes]
-\def\tcb@version{6.0.3}
+\ProvidesPackage{tcolorbox}[2023/06/19 version 6.0.4 text color boxes]
+\def\tcb@version{6.0.4}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -710,8 +710,18 @@
   box align/base/.style={baseline=\tcb@val@raisebase},%
   shrink tight/.style={boxsep=0mm,top=-\the\dimexpr\kvtcb@top@rule@stand\relax,bottom=-\the\dimexpr\kvtcb@bottom@rule@stand\relax,%
     left=-\the\dimexpr\kvtcb@left@rule\relax,right=-\the\dimexpr\kvtcb@right@rule\relax},%
-  extrude left by/.code={\tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}\tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-(#1)}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
-  extrude right by/.code={\tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}\tcbdimto\kvtcb@bbright{\kvtcb@bbright-(#1)}\tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
+  extrude left by/.code={%
+    \tcbdimto\kvtcb@leftupper{\kvtcb@leftupper+#1}%
+    \tcbdimto\kvtcb@leftlower{\kvtcb@leftlower+#1}%
+    \tcbdimto\kvtcb@lefttitle{\kvtcb@lefttitle+#1}%
+    \tcbdimto\kvtcb@bbleft{\kvtcb@bbleft-(#1)}%
+    \tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
+  extrude right by/.code={%
+    \tcbdimto\kvtcb@rightupper{\kvtcb@rightupper+#1}%
+    \tcbdimto\kvtcb@rightlower{\kvtcb@rightlower+#1}%
+    \tcbdimto\kvtcb@righttitle{\kvtcb@righttitle+#1}%
+    \tcbdimto\kvtcb@bbright{\kvtcb@bbright-(#1)}%
+    \tcbdimto\kvtcb@width{\kvtcb@width+#1}},%
   extrude top by/.code={\tcbdimto\kvtcb@top{\kvtcb@top+#1}\tcbdimto\kvtcb@bbtop@stand{\kvtcb@bbtop@stand-(#1)}},%
   extrude bottom by/.code={\tcbdimto\kvtcb@bottom{\kvtcb@bottom+#1}\tcbdimto\kvtcb@bbbottom@stand{\kvtcb@bbbottom@stand-(#1)}},%
   extrude by/.style={extrude left by=#1,extrude right by=#1,extrude top by=#1,extrude bottom by=#1},%
@@ -887,28 +897,27 @@
   }
 
 
-\cs_new:Npn \__tcobox_zcsetup_countertype:nn #1#2
+\cs_new_protected:Npn \__tcobox_zcsetup_reftype:n #1
   {
     \cs_if_exist:NT \zcsetup
       {
-        \zcsetup { countertype={#1={#2}} }
+        \zcsetup { reftype={#1} }
       }
   }
 
 
-\cs_new:Npn \__tcobox_label_zlabel:n #1
+\cs_new_protected:Npn \__tcobox_label_zlabel:n #1
   {
+    \group_begin:
     \quark_if_nil:NF \l__tcobox_kv_labeltype_tl
       {
-        \cs_if_exist:NT \tcbcounter
-          {
-            \exp_args:NVV \__tcobox_zcsetup_countertype:nn \tcbcounter \l__tcobox_kv_labeltype_tl
-          }
+        \exp_args:NV \__tcobox_zcsetup_reftype:n \l__tcobox_kv_labeltype_tl
       }
     \cs_if_exist:NT \zlabel
       {
-        \zlabel { #1 }
+        \zlabel {#1}
       }
+    \group_end:
   }
 
 
@@ -953,10 +962,20 @@
 \def\kvtcb@beforebox{}
 \def\kvtcb@afterbox{}
 
-\def\tcb@set@parbox@indent@{%
-  \vspace{-\parskip}\noindent%
-  \let\tcb@set@parbox@indent\@empty%
-}
+\IfFormatAtLeastTF{2023-06-01}
+  {
+    \def\tcb@set@parbox@indent@{%
+      \noindent%
+      \let\tcb@set@parbox@indent\@empty%
+    }
+  }
+  {
+    % Note: To be removed in future
+    \def\tcb@set@parbox@indent@{%
+      \vspace{-\parskip}\noindent%
+      \let\tcb@set@parbox@indent\@empty%
+    }
+  }
 
 \def\tcb@parbox@true@indent{}%
 \def\tcb@parbox@false@indent{%
@@ -2220,15 +2239,15 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \tl_if_novalue:nTF { #4 }
       {
-        #1 { #3 }{ \tcolorbox[#6,options@for=#3] }{ \endtcolorbox }
+        #1 { #3 }{ \tcolorbox[{#6,options@for=#3}] }{ \endtcolorbox }
       }
       {
         \tl_if_novalue:nTF { #5 }
         {
-          #1 { #3 }[ #4 ]{ \tcolorbox[#6,options@for=#3] }{ \endtcolorbox }
+          #1 { #3 }[ #4 ]{ \tcolorbox[{#6,options@for=#3}] }{ \endtcolorbox }
         }
         {
-          #1 { #3 }[ #4 ][ #5 ]{ \tcolorbox[#6,options@for=#3] }{ \endtcolorbox }
+          #1 { #3 }[ #4 ][ #5 ]{ \tcolorbox[{#6,options@for=#3}] }{ \endtcolorbox }
         }
       }
   }
@@ -2247,7 +2266,7 @@
 \NewDocumentCommand \__tcobox_new_TColorBox:w { m +O{} >{\TrimSpaces} m +m +m }
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    #1 { #3 }{ #4 }{ \tcolorbox[#5,options@for=#3] }{ \endtcolorbox }
+    #1 { #3 }{ #4 }{ \tcolorbox[{#5,options@for=#3}] }{ \endtcolorbox }
   }
 \NewDocumentCommand \DeclareTColorBox { }
   {
@@ -2274,7 +2293,7 @@
 \cs_new:Npn \__tcobox_new_TotalTColorBox:Nnnnnn #1#2#3#4#5#6
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \begin{tcolorbox}[#5,options@for=#3]#6\end{tcolorbox} }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \begin{tcolorbox}[{#5,options@for=#3}]#6\end{tcolorbox} }
   }
 \NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +O{} m }
   {
@@ -2308,15 +2327,15 @@
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
     \tl_if_novalue:nTF { #4 }
       {
-        \exp_args:Nc #1 { #3 }{ \tcbox[#6,options@for=#3] }
+        \exp_args:Nc #1 { #3 }{ \tcbox[{#6,options@for=#3}] }
       }
       {
         \tl_if_novalue:nTF { #5 }
         {
-          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcbox[#6,options@for=#3] }
+          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcbox[{#6,options@for=#3}] }
         }
         {
-          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcbox[#6,options@for=#3] }
+          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcbox[{#6,options@for=#3}] }
         }
       }
   }
@@ -2340,7 +2359,7 @@
 \cs_new:Npn \__tcobox_new_TCBox:Nnnnn #1#2#3#4#5
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[#5,options@for=#3] }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[{#5,options@for=#3}] }
   }
 \NewDocumentCommand \__tcobox_new_TCBox:w { m +O{} m }
   {
@@ -2372,7 +2391,7 @@
 \cs_new:Npn \__tcobox_new_TotalTCBox:Nnnnnn #1#2#3#4#5#6
   {
     \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[#5,options@for=#3]{#6} }
+    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[{#5,options@for=#3}]{#6} }
   }
 \NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +O{} m }
   {
@@ -2406,8 +2425,8 @@
 
 \newcommand{\tcolorboxenvironment}[2]{%
   \AddToHook{env/#1/before}{%
-    \begin{tcolorbox}[savedelimiter={#1},#2,wrap@environment,%
-      code={\def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}}]%
+    \begin{tcolorbox}[{savedelimiter={#1},#2,wrap@environment,%
+      code={\def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}}}]%
   }%
   \AddToHook{env/#1/after}{%
     \tcb@end@tcolorboxenvironment%
