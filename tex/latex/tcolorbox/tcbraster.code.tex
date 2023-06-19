@@ -229,24 +229,24 @@
 }
 
 \newcommand{\tcbitem@following}[1][]{%
-  \end{tcolorbox}\begin{tcolorbox}[#1]%
+  \end{tcolorbox}\begin{tcolorbox}[{#1}]%
 }
 
 \newcommand{\tcbitem@first}[1][]{%
   \let\tcbitem=\tcbitem@following%
-  \begin{tcolorbox}[#1]%
+  \begin{tcolorbox}[{#1}]%
 }
 
 \newenvironment{tcbitemize}[1][]{%
-  \begin{tcbraster}[#1]%
+  \begin{tcbraster}[{#1}]%
   \let\tcb@raster@change@fitbox=\tcb@raster@change@hbox%
   \let\tcbitem=\tcbitem@first%
 }{\end{tcolorbox}\end{tcbraster}}
 
 \newenvironment{tcboxedraster}[2][]{%
-  \tcolorbox[{#2}]\begin{tcbraster}[#1]}%
+  \tcolorbox[{#2}]\begin{tcbraster}[{#1}]}%
   {\end{tcbraster}\endtcolorbox}
 
 \newenvironment{tcboxeditemize}[2][]{%
-  \tcolorbox[{#2}]\tcbitemize[#1]}%
+  \tcolorbox[{#2}]\tcbitemize[{#1}]}%
   {\endtcbitemize\endtcolorbox}

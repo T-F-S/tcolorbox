@@ -11,6 +11,8 @@ and this project adheres to
 ### Added
 
 ### Changed
+- Added braces to protect square brackets, mostly for key values
+  (issue #229, continued)
 
 ### Deprecated
 

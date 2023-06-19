@@ -160,7 +160,7 @@
   \tcb@newenvironment{#1}[2][]{%
     #4%
     \begingroup%
-    \tcbexternal[#3,##1,environment=#2]{##2}%
+    \tcbexternal[{#3,##1,environment=#2}]{##2}%
   }{%
     \endtcbexternal%
     \endgroup%

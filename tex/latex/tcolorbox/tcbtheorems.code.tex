@@ -149,7 +149,7 @@
 
 \NewDocumentCommand \__tcobox_new_tcbtheorem_x:w { m O{} m m +m m }
   {
-    #1 [auto~counter,#2] {#3} { +O{} +o +m m }
+    #1 [{auto~counter,#2}] {#3} { +O{} +o +m m }
       {
         #5,
         title      = {\__tcobox_theo_title:nnn{#4}{\thetcbcounter}{##3}},
@@ -165,7 +165,7 @@
         theo@label = {#6}{##4},
         ##1
       }
-    #1 [#2,no~counter,list~inside=] {#3*} { +O{} +m }
+    #1 [{#2,no~counter,list~inside=}] {#3*} { +O{} +m }
       {
         #5,
         title = {\__tcobox_theo_title:nnn{#4}{}{##2}},

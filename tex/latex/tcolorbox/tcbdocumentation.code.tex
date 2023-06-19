@@ -150,7 +150,7 @@
   index colorize/.is if=tcb@doc@colorize,%
   index annotate/.is if=tcb@doc@annotate,%
   index command/.code={\def\kvtcb@index@command##1{#1{##1}}},%
-  index command name/.code={\def\kvtcb@index@command##1{\index[#1]{##1}}},%
+  index command name/.code={\def\kvtcb@index@command##1{\index[{#1}]{##1}}},%
   doc left/.dimstore in=\kvtcb@doc@left,
   doc right/.dimstore in=\kvtcb@doc@right,
   doc left indent/.dimstore in=\kvtcb@doc@indentleft,
@@ -868,7 +868,7 @@
 
 \setrefcountdefault{-1}
 \NewDocumentCommand\tcb@ref@doc{msm}{%
-  \hyperref[#1:#3]{\texttt{\ref*{#1:#3}}%
+  \hyperref[{#1:#3}]{\texttt{\ref*{#1:#3}}%
   \IfBooleanTF{#2}{}{%
     \ifnum\getpagerefnumber{#1:#3}=\thepage\relax%
     \else%
@@ -899,12 +899,12 @@
 
 \newcommand{\tcbdocmarginnote}[2][]{%
   \marginnote{%
-  \begin{tcolorbox}[enhanced jigsaw,size=fbox,boxrule=1pt,leftrule=0pt,rightrule=0pt,
+  \begin{tcolorbox}[{enhanced jigsaw,size=fbox,boxrule=1pt,leftrule=0pt,rightrule=0pt,
     arc=0pt,outer arc=1pt,boxsep=1pt,top=1pt,bottom=1pt,
     nobeforeafter,width=\marginparwidth,
     colframe=red!50!white,colback=red!25!yellow!5!white,fontupper=\scriptsize,
     if odd page or oneside={flushright upper}{flushleft upper},
-    doc@marginnote,#1]#2\end{tcolorbox}}}
+    doc@marginnote,#1}]#2\end{tcolorbox}}}
 
 \newcommand*{\tcbdocnew}[1]{\kvtcb@text@new: #1}
 \newcommand*{\tcbdocupdated}[1]{\kvtcb@text@updated: #1}

@@ -1899,7 +1899,7 @@
 }\fi}
 
 \tcbset{%
-  hyperref node/.style 2 args={finish={\tcbhypernode{\hyperref[#1]}{#2}}},
+  hyperref node/.style 2 args={finish={\tcbhypernode{\hyperref[{#1}]}{#2}}},
   hyperref/.style={hyperref node={#1}{frame}},
   hyperref interior/.style={hyperref node={#1}{interior}},
   hyperref title/.style={hyperref node={#1}{title}},
@@ -1911,7 +1911,7 @@
   hyperurl/.style={hyperurl node={#1}{frame}},
   hyperurl interior/.style={hyperurl node={#1}{interior}},
   hyperurl title/.style={hyperurl node={#1}{title}},
-  hyperurl* node/.style n args={3}{finish={\tcbhypernode{\href[#1]{#2}}{#3}}},
+  hyperurl* node/.style n args={3}{finish={\tcbhypernode{\href[{#1}]{#2}}{#3}}},
   hyperurl*/.style 2 args={hyperurl* node={#1}{#2}{frame}},
   hyperurl* interior/.style 2 args={hyperurl* node={#1}{#2}{interior}},
   hyperurl* title/.style 2 args={hyperurl* node={#1}{#2}{title}},
