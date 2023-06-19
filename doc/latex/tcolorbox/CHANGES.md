@@ -11,8 +11,23 @@ and this project adheres to
 ### Added
 
 ### Changed
-- Added braces to protect square brackets, mostly for key values
-  (issue #229, continued)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+
+## [Unreleased]
+
+### Added
+
+### Changed
+- Added braces to protect square brackets, mostly for key values (issue #234, issue #239 continued)
 
 ### Deprecated
 
@@ -35,7 +50,7 @@ and this project adheres to
     The implementation is adapted to avoid such a need at several places (issue #229)
 
 ### Fixed
-- The last version war inconsistently numbered 6.0.2 and/or 6.0.3 (issue #224)
+- The last version was inconsistently numbered 6.0.2 and/or 6.0.3 (issue #224)
 - New LaTeX versions (from 2023-06-01) remove `\parskip` at top of `minipage`.
     Therefore, `parbox=false` has to be adapted (issue #232)
 
