@@ -808,11 +808,11 @@
   hypertarget/.style={phantom={\ifdefined\hypertarget\Hy@raisedlink{\hypertarget{#1}{}}\fi}},
   bookmark*/.style 2 args={phantom={\ifdefined\bookmark%
     \Hy@raisedlink{\hypertarget{tcb@\thetcolorboxnumber}{}}%
-    \bookmark[dest=tcb@\thetcolorboxnumber,rellevel=1,keeplevel,#1]{#2}%
+    \bookmark[{dest=tcb@\thetcolorboxnumber,rellevel=1,keeplevel,#1}]{#2}%
     \fi}},
   bookmark/.style={bookmark*={}{#1}},
   index/.style={phantom={\index{#1}}},%
-  index*/.style 2 args={phantom={\index[#1]{#2}}},%
+  index*/.style 2 args={phantom={\index[{#1}]{#2}}},%
   add to list/.style 2 args={phantom={\tcb@addcontentsline{#1}{#2}}},
   nophantom/.code={\def\kvtcb@phantom{}},%
   shield externalize/.is choice,
@@ -2089,14 +2089,14 @@
   \let\tcb@trans@bottom\kvtcb@bottomtitle%
   \let\tcb@trans@rule\kvtcb@title@rule%
   \let\tcb@trans@style\kvtcb@subtitle@style%
-  \begin{tcolorbox}[sharp corners,
+  \begin{tcolorbox}[{sharp corners,
     before skip={0.5\baselineskip},after skip={0.5\baselineskip},
     colframe=tcbtranscol@frame,colback=tcbtranscol@back,
     colupper=tcbtranscol@upper,fontupper=\tcb@trans@fontupper,
     boxsep=\tcb@trans@boxsep,left=\tcb@trans@left,right=\tcb@trans@right,
     top=\tcb@trans@top,bottom=\tcb@trans@bottom,
     boxrule=\tcb@trans@rule,leftrule=\z@,rightrule=\z@,oversize,
-    code={\pgfkeysalsofrom\tcb@trans@style},#1]%
+    code={\pgfkeysalsofrom\tcb@trans@style},#1}]%
   #2%
   \end{tcolorbox}%
   \endgroup%
@@ -2497,7 +2497,7 @@
             #1{#4}
           }
           {
-            #1[#3]{#4}
+            #1[{#3}]{#4}
           }
       }
     \@starttoc{#2}

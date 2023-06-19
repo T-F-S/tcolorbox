@@ -131,9 +131,9 @@
   \tcbdimto\tcb@poster@boxwidth{\tcb@poster@span\dimexpr\tcbpostercolwidth+\tcbpostercolspacing\relax-\tcbpostercolspacing}%
   \iftcb@posterbox@sequence%
     \begin{pgfinterruptpicture}%
-      \begin{tcolorbox}[tcb@poster@style,width=\tcb@poster@boxwidth,tcb@poster@boxheight,
+      \begin{tcolorbox}[{tcb@poster@style,width=\tcb@poster@boxwidth,tcb@poster@boxheight,
         height fixed for=all,#1,
-        enforce breakable,reset box array=tcb@poster,store to box array=tcb@poster]#3\end{tcolorbox}%
+        enforce breakable,reset box array=tcb@poster,store to box array=tcb@poster}]#3\end{tcolorbox}%
     \end{pgfinterruptpicture}%
     \def\tcb@poster@boxcount{0}%
     \renewcommand*{\do}[1]{\edef\tcb@poster@boxcount{\the\numexpr\tcb@poster@boxcount+1\relax}%
@@ -153,8 +153,8 @@
     \fi%
   \else%
     \begin{pgfinterruptpicture}%
-      \begin{tcolorbox}[tcb@poster@style,width=\tcb@poster@boxwidth,tcb@poster@boxheight,#1,
-        reset box array=tcb@poster,store to box array=tcb@poster]#3\end{tcolorbox}%
+      \begin{tcolorbox}[{tcb@poster@style,width=\tcb@poster@boxwidth,tcb@poster@boxheight,#1,
+        reset box array=tcb@poster,store to box array=tcb@poster}]#3\end{tcolorbox}%
     \end{pgfinterruptpicture}%
     \node[inner sep=0pt,outer sep=0,tcb@poster@node,name=\tcb@poster@prefix\tcb@poster@boxname] at (\tcb@poster@xpos|-\tcb@poster@ypos)
       {\consumeboxarray[tcb@poster]{1}};%
@@ -166,7 +166,7 @@
 }
 
 \newenvironment{tcb@poster@boxenv}[2][]{%
-  \newcommand{\tcb@poster@box@saved}{\posterbox[#1]{#2}{\tcbusetemp}}%
+  \newcommand{\tcb@poster@box@saved}{\posterbox[{#1}]{#2}{\tcbusetemp}}%
   \tcbwritetemp}%
   {\endtcbwritetemp\tcb@poster@box@saved}
 
