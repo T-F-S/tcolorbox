@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.4 (2023/06/19)
+%% The LaTeX package tcolorbox - version 6.1.0 (2023/09/26)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.0.4}
+\tcb@set@library@version{6.1.0}
 
 \RequirePackage{tikz}[2010/10/13]
 \RequirePackage{tikzfill.image}
@@ -1720,11 +1720,9 @@
 
 \cs_new:Npn \__tcobox_include_graphics:nn #1#2
   {
-    \tl_set:Nn \l_tmpa_tl { \includegraphics }
-    \tl_put_right:Nx \l_tmpa_tl { [#1] }
-    \l_tmpa_tl {#2}
+    \includegraphics [#1] {#2}
   }
-
+\cs_generate_variant:Nn \__tcobox_include_graphics:nn {en}
 
 \cs_new:Npn \__tcobox_include_graphics:
   {
@@ -1734,7 +1732,7 @@
       {
         \hbox_set:Nn \l_tmpa_box
           {
-            \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl }{ \imagepath }
+            \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl }{ \imagepath }
           }
         \if_case:w \kvtcb@graphics@orientation
           \dim_compare:nNnT {\box_wd:N\l_tmpa_box} < {\box_ht_plus_dp:N \l_tmpa_box}
@@ -1763,21 +1761,21 @@
       {
         \tcbox
           {
-            \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl }{ \imagepath }
+            \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl }{ \imagepath }
           }
       }
       {
         \legacy_if:nTF {tcb@fixedheight}
           {
             \begin{tcolorbox}
-              \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl,width=\linewidth,height=\tcbtextheight,keepaspectratio }{ \imagepath }
+              \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth,height=\tcbtextheight,keepaspectratio }{ \imagepath }
           \end{tcolorbox}
           }
           {
             \tl_if_empty:NTF \tcb@height@adjust
             {
               \begin{tcolorbox}
-                \__tcobox_include_graphics:nn { \l__tcobox_graphics_options_tl,width=\linewidth }{ \imagepath }
+                \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth }{ \imagepath }
               \end{tcolorbox}%
             }{% height fill
               \begin{tcolorbox}[

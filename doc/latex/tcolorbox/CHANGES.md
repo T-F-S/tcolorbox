@@ -22,20 +22,22 @@ and this project adheres to
 
 
 
-## [Unreleased]
+## [6.1.0] - 2023-09-26
 
 ### Added
+- New option `redirectlowerto` (issue #240)
 
 ### Changed
-- Added braces to protect square brackets, mostly for key values (issue #234, issue #239 continued)
-
-### Deprecated
-
-### Removed
+- Added braces to protect square brackets, mostly for key values (issue #234, issue #229 continued)
+- Internal `\__tcobox_include_graphics:nn` refactored (issue #236)
+- `blend into` now also adapts `list type` accordingly, 
+    e.g. `blend into=figures` now sets `list type=figure` (issue #238)
+- `every box`, `every box on layer <n>`, and `every box on higher layers` may contain 
+    `capture` mode settings now (issue #246)
 
 ### Fixed
-
-### Security
+- With parbox=false, `\par` was ignored in a `tcolorbox` that starts a list (issue #245)
+- `varwidth upper` ignored horizontal alignment of upper part (issze #247)
 
 
 

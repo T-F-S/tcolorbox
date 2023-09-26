@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.0.4 (2023/06/19)
+%% The LaTeX package tcolorbox - version 6.1.0 (2023/09/26)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/06/19 version 6.0.4 text color boxes]
-\def\tcb@version{6.0.4}
+\ProvidesPackage{tcolorbox}[2023/09/26 version 6.1.0 text color boxes]
+\def\tcb@version{6.1.0}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -29,6 +29,7 @@
 % register
 \newif\iftcb@lowerignored
 \newif\iftcb@lowervisible
+\newif\iftcb@redirectlowerto
 \newif\iftcb@uppervisible
 \newif\iftcb@titlevisible
 \newif\iftcb@hasTitle
@@ -285,7 +286,8 @@
   fontupper/.store in=\kvtcb@fontupper,
   fontlower/.store in=\kvtcb@fontlower,
   tempfile/.store in=\kvtcb@tempfile,
-  savelowerto/.store in=\kvtcb@savelowerto,
+  savelowerto/.code={\tcb@redirectlowertofalse\def\kvtcb@savelowerto{#1}},
+  redirectlowerto/.code={\tcb@lowerignoredtrue\tcb@lowervisiblefalse\tcb@redirectlowertotrue\def\kvtcb@savelowerto{#1}},
   saveto/.store in=\kvtcb@saveupperto,
   savedelimiter/.estore in=\kvtcb@savedelimiter,
   floatplacement/.store in=\kvtcb@floatplacement,
@@ -681,8 +683,14 @@
   tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[{align=center,inner sep=\z@,outer sep=\z@,#1}]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
   tikznode lower/.style={before lower={\centering\tcb@shield@externalize\begin{tikzpicture}\node[{align=center,inner sep=\z@,outer sep=\z@,#1}]\bgroup},after lower={\egroup;\end{tikzpicture}}},%
   tikznode/.style={tikznode upper={#1},tikznode lower={#1}},%
-  varwidth upper/.style={before upper={\tcbdimto\tcb@w@upper{#1-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@leftupper+\kvtcb@rightupper)}%
-    \begin{varwidth}{\tcb@w@upper}},after upper={\end{varwidth}}},%
+  varwidth upper/.style={%
+    before upper={%
+      \tcbdimto\tcb@w@upper{#1-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@leftupper+\kvtcb@rightupper)}%
+      \begin{varwidth}{\tcb@w@upper}%
+      \kvtcb@halignupper%
+    },%
+    after upper={\end{varwidth}}%
+  },%
   varwidth upper/.default=\kvtcb@width,
   text fill/.style={before upper={%
     \ifdim\dimexpr\tcbtextheight>\z@\relax%
@@ -987,6 +995,7 @@
 \let\tcb@parboxrestore=\@parboxrestore
 
 \def\tcb@parbox@false@settings{%
+  \let\par\@@par%
   \linewidth\hsize%
   \@totalleftmargin\z@%
   \leftskip\z@skip%
@@ -1022,7 +1031,8 @@
     \def\noexpand\@currenvline{\on@line}}%
   \reserved@a
     \@endpefalse%
-    \let\tcbbreak\par%
+    \global\@newlistfalse%
+    \let\tcbbreak\@@par%
     \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
     \tcb@minipage{#2}%
     \color{#3}%
@@ -1388,8 +1398,9 @@
 }
 
 \long\def\tcb@@icolorbox[#1]{%
+  \tcbset{capture=minipage}%
   \tcb@layer@inc%
-  \tcb@apply@box@options{capture=minipage,#1}\tcb@height@adjust%
+  \tcb@apply@box@options{#1}\tcb@height@adjust%
   \tcb@hasLowerfalse%
   \csname tcb@@capture@\kvtcb@capture\endcsname%
 }
@@ -2059,17 +2070,18 @@
 
 \long\def\tcbox@inner@v@@d#1{}%
 
-\long\def\tcb@ox#1#2{%
+\long\def\tcb@ox#1#2#3{%
   \begingroup%
+  \tcbset{#1}%
   \tcb@layer@inc%
-  \tcb@apply@box@options{#1,breakable@false,sidebyside@false}\tcb@height@adjust%
-  \csname tcbox@inner@\kvtcb@capture\endcsname{#2}%
+  \tcb@apply@box@options{#2,breakable@false,sidebyside@false}\tcb@height@adjust%
+  \csname tcbox@inner@\kvtcb@capture\endcsname{#3}%
   \tcb@layer@dec%
   \endgroup%
 }
 
 \newcommand{\tcbox}[2][]{%
-  \tcb@ox{capture=hbox,#1}{#2}%
+  \tcb@ox{capture=hbox}{#1}{#2}%
 }
 
 \newcommand{\tcbsubtitle}[2][]{%
@@ -2140,9 +2152,24 @@
   Crefname/.code n args={2}{\begingroup\edef\x{\endgroup\noexpand\Crefname{\tcb@new@boxname}}\x{#1}{#2}\tcb@new@label@type},
   %
   blend into/.is choice,%
-  blend into/figures/.style={use counter*=figure,list inside=lof,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@figure}}}}},%
-  blend into/tables/.style={use counter*=table,list inside=lot,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@table}}}}},%
-  blend into/listings/.style={use counter*=lstlisting,list inside=lol,/tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\lstlistingname~\thetcbcounter}}}}},%
+  blend into/figures/.style={%
+    use counter* = figure,
+    list inside  = lof,
+    list type    = figure,
+    /tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@figure}}}}%
+  },%
+  blend into/tables/.style={%
+    use counter* = table,
+    list inside  = lot,
+    list type    = table,
+    /tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\fnum@table}}}}%
+  },%
+  blend into/listings/.style={%
+    use counter* = lstlisting,
+    list inside  = lol,
+    list type    = lstlisting,
+    /tcb/code={\appto\tcb@new@colopt{,before title={\tcb@blend@beforetitle{\lstlistingname~\thetcbcounter}}}}%
+  },%
   %
   reset@new/.style={no counter,number within=,number format=\arabic,number freestyle=,
     list inside=,list type=tcolorbox,init@hook@clear,reset counter on overlays=false},
@@ -2583,8 +2610,10 @@
 \def\tcb@endlowerverbatimanddraw{%
   \endtcbverbatimwrite%
   \endgroup%
-  \IfFileExists{\kvtcb@savelowerto}{%
-    \tcb@savelowerbox\input{\kvtcb@savelowerto}\end{tcb@savebox}}{}%
+  \iftcb@redirectlowerto\else%
+    \IfFileExists{\kvtcb@savelowerto}{%
+      \tcb@savelowerbox\input{\kvtcb@savelowerto}\end{tcb@savebox}}{}%
+  \fi%
   \tcb@draw@color@box%
   \tcb@finalize@environment%
 }
