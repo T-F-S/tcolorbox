@@ -357,7 +357,7 @@ Now, we load the saved text:\\
 \setcounter{enumi}{1}
 Test counter: \theenumi
 
-\begin{tcolorbox}[redirectlowerto=\jobname_bspsave.tex,colback=white]
+\begin{tcolorbox}[redirectlowerto=\jobname_bspsave2.tex,colback=white]
 This is a \textbf{tcolorbox}.
 \tcblower
 This is the lower part.\stepcounter{enumi}
@@ -365,7 +365,7 @@ New value of test counter: \theenumi.
 \end{tcolorbox}
 
 Now, we load the saved text:\\
-\input{\jobname_bspsave.tex}
+\input{\jobname_bspsave2.tex}
 \end{exdispExample}
 \end{docTcbKey}
 
@@ -433,7 +433,7 @@ This is the lower part.
 \begin{exdispExample}{savedelimiter1}
 \newenvironment{mybox}[1]{%
   \tcolorbox[savedelimiter=mybox,
-             savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
+             savelowerto=\jobname_bspsave3.tex,lowerbox=ignored,
              colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
              title={#1}]}%
   {\endtcolorbox}
@@ -446,7 +446,7 @@ Saved lower part!
 
 Now, the saved part is used:
 \begin{tcolorbox}[colback=green!5]
-\input{\jobname_bspsave2.tex}
+\input{\jobname_bspsave3.tex}
 \end{tcolorbox}
 \end{exdispExample}
 
@@ -456,7 +456,7 @@ The |savedelimiter| is used implicitely with \refCom{newtcolorbox} which
 allows a more convenient usage:
 \begin{exdispExample}{savedelimiter2}
 \newtcolorbox{mybox}[1]{%
-             savelowerto=\jobname_bspsave2.tex,lowerbox=ignored,
+             savelowerto=\jobname_bspsave4.tex,lowerbox=ignored,
              colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
              title={#1}}%
 
@@ -468,7 +468,7 @@ Saved lower part!
 
 Now, the saved part is used:
 \begin{tcolorbox}[colback=green!5]
-\input{\jobname_bspsave2.tex}
+\input{\jobname_bspsave4.tex}
 \end{tcolorbox}
 \end{exdispExample}
 \end{docTcbKey}
