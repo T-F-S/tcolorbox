@@ -871,7 +871,7 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
 \begin{docTcbKey}[][doc new={2020-04-23}]{doc sort index}{=\meta{text}}{no default, initially unset}
   If used inside the option list of \refEnv{docCommand}, \refEnv{docEnvironment},
   \refEnv{docKey}, etc, then \meta{text} is used
-  for as sort key for the index instead of the name of the definition.
+  as sort key for the index instead of the name of the definition.
 \begin{dispListing}
 \begin{docCommands}[
     doc name        = l_tcobox_example_tl,
@@ -907,7 +907,7 @@ which is commented by a note inside the margin.
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2014-09-19]{doc new}{=\meta{date}}{style, no default}
-  Adds a a marginnote with a \enquote{New: \meta{date}} message at the beginning of
+  Adds a marginnote with a \enquote{New: \meta{date}} message at the beginning of
   the upper box part. The intended use is inside the option list of
   \refEnv{docCommand}, \refEnv{docEnvironment}, etc.
   \makeatletter\renewcommand*{\tcbdocnew}[1]{\kvtcb@text@new: #1}\makeatother%
