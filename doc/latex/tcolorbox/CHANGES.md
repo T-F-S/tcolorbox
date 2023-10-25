@@ -22,6 +22,35 @@ and this project adheres to
 
 
 
+## [6.2.0]
+
+### Added
+- New convenience options for box content additions (issue #250)
+    - Option `environment upper`
+    - Option `environment upper args`
+    - Option `environment lower`
+    - Option `environment lower args`
+    - Option `environment title`
+    - Option `environment title args`
+
+### Changed
+- minor implementation change to `redirectlowerto` (issue #240)
+- `pgfkeys` mentioned in the documentation (issue #241)
+- distinct `savelowerto`/`redirectlowerto` file names inside the documentation (issue #248)
+- updated documentation and warnings for the interaction between `saveto`
+    and `savelowerto` (issue #249)
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Several documentation typos (PR/issue #251)
+
+### Security
+
+
+
 ## [6.1.0] - 2023-09-26
 
 ### Added

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.1.0 (2023/09/26)
+%% The LaTeX package tcolorbox - version 6.2.0pre1 (2023/10/25)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/09/26 version 6.1.0 text color boxes]
-\def\tcb@version{6.1.0}
+\ProvidesPackage{tcolorbox}[2023/10/25 version 6.2.0pre1 text color boxes]
+\def\tcb@version{6.2.0pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -287,7 +287,7 @@
   fontlower/.store in=\kvtcb@fontlower,
   tempfile/.store in=\kvtcb@tempfile,
   savelowerto/.code={\tcb@redirectlowertofalse\def\kvtcb@savelowerto{#1}},
-  redirectlowerto/.code={\tcb@lowerignoredtrue\tcb@lowervisiblefalse\tcb@redirectlowertotrue\def\kvtcb@savelowerto{#1}},
+  redirectlowerto/.code={\pgfkeysalso{lowerbox=ignored}\tcb@redirectlowertotrue\def\kvtcb@savelowerto{#1}},
   saveto/.store in=\kvtcb@saveupperto,
   savedelimiter/.estore in=\kvtcb@savedelimiter,
   floatplacement/.store in=\kvtcb@floatplacement,
@@ -890,6 +890,25 @@
 
 \ExplSyntaxOn
 
+\tcbset
+{
+  __environment / .style~n~args = { 3 }
+    {
+      before~#1* = { \begin{#2} #3 },
+      after~#1*  = { \end{#2} }
+    },
+  environment~upper / .value~required,
+  environment~lower / .value~required,
+  environment~title / .value~required,
+  environment~upper / .style = { __environment = {upper}{#1}{ } },
+  environment~lower / .style = { __environment = {lower}{#1}{ } },
+  environment~title / .style = { __environment = {title}{#1}{ } },
+  environment~upper~args / .style~n~args = { 2 }{ __environment = {upper}{#1}{#2} },
+  environment~lower~args / .style~n~args = { 2 }{ __environment = {lower}{#1}{#2} },
+  environment~title~args / .style~n~args = { 2 }{ __environment = {title}{#1}{#2} },
+}
+
+
 \tl_new:N \l__tcobox_kv_labeltype_tl
 
 
@@ -1183,8 +1202,19 @@
     \expandafter\let\csname end\kvtcb@savedelimiter\expandafter\endcsname\csname tcb@endupperverbatimanddraw\endcsname%
     \ifx\kvtcb@savelowerto\@empty%
     \else%
-      \tcb@warning{'saveto' and 'savelowerto' cannot be combined. I deactivate 'savelowerto'}%
-      \tcbset{savelowerto=}%
+      \iftcb@redirectlowerto%
+        \tcb@warning{%
+          'saveto' and 'redirectlowerto' cannot be combined.\MessageBreak
+          I deactivate 'redirectlowerto' but retain its\MessageBreak
+          'lowerbox' setting}%
+        \tcb@redirectlowertofalse%
+        \tcbset{savelowerto=}%
+      \else%
+        \tcb@warning{%
+          'saveto' and 'savelowerto' cannot be combined.\MessageBreak
+          I deactivate 'savelowerto'}%
+        \tcbset{savelowerto=}%
+      \fi%
     \fi%
   \fi%
   \tcb@startbox%

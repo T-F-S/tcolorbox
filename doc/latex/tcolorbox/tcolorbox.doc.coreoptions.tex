@@ -4,7 +4,11 @@
 \section{Option Keys}\label{sec:optkeys}%
 \tcbset{external/prefix=external/coreoptions_}%
 For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
-the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
+the following |pgf| keys can be applied%
+\footnote{Strictly speaking, they are \texttt{pgfkeys} keys.
+  The \texttt{pgfkeys} package is auto-loaded by \texttt{pgf} and is
+  documented in \cite[Part~VII]{tantau:tikz_and_pgf}.}.
+The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
 the syntax for |pgf| keys, see \cite{tantau:tikz_and_pgf,sturm:latex} or the examples
 starting from page~\pageref{sec:latextutorial}.
@@ -272,8 +276,10 @@ This is a \textbf{tcolorbox} (but invisible).
   This is the counterpart of \refKey{/tcb/savelowerto}, but it saves not
   only the upper part but the whole content. If a lower part is present,
   it is also saved including \refCom{tcblower}.
+  An empty \meta{file name} deactivates \refKey{/tcb/saveto}.
   \begin{marker}
-  This option cannot be combined with \refKey{/tcb/savelowerto}.
+  This option cannot be combined with \refKey{/tcb/savelowerto} or
+  \refKey{/tcb/redirectlowerto}.
   \end{marker}
 
 \begin{exdispExample}{saveto_1}
@@ -315,6 +321,12 @@ Now, we load the saved text:
   \item\docValue{ignored}: the lower part is not used (here).
   \end{itemize}
   The last two values are usually applied in connection with |savelowerto|.
+
+  \begin{marker}
+  The lower part is always typset into a box which is used or dropped
+  accordingly. The only exception is applying \refKey{/tcb/redirectlowerto}.
+  \end{marker}
+
 \begin{exdispExample}{lowerbox}
 \begin{tcolorbox}[lowerbox=invisible,colback=white]
 This is a \textbf{tcolorbox}.
@@ -331,8 +343,14 @@ This is the lower part (but ignored).
 \end{docTcbKey}
 
 
+\clearpage
 \begin{docTcbKey}[][doc updated=2014-11-28]{savelowerto}{=\meta{file name}}{no default, initially empty}
   Saves the content of the lower part into a file for an optional later usage.
+  An empty \meta{file name} deactivates \refKey{/tcb/savelowerto}.
+  \begin{marker}
+  This option cannot be combined with \refKey{/tcb/saveto}.
+  \end{marker}
+
 \begin{exdispExample}{savelowerto}
 \begin{tcolorbox}[lowerbox=invisible,savelowerto=\jobname_bspsave.tex,colback=white]
 This is a \textbf{tcolorbox}.
@@ -346,12 +364,17 @@ Now, we load the saved text:\\
 \end{exdispExample}
 \end{docTcbKey}
 
+\medskip
 
-\clearpage
 \begin{docTcbKey}[][doc new=2023-07-17]{redirectlowerto}{=\meta{file name}}{no default, initially empty}
   This is a combination of \refKey{/tcb/savelowerto} and \refKey{/tcb/lowerbox}|=|\docValue{ignored}
   \emph{and additionally} avoids typesetting the content of the lower part.
   This can be useful, if the lower part contains counters or similar.
+  An empty \meta{file name} deactivates the saving, but the \refKey{/tcb/lowerbox}
+  setting will still be \docValue{ignored}.
+  \begin{marker}
+  This option cannot be combined with \refKey{/tcb/saveto}.
+  \end{marker}
 \begin{exdispExample}{redirectlowerto}
 
 \setcounter{enumi}{1}
@@ -2630,6 +2653,90 @@ Lower part.
   which is broken.}
 \end{exdispExample*}
 \end{docTcbKey}
+
+\clearpage
+
+\begin{docTcbKeys}[
+    doc new = 2023-10-16,
+    doc description = style,
+  ]
+  {
+    { doc name = environment upper, doc parameter={=\meta{name}} },
+    { doc name = environment upper args, doc parameter={=\marg{name}\marg{code}} }
+  }
+  This shortcut style sets \refKey{/tcb/before upper*}
+  to |\begin|\marg{name} and \refKey{/tcb/after upper*}
+  to |\end|\marg{name}, i.e. the upper part is enclosed by the environment \meta{name}.
+  The second variant also places \meta{code} after |\begin|\marg{name}.
+\begin{exdispExample}{environment_upper_1}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!80!black,
+  environment upper=itemize
+]
+  \item one
+  \item two
+\end{tcolorbox}
+\end{exdispExample}
+  Note that you may need \emph{additional} brackets around \meta{code}, if
+  \meta{code} contains some para\-meter(s) for the environment \meta{name}.
+\begin{exdispExample}{environment_upper_2}
+\begin{tcolorbox}[center upper,
+  colback=yellow!30, colframe=yellow!80!black,
+  environment upper args={tabular}{{cc}}
+]
+  one & two \\
+  three & four\\
+\end{tcolorbox}
+\end{exdispExample}
+\begin{exdispExample}{environment_upper_3}
+\begin{tcolorbox}[colback=yellow!30, colframe=yellow!80!black,
+  environment upper args = {list}{{\bfseries Fact:}
+    {\setlength\itemsep{0pt}\setlength\parsep{0pt}}},
+]
+  \item Blue is red
+  \item Red is green
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKeys}
+
+\clearpage
+
+\begin{docTcbKeys}[
+    doc new = 2023-10-16,
+    doc description = style,
+  ]
+  {
+    { doc name = environment lower, doc parameter={=\meta{name}} },
+    { doc name = environment lower args, doc parameter={=\marg{name}\marg{code}} }
+  }
+  This shortcut style sets \refKey{/tcb/before lower*}
+  to |\begin|\marg{name} and \refKey{/tcb/after lower*}
+  to |\end|\marg{name}, i.e. the lower part is enclosed by the environment \meta{name}.
+  The second variant also places \meta{code} after |\begin|\marg{name}.
+  Note that you may need \emph{additional} brackets around \meta{code}, if
+  \meta{code} contains some para\-meter(s) for the environment \meta{name}.
+
+  See \refKey{/tcb/environment upper} for analog examples.
+\end{docTcbKeys}
+
+
+\begin{docTcbKeys}[
+    doc new = 2023-10-16,
+    doc description = style,
+  ]
+  {
+    { doc name = environment title, doc parameter={=\meta{name}} },
+    { doc name = environment title args, doc parameter={=\marg{name}\marg{code}} }
+  }
+  This shortcut style sets \refKey{/tcb/before title*}
+  to |\begin|\marg{name} and \refKey{/tcb/after title*}
+  to |\end|\marg{name}, i.e. the title text is enclosed by the environment \meta{name}.
+  The second variant also places \meta{code} after |\begin|\marg{name}.
+  Note that you may need \emph{additional} brackets around \meta{code}, if
+  \meta{code} contains some para\-meter(s) for the environment \meta{name}.
+
+  See \refKey{/tcb/environment upper} for analog examples.
+\end{docTcbKeys}
+
 
 
 \clearpage
