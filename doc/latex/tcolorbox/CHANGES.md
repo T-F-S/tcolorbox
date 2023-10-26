@@ -34,10 +34,10 @@ and this project adheres to
     - Option `environment title args`
 
 ### Changed
-- minor implementation change to `redirectlowerto` (issue #240)
+- Minor implementation change to `redirectlowerto` (issue #240)
 - `pgfkeys` mentioned in the documentation (issue #241)
-- distinct `savelowerto`/`redirectlowerto` file names inside the documentation (issue #248)
-- updated documentation and warnings for the interaction between `saveto`
+- Distinct `savelowerto`/`redirectlowerto` file names inside the documentation (issue #248)
+- Updated documentation and warnings for the interaction between `saveto`
     and `savelowerto` (issue #249)
 
 ### Deprecated
