@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre1 (2023/10/25)
+%% The LaTeX package tcolorbox - version 6.2.0pre2 (2023/10/27)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre1}
+\tcb@set@library@version{6.2.0pre2}
 
 \RequirePackage{tikz}[2010/10/13]
 \RequirePackage{tikzfill.image}
@@ -1769,14 +1769,14 @@
           {
             \begin{tcolorbox}
               \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth,height=\tcbtextheight,keepaspectratio }{ \imagepath }
-          \end{tcolorbox}
+            \end{tcolorbox}
           }
           {
             \tl_if_empty:NTF \tcb@height@adjust
             {
               \begin{tcolorbox}
                 \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth }{ \imagepath }
-              \end{tcolorbox}%
+              \end{tcolorbox}
             }{% height fill
               \begin{tcolorbox}[
                 underlay=
