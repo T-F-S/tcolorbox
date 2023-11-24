@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre2 (2023/10/27)
+%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre2}
+\tcb@set@library@version{6.2.0pre3}
 
 \tcbuselibrary{pro@cessing}
 
@@ -65,31 +65,44 @@
   \edef\tcbexternal@job@pdf{\expandonce{\tcbexternal@job@name.pdf}}%
 }
 
-\def\tcbexternal@corecompile{%
-  \begingroup%
-  \ifnum\the\catcode`\"=13 \tcbexternal@activate@normal@dq\fi%
-  \message{=== Compile external '\tcbexternal@job@name': }%
-  \tcb@allocate@tcb@out%
-  \immediate\openout\tcb@out="\tcbexternal@run@tex"
-  \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALINPUT{"\tcbexternal@job@source"}}%
-  \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALSAFETY{\tcbexternal@safety}}%
-  \immediate\write\tcb@out{\string\gdef\string\TCBEXTERNALPREAMBLE{\expandonce{\tcbexternal@preamble}}}%
-  \ifdefempty{\tcbexternal@preclass}{}{\immediate\write\tcb@out{\expandonce{\tcbexternal@preclass}}}%
-  \immediate\write\tcb@out{\string\input{"\jobname.tex"}}%
-  \immediate\closeout\tcb@out%
-  \foreach \n in {1,...,\tcbexternal@runs}
-  {%
-    \ShellEscape{%
-      \tcbexternal@compiler\space
-      -shell-escape
-      -halt-on-error
-      -interaction=batchmode
-      -jobname="\tcbexternal@job@name"
-      "\tcbexternal@run@tex"
-    }%
-  }%
-  \endgroup%
-}
+\ExplSyntaxOn
+\cs_new_protected:Npn \tcbexternal@corecompile
+  {
+    \group_begin:
+    \char_set_catcode_other:n { `\" }
+    \iow_term:e { ===~Compile~external~'\tcbexternal@job@name':~ }
+    \iow_open:Nn \g__tcobox_out_iow { \tcbexternal@run@tex }
+    \iow_now:Ne \g__tcobox_out_iow
+      {
+        \token_to_str:N \gdef \token_to_str:N \TCBEXTERNALINPUT
+          { "\tcbexternal@job@source" } \iow_newline:
+        \token_to_str:N \gdef \token_to_str:N \TCBEXTERNALSAFETY
+          { \tcbexternal@safety } \iow_newline:
+        \token_to_str:N \gdef \token_to_str:N \TCBEXTERNALPREAMBLE
+          { \exp_not:V \tcbexternal@preamble }
+      }
+    \tl_if_empty:NF \tcbexternal@preclass
+      {
+        \iow_now:NV \g__tcobox_out_iow \tcbexternal@preclass
+      }
+    \iow_now:Ne \g__tcobox_out_iow
+        { \token_to_str:N \input {"\jobname.tex"} }
+    \iow_close:N \g__tcobox_out_iow
+    \int_step_inline:nn { \tcbexternal@runs }
+      {
+        \sys_shell_now:e
+          {
+            \tcbexternal@compiler \c_space_tl
+            -shell-escape~
+            -halt-on-error~
+            -interaction=batchmode~
+            -jobname="\tcbexternal@job@name"~
+            "\tcbexternal@run@tex"
+          }
+      }
+    \group_end:
+  }
+\ExplSyntaxOff
 
 \def\tcbexternal@compile#1{%
   \tcbiffileprocess{#1}%
@@ -239,22 +252,22 @@
     \let\tcbexternal@out@end=\@empty%
   },
   minipage/.code={%
-    \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{minipage}{\the\dimexpr#1\relax}\string\ignorespaces\@percentchar}}%
-    \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{minipage}\@percentchar}}%
+    \appto\tcbexternal@out@begin{\tcb@iow@write{\string\begin{minipage}{\the\dimexpr#1\relax}\string\ignorespaces\@percentchar}}%
+    \preto\tcbexternal@out@end{\tcb@iow@write{\string\end{minipage}\@percentchar}}%
   },
   minipage/.default=\linewidth,
   %
   environment with percent/.is choice,
   environment with percent/true/.style={%
     /tcb/external/environment/.code={%
-      \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{##1}\@percentchar}}%
-      \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{##1}\@percentchar}}%
+      \appto\tcbexternal@out@begin{\tcb@iow@write{\string\begin{##1}\@percentchar}}%
+      \preto\tcbexternal@out@end{\tcb@iow@write{\string\end{##1}\@percentchar}}%
     }
   },
   environment with percent/false/.style={%
     /tcb/external/environment/.code={%
-      \appto\tcbexternal@out@begin{\immediate\write\tcb@out{\string\begin{##1}}}%
-      \preto\tcbexternal@out@end{\immediate\write\tcb@out{\string\end{##1}}}%
+      \appto\tcbexternal@out@begin{\tcb@iow@write{\string\begin{##1}}}%
+      \preto\tcbexternal@out@end{\tcb@iow@write{\string\end{##1}}}%
     }
   },
   environment with percent/.default=true,

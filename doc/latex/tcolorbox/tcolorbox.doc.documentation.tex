@@ -18,7 +18,6 @@ This also loads
 the library \mylib{skins}, see \Vref{sec:skins},
 the library \mylib{raster}, see \Vref{sec:raster},
 the library \mylib{listings}, see \Vref{sec:listings},
-the library \mylib{xparse}, see \Vref{sec:xparse},
 and a bunch of packages, namely
 |makeidx|, |marginnote|, |refcount|, and |hyperref|.
 The packages |pifont| and |marvosym| should be installed for some symbols, but
@@ -73,10 +72,9 @@ For |minted| \cite{poore:minted} support, load:
 \end{docCommand}
 \end{dispExample}
 \begin{dispExample}
-\begin{docCommand}[color definition=blue]{foomakedocSubKey*}%
-    {\marg{name}\marg{key path}}
-  Creates a new environment \meta{name} based on \refEnv{docKey} for the
-  documentation of keys with the given \meta{key path}.
+\begin{docCommand}[doc no index,color definition=blue]{section}%
+    {\sarg\marg{title}}
+  Starts a section. The star variant is unnumbered.
 \end{docCommand}
 \end{dispExample}
 \end{docEnvironment}
@@ -98,14 +96,12 @@ For |minted| \cite{poore:minted} support, load:
 \begin{dispExample}
 \begin{docCommands}[
     doc no index,  %  no index entries for this example
-    doc name      = newtheorem,
-    doc parameter = \marg{envname},
+    doc name      = newtheorem
   ]
   {
-    {  },
+    { doc parameter = \sarg\marg{envname} },
     { doc parameter = \marg{envname}\oarg{numbered within} },
-    { doc parameter = \oarg{numbered like}\marg{envname} },
-    { doc name      = newtheorem* },
+    { doc parameter = \oarg{numbered like}\marg{envname} }
   }
   example
 \end{docCommands}

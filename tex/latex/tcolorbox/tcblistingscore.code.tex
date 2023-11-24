@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre2 (2023/10/27)
+%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.2.0pre2}
+\tcb@set@library@version{6.2.0pre3}
 
 \tcbuselibrary{pro@cessing}
 
@@ -164,15 +164,29 @@
   \begin{tcolorbox}[capture=\tcb@listing@capture,savedelimiter=tcolorbox]\tcb@listing@process\end{tcolorbox}%
 }
 
-\long\def\tcb@run@system@command#1{%
-  \ifcase\pdf@shellescape\relax
-    \tcb@error{You must invoke LaTeX with the -shell-escape flag}{Pass the -shell-escape flag to LaTeX.}%
-  \or\or
-    \tcb@warning{System call with restricted shell escape may fail}%
-  \fi%
-  \ShellEscape{#1}%
-  \relax%
+\ExplSyntaxOn
+\cs_new_protected:Npn \__tcbox_run_system_command:n #1
+  {
+    \sys_if_shell:TF
+      {
+        \sys_if_shell_restricted:T
+          {
+            \tcb@warning{System~call~with~restricted~shell~escape~may~fail}
+          }
+      }
+      {
+        \tcb@error{You~must~invoke~LaTeX~with~the~-shell-escape~flag}
+          {Pass~the -shell-escape~flag~to~LaTeX.}
+      }
+    \sys_shell_now:e {#1}
+  }
+
+\tcbset
+{
+  run~system~command/.style={process~code={\__tcbox_run_system_command:n{#1}}},
 }
+
+\ExplSyntaxOff
 
 
 \tcbset{%
@@ -219,7 +233,6 @@
   process code/.code={\appto\tcb@listing@process@hook{#1}},%
   no process/.code={\def\tcb@listing@process@hook{}},%
   compilable listing/.style={listing file={\jobname-listing-\thetcblistingcount.tex}},
-  run system command/.style={process code={\tcb@run@system@command{#1}}},%
   run@system@command/.style 2 args={run system command={#1\space#2\space\filename@area\filename@base}},%
   run pdflatex/.style={run@system@command={pdflatex}{#1}},%
   run xelatex/.style={run@system@command={xelatex}{#1}},%

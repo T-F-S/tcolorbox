@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre2 (2023/10/27)
+%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/10/27 version 6.2.0pre2 text color boxes]
-\def\tcb@version{6.2.0pre2}
+\ProvidesPackage{tcolorbox}[2023/11/24 version 6.2.0pre3 text color boxes]
+\def\tcb@version{6.2.0pre3}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -2568,10 +2568,12 @@
 
 % verbatim output as in 'verbatim'
 
-\def\tcb@allocate@tcb@out{%
-  \newwrite\tcb@out%
-  \xdef\tcb@allocate@tcb@out{}%
-}
+\ExplSyntaxOn
+\iow_new:N \g__tcobox_out_iow
+\cs_new_protected:Npn \tcb@iow@open  { \iow_open:Nn \g__tcobox_out_iow }
+\cs_new_protected:Npn \tcb@iow@write { \iow_now:Ne  \g__tcobox_out_iow }
+\cs_new_protected:Npn \tcb@iow@close { \iow_close:N \g__tcobox_out_iow }
+\ExplSyntaxOff
 
 \let\tcb@verbatim@begin@hook\@empty
 \let\tcb@verbatim@end@hook\@empty
@@ -2581,20 +2583,17 @@
 \def\tcbverbatimwrite#1{%
   \@bsphack
   \tcb@set@verbatim@finish%
-  \tcb@allocate@tcb@out%
-  \immediate\openout\tcb@out #1
+  \tcb@iow@open{#1}%
   \tcb@verbatim@begin@hook%
   \let\do\@makeother\dospecials
   \tcb@verbatim@change@percent\catcode`\^^M\active \catcode`\^^I=12
-  \def\verbatim@processline{%
-    \immediate\write\tcb@out
-      {\the\verbatim@line}}%
+  \def\verbatim@processline{\tcb@iow@write{\the\verbatim@line}}%
   \verbatim@start}%'
 
 
 \def\endtcbverbatimwrite{%
   \tcb@verbatim@end@hook%
-  \immediate\closeout\tcb@out
+  \tcb@iow@close
   \@esphack%
 }
 
@@ -2679,36 +2678,44 @@
 
 % recording
 
-\def\tcb@allocate@tcb@record@out{%
-  \newwrite\tcb@record@out%
-  \xdef\tcb@allocate@tcb@record@out{}%
-}
+\ExplSyntaxOn
+\iow_new:N \g__tcobox_record_iow
+\str_new:N \l__tcobox_record_file_str
 
+\cs_new_protected:Npn \__tcobox_record:n #1
+  {
+    \iow_now:Ne \g__tcobox_record_iow { #1 }
+  }
 
-\def\tcb@null#1{}
-\newcommand{\tcb@record}[1]{\immediate\write\tcb@record@out{#1}}
+\NewDocumentCommand \tcbstartrecording { O{\jobname.records} }
+  {
+    \cs_set_eq:NN \tcbrecord \__tcobox_record:n
+    \str_set:Ne \l__tcobox_record_file_str { #1 }
+    \iow_open:Nn \g__tcobox_record_iow { \l__tcobox_record_file_str }
+  }
 
-\newcommand{\tcbstartrecording}[1][\jobname.records]{%
-  \let\tcbrecord\tcb@record%
-  \edef\tcb@record@file{#1}%
-  \tcb@allocate@tcb@record@out%
-  \immediate\openout\tcb@record@out\tcb@record@file%
-}
+\NewDocumentCommand \tcbstoprecording { }
+  {
+    \iow_close:N \g__tcobox_record_iow
+    \cs_set_eq:NN \tcbrecord \use_none:n
+  }
 
-\newcommand{\tcbstoprecording}{%
-  \immediate\closeout\tcb@record@out%
-  \let\tcbrecord\tcb@null%
-}
-
-\tcbset{%
+\tcbset{
   record/.style={phantom={\tcbrecord{#1}}},
-  no recording/.code={\let\tcbrecord\tcb@null},
-  no recording
+  no~recording/.code={ \cs_set_eq:NN \tcbrecord \use_none:n },
+  no~recording
 }
 
-\newcommand{\tcbinputrecords}[1][\tcb@record@file]{%
-  \IfFileExists{#1}{\input{#1}}{\tcb@error{record file `#1' not found}{The record file `#1' was not found}}%
-}
+\NewDocumentCommand \tcbinputrecords { O{\l__tcobox_record_file_str} }
+  {
+    \file_if_exist_input:nF {#1}
+      {
+        \tcb@error{record~file~`#1'~not~found}
+          {The~record~file~`#1'~was~not~found}
+      }
+  }
+
+\ExplSyntaxOff
 
 \tcb@new@skin{standard}{frame engine=standard,interior titled engine=standard,
   interior engine=standard,segmentation engine=standard,title engine=standard,

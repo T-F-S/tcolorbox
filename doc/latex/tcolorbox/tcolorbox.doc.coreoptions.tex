@@ -2698,6 +2698,15 @@ Lower part.
 \end{exdispExample}
 \end{docTcbKeys}
 
+
+\begin{marker}
+\refKey{/tcb/environment upper} and friends (following) cannot be used to
+wrap another |tcolorbox|-based environment, i.e. never use
+|/tcb/environment upper=tcolorbox| or
+|/tcb/environment upper=etc-derived-from-tcolorbox|.
+\end{marker}
+
+
 \clearpage
 
 \begin{docTcbKeys}[

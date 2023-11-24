@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre2 (2023/10/27)
+%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre2}
+\tcb@set@library@version{6.2.0pre3}
 
-\tcbuselibrary{listings,skins,xparse,external,raster}
+\tcbuselibrary{listings,skins,external,raster}
 
 \ifdefined\printindex\else%
   \RequirePackage{makeidx}[2000/03/29]%
@@ -333,7 +333,7 @@
 \ExplSyntaxOn
 
 
-\cs_new_nopar:Npn \__tcobox_new_bool_key:nn #1 #2
+\cs_new_nopar:Npn \__tcobox_new_bool_key:Nn #1 #2
   {
     \bool_new:N #1
     \tcbset
@@ -345,15 +345,15 @@
       }
   }
 
-\__tcobox_new_bool_key:nn \l__tcobox_doc_toindex_bool { doc~into~index }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_colors_bool       { index~gather~colors }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_commands_bool     { index~gather~commands }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_counters_bool     { index~gather~counters }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_environments_bool { index~gather~environments }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_keys_bool         { index~gather~keys }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_lengths_bool      { index~gather~lengths }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_paths_bool        { index~gather~paths }
-\__tcobox_new_bool_key:nn \l__tcobox_doc_gather_values_bool       { index~gather~values }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_toindex_bool { doc~into~index }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_colors_bool       { index~gather~colors }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_commands_bool     { index~gather~commands }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_counters_bool     { index~gather~counters }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_environments_bool { index~gather~environments }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_keys_bool         { index~gather~keys }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_lengths_bool      { index~gather~lengths }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_paths_bool        { index~gather~paths }
+\__tcobox_new_bool_key:Nn \l__tcobox_doc_gather_values_bool       { index~gather~values }
 
 
 \cs_new_nopar:Npn \__tcobox_sanitize_tl:n #1

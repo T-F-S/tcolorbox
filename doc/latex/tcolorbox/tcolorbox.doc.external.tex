@@ -391,9 +391,7 @@ Note that this option is ignored for \refKey{/tcb/externalize listing}.
 
 \begin{extTcbKey}[][doc new=2015-03-11]{compiler}{=\meta{text}}{no default,
   initially \texttt{pdflatex}}
-  Sets the name of the compiler for the snippets. Note that this compiler
-  has to support the |\pdfmdfivesum| primitive e.g. using the
-  |pdftexcmds| package. This should work for |xelatex| and |lualatex|.
+  Sets the name of the compiler for the snippets.
 \end{extTcbKey}
 
 \begin{extTcbKey}[][doc new=2015-03-11]{runs}{=\meta{number}}{no default,
@@ -605,14 +603,17 @@ This is my \LaTeX\ box.
   not created.}\\
   Depending on operating system and compiler, an |external| subdirectory is
   automatically created or not. If not, create such a directory manually
-  or add the following to your document\footnote{The |shellesc| package
-  is loaded automatically by the library.}:
+  or add the following to your document:
 \begin{dispListing}
-\ShellEscape{mkdir external}
+\ExplSyntaxOn
+\sys_shell_now:n { mkdir~external }
+\ExplSyntaxOff
 \end{dispListing}
 or
 \begin{dispListing}
-\ShellEscape{mkdir -p external}
+\ExplSyntaxOn
+\sys_shell_now:n { mkdir~-p~external }
+\ExplSyntaxOff
 \end{dispListing}
   If the combination of \refKey{/tcb/external/prefix} and chosen snippet
   name points to another subdirectory than |external|, this has to be

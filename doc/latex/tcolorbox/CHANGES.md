@@ -32,6 +32,19 @@ and this project adheres to
     - Option `environment lower args`
     - Option `environment title`
     - Option `environment title args`
+- Library `hooks`:
+    - Option `environment upper app`
+    - Option `environment upper args app`
+    - Option `environment lower app`
+    - Option `environment lower args app`
+    - Option `environment title app`
+    - Option `environment title args app`
+    - Option `environment upper pre`
+    - Option `environment upper args pre`
+    - Option `environment lower pre`
+    - Option `environment lower args pre`
+    - Option `environment title pre`
+    - Option `environment title args pre`
 
 ### Changed
 - Minor implementation change to `redirectlowerto` (issue #240)
@@ -39,10 +52,20 @@ and this project adheres to
 - Distinct `savelowerto`/`redirectlowerto` file names inside the documentation (issue #248)
 - Updated documentation and warnings for the interaction between `saveto`
     and `savelowerto` (issue #249)
+- Improved some `\sarg` examples in the documentation (issue #256)
+- Library `documentation`:
+    - Expl3 arg-spec of internal macro corrected (issue #257)
+- Recording macros rewritten in expl3 code (part of issue #255)    
+- Library `external`: package loading of `pdftexcmds` and `shellesc` removed.
+    expl3 functions are used as drop-in replacements (part of issue #255)
+- Libraries `listings`, `listingsutf8`, and `minted`: package loading of `pdftexcmds`
+    and `shellesc` removed (part of issue #255)
 
 ### Deprecated
 
 ### Removed
+- Loading of the `xparse` library dropped inside the `documentation` library since all
+    needed features are part of the LaTeX format now (issue #254)
 
 ### Fixed
 - Several documentation typos and minor improvements (PR/issue #251 and PR/issue #252)

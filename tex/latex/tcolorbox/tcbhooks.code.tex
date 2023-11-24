@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre2 (2023/10/27)
+%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
 %% tcbhooks.code.tex: Code for adding hooks
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.2.0pre2}
+\tcb@set@library@version{6.2.0pre3}
 
 \tcbset{%
   before upper app/.code={\appto\kvtcb@before@upper{#1}},%
@@ -135,4 +135,37 @@
   listing options app/.code={\appto\kvtcb@listingoptions{,#1}},
   listing options pre/.code={\preto\kvtcb@listingoptions{#1,}},
 }
+
+\ExplSyntaxOn
+\tcbset {
+  __environment-app / .style~n~args = { 3 }
+    {
+      before~#1~app = { \begin{#2} #3 },
+      after~#1~pre  = { \end{#2} }
+    },
+  environment~upper~app / .value~required,
+  environment~lower~app / .value~required,
+  environment~title~app / .value~required,
+  environment~upper~app / .style = { __environment-app = {upper}{#1}{ } },
+  environment~lower~app / .style = { __environment-app = {lower}{#1}{ } },
+  environment~title~app / .style = { __environment-app = {title}{#1}{ } },
+  environment~upper~args~app / .style~n~args = { 2 }{ __environment-app = {upper}{#1}{#2} },
+  environment~lower~args~app / .style~n~args = { 2 }{ __environment-app = {lower}{#1}{#2} },
+  environment~title~args~app / .style~n~args = { 2 }{ __environment-app = {title}{#1}{#2} },
+  __environment-pre / .style~n~args = { 3 }
+    {
+      before~#1~pre = { \begin{#2} #3 },
+      after~#1~app  = { \end{#2} }
+    },
+  environment~upper~pre / .value~required,
+  environment~lower~pre / .value~required,
+  environment~title~pre / .value~required,
+  environment~upper~pre / .style = { __environment-pre = {upper}{#1}{ } },
+  environment~lower~pre / .style = { __environment-pre = {lower}{#1}{ } },
+  environment~title~pre / .style = { __environment-pre = {title}{#1}{ } },
+  environment~upper~args~pre / .style~n~args = { 2 }{ __environment-pre = {upper}{#1}{#2} },
+  environment~lower~args~pre / .style~n~args = { 2 }{ __environment-pre = {lower}{#1}{#2} },
+  environment~title~args~pre / .style~n~args = { 2 }{ __environment-pre = {title}{#1}{#2} },
+}
+\ExplSyntaxOff
 
