@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
+%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
 %% tcblistingscode.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.2.0pre3}
+\tcb@set@library@version{6.2.0pre4}
 
 \tcbuselibrary{pro@cessing}
 
@@ -176,7 +176,7 @@
       }
       {
         \tcb@error{You~must~invoke~LaTeX~with~the~-shell-escape~flag}
-          {Pass~the -shell-escape~flag~to~LaTeX.}
+          {Pass~the~-shell-escape~flag~to~LaTeX.}
       }
     \sys_shell_now:e {#1}
   }
@@ -368,8 +368,8 @@
   }
 \NewDocumentCommand \__tcobox_new_tcbinputlisting_i:w { m +O{} m }
   {
-    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
-    \exp_args:NNnV \__tcobox_new_tcbinputlisting_ii:w #1 {#2} \l_tmpa_tl
+    \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_tcbinputlisting_ii:w #1 {#2} \l__tcobox_tmpa_tl
   }
 \NewDocumentCommand \newtcbinputlisting { }
   {
@@ -390,8 +390,8 @@
   }
 \NewDocumentCommand \__tcobox_new_TCBInputListing:w { m +O{} m }
   {
-    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
-    \exp_args:NNnV \__tcobox_new_TCBInputListing:Nnnnn #1 {#2} \l_tmpa_tl
+    \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TCBInputListing:Nnnnn #1 {#2} \l__tcobox_tmpa_tl
   }
 \NewDocumentCommand \DeclareTCBInputListing { }
   {

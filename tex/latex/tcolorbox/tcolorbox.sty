@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
+%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/11/24 version 6.2.0pre3 text color boxes]
-\def\tcb@version{6.2.0pre3}
+\ProvidesPackage{tcolorbox}[2023/12/01 version 6.2.0pre4 text color boxes]
+\def\tcb@version{6.2.0pre4}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -54,6 +54,16 @@
 \newcounter{tcbbreakpart}
 \newcounter{tcblayer}
 \newcounter{tcolorbox@number}
+
+\ExplSyntaxOn
+\bool_new:N \l__tcobox_prevent_init_overwrite_bool
+\iow_new:N \g__tcobox_out_iow
+\iow_new:N \g__tcobox_record_iow
+\str_new:N \l__tcobox_record_file_str
+\tl_new:N \l__tcobox_kv_labeltype_tl
+\tl_new:N \l__tcobox_tmpa_tl
+\tl_new:N \l__tcobox_tmpb_tl
+\ExplSyntaxOff
 
 \def\tcb@info#1{\PackageInfo{tcolorbox}{#1}}
 \def\tcb@warning#1{\PackageWarning{tcolorbox}{#1}}
@@ -910,9 +920,6 @@
   environment~lower~args / .style~n~args = { 2 }{ __environment = {lower}{#1}{#2} },
   environment~title~args / .style~n~args = { 2 }{ __environment = {title}{#1}{#2} },
 }
-
-
-\tl_new:N \l__tcobox_kv_labeltype_tl
 
 
 \cs_new:Npn \__tcobox_label_label:n #1
@@ -2269,8 +2276,6 @@
 
 \ExplSyntaxOn
 
-\bool_new:N \l__tcobox_prevent_init_overwrite_bool
-
 \cs_new:Npn \__tcobox_process_newtcolorbox:nn #1#2
   {
     \bool_lazy_and:nnF
@@ -2357,8 +2362,8 @@
   }
 \NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +O{} m }
   {
-    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
-    \exp_args:NNnV \__tcobox_new_TotalTColorBox:Nnnnnn #1 {#2} \l_tmpa_tl
+    \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TotalTColorBox:Nnnnnn #1 {#2} \l__tcobox_tmpa_tl
   }
 \NewDocumentCommand \DeclareTotalTColorBox { }
   {
@@ -2401,8 +2406,8 @@
   }
 \NewDocumentCommand \__tcobox_new_tcbox_i:w { m +O{} m }
   {
-    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
-    \exp_args:NNnV \__tcobox_new_tcbox_ii:w #1 {#2} \l_tmpa_tl
+    \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_tcbox_ii:w #1 {#2} \l__tcobox_tmpa_tl
   }
 \NewDocumentCommand \newtcbox { }
   {
@@ -2423,8 +2428,8 @@
   }
 \NewDocumentCommand \__tcobox_new_TCBox:w { m +O{} m }
   {
-    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
-    \exp_args:NNnV \__tcobox_new_TCBox:Nnnnn #1 {#2} \l_tmpa_tl
+    \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TCBox:Nnnnn #1 {#2} \l__tcobox_tmpa_tl
   }
 \NewDocumentCommand \DeclareTCBox { }
   {
@@ -2455,8 +2460,8 @@
   }
 \NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +O{} m }
   {
-    \__tcobox_set_backslash_removed:Nn \l_tmpa_tl { #3 }
-    \exp_args:NNnV \__tcobox_new_TotalTCBox:Nnnnnn #1 {#2} \l_tmpa_tl
+    \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
+    \exp_args:NNnV \__tcobox_new_TotalTCBox:Nnnnnn #1 {#2} \l__tcobox_tmpa_tl
   }
 \NewDocumentCommand \DeclareTotalTCBox { }
   {
@@ -2527,9 +2532,9 @@
     \ifnum\c@tocdepth<1\relax
       \tcb@warning{'tocdepth'~value~lower~than~1~for~'tcblistof'}
     \fi
-    \tl_set:Nx \l_tmpa_tl {\tl_trim_spaces:n{#1}}
-    \tl_set:Nx \l_tmpb_tl {\str_range:Nnn \l_tmpa_tl {2}{8}}
-    \str_if_eq:VnT \l_tmpb_tl { chapter }
+    \tl_set:Nx \l__tcobox_tmpa_tl {\tl_trim_spaces:n{#1}}
+    \tl_set:Nx \l__tcobox_tmpb_tl {\str_range:Nnn \l__tcobox_tmpa_tl {2}{8}}
+    \str_if_eq:VnT \l__tcobox_tmpb_tl { chapter }
       {
         \if@twocolumn
           \@restonecoltrue\onecolumn
@@ -2537,8 +2542,8 @@
           \@restonecolfalse
         \fi
       }
-    \tl_set:Nx \l_tmpa_tl {\str_item:Nn \l_tmpa_tl {-1}}
-    \str_if_eq:VnTF \l_tmpa_tl { * }
+    \tl_set:Nx \l__tcobox_tmpa_tl {\str_item:Nn \l__tcobox_tmpa_tl {-1}}
+    \str_if_eq:VnTF \l__tcobox_tmpa_tl { * }
       {
         #1{#4}
         \IfNoValueTF{#3}
@@ -2569,7 +2574,6 @@
 % verbatim output as in 'verbatim'
 
 \ExplSyntaxOn
-\iow_new:N \g__tcobox_out_iow
 \cs_new_protected:Npn \tcb@iow@open  { \iow_open:Nn \g__tcobox_out_iow }
 \cs_new_protected:Npn \tcb@iow@write { \iow_now:Ne  \g__tcobox_out_iow }
 \cs_new_protected:Npn \tcb@iow@close { \iow_close:N \g__tcobox_out_iow }
@@ -2602,12 +2606,12 @@
 
 \cs_new_nopar:Npn \__tcobox_verbatim_finish:
   {
-    \tl_set_rescan:Nnx \l_tmpa_tl
+    \tl_set_rescan:Nnx \l__tcobox_tmpa_tl
       {
         \char_set_catcode_space:n { 9 }
         \char_set_catcode_space:n { 32 }
       } { \the\verbatim@line }
-    \tl_if_blank:VF \l_tmpa_tl
+    \tl_if_blank:VF \l__tcobox_tmpa_tl
       {
         \verbatim@processline
       }
@@ -2679,8 +2683,6 @@
 % recording
 
 \ExplSyntaxOn
-\iow_new:N \g__tcobox_record_iow
-\str_new:N \l__tcobox_record_file_str
 
 \cs_new_protected:Npn \__tcobox_record:n #1
   {

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
+%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,16 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre3}
+\tcb@set@library@version{6.2.0pre4}
 
 \tcbuselibrary{pro@cessing}
-
-{
-\catcode`\"=12
-\xdef\tcbexternal@normal@dq{"}
-\catcode`\"=13
-\gdef\tcbexternal@activate@normal@dq{\let"=\tcbexternal@normal@dq}
-}
 
 \long\def\tcbifexternal#1#2{%
   \ifdefined\TCBEXTERNALINPUT%
@@ -79,7 +72,7 @@
         \token_to_str:N \gdef \token_to_str:N \TCBEXTERNALSAFETY
           { \tcbexternal@safety } \iow_newline:
         \token_to_str:N \gdef \token_to_str:N \TCBEXTERNALPREAMBLE
-          { \exp_not:V \tcbexternal@preamble }
+          { \exp_not:o \tcbexternal@preamble }
       }
     \tl_if_empty:NF \tcbexternal@preclass
       {

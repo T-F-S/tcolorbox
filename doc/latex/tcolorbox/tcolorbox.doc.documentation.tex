@@ -822,6 +822,85 @@ with another note.
 
 \clearpage
 
+\begin{docTcbKeys}[
+    doc new         = {2023-12-01},
+    doc name        = doc key prefix,
+    doc parameter   = {=\meta{key prefix}},
+    doc description = {no default, initially |/|},
+  ]{}
+  Sets the \meta{key prefix} (root path) of the key to document.
+  This prefix is prepended to \refKey{/tcb/doc keypath}, if
+  \refKey{/tcb/doc keypath} is not empty.
+  The default |/| setting is intended for |pgfkeys|.
+  For |l3keys|, setting \refKey{/tcb/doc key prefix} to be empty is more
+  appropriate, since their path starts with a module name without |/|.
+\begin{dispExample}
+\begin{docKeys}[
+    doc no index,  %  no index entries for this example
+    doc key prefix  = ,
+    doc keypath     = tcobox,% module name
+    doc name        = my_l3_key,
+    doc parameter   = {=\meta{some value}},
+    doc description = example,
+  ] {}
+  Documentation of a key using |l3keys|.
+\end{docKeys}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+
+\begin{docTcbKeys}[
+    doc new         = {2023-12-01},
+    doc parameter   = \colOpt{=\meta{macro}},
+    doc description = {no default, initially empty},
+  ]{
+    {
+      doc name = index key formatter,
+    },
+    {
+      doc name = index keys formatter,
+    }
+  }
+Sets \meta{macro} as formatter for the text given by
+\refKey{/tcb/doclang/key} or
+\refKey{/tcb/doclang/keys} inside the index.
+The \meta{macro} has to take one mandatory
+argument (the language text).
+The intended purpose is to differentiate between different sorts of
+keys, if necessary, e.g.\ between |pgfkeys| and |l3keys|.
+If these options are used without value, the formatters are reset to
+their standard behavior.
+
+\begin{dispExample}
+% See index of this documentation to recognize the effect
+\newcommand{\myFormatPgfkeysIndex}[1]{#1 (\textsf{pgfkeys})}
+\newcommand{\myFormatExplkeysIndex}[1]{#1 (\textsf{l3keys})}
+
+\tcbmakedocSubKey[
+    index key formatter=\myFormatPgfkeysIndex,
+    index keys formatter=\myFormatPgfkeysIndex
+  ]{docFooPgfkey}{foopgf}
+\tcbmakedocSubKey[
+    doc key prefix=,
+    index key formatter=\myFormatExplkeysIndex,
+    index keys formatter=\myFormatExplkeysIndex
+  ]{docFooExplkey}{fooexpl}
+
+\begin{docFooPgfkey}{foo pgf}{=\meta{name}}{no default, initially empty}
+  content
+\end{docFooPgfkey}
+
+\begin{docFooExplkey}{foo expl}{=\meta{name}}{no default, initially empty}
+  content
+\end{docFooExplkey}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+
+\clearpage
+
 \begin{docTcbKey}{doc description}{=\meta{description}}{no default, initially empty}
   Sets a (short!) additional \meta{description} for
   \refEnv{docCommand}, \refEnv{docEnvironment}, or \refEnv{docPathOperation}.
@@ -1092,7 +1171,7 @@ The is an example text.
 \tcbset{doc head key={boxsep=4pt,arc=4pt,boxrule=0.6pt,
   frame style=fill,interior style=fill,colframe=green!50!black}}
 
-\begin{docKey}{/foo/myKey}{}{no value}
+\begin{docKey}[foo]{myKey}{}{no value}
   This is the documentation of \refKey{/foo/myKey}.
 \end{docKey}
 \end{dispExample}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
+%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.2.0pre3}
+\tcb@set@library@version{6.2.0pre4}
 
 \RequirePackage{minted}[2021/12/24]
 
@@ -35,21 +35,21 @@
       {
         \usemintedstyle { #4 }
       }
-    \tl_set:Nn \l_tmpa_tl { \inputminted[#1 }
+    \tl_set:Nn \l__tcobox_tmpa_tl { \inputminted[#1 }
     \cs_if_exist:NT \tcb@listing@capture
       {
         \str_if_eq:VnT \tcb@listing@capture { hbox }
           {
-            \tl_put_right:Nn \l_tmpa_tl { ,envname=BVerbatim }
+            \tl_put_right:Nn \l__tcobox_tmpa_tl { ,envname=BVerbatim }
           }
       }
-    \tl_put_right:Nn \l_tmpa_tl { ] }
+    \tl_put_right:Nn \l__tcobox_tmpa_tl { ] }
     \file_if_exist:nTF { \minted@outputdir #3 }
       {
-        \l_tmpa_tl { #2 }{ \minted@outputdir #3 }
+        \l__tcobox_tmpa_tl { #2 }{ \minted@outputdir #3 }
       }
       {
-        \l_tmpa_tl { #2 }{ #3 }
+        \l__tcobox_tmpa_tl { #2 }{ #3 }
       }
   }
 

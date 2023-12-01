@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre3 (2023/11/24)
+%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre3}
+\tcb@set@library@version{6.2.0pre4}
 
 \tcbuselibrary{listings,skins,external,raster}
 
@@ -198,6 +198,11 @@
   keywords bold/.default=true,%
   keywords bold/true/.code={\let\tcb@doc@bfseries\bfseries},
   keywords bold/false/.code={\let\tcb@doc@bfseries\mdseries},
+  doc key prefix/.store in=\kvtcb@doc@keyprefix,
+  index key formatter/.code={\let\kvtcb@doc@format@key=#1},
+  index keys formatter/.code={\let\kvtcb@doc@format@keys=#1},
+  index key formatter/.default=\@firstofone,
+  index keys formatter/.default=\@firstofone,
 }
 
 
@@ -289,7 +294,7 @@
 \NewDocumentCommand{\tcbIndexPrintEnvCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@environment}{\kvtcb@text@env}}
 \NewDocumentCommand{\tcbIndexPrintEnvC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@environment}}
 
-\NewDocumentCommand{\tcbIndexPrintKeyCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}{\kvtcb@text@key}}
+\NewDocumentCommand{\tcbIndexPrintKeyCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@key}}
 \NewDocumentCommand{\tcbIndexPrintKeyC}{m}{\tcb@Index@Print@C{#1}{\kvtcb@col@key}}
 
 \NewDocumentCommand{\tcbIndexPrintPathCA}{m}{\tcb@Index@Print@CA{#1}{\kvtcb@col@path}{\kvtcb@text@path}}
@@ -570,7 +575,7 @@
     \textcolor{\kvtcb@col@key}{\tcb@doc@bfseries\ttfamily
     \tl_if_empty:NF \kvtcb@doc@keypath
       {
-        /\__tcobox_sanitize_tl:V\kvtcb@doc@keypath/
+        \kvtcb@doc@keyprefix\__tcobox_sanitize_tl:V\kvtcb@doc@keypath/
       }
     \__tcobox_sanitize_tl:V\kvtcb@doc@name}
   }
@@ -579,15 +584,15 @@
   {
     \bool_if:NT \l__tcobox_doc_toindex_bool
       {
-        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyCA{\kvtcb@doc@index}}
+        \kvtcb@index@command{\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyCA{\kvtcb@doc@index}{\kvtcb@doc@format@key\kvtcb@text@key}}
         \bool_if:NT \l__tcobox_doc_gather_keys_bool
           {
             \tl_if_empty:NTF \kvtcb@doc@keypath
               {
-                \kvtcb@index@command{\kvtcb@text@keys\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
+                \kvtcb@index@command{\kvtcb@doc@format@keys\kvtcb@text@keys\idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
               }
               {
-                \kvtcb@index@command{\kvtcb@text@keys\idx@level\kvtcb@doc@keypath\idx@actual\tcbIndexPrintKeyC{/\kvtcb@doc@keypath/}
+                \kvtcb@index@command{\kvtcb@doc@format@keys\kvtcb@text@keys\idx@level\kvtcb@doc@keypath\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@keyprefix\kvtcb@doc@keypath/}
                   \idx@level\kvtcb@doc@sortindex\idx@actual\tcbIndexPrintKeyC{\kvtcb@doc@index}}
               }
           }
@@ -608,12 +613,12 @@
           }
       }
       {
-        \tl_set:Nx \l_tmpa_tl {/\kvtcb@doc@keypath/\kvtcb@doc@label}
-        \seq_if_in:NVF \g__tcobox_label_seq \l_tmpa_tl
+        \tl_set:Nx \l__tcobox_tmpa_tl {\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@label}
+        \seq_if_in:NVF \g__tcobox_label_seq \l__tcobox_tmpa_tl
           {
-            \protected@edef\@currentlabel{/\kvtcb@doc@keypath/\kvtcb@doc@name}
-            \label{key:/\kvtcb@doc@keypath/\kvtcb@doc@label}
-            \seq_gput_left:NV \g__tcobox_label_seq \l_tmpa_tl
+            \protected@edef\@currentlabel{\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@name}
+            \label{key:\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@label}
+            \seq_gput_left:NV \g__tcobox_label_seq \l__tcobox_tmpa_tl
           }
       }
     {\ttfamily\kvtcb@doc@parameter}
@@ -655,17 +660,18 @@
   }
 
 
-\NewDocumentCommand \tcbmakedocSubKey { m m }
+\NewDocumentCommand \tcbmakedocSubKey { +O{} m m }
   {
-    \NewDocumentEnvironment{#1}{ O{} +O{} m m +m }
+    \NewDocumentEnvironment{#2}{ O{} +O{} m m +m }
       {
         \__tcobox_doc_entry_begin:nnn
           {
-            doc@sub@keypath=#2,
+            doc@sub@keypath=#3,
             doc~keypath=##1,
             doc~name={##3},
             doc~parameter={##4},
             doc~description={##5},
+            #1,
             ##2
           }
           {}{key}
@@ -673,27 +679,28 @@
       {
         \__tcobox_doc_entry_end:n { key }
       }
-    \NewDocumentEnvironment{#1*}{}
+    \NewDocumentEnvironment{#2*}{}
       {
         \group_begin:
         \bool_set_false:N \l__tcobox_doc_toindex_bool
-        \begin{#1}
+        \begin{#2}
       }
       {
-        \end{#1}
+        \end{#2}
         \group_end:
       }
   }
 
 
-\NewDocumentCommand \tcbmakedocSubKeys { m m }
+\NewDocumentCommand \tcbmakedocSubKeys { +O{} m m }
   {
-    \NewDocumentEnvironment{#1}{ +O{} +m }
+    \NewDocumentEnvironment{#2}{ +O{} +m }
       {
         \__tcobox_doc_entry_begin:nnn
           {
-            doc@sub@keypath=#2,
+            doc@sub@keypath=#3,
             doc~keypath=,
+            #1,
             ##1
           }
           {##2}{key}
@@ -1017,6 +1024,9 @@
   index annotate=true,
   english language,
   keywords bold,
+  doc key prefix={/},
+  index key formatter,
+  index keys formatter,
 }
 
 % deprecated
