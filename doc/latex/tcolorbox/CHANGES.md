@@ -58,14 +58,15 @@ and this project adheres to
 - Updated documentation and warnings for the interaction between `saveto`
     and `savelowerto` (issue #249)
 - Improved some `\sarg` examples in the documentation (issue #256)
+- Recording macros rewritten in expl3 code (part of issue #255)    
+- Usage of `\l_tmpa_tl` and `\l_tmpb_tl` replaced by `\l__tcobox_tmpa_tl` and `\l__tcobox_tmpb_tl`
 - Library `documentation`:
     - Expl3 arg-spec of internal macro corrected (issue #257)
-- Recording macros rewritten in expl3 code (part of issue #255)    
+    - `\tcbmakedocSubKey` and `\tcbmakedocSubKeys` take options now (issue #259)
 - Library `external`: package loading of `pdftexcmds` and `shellesc` removed.
     Expl3 functions are used as drop-in replacements (part of issue #255)
-- Libraries `listings`, `listingsutf8`, and `minted`: package loading of `pdftexcmds`
-    and `shellesc` removed (part of issue #255)
-- Usage of `\l_tmpa_tl` and `\l_tmpb_tl` replaced by `\l__tcobox_tmpa_tl` and `\l__tcobox_tmpb_tl`
+- Libraries `listings`, `listingsutf8`, and `minted`: 
+    package loading of `pdftexcmds` and `shellesc` removed (part of issue #255)
 
 ### Deprecated
 

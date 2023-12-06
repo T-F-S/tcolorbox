@@ -560,10 +560,11 @@ heading line. Optionally, such a box can be split in an upper and a lower part.
 \end{docEnvironment}
 
 \clearpage
-\begin{docCommand}[doc updated=2020-04-22]{tcbmakedocSubKey}{\marg{name}\marg{key path}}
+\begin{docCommand}[doc updated=2023-12-01]{tcbmakedocSubKey}{\oarg{options}\marg{name}\marg{key path}}
   Creates a new environment \meta{name} based on \refEnv{docKey} for the
   documentation of keys with the given \meta{key path} as root.
   The new environment \meta{name} takes the same para\-meters as \refEnv{docKey} itself.
+  The given \meta{options} are prepended to options of the \meta{name} environment.
   A second starred environment \meta{name} is also created, which is identical
   to \meta{name} but without index entry.
 \begin{dispExample}
@@ -580,10 +581,12 @@ Some key (not indexed).
 \end{docCommand}
 
 
-\begin{docCommand}[doc new=2020-04-22]{tcbmakedocSubKeys}{\marg{name}\marg{key path}}
+\begin{docCommand}[doc new and updated={2020-04-22}{2023-12-01}]{tcbmakedocSubKeys}{\oarg{options}\marg{name}\marg{key path}}
   Creates a new environment \meta{name} based on \refEnv{docKeys} for the
   documentation of keys with the given \meta{key path} as root.
   The new environment \meta{name} takes the same para\-meters as \refEnv{docKeys} itself.
+  The given \meta{options} are prepended to options of the \meta{name} environment
+  (see \refKey{/tcb/index key formatter} for an example).
 \begin{dispExample}
 \tcbmakedocSubKeys{docFooKeys}{foo}
 
