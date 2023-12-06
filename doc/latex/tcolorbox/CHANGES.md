@@ -45,6 +45,11 @@ and this project adheres to
     - Option `environment lower args pre`
     - Option `environment title pre`
     - Option `environment title args pre`
+- Library `documentation`:
+    Root (`/`) of a documented key configurable made configurable (issue #259):
+    - Option `doc key prefix`
+    - Option `index key formatter`
+    - Option `index keys formatter`
 
 ### Changed
 - Minor implementation change to `redirectlowerto` (issue #240)
@@ -57,9 +62,10 @@ and this project adheres to
     - Expl3 arg-spec of internal macro corrected (issue #257)
 - Recording macros rewritten in expl3 code (part of issue #255)    
 - Library `external`: package loading of `pdftexcmds` and `shellesc` removed.
-    expl3 functions are used as drop-in replacements (part of issue #255)
+    Expl3 functions are used as drop-in replacements (part of issue #255)
 - Libraries `listings`, `listingsutf8`, and `minted`: package loading of `pdftexcmds`
     and `shellesc` removed (part of issue #255)
+- Usage of `\l_tmpa_tl` and `\l_tmpb_tl` replaced by `\l__tcobox_tmpa_tl` and `\l__tcobox_tmpb_tl`
 
 ### Deprecated
 
