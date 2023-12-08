@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
+%% The LaTeX package tcolorbox - version 6.2.0pre5 (2023/12/08)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre4}
+\tcb@set@library@version{6.2.0pre5}
 
 \tcbuselibrary{listings,skins,external,raster}
 
@@ -402,7 +402,7 @@
 % main documentation environments
 
 \seq_new:N \g__tcobox_label_seq
-
+\seq_new:N \l__tcobox_tmpa_seq
 
 \cs_new:Npn \__tcobox_doc_entry_begin:nnn #1#2#3
   {
@@ -411,12 +411,12 @@
     \seq_gclear:N \g__tcobox_label_seq
     \begin{tcbraster}[raster~columns=1,raster~row~skip=0pt,
       raster~after~skip=4.1pt,raster~force~size=false,doc@raster@#3]
-    \seq_set_from_clist:Nn \l_tmpa_seq {#2}
-    \seq_if_empty:NT \l_tmpa_seq
+    \seq_set_from_clist:Nn \l__tcobox_tmpa_seq {#2}
+    \seq_if_empty:NT \l__tcobox_tmpa_seq
     {
-      \seq_put_left:Nn \l_tmpa_seq {}
+      \seq_put_left:Nn \l__tcobox_tmpa_seq {}
     }
-    \seq_map_inline:Nn \l_tmpa_seq
+    \seq_map_inline:Nn \l__tcobox_tmpa_seq
       {
         \group_begin:
         \tcbset{##1}

@@ -46,10 +46,10 @@ and this project adheres to
     - Option `environment title pre`
     - Option `environment title args pre`
 - Library `documentation`:
-    Root (`/`) of a documented key configurable made configurable (issue #259):
-    - Option `doc key prefix`
     - Option `index key formatter`
     - Option `index keys formatter`
+    - Root (`/`) of a documented key made configurable (issue #259):
+        - Option `doc key prefix`
 
 ### Changed
 - Minor implementation change to `redirectlowerto` (issue #240)
@@ -59,7 +59,7 @@ and this project adheres to
     and `savelowerto` (issue #249)
 - Improved some `\sarg` examples in the documentation (issue #256)
 - Recording macros rewritten in expl3 code (part of issue #255)    
-- Usage of `\l_tmpa_tl` and `\l_tmpb_tl` replaced by `\l__tcobox_tmpa_tl` and `\l__tcobox_tmpb_tl`
+- Usage of expl3 scratch variables like `\l_tmpa_tl` replaced by package variables like `\l__tcobox_tmpa_tl`
 - Library `documentation`:
     - Expl3 arg-spec of internal macro corrected (issue #257)
     - `\tcbmakedocSubKey` and `\tcbmakedocSubKeys` take options now (issue #259)

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
+%% The LaTeX package tcolorbox - version 6.2.0pre5 (2023/12/08)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.2.0pre4}
+\tcb@set@library@version{6.2.0pre5}
 
 \RequirePackage{amsmath}
 
@@ -107,7 +107,7 @@
       }
       {
         % box display name and number
-        \hbox_set:Nn \l_tmpa_box
+        \hbox_set:Nn \l__tcobox_tmpa_box
           {
             \__tcobox_theo_format:nn{#1}{#2}
             \bool_if:NF \l__tcobox_theo_headempty_bool
@@ -119,25 +119,25 @@
         % set (hanging) indent for name and number
         \str_if_eq:VnTF \l__tcobox_theo_hanging_indent_tl { auto }
           {
-            \hangindent \box_wd:N \l_tmpa_box
+            \hangindent \box_wd:N \l__tcobox_tmpa_box
             \hangafter = 1
           }
           {
-            \dim_set:Nn \l_tmpa_dim { \l__tcobox_theo_hanging_indent_tl }
-            \if_dim:w \l_tmpa_dim = \c_zero_dim
+            \dim_set:Nn \l__tcobox_tmpa_dim { \l__tcobox_theo_hanging_indent_tl }
+            \if_dim:w \l__tcobox_tmpa_dim = \c_zero_dim
             \else:
-              \if_dim:w \l_tmpa_dim > \c_zero_dim
-                \hangindent \l_tmpa_dim
+              \if_dim:w \l__tcobox_tmpa_dim > \c_zero_dim
+                \hangindent \l__tcobox_tmpa_dim
                 \hangafter = 1
               \else:
-                \hangindent -\l_tmpa_dim
+                \hangindent -\l__tcobox_tmpa_dim
                 \hangafter = -1
               \fi:
             \fi:
           }
         % insert box with name and number
         \mode_leave_vertical:
-        \box_use_drop:N \l_tmpa_box
+        \box_use_drop:N \l__tcobox_tmpa_box
         % insert formated title
         \group_begin:
           \__tcobox_theo_format_description:n{#3}

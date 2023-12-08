@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
+%% The LaTeX package tcolorbox - version 6.2.0pre5 (2023/12/08)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesPackage{tcolorbox}[2023/12/01 version 6.2.0pre4 text color boxes]
-\def\tcb@version{6.2.0pre4}
+\ProvidesPackage{tcolorbox}[2023/12/08 version 6.2.0pre5 text color boxes]
+\def\tcb@version{6.2.0pre5}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -57,6 +57,9 @@
 
 \ExplSyntaxOn
 \bool_new:N \l__tcobox_prevent_init_overwrite_bool
+\box_new:N \l__tcobox_tmpa_box
+\dim_new:N \l__tcobox_tmpa_dim
+\fp_new:N \l__tcobox_tmpa_fp
 \iow_new:N \g__tcobox_out_iow
 \iow_new:N \g__tcobox_record_iow
 \str_new:N \l__tcobox_record_file_str
@@ -1502,18 +1505,18 @@
 \ExplSyntaxOn
 \def\tcb@ch@fixed@spacesave
   {
-    \fp_set:Nn \l_tmpa_fp { \tcb@space+\tcbheightspace }
-    \fp_compare:nTF { \l_tmpa_fp < 0 }
+    \fp_set:Nn \l__tcobox_tmpa_fp { \tcb@space+\tcbheightspace }
+    \fp_compare:nTF { \l__tcobox_tmpa_fp < 0 }
       {
-        \fp_zero_new:N \l_tmpa_fp
+        \fp_zero_new:N \l__tcobox_tmpa_fp
       }
       {
-        \fp_compare:nT { \l_tmpa_fp > \tcb@height }
+        \fp_compare:nT { \l__tcobox_tmpa_fp > \tcb@height }
           {
-            \fp_set:Nn \l_tmpa_fp { \tcb@height }
+            \fp_set:Nn \l__tcobox_tmpa_fp { \tcb@height }
           }
       }
-    \tcbdimto\tcb@space { \fp_to_dim:n { trunc(\l_tmpa_fp,2) } }
+    \tcbdimto\tcb@space { \fp_to_dim:n { trunc(\l__tcobox_tmpa_fp,2) } }
     \use:x { \exp_not:N\tcb@savespace{\thetcolorboxnumber}{\tcb@space} }
     \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcbheightspace}
     \let\tcbheightspace\tcb@zpt

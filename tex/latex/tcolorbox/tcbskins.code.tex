@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre4 (2023/12/01)
+%% The LaTeX package tcolorbox - version 6.2.0pre5 (2023/12/08)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre4}
+\tcb@set@library@version{6.2.0pre5}
 
 \RequirePackage{tikz}[2010/10/13]
 \RequirePackage{tikzfill.image}
@@ -1730,27 +1730,27 @@
 
     \int_compare:nNnT \kvtcb@graphics@orientation > {-1}
       {
-        \hbox_set:Nn \l_tmpa_box
+        \hbox_set:Nn \l__tcobox_tmpa_box
           {
             \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl }{ \imagepath }
           }
         \if_case:w \kvtcb@graphics@orientation
-          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} < {\box_ht_plus_dp:N \l_tmpa_box}
+          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} < {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
             {
               \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=90}
             }
         \or:
-          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} < {\box_ht_plus_dp:N \l_tmpa_box}
+          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} < {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
             {
               \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=-90}
             }
         \or:
-          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} > {\box_ht_plus_dp:N \l_tmpa_box}
+          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} > {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
             {
               \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=90}
             }
         \or:
-          \dim_compare:nNnT {\box_wd:N\l_tmpa_box} > {\box_ht_plus_dp:N \l_tmpa_box}
+          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} > {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
             {
               \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=-90}
             }
