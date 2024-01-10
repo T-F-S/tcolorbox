@@ -58,6 +58,7 @@ and this project adheres to
 - Updated documentation and warnings for the interaction between `saveto`
     and `savelowerto` (issue #249)
 - Improved some `\sarg` examples in the documentation (issue #256)
+- Small typos in the documentation (issue #261)
 - Recording macros rewritten in expl3 code (part of issue #255)    
 - Usage of expl3 scratch variables like `\l_tmpa_tl` replaced by package variables like `\l__tcobox_tmpa_tl`
 - Library `documentation`:
@@ -67,8 +68,7 @@ and this project adheres to
     Expl3 functions are used as drop-in replacements (part of issue #255)
 - Libraries `listings`, `listingsutf8`, and `minted`: 
     package loading of `pdftexcmds` and `shellesc` removed (part of issue #255)
-
-### Deprecated
+- Needed LaTeX version updated to 2021-11-15    
 
 ### Removed
 - Loading of the `xparse` library dropped inside the `documentation` library since all
@@ -76,8 +76,7 @@ and this project adheres to
 
 ### Fixed
 - Several documentation typos and minor improvements (PR/issue #251 and PR/issue #252)
-
-### Security
+- Extra top space if `parbox=false` and tcolorbox starts with a list (issue #262)
 
 
 

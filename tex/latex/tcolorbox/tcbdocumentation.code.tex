@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 6.2.0pre5 (2023/12/08)
+%% The LaTeX package tcolorbox - version 6.2.0 (2024/01/10)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2023 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2024 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0pre5}
+\tcb@set@library@version{6.2.0}
 
 \tcbuselibrary{listings,skins,external,raster}
 
@@ -465,11 +465,11 @@
   {
     \__tcobox_print_command:
     \__tcobox_index_command:
-    \seq_if_in:NVF \g__tcobox_label_seq \kvtcb@doc@label
+    \seq_if_in:NoF \g__tcobox_label_seq { \kvtcb@doc@label }
       {
         \protected@edef\@currentlabel{\noexpand\tcb@cs{\kvtcb@doc@name}}
         \label{com:\kvtcb@doc@label}
-        \seq_gput_left:NV \g__tcobox_label_seq \kvtcb@doc@label
+        \seq_gput_right:No \g__tcobox_label_seq { \kvtcb@doc@label }
       }
     {\ttfamily\kvtcb@doc@parameter}
     \tcb@doc@do@description
@@ -527,11 +527,11 @@
   {
     \strut\cs{begin}\brackets{\__tcobox_print_environment:}
     \__tcobox_index_environment:
-    \seq_if_in:NVF \g__tcobox_label_seq \kvtcb@doc@label
+    \seq_if_in:NoF \g__tcobox_label_seq { \kvtcb@doc@label }
       {
         \protected@edef\@currentlabel{\kvtcb@doc@name}
         \label{env:\kvtcb@doc@label}
-        \seq_gput_left:NV \g__tcobox_label_seq \kvtcb@doc@label
+        \seq_gput_right:No \g__tcobox_label_seq { \kvtcb@doc@label }
       }
     {\ttfamily\kvtcb@doc@parameter}\par
     \strut{\ttfamily\nobreakspace\nobreakspace}\meta{\kvtcb@text@envcontent}\par
@@ -605,20 +605,20 @@
     \__tcobox_index_key:
     \tl_if_empty:NTF \kvtcb@doc@keypath
       {
-        \seq_if_in:NVF \g__tcobox_label_seq \kvtcb@doc@label
+        \seq_if_in:NoF \g__tcobox_label_seq { \kvtcb@doc@label }
           {
             \protected@edef\@currentlabel{\kvtcb@doc@name}
             \label{key:\kvtcb@doc@label}
-            \seq_gput_left:NV \g__tcobox_label_seq \kvtcb@doc@label
+            \seq_gput_right:No \g__tcobox_label_seq { \kvtcb@doc@label }
           }
       }
       {
-        \tl_set:Nx \l__tcobox_tmpa_tl {\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@label}
-        \seq_if_in:NVF \g__tcobox_label_seq \l__tcobox_tmpa_tl
+        \tl_set:Ne \l__tcobox_tmpa_tl {\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@label}
+        \seq_if_in:NoF \g__tcobox_label_seq { \l__tcobox_tmpa_tl }
           {
             \protected@edef\@currentlabel{\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@name}
             \label{key:\kvtcb@doc@keyprefix\kvtcb@doc@keypath/\kvtcb@doc@label}
-            \seq_gput_left:NV \g__tcobox_label_seq \l__tcobox_tmpa_tl
+            \seq_gput_right:No \g__tcobox_label_seq { \l__tcobox_tmpa_tl }
           }
       }
     {\ttfamily\kvtcb@doc@parameter}
@@ -732,11 +732,11 @@
   {
     \colFade{\tcb@cs{path~...}}~\__tcobox_print_path:
     \__tcobox_index_path:
-    \seq_if_in:NVF \g__tcobox_label_seq \kvtcb@doc@label
+    \seq_if_in:NoF \g__tcobox_label_seq { \kvtcb@doc@label }
       {
         \protected@edef\@currentlabel{\kvtcb@doc@name}
         \label{path:\kvtcb@doc@label}
-        \seq_gput_left:NV \g__tcobox_label_seq \kvtcb@doc@label
+        \seq_gput_right:No \g__tcobox_label_seq { \kvtcb@doc@label }
       }
     {\ttfamily\kvtcb@doc@parameter{}~\colFade{...;}}
     \tcb@doc@do@description
