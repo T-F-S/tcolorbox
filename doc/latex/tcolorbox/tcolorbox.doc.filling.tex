@@ -63,7 +63,7 @@ To be more specific, they determine the east-to-west and the north-to-south dime
 which may be not the maximal dimensions for a non-rectangular node.
 Note that the following dimensions are measured exactly including the line width
 of the border line. If a new rectangle or node with the same dimensions
-and a border is to be drawn, this border width has to be substracted.
+and a border is to be drawn, this border width has to be subtracted.
 
 \begin{docCommand}[doc new=2014-09-19]{tcbsettowidthofnode}{\marg{register}\marg{node}}
   Sets the east-to-west dimension of the given \meta{node}
@@ -88,7 +88,7 @@ and a border is to be drawn, this border width has to be substracted.
   \node[align=center,draw=red,fill=yellow] (A) {This is my\\example node};
   \tcbsetmacrotowidthofnode\mywidth{A}
   \tcbsetmacrotoheightofnode\myheight{A}
-  \path[fill=blue!25!white]           %  rectangle widthout border
+  \path[fill=blue!25!white]           %  rectangle without border
     ([xshift=2mm]A.south east)
     rectangle node{Copy} +(\mywidth,\myheight);
   \node[draw=blue,fill=blue!25!white, % standard border width 0.4pt
