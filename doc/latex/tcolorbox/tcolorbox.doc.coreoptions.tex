@@ -3104,11 +3104,11 @@ inside the document preamble.
 \begin{docTcbKey}[][doc new={2020-09-25}]{before skip balanced}{=\meta{glue}}{no default, initially |0.5\textbackslash baselineskip plus 2pt|}
   Inserts some vertical space before the colored box. This style sets \refKey{/tcb/before}.\par
   If the depth of the
-  preceeding \TeX\ box is between |0pt| and |0.3\baselineskip|,
-  the distance between the \emph{baseline} of the preceeding \TeX\ box and the tcolorbox
-  ist set to \meta{glue}$+$|0.3\baselineskip|.\par
-  If the depth is larger, the distance of the preceeding \TeX\ box and the tcolorbox
-  ist set to \meta{glue}.\par
+  preceding \TeX\ box is between |0pt| and |0.3\baselineskip|,
+  the distance between the \emph{baseline} of the preceding \TeX\ box and the tcolorbox
+  is set to \meta{glue}$+$|0.3\baselineskip|.\par
+  If the depth is larger, the distance of the preceding \TeX\ box and the tcolorbox
+  is set to \meta{glue}.\par
   Alternatively, see \refKey{/tcb/before skip} which ignores the \emph{baseline}.
 
 \begin{exdispExample*}{before_skip_balanced}{sbs,lefthand ratio=0.6}
@@ -3174,7 +3174,7 @@ line 4 g
   Inserts some vertical space of the given \meta{glue} before the colored box.
   This style sets \refKey{/tcb/before}.
   In contrast to \refKey{/tcb/before skip balanced}, this \meta{glue} is
-  relative to the lower edge of the preceeding box and not to the baseline.
+  relative to the lower edge of the preceding box and not to the baseline.
 \begin{exdispExample*}{before_skip}{sbs,lefthand ratio=0.6}
 Some text.
 \begin{tcolorbox}[before skip=1cm,
