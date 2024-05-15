@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0 (2024/01/10)
+%% The LaTeX package tcolorbox - version 6.3.0pre1 (2024/05/15)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.2.0}
+\tcb@set@library@version{6.3.0pre1}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -82,6 +82,7 @@
   \reserved@a%
   \@endpefalse%
   \global\@newlistfalse%
+  \tcb@set@savebox@construction@true%
   \let\tcbbreak\tcb@@break%
   \iftcb@usecolorstack%
     \pdfcolSwitchStack{tcb@breakable}%

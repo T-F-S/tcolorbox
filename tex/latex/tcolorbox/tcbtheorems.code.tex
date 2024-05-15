@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0 (2024/01/10)
+%% The LaTeX package tcolorbox - version 6.3.0pre1 (2024/05/15)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.2.0}
+\tcb@set@library@version{6.3.0pre1}
 
 \RequirePackage{amsmath}
 
@@ -260,10 +260,30 @@
     description~font/.default  =,
     description~formatter/.code =
       {
-        \cs_set_eq:NN \__tcobox_theo_format_description:n #1
+        \__tcobox_store_formatter_in:nN {#1} \__tcobox_theo_format_description:n
       },
     description~formatter/.default = \__tcobox_theo_format_description_standard:n,
   }
+
+
+\cs_if_exist:NF \__tcobox_store_formatter_in:nN
+  {
+    \cs_new_protected:Npn \__tcobox_store_formatter_in:nN #1#2
+      {
+        \__tcobox_if_single_cs:nTF {#1}
+          { \cs_set_eq:NN #2 #1 }
+          {
+            \tcb@error
+              {
+                Invalid~formatter~ "\tl_to_str:n {#1}" ~passed~to \MessageBreak
+                "\pgfkeyscurrentkey". \MessageBreak
+                A~formatter~should~be~a~single~command~taking~one \MessageBreak
+                mandatory~argument
+              }
+          }
+      }
+  }
+
 
 \ExplSyntaxOff
 

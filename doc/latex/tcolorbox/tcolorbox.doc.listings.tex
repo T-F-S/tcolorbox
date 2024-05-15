@@ -282,7 +282,8 @@ This is my \LaTeX\ box.
 \begin{docCommand}{NewTCBListing}{\oarg{init options}\marg{name}\marg{specification}\marg{options}}
   Creates a new environment \meta{name} based on \refEnv{tcblisting}.\\
   Basically, \refCom{NewTCBListing} operates like |\NewDocumentEnvironment|. This means,
-  the new environment \meta{name} is constructed with the given argument \meta{specification}.
+  the new environment \meta{name} is constructed with the
+  given \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.
   An error is issued if \meta{name} has already been defined.
   The \meta{options} are given to the underlying \refEnv{tcblisting}.\\
   Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
@@ -429,7 +430,8 @@ Note that the following code uses \verb+!O{}+ now.
 \begin{docCommand}{NewTCBInputListing}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}}
   Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbinputlisting}.
   Basically, \refCom{NewTCBInputListing} operates like |\NewDocumentCommand|. This means,
-  the new command \texttt{\textbackslash}\meta{name} is constructed with the given argument \meta{specification}.
+  the new command \texttt{\textbackslash}\meta{name} is constructed with the
+  given \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.
   An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
   The \meta{options} are given to the underlying \refCom{tcbinputlisting}.\\
   The \meta{init options} allow setting up automatic numbering,

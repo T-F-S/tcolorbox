@@ -1354,29 +1354,6 @@ keys to insert code before (or after) the description texts.
 \end{docTcbKey}
 
 
-\begin{marker}
-The following two keys are deprecated and without function (v3.50 and above).
-Use \refKey{/tcb/before} and \refKey{/tcb/after} with appropriate values
-instead. Also see \refKey{/tcb/docexample}.
-\end{marker}
-
-\begin{docTcbKey}[][doc updated=2015-03-16]{before example}{=\meta{macros}}{no default, initially empty}
-\smallskip\begin{deprecated}
-  Sets the \meta{macros} which are executed before \refEnv{dispExample} and \refEnv{dispListing}
-  additional to \refKey{/tcb/before}.
-\end{deprecated}
-\end{docTcbKey}
-
-\enlargethispage*{1cm}
-
-\begin{docTcbKey}{after example}{=\meta{macros}}{no default, initially empty}
-\smallskip\begin{deprecated}
-  Sets the \meta{macros} which are executed after \refEnv{dispExample} and \refEnv{dispListing}
-  additional to \refKey{/tcb/after}.
-\end{deprecated}
-\end{docTcbKey}
-
-\clearpage
 \begin{docTcbKey}[][doc new=2017-04-25]{keywords bold}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   Keyword used in \refEnv{docEnvironment}, \refEnv{docCommand}, etc. are printed
   boldface (or not). Since the typewriter font is used, the effect may be
@@ -1390,6 +1367,24 @@ instead. Also see \refKey{/tcb/docexample}.
 \docAuxCommand{fooaux}, \refCom{tcbset}
 \end{dispExample*}
 \end{docTcbKey}
+
+\clearpage
+
+\begin{docTcbKeys}
+  {
+    {
+      doc name        = page ref formatter,
+      doc new         = {2024-03-13},
+      doc parameter   = \colOpt{=\meta{macro}},
+      doc description = {no default, initially \texttt{\textbackslash textsuperscript}},
+    }
+  }
+Sets \meta{macro} as formatter for page references like the
+reference to \refEnv{tcolorbox}.
+The default setting puts the page reference in a |\textsuperscript|.
+It may be changed to |\fakesuperscript| to cope with superiors problems
+in combination with the |realscripts| package or just otherwise for user customization.
+\end{docTcbKeys}
 
 
 

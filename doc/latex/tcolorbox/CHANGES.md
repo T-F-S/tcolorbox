@@ -22,7 +22,34 @@ and this project adheres to
 
 
 
-## [6.2.0]
+## [6.3.0] - xxxx-xx-xx
+
+### Added
+- Library `documentation`:
+    - Option `page ref formatter` (issue #273)
+
+### Changed
+- Boolean marker to detect if inside a `tcb@savebox` introduced (issue #262)
+- LaTeX usrguide cited for `\NewDocumentCommand` and friends (issue #263)
+- Stricter checks on box names in `\newtcbox` and friends (issue #264)
+- Checks on formatter like `index key formatter` enforced (issue #265)
+- Needed LaTeX version updated to 2023-11-01
+- More meaningful error message in case of `\DeclareTColorBox` with same auto counter (issue #276)
+
+### Deprecated
+
+### Removed
+- Documentation for the deprecated options `before example` and `after example`
+
+### Fixed
+- `\@nobreakfalse` added to `\tcb@parbox@false@settings` to avoid 
+    decreased space before list with `parbox=false` following a section heading (issue #270)
+
+### Security
+
+
+
+## [6.2.0] - 2024-01-10
 
 ### Added
 - New convenience options for box content additions (issue #250)

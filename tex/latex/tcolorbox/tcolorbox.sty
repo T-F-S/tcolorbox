@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.2.0 (2024/01/10)
+%% The LaTeX package tcolorbox - version 6.3.0pre1 (2024/05/15)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\NeedsTeXFormat{LaTeX2e}[2021-11-15]
-\ProvidesPackage{tcolorbox}[2024/01/10 version 6.2.0 text color boxes]
-\def\tcb@version{6.2.0}
+\NeedsTeXFormat{LaTeX2e}[2023-11-01]
+\ProvidesPackage{tcolorbox}[2024/05/15 version 6.3.0pre1 text color boxes]
+\def\tcb@version{6.3.0pre1}
 
 \RequirePackage{pgf}[2008/01/15]
 \RequirePackage{verbatim}[2003/08/22]
@@ -57,6 +57,7 @@
 
 \ExplSyntaxOn
 \bool_new:N \l__tcobox_prevent_init_overwrite_bool
+\bool_new:N \l__tcobox_savebox_construction_bool
 \box_new:N \l__tcobox_tmpa_box
 \dim_new:N \l__tcobox_tmpa_dim
 \fp_new:N \l__tcobox_tmpa_fp
@@ -1003,22 +1004,13 @@
     IfBooleanF/.code~n~args={2}{\IfBooleanF{#1}{\pgfkeysalso{#2}}},
   }
 
-\IfFormatAtLeastTF{2023-06-01}
-  {
-    \def\tcb@set@parbox@indent@{
-      \exp_args:Nne \hook_gput_next_code:nn {para/begin}
-         { \__tcobox_set_parbox_indent:n { \thetcolorboxnumber } }
-      \let\tcb@set@parbox@indent\@empty
-    }
-  }
-  {
-    % Note: To be removed in future
-    \def\tcb@set@parbox@indent@{
-      \vspace{-\parskip}
-      \noindent
-      \let\tcb@set@parbox@indent\@empty
-    }
-  }
+
+\def\tcb@set@parbox@indent@{
+  \exp_args:Nne \hook_gput_next_code:nn {para/begin}
+     { \__tcobox_set_parbox_indent:n { \thetcolorboxnumber } }
+  \let\tcb@set@parbox@indent\@empty
+}
+
 
 \cs_new_protected:Npn \__tcobox_set_parbox_indent:n #1
   {
@@ -1027,11 +1019,19 @@
       { \int_compare_p:nNn { #1 } = { \thetcolorboxnumber } }
       % and if inside a "tcb@savebox" env (upper or lower part is non-empty),
       % hence not at the time of using saved \tcb@upperbox or \tcb@lowerbox
-      { \cs_if_exist_p:N \tcbbreak }
+      { \l__tcobox_savebox_construction_bool }
       {
         \OmitIndent
       }
   }
+
+
+\def\tcb@set@savebox@construction@true
+  {
+    \bool_set_true:N \l__tcobox_savebox_construction_bool
+  }
+\bool_set_false:N \l__tcobox_savebox_construction_bool
+
 
 \ExplSyntaxOff
 
@@ -1045,6 +1045,7 @@
 \let\tcb@parboxrestore=\@parboxrestore
 
 \def\tcb@parbox@false@settings{%
+  \@nobreakfalse%
   \let\par\@@par%
   \linewidth\hsize%
   \@totalleftmargin\z@%
@@ -1082,6 +1083,7 @@
   \reserved@a
     \@endpefalse%
     \global\@newlistfalse%
+    \tcb@set@savebox@construction@true%
     \let\tcbbreak\@@par%
     \csname tcb@parbox@use@\kvtcb@parbox\endcsname%
     \tcb@minipage{#2}%
@@ -2255,6 +2257,9 @@
 }
 
 \def\tcb@proc@counter@auto#1{%
+  \ifcsdef{c@tcb@cnt@#1}
+    {\tcb@error{Auto counter for environment '#1' already defined}{}}
+    {}%
   \newcounter{tcb@cnt@#1}%
   \csxdef{tcb@cnt@#1}{tcb@cnt@#1}%
   \tcb@proc@counter@autoanduse{#1}%
@@ -2297,6 +2302,33 @@
 
 \ExplSyntaxOn
 
+\prg_new_conditional:Npnn \__tcobox_if_single_cs:n #1 { p, TF }
+  {
+    \bool_lazy_and:nnTF
+      { \tl_if_single_p:n { #1 } }
+      { \token_if_cs_p:N #1 }
+      { \prg_return_true: }
+      { \prg_return_false: }
+  }
+
+\msg_new:nnn { tcolorbox } { invalid-box-name }
+  {
+    Invalid~box~name~`` \tl_to_str:n {#1} ''.~
+    A~single~command~is~expected~after~space~trimming.~
+    I'll~drop~this~box~definition.
+  }
+
+\cs_new:Npn \__tcobox_set_backslash_removed:Nn #1#2
+  {
+    \__tcobox_if_single_cs:nTF { #2 }
+      {
+        \tl_set:Ne #1 { \exp_last_unbraced:Ne \cs_to_str:N { \tl_trim_spaces:n { #2 } } }
+      }
+      {
+        \msg_error:nnn { tcolorbox } { invalid-box-name } { #2 }
+      }
+  }
+
 \cs_new:Npn \__tcobox_process_newtcolorbox:nn #1#2
   {
     \bool_lazy_and:nnF
@@ -2309,14 +2341,6 @@
         \preto\tcb@new@colopt{savedelimiter=#2}
         \exp_args:Nc \cs_set_eq:NN { tcb@opt@#2 } \tcb@new@colopt
       }
-  }
-
-
-\cs_new:Npn \__tcobox_set_backslash_removed:Nn #1#2
-  {
-    \tl_set:Nn #1 { #2 }
-    \tl_trim_spaces:N #1
-    \tl_set:Ne #1 { \exp_last_unbraced:NV \cs_to_str:N #1 }
   }
 
 
