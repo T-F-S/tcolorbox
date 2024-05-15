@@ -44,6 +44,7 @@ and this project adheres to
 ### Fixed
 - `\@nobreakfalse` added to `\tcb@parbox@false@settings` to avoid 
     decreased space before list with `parbox=false` following a section heading (issue #270)
+- Documentation typos fixed (issue #279)    
 
 ### Security
 
