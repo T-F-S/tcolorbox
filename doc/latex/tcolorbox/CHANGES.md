@@ -22,31 +22,41 @@ and this project adheres to
 
 
 
-## [6.3.0] - xxxx-xx-xx
+## [6.3.0] - 2024-07-10
 
 ### Added
 - Library `documentation`:
     - Option `page ref formatter` (issue #273)
+- First experimental partial tagging support: suppress tagging of drawing (issue #283)
+    This works for lualatex only.
 
 ### Changed
+- The base package loads `tikz` now instead of `pgf`. 
+    All skins, including the `standard` family, use `tikzpicture` as internal environment now.
 - Boolean marker to detect if inside a `tcb@savebox` introduced (issue #262)
 - LaTeX usrguide cited for `\NewDocumentCommand` and friends (issue #263)
 - Stricter checks on box names in `\newtcbox` and friends (issue #264)
 - Checks on formatter like `index key formatter` enforced (issue #265)
 - Needed LaTeX version updated to 2023-11-01
 - More meaningful error message in case of `\DeclareTColorBox` with same auto counter (issue #276)
+- Library `theorems`:
+    - Options `ams align`, `ams align*`, `ams gather`, and `ams gather*` are now shortcuts
+        for the upper part only (issue #282)
+    - Documentation for `ams align`, `ams align*`, `ams gather`, and `ams gather*` adapted, i.e.
+        exclusion of lower parts documented (issue #282)
+- Technical information: The package documentation is now produced with lualatex instead of pdflatex        
 
 ### Deprecated
+- The option `graphical environment` is useless now, since all environments are based on `tikzpicture` now.
 
 ### Removed
 - Documentation for the deprecated options `before example` and `after example`
+- Documentation for the deprecated option `graphical environment`
 
 ### Fixed
 - `\@nobreakfalse` added to `\tcb@parbox@false@settings` to avoid 
     decreased space before list with `parbox=false` following a section heading (issue #270)
 - Documentation typos fixed (issue #279)    
-
-### Security
 
 
 

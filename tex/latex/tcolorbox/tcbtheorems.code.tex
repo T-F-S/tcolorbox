@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0pre2 (2024/05/15)
+%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.3.0pre2}
+\tcb@set@library@version{6.3.0}
 
 \RequirePackage{amsmath}
 
@@ -318,16 +318,16 @@
   ams equation*/.style={ams equation* upper,ams equation* lower},%
   ams align upper/.style={before upper*=\tcb@hack@amsmath\align,after upper*=\endalign},%
   ams align lower/.style={before lower*=\tcb@hack@amsmath\align,after lower*=\endalign},%
-  ams align/.style={ams align upper,ams align lower},%
+  ams align/.style={ams align upper},%
   ams align* upper/.style={before upper*=\tcb@hack@amsmath\csname align*\endcsname,after upper*=\endalign},%
   ams align* lower/.style={before lower*=\tcb@hack@amsmath\csname align*\endcsname,after lower*=\endalign},%
-  ams align*/.style={ams align* upper,ams align* lower},%
+  ams align*/.style={ams align* upper},%
   ams gather upper/.style={before upper*=\tcb@hack@amsmath\gather,after upper*=\endgather},%
   ams gather lower/.style={before lower*=\tcb@hack@amsmath\gather,after lower*=\endgather},%
-  ams gather/.style={ams gather upper,ams gather lower},%
+  ams gather/.style={ams gather upper},%
   ams gather* upper/.style={before upper*=\tcb@hack@amsmath\csname gather*\endcsname,after upper*=\endgather},%
   ams gather* lower/.style={before lower*=\tcb@hack@amsmath\csname gather*\endcsname,after lower*=\endgather},%
-  ams gather*/.style={ams gather* upper,ams gather* lower},%
+  ams gather*/.style={ams gather* upper},%
   ams nodisplayskip upper/.style={before upper=\vskip-\abovedisplayskip},%
   ams nodisplayskip lower/.style={before lower=\vskip-\abovedisplayskip},%
   ams nodisplayskip/.style={ams nodisplayskip upper,ams nodisplayskip lower},%

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0pre2 (2024/05/15)
+%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.3.0pre2}
+\tcb@set@library@version{6.3.0}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -828,7 +828,7 @@
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
   \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
-  \tcb@drawing@env@begin%
+  \begin{tcb@drawing}%
     \tcb@extensions@preframe%
      % draw frame and interior
     \tcb@adraw@frame%
@@ -843,7 +843,7 @@
     \tcb@tdraw@upper%
     \tcb@tdraw@lower%
     \tcb@extensions@final%
-  \tcb@drawing@env@end%
+  \end{tcb@drawing}%
   \endgroup%
 }
 
@@ -858,7 +858,7 @@
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
   \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
-  \tcb@drawing@env@begin%
+  \begin{tcb@drawing}%
     \tcb@extensions@preframe%
     % draw frame and interior
     \tcb@adraw@frame%
@@ -869,7 +869,7 @@
     \tcb@tdraw@title%
     \tcb@tdraw@upper%
     \tcb@extensions@final%
-  \tcb@drawing@env@end%
+  \end{tcb@drawing}%
   \endgroup%
 }
 
@@ -884,7 +884,7 @@
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
   \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
-  \tcb@drawing@env@begin%
+  \begin{tcb@drawing}%
     \tcb@extensions@preframe%
     % draw frame and interior
     \tcb@adraw@frame%
@@ -898,7 +898,7 @@
     \tcb@tdraw@title%
     \tcb@tdraw@lower%
     \tcb@extensions@final%
-  \tcb@drawing@env@end%
+  \end{tcb@drawing}%
   \endgroup%
 }
 
@@ -913,7 +913,7 @@
   \csname tcb@break@ch@\tcb@split@state\endcsname%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
   \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
-  \tcb@drawing@env@begin%
+  \begin{tcb@drawing}%
     \tcb@extensions@preframe%
     % draw frame and interior
     \tcb@adraw@frame%
@@ -924,7 +924,7 @@
     \tcb@tdraw@title%
     \tcb@tdraw@lower%
     \tcb@extensions@final%
-  \tcb@drawing@env@end%
+  \end{tcb@drawing}%
   \endgroup%
 }
 

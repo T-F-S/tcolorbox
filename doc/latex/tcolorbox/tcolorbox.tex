@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 6.2.0 (2024/01/10)
+%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
@@ -25,6 +25,18 @@
 % arara: pdflatex: { shell: yes, synctex: yes }
 % arara: pdflatex: { shell: yes, synctex: yes }
 %
+%\DocumentMetadata{
+%  lang        = en,
+%  pdfversion  = 2.0,
+%  pdfstandard = ua-2,
+%  pdfstandard = a-4f,
+%  testphase   =
+%  {
+%    phase-III,
+%    firstaid
+%  },
+%  %uncompress,
+%}
 \PassOptionsToPackage{pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks,pdfusetitle,pdfpagelabels}{hyperref}
 \documentclass[a4paper,11pt]{ltxdoc}
 
@@ -51,8 +63,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{6.2.0}%
-\def\datum{2024/01/10}%
+\def\version{6.3.0}%
+\def\datum{2024/07/10}%
 \makeindex
 
 \hypersetup{
@@ -68,7 +80,7 @@
 %\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.initoptions,tcolorbox.doc.index}
+%\includeonly{tcolorbox.doc.coreoptions}
 %\hypersetup{colorlinks=false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

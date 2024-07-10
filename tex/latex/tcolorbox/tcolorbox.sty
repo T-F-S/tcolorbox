@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0pre2 (2024/05/15)
+%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,10 +18,11 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2024/05/15 version 6.3.0pre2 text color boxes]
-\def\tcb@version{6.3.0pre2}
+\ProvidesPackage{tcolorbox}[2024/07/10 version 6.3.0 text color boxes]
+\def\tcb@version{6.3.0}
 
-\RequirePackage{pgf}[2008/01/15]
+%\RequirePackage{pgf}[2008/01/15]
+\RequirePackage{tikz}[2023/01/15]
 \RequirePackage{verbatim}[2003/08/22]
 \RequirePackage{environ}[2013/04/01]
 \RequirePackage{etoolbox}[2011/01/03]
@@ -562,7 +563,7 @@
   toggle left and right/evenpage/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@evenpage\tcbset{check odd page}},
   toggle left and right/forced/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@forced},
   toggle left and right/.default=evenpage,
-  graphical environment/.store in=\kvtcb@graphenv,
+  graphical environment/.style=,%  deprecated
   %
   frame engine/.is choice,
   frame engine/standard/.style={frame code=\tcb@drawframe@standard},
@@ -2027,17 +2028,42 @@
   \fi%
 }
 
-\def\tcb@drawing@env@begin{%
-  \csname tcb@before@\tcb@split@state\endcsname%
-  \begin{\kvtcb@graphenv}%
-  \tcb@bbdraw%
-  \tcb@apply@graph@patches%
-}
 
-\def\tcb@drawing@env@end{%
-  \end{\kvtcb@graphenv}%
-  \csname tcb@after@\tcb@split@state\endcsname%
-}
+\let\tcb@tikz@option@hook\@empty
+\let\tcb@tikz@begin@hook\@empty
+\let\tcb@tikz@end@hook\@empty
+
+\ExplSyntaxOn
+
+\NewSocket{tagsupport/tcb/drawing/begin}{0}
+\NewSocket{tagsupport/tcb/drawing/end}{0}
+\NewSocketPlug{tagsupport/tcb/drawing/begin}{suspend}
+  {\tag_mc_end_push:\tag_mc_begin:n{artifact}}
+\NewSocketPlug{tagsupport/tcb/drawing/end}{resume}
+  {\tag_mc_end:\tag_mc_begin_pop:n{}}
+\AssignSocketPlug{tagsupport/tcb/drawing/begin}{suspend}
+\AssignSocketPlug{tagsupport/tcb/drawing/end}{resume}
+
+\NewDocumentEnvironment{ tcb@drawing }{ }
+  {
+    \use:c{ tcb@before@\tcb@split@state }
+    \exp_last_unbraced:NnNo \begin{tikzpicture}[\tcb@tikz@option@hook]
+    \UseTaggingSocket{tcb/drawing/begin}
+    \SuspendTagging{tcb/drawing}
+    \tcb@tikz@begin@hook
+    \tcb@bbdraw
+    \tcb@apply@graph@patches
+  }
+  {
+    \tcb@tikz@end@hook
+    \ResumeTagging{tcb/drawing}
+    \UseTaggingSocket{tcb/drawing/end}
+    \end{tikzpicture}
+    \use:c{ tcb@after@\tcb@split@state }
+  }
+
+\ExplSyntaxOff
+
 
 \def\tcb@set@normal@unbroken@beforeafter{%
   \let\tcb@before@unbroken=\kvtcb@beforebox%
@@ -2079,7 +2105,8 @@
   \tcb@ch%
   \tcbdimto\tcb@innerheight{\tcb@height-\kvtcb@top@rule-\kvtcb@bottom@rule-\tcb@h@padtitle}%
   \tcbdimto\tcbtextheight{\tcb@innerheight-\kvtcb@boxsep*2-\kvtcb@top-\kvtcb@bottom}%
-  \tcb@drawing@env@begin%
+  \begin{tcb@drawing}%
+  %\tcb@drawing@env@begin%
     \pgfsetbaseline{\the\dimexpr\kvtcb@baseline-\kvtcb@bbbottom\relax}%
     \tcb@extensions@preframe%
     % draw frame and interior
@@ -2099,7 +2126,8 @@
     \tcb@tdraw@upper%
     \iftcb@hasLower\tcb@tdraw@lower\fi%
     \tcb@extensions@final%
-  \tcb@drawing@env@end%
+  %\tcb@drawing@env@end%
+  \end{tcb@drawing}%
 }
 
 \let\tcb@drawcolorbox@standalone=\tcb@drawcolorbox
@@ -2764,7 +2792,7 @@
 
 \tcb@new@skin{standard}{frame engine=standard,interior titled engine=standard,
   interior engine=standard,segmentation engine=standard,title engine=standard,
-  graphical environment=pgfpicture,geometry nodes=false,
+  geometry nodes=false,
   set@extensions@preframe=,set@extensions@postframe={\tcb@apply@overlay},set@extensions@final=,%
   set@outerboundary=\tcb@boundaryframe@standard,%
   shape@of@skin=unbroken,

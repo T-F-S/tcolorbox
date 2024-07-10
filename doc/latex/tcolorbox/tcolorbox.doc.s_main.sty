@@ -276,9 +276,9 @@
     before skip=\medskipamount,after skip=\medskipamount,frame style={}},
 }
 
-\newtcbexternalizetcolorbox{exdispExample}{dispExample}{environment with percent=false,minipage}{beforeafter example}
+\newtcbexternalizetcolorbox{exdispExample}{dispExample}{environment with percent=false,minipage,compiler=lualatex}{beforeafter example}
 
-\newtcbexternalizetcolorbox{exdispExample*}{dispExample*}{environment with percent=false,minipage}{beforeafter example}
+\newtcbexternalizetcolorbox{exdispExample*}{dispExample*}{environment with percent=false,minipage,compiler=lualatex}{beforeafter example}
 
 \newcommand{\inputpreamblelisting}[1]{%
   \tcbinputlisting{title=Definition in the preamble:,

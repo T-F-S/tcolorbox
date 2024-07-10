@@ -62,13 +62,6 @@ option from the core package has to be set.
 
 \clearpage
 
-\begin{docTcbKey}{graphical environment}{=\meta{name}}{no default, initially \texttt{pgfpicture}}
-  Sets the graphical environment for the |tcolorbox| to \meta{name}.
-  Feasible values are |pgfpicture| and |tikzpicture| or environments which
-  inherit from one of these two. This key is set by a \refKey{/tcb/skin} and
-  may seldom be used directly.
-\end{docTcbKey}
-
 The skin of a |tcolorbox| is drawn by up to four \emph{engines}.
 Afterwards, the text content is drawn which is not part of a skin.
 The four steps are:
@@ -84,18 +77,6 @@ The four steps are:
   \refKey{/tcb/title filled} is set to |true|; drawn
   by \refKey{/tcb/title engine}.
 \end{enumerate}
-
-%Every engine for the up to four steps can be set to one of the following types:
-%\begin{enumerate}
-%\item\docValue{standard}: the original code from the core package.
-%\item\docValue{path}: a |tikz| path which can be controlled by options.
-%\item\docValue{pathfirst}: a |tikz| path which can be controlled by options.
-%\item\docValue{pathmiddle}: a |tikz| path which can be controlled by options.
-%\item\docValue{pathlast}: a |tikz| path which can be controlled by options.
-%\item\docValue{freelance}: arbitrary user code.
-%\item\docValue{spartan}: a quite spartan code.
-%\end{enumerate}
-%\clearpage
 
 \begin{docTcbKey}{frame engine}{=\meta{name}}{no default, initially \texttt{standard}}
   Sets the \emph{frame} drawing engine for a box to \meta{name}.

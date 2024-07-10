@@ -706,91 +706,140 @@ created by hand or using \refCom{newtcbtheorem}.
 \end{docTcbKey}
 
 \clearpage
-\begin{docTcbKey}{ams align upper}{}{style, no value}
+\begin{docTcbKeys}[
+    doc parameter   = ,
+    doc description = {style, no value},
+  ]
+  {
+    {
+      doc name = ams align upper,
+    },
+    {
+      doc name    = ams align,
+      doc updated = 2024-06-27,
+    }
+  }
   Adds an |amsmath| |align| environment to the start and end
   of the upper part.
-\end{docTcbKey}
-
-\begin{docTcbKey}{ams align lower}{}{style, no value}
-  Adds an |amsmath| |align| environment to the start and end
-  of the lower part.
-\end{docTcbKey}
-
-\begin{docTcbKey}{ams align}{}{style, no value}
-  Adds an |amsmath| |align| environment to the start and end
-  of the upper \emph{and} lower part.
 \begin{dispExample}
 \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=red!50!black]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
   \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
 \end{tcolorbox}
 \end{dispExample}
-\end{docTcbKey}
+\begin{marker}
+  Boxes with \refKey{/tcb/ams align upper} or \refKey{/tcb/ams align}
+  cannot have a lower part!
+  For a lower part, use \refKey{/tcb/ams nodisplayskip upper} instead.
+\end{marker}
+\end{docTcbKeys}
 
-\begin{docTcbKey}{ams align* upper}{}{style, no value}
-  Adds an |amsmath| |align*| environment to the start and end
-  of the upper part.
-\end{docTcbKey}
-
-\begin{docTcbKey}{ams align* lower}{}{style, no value}
-  Adds an |amsmath| |align*| environment to the start and end
+\begin{docTcbKey}{ams align lower}{}{style, no value}
+  Adds an |amsmath| |align| environment to the start and end
   of the lower part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams align*}{}{style, no value}
+
+\begin{docTcbKeys}[
+    doc parameter   = ,
+    doc description = {style, no value},
+  ]
+  {
+    {
+      doc name = ams align* upper,
+    },
+    {
+      doc name    = ams align*,
+      doc updated = 2024-06-27,
+    }
+  }
   Adds an |amsmath| |align*| environment to the start and end
-  of the upper \emph{and} lower part.
+  of the upper part.
 \begin{dispExample}
 \begin{tcolorbox}[ams align*,colback=yellow!10!white,colframe=red!50!black]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
   \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
 \end{tcolorbox}
 \end{dispExample}
-\end{docTcbKey}
+\begin{marker}
+  Boxes with \refKey{/tcb/ams align* upper} or \refKey{/tcb/ams align*}
+  cannot have a lower part!
+  For a lower part, use \refKey{/tcb/ams nodisplayskip upper} instead.
+\end{marker}
+\end{docTcbKeys}
 
-\clearpage
-\begin{docTcbKey}{ams gather upper}{}{style, no value}
-  Adds an |amsmath| |gather| environment to the start and end
-  of the upper part.
-\end{docTcbKey}
-
-\begin{docTcbKey}{ams gather lower}{}{style, no value}
-  Adds an |amsmath| |gather| environment to the start and end
+\begin{docTcbKey}{ams align* lower}{}{style, no value}
+  Adds an |amsmath| |align*| environment to the start and end
   of the lower part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams gather}{}{style, no value}
+
+\clearpage
+\begin{docTcbKeys}[
+    doc parameter   = ,
+    doc description = {style, no value},
+  ]
+  {
+    {
+      doc name = ams gather upper,
+    },
+    {
+      doc name    = ams gather,
+      doc updated = 2024-06-27,
+    }
+  }
   Adds an |amsmath| |gather| environment to the start and end
-  of the upper \emph{and} lower part.
+  of the upper part.
 \begin{dispExample}
 \begin{tcolorbox}[ams gather,colback=yellow!10!white,colframe=red!50!black]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
   \int x^2 ~\text{d}x = \frac13 x^3 + c.
 \end{tcolorbox}
 \end{dispExample}
-\end{docTcbKey}
+\begin{marker}
+  Boxes with \refKey{/tcb/ams gather upper} or \refKey{/tcb/ams gather}
+  cannot have a lower part!
+  For a lower part, use \refKey{/tcb/ams nodisplayskip upper} instead.
+\end{marker}
+\end{docTcbKeys}
 
-\begin{docTcbKey}{ams gather* upper}{}{style, no value}
-  Adds an |amsmath| |gather*| environment to the start and end
-  of the upper part.
-\end{docTcbKey}
-
-\begin{docTcbKey}{ams gather* lower}{}{style, no value}
-  Adds an |amsmath| |gather*| environment to the start and end
+\begin{docTcbKey}{ams gather lower}{}{style, no value}
+  Adds an |amsmath| |gather| environment to the start and end
   of the lower part.
 \end{docTcbKey}
 
-\begin{docTcbKey}{ams gather*}{}{style, no value}
+\begin{docTcbKeys}[
+    doc parameter   = ,
+    doc description = {style, no value},
+  ]
+  {
+    {
+      doc name = ams gather* upper,
+    },
+    {
+      doc name    = ams gather*,
+      doc updated = 2024-06-27,
+    }
+  }
   Adds an |amsmath| |gather*| environment to the start and end
-  of the upper \emph{and} lower part.
+  of the upper part.
 \begin{dispExample}
 \begin{tcolorbox}[ams gather*,colback=yellow!10!white,colframe=red!50!black]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
   \int x^2 ~\text{d}x = \frac13 x^3 + c.
 \end{tcolorbox}
 \end{dispExample}
-\end{docTcbKey}
+\begin{marker}
+  Boxes with \refKey{/tcb/ams gather* upper} or \refKey{/tcb/ams gather*}
+  cannot have a lower part!
+  For a lower part, use \refKey{/tcb/ams nodisplayskip upper} instead.
+\end{marker}
+\end{docTcbKeys}
 
+\begin{docTcbKey}{ams gather* lower}{}{style, no value}
+  Adds an |amsmath| |gather*| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{ams nodisplayskip upper}{}{style, no value}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0pre2 (2024/05/15)
+%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,14 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.3.0pre2}
+\tcb@set@library@version{6.3.0}
 
-\RequirePackage{tikz}[2010/10/13]
 \RequirePackage{tikzfill.image}
-
-\newenvironment{tikzpicture@tcb@hooked}{%
-  \edef\tcb@tikzpicture@begin{\noexpand\tikzpicture[\expandonce\tcb@tikz@option@hook]}%
-  \tcb@tikzpicture@begin\tcb@tikz@begin@hook}{\tcb@tikz@end@hook\endtikzpicture}
 
 \def\tcb@creategeonodes@true{%
   \begin{scope}[every node/.style={line width=0mm,inner sep=0mm,outer sep=0mm,draw=none,fill=none,rectangle}]
@@ -438,7 +433,7 @@
 
 \tcbset{%
   base@unbroken/.style={%
-    clear@spec,graphical environment=tikzpicture@tcb@hooked,geometry nodes,%
+    clear@spec,geometry nodes,%
     set@outerboundary=\tcb@boundaryframe@standard,%
     shape@of@skin=unbroken,%
     set@extensions@preframe={\kvtcb@shadow},%
@@ -446,7 +441,7 @@
     set@extensions@final={\tcb@apply@finish}%
   },%
   base@first/.style={%
-    clear@spec,graphical environment=tikzpicture@tcb@hooked,geometry nodes,%
+    clear@spec,geometry nodes,%
     set@outerboundary=\tcb@boundaryframe@pathfirst,%
     shape@of@skin=first,%
     set@extensions@preframe={\kvtcb@shadow},%
@@ -454,7 +449,7 @@
     set@extensions@final={\tcb@apply@finish}%
   },%
   base@middle/.style={%
-    clear@spec,graphical environment=tikzpicture@tcb@hooked,geometry nodes,%
+    clear@spec,geometry nodes,%
     set@outerboundary=\tcb@boundaryframe@pathmiddle,%
     shape@of@skin=middle,%
     set@extensions@preframe={\kvtcb@shadow},%
@@ -462,7 +457,7 @@
     set@extensions@final={\tcb@apply@finish}%
   },%
   base@last/.style={%
-    clear@spec,graphical environment=tikzpicture@tcb@hooked,geometry nodes,%
+    clear@spec,geometry nodes,%
     set@outerboundary=\tcb@boundaryframe@pathlast,%
     shape@of@skin=last,%
     set@extensions@preframe={\kvtcb@shadow},%
@@ -885,7 +880,7 @@
   segmentation code={\tcb@drawspec@widgetsegment},%
   skin first=widgetmiddle,skin middle=widgetmiddle,skin last=widgetlast}
 
-\tcb@new@skin{spartan}{graphical environment=tikzpicture@tcb@hooked,geometry nodes=true,shape@of@skin=unbroken,%
+\tcb@new@skin{spartan}{geometry nodes=true,shape@of@skin=unbroken,%
   set@extensions@preframe=,set@extensions@postframe={\tcb@apply@underlay},set@extensions@final=,%
   frame engine=spartan,interior titled engine=spartan,interior engine=spartan,title engine=spartan,segmentation engine=spartan,%
   set@outerboundary=\tcb@boundaryframe@standard,%
@@ -893,7 +888,7 @@
 
 \tcbset{spartan/.style={skin=spartan}}
 
-\tcb@new@skin{draft}{clear@spec,graphical environment=tikzpicture@tcb@hooked,geometry nodes,shape@of@skin=unbroken,%
+\tcb@new@skin{draft}{clear@spec,geometry nodes,shape@of@skin=unbroken,%
   frame engine=empty,interior titled engine=empty,interior engine=empty,segmentation engine=path,title empty,%
   segmentation style={draw=black,dashed},
   set@extensions@postframe=,
