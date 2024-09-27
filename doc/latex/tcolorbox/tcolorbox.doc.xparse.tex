@@ -7,14 +7,14 @@ The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{xparse}
 \end{dispListing}
-This loads the package |xparse| \cite{latexproject:xparse}.
+This loads the package \refPkg{xparse} \cite{latexproject:xparse}.
 
 Note that up to version 5.0.2 this library contained code which
-needed the |xparse| package. Since nowadays this package has become
+needed the \refPkg{xparse} package. Since nowadays this package has become
 basically a part of the \LaTeX\ kernel, the code of the library was
 migrated to other parts of the |tcolorbox| package. So, the remaining
 library is nearly a stub which only loads |xparse|.
 
 Instead of including the |xparse| library, it is recommended to include the
-|xparse| package directly, \textbf{if really needed} (the \LaTeX\ kernel contains
+\refPkg{xparse} package directly, \textbf{if really needed} (the \LaTeX\ kernel contains
 essentially everything needed). The library is kept for compatibility.

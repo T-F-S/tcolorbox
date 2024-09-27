@@ -2640,7 +2640,7 @@ Lower part.
 
 \begin{docTcbKey}{varwidth upper}{\colOpt{=\meta{length}}}{style, default \refKey{/tcb/width}}
   This style places the upper part content into a |varwidth| environment.
-  This style needs the |varwidth| package \cite{arseneau:2011a} to be loaded manually.
+  This style needs the \refPkg{varwidth} package \cite{arseneau:2011a} to be loaded manually.
   The resulting box has a maximal width of \meta{length}.
   This option is only senseful for a \refCom{tcbox}.
 \begin{exdispExample*}{varwidth_upper}{sbs,lefthand ratio=0.6}
@@ -3268,7 +3268,7 @@ text after
   \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}
   (see note on page~\pageref{subsec:surroundings}).\par
   Sets the keys |before| and |after| to values which are
-  recommended, if the package |parskip| \emph{is} used and there is no better
+  recommended, if the package \refPkg{parskip} \emph{is} used and there is no better
   idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{parskip/.style={before={\par\pagebreak[0]\parindent=0pt},
@@ -3281,7 +3281,7 @@ text after
   \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}
   (see note on page~\pageref{subsec:surroundings}).\par
   Sets the keys |before| and |after| to values which are
-  recommended, if the package |parskip| is \emph{not} used and there is no better
+  recommended, if the package \refPkg{parskip} is \emph{not} used and there is no better
   idea for |before| and |after|. This is similar to:
 \begin{dispListing}
 \tcbset{noparskip/.style={before={\par\pagebreak[0]\smallskip\parindent=0pt},
@@ -3293,13 +3293,13 @@ text after
   This options is considered to be superseded by
   \refKey{/tcb/before skip balanced} and \refKey{/tcb/after skip balanced}
   (see note on page~\pageref{subsec:surroundings}).\par
-  Tries to detect the usage of the package |parskip| and sets
+  Tries to detect the usage of the package \refPkg{parskip} and sets
   the keys |before| and |after| accordingly. Actually, the following is done:
   \begin{itemize}
   \item If the length of |\parskip| is greater than |0pt| at the beginning of the document,
-    \refKey{/tcb/parskip} is executed. Here, the usage of package |parskip| is \emph{assumed}.
+    \refKey{/tcb/parskip} is executed. Here, the usage of package \refPkg{parskip} is \emph{assumed}.
   \item Otherwise, if the length of |\parskip| is not greater than |0pt| at the beginning of the document,
-    \refKey{/tcb/noparskip} is executed. Here, the absence of package |parskip| is \emph{assumed}.
+    \refKey{/tcb/noparskip} is executed. Here, the absence of package \refPkg{parskip} is \emph{assumed}.
   \end{itemize}
 \end{docTcbKey}
 
@@ -4315,7 +4315,7 @@ related operations which do not produce visible text.
 \item Labels are ensured to reference the correct page number.
 \item The \meta{code} is executed only once even during fitting operations for
   title and box content.
-\item In combination with the |hyperref| package, the hyper anchor is set
+\item In combination with the \refPkg{hyperref} package, the hyper anchor is set
   to the upper left corner of the |tcolorbox|, i.\,e.\ links inside the pdf document
   will jump to the box pleasantly.
 \item Since the \meta{code} is executed inside a \TeX\ group, only global
@@ -4343,8 +4343,8 @@ Note that this option is not getting reset by \refKey{/tcb/reset}.
 \begin{docTcbKey}[][doc new=2023-02-08]{label is zlabel}{}{no value, initially unset}
 Sets |\zlabel| as labelling for |tcolorbox| (global or per box).
 When \refKey{/tcb/label} and friends are used, the underlying labeling macro is |\zlabel|.
-This needs the |zref| package \cite{oberdiek:zref} or packages building upon |zref| to be loaded.
-References can be made by |\zref|. If the |zref-clever| package \cite{barros:zref-clever} is loaded,
+This needs the \refPkg{zref} package \cite{oberdiek:zref} or packages building upon \refPkg{zref} to be loaded.
+References can be made by |\zref|. If the \refPkg{zref-clever} package \cite{barros:zref-clever} is loaded,
 |\zcref|, |\zcpageref|, and similar macros can be applied.
 Note that this option is not getting reset by \refKey{/tcb/reset}.
 \end{docTcbKey}
@@ -4362,7 +4362,7 @@ from page \pageref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
 
 \begin{docTcbKey}[][doc new=2014-11-28]{phantomlabel}{=\meta{marker}}{no default, initially unset}
 Equivalent to \refKey{/tcb/label} for an \emph{unnumbered} box.
-A |\phantomsection| from the package |hyperref| \cite{rahtz:hyperref} is used to set a correct
+A |\phantomsection| from the package \refPkg{hyperref} \cite{rahtz:hyperref} is used to set a correct
 hyperlink target.
 This is not needed and should typically not be used for a numbered box.
 \end{docTcbKey}
@@ -4389,7 +4389,7 @@ from page \pageref{sec:numberedboxes}.
 This option has a different meaning based upon the chosen labeling mechanism.
 \begin{itemize}
 \item If \refKey{/tcb/label is label} is active:\par
-  The option key \refKey{/tcb/label type} can be used only in conjunction with the |cleveref| package
+  The option key \refKey{/tcb/label type} can be used only in conjunction with the \refPkg{cleveref} package
   \cite{cubitt:2018a} which has to be loaded separately.
   \meta{type} has to be a cross-reference type \emph{known} to |cleveref|
   like |theorem|, |algorithm|, |result|, etc. References made with |cleveref|
@@ -4397,7 +4397,7 @@ This option has a different meaning based upon the chosen labeling mechanism.
   errors, if |cleveref| is not loaded.
   For an example, see \Vref{theo:meanvaluetheorem}.
 \item If \refKey{/tcb/label is zlabel} is active:\par
-  The option key \refKey{/tcb/label type} can be used only in conjunction with the |zref-clever| package
+  The option key \refKey{/tcb/label type} can be used only in conjunction with the \refPkg{zref-clever} package
   \cite{barros:zref-clever}
   which has to be loaded separately.
   \meta{type} has to be a cross-reference type \emph{known} to |zref-clever|.
@@ -4419,9 +4419,9 @@ Removes a \refKey{/tcb/label type}, if set before.
 
 \clearpage
 \begin{docTcbKey}[][doc new and updated={2016-06-22}{2023-02-08}]{nameref}{=\meta{text}}{no default, initially unset}
-If the |nameref| package is loaded, the given \meta{text} is used for
+If the \refPkg{nameref} package is loaded, the given \meta{text} is used for
 corresponding |\nameref| macros.
-If the |zref-titleref| package is loaded, the given \meta{text} is used to
+If the \refPkg{zref-titleref} package is loaded, the given \meta{text} is used to
 set the reference text for |\ztitleref|.
 Typically, the \meta{text} will be chosen
 to be identical or nearly identical to the one for \refKey{/tcb/title}.
@@ -4454,7 +4454,7 @@ The most likely use case is to set a \emph{short title} for the
 
 \clearpage
 \begin{docTcbKey}[][doc new=2017-02-03]{hypertarget}{=\meta{marker}}{no default, initially unset}
-A |\hypertarget| from the package |hyperref| \cite{rahtz:hyperref} is used to
+A |\hypertarget| from the package \refPkg{hyperref} \cite{rahtz:hyperref} is used to
 create an internal link of an anchor \meta{marker}.
 This \meta{marker} can be referenced by |\hyperlink| or
 \refKey{/tcb/hyperlink}.
@@ -4473,7 +4473,7 @@ Click me to jump to Box B.
 
 
 \begin{docTcbKey}[][doc new=2017-02-10]{bookmark}{=\meta{text}}{no default, initially unset}
-  Sets a PDF bookmark with the given \meta{text}, if the package |bookmark| \cite{oberdiek:bookmark}
+  Sets a PDF bookmark with the given \meta{text}, if the package \refPkg{bookmark} \cite{oberdiek:bookmark}
   is loaded. This bookmark is set with an automated destination (the current box)
   and is set one level below the current bookmark level.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
@@ -4490,7 +4490,7 @@ to see the bookmark.
 
 \begin{docTcbKey}[][doc new=2017-02-10]{bookmark*}{=\marg{options}\marg{text}}{no default, initially unset}
   Identical to \refKey{/tcb/bookmark}, but additional \meta{options}
-  from the package |bookmark| \cite{oberdiek:bookmark} can be given.
+  from the package \refPkg{bookmark} \cite{oberdiek:bookmark} can be given.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
 % \usepackage{bookmark}%
 \begin{tcolorbox}[colback=red!10,colframe=red!50!black,
@@ -4692,7 +4692,7 @@ It is precise only, if \refKey{/tcb/check odd page} was set.
 See \Fullref{sec:external} for the \mylib{external} library of |tcolorbox|.
 \end{marker}
 
-If the \emph{externalization} library of the \texttt{tikz} package is used,
+If the \emph{externalization} library of the \refPkg{tikz} package is used,
 a |tcolorbox| could trigger the externalization process which will arise
 a compilation error.
 
@@ -4734,7 +4734,7 @@ inside the current \TeX\ group and is not affected by \refKey{/tcb/reset}.
   it may be used inside the option list of a |tcolorbox| to set the
   externalization \meta{file name} for the first |tikzpicture| which is discovered
   \emph{inside} the box content.
-  The package |tikz| \cite{tantau:tikz_and_pgf} or the library \mylib{skins} has to be loaded to use this option.
+  The package \refPkg{tikz} \cite{tantau:tikz_and_pgf} or the library \mylib{skins} has to be loaded to use this option.
   Additionally, |\usetikzlibrary{external}| has to be used.
 \end{docTcbKey}
 
@@ -4742,7 +4742,7 @@ inside the current \TeX\ group and is not affected by \refKey{/tcb/reset}.
   Convenience option which calls |/tikz/external/remake next|. Typically,
   it may be used inside the option list of a |tcolorbox| to force the remake
   of the first |tikzpicture| which is discovered \emph{inside} the box content.
-  The package |tikz| \cite{tantau:tikz_and_pgf} or the library \mylib{skins} has to be loaded to use this option.
+  The package \refPkg{tikz} \cite{tantau:tikz_and_pgf} or the library \mylib{skins} has to be loaded to use this option.
   Additionally, |\usetikzlibrary{external}| has to be used.
 \end{docTcbKey}
 

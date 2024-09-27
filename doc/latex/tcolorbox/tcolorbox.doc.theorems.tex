@@ -7,7 +7,7 @@ The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{theorems}
 \end{dispListing}
-This also loads the package |amsmath|.
+This also loads the package \refPkg{amsmath}.
 
 Denis Bitouz\'e, Muzimuzhi, and many others provided very valuable input for this library.
 
@@ -195,7 +195,7 @@ To switch off the \texttt{nameref} feature permanently, add
 \end{dispExample}
 
 \clearpage
-\refCom{tcbhighmath} can be used in symbiosis with the |empheq| package
+\refCom{tcbhighmath} can be used in symbiosis with the \refPkg{empheq} package
 which allows to specify own boxing commands to mark multiline formulas.
 
 \begin{dispExample}
@@ -900,8 +900,8 @@ New colored mathematical environments are easily created using
 \clearpage
 \begin{docTcbKey}{theorem style}{=\meta{name}}{no default, initially |standard|}
 Applies a predefined style \meta{name} to the theorem environment. Some of
-the feasible \meta{name} values resemble style names from the packages |theorem|
-and |ntheorem| to give convenient access to known patterns.
+the feasible \meta{name} values resemble style names from the packages \refPkg{theorem}
+and \refPkg{ntheorem} to give convenient access to known patterns.
 \begin{marker}
 The styles alter \refKey{/tcb/separator sign}, \refKey{/tcb/description delimiters},
 \refKey{/tcb/terminator sign}, and more. Therefore, one should apply such
@@ -1018,7 +1018,7 @@ identically colored.
 All following environments are numbered with a common counter, but this
 can be changed easily. Here, the counter output is supplemented by
 the subsection number.
-Further, the |cleveref| package \cite{cubitt:2018a} is used for clever
+Further, the \refPkg{cleveref} package \cite{cubitt:2018a} is used for clever
 references.
 
 \inputpreamblelisting{G}
@@ -1208,8 +1208,8 @@ Let's try a more conservative approach:
 Instead of creating theorem environments with the methods described before,
 environments from other packages can be boxed with a |tcolorbox|.
 
-Environments may be created e.g. by methods from the |theorem| package or
-the |amsthm| package. \refCom{tcolorboxenvironment} can be used to put a box
+Environments may be created e.g. by methods from the \refPkg{theorem} package or
+the \refPkg{amsthm} package. \refCom{tcolorboxenvironment} can be used to put a box
 around these environments.
 
 \inputpreamblelisting{K}

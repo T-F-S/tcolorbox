@@ -7,7 +7,7 @@ The library is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{skins}
 \end{dispListing}
-This also loads the package |tikzfill.image|.
+This also loads the package \refPkg[tikzfill]{tikzfill.image}.
 
 In the following, general settings and options of the library are
 documented.
@@ -1012,7 +1012,7 @@ The text is centered by default
 
 \begin{docTcbKey}{varwidth boxed title}{\colOpt{=\meta{length}}}{initially unset}
 The title text content is captured with a |varwidth| environment with a width of \meta{length}.
-This style needs the |varwidth| package \cite{arseneau:2011a} to be loaded manually.
+This style needs the \refPkg{varwidth} package \cite{arseneau:2011a} to be loaded manually.
 By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{exdispExample*}{varwidth_boxed_title}{sbs,lefthand ratio=0.66}
 % \usepackage{varwidth}
@@ -1035,7 +1035,7 @@ By default, the resulting boxed title is somewhat smaller than the main box.
 
 \begin{docTcbKey}{varwidth boxed title*}{\colOpt{=\meta{length}}}{initially unset}
 The title text content is captured with a |varwidth| environment with a width of main box width plus \meta{length}.
-This style needs the |varwidth| package \cite{arseneau:2011a} to be loaded manually.
+This style needs the \refPkg{varwidth} package \cite{arseneau:2011a} to be loaded manually.
 By default, the resulting boxed title is somewhat smaller than the main box.
 \begin{exdispExample*}{varwidth_boxed_title_star}{sbs,lefthand ratio=0.66}
 % \usepackage{varwidth}
@@ -2285,9 +2285,6 @@ Such shadows can be added directly to the frame path using \refKey{/tcb/frame st
 
 \clearpage
 \subsection{\tikzname\  Picture Option Keys}\label{subsec:tikzpicture}
-The skin \refSkin{standard} does not support these options,
-but most other skins, e.\,g.\ \refSkin{enhanced}.
-
 
 \begin{docTcbKey}{tikz}{=\meta{tikz option list}}{no default, initially empty}
   Adds the given \meta{tikz option list} to the main |tikzpicture| environment
@@ -2721,12 +2718,12 @@ Finishes are intended for special effects like highlights or glosses or text ove
 
 \clearpage
 \subsection{Hyper Option Keys}\label{subsec:hyper}
-All options of this section need the package |hyperref| \cite{rahtz:hyperref}
+All options of this section need the package \refPkg{hyperref} \cite{rahtz:hyperref}
 to be loaded separately. All these options are implemented as
 \refKey{/tcb/finish} and can be disabled by \refKey{/tcb/no finish}.
 
 \begin{marker}
-If the package |hyperref| \cite{rahtz:hyperref} is not loaded or if
+If the package \refPkg{hyperref} \cite{rahtz:hyperref} is not loaded or if
 the \refSkin{standard} skin is used, all hyper option are silently ignored.
 \end{marker}
 

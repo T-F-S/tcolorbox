@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
+%% The LaTeX package tcolorbox - version 6.4.0 (2024/09/27)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2024/07/10 version 6.3.0 text color boxes]
-\def\tcb@version{6.3.0}
+\ProvidesPackage{tcolorbox}[2024/09/27 version 6.4.0 text color boxes]
+\def\tcb@version{6.4.0}
 
 %\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
@@ -73,7 +73,9 @@
 \def\tcb@info#1{\PackageInfo{tcolorbox}{#1}}
 \def\tcb@warning#1{\PackageWarning{tcolorbox}{#1}}
 \def\tcb@error#1#2{\PackageError{tcolorbox}{#1}{#2}}
-
+\def\tcb@warning@deprecatedkey#1{%
+  \tcb@warning{`\pgfkeyscurrentkey' key is deprecated hence ignored since #1.}%
+}
 % key management
 \pgfkeys{/tcb/.is family}
 
@@ -563,7 +565,6 @@
   toggle left and right/evenpage/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@evenpage\tcbset{check odd page}},
   toggle left and right/forced/.code={\let\tcb@lrtoggle=\tcb@lrtoggle@forced},
   toggle left and right/.default=evenpage,
-  graphical environment/.style=,%  deprecated
   %
   frame engine/.is choice,
   frame engine/standard/.style={frame code=\tcb@drawframe@standard},
@@ -1103,7 +1104,7 @@
 
 
 % counter for float
-\AtBeginDocument{%
+\AtBeginDocument[tcolorbox]{%
 \@ifundefined{c@float@type}%
     {\edef\ftype@tcbfloat{\ifx\c@figure\@undefined 1\else 4\fi}}%
     {\edef\ftype@tcbfloat{\the\c@float@type}%
@@ -1594,7 +1595,7 @@
     \fi%
   }{%
     \csxdef{tcb@ehg@current@\tcb@ehgid}{#1}%
-    \begingroup\edef\x{\endgroup\noexpand\AtEndDocument{\noexpand\tcb@saveehg{\tcb@ehgid}}}\x%
+    \begingroup\edef\x{\endgroup\noexpand\AtEndDocument[tcolorbox]{\noexpand\tcb@saveehg{\tcb@ehgid}}}\x%
   }%
 }
 
@@ -2035,6 +2036,8 @@
 
 \ExplSyntaxOn
 
+\exp_args_generate:n {nNo}
+
 \NewSocket{tagsupport/tcb/drawing/begin}{0}
 \NewSocket{tagsupport/tcb/drawing/end}{0}
 \NewSocketPlug{tagsupport/tcb/drawing/begin}{suspend}
@@ -2047,7 +2050,7 @@
 \NewDocumentEnvironment{ tcb@drawing }{ }
   {
     \use:c{ tcb@before@\tcb@split@state }
-    \exp_last_unbraced:NnNo \begin{tikzpicture}[\tcb@tikz@option@hook]
+    \exp_args:NnNo \begin{tikzpicture}[\tcb@tikz@option@hook]
     \UseTaggingSocket{tcb/drawing/begin}
     \SuspendTagging{tcb/drawing}
     \tcb@tikz@begin@hook
@@ -2557,28 +2560,36 @@
     \__tcobox_new_TotalTCBox:w \ProvideDocumentCommand
   }
 
+\NewDocumentCommand \tcolorboxenvironment { m +m }
+  {
+    \hook_gput_code:nnn{ env/#1/before }{ tcolorbox }
+      {
+        \begin{tcolorbox}
+          [{
+            savedelimiter = {#1},
+            #2,
+            wrap@environment,
+            code = \def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}
+          }]
+      }
+    \hook_gput_code:nnn{ env/#1/after }{ tcolorbox }
+      {
+        \tcb@end@tcolorboxenvironment
+      }
+  }
+
+\DeclareTotalTCBox{ \tcboxverb }{ O{} v }{ verbatim,#1 }{ #2 }
+
+\DeclareTotalTColorBox{ \tcbsidebyside }{ +O{} +m +m }
+  {
+    code = \long\def\tcb@sbs@text@left{#2}\long\def\tcb@sbs@text@right{#3},
+    #1,
+    sidebyside,
+    sidebyside@switch,
+    sidebyside@adapt@process
+  }{ \tcb@sbs@content }
 
 \ExplSyntaxOff
-
-
-\newcommand{\tcolorboxenvironment}[2]{%
-  \AddToHook{env/#1/before}{%
-    \begin{tcolorbox}[{savedelimiter={#1},#2,wrap@environment,%
-      code={\def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}}}]%
-  }%
-  \AddToHook{env/#1/after}{%
-    \tcb@end@tcolorboxenvironment%
-  }%
-}
-
-\DeclareTotalTCBox{\tcboxverb}{ O{} v }{verbatim,#1}{#2}
-
-\DeclareTotalTColorBox{\tcbsidebyside}{ +O{} +m +m }{%
-  code={\long\def\tcb@sbs@text@left{#2}\long\def\tcb@sbs@text@right{#3}},%
-  #1,%
-  sidebyside,%
-  sidebyside@switch,sidebyside@adapt@process%
-}{\tcb@sbs@content}
 
 
 \def\tcb@addcontentsline#1#2{%
@@ -2919,3 +2930,8 @@
 
 \ProcessOptions*
 \begingroup\edef\x{\endgroup\noexpand\tcbuselibrary{\tcb@optionlist}}\x
+
+% deprecated
+\tcbset{
+  graphical environment/.code = {\tcb@warning@deprecatedkey{v6.3.0 (2024/07/10)}},
+}

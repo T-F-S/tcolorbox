@@ -27,12 +27,12 @@ the settings of a previous loaded library. A library is never loaded twice.
 
 
 \subsubsection{Loading \mylib{listings}}
-This library uses the package |listings| \cite{hoffmann:listings} to typeset
+This library uses the package \refPkg{listings} \cite{hoffmann:listings} to typeset
 listings. It is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{listings}
 \end{dispListing}
-This also loads the package |listings| \cite{hoffmann:listings}.
+This also loads the package \refPkg{listings} \cite{hoffmann:listings}.
 
 The \refKey{/tcb/listing engine} is set to |listings| by the library.
 To reactivate this setting, if overwritten by other libraries, use
@@ -47,15 +47,15 @@ Therefore, loading this library is automatically replaced by loading
 \mylib{listings} only, if pdf\LaTeX\ is \emph{not} used.
 \end{marker}
 To extend |listings| for UTF-8 encoded sources, you can use the support from
-the package |listingsutf8| \cite{oberdiek:listingsutf8} by loading the library
+the package \refPkg{listingsutf8} \cite{oberdiek:listingsutf8} by loading the library
 variant \mylib{listingsutf8}.
 \begin{dispListing}
 \tcbuselibrary{listingsutf8}
 \tcbset{listing utf8=latin1}% optional; `latin1' is the default.
 \end{dispListing}
 This also loads the library \mylib{listings}
-and the packages |listings| \cite{hoffmann:listings}
-and |listingsutf8| \cite{oberdiek:listingsutf8}.
+and the packages \refPkg{listings} \cite{hoffmann:listings}
+and \refPkg{listingsutf8} \cite{oberdiek:listingsutf8}.
 
 The \refKey{/tcb/listing engine} is set to |listings| by the library.
 To reactivate this setting, if overwritten by other libraries, use
@@ -66,19 +66,27 @@ To reactivate this setting, if overwritten by other libraries, use
 
 \clearpage
 \subsubsection{Loading \mylib{minted}}
-This library uses the package |minted| \cite{poore:minted} to typeset
+This library uses the package \refPkg{minted} \cite{poore:minted} to typeset
 listings. It is loaded by a package option or inside the preamble by:
 \begin{dispListing}
 \tcbuselibrary{minted}
 \end{dispListing}
-This also loads the package |minted| \cite{poore:minted}.
+This also loads the package \refPkg{minted} \cite{poore:minted}.
 
 \begin{marker}
-The |minted| package uses the external tool |Pygments| \cite{pygments:web}
+To use the legacy version v2.9 of \refPkg{minted}, write
+\begin{dispListing}
+\usepackage{minted2}
+\end{dispListing}
+\emph{before} loading the library!
+\end{marker}
+
+\begin{marker}
+The \refPkg{minted} package uses the external tool |Pygments| \cite{pygments:web}
 to apply syntax highlighting. It has to be installed and set up, before the
 library can be used, see \cite{poore:minted} and \cite{pygments:web}.
 The \refEnv{tcolorbox} library \mylib{minted} does not work, if the package
-|minted| \cite{poore:minted} does not work.
+\refPkg{minted} \cite{poore:minted} does not work.
 \end{marker}
 
 The \refKey{/tcb/listing engine} is set to |minted| by the library.
@@ -340,7 +348,7 @@ This is my
 \clearpage
 
 \begin{marker}
-With date of 2018-05-12, the |xparse| \cite{latexproject:xparse} package
+With date of 2018-05-12, the \refPkg{xparse} \cite{latexproject:xparse} package
 changed the argument collection process (now part of the \LaTeX\ kernel).
 Spaces are ignored which leads to a serious change for listing environments
 ending with an optional argument like \verb+O{}+.
@@ -471,7 +479,7 @@ Note that the following code uses \verb+!O{}+ now.
 \subsection{Option Keys of the \mylib{listings} Library}\label{sec:speclistingkeys}
 
 \begin{docTcbKey}{listing options}{=\meta{key list}}{no default, initially |style=tcblatex|}
-  Sets the options from the package |listings| \cite{hoffmann:listings}
+  Sets the options from the package \refPkg{listings} \cite{hoffmann:listings}
   which are used during typesetting of the listing.
   For \LaTeX\ listings, there is a predefined |listings| style named |tcblatex|
   which can be used.
@@ -487,7 +495,7 @@ and in compiled form. Additionally, we use line numbers here.
 
 \begin{docTcbKey}{no listing options}{}{no value, initially unset}
   Abbreviation for |listing options={}|.
-  This removes all options for the |listings| package.
+  This removes all options for the \refPkg{listings} package.
   This includes the \refEnv{tcblisting} standard style |tcblatex| and the encoding presets.
   Use this option, if you want to set the |listings| options outside of \refEnv{tcblisting}, e.\,g.\ globally in
   the preamble.
@@ -501,7 +509,7 @@ All \textit{listings} options removed.
 
 \begin{docTcbKey}{listing style}{=\meta{style}}{no default, initially |tcblatex|}
   Abbreviation for |listing options={style=...}|. This key sets a \meta{style}
-  for the |listings| package, see \cite{hoffmann:listings}.
+  for the \refPkg{listings} package, see \cite{hoffmann:listings}.
   For \LaTeX, there is a predefined style named |tcblatex|.
 \begin{dispExample}
 \begin{tcblisting}{colback=red!5!white,colframe=red!75!black,
@@ -515,14 +523,14 @@ Here, we use the predefined style.
 \begin{docTcbKey}{listing inputencoding}{=\meta{encoding}}{no default, initially \texttt{\cs inputencodingname}}
   Sets the input encoding value for the predefined listing style |tcblatex|
   and |tcbdocumentation| from the library \mylib{documentation}.
-  The initial value is derived from the package |inputenc| if used.
+  The initial value is derived from the package \refPkg{inputenc} if used.
 \end{docTcbKey}
 
 \begin{docTcbKey}{listing remove caption}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
-If set to |true|, some part of the caption building code of the |listings| package
-is silenced to prevent some unwanted interaction with the |hyperref| package resulting
+If set to |true|, some part of the caption building code of the \refPkg{listings} package
+is silenced to prevent some unwanted interaction with the \refPkg{hyperref} package resulting
 in additional vertical space.
-If set to |false|, the |listings| package code is kept unchanged.
+If set to |false|, the \refPkg{listings} package code is kept unchanged.
 Note that listings outside \refEnv{tcblisting} and
 \refCom{tcbinputlisting} are always processed normally.
 Typically, a user is not expected to use this key at all.
@@ -530,7 +538,7 @@ Typically, a user is not expected to use this key at all.
 
 \begin{docTcbKey}{every listing line}{=\meta{text}}{no default, initially unset/empty}
 Inserts some \meta{text} to the begin of every line of a listing.
-Note that this a hack of the |listings| package code. This may become unusable
+Note that this a hack of the \refPkg{listings} package code. This may become unusable
 or superfluous in the future.
 \begin{dispExample}
 \newtcblisting{commandshell}{colback=black,colupper=white,colframe=yellow!75!black,
@@ -584,14 +592,14 @@ all options from \Vref{sec:speclistingkeys} are applicable.
 
 \begin{docTcbKey}{listing utf8}{=\meta{one-byte-encoding}}{style, no default, initially |latin1|}
   Abbreviation for using \refKey{/tcb/listing inputencoding}
-  together with UTF-8 support from the package |listingsutf8| \cite{oberdiek:listingsutf8}.
+  together with UTF-8 support from the package \refPkg{listingsutf8} \cite{oberdiek:listingsutf8}.
   This option is available only for the library variant \mylib{listingsutf8}.
   The \meta{one-byte-encoding} is one of
   the applicable encodings from \cite{oberdiek:listingsutf8}, e.\,g.\ |latin1|
   which is the default.\par
   Be aware that this means restriction to this specific \meta{one-byte-encoding}:
   e.\,g.\ |latin1| comprises umlauts and other accented characters, but not
-  the Euro sign. If you want to use the |listings| package \emph{and} \flqq real\frqq\
+  the Euro sign. If you want to use the \refPkg{listings} package \emph{and} \flqq real\frqq\
   UTF-8 source code, then do \emph{not} use \mylib{listingsutf8} but \mylib{listings}
   with
   \refKey{/tcb/listing inputencoding}|=utf8|
@@ -623,7 +631,7 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
 
 \begin{docTcbKey}[][doc updated={2021-12-15}]{minted options}{=\meta{key list}}{no default, initially
     \linebreak see \refKey{/tcb/default minted options}}
-  Sets the options from the package |minted| \cite{poore:minted}
+  Sets the options from the package \refPkg{minted} \cite{poore:minted}
   which are used during typesetting of the listing.
   Also see \refKey{/tcb/minted options app} and \refKey{/tcb/minted options pre}.
 \begin{dispExample}
@@ -652,7 +660,7 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
 \clearpage
 \begin{docTcbKey}[][doc new={2021-12-15}]{default minted options}{=\meta{key list}}{no default, initially
     |tabsize=2,fontsize=\textbackslash small,|\linebreak|breaklines,autogobble|}
-  Sets the options from the package |minted| \cite{poore:minted}
+  Sets the options from the package \refPkg{minted} \cite{poore:minted}
   which are used during typesetting of the listing, if
   \refKey{/tcb/minted options} are \emph{not} used. The intended use is
   inside the preamble to change the default behavior.

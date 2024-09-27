@@ -36,6 +36,7 @@
 \tcbuselibrary{most,documentation}
 
 \tcbifexternal{}{%
+  \IfFileExists{minted2.sty}{\RequirePackage{minted2}}{}% Avoid latexmk problems (endless loop)
   \tcbuselibrary{minted}%
   \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
 }
@@ -204,7 +205,7 @@
     docCounter,docLength,
     meta,marg,
     oarg,
-    refCom,refEnv,refKey,
+    refCom,refEnv,refKey,refPathOperation,refAux,refAuxcs,refPkg,
     sarg,
     tcbmakedocSubKey,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
     % skins

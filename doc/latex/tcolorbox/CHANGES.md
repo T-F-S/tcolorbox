@@ -22,6 +22,25 @@ and this project adheres to
 
 
 
+## [6.4.0] - 2024-09-07
+
+### Added
+- Libary `documentation`:
+    - `\refPkg` for referring packages on CTAN (issue #290)
+
+### Changed
+- Precautions for tikz options with square brackets (issue #284)
+- Usage warnings added for deprecated options `before example`, `after example`, and `graphical environment` (issue #284)
+- Documenation for TikZ Picture Option Keys adapted (issue #285)
+- Label `tcolorbox` added to LaTeX hooks (issue #287)
+- Libary `minted`: Minted option `envname` now supported by package `minted` directly (issue #2)
+
+### Fixed
+- Libary `minted`: `minted Warning: Macro \minted@def@optcl is deprecated with minted v3` (issue #2)
+- `tcolorbox-tutorial-poster.tex`: minted v3 seems to need escaped comma `\,` instead of `,` inside `breakafter`
+
+
+
 ## [6.3.0] - 2024-07-10
 
 ### Added

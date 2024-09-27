@@ -16,7 +16,7 @@ The whole procedure saves compilation time, if such a snippet is costly to
 compile but needs to compile just once or very seldom.
 
 There are very good alternatives to this library. One should consider
-the |standalone| package or the \tikzname\ externalization library instead.
+the \refPkg{standalone} package or the \tikzname\ externalization library instead.
 The \mylib{external} library is something in between and can be seen as
 poor man variant of the \tikzname\ externalization library.
 
@@ -619,14 +619,14 @@ or
   name points to another subdirectory than |external|, this has to be
   adapted.
 
-\item\textbf{I use the |minted| package and I get a cache directory for
+\item\textbf{I use the \refPkg{minted} package and I get a cache directory for
   every externalized snippet.}\\
   To avoid this problem, there are several ways.
   \begin{itemize}
   \item If you do not need |minted| inside the snippet code, you may use
     |\usepackage{minted}| \emph{after} \refCom{tcbEXTERNALIZE}
     or use \refCom{tcbifexternal} to switch |minted| off for the external code.
-    If |minted| is already included by another package, add the following to
+    If \refPkg{minted} is already included by another package, add the following to
     your preamble:
 \begin{dispListing}
 \tcbset{external/PassOptionsToPackage={draft}{minted}}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
+%% The LaTeX package tcolorbox - version 6.4.0 (2024/09/27)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,13 +17,13 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.3.0}
+\tcb@set@library@version{6.4.0}
 
 \tcbuselibrary{listings,skins,external,raster}
 
 \ifdefined\printindex\else%
   \RequirePackage{makeidx}[2000/03/29]%
-  \AddToHook{begindocument/before}{%
+  \AddToHook{begindocument/before}[tcolorbox]{%
     \@ifpackageloaded{imakeidx}{%
       \tcb@warning{`imakeidx' package should be loaded before `documentation' library}%
   }{}}%
@@ -66,7 +66,7 @@
 \DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
 \def\meta@font@select{\rmfamily\itshape}
 
-\AtEndPreamble{%
+\AtEndPreamble[tcolorbox]{%
   \@ifpackageloaded{doc}{%
   }{% code taken from doc.sty
     \ifx\l@nohyphenation\undefined
@@ -228,7 +228,7 @@
     value=value,values=Values}},
 }
 
-\AtBeginDocument{%
+\AtBeginDocument[tcolorbox]{%
   \csname tcb@doc@index@\idx@format\endcsname%
   \hypersetup{
   citecolor=\kvtcb@colhyper,
@@ -922,7 +922,16 @@
 \def\refKey{\tcb@ref@doc{key}}
 \def\refPathOperation{\tcb@ref@doc{path}}
 
-\AtBeginDocument{%
+\NewDocumentCommand \refPkg { O{#2} m } {%
+  \href{https://ctan.org/pkg/#1}%
+  {%
+    \refAux{#2}%
+    \kvtcb@doc@format@page{{\fontfamily{pzd}\fontencoding{U}\fontseries{m}\fontshape{n}\selectfont\char213}%
+    \,CTAN}%
+  }%
+}
+
+\AtBeginDocument[tcolorbox]{%
   \ifHy@colorlinks
     \def\refAux#1{\textcolor{\kvtcb@colhyper}{\tcb@scantokens{#1}}}%
     \def\refAuxcs#1{\textcolor{\kvtcb@colhyper}{\tcb@cs{#1}}}%
@@ -1065,8 +1074,6 @@
 
 % deprecated
 \tcbset{
-  before example/.store in=\kvtcb@beforeexample,
-  after example/.store in=\kvtcb@afterexample,
-    before example=\par\smallskip,
-    after example=,
+  before example/.code = {\tcb@warning@deprecatedkey{v3.50 (2015/03/16)}},
+  after example/.code  = {\tcb@warning@deprecatedkey{v3.50 (2015/03/16)}},
 }

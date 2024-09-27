@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.3.0 (2024/07/10)
+%% The LaTeX package tcolorbox - version 6.4.0 (2024/09/27)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,12 +18,14 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.3.0}
+\tcb@set@library@version{6.4.0}
 
 \RequirePackage{minted}[2021/12/24]
 
 % to be removed, if integrated into the minted package (#281)
-\minted@def@optcl{envname}{-P envname}{#1}
+\IfPackageAtLeastTF{minted}{2024/08/25}{}{%
+  \minted@def@optcl{envname}{-P envname}{#1}%
+}
 
 \tcbuselibrary{listings@core}
 

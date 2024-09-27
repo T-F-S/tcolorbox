@@ -5,9 +5,9 @@
 \tcbset{external/prefix=external/documentation_}%
 This library has the single purpose to support \LaTeX\ package documentations
 like this one. Actually, the visual nature follows the approach from
-Till Tantau's |pgf| \cite{tantau:tikz_and_pgf} documentation.
+Till Tantau's \refPkg{pgf} \cite{tantau:tikz_and_pgf} documentation.
 Typically, this library is assumed to be used in conjunction with the
-class |ltxdoc| or alike.
+class \refPkg{ltxdoc} or alike.
 Denis Bitouz\'e, Muzimuzhi, and many others provided very valuable input for this library.
 
 The library is loaded by a package option or inside the preamble by:
@@ -19,17 +19,17 @@ the library \mylib{skins}, see \Vref{sec:skins},
 the library \mylib{raster}, see \Vref{sec:raster},
 the library \mylib{listings}, see \Vref{sec:listings},
 and a bunch of packages, namely
-|makeidx|, |marginnote|, |refcount|, and |hyperref|.
-The packages |pifont| and |marvosym| should be installed for some symbols, but
+\refPkg{makeidx}, \refPkg{marginnote}, \refPkg{refcount}, and \refPkg{hyperref}.
+The packages \refPkg{pifont} and \refPkg{marvosym} should be installed for some symbols, but
 need not to be loaded.
 
 \begin{marker}
-The package |makeidx| is loaded only, if \docAuxCommand*{printindex} is
-\emph{not} already defined. Therefore, one can include an alternative to |makeidx| like
-|imakeidx| \emph{before} the library |documentation| is used.
+The package \refPkg{makeidx} is loaded only, if \docAuxCommand*{printindex} is
+\emph{not} already defined. Therefore, one can include an alternative to \refPkg{makeidx} like
+\refPkg{imakeidx} \emph{before} the library |documentation| is used.
 \end{marker}
 \begin{marker}
-The package |marginnote| is loaded only, if \docAuxCommand*{marginnote} is
+The package \refPkg{marginnote} is loaded only, if \docAuxCommand*{marginnote} is
 \emph{not} already defined.
 \end{marker}
 \begin{marker}
@@ -47,7 +47,7 @@ For UTF-8 support load (ignore this when using Xe\LaTeX):
   \tcbuselibrary{listingsutf8,documentation}
 \end{dispListing}
 
-For |minted| \cite{poore:minted} support, load:
+For \refPkg{minted} \cite{poore:minted} support, load:
 \begin{dispListing}
   \tcbuselibrary{documentation,minted}
   \tcbset{listing engine=minted}
@@ -704,6 +704,21 @@ Some pages back, one can see \refAuxcs{fooaux} as an example.
 \end{docCommand}
 
 
+\begin{docCommand}[doc new=2024-09-18]{refPkg}{\oarg{ctanname}\marg{name}}
+  References a package \meta{name} on \href{https://ctan.org}{CTAN} with
+  hyperlink \mbox{|https://ctan.org/pkg/|\meta{name}}.
+  Using the option \meta{ctanname} creates the hyperlink
+  \mbox{|https://ctan.org/pkg/|\meta{ctanname}}.
+\begin{dispExample}
+Hyperlinks are created with help of the \refPkg{hyperref} package.\par
+The package \refPkg[frankenstein]{dialogue} is part of the
+\refPkg{frankenstein} bundle of packages.
+\end{dispExample}
+\end{docCommand}
+
+
+\clearpage
+
 \begin{docCommand}{colDef}{\marg{text}}
 Sets \meta{text} with the command color, see \refKey{/tcb/color command}.
 \begin{dispExample}
@@ -718,8 +733,6 @@ This is my \colOpt{text}.
 \end{dispExample}
 \end{docCommand}
 
-\clearpage
-
 \begin{docCommand}[doc new=2019-09-18]{colFade}{\marg{text}}
   Sets \meta{text} with the fade color, see \refKey{/tcb/color fade}.
 \begin{dispExample}
@@ -730,7 +743,7 @@ This is my \colFade{text}.
 
 \begin{docCommand}[doc new=2014-09-19]{tcbdocmarginnote}{\oarg{options}\marg{text}}
   Creates a |tcolorbox| note with the given \meta{text} inside the margin using
-  the |marginnote| package. The style of the |tcolorbox| is predefined and can be
+  the \refPkg{marginnote} package. The style of the |tcolorbox| is predefined and can be
   altered by \refKey{/tcb/doc marginnote} and the given \meta{options}.
 \begin{dispExample}
 Some text\tcbdocmarginnote{Note A}
@@ -1313,7 +1326,7 @@ keys to insert code before (or after) the description texts.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation listing options}{=\meta{key list}}{no default,\\\hspace*{\fill} initially |style=tcbdocumentation|}
-  Sets the options from the package |listings| \cite{hoffmann:listings}.
+  Sets the options from the package \refPkg{listings} \cite{hoffmann:listings}.
   They are used inside \refEnv{dispExample} and \refEnv{dispListing} to typeset
   the listings. Note that this is not identical to the key
   \refKey{/tcb/listing options} which is used for \enquote{normal} listings.\\
@@ -1323,14 +1336,14 @@ keys to insert code before (or after) the description texts.
 \begin{docTcbKey}{documentation listing style}{=\meta{listing style}}{no default, initially |tcbdocumentation|}
   Abbreviation for |documentation listing options={style=...}|.
   This key sets a \meta{style}
-  for the |listings| package, see \cite{hoffmann:listings}.
+  for the \refPkg{listings} package, see \cite{hoffmann:listings}.
   Note that this is not identical to the key
   \refKey{/tcb/listing style} which is used for \enquote{normal} listings.\\
   Used for \refKey{/tcb/listing engine}|=listings| only.
 \end{docTcbKey}
 
 \begin{docTcbKey}{documentation minted options}{=\meta{key list}}{no default,\\\hspace*{\fill} initially |tabsize=2,fontsize=\textbackslash small|}
-  Sets the options from the package |minted| \cite{poore:minted}
+  Sets the options from the package \refPkg{minted} \cite{poore:minted}
   which are used during typesetting of the listing, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted options} which is used for \enquote{normal} listings.\\
@@ -1339,7 +1352,7 @@ keys to insert code before (or after) the description texts.
 
 \begin{docTcbKey}{documentation minted style}{=\meta{key list}}{no default, initially unset}
   Sets a \meta{style} known to |Pygments| \cite{pygments:web} for
-  the package |minted| \cite{poore:minted}, if used.
+  the package \refPkg{minted} \cite{poore:minted}, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted style} which is used for \enquote{normal} listings.\\
   Used for \refKey{/tcb/listing engine}|=minted| only.
@@ -1347,7 +1360,7 @@ keys to insert code before (or after) the description texts.
 
 \begin{docTcbKey}[][doc new=2017-04-24]{documentation minted language}{=\meta{programming language}}{no default, initially |latex|}
   Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}
-  for the package |minted| \cite{poore:minted}, if used.
+  for the package \refPkg{minted} \cite{poore:minted}, if used.
   Note that this is not identical to the key
   \refKey{/tcb/minted language} which is used for \enquote{normal} listings.\\
   Used for \refKey{/tcb/listing engine}|=minted| only.
@@ -1383,7 +1396,7 @@ Sets \meta{macro} as formatter for page references like the
 reference to \refEnv{tcolorbox}.
 The default setting puts the page reference in a |\textsuperscript|.
 It may be changed to |\fakesuperscript| to cope with superiors problems
-in combination with the |realscripts| package or just otherwise for user customization.
+in combination with the \refPkg{realscripts} package or just otherwise for user customization.
 \end{docTcbKeys}
 
 
@@ -1420,11 +1433,11 @@ in combination with the |realscripts| package or just otherwise for user customi
   \item\docValue{pgfchapter}: The index is formatted like in the |pgf| documentation (as a chapter).
   \item\docValue{pgf}: Alias for |pgfsection|.
   \item\docValue{doc}: The index is assumed to be formatted by |doc| or |ltxdoc|. The usage of |makeindex|
-    with |-s gind.ist| is assumed. The package |hypdoc| has to be loaded
+    with |-s gind.ist| is assumed. The package \refPkg{hypdoc} has to be loaded
     \emph{before} |tcolorbox|. Only a limited set of customizations will
     work! This option cannot be unset when used!
   \item\docValue{off}: The index is not formatted by |tcolorbox|. Use this, if
-    the index is formatted by other package like |imakeidx|.
+    the index is formatted by other package like \refPkg{imakeidx}.
   \end{itemize}
 \end{docTcbKey}
 
