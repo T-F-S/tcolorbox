@@ -22,7 +22,16 @@ and this project adheres to
 
 
 
-## [6.4.0] - 2024-09-07
+## [6.4.1] - 2024-10-22
+
+### Changed
+- Updated `zref-clever` support so that `label type` can also work with `label is label` (issue #295)
+- Documentation: change mention of `tikz` to `tikzfill.image` in skins description (issue #293)
+- `tcolorbox-tutorial-poster.tex`: Using `breakafterinrun` to break long sequences of dashes (issue #294)
+
+
+
+## [6.4.0] - 2024-09-27
 
 ### Added
 - Libary `documentation`:

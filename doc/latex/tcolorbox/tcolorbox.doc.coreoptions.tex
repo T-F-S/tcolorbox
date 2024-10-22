@@ -4385,20 +4385,21 @@ from page \pageref{sec:numberedboxes}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc updated=2023-02-09]{label type}{=\meta{type}}{no default, initially unset}
+\begin{docTcbKey}[][doc updated=2024-10-22]{label type}{=\meta{type}}{no default, initially unset}
 This option has a different meaning based upon the chosen labeling mechanism.
 \begin{itemize}
 \item If \refKey{/tcb/label is label} is active:\par
-  The option key \refKey{/tcb/label type} can be used only in conjunction with the \refPkg{cleveref} package
-  \cite{cubitt:2018a} which has to be loaded separately.
+  The option key \refKey{/tcb/label type} can be used in conjunction with the \refPkg{cleveref} package
+  \cite{cubitt:2018a} or the \refPkg{zref-clever} package \cite{barros:zref-clever}
+  which have to be loaded separately.
   \meta{type} has to be a cross-reference type \emph{known} to |cleveref|
   like |theorem|, |algorithm|, |result|, etc. References made with |cleveref|
-  will use this type. Note that using |label type| will result in compilation
-  errors, if |cleveref| is not loaded.
-  For an example, see \Vref{theo:meanvaluetheorem}.
+  will use this type. For an example, see \Vref{theo:meanvaluetheorem}.
+  Recent versions of \refPkg{zref-clever} also work with \refKey{/tcb/label is label}
+  and \refKey{/tcb/label type} can be used as described below for \refKey{/tcb/label is zlabel}.
 \item If \refKey{/tcb/label is zlabel} is active:\par
-  The option key \refKey{/tcb/label type} can be used only in conjunction with the \refPkg{zref-clever} package
-  \cite{barros:zref-clever}
+  The option key \refKey{/tcb/label type} can be used only in conjunction with the
+  \refPkg{zref-clever} package \cite{barros:zref-clever}
   which has to be loaded separately.
   \meta{type} has to be a cross-reference type \emph{known} to |zref-clever|.
   This \meta{type} is bound to an automatic |tcolorbox| counter which has to be set up using

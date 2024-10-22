@@ -36,7 +36,9 @@
 \tcbuselibrary{most,documentation}
 
 \tcbifexternal{}{%
-  \IfFileExists{minted2.sty}{\RequirePackage{minted2}}{}% Avoid latexmk problems (endless loop)
+  \IfFileExists{minted2.sty}{\RequirePackage{minted2}}{}%
+    % Avoid https://github.com/gpoore/minted/issues/414
+    % and spurious errors where minted v3 complains about .tcbtemp files
   \tcbuselibrary{minted}%
   \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
 }

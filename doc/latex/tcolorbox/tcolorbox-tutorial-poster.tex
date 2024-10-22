@@ -1,5 +1,5 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 6.4.0 (2024/09/27)
+%% The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
 %% tcolorbox-tutorial-poster.tex: a tutorial for poster creation with tcolorbox
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %%
 %% This work consists of all files listed in README
 %%
-% arara: pdflatex: { shell: yes }
-% arara: pdflatex: { shell: yes }
+% arara: pdflatex
+% arara: pdflatex
 \documentclass[12pt]{article}
 
 \usepackage[a3paper,landscape]{geometry}
@@ -1373,7 +1373,7 @@ Our poster is finished now. Just go to the next page to see the final result.
     \tcbinputlisting{standard jigsaw,size=minimal,toprule=0.5mm,bottomrule=0.5mm,boxsep=2mm,
       colback=white,opacityback=0.75,listing only,
       enforce breakable,tcb@poster@boxheight,before skip=-\interlineskip,height fixed for=all,
-      minted options={tabsize=2,fontsize=\small,breaklines,breakafter={\,\]-}},
+      minted options={tabsize=2,fontsize=\small,breaklines,breakafter={\,\]-},breakafterinrun},
       listing file=tcolorbox-example-poster.tex}%
   }
 \end{tcbposter}

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.4.0 (2024/09/27)
+%% The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2024/09/27 version 6.4.0 text color boxes]
-\def\tcb@version{6.4.0}
+\ProvidesPackage{tcolorbox}[2024/10/22 version 6.4.1 text color boxes]
+\def\tcb@version{6.4.1}
 
 %\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
@@ -933,6 +933,11 @@
 }
 
 
+\bool_new:N \g__tcobox_cleveref_loaded_bool
+\AddToHook{package/cleveref/after}
+  { \bool_gset_true:N \g__tcobox_cleveref_loaded_bool }
+
+
 \cs_new:Npn \__tcobox_label_label:n #1
   {
     \quark_if_nil:NTF \l__tcobox_kv_labeltype_tl
@@ -940,16 +945,12 @@
         \label{#1}
       }
       {
-        \exp_last_unbraced:NNV \label[\l__tcobox_kv_labeltype_tl]{#1}
-      }
-  }
-
-
-\cs_new_protected:Npn \__tcobox_zcsetup_reftype:n #1
-  {
-    \cs_if_exist:NT \zcsetup
-      {
-        \zcsetup { reftype={#1} }
+        \group_begin:
+        \exp_args:NV \__tcobox_zcsetup_reftype:n \l__tcobox_kv_labeltype_tl
+        \bool_if:NTF \g__tcobox_cleveref_loaded_bool
+          { \exp_last_unbraced:NNV \label[\l__tcobox_kv_labeltype_tl]{#1} }
+          { \label{#1} }
+        \group_end:
       }
   }
 
@@ -966,6 +967,15 @@
         \zlabel {#1}
       }
     \group_end:
+  }
+
+
+\cs_new_protected:Npn \__tcobox_zcsetup_reftype:n #1
+  {
+    \cs_if_exist:NT \zcsetup
+      {
+        \zcsetup { reftype={#1} }
+      }
   }
 
 
