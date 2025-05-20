@@ -1,5 +1,6 @@
 # The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
 
+[![CTAN](https://img.shields.io/ctan/v/tcolorbox.svg)](https://www.ctan.org/pkg/tcolorbox)
 
 > Copyright (c) 2006-2024 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 
