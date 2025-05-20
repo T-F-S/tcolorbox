@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
+%% The LaTeX package tcolorbox - version 6.5.0 (2025/05/20)
 %% tcbminted.code.tex: Code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2024 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2025 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.4.1}
+\tcb@set@library@version{6.5.0}
 
 \RequirePackage{minted}[2021/12/24]
 
@@ -33,11 +33,11 @@
 
 \cs_new_nopar:Npn \__tcobox_minted_input_listing:nnnn #1#2#3#4
   {
+    \tl_set:Nn \l__tcobox_tmpa_tl { \inputminted[#1 }
     \tl_if_empty:nF { #4 }
       {
-        \usemintedstyle { #4 }
+        \tl_put_right:Nn \l__tcobox_tmpa_tl { ,style=#4 }
       }
-    \tl_set:Nn \l__tcobox_tmpa_tl { \inputminted[#1 }
     \cs_if_exist:NT \tcb@listing@capture
       {
         \str_if_eq:VnT \tcb@listing@capture { hbox }

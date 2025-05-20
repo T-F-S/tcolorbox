@@ -53,7 +53,7 @@ The resulting box is unbreakable.
 
 
 \clearpage
-\begin{docTcbKey}[][doc updated=2015-02-06]{sidebyside align}{=\meta{alignment}}{no default, initially |center|}
+\begin{docTcbKey}[][doc updated=2024-11-26]{sidebyside align}{=\meta{alignment}}{no default, initially |center|}
   Sets the vertical \meta{alignment} for the left-handed and right-handed part.
 
   Feasible values for \meta{alignment} are:
@@ -61,6 +61,10 @@ The resulting box is unbreakable.
   \item\docValue{center}: identical to |minipage| option |c|.
   \item\docValue{top}:    identical to |minipage| option |t| (aligns the top
       lines of the left-handed and right-handed side according to their baselines).
+    \begin{marker}
+    This value of \meta{alignment} needs \refPkg{luacolor} to work properly since version 6.0.0 (2023-02-10).
+    Adding |\strut| may help alternatively to simulate the effect for equal font heights.
+    \end{marker}
   \item\docValue{bottom}: identical to |minipage| option |b| (aligns the bottom
       lines of the left-handed and right-handed side according to their baselines).
   \item\docValue{center seam}: aligns the center of the left-handed and right-handed side.

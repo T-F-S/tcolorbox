@@ -1,9 +1,9 @@
 % \LaTeX-Main\
-%% The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
+%% The LaTeX package tcolorbox - version 6.5.0 (2025/05/20)
 %% tcolorbox.tex: Manual
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2024 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2025 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -41,11 +41,11 @@
 \documentclass[a4paper,11pt]{ltxdoc}
 
 
-\RequirePackage{l3benchmark}
-\ExplSyntaxOn
-\AtEndDocument { \benchmark_toc: }
-\benchmark_tic:
-\ExplSyntaxOff
+%\RequirePackage{l3benchmark}
+%\ExplSyntaxOn
+%\AtEndDocument { \benchmark_toc: }
+%\benchmark_tic:
+%\ExplSyntaxOff
 
 \usepackage{tcolorbox.doc.s_main}
 \tcbEXTERNALIZE
@@ -63,8 +63,8 @@
 \setlength{\bibitemsep}{\smallskipamount}
 \addbibresource{tcolorbox.doc.bib}
 
-\def\version{6.4.1}%
-\def\datum{2024/10/22}%
+\def\version{6.5.0}%
+\def\datum{2025/05/20}%
 \makeindex
 
 \hypersetup{
@@ -80,7 +80,7 @@
 %\geometry{showframe}
 %\tcbset{draftmode}
 \tcbset{/tcb/external/-}% for final run
-%\includeonly{tcolorbox.doc.coreoptions}
+%\includeonly{tcolorbox.doc.intro}
 %\hypersetup{colorlinks=false}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

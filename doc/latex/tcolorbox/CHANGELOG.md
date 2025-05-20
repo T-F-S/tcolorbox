@@ -2,15 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on
-[Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
 ### Added
-
-- Library 'listings', 'listingsut8', 'minted': new options 'run pdflatex-dev', 'run xelatex-dev', 'run lualatex-dev', 'run latexmk', 'run latex-dev'
 
 ### Changed
 
@@ -22,6 +20,32 @@ and this project adheres to
 
 ### Security
 
+
+
+## [6.5.0] - 2025-05-20
+
+### Added
+- Libary `documentation`:
+    - `ctan formatter` for customization of the string CTAN (issue #290)
+- Libraries `listings`, `listingsut8`, `minted`: (pull request #313)
+    - Option `run pdflatex-dev`
+    - Option `run xelatex-dev`
+    - Option `run lualatex-dev`
+    - Option `run latexmk`
+    - Option `run latex-dev`
+
+### Changed
+- Package hyperref Info: bookmark level for `list type` unknown: Message silenced (issue #296)
+- Implementation of `minted style` does not use `\usemintedstyle` any longer.
+    Note that this avoids global style changes and documents relying on the old side-effect
+    may have to be adapted (issue #299)
+- Documentation: `\tcboxverb` moved from 3.3 to 3.1
+- Documentation of `\newtcbox` and `\NewTCBox` explains arguments in more detail (issue #300)
+- Documentation typos (issue #301)
+- Documentation: Added fix from https://tex.stackexchange.com/questions/730126/update-to-cleveref-firstaid-adds-space-after-tcolorbox-documentation-commands
+- Documentation: `sidebyside align=top` needs `luacolor` since version 6.0.0 (2023-02-10) (issue #302)
+- Documentation: Unmatched opening brace removed
+- `CHANGES.md` renamed to `CHANGELOG.md` following https://keepachangelog.com/en/1.1.0/
 
 
 ## [6.4.1] - 2024-10-22
@@ -42,7 +66,7 @@ and this project adheres to
 ### Changed
 - Precautions for tikz options with square brackets (issue #284)
 - Usage warnings added for deprecated options `before example`, `after example`, and `graphical environment` (issue #284)
-- Documenation for TikZ Picture Option Keys adapted (issue #285)
+- Documentation for TikZ Picture Option Keys adapted (issue #285)
 - Label `tcolorbox` added to LaTeX hooks (issue #287)
 - Libary `minted`: Minted option `envname` now supported by package `minted` directly (issue #2)
 
@@ -61,7 +85,7 @@ and this project adheres to
     This works for lualatex only.
 
 ### Changed
-- The base package loads `tikz` now instead of `pgf`. 
+- The base package loads `tikz` now instead of `pgf`.
     All skins, including the `standard` family, use `tikzpicture` as internal environment now.
 - Boolean marker to detect if inside a `tcb@savebox` introduced (issue #262)
 - LaTeX usrguide cited for `\NewDocumentCommand` and friends (issue #263)
@@ -74,7 +98,7 @@ and this project adheres to
         for the upper part only (issue #282)
     - Documentation for `ams align`, `ams align*`, `ams gather`, and `ams gather*` adapted, i.e.
         exclusion of lower parts documented (issue #282)
-- Technical information: The package documentation is now produced with lualatex instead of pdflatex        
+- Technical information: The package documentation is now produced with lualatex instead of pdflatex
 
 ### Deprecated
 - The option `graphical environment` is useless now, since all environments are based on `tikzpicture` now.
@@ -84,9 +108,9 @@ and this project adheres to
 - Documentation for the deprecated option `graphical environment`
 
 ### Fixed
-- `\@nobreakfalse` added to `\tcb@parbox@false@settings` to avoid 
+- `\@nobreakfalse` added to `\tcb@parbox@false@settings` to avoid
     decreased space before list with `parbox=false` following a section heading (issue #270)
-- Documentation typos fixed (issue #279)    
+- Documentation typos fixed (issue #279)
 
 
 
@@ -127,16 +151,16 @@ and this project adheres to
     and `savelowerto` (issue #249)
 - Improved some `\sarg` examples in the documentation (issue #256)
 - Small typos in the documentation (issue #261)
-- Recording macros rewritten in expl3 code (part of issue #255)    
+- Recording macros rewritten in expl3 code (part of issue #255)
 - Usage of expl3 scratch variables like `\l_tmpa_tl` replaced by package variables like `\l__tcobox_tmpa_tl`
 - Library `documentation`:
     - Expl3 arg-spec of internal macro corrected (issue #257)
     - `\tcbmakedocSubKey` and `\tcbmakedocSubKeys` take options now (issue #259)
 - Library `external`: package loading of `pdftexcmds` and `shellesc` removed.
     Expl3 functions are used as drop-in replacements (part of issue #255)
-- Libraries `listings`, `listingsutf8`, and `minted`: 
+- Libraries `listings`, `listingsutf8`, and `minted`:
     package loading of `pdftexcmds` and `shellesc` removed (part of issue #255)
-- Needed LaTeX version updated to 2021-11-15    
+- Needed LaTeX version updated to 2021-11-15
 
 ### Removed
 - Loading of the `xparse` library dropped inside the `documentation` library since all
@@ -156,9 +180,9 @@ and this project adheres to
 ### Changed
 - Added braces to protect square brackets, mostly for key values (issue #234, issue #229 continued)
 - Internal `\__tcobox_include_graphics:nn` refactored (issue #236)
-- `blend into` now also adapts `list type` accordingly, 
+- `blend into` now also adapts `list type` accordingly,
     e.g. `blend into=figures` now sets `list type=figure` (issue #238)
-- `every box`, `every box on layer <n>`, and `every box on higher layers` may contain 
+- `every box`, `every box on layer <n>`, and `every box on higher layers` may contain
     `capture` mode settings now (issue #246)
 
 ### Fixed
@@ -193,10 +217,10 @@ and this project adheres to
     - Macro `\sarg` (issue #193)
 
 ### Changed
-- Documentation: 
+- Documentation:
     - List of initialization option macros enlarged (issue #213)
     - Removed `xparse` references (issue #214)
-    - Typo correction (issue #216, issue #219)   
+    - Typo correction (issue #216, issue #219)
 - Library `skins`:
     - `\tcbhypernode` made compatible for xelatex (issue #221)
 
@@ -248,7 +272,7 @@ and this project adheres to
 
 ### Changed
 - Possible visible change: previous hacks of current color handling are removed (issue #204)
-    and color is now inserted at begin of all internal `\box`es. This inserts a whatsit and can 
+    and color is now inserted at begin of all internal `\box`es. This inserts a whatsit and can
     give additional space at begin of a box which starts with an `itemize` or a similar environment.
     If necessary, such a space may be removed by a manual `\vspace{-\parsep}`, see issue #123
     Note: lualatex with package luacolor removes all spacing problems
@@ -256,7 +280,7 @@ and this project adheres to
     leading and trailing spaces are now removed from the environment name
 - `before title` appends `\ignorespaces` now
 - `after title` prepends `\unskip` now
-- `tcbverbatimwrite` sets `verbatim ignore indention at end` to remove spaces from  
+- `tcbverbatimwrite` sets `verbatim ignore indention at end` to remove spaces from
     indention of the end of environment
 - `nameref` also sets zref-titleref reference
 - `label type` is used for cleveref and zref-clever
@@ -270,7 +294,7 @@ and this project adheres to
     (should be more robust; inspired by issue #209)
 - Temporary `\tcbcounter` in `\newtcolorbox[auto counter]` undefined/restored after usage (issue #203)
 - Color setting example of subtitle inside `subtitle style` (issue #189)
-- Documentation: 
+- Documentation:
     - The documentation orders now `\New...`, `\Renew...`, `\Provide...`, `\Declare...`.
         Previously, `\Declare...` was often used first.
     - `NewTotalTColorBox` cannot be used with `saveto` or `savelowerto` (issue #205)
@@ -296,7 +320,7 @@ and this project adheres to
 ### Changed
 - Some documentation improvements
 - Library `xparse` removed from settings `many` and `most`
-- Slight implemenation change for `\newtcbtheorem` and `\renewtcbtheorem`
+- Slight implementation change for `\newtcbtheorem` and `\renewtcbtheorem`
 
 ### Fixed
 - Regression bug introduced with v5.0.0 2021-12-16 (issue #182)

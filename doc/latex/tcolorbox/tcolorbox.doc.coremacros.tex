@@ -147,6 +147,24 @@ Text \tcbox[tcbox raise base]{Hello World}\hfill
 
 \end{docCommand}
 
+
+\clearpage
+
+\begin{docCommand}{tcboxverb}{\oarg{options}\marg{verbatim box content}}
+  Creates a colored box based on \refCom{tcbox} which is fitted to the width of the given
+  \meta{verbatim box content}.
+  The underlying \refCom{tcbox} is styled with
+  \refKey{/tcb/verbatim} plus the given \meta{options}.
+  The difference to \refCom{tcbox} is that the \meta{verbatim box content} is
+  interpreted \textit{verbatim}. Therefore, |\tcboxverb| acts similar to |\verb|.
+
+\begin{dispExample}
+\tcboxverb{\LaTeX}, \tcboxverb[colback=blue!10!white,colupper=blue]{\LaTeX},
+\tcboxverb[blank,fuzzy halo]{\LaTeX}, \tcboxverb[beamer]{\LaTeX},
+\tcboxverb[enhanced,skin=enhancedmiddle jigsaw,colframe=red]{\LaTeX}.
+\end{dispExample}
+\end{docCommand}
+
 \clearpage
 \subsection{Producing \texttt{tcolorbox} Environments and Commands}\label{subsec:macros_tcolorbox}
 
@@ -277,7 +295,7 @@ This is a tcolorbox.
   In contrast to \refCom{NewTColorBox}, also the \meta{content} of the |tcolorbox| is specified.\\
   Basically, \refCom{NewTotalTColorBox} operates like |\NewDocumentCommand|. This means,
   the new command \texttt{\textbackslash}\meta{name} is constructed with the given
-  given \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.
+  \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.
   An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
   The \meta{options} are given to the underlying \refEnv{tcolorbox} which is filled with
   the specified \meta{content}.\\
@@ -321,12 +339,15 @@ This is a tcolorbox.
 
 \clearpage
 \subsection{Producing \texttt{\textbackslash tcbox} Commands}\label{subsec:macros_tcbox}
+\enlargethispage*{10mm}
 
 \begin{docCommand}{newtcbox}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\oarg{number}\oarg{default}\marg{options}}
   Creates a new macro \texttt{\textbackslash}\meta{name} based on \refCom{tcbox}.
   Basically, |\newtcbox| operates like |\newcommand|.
-  The new macro \texttt{\textbackslash}\meta{name} optionally takes \meta{number}$+1$ arguments, where
+  The new macro \texttt{\textbackslash}\meta{name} optionally takes \meta{number}$+1$ arguments (up to 10), where
   \meta{default} is the default value for the optional first argument.
+  Additional to the \meta{number} arguments, there is an
+  automatic last (mandatory) argument of \texttt{\textbackslash}\meta{name} which takes the box content
   The \meta{options} are given to the underlying |tcbox|.
   The \meta{init options} allow setting up automatic numbering,
   see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
@@ -390,7 +411,10 @@ The \xmybox[green]{quick} brown \xmybox{fox} \xmybox[blue]{jumps} over the
   Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcbox}.
   Basically, \refCom{NewTCBox} operates like |\NewDocumentCommand|. This means,
   the new command \texttt{\textbackslash}\meta{name} is constructed with the given
-  given \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.
+  \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.
+  Additional to the argument \meta{specification}, there is an
+  automatic last (mandatory) argument of \texttt{\textbackslash}\meta{name} which takes the box content.
+  Therefore, \texttt{\textbackslash}\meta{name} may have up to 10 arguments in sum.
   An error is issued if \texttt{\textbackslash}\meta{name} has already been defined.
   The \meta{options} are given to the underlying \refCom{tcbox}.\\
   Note that \refKey{/tcb/savedelimiter} is set to the given \meta{name}
@@ -500,22 +524,6 @@ typeset the verbatim content.
   Operates like \refCom{NewTotalTCBox}, but based on |\NewDocumentCommand| instead of |\DeclareDocumentCommand|.
   The new command is always created, irrespective of an already existing
   command with the same name.
-\end{docCommand}
-
-
-\begin{docCommand}{tcboxverb}{\oarg{options}\marg{verbatim box content}}
-  Creates a colored box based on \refCom{tcbox} which is fitted to the width of the given
-  \meta{verbatim box content}.
-  The underlying \refCom{tcbox} is styled with
-  \refKey{/tcb/verbatim} plus the given \meta{options}.
-  The difference to \refCom{tcbox} is that the \meta{verbatim box content} is
-  interpreted \textit{verbatim}. Therefore, |\tcboxverb| acts similar to |\verb|.
-
-\begin{dispExample}
-\tcboxverb{\LaTeX}, \tcboxverb[colback=blue!10!white,colupper=blue]{\LaTeX},
-\tcboxverb[blank,fuzzy halo]{\LaTeX}, \tcboxverb[beamer]{\LaTeX},
-\tcboxverb[enhanced,skin=enhancedmiddle jigsaw,colframe=red]{\LaTeX}.
-\end{dispExample}
 \end{docCommand}
 
 

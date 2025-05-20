@@ -704,12 +704,15 @@ Some pages back, one can see \refAuxcs{fooaux} as an example.
 \end{docCommand}
 
 
-\begin{docCommand}[doc new=2024-09-18]{refPkg}{\oarg{ctanname}\marg{name}}
+\begin{docCommand}[doc new and updated={2024-09-18}{2024-11-29}]{refPkg}{\oarg{ctanname}\marg{name}}
   References a package \meta{name} on \href{https://ctan.org}{CTAN} with
   hyperlink \mbox{|https://ctan.org/pkg/|\meta{name}}.
   Using the option \meta{ctanname} creates the hyperlink
   \mbox{|https://ctan.org/pkg/|\meta{ctanname}}.
+  The appearance of the \href{https://ctan.org}{CTAN} text can be
+  customized by \refKey{/tcb/ctan formatter}.
 \begin{dispExample}
+\tcbset{ctan formatter=\texttt}
 Hyperlinks are created with help of the \refPkg{hyperref} package.\par
 The package \refPkg[frankenstein]{dialogue} is part of the
 \refPkg{frankenstein} bundle of packages.
@@ -1366,6 +1369,7 @@ keys to insert code before (or after) the description texts.
   Used for \refKey{/tcb/listing engine}|=minted| only.
 \end{docTcbKey}
 
+\clearpage
 
 \begin{docTcbKey}[][doc new=2017-04-25]{keywords bold}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   Keyword used in \refEnv{docEnvironment}, \refEnv{docCommand}, etc. are printed
@@ -1381,7 +1385,6 @@ keys to insert code before (or after) the description texts.
 \end{dispExample*}
 \end{docTcbKey}
 
-\clearpage
 
 \begin{docTcbKeys}
   {
@@ -1397,6 +1400,28 @@ reference to \refEnv{tcolorbox}.
 The default setting puts the page reference in a |\textsuperscript|.
 It may be changed to |\fakesuperscript| to cope with superiors problems
 in combination with the \refPkg{realscripts} package or just otherwise for user customization.
+\end{docTcbKeys}
+
+
+\begin{docTcbKeys}
+  {
+    {
+      doc name        = ctan formatter,
+      doc new         = {2024-11-29},
+      doc parameter   = \colOpt{=\meta{macro}},
+      doc description = {no default, initially empty},
+    }
+  }
+Sets \meta{macro} as formatter for the string CTAN inside \refCom{refPkg}.
+The \meta{macro} has to take one mandatory argument (the string CTAN) and
+is typically some font setting.
+\begin{dispExample}
+\tcbset{ctan formatter=\textsf}
+Images are included using the \refPkg{graphicx} package.\par
+\newcommand{\myformatter}[1]{\textbf{\ttfamily\color{red}\TeX-Archive}}
+\tcbset{ctan formatter=\myformatter}
+Draw your own picture with help of the \refPkg{tikz} package.
+\end{dispExample}
 \end{docTcbKeys}
 
 
@@ -1423,7 +1448,7 @@ in combination with the \refPkg{realscripts} package or just otherwise for user 
 \end{dispListing}
 \end{docTcbKey}
 
-
+\clearpage
 
 \begin{docTcbKey}{index format}{=\meta{format}}{no default, initially |pgf|}
   Determines the basic \meta{format} of the generated index.
@@ -1461,7 +1486,6 @@ in combination with the \refPkg{realscripts} package or just otherwise for user 
   \refKey{/tcb/index level}.
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
 
 \begin{docTcbKey}{index german settings}{}{style, no value}
   Sets the |makeindex| values recommended for German language texts.
@@ -1471,8 +1495,6 @@ in combination with the \refPkg{realscripts} package or just otherwise for user 
 \end{dispListing}
 \end{docTcbKey}
 
-\clearpage
-\enlargethispage*{1cm}
 
 \begin{docTcbKey}{index annotate}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
   If set to |true|, the index entries are annotated with short descriptions
@@ -1542,7 +1564,7 @@ in combination with the \refPkg{realscripts} package or just otherwise for user 
   Switches all index gather options from above to |true| (all) or |false| (none).
 \end{docTcbKeys}
 
-
+\clearpage
 
 \begin{docTcbKey}{color command}{=\meta{color}}{no default, initially |Definition|}
   Sets the highlight color used by macro definitions.

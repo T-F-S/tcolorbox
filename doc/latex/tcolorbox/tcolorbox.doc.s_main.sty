@@ -36,9 +36,8 @@
 \tcbuselibrary{most,documentation}
 
 \tcbifexternal{}{%
-  \IfFileExists{minted2.sty}{\RequirePackage{minted2}}{}%
-    % Avoid https://github.com/gpoore/minted/issues/414
-    % and spurious errors where minted v3 complains about .tcbtemp files
+  %\IfFileExists{minted2.sty}{\RequirePackage{minted2}}{}%
+    % Avoid spurious errors where minted v3 complains about .tcbtemp files
   \tcbuselibrary{minted}%
   \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
 }
@@ -74,6 +73,7 @@
   color length=Orange!85!black,
   index colorize,
   index annotate,
+  ctan formatter=\texttt,
 }
 \urlstyle{sf}
 
@@ -348,3 +348,11 @@
 
 \ExplSyntaxOff
 
+% https://tex.stackexchange.com/questions/730126/update-to-cleveref-firstaid-adds-space-after-tcolorbox-documentation-commands.
+\RemoveFromHook{label}[firstaid/cleveref]
+\AddToHook{label}[firstaid/cleveref]
+         {\ifx
+           \@currentcounter\@empty
+          \else
+           \firstaid@cref@updatelabeldata{\@currentcounter}%<--- was missing
+          \fi}

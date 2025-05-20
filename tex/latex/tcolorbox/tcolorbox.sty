@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
+%% The LaTeX package tcolorbox - version 6.5.0 (2025/05/20)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2024 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2025 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2024/10/22 version 6.4.1 text color boxes]
-\def\tcb@version{6.4.1}
+\ProvidesPackage{tcolorbox}[2025/05/20 version 6.5.0 text color boxes]
+\def\tcb@version{6.5.0}
 
 %\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
@@ -2619,6 +2619,8 @@
 }
 
 \newcommand*\l@tcolorbox{\@dottedtocline{1}{1.5em}{2.3em}}
+
+\def\toclevel@tcolorbox{0}% for hyperref
 
 \ExplSyntaxOn
 \NewDocumentCommand{\tcblistof}{ O{\section} m o m }

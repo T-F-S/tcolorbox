@@ -1,15 +1,16 @@
-# The LaTeX package tcolorbox - version 6.4.1 (2024/10/22)
+# The LaTeX package tcolorbox - version 6.5.0 (2025/05/20)
 
+[![CTAN](https://img.shields.io/ctan/v/tcolorbox.svg)](https://www.ctan.org/pkg/tcolorbox)
 
-> Copyright (c) 2006-2024 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+> Copyright (c) 2006-2025 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 
 > This work may be distributed and/or modified under the
-> conditions of the LaTeX Project Public License, either version 1.3
+> conditions of the LaTeX Project Public License, either version 1.3c
 > of this license or (at your option) any later version.
 > The latest version of this license is in
 >   http://www.latex-project.org/lppl.txt
-> and version 1.3 or later is part of all distributions of LaTeX
-> version 2005/12/01 or later.
+> and version 1.3c or later is part of all distributions of LaTeX
+> version 2008/05/04 or later.
 
 > This work has the LPPL maintenance status author-maintained.
 
@@ -27,7 +28,7 @@ saving and reuse of source code and text parts.
 ## Contents of the package
 
 - `README.md`                     this file
-- `CHANGES.md`                    log of changes (history)
+- `CHANGELOG.md`                  log of changes (history)
 - `tcolorbox.sty`                 LaTeX package file (style file)
 - `tcbbreakable.code.tex`         LaTeX package file (library of tcolorbox)
 - `tcbdocumenation.code.tex`      LaTeX package file (library of tcolorbox)

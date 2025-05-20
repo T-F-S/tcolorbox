@@ -659,7 +659,7 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
 
 \clearpage
 \begin{docTcbKey}[][doc new={2021-12-15}]{default minted options}{=\meta{key list}}{no default, initially
-    |tabsize=2,fontsize=\textbackslash small,|\linebreak|breaklines,autogobble|}
+    |tabsize=2,|\linebreak|fontsize=\textbackslash small,breaklines,autogobble|}
   Sets the options from the package \refPkg{minted} \cite{poore:minted}
   which are used during typesetting of the listing, if
   \refKey{/tcb/minted options} are \emph{not} used. The intended use is
@@ -677,15 +677,21 @@ Sets a \meta{programming language} known to |Pygments| \cite{pygments:web}.
 
 
 
-\begin{docTcbKey}{minted style}{=\meta{style}}{no default, initially unset}
-Sets a \meta{style} known to |Pygments| \cite{pygments:web}. This is
-independent from \refKey{/tcb/minted options}. Note that styles are always
-applied globally; all following examples will be set in the given \meta{style}
-until a new style is set. Also note that
+\begin{docTcbKey}[][doc updated=2024-11-07]{minted style}{=\meta{style}}{no default, initially unset}
+Sets a \meta{style} known to |Pygments| \cite{pygments:web}, see \url{https://pygments.org/styles/}.
+Alternatively, one could add |style=|\meta{style} to \refKey{/tcb/minted options}.
+Note that
 setting |\usemintedstyle|\marg{style} only once per document is more economic, if
 all styles in a document are the same.
 For examples of different styles, see
 \refKey{/tcb/minted language} and \refKey{/tcb/minted options}.
+
+\begin{marker}
+Up to version 6.4.1, \refKey{/tcb/minted style} applied |\usemintedstyle|\marg{style}
+resulting in a global style change, even for code using \refPkg{minted} directly.
+Now, \refKey{/tcb/minted style} only applies to |tcolorbox|.
+\end{marker}
+
 \end{docTcbKey}
 
 See further options in \Vref{sec:commonlistingkeys}.
@@ -1287,7 +1293,7 @@ Issues a |latex-dev| compilation of the listing with the given \meta{arguments}.
 Issues a |dvips| compilation of the listing with the given \meta{arguments}.
 \end{docTcbKey}
 
-\enlargethispage*{1cm}
+\clearpage
 \begin{docTcbKey}[][doc new=2014-11-14]{run ps2pdf}{\colOpt{=\meta{arguments}}}{style, no default, initially unset}
 Issues a |ps2pdf| compilation of the listing with the given \meta{arguments}.
 \end{docTcbKey}
@@ -1316,6 +1322,8 @@ Issues a |ps2pdf| compilation of the listing with the given \meta{arguments}.
 \end{tcblisting}
 \end{dispListing*}
 {\tcbusetemp}
+
+\clearpage
 
 \begin{marker}
   For most applications, you will like to add \refKey{/tcb/freeze pdf} as option,
