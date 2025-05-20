@@ -10,6 +10,8 @@ and this project adheres to
 
 ### Added
 
+- Library 'listings', 'listingsut8', 'minted': new options 'run pdflatex-dev', 'run xelatex-dev', 'run lualatex-dev', 'run latexmk', 'run latex-dev'
+
 ### Changed
 
 ### Deprecated
