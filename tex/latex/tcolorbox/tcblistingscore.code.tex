@@ -235,13 +235,18 @@
   compilable listing/.style={listing file={\jobname-listing-\thetcblistingcount.tex}},
   run@system@command/.style 2 args={run system command={#1\space#2\space\filename@area\filename@base}},%
   run pdflatex/.style={run@system@command={pdflatex}{#1}},%
+  run pdflatex-dev/.style={run@system@command={pdflatex-dev}{#1}},%
   run xelatex/.style={run@system@command={xelatex}{#1}},%
+  run xelatex-dev/.style={run@system@command={xelatex-dev}{#1}},%
   run lualatex/.style={run@system@command={lualatex}{#1}},%
+  run lualatex-dev/.style={run@system@command={lualatex-dev}{#1}},%
   run makeindex/.style={run@system@command={makeindex}{#1}},%
   run bibtex/.style={run@system@command={bibtex}{#1}},%
   run biber/.style={run@system@command={biber}{#1}},%
   run arara/.style={run@system@command={arara}{#1}},%
+  run latexmk/.style={run@system@command={latexmk}{#1}},%
   run latex/.style={run@system@command={latex}{#1}},%
+  run latex-dev/.style={run@system@command={latex-dev}{#1}},%
   run dvips/.style={run@system@command={dvips}{#1}},%
   run ps2pdf/.style={run system command={ps2pdf\space#1\space\filename@area\filename@base.ps}},%
   freeze file/.code={\def\tcbprocess@condition{1}\def\tcbprocess@target{#1}},%
