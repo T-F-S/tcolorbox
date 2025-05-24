@@ -2567,8 +2567,6 @@ One     & Two     & Three \\\hline\hline
   This style adds a centered |tikzpicture| environment to the start and end
   of the upper part. The \meta{options} may be given as \tikzname\  picture options.
 \begin{exdispExample}{tikz_upper}
-% \usepackage{tikz}
-
 \begin{tcolorbox}[tikz upper,fonttitle=\bfseries,colback=white,colframe=black,
                   title=\tikzname\ drawing]
   \path[fill=yellow,draw=yellow!75!red] (0,0) circle (1cm);
@@ -2584,7 +2582,6 @@ One     & Two     & Three \\\hline\hline
   This style adds a centered |tikzpicture| environment to the start and end
   of the lower part. The \meta{options} may be given as \tikzname\  picture options.
 \begin{exdispExample}{tikz_lower}
-% \usepackage{tikz}
 % \tcbuselibrary{skins,listings}
 
 \begin{tcblisting}{tikz lower,listing side text,fonttitle=\bfseries,
@@ -2608,7 +2605,7 @@ One     & Two     & Three \\\hline\hline
   This style is especially useful for boxes with multiline texts which are
   fitted to the text width.
 \begin{exdispExample}{tikznode_upper}
-% \usepackage{tikz}
+% \tcbuselibrary{skins}
 \newtcbox{\headline}[1][]{enhanced,center,
   ignore nobreak,fontupper=\Large\bfseries,
   colframe=red!50!black,colback=red!10!white,
@@ -2622,7 +2619,6 @@ One     & Two     & Three \\\hline\hline
   This style places the lower part content into a centered
   \tikzname\ node. The \meta{options} may be given as \tikzname\  node options.
 \begin{exdispExample}{tikznode_lower}
-% \usepackage{tikz}
 \begin{tcolorbox}[bicolor,colback=LightBlue!50!white,colbacklower=white,
   colframe=black,tikznode lower={inner sep=2pt,draw=red,fill=yellow}]
 Upper part.
