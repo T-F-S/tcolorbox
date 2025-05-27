@@ -10,6 +10,9 @@ and this project adheres to
 
 ### Added
 
+- library 'skins':
+  - options 'alt' and 'temporal' for the use with beamer
+
 ### Changed
 
 ### Deprecated
