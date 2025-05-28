@@ -1911,6 +1911,8 @@
   beamer hidden/.style={nirvana},
   beamer alerted/.style={fuzzy halo},
   only/.code args={<#1>#2}{\only<#1>{\tcbset{#2}}},%
+  alt/.code args={<#1>#2#3}{\alt<#1>{\tcbset{#2}}{\tcbset{#3}}},%
+  temporal/.code args={<#1>#2#3#4}{\temporal<#1>{\tcbset{#2}}{\tcbset{#3}}{\tcbset{#4}}},%
   hide/.code args={<#1>}{\only<#1>{\tcbset{beamer hidden}}},%
   alert/.code args={<#1>}{\only<#1>{\tcbset{beamer alerted}}},%
 }
