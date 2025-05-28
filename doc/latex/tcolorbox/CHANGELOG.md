@@ -12,6 +12,8 @@ and this project adheres to
 
 - library 'skins':
   - options 'alt' and 'temporal' for the use with beamer
+- library 'documentation':
+  - macro `\ssarg` to document beamer overlay specifications
 
 ### Changed
 
