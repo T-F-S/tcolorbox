@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.5.0 (2025/05/20)
+%% The LaTeX package tcolorbox - version 6.6.0pre1 (2025/05/28)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.5.0}
+\tcb@set@library@version{6.6.0pre1}
 
 \RequirePackage{tikzfill.image}
 
@@ -1912,7 +1912,7 @@
   beamer alerted/.style={fuzzy halo},
   only/.code args={<#1>#2}{\only<#1>{\tcbset{#2}}},%
   alt/.code args={<#1>#2#3}{\alt<#1>{\tcbset{#2}}{\tcbset{#3}}},%
-  temporal/.code args={<#1>#2#3#4}{\temporal<#1>{\tcbset{#2}}{\tcbset{#3}}{\tcbset{#4}}},%
+  temporal/.code args={<#1>#2#3#4}{\temporal<#1>{\tcbset{#2}}{\tcbset{#3}}{\tcbset#4}},% possible beamer error with #1 (?!)
   hide/.code args={<#1>}{\only<#1>{\tcbset{beamer hidden}}},%
   alert/.code args={<#1>}{\only<#1>{\tcbset{beamer alerted}}},%
 }

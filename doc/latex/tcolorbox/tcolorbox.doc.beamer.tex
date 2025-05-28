@@ -13,7 +13,7 @@ by a package option or inside the preamble by:
 
 See \Vref{sec:skins} for the documentation of all other options of the \mylib{skins} library.
 
-\begin{docTcbKey}[][doc new and updated={2015-01-09}{2019-03-01}]{only}{=\ssarg{overlay specification}\marg{options}}{style, no default, initially unset}
+\begin{docTcbKey}[][doc new and updated={2015-01-09}{2019-03-01}]{only}{=\pbarg{overlay specification}\marg{options}}{style, no default, initially unset}
 Sets the given |tcolorbox| \meta{options} in dependency of
 a |beamer| \meta{overlay specification}.
 Note that this needs the |beamer| class \cite{tantau:beamer}.
@@ -72,17 +72,23 @@ The option \refKey{/tcb/only} belonged to the base package before version 4.20.
 \end{marker}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2025-05-25},doc head key={sidebyside align=bottom}]{alt}{=\ssarg{overlay specification}\marg{default options}\marg{alternative options}\\}{style, no default, initially unset}
-Alternates between different |tcolorbox| \meta{options} in dependency of a |beamer| \meta{overlay specification}.
+\begin{docTcbKey}[][doc new={2025-05-28}]{alt}{=\pbarg{overlay specification}\marg{default}\marg{alternative}}{style, no default, initially unset}
+Alternates between different |tcolorbox| options in dependency of a |beamer| \meta{overlay specification}.
+The \meta{default} options are used on the specified slides, otherwise the \meta{alternative} options.
 Note that this needs the |beamer| class \cite{tantau:beamer}.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2025-05-25},doc head key={sidebyside align=bottom}]{temporal}{=\ssarg{overlay specification}\marg{before slide options}\marg{default options}\marg{after slide options}}{style, no default, initially unset}
-Temporarily changes between different |tcolorbox| \meta{options} in dependency of a |beamer| \meta{overlay specification}.
+\begin{docTcbKey}[][doc new={2025-05-28}]{temporal}{=\pbarg{overlay specification}\marg{before slide}\marg{default}\marg{after slide}}{style,\linebreak no default, initially unset}
+Temporarily changes between different |tcolorbox| options in dependency of a |beamer| \meta{overlay specification}.
+The \meta{default} options are used on the specified slides,
+the \meta{before slide} options are used before them, and
+the \meta{after slide} options after them.
 Note that this needs the |beamer| class \cite{tantau:beamer}.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2019-03-01}]{hide}{=\ssarg{overlay specification}}{style, no default, initially unset}
+\clearpage
+
+\begin{docTcbKey}[][doc new={2019-03-01}]{hide}{=\pbarg{overlay specification}}{style, no default, initially unset}
 Sets the \refKey{/tcb/beamer hidden} style in dependency of
 a |beamer| \meta{overlay specification}.
 \refKey{/tcb/beamer hidden} can be redefined for customization.
@@ -98,7 +104,7 @@ This style is not intended to be used directly, but in concealed way by applying
 \end{dispListing}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2019-03-01}]{alert}{=\ssarg{overlay specification}}{style, no default, initially unset}
+\begin{docTcbKey}[][doc new={2019-03-01}]{alert}{=\pbarg{overlay specification}}{style, no default, initially unset}
 Sets the \refKey{/tcb/beamer alerted} style in dependency of
 a |beamer| \meta{overlay specification}.
 \refKey{/tcb/beamer alerted} can be redefined for customization.
@@ -214,3 +220,31 @@ convenient use of a list of boxes which are uncovered one by one.
 \end{document}
 \end{fulldocumentlisting}
 
+
+\begin{fulldocumentlisting}{run pdflatex}
+\documentclass{beamer}
+\usepackage[most]{tcolorbox}
+
+\NewTColorBox{mybox}{ d<> }{enhanced,
+  temporal=<#1>{empty,invisible}
+               {colback=red!5,colframe=red!20!gray}
+               {colframe=blue!20!gray,colback=blue!5},
+}
+\begin{document}
+
+\begin{frame}
+  \begin{mybox}<1>
+    First Statement
+  \end{mybox}
+  \begin{mybox}<2>
+    Second Statement
+  \end{mybox}
+  \begin{mybox}<3>
+    Third Statement
+  \end{mybox}
+  \begin{mybox}<4>
+    Final Statement
+  \end{mybox}
+\end{frame}
+\end{document}
+\end{fulldocumentlisting}
