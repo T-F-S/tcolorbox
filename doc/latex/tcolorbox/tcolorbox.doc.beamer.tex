@@ -198,7 +198,8 @@ convenient use of a list of boxes which are uncovered one by one.
 \begin{frame}
   \begin{tcbitemize}[raster equal height=rows,
     beamer,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
-    beamer hidden/.style={colback=white,colframe=gray!50,opacityupper=0.2,opacitytitle=0.2},
+    beamer hidden/.style={colback=white,colframe=gray!50,opacityupper=0.2,
+                          opacitytitle=0.2},
     beamer alerted/.style={colframe=red!50!gray,fuzzy halo},
     ]
   \tcbitem[title=One,alert=<1>]
@@ -226,8 +227,8 @@ convenient use of a list of boxes which are uncovered one by one.
 \usepackage[most]{tcolorbox}
 
 \NewTColorBox{mybox}{ d<> }{enhanced,
-  temporal=<#1>{empty,invisible}
-               {colback=red!5,colframe=red!20!gray}
+  temporal=<#1>{empty,invisible}%
+               {colback=red!5,colframe=red!20!gray}%
                {colframe=blue!20!gray,colback=blue!5},
 }
 \begin{document}
