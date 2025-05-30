@@ -1917,7 +1917,7 @@
 \tcbset{
   only    /.code = { \__tcobox_beamer_only:w #1 },
   hide    /.code = { \__tcobox_beamer_hide:w #1 },
-  alert   /.code = { \__tcobox_beamer_alert:w #1 },%
+  alert   /.code = { \__tcobox_beamer_alert:w #1 },
   alt     /.code = { \__tcobox_beamer_alt:w #1 },
   temporal/.code = { \__tcobox_beamer_temporal:w #1 },
 }
@@ -1937,12 +1937,12 @@
     \only <#1> { \tcbset{beamer~alerted} }
   }
 
-\cs_new:Npn \__tcobox_beamer_alt:w <#1>#2#3
+\cs_new_protected:Npn \__tcobox_beamer_alt:w <#1>#2#3
   {
     \alt <#1> { \tcbset{#2} }{ \tcbset{#3} }
   }
 
-\cs_new:Npn \__tcobox_beamer_temporal:w <#1>#2#3#4
+\cs_new_protected:Npn \__tcobox_beamer_temporal:w <#1>#2#3#4
   {
     \temporal <#1> { \tcbset{#2} }{ \tcbset{#3} }{ \tcbset{#4} }
   }
