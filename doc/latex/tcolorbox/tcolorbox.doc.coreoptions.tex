@@ -861,7 +861,7 @@ This is a demonstration text for showing how line breaking works.
 
 \begin{marker}
 The vertical alignment settings are only relevant for boxes which are larger
-than their natural height, see \Fullref{sec:heightcontrol}.
+than their natural height, see \zvref[S]{sec:heightcontrol}.
 \end{marker}
 
 \begin{docTcbKey}[][doc updated=2015-07-16]{valign}{=\meta{alignment}}{no default, initially |top|}
@@ -873,7 +873,7 @@ than their natural height, see \Fullref{sec:heightcontrol}.
   \item\docValue{center}: Anchor text at center.
   \item\docValue{bottom}: Anchor text at bottom.
   \item\docValue{scale}: Scale text vertically to fit into the available space.
-    This is brutal and may not look very good. Consider \Fullref{sec:fitting}
+    This is brutal and may not look very good. Consider \zvref[S]{sec:fitting}
     alternatively.
   \item\docValue{scale*}: Like \docValue{scale}, but scaling is bounded by
     \refKey{/tcb/valign scale limit}.
@@ -959,7 +959,7 @@ This is a \textbf{tcolorbox}.
 \end{docTcbKey}
 
 
-See \Fullref{sec:heightcontrol} for setting fixed height values.
+See \zvref[S]{sec:heightcontrol} for setting fixed height values.
 
 
 \clearpage
@@ -4343,6 +4343,11 @@ This needs the \refPkg{zref} package \cite{oberdiek:zref} or packages building u
 References can be made by |\zref|. If the \refPkg{zref-clever} package \cite{barros:zref-clever} is loaded,
 |\zcref|, |\zcpageref|, and similar macros can be applied.
 Note that this option is not getting reset by \refKey{/tcb/reset}.
+\begin{marker}
+Recent versions of \refPkg{zref-clever} hook into the common |\label| and not
+need setting |\zlabel| explicitly. \refKey{/tcb/label is zlabel} can be
+omitted and applied only for optimization (for experts).
+\end{marker}
 \end{docTcbKey}
 
 
@@ -4418,7 +4423,7 @@ Removes a \refKey{/tcb/label type}, if set before.
 \begin{docTcbKey}[][doc new and updated={2016-06-22}{2023-02-08}]{nameref}{=\meta{text}}{no default, initially unset}
 If the \refPkg{nameref} package is loaded, the given \meta{text} is used for
 corresponding |\nameref| macros.
-If the \refPkg{zref-titleref} package is loaded, the given \meta{text} is used to
+If the \refPkg[zref]{zref-titleref} package is loaded, the given \meta{text} is used to
 set the reference text for |\ztitleref|.
 Typically, the \meta{text} will be chosen
 to be identical or nearly identical to the one for \refKey{/tcb/title}.
@@ -4426,13 +4431,16 @@ to be identical or nearly identical to the one for \refKey{/tcb/title}.
 \inputpreamblelisting{A}
 
 \begin{dispExample}
+%\RequirePackage{zref-clever,zref-titleref}
 \begin{pabox}[label={mynamelabel},nameref={Title or anything else}]{Title text}
 This is a tcolorbox.
 \end{pabox}
 This box is automatically numbered with \ref{mynamelabel} on page
 \pageref{mynamelabel}.
 
-The box is titled \enquote{\nameref{mynamelabel}}.
+The box is titled \enquote{\nameref{mynamelabel}},
+alternatively \enquote{\ztitleref{mynamelabel}},
+or \enquote{\zcref[noname,ref=title]{mynamelabel}}.
 \end{dispExample}
 
 \begin{marker}
@@ -4579,7 +4587,7 @@ has to be set explicitly! Also see \refKey{/tcb/if odd page*}.
 \clearpage
 \begin{docTcbKey}[][doc new=2015-11-13]{if odd page*}{=\marg{odd options}\marg{even options}}{style, no default}
 \begin{marker}
-This option needs the \mylib{breakable} library, see \Fullref{sec:breakable}.
+This option needs the \mylib{breakable} library, see \zvref[S]{sec:breakable}.
 \end{marker}
 For breakable boxes, if the current partial box is on an odd page, the \meta{odd options} are applied.
 On an even page, the \meta{even options} are applied.
@@ -4686,7 +4694,7 @@ It is precise only, if \refKey{/tcb/check odd page} was set.
 \clearpage
 \subsection{Externalization}
 \begin{marker}
-See \Fullref{sec:external} for the \mylib{external} library of |tcolorbox|.
+See \zvref[S]{sec:external} for the \mylib{external} library of |tcolorbox|.
 \end{marker}
 
 If the \emph{externalization} library of the \refPkg{tikz} package is used,

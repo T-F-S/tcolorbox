@@ -170,6 +170,9 @@ The real counter name is \texttt{\tcbcounter}.
 \begin{marker}
 The following options \refKey{/tcb/new/crefname} and \refKey{/tcb/new/Crefname}
 need to be set inside the preamble.
+Note that \refPkg{cleveref} had its last update in 2018 (as of 2025-06-04) and
+had or has conflicts with recent \LaTeX\ kernels. \refPkg{zref-clever} is
+a possible alternative.
 \end{marker}
 
 \begin{newTcbKey}[][doc updated=2014-12-01]{crefname}{=\marg{singular}\marg{plural}}{no default, initially unset}
@@ -191,22 +194,36 @@ need to be set inside the preamble.
   See \refKey{/tcb/label type} and \cite{cubitt:2018a} for more information.
 \end{newTcbKey}
 
-\inputpreamblelisting{I}
-\begin{dispExample}
-% \usepackage{varioref}
-% \usepackage{cleveref}
+\begin{fulldocumentlisting}{
+  comment style={raster columns=1,raster left skip=20mm,raster right skip=20mm},
+  run pdflatex}
+\documentclass[12pt]{article}
+\usepackage[papersize={160mm,80mm},noheadfoot,margin=10mm]{geometry}
+\usepackage{varioref,cleveref}
+\usepackage{tcolorbox}
+
+\newtcolorbox[auto counter,number within=section,
+  crefname={bluebox}{blueboxes}]%
+  {mybluebox}[2][]{colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
+     title=Bluebox \thetcbcounter: #2,#1}
+
+\begin{document}
+\section{Blue}
+
 \begin{mybluebox}[label={myreference}]{My title}
 This is an example.
 \end{mybluebox}
 
-\Cref{myreference}, \cref{myreference}.\\
+\noindent\Cref{myreference}, \cref{myreference}.\\
 \Cpageref{myreference}, \cpageref{myreference}.\\
 \nameCref{myreference}, \namecref{myreference}.\\
 \labelcref{myreference}, \labelcpageref{myreference}.\\
 With \texttt{varioref}:\\
-\Vref{myreference}, \vref{myreference}.\\
-\Vref*{myreference}, \vref*{myreference}.
-\end{dispExample}
+\Vref{myreference}, \vref{myreference}.
+\end{document}
+\end{fulldocumentlisting}
+
+
 
 \clearpage
 

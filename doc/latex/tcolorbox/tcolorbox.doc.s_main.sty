@@ -8,7 +8,6 @@
 \@namedef{opt@hypdoc.sty}{hypdoc}
 
 \RequirePackage[T1]{fontenc}
-%\RequirePackage[utf8]{inputenc}
 \RequirePackage[english]{babel}
 \RequirePackage{lmodern,parskip,array,ifthen,calc}
 \RequirePackage{amsmath,amssymb}
@@ -20,8 +19,6 @@
 \usetikzlibrary{patterns}
 \usetikzlibrary{spy}
 \usetikzlibrary{arrows.meta}
-
-\RequirePackage[nospace]{varioref}
 
 \RequirePackage{bookmark,varwidth,incgraph}
 \RequirePackage{array,tabularx}
@@ -36,8 +33,6 @@
 \tcbuselibrary{most,documentation}
 
 \tcbifexternal{}{%
-  %\IfFileExists{minted2.sty}{\RequirePackage{minted2}}{}%
-    % Avoid spurious errors where minted v3 complains about .tcbtemp files
   \tcbuselibrary{minted}%
   \tcbset{listing engine=listings,initialize@reset={listing engine=listings}}%
 }
@@ -59,8 +54,9 @@
 \tolerance=2000%
 \setlength{\emergencystretch}{20pt}%
 
-\RequirePackage{cleveref}
-
+\RequirePackage{zref-clever}
+\RequirePackage{zref-vario}
+\RequirePackage{zref-titleref}
 
 \tcbset{skin=enhanced,
   doc head={colback=yellow!10!white,interior style=fill},
@@ -180,7 +176,9 @@
   classoffset=0,
   texcsstyle=*\color{blue},
   % LaTeX and other packages
-  moretexcs={arrayrulecolor,draw,includegraphics,ifthenelse,isodd,lipsum,path,pgfkeysalso},
+  moretexcs={arrayrulecolor,draw,includegraphics,ifthenelse,isodd,lipsum,path,pgfkeysalso,
+      zcref,zcpageref,zvref,
+      },
   classoffset=1,
   % tcolorbox macros
   moretexcs={% core
@@ -288,7 +286,6 @@
     base example,coltitle=black,fonttitle=\itshape,titlerule=0pt,
     colbacktitle=Navy!15!ExampleBack,
     top=0mm,
-    %before=\par\smallskip,%
     before skip balanced=4pt plus 2pt minus 1pt,
     after skip balanced=5pt plus 2pt minus 1pt,
     listing style=mydocumentation,
@@ -347,12 +344,3 @@
   }
 
 \ExplSyntaxOff
-
-% https://tex.stackexchange.com/questions/730126/update-to-cleveref-firstaid-adds-space-after-tcolorbox-documentation-commands.
-\RemoveFromHook{label}[firstaid/cleveref]
-\AddToHook{label}[firstaid/cleveref]
-         {\ifx
-           \@currentcounter\@empty
-          \else
-           \firstaid@cref@updatelabeldata{\@currentcounter}%<--- was missing
-          \fi}

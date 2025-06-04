@@ -65,19 +65,19 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_G.tex}
-% \usepackage{cleveref}
+% \usepackage{zref-clever}
 \tcbset{
   defstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
               arc=0mm, colback=blue!5!white,colframe=blue!75!black},
   theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
                colback=red!10!white,colframe=red!75!black},
 }
-\NewTcbTheorem[number within=subsection,crefname={definition}{definitions}]%
-  {Definition}{Definition}{defstyle}{def}
-\NewTcbTheorem[use counter from=Definition,crefname={theorem}{theorems}]%
-  {Theorem}{Theorem}{theostyle}{theo}
-\NewTcbTheorem[use counter from=Definition,crefname={corollary}{corollaries}]%
-  {Corollary}{Corollary}{theostyle}{cor}
+\NewTcbTheorem[number within=subsection]{Definition}{Definition}%
+  {defstyle,label type=definition}{def}
+\NewTcbTheorem[use counter from=Definition]{Theorem}{Theorem}%
+  {theostyle,label type=theorem}{theo}
+\NewTcbTheorem[use counter from=Definition]{Corollary}{Corollary}%
+  {theostyle,label type=corollary}{cor}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_G.tex}
 
@@ -90,16 +90,6 @@
   title=Question~\thetcbcounter: #2,#1}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_H.tex}
-
-
-\begin{tcbverbatimwrite}{\jobname_preamble_I.tex}
-% \usepackage{cleveref}
-\newtcolorbox[auto counter,number within=section,
-  crefname={bluebox}{blueboxes}]%
-  {mybluebox}[2][]{colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
-     title=Bluebox \thetcbcounter: #2,#1}
-\end{tcbverbatimwrite}
-\input{\jobname_preamble_I.tex}
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_J.tex}

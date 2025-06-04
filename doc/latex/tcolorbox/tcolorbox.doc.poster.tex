@@ -11,7 +11,7 @@ A \refEnv{tcbposter} is a |tikzpicture| where |tcolorbox|es can be
 placed in a column oriented manner using \refCom{posterbox} commands.
 This base concept is more or less copied from the great \refPkg{baposter} package.
 
-The \mylib{raster} library, see \Fullref{sec:raster}, can produce
+The \mylib{raster} library, see \zvref[S]{sec:raster}, can produce
 similar looking results and may be more appropriate
 depending on the actual project.
 \begin{itemize}
@@ -43,10 +43,10 @@ The library is loaded by a package option or inside the preamble by:
 \tcbuselibrary{poster}
 \end{dispListing}
 This also loads the libraries
-\mylib{skins}, see \Fullref{sec:skins},
-\mylib{breakable}, see \Fullref{sec:breakable},
-\mylib{magazine}, see \Fullref{sec:magazine}, and
-\mylib{fitting}, see \Fullref{sec:fitting}.
+\mylib{skins}, see \zvref[S]{sec:skins},
+\mylib{breakable}, see \zvref[S]{sec:breakable},
+\mylib{magazine}, see \zvref[S]{sec:magazine}, and
+\mylib{fitting}, see \zvref[S]{sec:fitting}.
 
 
 %--------------------------
@@ -212,7 +212,7 @@ documentation:\par
   \meta{name} is set as prefix for any \tikzname\ node which is generated
   automatically by the \mylib{poster} library. This encompasses predefined
   nodes like |top|, |bottom|, \ldots, and nodes defined by using
-  \refKey{/tcb/posterloc/name}. Also, see~\Fullref{subsec:poster_environment}.
+  \refKey{/tcb/posterloc/name}. Also, see~\zvref[S]{subsec:poster_environment}.
   For a typical poster, this value can stay as it is.
 \end{posterTcbKey}
 
@@ -471,7 +471,7 @@ poster listing.
 \clearpage
 \begin{posterlocTcbKey}[][doc new=2017-07-03]{below}{=\meta{name}}{no default, initially |top|}
   The box is placed below another box with the given \meta{name}. Also,
-  \meta{name} can be a predefined node, see \Fullref{subsec:poster_environment}.
+  \meta{name} can be a predefined node, see \zvref[S]{subsec:poster_environment}.
 \begin{exdispExample}{below}
 \begin{tcbposter}[
   poster = {showframe,height=3cm,spacing=2mm,rows=2},
@@ -488,7 +488,7 @@ poster listing.
 
 \begin{posterlocTcbKey}[][doc new=2017-07-03]{above}{=\meta{name}}{no default, initially unset}
   The box is placed above another box with the given \meta{name}. Also,
-  \meta{name} can be a predefined node, see \Fullref{subsec:poster_environment}.
+  \meta{name} can be a predefined node, see \zvref[S]{subsec:poster_environment}.
 \begin{exdispExample}{above}
 \begin{tcbposter}[
   poster = {showframe,height=3cm,spacing=2mm,rows=2},
@@ -506,7 +506,7 @@ poster listing.
 \clearpage
 \begin{posterlocTcbKey}[][doc new=2017-07-03]{at}{=\meta{name}}{no default, initially unset}
   The box is placed at the position with the given \meta{name}. This is
-  quite likely a predefined node, see \Fullref{subsec:poster_environment}.
+  quite likely a predefined node, see \zvref[S]{subsec:poster_environment}.
 \begin{exdispExample}{at}
 \begin{tcbposter}[
   poster = {showframe,height=3cm,spacing=2mm,rows=2},
@@ -521,7 +521,7 @@ poster listing.
 
 \begin{posterlocTcbKey}[][doc new=2017-07-03]{between}{=\meta{name1} and \meta{name2}}{no default, initially unset}
   The box is placed below a box \meta{name1} and above another box \meta{name2}. Also,
-  \meta{name1} and \meta{name2} can be predefined nodes, see \Fullref{subsec:poster_environment}.
+  \meta{name1} and \meta{name2} can be predefined nodes, see \zvref[S]{subsec:poster_environment}.
 \begin{exdispExample}{between}
 \begin{tcbposter}[
   poster = {showframe,height=3cm,spacing=2mm,rows=2},

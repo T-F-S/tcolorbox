@@ -10,11 +10,6 @@ and this project adheres to
 
 ### Added
 
-- library 'skins':
-  - options 'alt' and 'temporal' for the use with beamer
-- library 'documentation':
-  - macro `\ssarg` to document beamer overlay specifications
-
 ### Changed
 
 ### Deprecated
@@ -24,6 +19,29 @@ and this project adheres to
 ### Fixed
 
 ### Security
+
+
+
+## [6.6.0] - 2025-06-04
+
+### Added
+- Libary `skins`:
+    - Options `alt` and `temporal` for use with beamer (pull request #317)
+- Libary `documentation`:
+    - Macro `\pbarg` to document beamer overlay specifications (pull request #317)
+
+### Changed
+- Documentation:
+    With LaTeX2e <2025-06-01> the handling of `\label` was improved resulting
+    in breaking the combination of `cleveref` and `amsmath` (temporally):
+    - `cleveref` removed from the `tcolorbox` documentation style (no change for users!)
+    - Theorem examples from the `theorems` library documentation rewritten
+        for `zref-clever` instead of `cleveref`
+    - Several documentation adaptions
+    - References updated
+
+### Fixed
+- Documentation cleanup: tikz loading in examples not necessary (pull request #315)
 
 
 

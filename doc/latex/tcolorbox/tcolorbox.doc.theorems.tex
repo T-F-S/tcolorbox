@@ -1018,7 +1018,7 @@ identically colored.
 All following environments are numbered with a common counter, but this
 can be changed easily. Here, the counter output is supplemented by
 the subsection number.
-Further, the \refPkg{cleveref} package \cite{cubitt:2018a} is used for clever
+Further, the \refPkg{zref-clever} package \cite{barros:zref-clever} is used for clever
 references.
 
 \inputpreamblelisting{G}
@@ -1026,11 +1026,18 @@ references.
 By \refCom{newtcbtheorem}, commonly numbered theorem environments are
 created now. |defstyle| and |theostyle| are used for the appearance.
 
+\begin{marker}
+If you not need \refPkg{zref-clever} support, drop \refKey{/tcb/label type}
+from the definitions above.
+\end{marker}
+
+
 Now, everything is prepared for the following examples.
 
 \begin{dispExample}
-The following theorem is numbered as \Cref{theo:diffbarstetig} and
-referenced with the marker \texttt{theo:diffbarstetig}.
+The following theorem is numbered as \zcref[S]{theo:diffbarstetig}
+and referenced with the marker \texttt{theo:diffbarstetig}.
+Alternatively, use the basic form Theorem~\ref{theo:diffbarstetig}.
 
 \begin{Theorem}{Differenzierbarkeit bedingt Stetigkeit, wobei diese Benennung
   zu Testzwecken ungew\"{o}hnlich lang ist}{diffbarstetig}%
@@ -1041,7 +1048,7 @@ referenced with the marker \texttt{theo:diffbarstetig}.
 
 
 \begin{dispExample}
-The following definition is numbered as \Cref{def:diffbarkeit} and
+The following definition is numbered as \zcref[cap]{def:diffbarkeit} and
 referenced with the marker \texttt{def:diffbarkeit}.\bigskip
 
 \begin{Definition}{Differenzierbarkeit}{diffbarkeit}
@@ -1063,7 +1070,7 @@ referenced with the marker \texttt{def:diffbarkeit}.\bigskip
 
 
 \begin{dispExample}
-The following corollary is numbered as \Cref{cor:nullstellen} and
+The following corollary is numbered as \zcref{cor:nullstellen} and
 referenced with the marker \texttt{cor:nullstellen}.\bigskip
 
 \begin{Corollary}{Nullstellenexistenz}{nullstellen}
@@ -1084,8 +1091,8 @@ referenced with the marker \texttt{cor:nullstellen}.\bigskip
 \end{dispExample}
 
 \begin{dispExample}
-% \usepackage{varioref}
-% \usepackage{cleveref}
+% \usepackage{zref-clever}
+% \usepackage{zref-vario}
 % \tcbuselibrary{skins}
 \newtcbtheorem[use counter from=Definition]{YetAnotherTheorem}{Theorem}%
   {theorem style=plain apart,label type=theorem,enhanced,frame hidden,
@@ -1105,20 +1112,21 @@ referenced with the marker \texttt{cor:nullstellen}.\bigskip
 \end{YetAnotherTheorem}
 
 \medskip
-Here, |cleveref| support is used to reference \Cref{theo:meanvaluetheorem}
-on \Cpageref{theo:meanvaluetheorem}. This \namecref{theo:meanvaluetheorem}
-can also be referenced by |\Vref| resulting in \Vref{theo:meanvaluetheorem}.
+Here, |zref-clever| support is used to reference \zcref[S]{theo:meanvaluetheorem}
+on \zcpageref{theo:meanvaluetheorem}. This \zcref*[noref]{theo:meanvaluetheorem}
+can also be referenced by |\zvref| resulting in \zvref[S]{theo:meanvaluetheorem}.
 \end{dispExample}
 
 \begin{marker}
 Note that \refKey{/tcb/label type} was used in the example above to feed
-|cleveref| \cite{cubitt:2018a} with the needed name information.
+\refPkg{zref-clever} \cite{barros:zref-clever} with the needed name information.
 \end{marker}
 
 \clearpage
 
 \begin{dispExample}
-Here, using |\Vref| resulting in \Vref{theo:meanvaluetheorem} is more interesting\ldots
+Here, using |\zvref| resulting in \zvref[S]{theo:meanvaluetheorem}
+is more interesting\ldots
 \end{dispExample}
 
 
