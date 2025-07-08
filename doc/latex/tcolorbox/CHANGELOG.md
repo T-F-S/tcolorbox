@@ -21,6 +21,13 @@ and this project adheres to
 ### Security
 
 
+## [6.7.1] - 2025-07-08
+
+### Fixed
+- Libary `skins`:
+    - Implemenation of `use alt` and `use temporal` corrected.
+
+
 
 ## [6.7.0] - 2025-07-07
 

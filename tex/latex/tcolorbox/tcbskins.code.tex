@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.7.0 (2025/07/07)
+%% The LaTeX package tcolorbox - version 6.7.1 (2025/07/08)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.7.0}
+\tcb@set@library@version{6.7.1}
 
 \RequirePackage{tikzfill.image}
 
@@ -1930,8 +1930,10 @@
   set~alt = {}{},
   use~alt /.code =
     {
-      \tl_set:Nn \l__tcobox_tmpa { #1 }
-      \exp_last_two_unbraced:Noo \__tcobox_beamer_alt:w \l__tcobox_tmpa \l__tcobox_beamer_alt_args
+      \use:e
+        {
+          \__tcobox_beamer_alt:w \exp_not:n { #1 } \exp_not:o \l__tcobox_beamer_alt_args
+        }
     },
   set~temporal /.code =
     {
@@ -1940,8 +1942,10 @@
   set~temporal = {}{}{},
   use~temporal /.code =
     {
-      \tl_set:Nn \l__tcobox_tmpa { #1 }
-      \exp_last_two_unbraced:Noo \__tcobox_beamer_temporal:w \l__tcobox_tmpa \l__tcobox_beamer_temporal_args
+      \use:e
+        {
+          \__tcobox_beamer_temporal:w \exp_not:n { #1 } \exp_not:o \l__tcobox_beamer_temporal_args
+        }
     },
 }
 
