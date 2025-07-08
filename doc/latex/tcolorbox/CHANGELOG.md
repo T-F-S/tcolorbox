@@ -22,6 +22,29 @@ and this project adheres to
 
 
 
+## [6.7.0] - 2025-07-07
+
+### Added
+- Libary `skins`:
+    - Option `tcb fill lower bicolor`. Actually, this option is available since years,
+        but was forgotten to be documented (issue #323)
+    - Options `set alt` and `use alt` for use with beamer
+    - Options `set temporal` and `use temporal` for use with beamer
+
+### Changed
+- Documentation:
+    - Some beamer support examples rewritten for `set temporal` and `use temporal`
+
+### Fixed
+- Libary `skins`:
+    - Combination of `skin=enhancedlast jigsaw` or `skin=bicolorlast jigsaw` with a `title`
+        failed to have a hole for the box content (issue #322)
+- Documentation:
+    - Add missing counter marks (pull request #320)
+    - Drop unneeded tikz loading in doc examples (pull request #321)
+
+
+
 ## [6.6.0] - 2025-06-04
 
 ### Added

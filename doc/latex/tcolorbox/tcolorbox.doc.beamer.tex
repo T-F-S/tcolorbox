@@ -72,10 +72,20 @@ The option \refKey{/tcb/only} belonged to the base package before version 4.20.
 \end{marker}
 \end{docTcbKey}
 
+\clearpage
+
 \begin{docTcbKey}[][doc new={2025-05-28}]{alt}{=\pbarg{overlay specification}\marg{default}\marg{alternative}}{style, no default, initially unset}
 Alternates between different |tcolorbox| options in dependency of a |beamer| \meta{overlay specification}.
 The \meta{default} options are used on the specified slides, otherwise the \meta{alternative} options.
 Note that this needs the |beamer| class \cite{tantau:beamer}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new={2025-07-07}]{set alt}{=\marg{default}\marg{alternative}}{no default, initially \brackets{}\brackets{}}
+Stores the arguments later to be used with \refKey{/tcb/use alt}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new={2025-07-07}]{use alt}{=\pbarg{overlay specification}}{style, no default, initially unset}
+Like \refKey{/tcb/alt}, but uses the arguments stored with \refKey{/tcb/set alt}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new={2025-05-28}]{temporal}{=\pbarg{overlay specification}\marg{before slide}\marg{default}\marg{after slide}}{style,\linebreak no default, initially unset}
@@ -86,7 +96,14 @@ the \meta{after slide} options after them.
 Note that this needs the |beamer| class \cite{tantau:beamer}.
 \end{docTcbKey}
 
-\clearpage
+\begin{docTcbKey}[][doc new={2025-07-07}]{set temporal}{=\marg{before slide}\marg{default}\marg{after slide}}{no default, initially \brackets{}\brackets{}\brackets{}}
+Stores the arguments later to be used with \refKey{/tcb/use temporal}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new={2025-07-07}]{use temporal}{=\pbarg{overlay specification}}{style, no default, initially unset}
+Like \refKey{/tcb/temporal}, but uses the arguments stored with \refKey{/tcb/set temporal}.
+\end{docTcbKey}
+
 
 \begin{docTcbKey}[][doc new={2019-03-01}]{hide}{=\pbarg{overlay specification}}{style, no default, initially unset}
 Sets the \refKey{/tcb/beamer hidden} style in dependency of
@@ -122,7 +139,7 @@ This style is not intended to be used directly, but in concealed way by applying
 \end{docTcbKey}
 
 
-\bigskip
+\clearpage
 
 The following examples use \refEnv{tcbitemize} from \mylib{raster} for
 convenient use of a list of boxes which are uncovered one by one.
@@ -164,24 +181,24 @@ convenient use of a list of boxes which are uncovered one by one.
 \begin{document}
 
 \begin{frame}
-  \begin{tcbitemize}[raster equal height=rows,
-    enhanced,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
-    beamer hidden/.style={invisible,interior hidden,colframe=blue!20!gray!15},
-    beamer alerted/.style={colframe=red!50!gray},
+  \begin{tcbitemize}[raster equal height=rows,enhanced,
+    set temporal={invisible,interior hidden,colframe=blue!20!gray!15}
+                 {colback=red!5,colframe=red!50!gray,coltitle=yellow}
+                 {colback=blue!5,colframe=blue!20!gray,coltitle=yellow},
     ]
-  \tcbitem[title=One,alert=<1>]
+  \tcbitem[title=One,use temporal=<1>]
     First Statement
-  \tcbitem[title=Two,hide=<-1>,alert=<2>]
+  \tcbitem[title=Two,use temporal=<2>]
     Second Statement
-  \tcbitem[title=Three,hide=<-2>,alert=<3>]
+  \tcbitem[title=Three,use temporal=<3>]
     Test
-  \tcbitem[title=Four,hide=<-3>,alert=<4>]
+  \tcbitem[title=Four,use temporal=<4>]
     \begin{equation*}
     \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
     \end{equation*}
-  \tcbitem[title=Five,hide=<-4>,alert=<5>]
+  \tcbitem[title=Five,use temporal=<5>]
     \includegraphics[width=1cm]{goldshade.png}
-  \tcbitem[title=Six,hide=<-5>,alert=<6>]
+  \tcbitem[title=Six,use temporal=<6>]
     Test
   \end{tcbitemize}
 \end{frame}
@@ -196,25 +213,26 @@ convenient use of a list of boxes which are uncovered one by one.
 \begin{document}
 
 \begin{frame}
-  \begin{tcbitemize}[raster equal height=rows,
-    beamer,colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
-    beamer hidden/.style={colback=white,colframe=gray!50,opacityupper=0.2,
-                          opacitytitle=0.2},
-    beamer alerted/.style={colframe=red!50!gray,fuzzy halo},
+  \begin{tcbitemize}[raster equal height=rows,beamer,
+    colback=blue!5,colframe=blue!20!gray,coltitle=yellow,
+    set temporal={colback=white,colframe=gray!50,
+                    opacityupper=0.2,opacitytitle=0.2}
+                 {colframe=red!50!gray,fuzzy halo}
+                 {},
     ]
-  \tcbitem[title=One,alert=<1>]
+  \tcbitem[title=One,use temporal=<1>]
     First Statement
-  \tcbitem[title=Two,hide=<-1>,alert=<2>]
+  \tcbitem[title=Two,use temporal=<2>]
     Second Statement
-  \tcbitem[title=Three,hide=<-2>,alert=<3>]
+  \tcbitem[title=Three,use temporal=<3>]
     Test
-  \tcbitem[title=Four,hide=<-3>,alert=<4>]
+  \tcbitem[title=Four,use temporal=<4>]
     \begin{equation*}
     \int\limits_{1}^{x} \frac{1}{t}~dt = \ln(x).
     \end{equation*}
-  \tcbitem[title=Five,hide=<-4>,alert=<5>]
+  \tcbitem[title=Five,use temporal=<5>]
     \includegraphics[width=1cm]{goldshade.png}
-  \tcbitem[title=Six,hide=<-5>,alert=<6>]
+  \tcbitem[title=Six,use temporal=<6>]
     Test
   \end{tcbitemize}
 \end{frame}

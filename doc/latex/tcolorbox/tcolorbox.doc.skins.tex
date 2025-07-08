@@ -406,6 +406,35 @@ This is the lower part.
 \end{exdispExample*}
 \end{docTikzKey}
 
+\clearpage
+
+\begin{docTikzKey}[][doc new=2025-07-07]{tcb fill lower bicolor}{}{style, no value}
+This is a \tikzname\ style which is finally applied to the
+\emph{interior lower part} of the box, when the \refSkin{bicolor} skin is used.
+
+\begin{exdispExample*}{tcb_fill_lower_bicolor}{sbs,lefthand ratio=0.66}
+% \tcbuselibrary{hooks}
+% \usetikzlibrary{decorations.pathmorphing}
+\tcbset{bicolor,colback=red!5!white,
+  colbacklower=blue!15!white,
+  colframe=red!75!black,fonttitle=\bfseries,
+  segmentation code app={
+    \path[tcb fill lower bicolor,
+          decoration={zigzag,amplitude=1mm}]
+      decorate {
+          ([yshift=-0.1pt]segmentation.east)
+        --([yshift=-0.1pt]segmentation.west) }
+      --cycle;}  }
+
+\begin{tcolorbox}[title=My title]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{exdispExample*}
+\end{docTikzKey}
+
+
 
 \clearpage
 \subsection{Boxed Title Option Keys}\label{subsec:skinboxedtitle}

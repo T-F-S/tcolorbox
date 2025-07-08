@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.6.0 (2025/06/04)
+%% The LaTeX package tcolorbox - version 6.7.0 (2025/07/07)
 %% tcbskinsjigsaw.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.6.0}
+\tcb@set@library@version{6.7.0}
 
 \tcbuselibrary{skins}
 
@@ -152,6 +152,7 @@
         \fi%
       \else%
         \tcb@boundaryframe@pathlast%
+        \tcb@boundaryinterior@title@standard%
       \fi%
     \else%
       \tcbdimto\tcb@xa{\tcb@width-\kvtcb@right@rule}%
