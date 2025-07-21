@@ -30,15 +30,33 @@ options \emph{after} |hyperref| is loaded to avoid warnings about
 \subsection{Numbered Boxes}\label{sec:numberedboxes}
 Counters assigned using the initialization options are administrated
 automatically. Especially, they are increased for each new box.
-Independent from the real counter name, the counter value can be
-referenced by \docAuxCommand{thetcbcounter}, e.\,g.\ inside the title of
-the box. The real counter name is stored inside \docAuxCommand{tcbcounter}.
 
+\begin{docCommand}{thetcbcounter}{}
+Counter value of the current numbered box. It may be used inside the box,
+e.\,g.\ inside the title of
+the box. See \refKey{/tcb/new/auto counter} and following for examples.
+\end{docCommand}
+
+\begin{docCommand}{tcbcounter}{}
+Real counter name of the current numbered box for possible use inside the box.
+\end{docCommand}
+
+\begin{docCommand}[doc new=2025-07-21]{thetcbcounterof}{\marg{tcolorbox}}
+Counter value of a numbered \meta{tcolorbox} environment created with
+initialization options as documented below, e.\,g.\ \refKey{/tcb/new/auto counter}.
+\end{docCommand}
+
+\begin{docCommand}[doc new=2025-07-21]{tcbcounterof}{\marg{tcolorbox}}
+Real counter name of a numbered \meta{tcolorbox} environment.
+\end{docCommand}
+
+
+\clearpage
 \begin{newTcbKey}{auto counter}{}{no value, initially unset}
 Creates a new counter automatically.
 With \refKey{/tcb/new/number format} and
 \refKey{/tcb/new/number within}, the appearance and behavior of the counter
-can be changed. The counter value is referenced by \docAuxCommand{thetcbcounter}.
+can be changed. The counter value is referenced by \refCom{thetcbcounter}.
 
 \inputpreamblelisting{A}
 
@@ -52,12 +70,12 @@ The real counter name is \texttt{\tcbcounter}.
 \end{dispExample}
 \end{newTcbKey}
 
-\clearpage
+
 \begin{newTcbKey}{use counter from}{=\meta{tcolorbox}}{no default, initially unset}
 Here, a counter from another \meta{tcolorbox} is reused.
 Note that the settings for \refKey{/tcb/new/number format} and
 \refKey{/tcb/new/number within} are inherited and cannot be changed.
-The counter value is referenced by \docAuxCommand{thetcbcounter}.
+The counter value is referenced by \refCom{thetcbcounter}.
 
 \begin{dispExample}
 \newtcolorbox[use counter from=pabox]{mybox}[2][]{%
@@ -74,11 +92,12 @@ The real counter name is \texttt{\tcbcounter}.
 \end{newTcbKey}
 
 
+\clearpage
 \begin{newTcbKey}{use counter}{=\meta{counter}}{no default, initially unset}
 Here, an ordinary existing \LaTeX\ \meta{counter} is used for numbering.
 With \refKey{/tcb/new/number format} and
 \refKey{/tcb/new/number within}, the appearance and behavior of the counter
-can be changed. The counter value is referenced by \docAuxCommand{thetcbcounter}.
+can be changed. The counter value is referenced by \refCom{thetcbcounter}.
 
 \begin{dispExample}
 % \newcounter{myexample}%  preamble
@@ -110,7 +129,6 @@ The created boxes are not numbered. This is the default. The option may
 be used to overrule a previous option.
 \end{newTcbKey}
 
-\enlargethispage*{1cm}
 
 \begin{newTcbKey}[][doc new=2019-10-18]{reset counter on overlays}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
 For |beamer| slides, this invokes the |\resetcounteronoverlays| command
@@ -134,6 +152,12 @@ See \refKey{/tcb/new/use counter} for a complete example.
 \end{newTcbKey}
 
 
+\begin{newTcbKey}[][doc new=2025-07-21]{number within from}{=\meta{tcolorbox}}{no default, initially unset}
+This is a shortcut for \refKey{/tcb/new/number within}|=|\refCom{tcbcounterof}\meta{tcolorbox},
+i.\,e.\ the automatic counter is set to zero, if the counter of the referenced \meta{tcolorbox} is increased.
+\end{newTcbKey}
+
+
 \begin{newTcbKey}{number format}{=\meta{format macro}}{no default, initially \texttt{\textbackslash arabic}}
 Declares the format of the automatic counter. The \meta{format macro} can be
 any valid \LaTeX\ number formatting macro like |\arabic|, |\roman|, etc.\par
@@ -150,9 +174,9 @@ Allows advanced control over the complete number format. This option overrules
 the format given by \refKey{/tcb/new/number within} and \refKey{/tcb/new/number format}.
 Nevertheless, you can combine it with \refKey{/tcb/new/number within} to
 get the desired reset property.\par
-The \meta{code} is some formatting code which should contain |\tcbcounter| to
+The \meta{code} is some formatting code which should contain \refCom{tcbcounter} to
 reference the automated counter. Since this \meta{code} is expanded, you have
-to secure each macro with |\noexpand| with \emph{exception} of |\tcbcounter|.
+to secure each macro with |\noexpand| with \emph{exception} of \refCom{tcbcounter}.
 
 \inputpreamblelisting{H}
 

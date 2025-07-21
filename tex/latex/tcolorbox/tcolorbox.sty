@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.7.1 (2025/07/08)
+%% The LaTeX package tcolorbox - version 6.8.0pre1 (2025/07/21)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2025/07/08 version 6.7.1 text color boxes]
-\def\tcb@version{6.7.1}
+\ProvidesPackage{tcolorbox}[2025/07/21 version 6.8.0pre1 text color boxes]
+\def\tcb@version{6.8.0pre1}
 
 %\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
@@ -2245,6 +2245,7 @@
   reset counter on overlays/.is if=tcb@resetcounteronoverlays,
   %
   number within/.store in=\kvtcb@new@numberwithin,
+  number within from/.style={number within=\tcbcounterof{#1}},
   number format/.store in=\kvtcb@new@format,
   number freestyle/.store in=\kvtcb@new@freestyle,
   %
@@ -2342,6 +2343,36 @@
 
 
 \ExplSyntaxOn
+
+\msg_new:nnn { tcolorbox } { invalid-box-counter }
+  {
+    Box~``#1''~is~#2.~Box~counter~not~found.
+  }
+
+\cs_new:Npn \tcbcounterof #1
+  {
+    \__tcobox_if_box_numbered:nT { #1 } { \use:c { tcb@cnt@ #1 } }
+  }
+
+\cs_new:Npn \thetcbcounterof #1
+  {
+    \__tcobox_if_box_numbered:nT { #1 } { \exp_not:v { thetcb@cnt@ #1 } }
+  }
+
+\prg_new_conditional:Npnn \__tcobox_if_box_numbered:n #1 { T }
+  {
+    \cs_if_exist:cTF { tcb@cnt@ #1 }
+      { \prg_return_true: }
+      {
+        \msg_expandable_error:nnee { tcolorbox } { invalid-box-counter }
+          { #1 }
+          {
+            \cs_if_exist:cTF { tcb@opt@ #1 } { not~numbered } { undefined }
+          }
+        \prg_return_false:
+      }
+  }
+\cs_generate_variant:Nn \msg_expandable_error:nnnn { nnee }
 
 \prg_new_conditional:Npnn \__tcobox_if_single_cs:n #1 { p, TF }
   {

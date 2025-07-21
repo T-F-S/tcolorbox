@@ -21,11 +21,33 @@ and this project adheres to
 ### Security
 
 
+
+## [6.8.0] - xxxx-xx-xx
+
+### Added
+- Initialization Option:
+    - `number within from` with two new accompanying macros
+      `\tcbounterof` and `\thetcbcounterof` (issue #324)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Documentation:
+    - Doc polishment and correction (pull request #325)
+
+### Security
+
+
+
 ## [6.7.1] - 2025-07-08
 
 ### Fixed
 - Libary `skins`:
-    - Implemenation of `use alt` and `use temporal` corrected.
+    - Implementation of `use alt` and `use temporal` corrected.
 
 
 
