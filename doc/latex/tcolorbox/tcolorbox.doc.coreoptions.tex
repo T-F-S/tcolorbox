@@ -159,8 +159,8 @@ The optional \meta{text} is set between the formatted title and the box content.
 
 \bigskip
 \begin{marker}
-More title options are documented in \Vref{subsec:contentadditions}
-and \Vref{subsec:skinboxedtitle}.
+More title options are documented in \zvref{subsec:contentadditions}
+and \zvref{subsec:skinboxedtitle}.
 \end{marker}
 
 
@@ -861,7 +861,7 @@ This is a demonstration text for showing how line breaking works.
 
 \begin{marker}
 The vertical alignment settings are only relevant for boxes which are larger
-than their natural height, see \zvref[S]{sec:heightcontrol}.
+than their natural height, see \zvref{sec:heightcontrol}.
 \end{marker}
 
 \begin{docTcbKey}[][doc updated=2015-07-16]{valign}{=\meta{alignment}}{no default, initially |top|}
@@ -873,7 +873,7 @@ than their natural height, see \zvref[S]{sec:heightcontrol}.
   \item\docValue{center}: Anchor text at center.
   \item\docValue{bottom}: Anchor text at bottom.
   \item\docValue{scale}: Scale text vertically to fit into the available space.
-    This is brutal and may not look very good. Consider \zvref[S]{sec:fitting}
+    This is brutal and may not look very good. Consider \zvref{sec:fitting}
     alternatively.
   \item\docValue{scale*}: Like \docValue{scale}, but scaling is bounded by
     \refKey{/tcb/valign scale limit}.
@@ -958,8 +958,7 @@ This is a \textbf{tcolorbox}.
 \end{exdispExample*}
 \end{docTcbKey}
 
-
-See \zvref[S]{sec:heightcontrol} for setting fixed height values.
+See \zvref{sec:heightcontrol} for setting fixed height values.
 
 
 \clearpage
@@ -1638,7 +1637,7 @@ This is a \textbf{tcolorbox}.
 
 \begin{marker}
 Transparency effects are likely to be used in conjunction with \emph{jigsaw}
-skin variants, see \Vref{subsec:skinjigsaw}.
+skin variants, see \zvref{subsec:skinjigsaw}.
 \end{marker}
 
 \begin{docTcbKey}{opacityframe}{=\meta{fraction}}{no default, initially \texttt{1.0}}
@@ -2133,7 +2132,7 @@ colframe=red!75!black,colback=white}
 
 \medskip
 \begin{marker}
-See \Vref{sec:raster} for more equal height options.
+See \zvref{sec:raster} for more equal height options.
 \end{marker}
 
 \clearpage
@@ -4292,7 +4291,7 @@ Feasible values for \meta{mode} are:
 %If only the core package is used, there is only one \emph{skin} and these
 %keys are meaningless.
 %The library \mylib{skins} adds more skins. The appropriate option keys for skins of
-%the core package are therefore described in \Vref{sec:skincorekeys} from
+%the core package are therefore described in \zvref{sec:skincorekeys} from
 %page \pageref{sec:skincorekeys}.
 
 \clearpage
@@ -4395,7 +4394,7 @@ This option has a different meaning based upon the chosen labeling mechanism.
   which have to be loaded separately.
   \meta{type} has to be a cross-reference type \emph{known} to |cleveref|
   like |theorem|, |algorithm|, |result|, etc. References made with |cleveref|
-  will use this type. For an example, see \Vref{theo:meanvaluetheorem}.
+  will use this type. For an example, see \zvref{theo:meanvaluetheorem}.
   Recent versions of \refPkg{zref-clever} also work with \refKey{/tcb/label is label}
   and \refKey{/tcb/label type} can be used as described below for \refKey{/tcb/label is zlabel}.
 \item If \refKey{/tcb/label is zlabel} is active:\par
@@ -4587,7 +4586,7 @@ has to be set explicitly! Also see \refKey{/tcb/if odd page*}.
 \clearpage
 \begin{docTcbKey}[][doc new=2015-11-13]{if odd page*}{=\marg{odd options}\marg{even options}}{style, no default}
 \begin{marker}
-This option needs the \mylib{breakable} library, see \zvref[S]{sec:breakable}.
+This option needs the \mylib{breakable} library, see \zvref{sec:breakable}.
 \end{marker}
 For breakable boxes, if the current partial box is on an odd page, the \meta{odd options} are applied.
 On an even page, the \meta{even options} are applied.
@@ -4694,7 +4693,7 @@ It is precise only, if \refKey{/tcb/check odd page} was set.
 \clearpage
 \subsection{Externalization}
 \begin{marker}
-See \zvref[S]{sec:external} for the \mylib{external} library of |tcolorbox|.
+See \zvref{sec:external} for the \mylib{external} library of |tcolorbox|.
 \end{marker}
 
 If the \emph{externalization} library of the \refPkg{tikz} package is used,
@@ -4759,7 +4758,7 @@ Sets (nearly) all |tcolorbox| settings (including loaded libraries) back to thei
 \emph{plus} any settings given by \refCom{tcbsetforeverylayer}.
 \refKey{/tcb/savedelimiter}, \refKey{/tcb/capture}, and
 \refKey{/tcb/shield externalize} keep their values.
-Also, all raster values (see \Vref{sec:raster}) are not reset.
+Also, all raster values (see \zvref{sec:raster}) are not reset.
 
 This option is useful for boxes in boxes where the inner box should not inherit
 the settings of the outer box.

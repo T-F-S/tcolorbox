@@ -43,7 +43,7 @@ Here, you see the lower part of the box.
 \end{tcolorbox}
 
 The \meta{options} control the appearance and several functions of the boxes,
-see \Vref{sec:optkeys} for the complete list.
+see \zvref{sec:optkeys} for the complete list.
 A quick example is given here:
 
 \begin{dispExample}
@@ -67,7 +67,7 @@ Here, you see the lower part of the box.
 \clearpage
 \begin{docCommand}{tcbset}{\marg{options}}
   Sets options for every following \refEnv{tcolorbox} inside the current \TeX\ group.
-  By default, this does not apply to nested boxes, see \Vref{subsec:everybox}.\par
+  By default, this does not apply to nested boxes, see \zvref{subsec:everybox}.\par
   For example, the colors of the boxes may be defined for the whole document by this:
 \begin{dispListing}
 \tcbset{colback=red!5!white,colframe=red!75!black}
@@ -78,7 +78,7 @@ Here, you see the lower part of the box.
 \begin{docCommand}{tcbsetforeverylayer}{\marg{options}}
   Sets options for every following \refEnv{tcolorbox} inside the current \TeX\ group.
   In contrast to \refCom{tcbset}, this does also
-  apply to nested boxes, see \Vref{subsec:everybox}.
+  apply to nested boxes, see \zvref{subsec:everybox}.
   Technically, the \meta{options} are appended to the default values for every
   tcolorbox which are applied by \refKey{/tcb/reset}.\par
   You should not use this macro, if you are not completely sure that you
@@ -552,6 +552,6 @@ More text.
 \end{dispExample*}
 
 \medskip
-See further examples in \Vref{subsec:theorems_other}.
+See further examples in \zvref{subsec:theorems_other}.
 \end{docCommand}
 

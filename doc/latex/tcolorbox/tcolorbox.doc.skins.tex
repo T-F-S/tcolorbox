@@ -11,7 +11,7 @@ This also loads the package \refPkg[tikzfill]{tikzfill.image}.
 
 In the following, general settings and options of the library are
 documented.
-The actual catalog of skins is found in \Vref{sec:skincatalog}.
+The actual catalog of skins is found in \zvref{sec:skincatalog}.
 
 \subsection{Style Option Keys}\label{subsec:addstyleoptions}
 The following style options are applicable for all skins which
@@ -717,7 +717,7 @@ are \emph{not} automatically computed.
 \clearpage
 \subsubsection{Options for the Boxed Title Box}
 \begin{marker}
-  The boxed title options are implemented as an underlay, see \Vref{subsec:skinunderlay}.
+  The boxed title options are implemented as an underlay, see \zvref{subsec:skinunderlay}.
   Therefore, a boxed title is not drawn, if a skin does not support underlays
   like \refSkin{standard}. Still, the room for the boxed
   titles gets reserved in these cases.
@@ -2320,6 +2320,8 @@ Such shadows can be added directly to the frame path using \refKey{/tcb/frame st
   used to draw the color box, see \cite{tantau:tikz_and_pgf}. If this option is
   applied a second time, the new \meta{tikz option list} is appended to the
   current option list.
+  Note that, if \tikzname\ coordinate transformation options are used,
+  |transform shape| may also be needed to transform all box elements.
 \begin{dispExample*}{sbs,lefthand ratio=0.66,
   segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \tcbset{enhanced,colback=red!5!white,
@@ -2377,8 +2379,9 @@ Sold!
 
 \clearpage
 \begin{docTcbKey}{rotate}{=\meta{angle}}{no default, initially unset}
-  Rotates the |tcolorbox| by the given \meta{angle}. Note that this is
-  a \tikzname\  coordinate transformation i.e. not all graphical elements like shadings
+  Rotates the |tcolorbox| by the given \meta{angle}.
+  This also applys |transform shape|.
+  Note that this is a \tikzname\  coordinate transformation i.e. not all graphical elements like shadings
   will really be rotated.
 \begin{dispExample*}{sbs,lefthand ratio=0.66}
 \tcbset{enhanced,colback=red!5!white,
@@ -2391,8 +2394,9 @@ This is a tcolorbox.
 \end{docTcbKey}
 
 \begin{docTcbKey}{scale}{=\meta{fraction}}{no default, initially unset}
-  Scales the |tcolorbox| by the given \meta{fraction}. Note that this is
-  a \tikzname\  coordinate transformation i.e. not all graphical elements like line widths
+  Scales the |tcolorbox| by the given \meta{fraction}.
+  This also applys |transform shape|.
+  Note that this is a \tikzname\  coordinate transformation i.e. not all graphical elements like line widths
   will really be scaled.
 \begin{dispExample*}{sbs,lefthand ratio=0.66}
 \tcbset{enhanced,colback=red!5!white,
@@ -2466,10 +2470,10 @@ This is a test.
 \clearpage
 \subsection{Underlay Option Keys}\label{subsec:skinunderlay}
 
-Underlays are quite similar to overlays described in \Vref{subsec:overlays}.
+Underlays are quite similar to overlays described in \zvref{subsec:overlays}.
 Underlays are drawn \emph{after} the frame and interior are
 drawn and \emph{before} overlays and the text content is drawn; see
-\Vref{subsec:tcolorboxdrawing} for the general drawing scheme.
+\zvref{subsec:tcolorboxdrawing} for the general drawing scheme.
 
 The differences between underlays and overlays are:
 \begin{itemize}
@@ -2484,8 +2488,8 @@ The differences between underlays and overlays are:
 \item Underlays are stackable, i.\,e.\ several different underlays can be
   used on the same |tcolorbox|. Overlays are not stackable by default (but with
   some help of the library \mylib{hooks}).
-\item Boxed titles are implemented with underlays (\Vref{subsec:skinboxedtitle}),
-  watermarks are implemented with overlays (\Vref{subsec:watermarks}).
+\item Boxed titles are implemented with underlays (\zvref{subsec:skinboxedtitle}),
+  watermarks are implemented with overlays (\zvref{subsec:watermarks}).
 \end{itemize}
 
 
@@ -2566,7 +2570,7 @@ The differences between underlays and overlays are:
 \end{docTcbKey}
 
 \begin{docTcbKey}{underlay boxed title}{=\meta{graphical code}}{no default, initially unset}
-  If the box has a \emph{boxed title}, see \Vref{subsec:skinboxedtitle},
+  If the box has a \emph{boxed title}, see \zvref{subsec:skinboxedtitle},
   then the \meta{graphical code} is added to the box drawing process
   \emph{before} the boxed title is drawn.
 \end{docTcbKey}
@@ -2607,10 +2611,10 @@ The differences between underlays and overlays are:
 \clearpage
 \subsection{Finish Option Keys}\label{subsec:skinfinish}
 
-Finishes are quite similar to underlays described in \Vref{subsec:skinunderlay}
-and overlays described in \Vref{subsec:overlays}.
+Finishes are quite similar to underlays described in \zvref{subsec:skinunderlay}
+and overlays described in \zvref{subsec:overlays}.
 Finishes are drawn \emph{after} the text content is drawn; see
-\Vref{subsec:tcolorboxdrawing} for the general drawing scheme.
+\zvref{subsec:tcolorboxdrawing} for the general drawing scheme.
 Therefore, a finish will reduce the readability of the text content.
 
 Finishes are intended for special effects like highlights or glosses or text over text.
@@ -2902,7 +2906,7 @@ Open example file on Page~3.
 
 \clearpage
 \subsection{Jigsaw Skin Variants}\label{subsec:skinjigsaw}
-As described in \Vref{sec:skincorekeys}, a |tcolorbox| is drawn by up to
+As described in \zvref{sec:skincorekeys}, a |tcolorbox| is drawn by up to
 four \emph{engines}. Typically, the \emph{frame} engine fills the complete box area
 with color and the other engines fill certain areas with other colors.
 Finally, only the area which you see as \emph{frame} of the box will display

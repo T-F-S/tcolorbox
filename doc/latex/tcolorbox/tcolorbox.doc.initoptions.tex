@@ -42,12 +42,15 @@ Real counter name of the current numbered box for possible use inside the box.
 \end{docCommand}
 
 \begin{docCommand}[doc new=2025-07-21]{thetcbcounterof}{\marg{tcolorbox}}
-Counter value of a numbered \meta{tcolorbox} environment created with
+Counter value of a numbered \meta{tcolorbox} created with
 initialization options as documented below, e.\,g.\ \refKey{/tcb/new/auto counter}.
+\meta{tcolorbox} can be the name of a created box environment (by \refCom{newtcolorbox} and friends)
+or a created box macro (by \refCom{newtcbox} and friends; here, the name is
+without the leading backslash of the macro).
 \end{docCommand}
 
 \begin{docCommand}[doc new=2025-07-21]{tcbcounterof}{\marg{tcolorbox}}
-Real counter name of a numbered \meta{tcolorbox} environment.
+Real counter name of a numbered \meta{tcolorbox}.
 \end{docCommand}
 
 

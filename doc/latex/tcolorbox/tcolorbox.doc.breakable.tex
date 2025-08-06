@@ -526,13 +526,12 @@ and \refKey{/tcb/enlarge bottom at break by}.
 
 \begin{docTcbKey}[][doc new=2015-07-16]{extras}{=\marg{options}}{no default, initially unset}
   Adds |tcolorbox| \meta{options} to every box of a \emph{break sequence}
-  after skin settings are done. This is quite late in box processing.
+  (also including unbroken boxes) after skin settings are done. This is quite late in box processing.
   Geometry and break settings should \emph{not be used} here, because they
   will either be ignored or have unexpected negative results. But it is possible
   to change most colors, skin effects, shadows, borders, frame code, etc.
-  Note that using \refKey{/tcb/extras} for every box is very seldom an
-  advantage over setting the options directly. Usually, \refKey{/tcb/extras first},
-  \refKey{/tcb/extras middle}, etc.\ are sensible to apply.
+  While \refKey{/tcb/extras} affects every box,
+  \refKey{/tcb/extras first}, \refKey{/tcb/extras middle}, etc., apply extra options to specific partial boxes.
 \end{docTcbKey}
 
 
@@ -890,7 +889,7 @@ the \emph{break sequence} parts are displayed.
 \subsection{Break by Hand (Faked Break)}
 
 \begin{marker}
-See \Vref{subsec:multicol} for \emph{real} column breaks.
+See \zvref{subsec:multicol} for \emph{real} column breaks.
 \end{marker}
 
 Since the appearance of broken boxes is done by skins, it is quite easy

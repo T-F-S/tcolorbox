@@ -6,15 +6,15 @@
 The package provides some macros and options to take \emph{records} during
 compilation. This is done by \LaTeX\ file operations to save some data
 to a file for later usage. The main application scenario is depicted in
-\Vref{sec:recording-exercises} where
+\zvref{sec:recording-exercises} where
 information about example solutions is recorded and read again
-in \Vref{sec:recording-solutions}.
+in \zvref{sec:recording-solutions}.
 
 \subsection{Macros}\label{sec:recording-makros}
 \begin{docCommand}[doc new=2014-11-28]{tcbstartrecording}{\oarg{file name}}
   Opens a file denoted by \meta{file name} for writing the records.
   The default file name is |\jobname.records|.
-  See \Vref{sec:recording-exercises} for an example application.
+  See \zvref{sec:recording-exercises} for an example application.
   \begin{marker}
   In some situations, a not existing optional parameter may cause parsing
   problems. If this happens (or just for precaution), use
@@ -72,7 +72,7 @@ solutions. Each pair is generated inside a single |tcolorbox| where the
 solution is given below \refCom{tcblower}. For every example, the solution part
 is saved by \refKey{/tcb/savelowerto} to a file. The saving is recorded using
 \refKey{/tcb/record}. To enlighten the possibilities, the second exercise
-has no solution. Finally, the solutions are input in \Vref{sec:recording-solutions}.
+has no solution. Finally, the solutions are input in \zvref{sec:recording-solutions}.
 
 \inputpreamblelisting{L}
 
@@ -189,7 +189,7 @@ has no solution. Finally, the solutions are input in \Vref{sec:recording-solutio
 \tcbusetemp
 
 \subsection{Example: Solutions}\label{sec:recording-solutions}
-This concludes the example given in \Vref{sec:recording-exercises}.
+This concludes the example given in \zvref{sec:recording-exercises}.
 Now, the saved and recorded solutions are included.
 
 \begin{dispListing*}{breakable,before upper=}

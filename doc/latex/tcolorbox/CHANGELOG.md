@@ -38,6 +38,10 @@ and this project adheres to
 ### Fixed
 - Documentation:
     - Doc polishment and correction (pull request #325)
+    - Description of `extras` made clearer (part of issue #326)
+    - Mention `transform shape` for the `tikz` option (issue #327)
+    - Missing counter names in references resulting from  
+        replacing cleveref since 6.6.0 (issue #328)
 
 ### Security
 
