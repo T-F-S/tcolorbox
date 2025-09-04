@@ -2559,7 +2559,43 @@ One     & Two     & Three \\\hline\hline
 \end{exdispExample}
 \end{docTcbKey}
 
+\clearpage
+\begin{marker}
+If \refKey{/tcb/tabularray} or \refKey{/tcb/tabularray*} are used, one cannot have a lower part.
+\end{marker}
 
+\begin{docTcbKey}{tabularray}{=\meta{preamble}}{style}
+  This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
+  and several geometry keys to support a |tabularray| with the
+  given \meta{preamble}.
+  The package |tabularray| \cite{lvjr:tabularray} has to be loaded separately.
+\begin{exdispExample}{tabularray_1}
+% \usepackage{tabularray}
+\begin{tcolorbox}[tabularray={colspec={X||X|X|X|X||X}, column{2-Z}={halign=r}}, title=My table]
+Group & One     & Two     & Three    & Four     & Sum\\\hline\hline
+Red   & 1000.00 & 2000.00 &  3000.00 &  4000.00 & 10000.00\\\hline
+Green & 2000.00 & 3000.00 &  4000.00 &  5000.00 & 14000.00\\\hline
+Blue  & 3000.00 & 4000.00 &  5000.00 &  6000.00 & 18000.00\\\hline\hline
+Sum   & 6000.00 & 9000.00 & 12000.00 & 15000.00 & 42000.00
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{tabularray*}{=\marg{code}\marg{preamble}}{style}
+  This is a variant of \refKey{/tcb/tabularray} which adds some \meta{code}
+  before the table starts.
+\begin{exdispExample}{tabularray_2}
+% \usepackage{tabularray}
+\begin{tcolorbox}[
+  tabularray*={\SetTblrInner{row{1}={font=\bfseries}}}{colspec={X||X|X|X|X||X}, column{2-Z}={halign=r}}, title=My table]
+Group & One     & Two     & Three    & Four     & Sum\\\hline\hline
+Red   & 1000.00 & 2000.00 &  3000.00 &  4000.00 & 10000.00\\\hline
+Green & 2000.00 & 3000.00 &  4000.00 &  5000.00 & 14000.00\\\hline
+Blue  & 3000.00 & 4000.00 &  5000.00 &  6000.00 & 18000.00\\\hline\hline
+Sum   & 6000.00 & 9000.00 & 12000.00 & 15000.00 & 42000.00
+\end{tcolorbox}
+\end{exdispExample}
+\end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{tikz upper}{\colOpt{=\meta{options}}}{style}

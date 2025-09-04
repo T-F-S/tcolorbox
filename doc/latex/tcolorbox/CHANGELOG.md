@@ -10,6 +10,9 @@ and this project adheres to
 
 ### Added
 
+- new core package keys:
+  'tabularray*', 'tabularray'
+
 ### Changed
 
 ### Deprecated
