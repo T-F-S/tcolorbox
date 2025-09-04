@@ -694,6 +694,18 @@
     after upper*={\end{tabular*}\global\let\CT@arc@\tcb@CT@arc@save}
   },
   tabulars/.style={tabulars*={}{#1}},
+  tabularray*/.style 2 args={%
+    boxsep=\z@,top=\z@,bottom=\z@,leftupper=\z@,rightupper=\z@,
+    toptitle=1mm,bottomtitle=1mm,boxrule=0.5mm,
+    before upper*={%
+      \let\tcb@CT@arc@save\CT@arc@%
+      \renewcommand\lTblrDefaultHruleColorTl{tcbcolframe}%
+      \renewcommand\lTblrDefaultVruleColorTl{tcbcolframe}%
+      #1%
+      \tcb@hack@currenvir\tblr{#2}},
+    after upper*={\endtblr\global\let\CT@arc@\tcb@CT@arc@save}%
+  },
+  tabularray/.style={tabularray*={}{#1}},
   tikz upper/.style={before upper*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after upper*=\end{tikzpicture}},%
   tikz lower/.style={before lower*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after lower*=\end{tikzpicture}},%
   tikznode upper/.style={before upper={\centering\tcb@shield@externalize\begin{tikzpicture}\node[{align=center,inner sep=\z@,outer sep=\z@,#1}]\bgroup},after upper={\egroup;\end{tikzpicture}}},%
