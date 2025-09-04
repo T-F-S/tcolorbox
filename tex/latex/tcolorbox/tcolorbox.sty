@@ -702,8 +702,8 @@
       \renewcommand\lTblrDefaultHruleColorTl{tcbcolframe}%
       \renewcommand\lTblrDefaultVruleColorTl{tcbcolframe}%
       #1%
-      \tcb@hack@currenvir\tblr{#2}},
-    after upper*={\endtblr\global\let\CT@arc@\tcb@CT@arc@save}%
+      \begin{tblr}{#2}},
+    after upper*={\end{tblr}\global\let\CT@arc@\tcb@CT@arc@save}%
   },
   tabularray/.style={tabularray*={}{#1}},
   tikz upper/.style={before upper*={\centering\tcb@shield@externalize\begin{tikzpicture}[{#1}]},after upper*=\end{tikzpicture}},%
