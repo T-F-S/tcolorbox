@@ -22,28 +22,31 @@ and this project adheres to
 
 
 
-## [6.8.0] - xxxx-xx-xx
+## [6.8.0] - 2025-09-09
 
 ### Added
 - Initialization Option:
     - `number within from` with two new accompanying macros
-      `\tcbounterof` and `\thetcbcounterof` (issue #324)
-
-### Changed
-
-### Deprecated
-
-### Removed
+      `\tcbcounterof` and `\thetcbcounterof` (issue #324)
+- Core package:
+    - Options `tabularray` and `tabularray*` to use tblr tables 
+        inside tcolorbox conveniently (pull request #334)
 
 ### Fixed
+- Libary `skins`:
+    - `attach boxed title to ... text ...` ignores `xshift` setting (issue #331)
+- `spread inwards` and `spread outwards` lost `toggle enlargement` for
+    twosided documents since version 4.21 (2019-09-19) (issude #335)
 - Documentation:
     - Doc polishment and correction (pull request #325)
     - Description of `extras` made clearer (part of issue #326)
     - Mention `transform shape` for the `tikz` option (issue #327)
     - Missing counter names in references resulting from  
         replacing cleveref since 6.6.0 (issue #328)
-
-### Security
+    - Mention extras options are stackable in manual (issue #329)
+    - Redundant verbs removed (pull request #330)
+    - Typo in documentation for `\DeclareTotalTCBox` (pull request #332)
+    - Typo corrections (pull request #333)
 
 
 

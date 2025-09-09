@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.8.0pre2 (2025/08/06)
+%% The LaTeX package tcolorbox - version 6.8.0 (2025/09/09)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.8.0pre2}
+\tcb@set@library@version{6.8.0}
 
 \RequirePackage{tikzfill.image}
 
@@ -1151,9 +1151,9 @@
       \ifcase#6
         \tcbdimto\tcb@xshift@boxedtitle{\kvtcb@xshift@boxedtitle}%
       \or%
-        \tcbdimto\tcb@xshift@boxedtitle{\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper-\tcb@xshift@boxedtitle@delta}%
+        \tcbdimto\tcb@xshift@boxedtitle{\kvtcb@xshift@boxedtitle+\kvtcb@left@rule+\kvtcb@boxsep+\kvtcb@leftupper-\tcb@xshift@boxedtitle@delta}%
       \else%
-        \tcbdimto\tcb@xshift@boxedtitle{\tcb@xshift@boxedtitle@delta-(\kvtcb@right@rule+\kvtcb@boxsep+\kvtcb@rightupper)}%
+        \tcbdimto\tcb@xshift@boxedtitle{\kvtcb@xshift@boxedtitle+\tcb@xshift@boxedtitle@delta-(\kvtcb@right@rule+\kvtcb@boxsep+\kvtcb@rightupper)}%
       \fi%
       \def\tcb@specialgeonodes@unbroken{%
         \node[#4,name=title,at={([xshift=\tcb@xshift@boxedtitle,yshift=\kvtcb@yshift@boxedtitle]frame.#5)},

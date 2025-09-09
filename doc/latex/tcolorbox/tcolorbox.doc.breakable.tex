@@ -529,9 +529,15 @@ and \refKey{/tcb/enlarge bottom at break by}.
   (also including unbroken boxes) after skin settings are done. This is quite late in box processing.
   Geometry and break settings should \emph{not be used} here, because they
   will either be ignored or have unexpected negative results. But it is possible
-  to change most colors, skin effects, shadows, borders, frame code, etc.
-  While \refKey{/tcb/extras} affects every box,
-  \refKey{/tcb/extras first}, \refKey{/tcb/extras middle}, etc., apply extra options to specific partial boxes.
+  to change most colors, skin effects, shadows, borders, frame code, etc.\par
+  While \refKey{/tcb/extras} affects every box (including unbroken boxes),
+  \refKey{/tcb/extras first}, \refKey{/tcb/extras middle}, \refKey{/tcb/extras last},
+  \refKey{/tcb/extras unbroken}, etc., apply extra options to specific partial
+  boxes.\par
+  \refKey{/tcb/extras} and also \refKey{/tcb/extras first}, etc., are stackable,
+  i.\,e.\ the given \meta{options} are appended to any previous extra options.
+  Use \refKey{/tcb/no extras} to remove all extra options.\par
+  If needed, \refKey{/tcb/extras pre} prepends options to previous extra options.
 \end{docTcbKey}
 
 
@@ -544,6 +550,8 @@ and \refKey{/tcb/enlarge bottom at break by}.
   If the box is set to be \refKey{/tcb/breakable} and \emph{is} broken actually,
   then the \meta{options} are added to every box of the \emph{break sequence}.
   \refKey{/tcb/extras} overwrites this key.
+  This is a shortcut for setting
+  \refKey{/tcb/extras first}, \refKey{/tcb/extras middle}, and \refKey{/tcb/extras last}.
 \end{docTcbKey}
 
 \begin{docTcbKey}[][doc new=2015-07-16]{extras unbroken}{=\marg{options}}{no default, initially unset}
@@ -587,6 +595,8 @@ and \refKey{/tcb/enlarge bottom at break by}.
   Removes the last extras if set before.
 \end{docTcbKey}
 
+\clearpage
+
 \begin{docTcbKey}[][doc new=2015-07-16]{extras unbroken and first}{=\marg{options}}{no default, initially unset}
   This is an abbreviation for setting
   \refKey{/tcb/extras unbroken} and
@@ -608,8 +618,6 @@ and \refKey{/tcb/enlarge bottom at break by}.
   \refKey{/tcb/extras} overwrites this key.
 \end{docTcbKey}
 
-\clearpage
-
 \begin{docTcbKey}[][doc new=2015-07-16]{extras first and middle}{=\marg{options}}{no default, initially unset}
   This is an abbreviation for setting
   \refKey{/tcb/extras first} and
@@ -620,7 +628,7 @@ and \refKey{/tcb/enlarge bottom at break by}.
 
 \begin{docTcbKey}[][doc new=2018-07-26]{extras title after break}{=\marg{options}}{no default, initially unset}
   If the box has a \refKey{/tcb/title after break}, then the \meta{options}
-  are added for all titles after the first break, i.e.\ all middle and last.
+  are added for all titles after the first break, i.\,e.\ all middle and last.
   The color, font, and alignment of titles after break can be adapted choosing
   \meta{options}, e.g.\ by \refKey{/tcb/coltitle}, \refKey{/tcb/fonttitle},
   \refKey{/tcb/halign title}.
@@ -770,7 +778,7 @@ automatically but set manually.
   break and which is immediately discarded. You may ignore this technical
   information and just use it as you would use |\pagebreak|.\par\smallskip
   For an \emph{unbreakable box}, \refCom{tcbbreak} is identical to insert |\par|,
-  i.e.\ it just starts a new paragraph.\par\smallskip
+  i.\,e.\ it just starts a new paragraph.\par\smallskip
   Also see \refKey{/tcb/break at} for defining height dependent breaks.
 
 \begin{dispListing}
