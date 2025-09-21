@@ -20,7 +20,7 @@ Especially, the skin \refSkin{enhanced} supports \emph{all} of them
 and \refSkin{standard} \emph{none}.
 
 \begin{docTcbKey}{frame style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
-  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  The \meta{\texttt{\upshape tikz} keys} are used inside the \tikzname\ path command
   for drawing the \emph{frame} of the box.\\
   This option is available if the \refKey{/tcb/frame engine} is set to
   |path|, |pathfirst|, |pathmiddle|, or |pathlast|.
@@ -91,7 +91,7 @@ This is the lower part.
 
 
 \begin{docTcbKey}{interior style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
-  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  The \meta{\texttt{\upshape tikz} keys} are used inside the \tikzname\ path command
   for drawing the \emph{interior} of the box. They are used for the titled
   and for the untitled version as well.\\
   This option is available if the \refKey{/tcb/interior titled engine}
@@ -164,7 +164,7 @@ This is the lower part.
 
 \clearpage
 \begin{docTcbKey}{segmentation style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
-  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  The \meta{\texttt{\upshape tikz} keys} are used inside the \tikzname\ path command
   for drawing the \emph{segmentation} line of the box.\\
   This option is available if the \refKey{/tcb/segmentation engine}
   is set to |path|.
@@ -205,7 +205,7 @@ This is the lower part.
 
 
 \begin{docTcbKey}{title style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
-  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  The \meta{\texttt{\upshape tikz} keys} are used inside the \tikzname\ path command
   for drawing the \emph{title area} of the box.\\
   This option is available if the \refKey{/tcb/title engine} is set to
   |path|, |pathfirst|, |pathmiddle|, or |pathlast|.
@@ -1181,7 +1181,7 @@ This example uses a public domain picture from\\
 
 \clearpage
 \begin{docTcbKey}{watermark tikz}{=\meta{graphical code}}{no default, initially unset}
-  Draws the given |tikz| \meta{graphical code}
+  Draws the given \tikzname\ \meta{graphical code}
   in the center of the interior region of a |tcolorbox|.
   The code is executed \emph{after} the
   frame and interior are drawn and \emph{before} the text content is drawn.
@@ -1203,7 +1203,7 @@ This example uses a public domain picture from\\
 
 
 \begin{docTcbKey}{watermark tikz on}{=\meta{part} is \meta{graphical code}}{no default, initially unset}
-  This option draws the given |tikz| \meta{graphical code} in the center of the interior region of a |tcolorbox|
+  This option draws the given \tikzname\ \meta{graphical code} in the center of the interior region of a |tcolorbox|
   as described for \refKey{/tcb/watermark tikz}.
   But this is done only for boxes named \meta{part} of a break sequence, see
   \refKey{/tcb/breakable}.\\ 
@@ -1367,7 +1367,7 @@ page \pageref{subsec:overlays}.
 
 
 \begin{docEnvironment}{tcbclipframe}{}
-Defines a |Tikz| scope which clips to the frame area path.
+Defines a \tikzname\ scope which clips to the frame area path.
 \begin{dispExample}
 \makeatletter
 \newtcolorbox{picturebox}[2][]{%
@@ -1386,7 +1386,7 @@ Defines a |Tikz| scope which clips to the frame area path.
 
 \clearpage
 \begin{docEnvironment}{tcbinvclipframe}{}
-Defines a |Tikz| scope which clips to the \emph{outside} of the frame area path.
+Defines a \tikzname\ scope which clips to the \emph{outside} of the frame area path.
 
 \begin{dispExample*}{segmentation style={preaction={fill=white},pattern=checkerboard,pattern color=gray!40}}
 \tcbset{enhanced jigsaw,fonttitle=\bfseries,opacityback=0.35,colback=blue!5!white,
@@ -1412,7 +1412,7 @@ Defines a |Tikz| scope which clips to the \emph{outside} of the frame area path.
 
 \clearpage
 \begin{docEnvironment}{tcbclipinterior}{}
-Defines a |Tikz| scope which clips to the interior area path.
+Defines a \tikzname\ scope which clips to the interior area path.
 \begin{dispExample}
 \begin{tcolorbox}[enhanced,title=My Title,
   overlay={\begin{tcbclipinterior}
@@ -1425,7 +1425,7 @@ Defines a |Tikz| scope which clips to the interior area path.
 \end{docEnvironment}
 
 \begin{docEnvironment}{tcbcliptitle}{}
-Defines a |Tikz| scope which clips to the title area path.
+Defines a \tikzname\ scope which clips to the title area path.
 \begin{dispExample}
 \begin{tcolorbox}[enhanced,title=My Title,colframe=blue,colback=yellow!10!white,
   overlay={\begin{tcbcliptitle}\node at (title)
