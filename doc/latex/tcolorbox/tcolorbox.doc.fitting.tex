@@ -12,7 +12,7 @@ The library is loaded by a package option or inside the preamble by:
 
 \begin{docCommand}{tcboxfit}{\oarg{options}\marg{box content}}
   Creates a colored box where the given \meta{box content} is fitted to
-  the width and height of the box. A |tcboxfit| has to have a fixed height.
+  the width and height of the box. A |\tcboxfit| has to have a fixed height.
   If no fixed height is given, a square box is constructed.
   In principle, most \meta{options} for a \refEnv{tcolorbox}
   can be used for |\tcboxfit| with some restrictions. A |\tcboxfit| cannot have
@@ -95,7 +95,7 @@ The library is loaded by a package option or inside the preamble by:
   Basically, |\newtcboxfit| operates like |\newcommand|.
   The new macro \texttt{\textbackslash}\meta{name} optionally takes \meta{number}$+1$ arguments, where
   \meta{default} is the default value for the optional first argument.
-  The \meta{options} are given to the underlying |tcboxfit|.
+  The \meta{options} are given to the underlying |\tcboxfit|.
   The \meta{init options} allow setting up automatic numbering,
   see Section \ref{sec:initkeys} from page \pageref{sec:initkeys}.
 \begin{dispExample*}{sbs,lefthand ratio=0.6}
@@ -191,7 +191,7 @@ The library is loaded by a package option or inside the preamble by:
 
 \begin{docCommand}{NewTotalTCBoxFit}{\oarg{init options}\brackets{\texttt{\textbackslash}\meta{name}}\marg{specification}\marg{options}\marg{content}}
   Creates a new command \texttt{\textbackslash}\meta{name} based on \refCom{tcboxfit}.
-  In contrast to \refCom{NewTCBoxFit}, also the \meta{content} of the |tcboxfit| is specified.\\
+  In contrast to \refCom{NewTCBoxFit}, also the \meta{content} of the |\tcboxfit| is specified.\\
   Basically, \refCom{NewTotalTCBoxFit} operates like |\NewDocumentCommand|. This means,
   the new command \texttt{\textbackslash}\meta{name} is constructed with the given
   \LaTeX3 argument \meta{specification} following \cite{latexproject:usrguide}.

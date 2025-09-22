@@ -113,7 +113,7 @@ defined just for this documentation.
 \begin{docSkin}{standard}
   This is the standard skin from the core package. All drawing engines
   are set to type |standard|. The drawing is based on |pgf| commands and
-  does not need the |tikz| package.
+  does not need the \tikzname\ package.
 \begin{tcolorbox}[skintable=standard]
   \begin{tabbing}
     \refKey{/tcb/interior titled engine}: \=\kill
@@ -170,11 +170,10 @@ have some \enquote{enhanced} features, the |enhanced| skin is what you are looki
 \end{marker}
 
 \begin{docSkin}{enhanced}
-  This skin translates the drawing commands of the core package into |tikz|
-  path commands. Therefore, it allows all |tikz| high level options for
+  This skin translates the drawing commands of the core package into \tikzname\ path commands. Therefore, it allows all \tikzname\ high level options for
   these paths and has more flexibility compared to the \refSkin{standard} skin.
   You pay for this with some prolonged compilation time.
-  The |tikz| path options can
+  The \tikzname\ path options can
   be given with the option keys
   \refKey{/tcb/frame style},
   \refKey{/tcb/interior style},
@@ -1566,7 +1565,7 @@ you would have used \refKey{/tcb/freelance} before.
 
 \begin{docSkin}{freelance}
   This skin gives full freedom for the appearance of the |tcolorbox|.
-  All drawing engines are set to type |freelance|; they use the |tikz| package
+  All drawing engines are set to type |freelance|; they use the \tikzname\ package
   and compute the \refKey{/tcb/geometry nodes}.
   %This skin is useful for boxes which should differ much from the normal
   %appearance. Note that this difference has to be programmed by the user.
