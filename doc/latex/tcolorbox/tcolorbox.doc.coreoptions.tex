@@ -6,7 +6,7 @@
 For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
 the following |pgf| keys can be applied%
 \footnote{Strictly speaking, they are \texttt{pgfkeys} keys.
-  The \texttt{pgfkeys} package is auto-loaded by \texttt{pgf} and is
+  The \refPkg{pgfkeys} package is auto-loaded by \refPkg{pgf} and is
   documented in \cite[Part~VII]{tantau:tikz_and_pgf}.}.
 The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
@@ -2800,8 +2800,8 @@ Common special cases are \emph{watermarks} which are implemented using overlays.
 See Subsection \ref{subsec:watermarks} from page \pageref{subsec:watermarks} if
 you want to add \emph{watermarks}.
 \begin{marker}
-If you use the core package only, the \meta{graphical code} has to be |pgf| code
-and there is not much assistance for positioning.
+If you use the core package only, the \meta{graphical code} has to be
+\refPkg{pgf} code and there is not much assistance for positioning.
 Therefore, the usage of the \refKey{/tcb/enhanced} mode from the library skins
 is recommended which allows \tikzname\ code and gives access to
 \refKey{/tcb/geometry nodes} for positioning.
@@ -3024,8 +3024,9 @@ are drawn by the codes given with
 \begin{docTcbKey}{float*}{\colOpt{=\meta{values}}}{default from \texttt{floatplacement}}
   Identical to \refKey{/tcb/float}, but for wide boxes spanning the whole page
   width of two column documents or in conjunction with the packages
-  |multicol| or |paracol|. Note that you have to set |width=\textwidth|
-  additionally, if the box should span the whole page width in these cases!
+  \refPkg{multicol} or \refPkg{paracol}. Note that you have to set
+  |width=\textwidth| additionally, if the box should span the whole page width
+  in these cases!
 \begin{dispListing}
 \begin{tcolorbox}[float*=b, title=Floating box from |float*|,width=\textwidth,
     enhanced,watermark text={I'm also floating}]
@@ -4566,7 +4567,7 @@ to see the bookmark.
   Adds an \meta{entry} to an index with a specific \meta{name}.
   This is a shortcut for
   setting |\index|\oarg{name}\marg{entry} to \refKey{/tcb/phantom}.
-  An index extension package like |imakeidx| has to be loaded to use
+  An index extension package like \refPkg{imakeidx} has to be loaded to use
   this option key.
 \end{docTcbKey}
 
@@ -4681,7 +4682,7 @@ the correct page test is applied.
 But for \refKey{/tcb/breakable} boxes, \refCom{tcbifoddpage}
 will always give the result for the page of the \emph{first} box inside
 the box \textbf{content text}. If needed, the methods from the packages
-|changepage| or |ifoddpage| could be used here.
+\refPkg{changepage} or \refPkg{ifoddpage} could be used here.
 %To mention it again, for overlays, watermarks, etc, \refCom{tcbifoddpage} gives
 %the correct page test.
 
@@ -4850,7 +4851,7 @@ This is a \textbf{tcolorbox}.
       doc parameter   = {=\marg{token list}\marg{false options}},
     }
   }
-  Wraps the |\tl_if_blank:n(TF)| command(s) of \textsf{expl3} for option setting.
+  Wraps the |\tl_if_blank:n(TF)| command(s) of \refPkg[l3kernel]{expl3} for option setting.
   If the \meta{token list} consists only of blank spaces or is entirely empty, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
@@ -4883,7 +4884,7 @@ This is a tcolorbox.
       doc parameter   = {=\marg{token list}\marg{false options}},
     }
   }
-  Wraps the |\tl_if_empty:n(TF)| command(s) of \textsf{expl3} for option setting.
+  Wraps the |\tl_if_empty:n(TF)| command(s) of \refPkg[l3kernel]{expl3} for option setting.
   If the \meta{token list} is entirely empty, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}

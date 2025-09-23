@@ -158,7 +158,7 @@ To switch off the \texttt{nameref} feature permanently, add
   Creates a \refEnv{tcolorbox} which is fitted to the width of the given
   \meta{mathematical box content}. This box is intended to be applied as
   part of a larger formula and may be used as replacement for the |\boxed|
-  macro of |amsmath|.
+  macro of \refPkg{amsmath}.
 
 \begin{dispExample}
 \begin{equation}
@@ -658,7 +658,8 @@ created by hand or using \refCom{newtcbtheorem}.
 
 
 \begin{marker}
-  The following styles are only tested to work with the original |amsmath| environments.
+  The following styles are only tested to work with the original
+  \refPkg{amsmath} environments.
   If e.g. the |equation| environment is redefined as |gather|, then
   \refKey{/tcb/ams equation} should / could not be used. Obviously, you are encouraged
   to use \refKey{/tcb/ams gather} in this case.

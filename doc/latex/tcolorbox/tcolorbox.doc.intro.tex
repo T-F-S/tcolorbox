@@ -48,9 +48,10 @@ for some hints. The short story is: you have to install not only
 
 \subsection{Loading the Package}
 The base package |tcolorbox| loads the packages
-|tikz| \cite{tantau:tikz_and_pgf}, |verbatim| \cite{schoepf:verbatim},
-|etoolbox| \cite{lehmann:etoolbox},
-and |environ| \cite{robertson:2014a}.
+\refPkg{tikz} \cite{tantau:tikz_and_pgf},
+\refPkg{verbatim} \cite{schoepf:verbatim},
+\refPkg{etoolbox} \cite{lehmann:etoolbox},
+and \refPkg{environ} \cite{robertson:2014a}.
 |tcolorbox| itself is loaded in the usual manner in the preamble:
 \begin{dispListing}
 \usepackage{tcolorbox}
@@ -101,7 +102,7 @@ The following keys are used inside |\tcbuselibrary| respectively
 
 \begin{docTcbKey}[library]{listingsutf8}{}{\mylib{listingsutf8}}
   Loads the packages \refPkg{listings} \cite{hoffmann:listings} and
-  |listingsutf8| \cite{oberdiek:listingsutf8} for UTF-8 support.
+  \refPkg{listingsutf8} \cite{oberdiek:listingsutf8} for UTF-8 support.
   This is a variant of the library \mylib{listings}
   and is described in \zvref{sec:listings}.
 \end{docTcbKey}
