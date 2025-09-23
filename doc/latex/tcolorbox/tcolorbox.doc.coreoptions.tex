@@ -896,7 +896,7 @@ colframe=blue!75!black,colback=white,height=2cm}
 \end{docTcbKey}
 
 \begin{docTcbKey}{valign lower}{=\meta{alignment}}{no default, initially |top|}
-  This key has the same meaning for the lower part as |valign|
+  This key has the same meaning for the lower part as \refKey{/tcb/valign}
   for the upper part, i.\,e., it determines
   the vertical \meta{alignment} of the lower part with feasible values
   |top|, |center|, |bottom|, |scale|, and |scale*|.
@@ -2802,7 +2802,7 @@ you want to add \emph{watermarks}.
 \begin{marker}
 If you use the core package only, the \meta{graphical code} has to be
 \refPkg{pgf} code and there is not much assistance for positioning.
-Therefore, the usage of the \refKey{/tcb/enhanced} mode from the library skins
+Therefore, the usage of the \refKey{/tcb/enhanced} mode from the library \mylib{skins}
 is recommended which allows \tikzname\ code and gives access to
 \refKey{/tcb/geometry nodes} for positioning.
 \end{marker}
@@ -4418,7 +4418,7 @@ This is not needed and should typically not be used for a numbered box.
 \clearpage
 
 \begin{docTcbKey}{step}{=\meta{counter}}{no default, initially unset}
-Shortcut for |phantom={\refstepcounter{#1}}|. The given \meta{counter} is
+Shortcut for \refKey{/tcb/phantom}|={\refstepcounter{#1}}|. The given \meta{counter} is
 increased and ready for labelling. This option is not needed when
 using the convenient automated numbering introduced with version 2.40,
 see Subsection \ref{sec:numberedboxes}
@@ -4744,7 +4744,7 @@ It is precise only, if \refKey{/tcb/check odd page} was set.
 See \zvref{sec:external} for the \mylib{external} library of |tcolorbox|.
 \end{marker}
 
-If the \emph{externalization} library of the \refPkg{tikz} package is used,
+If the \emph{externalization} library |external| of the \refPkg{tikz} package is used,
 a |tcolorbox| could trigger the externalization process which will arise
 a compilation error.
 

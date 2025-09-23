@@ -26,7 +26,7 @@ need not to be loaded.
 \begin{marker}
 The package \refPkg{makeidx} is loaded only, if \docAuxCommand*{printindex} is
 \emph{not} already defined. Therefore, one can include an alternative to \refPkg{makeidx} like
-\refPkg{imakeidx} \emph{before} the library |documentation| is used.
+\refPkg{imakeidx} \emph{before} the library \mylib{documentation} is used.
 \end{marker}
 \begin{marker}
 The package \refPkg{marginnote} is loaded only, if \docAuxCommand*{marginnote} is
@@ -478,7 +478,7 @@ This is an optional \oarg{argument}.
   Renamed macro from the \refPkg{beamer} \cite{tantau:beamer} documentation to
   typeset a \meta{text} with pointed brackets as a mandatory argument.
 \begin{dispExample}
-This is a beamer \pbarg{argument}.
+This is a |beamer| \pbarg{argument}.
 \end{dispExample}
 \end{docCommand}
 
@@ -1466,7 +1466,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
   \begin{itemize}
   \item\docValue{pgfsection}: The index is formatted like in the \refPkg{pgf} documentation (as a section).
   \item\docValue{pgfchapter}: The index is formatted like in the \refPkg{pgf} documentation (as a chapter).
-  \item\docValue{pgf}: Alias for |pgfsection|.
+  \item\docValue{pgf}: Alias for \docValue{pgfsection}.
   \item\docValue{doc}: The index is assumed to be formatted by \refPkg{doc} or
     \refPkg{ltxdoc}. The usage of \refPkg{makeindex}
     with |-s gind.ist| is assumed. The package \refPkg{hypdoc} has to be loaded
