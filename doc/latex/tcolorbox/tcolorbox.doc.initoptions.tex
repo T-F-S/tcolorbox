@@ -22,7 +22,7 @@ Typically, these options may generate counters and alike.
 It is \textbf{strongly} recommended that you use initialization options inside
 the preamble only. Otherwise, you may get trouble when using \LaTeX's |\include| features.
 Also, it is recommended to generate new environments and commands with these
-options \emph{after} |hyperref| is loaded to avoid warnings about
+options \emph{after} \refPkg{hyperref} is loaded to avoid warnings about
 \emph{duplicate identifiers}.
 \end{marker}
 
@@ -134,7 +134,7 @@ be used to overrule a previous option.
 
 
 \begin{newTcbKey}[][doc new=2019-10-18]{reset counter on overlays}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
-For |beamer| slides, this invokes the |\resetcounteronoverlays| command
+For \refPkg{beamer} slides, this invokes the |\resetcounteronoverlays| command
 for the box counter. The counter is automatically reset on subsequent
 overlay slides of a frame.
 Thereby, the counter will be the same on all slides of every frame.
