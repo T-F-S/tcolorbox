@@ -4,7 +4,7 @@
 \section{Saving and Loading of Verbatim Texts}%
 \tcbset{external/prefix=external/verbatim_}%
 The following macros are slightly modified versions of the original macros
-from the known packages |moreverb| and |verbatim|.
+from the known packages \refPkg{moreverb} and \refPkg{verbatim}.
 They are used implicitly inside of a |tcolorbox| environment,
 but they can be used outside also.
 \enlargethispage*{1.5cm}
@@ -61,7 +61,7 @@ Now, we are using the file:\par
 \begin{docTcbKey}[][doc new=2017-07-05]{verbatim ignore percent}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
   If this option is set to be |true|, the percent sign \% is silently
   ignored for \refEnv{tcbverbatimwrite} and all macros and environments
-  which are built using \refEnv{tcbverbatimwrite}, e.g.\ 
+  which are built using \refEnv{tcbverbatimwrite}, e.\,g.\ 
   \refEnv{tcbwritetemp}, \refEnv{tcblisting}, or \refEnv{dispExample}.\par
   This option may be useful for creating some special effects, but mainly
   it is intended to be applied for documentation with DocStrip.

@@ -6,7 +6,7 @@
 For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
 the following |pgf| keys can be applied%
 \footnote{Strictly speaking, they are \texttt{pgfkeys} keys.
-  The \texttt{pgfkeys} package is auto-loaded by \texttt{pgf} and is
+  The \refPkg{pgfkeys} package is auto-loaded by \refPkg{pgf} and is
   documented in \cite[Part~VII]{tantau:tikz_and_pgf}.}.
 The key tree path |/tcb/| is not to
 be used inside these macros. It is easy to add your own style keys using
@@ -724,7 +724,7 @@ This is a demonstration text for showing how line breaking works.
   If \refKey{/tcb/halign} resp. \refKey{/tcb/halign upper} is not flexible enough,
   \refKey{/tcb/halign code} resp. \refKey{/tcb/halign upper code} allows to set
   arbitrary \meta{code} to configure the horizontal alignment of the text content,
-  e.g. using alignments from specialized packages.
+  e.\,g.\ using alignments from specialized packages.
 \end{docTcbKeys}
 
 
@@ -896,7 +896,7 @@ colframe=blue!75!black,colback=white,height=2cm}
 \end{docTcbKey}
 
 \begin{docTcbKey}{valign lower}{=\meta{alignment}}{no default, initially |top|}
-  This key has the same meaning for the lower part as |valign|
+  This key has the same meaning for the lower part as \refKey{/tcb/valign}
   for the upper part, i.\,e., it determines
   the vertical \meta{alignment} of the lower part with feasible values
   |top|, |center|, |bottom|, |scale|, and |scale*|.
@@ -1024,7 +1024,7 @@ This is a \textbf{tcolorbox}.
 
 
 \begin{docTcbKey}{boxrule}{=\meta{length}}{style, no default, initially \texttt{0.5mm}}
-  Sets all rules of the frame to \meta{length}, i.\,e.\ 
+  Sets all rules of the frame to \meta{length}, i.\,e., 
   \refKey{/tcb/toprule}, \refKey{/tcb/bottomrule}, \refKey{/tcb/leftrule},
   \refKey{/tcb/rightrule}, and \refKey{/tcb/titlerule}.
 \begin{exdispExample}{boxrule}
@@ -1402,9 +1402,9 @@ This is the lower part.
   predefined length values.
   For \meta{name}, the following values are feasible:
   \begin{itemize}
-  \item\docValue{normal}: normal sized boxes e.g. of width |\linewidth|.
+  \item\docValue{normal}: normal sized boxes e.\,g.\ of width |\linewidth|.
   \item\docValue{title}: title line sized boxes.
-  \item\docValue{small}: small boxes e.g. for keyword highlighting.
+  \item\docValue{small}: small boxes e.\,g.\ for keyword highlighting.
   \item\docValue{fbox}: identical to the standard |\fbox|.
   \item\docValue{tight}: no padding space at all.
   \item\docValue{minimal}: no padding space, no box rules.
@@ -1751,7 +1751,7 @@ This is a \textbf{tcolorbox}.
 \subsection{Height Control}\label{sec:heightcontrol}
 In a typical usage scenario, the height of a |tcolorbox| is computed automatically
 to fit the content. Nevertheless, the height can be set to a fixed value
-or to fit commonly for several boxes, e.\,g. if boxes are set side by side.
+or to fit commonly for several boxes, e.\,g.\ if boxes are set side by side.
 
 \bigskip
 \begin{marker}
@@ -1995,18 +1995,18 @@ colframe=blue!75!black,colback=white,height=3cm}
 \end{docTcbKey}
 
 \begin{docTcbKey}{space to upper}{}{style}
-  This is an abbreviation for |space=1|, i.\,e. all extra space is added
+  This is an abbreviation for |space=1|, i.\,e., all extra space is added
   to the upper part.
 \end{docTcbKey}
 
 \begin{docTcbKey}{space to lower}{}{style, initially set}
-  This is an abbreviation for |space=0|, i.\,e. all extra space is added
+  This is an abbreviation for |space=0|, i.\,e., all extra space is added
   to the lower part (if there is any).
 \end{docTcbKey}
 
 \clearpage
 \begin{docTcbKey}{space to both}{}{style}
-  This is an abbreviation for |space=0.5|, i.\,e. the extra space
+  This is an abbreviation for |space=0.5|, i.\,e., the extra space
   equally distributed between the upper and the lower part.
 \begin{exdispExample}{space_to_both}
 \tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
@@ -2089,7 +2089,7 @@ This is the lower part with a lot of text in several lines.
 \clearpage
 \begin{docTcbKey}[][doc updated=2014-11-07]{equal height group}{=\meta{id}}{no default}
   Boxes which are members of an |equal height group| will all get the
-  same height, i.\,e. the maximum of all their natural heights. The
+  same height, i.\,e., the maximum of all their natural heights. The
   \meta{id} serves to distinguish between different height groups.
   %This \meta{id} should contain only characters which are feasible
   %for \TeX\ macro names, typically alphabetic characters but no numerals
@@ -2173,7 +2173,7 @@ with a listing.
 
 \begin{docTcbKey}[][doc new=2016-03-24]{minimum for current equal height group}{=\meta{length}}{no default, initially unset}
   Sets \refKey{/tcb/minimum for equal height group} for the current equal height
-  group. Apparently, this only works for an already known equal height group, i.e.
+  group. Apparently, this only works for an already known equal height group, i.\,e.,
   \refKey{/tcb/equal height group} has to be set \emph{before} this option is used.
   This option is likely to be used in combination with \refKey{/tcb/raster equal height}
 
@@ -2441,7 +2441,7 @@ and the box is unbreakable.
 \begin{docTcbKey}[][doc new=2015-07-15]{text fill}{}{style, no value}
   This style sets \refKey{/tcb/before upper} and \refKey{/tcb/after upper}
   to embed the upper part with a minipage. If a fixed height was applied
-  e.g.\ by \refKey{/tcb/height} or \refKey{/tcb/height fill}, this minipage
+  e.\,g.\ by \refKey{/tcb/height} or \refKey{/tcb/height fill}, this minipage
   gets a matching height. This allows to use vertical glue macros like
   |\vfill| to act like expected. If the box has no fixed height,
   setting \refKey{/tcb/text fill} has no other effect as making the box
@@ -2708,7 +2708,7 @@ Lower part.
   }
   This shortcut style sets \refKey{/tcb/before upper*}
   to |\begin|\marg{name} and \refKey{/tcb/after upper*}
-  to |\end|\marg{name}, i.e. the upper part is enclosed by the environment \meta{name}.
+  to |\end|\marg{name}, i.\,e., the upper part is enclosed by the environment \meta{name}.
   The second variant also places \meta{code} after |\begin|\marg{name}.
 \begin{exdispExample}{environment_upper_1}
 \begin{tcolorbox}[colback=yellow!30, colframe=yellow!80!black,
@@ -2743,7 +2743,7 @@ Lower part.
 
 \begin{marker}
 \refKey{/tcb/environment upper} and friends (following) cannot be used to
-wrap another |tcolorbox|-based environment, i.e. never use
+wrap another |tcolorbox|-based environment, i.\,e., never use
 |/tcb/environment upper=tcolorbox| or
 |/tcb/environment upper=etc-derived-from-tcolorbox|.
 \end{marker}
@@ -2761,7 +2761,7 @@ wrap another |tcolorbox|-based environment, i.e. never use
   }
   This shortcut style sets \refKey{/tcb/before lower*}
   to |\begin|\marg{name} and \refKey{/tcb/after lower*}
-  to |\end|\marg{name}, i.e. the lower part is enclosed by the environment \meta{name}.
+  to |\end|\marg{name}, i.\,e., the lower part is enclosed by the environment \meta{name}.
   The second variant also places \meta{code} after |\begin|\marg{name}.
   Note that you may need \emph{additional} brackets around \meta{code}, if
   \meta{code} contains some para\-meter(s) for the environment \meta{name}.
@@ -2780,7 +2780,7 @@ wrap another |tcolorbox|-based environment, i.e. never use
   }
   This shortcut style sets \refKey{/tcb/before title*}
   to |\begin|\marg{name} and \refKey{/tcb/after title*}
-  to |\end|\marg{name}, i.e. the title text is enclosed by the environment \meta{name}.
+  to |\end|\marg{name}, i.\,e., the title text is enclosed by the environment \meta{name}.
   The second variant also places \meta{code} after |\begin|\marg{name}.
   Note that you may need \emph{additional} brackets around \meta{code}, if
   \meta{code} contains some para\-meter(s) for the environment \meta{name}.
@@ -2800,9 +2800,9 @@ Common special cases are \emph{watermarks} which are implemented using overlays.
 See Subsection \ref{subsec:watermarks} from page \pageref{subsec:watermarks} if
 you want to add \emph{watermarks}.
 \begin{marker}
-If you use the core package only, the \meta{graphical code} has to be |pgf| code
-and there is not much assistance for positioning.
-Therefore, the usage of the \refKey{/tcb/enhanced} mode from the library skins
+If you use the core package only, the \meta{graphical code} has to be
+\refPkg{pgf} code and there is not much assistance for positioning.
+Therefore, the usage of the \refKey{/tcb/enhanced} mode from the library \mylib{skins}
 is recommended which allows \tikzname\ code and gives access to
 \refKey{/tcb/geometry nodes} for positioning.
 \end{marker}
@@ -3024,8 +3024,9 @@ are drawn by the codes given with
 \begin{docTcbKey}{float*}{\colOpt{=\meta{values}}}{default from \texttt{floatplacement}}
   Identical to \refKey{/tcb/float}, but for wide boxes spanning the whole page
   width of two column documents or in conjunction with the packages
-  |multicol| or |paracol|. Note that you have to set |width=\textwidth|
-  additionally, if the box should span the whole page width in these cases!
+  \refPkg{multicol} or \refPkg{paracol}. Note that you have to set
+  |width=\textwidth| additionally, if the box should span the whole page width
+  in these cases!
 \begin{dispListing}
 \begin{tcolorbox}[float*=b, title=Floating box from |float*|,width=\textwidth,
     enhanced,watermark text={I'm also floating}]
@@ -3264,7 +3265,7 @@ text after
 \begin{docTcbKey}[][doc new=2014-11-07]{left skip}{=\meta{length}}{style, no default, initially |0mm|}
   Inserts some horizontal space of the given \meta{length} before the colored box.
   This style sets \refKey{/tcb/grow to left by} with the negated \meta{length},
-  i.e. the bounding box and box width are changed.
+  i.\,e., the bounding box and box width are changed.
 \begin{exdispExample*}{left_skip}{sbs,lefthand ratio=0.6}
 \noindent\rule{\linewidth}{2pt}
 
@@ -3278,7 +3279,7 @@ text after
 \begin{docTcbKey}[][doc new=2014-11-07]{right skip}{=\meta{length}}{style, no default, initially |0mm|}
   Inserts some horizontal space of the given \meta{length} after the colored box.
   This style sets \refKey{/tcb/grow to right by} with the negated \meta{length},
-  i.e. the bounding box and box width are changed.
+  i.\,e., the bounding box and box width are changed.
 \begin{exdispExample*}{right_skip}{sbs,lefthand ratio=0.6}
 \noindent\rule{\linewidth}{2pt}
 
@@ -3466,7 +3467,7 @@ dimensions of the outer frame. Therefore, \LaTeX\ reserves exactly the space
 needed for the box.
 This behavior can be changed by enlarging (or shrinking) the bounding box.
 If the bounding box is enlarged, the |tcolorbox| will get some clearance
-around it. If the bounding box is shrunk, i.\,e.\ enlarged with negative
+around it. If the bounding box is shrunk, i.\,e., enlarged with negative
 values, the |tcolorbox| will overlap to other parts of the page.
 For example, the |tcolorbox| could be stretched into the page margin.
 
@@ -4352,13 +4353,13 @@ new \meta{code} is appended.\par
 The \meta{code} is intended to be used for counter stepping, labelling, and
 related operations which do not produce visible text.
 \begin{itemize}
-\item The \meta{code} is executed before the title and box content, i.\,e.\ counter
+\item The \meta{code} is executed before the title and box content, i.\,e., counter
   values are ensured to be increased before usage.
 \item Labels are ensured to reference the correct page number.
 \item The \meta{code} is executed only once even during fitting operations for
   title and box content.
 \item In combination with the \refPkg{hyperref} package, the hyper anchor is set
-  to the upper left corner of the |tcolorbox|, i.\,e.\ links inside the pdf document
+  to the upper left corner of the |tcolorbox|, i.\,e., links inside the pdf document
   will jump to the box pleasantly.
 \item Since the \meta{code} is executed inside a \TeX\ group, only global
   operations can survive this group.
@@ -4418,7 +4419,7 @@ This is not needed and should typically not be used for a numbered box.
 \clearpage
 
 \begin{docTcbKey}{step}{=\meta{counter}}{no default, initially unset}
-Shortcut for |phantom={\refstepcounter{#1}}|. The given \meta{counter} is
+Shortcut for \refKey{/tcb/phantom}|={\refstepcounter{#1}}|. The given \meta{counter} is
 increased and ready for labelling. This option is not needed when
 using the convenient automated numbering introduced with version 2.40,
 see Subsection \ref{sec:numberedboxes}
@@ -4566,7 +4567,7 @@ to see the bookmark.
   Adds an \meta{entry} to an index with a specific \meta{name}.
   This is a shortcut for
   setting |\index|\oarg{name}\marg{entry} to \refKey{/tcb/phantom}.
-  An index extension package like |imakeidx| has to be loaded to use
+  An index extension package like \refPkg{imakeidx} has to be loaded to use
   this option key.
 \end{docTcbKey}
 
@@ -4653,7 +4654,7 @@ packed into \refKey{/tcb/extras}.
 \begin{tcolorbox}[breakable,if odd page*={colback=yellow!50}{colback=red!50}]
   This breakable box is colored in yellow on an odd page
   and is colored in red on an even page. For every partial box, the
-  test is repeated, i.e. this would give a yellow, red, yellow, red, \ldots\
+  test is repeated, i.\,e., this would give a yellow, red, yellow, red, \ldots\
   sequence for a long content.
 \end{tcolorbox}
 \end{dispExample}
@@ -4681,7 +4682,7 @@ the correct page test is applied.
 But for \refKey{/tcb/breakable} boxes, \refCom{tcbifoddpage}
 will always give the result for the page of the \emph{first} box inside
 the box \textbf{content text}. If needed, the methods from the packages
-|changepage| or |ifoddpage| could be used here.
+\refPkg{changepage} or \refPkg{ifoddpage} could be used here.
 %To mention it again, for overlays, watermarks, etc, \refCom{tcbifoddpage} gives
 %the correct page test.
 
@@ -4743,7 +4744,7 @@ It is precise only, if \refKey{/tcb/check odd page} was set.
 See \zvref{sec:external} for the \mylib{external} library of |tcolorbox|.
 \end{marker}
 
-If the \emph{externalization} library of the \refPkg{tikz} package is used,
+If the \emph{externalization} library |external| of the \refPkg{tikz} package is used,
 a |tcolorbox| could trigger the externalization process which will arise
 a compilation error.
 
@@ -4850,7 +4851,7 @@ This is a \textbf{tcolorbox}.
       doc parameter   = {=\marg{token list}\marg{false options}},
     }
   }
-  Wraps the |\tl_if_blank:n(TF)| command(s) of \textsf{expl3} for option setting.
+  Wraps the |\tl_if_blank:n(TF)| command(s) of \refPkg[l3kernel]{expl3} for option setting.
   If the \meta{token list} consists only of blank spaces or is entirely empty, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
@@ -4883,7 +4884,7 @@ This is a tcolorbox.
       doc parameter   = {=\marg{token list}\marg{false options}},
     }
   }
-  Wraps the |\tl_if_empty:n(TF)| command(s) of \textsf{expl3} for option setting.
+  Wraps the |\tl_if_empty:n(TF)| command(s) of \refPkg[l3kernel]{expl3} for option setting.
   If the \meta{token list} is entirely empty, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}

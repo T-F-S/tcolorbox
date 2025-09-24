@@ -282,12 +282,12 @@ This is the lower part.
 
 \begin{docTcbKey}[][doc new=2015-01-14]{titlerule style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
   The \meta{\texttt{\upshape tikz} keys} are used to draw a title rule,
-  i.e.\ a rule below the optional title. The width of the rule is controlled
+  i.\,e., a rule below the optional title. The width of the rule is controlled
   by \refKey{/tcb/titlerule}. It may be set directly to a smaller width
   to create mixed effects with the standard rule.
   This option is implemented as an \refKey{/tcb/underlay}. Thus, it is not
   available for \refSkin{standard} and \refSkin{standard jigsaw}, but for
-  all other skins, e.g.\ \refSkin{enhanced}.
+  all other skins, e.\,g.\ \refSkin{enhanced}.
   As an underlay, this option can be used multiple times and is removed
   by \refKey{/tcb/no underlay}.
 \begin{exdispExample*}{titlerule_style_1}{sbs,lefthand ratio=0.66}
@@ -1511,7 +1511,7 @@ but most other skins, e.\,g.\ \refSkin{enhanced}.
 The borderlines are independent from the normal |tcolorbox| rules.
 They may be used with or without the \refKey{/tcb/segmentation engine}.
 
-The borderlines are stackable, i.\,e.\ several different border lines can be
+The borderlines are stackable, i.\,e., several different border lines can be
 used on the same |tcolorbox|. They are drawn \emph{after} the box frame and box
 interior and \emph{before} overlays or watermarks.
 
@@ -1741,7 +1741,7 @@ but adapt to breakable boxes.
 The skin \refSkin{standard} does not support these shadows,
 but most other skins, e.\,g.\ \refSkin{enhanced}.
 
-The shadows are stackable, i.\,e.\ several different shadows can be
+The shadows are stackable, i.\,e., several different shadows can be
 used on the same |tcolorbox|. They are drawn \emph{before} the box frame is drawn.
 
 \begin{docTcbKey}{no shadow}{}{no default}
@@ -2381,7 +2381,7 @@ Sold!
 \begin{docTcbKey}{rotate}{=\meta{angle}}{no default, initially unset}
   Rotates the |tcolorbox| by the given \meta{angle}.
   This also applys |transform shape|.
-  Note that this is a \tikzname\  coordinate transformation i.e. not all graphical elements like shadings
+  Note that this is a \tikzname\  coordinate transformation i.\,e., not all graphical elements like shadings
   will really be rotated.
 \begin{dispExample*}{sbs,lefthand ratio=0.66}
 \tcbset{enhanced,colback=red!5!white,
@@ -2396,7 +2396,7 @@ This is a tcolorbox.
 \begin{docTcbKey}{scale}{=\meta{fraction}}{no default, initially unset}
   Scales the |tcolorbox| by the given \meta{fraction}.
   This also applys |transform shape|.
-  Note that this is a \tikzname\  coordinate transformation i.e. not all graphical elements like line widths
+  Note that this is a \tikzname\  coordinate transformation i.\,e., not all graphical elements like line widths
   will really be scaled.
 \begin{dispExample*}{sbs,lefthand ratio=0.66}
 \tcbset{enhanced,colback=red!5!white,
@@ -2485,7 +2485,7 @@ The differences between underlays and overlays are:
   \begin{marker}
   If an underlay is used with the \refSkin{standard} skin, it is silently ignored.
   \end{marker}
-\item Underlays are stackable, i.\,e.\ several different underlays can be
+\item Underlays are stackable, i.\,e., several different underlays can be
   used on the same |tcolorbox|. Overlays are not stackable by default (but with
   some help of the library \mylib{hooks}).
 \item Boxed titles are implemented with underlays (\zvref{subsec:skinboxedtitle}),
@@ -2630,7 +2630,7 @@ Finishes are intended for special effects like highlights or glosses or text ove
   \begin{marker}
   If a finish is used with the \refSkin{standard} skin, it is silently ignored.
   \end{marker}
-\item Finishes are stackable, i.\,e.\ several different finishes can be
+\item Finishes are stackable, i.\,e., several different finishes can be
   used on the same |tcolorbox|.
 \end{itemize}
 
@@ -2874,8 +2874,8 @@ View CTAN with a browser.
 
 
 \begin{docTcbKey}[][doc new=2017-02-03]{hyperurl*}{=\marg{options}\marg{url}}{no default, initially unset}
-  Identical to \refKey{/tcb/hyperurl}, but additional |hyperref| \cite{rahtz:hyperref}
-  \meta{options} are applied.
+  Identical to \refKey{/tcb/hyperurl}, but additional
+  \refPkg{hyperref} \cite{rahtz:hyperref} \meta{options} are applied.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
 \begin{tcolorbox}[enhanced,colback=green!50,
   hyperurl*={page=3,pdfnewwindow=true}%
@@ -2912,7 +2912,7 @@ with color and the other engines fill certain areas with other colors.
 Finally, only the area which you see as \emph{frame} of the box will display
 the frame color. For most applications, this is a good approach.
 
-For certain boxes, a more delicate procedure is needed. E.g., if the box should
+For certain boxes, a more delicate procedure is needed. E.\,g., if the box should
 be translucent, an already painted area cannot be made unpainted. Therefore,
 more elaborate frame engines saw holes into the frame where the interior area and
 optionally the title area will be painted.
@@ -2990,7 +2990,7 @@ implementation may change in future.
 \begin{marker}
 Normally, switching to the draft mode should not alter the geometry of
 your document. Since overlays are deactivated, any code placed there
-(e.g. counter changes) is not executed anymore! Also, \refKey{/tcb/remember as}
+(e.\,g.\ counter changes) is not executed anymore! Also, \refKey{/tcb/remember as}
 will not have any effect. You may exclude critical code with
 \refCom{tcbinterruptdraftmode} / \refCom{tcbcontinuedraftmode}
 from converting to draft mode.

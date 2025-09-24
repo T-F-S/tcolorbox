@@ -47,10 +47,11 @@ for some hints. The short story is: you have to install not only
 
 
 \subsection{Loading the Package}
-The base package |tcolorbox| loads the packages
-|tikz| \cite{tantau:tikz_and_pgf}, |verbatim| \cite{schoepf:verbatim},
-|etoolbox| \cite{lehmann:etoolbox},
-and |environ| \cite{robertson:2014a}.
+The core package |tcolorbox| loads the packages
+\refPkg{tikz} \cite{tantau:tikz_and_pgf},
+\refPkg{verbatim} \cite{schoepf:verbatim},
+\refPkg{etoolbox} \cite{lehmann:etoolbox},
+and \refPkg{environ} \cite{robertson:2014a}.
 |tcolorbox| itself is loaded in the usual manner in the preamble:
 \begin{dispListing}
 \usepackage{tcolorbox}
@@ -66,7 +67,7 @@ For example, the key to typeset listings is:
 
 \clearpage
 \subsection{Libraries}\label{sec:bibliothek}
-The base package |tcolorbox| is extendable by program libraries.
+The core package |tcolorbox| is extendable by program libraries.
 This is done by using option keys while loading the package or inside
 the preamble by applying the following macro with the same set of keys.
 
@@ -101,7 +102,7 @@ The following keys are used inside |\tcbuselibrary| respectively
 
 \begin{docTcbKey}[library]{listingsutf8}{}{\mylib{listingsutf8}}
   Loads the packages \refPkg{listings} \cite{hoffmann:listings} and
-  |listingsutf8| \cite{oberdiek:listingsutf8} for UTF-8 support.
+  \refPkg{listingsutf8} \cite{oberdiek:listingsutf8} for UTF-8 support.
   This is a variant of the library \mylib{listings}
   and is described in \zvref{sec:listings}.
 \end{docTcbKey}
@@ -185,7 +186,7 @@ The following keys are used inside |\tcbuselibrary| respectively
   interior style={fill tile image*={width=2cm}{pink_marble.png},fill image opacity=0.5},
   colframe=red!50!black]
   \begin{tcolorbox}[beamer,adjusted title=Basic Features,colframe=blue!50!black,colback=blue!10!white]
-  Base package
+  Core package
   \end{tcolorbox}
   \begin{tcbitemize}[raster columns=3,raster before skip=2mm,raster after skip=0pt,
     raster equal height,beamer,colframe=blue!50!black,colback=blue!10!white]

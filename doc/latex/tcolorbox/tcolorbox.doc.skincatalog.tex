@@ -14,7 +14,7 @@ See \zvref{sec:skins} for the documentation of all other options of the \mylib{s
 
 \begin{itemize}
 \item In principle, a skin is applied by choosing a value for
-  \refKey{/tcb/skin}, e.g. \docValue*{enhanced}.
+  \refKey{/tcb/skin}, e.\,g.\ \docValue*{enhanced}.
   Since the parts of a breakable box should look different,
   there are individual skins for breakable boxes, also see \zvref{subsec:breaksequence}.
   Skins for breakable boxes derived from a base skin are called a skin family
@@ -112,8 +112,8 @@ defined just for this documentation.
 
 \begin{docSkin}{standard}
   This is the standard skin from the core package. All drawing engines
-  are set to type |standard|. The drawing is based on |pgf| commands and
-  does not need the \tikzname\ package.
+  are set to type |standard|. The drawing is based on \refPkg{pgf} commands and
+  does not need the \refPkg{tikz} package.
 \begin{tcolorbox}[skintable=standard]
   \begin{tabbing}
     \refKey{/tcb/interior titled engine}: \=\kill
@@ -581,7 +581,7 @@ Nevertheless, this skin can be applied independently.
 
 \begin{marker}
   The following options \refKey{/tcb/colbacklower} and \refKey{/tcb/opacitybacklower}
-  are executed before \refKey{/tcb/segmentation style}, i.e.
+  are executed before \refKey{/tcb/segmentation style}, i.\,e.,
   \refKey{/tcb/segmentation style} overrules them.
 \end{marker}
 
@@ -1224,7 +1224,7 @@ Nevertheless, this skin can be applied independently.
 \subsection{Skin Family \enquote{empty}}
 
 \begin{docSkin}{empty}
-  This skin sets all engines to |empty|, i.\,e.\ nothing is drawn at all.
+  This skin sets all engines to |empty|, i.\,e., nothing is drawn at all.
   Therefore, this skin is a good starting point to create a complete
   new style by yourself.
 \begin{tcolorbox}[skintable=empty]
@@ -1569,8 +1569,8 @@ you would have used \refKey{/tcb/freelance} before.
 
 \begin{docSkin}{freelance}
   This skin gives full freedom for the appearance of the |tcolorbox|.
-  All drawing engines are set to type |freelance|; they use the \tikzname\ package
-  and compute the \refKey{/tcb/geometry nodes}.
+  All drawing engines are set to type |freelance|; they use the \refPkg{tikz}
+  package and compute the \refKey{/tcb/geometry nodes}.
   %This skin is useful for boxes which should differ much from the normal
   %appearance. Note that this difference has to be programmed by the user.
   %The drawing code can be given

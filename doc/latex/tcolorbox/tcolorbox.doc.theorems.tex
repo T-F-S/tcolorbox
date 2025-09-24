@@ -24,7 +24,7 @@ Denis Bitouz\'e, Muzimuzhi, and many others provided very valuable input for thi
     }
   Creates new environments \meta{name} and \meta{name}|*| based on |tcolorbox| to frame a
   (mathematical) theorem. The \meta{display name} is used in the title line
-  with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
+  with a number, e.\,g.\ \mbox{\flqq Theorem 5.1\frqq}.
   The \meta{options} are given to the underlying |tcolorbox| to control
   the appearance.
   %The \meta{counter} is used for automatic numbering.
@@ -158,7 +158,7 @@ To switch off the \texttt{nameref} feature permanently, add
   Creates a \refEnv{tcolorbox} which is fitted to the width of the given
   \meta{mathematical box content}. This box is intended to be applied as
   part of a larger formula and may be used as replacement for the |\boxed|
-  macro of |amsmath|.
+  macro of \refPkg{amsmath}.
 
 \begin{dispExample}
 \begin{equation}
@@ -438,7 +438,7 @@ See Example~\ref{theo*myex}.
   The given \meta{style} is used in connection with labels created with environments which
   are defined themselves by \refCom{newtcbtheorem}.
   This \meta{style} uses one argument which is automatically set to the
-  full label marker of the environment, i.e. a text consisting of
+  full label marker of the environment, i.\,e., a text consisting of
   \meta{prefix} (defined by \refCom{newtcbtheorem}),
   \refKey{/tcb/label separator},
   and \meta{marker} (defined by an actual theorem environment).
@@ -604,7 +604,7 @@ created by hand or using \refCom{newtcbtheorem}.
 \begin{docTcbKey}{highlight math}{}{style, no value}
   A style which is used for \refCom{tcbhighmath} and which is
   predefined as |notitle,nophantom,colframe=red,colback=yellow!25!white|.\par
-  It can be changed with the usual |pgf| techniques or
+  It can be changed with the usual |pgf| key techniques or
   with \refKey{/tcb/highlight math style}.
 \begin{dispExample}
 \begin{align*}
@@ -658,8 +658,9 @@ created by hand or using \refCom{newtcbtheorem}.
 
 
 \begin{marker}
-  The following styles are only tested to work with the original |amsmath| environments.
-  If e.g. the |equation| environment is redefined as |gather|, then
+  The following styles are only tested to work with the original
+  \refPkg{amsmath} environments.
+  If e.\,g.\ the |equation| environment is redefined as |gather|, then
   \refKey{/tcb/ams equation} should / could not be used. Obviously, you are encouraged
   to use \refKey{/tcb/ams gather} in this case.
 \end{marker}
@@ -1027,7 +1028,7 @@ By \refCom{newtcbtheorem}, commonly numbered theorem environments are
 created now. |defstyle| and |theostyle| are used for the appearance.
 
 \begin{marker}
-If you not need \refPkg{zref-clever} support, drop \refKey{/tcb/label type}
+If you do not need \refPkg{zref-clever} support, drop \refKey{/tcb/label type}
 from the definitions above.
 \end{marker}
 
@@ -1216,7 +1217,7 @@ Let's try a more conservative approach:
 Instead of creating theorem environments with the methods described before,
 environments from other packages can be boxed with a |tcolorbox|.
 
-Environments may be created e.g. by methods from the \refPkg{theorem} package or
+Environments may be created e.\,g.\ by methods from the \refPkg{theorem} package or
 the \refPkg{amsthm} package. \refCom{tcolorboxenvironment} can be used to put a box
 around these environments.
 

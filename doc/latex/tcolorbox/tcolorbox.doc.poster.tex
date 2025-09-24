@@ -150,7 +150,7 @@ documentation:\par
 
 \begin{postersetTcbKey}[][doc new=2017-07-03]{poster}{=\marg{option list}}{style, no default}
   This option can be applied inside \refEnv{tcbposter} and \refCom{tcbposterset}
-  to set the given poster \meta{option list}, e.g.
+  to set the given poster \meta{option list}, e.\,g.\
 \begin{dispListing}
 \tcbposterset{poster={width=20cm,height=15cm}}
 \end{dispListing}
@@ -159,7 +159,7 @@ documentation:\par
 
 
 \begin{posterTcbKey}[][doc new=2017-07-03]{columns}{=\meta{number}}{no default, initially |3|}
-  Sets the \meta{number} of columns for a |tcbposter|.
+  Sets the \meta{number} of columns for a \refEnv{tcbposter}.
 \begin{exdispExample}{columns}
   \begin{tcbposter}[
     poster = {showframe,columns=5,rows=2,spacing=1mm,height=4cm},
@@ -169,7 +169,7 @@ documentation:\par
 \end{posterTcbKey}
 
 \begin{posterTcbKey}[][doc new=2017-07-03]{rows}{=\meta{number}}{no default, initially |4|}
-  Sets the \meta{number} of rows for a |tcbposter|.
+  Sets the \meta{number} of rows for a \refEnv{tcbposter}.
 \end{posterTcbKey}
 
 
@@ -306,7 +306,7 @@ The \meta{option list} can contain any |tcolorbox| option.
   It uses \refKey{/tcb/fit basedim} and \refKey{/tcb/fit fontsize macros}
   to redefine |\normalsize| to \meta{length} and all other standard
   font size macros like |\small| and |\large| accordingly.\par
-  This needs a freely scalable font family like |lmodern| to work.
+  This needs a freely scalable font family like \refPkg[lm]{lmodern} to work.
   If \refKey{/tcb/posterset/fontsize} is not applied, there standard
   font size macros are not changed in any way.
 
@@ -345,7 +345,7 @@ The \meta{option list} can contain any |tcolorbox| option.
 \end{docCommand}
 
 \begin{docEnvironment}[doc new=2017-07-03]{posterboxenv}{\oarg{options}\marg{placement}}
-  This is the environment version of \refCom{posterbox}, i.e.\ inside a
+  This is the environment version of \refCom{posterbox}, i.\,e., inside a
   \refEnv{tcbposter} environment, this places a |tcolorbox| with
   additional |tcolorbox| \meta{options} and the given \meta{environment content}
   at a place determined by \meta{placement}.
@@ -571,7 +571,7 @@ poster listing.
 \begin{docTcbKey}[][doc new=2017-07-03]{placeholder}{}{style, no value}
   If the box content of a \refKey{/tcb/posterloc/sequence} is too short
   to fill all reserved box parts, the empty boxes are drawn with
-  the \refKey{/tcb/placeholder} style. This style can be redefined, e.g.
+  the \refKey{/tcb/placeholder} style. This style can be redefined, e.\,g.\
   to \refKey{/tcb/blankest}, if nothing should be drawn for empty boxes.
 \begin{exdispExample}{placeholder}
 \begin{tcbposter}[

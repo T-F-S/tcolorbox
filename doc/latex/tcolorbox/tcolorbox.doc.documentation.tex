@@ -26,7 +26,7 @@ need not to be loaded.
 \begin{marker}
 The package \refPkg{makeidx} is loaded only, if \docAuxCommand*{printindex} is
 \emph{not} already defined. Therefore, one can include an alternative to \refPkg{makeidx} like
-\refPkg{imakeidx} \emph{before} the library |documentation| is used.
+\refPkg{imakeidx} \emph{before} the library \mylib{documentation} is used.
 \end{marker}
 \begin{marker}
 The package \refPkg{marginnote} is loaded only, if \docAuxCommand*{marginnote} is
@@ -35,7 +35,7 @@ The package \refPkg{marginnote} is loaded only, if \docAuxCommand*{marginnote} i
 \begin{marker}
 In contrast to other |tcolorbox| options, the option
 settings for \mylib{documentation} are typically not
-getting reset by \refKey{/tcb/reset}, i.e. they keep their
+getting reset by \refKey{/tcb/reset}, i.\,e., they keep their
 values for embedded boxes.
 \end{marker}
 \begin{marker}
@@ -440,7 +440,7 @@ The color \docColor{foocolor} is available.
 
 
 \begin{docCommand}{cs}{\marg{name}}
-  Macro from |ltxdoc| \cite{carlisle:ltxdoc} to typeset a command word \meta{name}
+  Macro from \refPkg{ltxdoc} \cite{carlisle:ltxdoc} to typeset a command word \meta{name}
   where the backslash is prefixed. The library overwrites the original macro.
 \begin{dispExample}
 This is a \cs{foocommand}.
@@ -448,7 +448,7 @@ This is a \cs{foocommand}.
 \end{docCommand}
 
 \begin{docCommand}{meta}{\marg{text}}
-  Macro from |doc| \cite{mittelbach:doc} to typeset a meta \meta{text}.
+  Macro from \refPkg{doc} \cite{mittelbach:doc} to typeset a meta \meta{text}.
   The library overwrites the original macro.
 \begin{dispExample}
 This is a \meta{text}.
@@ -457,7 +457,7 @@ This is a \meta{text}.
 
 
 \begin{docCommand}{marg}{\marg{text}}
-  Macro from |ltxdoc| \cite{carlisle:ltxdoc} to typeset a \meta{text} with
+  Macro from \refPkg{ltxdoc} \cite{carlisle:ltxdoc} to typeset a \meta{text} with
   curly brackets as a mandatory argument. The library overwrites the original macro.
 \begin{dispExample}
 This is a mandatory \marg{argument}.
@@ -465,7 +465,7 @@ This is a mandatory \marg{argument}.
 \end{docCommand}
 
 \begin{docCommand}{oarg}{\marg{text}}
-  Macro from |ltxdoc| \cite{carlisle:ltxdoc} to typeset a \meta{text} with
+  Macro from \refPkg{ltxdoc} \cite{carlisle:ltxdoc} to typeset a \meta{text} with
   square brackets as an optional argument. The library overwrites the original macro.
 \begin{dispExample}
 This is an optional \oarg{argument}.
@@ -475,10 +475,10 @@ This is an optional \oarg{argument}.
 \clearpage
 
 \begin{docCommand}[doc new={2025-05-28}]{pbarg}{\marg{text}}
-  Renamed macro from the \cite{tantau:beamer} documentation to typeset a \meta{text} with
-  pointed brackets as a mandatory argument.
+  Renamed macro from the \refPkg{beamer} \cite{tantau:beamer} documentation to
+  typeset a \meta{text} with pointed brackets as a mandatory argument.
 \begin{dispExample}
-This is a beamer \pbarg{argument}.
+This is a |beamer| \pbarg{argument}.
 \end{dispExample}
 \end{docCommand}
 
@@ -696,7 +696,7 @@ We have created \refPathOperation*{fooop} as an example.
 \begin{docCommand}[doc updated=2020-02-11]{refAux}{\marg{name}}
   References some auxiliary environment, key, value, or color.
   The \meta{name} is colored according to \refKey{/tcb/color hyperlink},
-  if |hyperref| colorlinks are set, but there is no real link.
+  if \refPkg{hyperref} colorlinks are set, but there is no real link.
 \begin{dispExample}
 Some pages back, one can see \refAux{/foo/footitle} as an example.
 \end{dispExample}
@@ -706,7 +706,7 @@ Some pages back, one can see \refAux{/foo/footitle} as an example.
   References some auxiliary macro \meta{name} where \meta{name} is
   written without backslash.
   The \meta{name} is colored according to \refKey{/tcb/color hyperlink},
-  if |hyperref| colorlinks are set, but there is no real link.
+  if \refPkg{hyperref} colorlinks are set, but there is no real link.
 \begin{dispExample}
 Some pages back, one can see \refAuxcs{fooaux} as an example.
 \end{dispExample}
@@ -795,7 +795,7 @@ with another note.
 
 
 \begin{docTcbKey}[][doc new={2020-04-22}]{doc name}{=\meta{name}}{no default, initially empty}
-  Sets the \meta{name} of the entry to document, i.e. the \meta{name} of the
+  Sets the \meta{name} of the entry to document, i.\,e., the \meta{name} of the
   command, environment, key, etc. For \refEnv{docCommand}, \refEnv{docEnvironment}, etc.
   the \meta{name} is set by a mandatory parameter, but can also be set
   by \refKey{/tcb/doc name}.
@@ -814,7 +814,7 @@ with another note.
 
 
 \begin{docTcbKey}[][doc new={2020-04-22}]{doc parameter}{=\meta{parameters}}{no default, initially empty}
-  Sets the \meta{parameters} of the entry to document, i.e. the \meta{parameters} of the
+  Sets the \meta{parameters} of the entry to document, i.\,e., the \meta{parameters} of the
   command, environment, key, etc. For \refEnv{docCommand}, \refEnv{docEnvironment}, etc.
   the \meta{parameters} is set by a mandatory option, but can also be set
   by \refKey{/tcb/doc parameter}.
@@ -859,9 +859,10 @@ with another note.
   Sets the \meta{key prefix} (root path) of the key to document.
   This prefix is prepended to \refKey{/tcb/doc keypath}, if
   \refKey{/tcb/doc keypath} is not empty.
-  The default |/| setting is intended for |pgfkeys|.
-  For |l3keys|, setting \refKey{/tcb/doc key prefix} to be empty is more
-  appropriate, since their path starts with a module name without |/|.
+  The default |/| setting is intended for \refPkg{pgfkeys}.
+  For \refPkg[l3kernel]{l3keys}, setting \refKey{/tcb/doc key prefix} to be
+  empty is more appropriate, since their path starts with a module name
+  without |/|.
 \begin{dispExample}
 \begin{docKeys}[
     doc no index,  %  no index entries for this example
@@ -895,8 +896,8 @@ Sets \meta{macro} as formatter for the text given by
 \refKey{/tcb/doclang/keys} inside the index.
 The \meta{macro} has to take one mandatory
 argument (the language text).
-The intended purpose is to differentiate between different sorts of
-keys, if necessary, e.g.\ between |pgfkeys| and |l3keys|.
+The intended purpose is to differentiate between different sorts of keys,
+if necessary, e.\,g.\ between \refPkg{pgfkeys} and \refPkg[l3kernel]{l3keys}.
 If these options are used without value, the formatters are reset to
 their standard behavior.
 
@@ -1447,10 +1448,10 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 \begin{docTcbKey}[][doc new=2015-01-09]{index command name}{=\meta{name}}{no default, initially unset}
   Replaces the internally used \cs{index} macro by
-  \mbox{\cs{index}\texttt{[\meta{name}]}}, i.e.\ 
+  \mbox{\cs{index}\texttt{[\meta{name}]}}, i.\,e.,
   \mbox{\cs{index}\texttt{\textbraceleft\ldots\textbraceright}} is replaced by
   \mbox{\cs{index}\texttt{[\meta{name}]\textbraceleft\ldots\textbraceright}}.
-  This option is intended to be used with |imakeidx| and is
+  This option is intended to be used with \refPkg{imakeidx} and is
   mutually exclusive with \refKey{/tcb/index command}.
 \begin{dispListing}
 \tcbset{index command name=mydoc}
@@ -1463,10 +1464,11 @@ Draw your own picture with help of the \refPkg{tikz} package.
   Determines the basic \meta{format} of the generated index.
   Feasible values are:
   \begin{itemize}
-  \item\docValue{pgfsection}: The index is formatted like in the |pgf| documentation (as a section).
-  \item\docValue{pgfchapter}: The index is formatted like in the |pgf| documentation (as a chapter).
-  \item\docValue{pgf}: Alias for |pgfsection|.
-  \item\docValue{doc}: The index is assumed to be formatted by |doc| or |ltxdoc|. The usage of |makeindex|
+  \item\docValue{pgfsection}: The index is formatted like in the \refPkg{pgf} documentation (as a section).
+  \item\docValue{pgfchapter}: The index is formatted like in the \refPkg{pgf} documentation (as a chapter).
+  \item\docValue{pgf}: Alias for \docValue{pgfsection}.
+  \item\docValue{doc}: The index is assumed to be formatted by \refPkg{doc} or
+    \refPkg{ltxdoc}. The usage of \refPkg{makeindex}
     with |-s gind.ist| is assumed. The package \refPkg{hypdoc} has to be loaded
     \emph{before} |tcolorbox|. Only a limited set of customizations will
     work! This option cannot be unset when used!
@@ -1489,7 +1491,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
 \end{docTcbKey}
 
 \begin{docTcbKey}{index default settings}{}{style, no value}
-  Sets the |makeindex| default values for
+  Sets the \refPkg{makeindex} default values for
   \refKey{/tcb/index actual},
   \refKey{/tcb/index quote}, and
   \refKey{/tcb/index level}.
@@ -1497,7 +1499,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 
 \begin{docTcbKey}{index german settings}{}{style, no value}
-  Sets the |makeindex| values recommended for German language texts.
+  Sets the \refPkg{makeindex} values recommended for German language texts.
   This is identical to setting the following:
 \begin{dispListing}
 \tcbset{index actual={=},index quote={!},index level={>}}
@@ -1550,7 +1552,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
     }
   }
   If set to |true|, an additional index grouping is created where entries
-  are gathered, e.g. \refKey{/tcb/index gather counters} creates an index
+  are gathered, e.\,g.\ \refKey{/tcb/index gather counters} creates an index
   entry `Colors', see \refKey{/tcb/doclang/colors}, which gets all colors
   as sub entries.
 \end{docTcbKeys}
@@ -1624,7 +1626,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 
 \begin{docTcbKey}{color hyperlink}{=\meta{color}}{no default, initially |Hyperlink|}
-  Sets the color for all hyper-links, i.\,e. all internal and external links.
+  Sets the color for all hyper-links, i.\,e., all internal and external links.
 \end{docTcbKey}
 
 

@@ -103,7 +103,7 @@ parameters. The differences are:
   But you cannot not nest a breakable box inside a breakable box.
   The \refKey{/tcb/breakable} key for a nested box is ignored
   automatically\footnote{Until |tcolorbox| 3.04, the \refKey{/tcb/breakable} key
-  was not ignored for nested boxes.}, i.\,e.\ inner
+  was not ignored for nested boxes.}, i.\,e., inner
   boxes are always unbreakable.\par
   After all, in the unlikely case you really want to have the nested box to be breakable,
   use \refKey{/tcb/enforce breakable} for the nested
@@ -241,7 +241,7 @@ The |break at| option can be used to insert better break points by hand.
 
 \begin{docTcbKey}{enlargepage}{=\meta{length}\colOpt{/\meta{length}/\ldots/\meta{length}}}{no default, initially |0pt|}
   Inserts a |\enlargethispage|\marg{length} to the pages of the break sequence,
-  i.\,e.\ allows one to enlarge (or shrink) partial boxes. The first \meta{length} is applied
+  i.\,e., allows one to enlarge (or shrink) partial boxes. The first \meta{length} is applied
   to the first partial box, the second \meta{length} is applied
   to the second partial box, and so on. The last \meta{length} value is applied
   to all following partial boxes if any. Note that floating boxes will not be enlarged.
@@ -313,13 +313,13 @@ The |break at| option can be used to insert better break points by hand.
   Depending on the \LaTeX\ engine and loaded packages, if your text contains some
   color changing commands, your color may not survive the break to the next box.
   For some engines, there is support for additional color stacks which
-  allow colors to survive breaks. Such an color stack  can be activated
+  allow colors to survive breaks. Such a color stack  can be activated
   by \refKey{/tcb/use color stack} with help of the \refPkg{pdfcol} package.
   This can be done globally or per box.
   \begin{marker}
   Note that activating \refKey{/tcb/use color stack} inserts a color command with a \emph{whatsit}
   at the begin of the upper part and of the lower part of a \refEnv{tcolorbox}.
-  This \emph{may} add additional vertical space, e.g. if your box text starts
+  This \emph{may} add additional vertical space, e.\,g.\ if your box text starts
   with a list like \emph{enumerate}!
   \end{marker}
   \begin{itemize}
@@ -535,7 +535,7 @@ and \refKey{/tcb/enlarge bottom at break by}.
   \refKey{/tcb/extras unbroken}, etc., apply extra options to specific partial
   boxes.\par
   \refKey{/tcb/extras} and also \refKey{/tcb/extras first}, etc., are stackable,
-  i.\,e.\ the given \meta{options} are appended to any previous extra options.
+  i.\,e., the given \meta{options} are appended to any previous extra options.
   Use \refKey{/tcb/no extras} to remove all extra options.\par
   If needed, \refKey{/tcb/extras pre} prepends options to previous extra options.
 \end{docTcbKey}
@@ -628,9 +628,9 @@ and \refKey{/tcb/enlarge bottom at break by}.
 
 \begin{docTcbKey}[][doc new=2018-07-26]{extras title after break}{=\marg{options}}{no default, initially unset}
   If the box has a \refKey{/tcb/title after break}, then the \meta{options}
-  are added for all titles after the first break, i.\,e.\ all middle and last.
+  are added for all titles after the first break, i.\,e., all middle and last.
   The color, font, and alignment of titles after break can be adapted choosing
-  \meta{options}, e.g.\ by \refKey{/tcb/coltitle}, \refKey{/tcb/fonttitle},
+  \meta{options}, e.\,g.\ by \refKey{/tcb/coltitle}, \refKey{/tcb/fonttitle},
   \refKey{/tcb/halign title}.
   Note that \refKey{/tcb/colbacktitle} has to be placed into
   \refKey{/tcb/extras middle and last}.
@@ -679,7 +679,7 @@ and \refKey{/tcb/enlarge bottom at break by}.
 \subsection{Breakable boxes and the \texttt{multicol} package}\label{subsec:multicol}
 \begin{marker}
 With version 4.10, the algorithm for detecting the available height
-for a |tcolorbox| inside a |multicol| environment was improved with help
+for a |tcolorbox| inside a |multicols| environment was improved with help
 of Frank Mittelbach. This change \emph{may} impact existing user
 code which \emph{may} have to be adapted.
 \end{marker}
@@ -778,7 +778,7 @@ automatically but set manually.
   break and which is immediately discarded. You may ignore this technical
   information and just use it as you would use |\pagebreak|.\par\smallskip
   For an \emph{unbreakable box}, \refCom{tcbbreak} is identical to insert |\par|,
-  i.\,e.\ it just starts a new paragraph.\par\smallskip
+  i.\,e., it just starts a new paragraph.\par\smallskip
   Also see \refKey{/tcb/break at} for defining height dependent breaks.
 
 \begin{dispListing}
