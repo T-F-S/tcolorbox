@@ -4393,7 +4393,8 @@ Note that this option is not getting reset by \refKey{/tcb/reset}.
 \begin{marker}
 Recent versions of \refPkg{zref-clever} hook into the common |\label| and not
 need setting |\zlabel| explicitly. \refKey{/tcb/label is zlabel} can be
-omitted and applied only for optimization (for experts).
+omitted and applied only for optimization (for experts).\par
+See \refKey{/tcb/label type} for more information.
 \end{marker}
 \end{docTcbKey}
 
@@ -4449,14 +4450,13 @@ This option has a different meaning based upon the chosen labeling mechanism.
   The option key \refKey{/tcb/label type} can be used only in conjunction with the
   \refPkg{zref-clever} package \cite{barros:zref-clever}
   which has to be loaded separately.
-  \meta{type} has to be a cross-reference type \emph{known} to |zref-clever|.
+  \meta{type} is passed to the |zref-clever| option |reftype|, thus it has to
+  be a cross-reference type \emph{known} to |zref-clever|.
   This \meta{type} is bound to an automatic |tcolorbox| counter which has to be set up using
   \refKey{/tcb/new/auto counter},
   \refKey{/tcb/new/use counter from},
   \refKey{/tcb/new/use counter}, or
   \refKey{/tcb/new/use counter*}.
-  If \refKey{/tcb/label is zlabel} is set, but |zref-clever| is not loaded,
-  using |zref-clever countertype| will be silently ignored.
 \end{itemize}
 \end{docTcbKey}
 
@@ -4920,7 +4920,7 @@ This is a tcolorbox.
       doc new         = 2020-09-16,
     }
   }
-  Wraps the |\IfNoValue(TF)| command(s) of |xparse| for option setting.
+  Wraps the |\IfNoValue(TF)| command(s) for option setting, see \cite{latexproject:usrguide}.
   If the \meta{argument} has no value, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
@@ -4956,7 +4956,7 @@ This is a tcolorbox.
       doc new         = 2020-09-16,
     }
   }
-  Wraps the |\IfValue(TF)| command(s) of |xparse| for option setting.
+  Wraps the |\IfValue(TF)| command(s) for option setting, see \cite{latexproject:usrguide}.
   If the \meta{argument} has a value, the \meta{true options} are set.
   Otherwise, the \meta{false options} are set.
 \begin{dispExample}
@@ -4993,7 +4993,7 @@ This is a tcolorbox.
       doc new         = 2020-09-16,
     }
   }
-  Wraps the |\IfBoolean(TF)| command(s) of |xparse| for option setting.
+  Wraps the |\IfBoolean(TF)| command(s) for option setting, see \cite{latexproject:usrguide}.
   If the \meta{argument} is |\BooleanTrue|, the \meta{true options} are set.
   If the \meta{argument} is |\BooleanFalse|, the \meta{false options} are set.
 

@@ -977,9 +977,13 @@ Nevertheless, this skin can be applied independently.
 \subsection{Skin Family \enquote{beamer}}
 
 \begin{docSkin}{beamer}
-  This skin resembles boxes known from the \refPkg{beamer} class and therefore
-  is called \enquote{beamer}. It uses the normal colors from the core package
-  but shades them a little bit.
+  This skin resembles boxes known from the \refPkg{beamer} class and therefore is
+  called \enquote{beamer}. It uses the normal colors from the core package but shades
+  them a little bit.\par
+  While the motivation for this skin is to use \enquote{beamerish} looking
+  boxes apart from the \refPkg{beamer} class, one may want to use |tcolorbox|es
+  as blocks inside |beamer| slides. For this purpose see the package \refPkg{beamertheme-tcolorbox}
+  which provides a |beamer| inner theme reproducing standard |beamer| blocks using |tcolorbox|es.
 \begin{tcolorbox}[skintable=beamer]
   \begin{tabbing}
     \refKey{/tcb/interior titled engine}: \=\kill
