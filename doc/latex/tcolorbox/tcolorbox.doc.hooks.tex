@@ -38,7 +38,12 @@ The general naming convention (with some small exceptions) is:
 If the original \meta{option key} is used (again), all code will be overwritten.
 Therefore, the order of the option key usage is crucial.
 
+In particular, if the original \meta{option key} is stackable by default,
+usually there is already an accompanying \enquote{|no| \meta{option key}} option
+to clear the existing code. Thus this library only adds the
+\enquote{\meta{option key} |pre|} variant.
 
+\enlargethispage*{2cm}
 
 \begin{dispExample}
 % \usepackage{array,tabularx}

@@ -34,13 +34,17 @@ and this project adheres to
 
 ### Fixed
 - Documentation:
-    - Doc polishment and correction (pull request #336)
+    - Doc polishment and correction (pull request #336 and pull request #346)
     - Remove confusing sentence from `label type` docs (issue #338)
     - Emphasize `skins` library in `geometry nodes` docs (issue #337)
     - Mention new externalization packages `memoize` and `robust-externalize` (issue #339)
     - Mention `beamertheme-tcolorbox` in connection with the `beamer` skin (issue #340)
     - Replace several `xparse` leftovers (issue #341)
     - Remove `\interlineskip` from `tcolorbox-tutorial-poster.tex` (issue #353)
+    - Correct some header comments (pull request #343)
+    - Add references to options line `run arara` (pull request #344)
+    - Add general hooks intro for stackable options (issue #347)
+    - Refine docs for `enhanced standard` and `enhanced standard jigsaw` (issue #350)
 
 ### Security
 
