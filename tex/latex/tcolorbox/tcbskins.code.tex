@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.8.0 (2025/09/09)
+%% The LaTeX package tcolorbox - version 6.8.1pre1 (2025/09/24)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.8.0}
+\tcb@set@library@version{6.8.1pre1}
 
 \RequirePackage{tikzfill.image}
 
@@ -1987,7 +1987,7 @@
     watermark zoom=0.75,clip watermark,%
     clip title=false,clip upper=false,clip lower=false,%
     no borderline,smart shadow arc,no shadow,no underlay,no finish,tikz reset,at begin tikz reset,at end tikz reset,%
-    boxed title size=title,no boxed title style,hbox boxed title,code={\let\tcb@specialgeonodes@hook\relax},%
+    boxed title size=title,no boxed title style,hbox boxed title,code={\let\tcb@specialgeonodes@hook\@empty},%
     graphics options=,graphics pages={1,...,\pdfpages},graphics directory=,graphics orientation=as-is,%
   },
   initialize@reset=reset@skins,

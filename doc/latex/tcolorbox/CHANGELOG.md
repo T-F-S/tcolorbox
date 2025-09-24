@@ -22,6 +22,30 @@ and this project adheres to
 
 
 
+## [6.8.1] - xxxx-xx-xx
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Documentation:
+    - Doc polishment and correction (pull request #336)
+    - Remove confusing sentence from `label type` docs (issue #338)
+    - Emphasize `skins` library in `geometry nodes` docs (issue #337)
+    - Mention new externalization packages `memoize` and `robust-externalize` (issue #339)
+    - Mention `beamertheme-tcolorbox` in connection with the `beamer` skin (issue #340)
+    - Replace several `xparse` leftovers (issue #341)
+    - Remove `\interlineskip` from `tcolorbox-tutorial-poster.tex` (issue #353)
+
+### Security
+
+
+
 ## [6.8.0] - 2025-09-09
 
 ### Added

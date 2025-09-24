@@ -348,18 +348,15 @@ This is my
 \clearpage
 
 \begin{marker}
-With date of 2018-05-12, the \refPkg{xparse} \cite{latexproject:xparse} package
-changed the argument collection process (now part of the \LaTeX\ kernel).
-Spaces are ignored which leads to a serious change for listing environments
-ending with an optional argument like \verb+O{}+.
-The former behavior of respecting spaces can be preserved by adding a \flqq\verb+!+\frqq.
-Note that the following code uses \verb+!O{}+ now.
-\begin{itemize}
-\item For older |xparse| versions, the following code is correct when using \verb+O{}+.
-\item For |xparse| of 2018-05-12, only the first two examples of
-  the following code using \verb+O{}+ are really \flqq good\frqq\ -- all others do not work.
-\item For |xparse| of 2018-05-12 and later, the following code is correct when using \verb+!O{}+.
-\end{itemize}
+A listing environment ending with an optional argument like \verb+O{}+
+needs special attention. Without the prefix \flqq\verb+!+\frqq{} spaces after
+the begin of the environment are trimmed, see \cite{latexproject:usrguide}.
+This results in error or unwanted
+behaviour, if the optional argument is not used and the content of the
+environment starts with brackets or a backslash.
+With prefix \flqq\verb+!+\frqq, a space or linebreak
+after environment begin is enough to
+avoid these problems.
 \end{marker}
 
 \begin{dispListing*}{title={Caveats of using an environment ending with an
@@ -385,6 +382,33 @@ Note that the following code uses \verb+!O{}+ now.
 \end{mybox}
 
 \begin{mybox} [\good]\end{mybox}
+
+\begin{mybox}[\bad!]\end{mybox}
+\end{dispListing*}
+
+
+\begin{dispListing*}{title={Do not use this},fonttitle=\bfseries}
+\DeclareTCBListing{mybox}{ O{} }{listing only,#1}
+
+\begin{mybox}[colframe=red]
+\good
+\end{mybox}
+
+\begin{mybox}[colframe=red]\good\end{mybox}
+
+\begin{mybox}
+\bad!
+\end{mybox}
+
+\begin{mybox} \bad!\end{mybox}
+
+\begin{mybox}\bad!\end{mybox}
+
+\begin{mybox}
+[\bad!]
+\end{mybox}
+
+\begin{mybox} [\bad!]\end{mybox}
 
 \begin{mybox}[\bad!]\end{mybox}
 \end{dispListing*}
