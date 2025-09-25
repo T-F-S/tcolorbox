@@ -791,6 +791,151 @@ with another note.
 
 \clearpage
 %-------------------------------------------------------------------------------
+\subsection{Lists of Choices for Key Documentation}
+
+\enlargethispage*{10mm}
+\begin{docCommands}[doc parameter=\marg{comma separated list of choices}]
+  {
+    {
+      doc name = docKeyChoices,
+      doc new  = 2025-09-25,
+    },
+    {
+      doc name = docKeyChoices*,
+    },
+  }
+  Inside the parameter list of \refEnv{docKey}, \refEnv{docKey*}, or \refEnv{docKeys}
+  to document a key, this macro can be used to give
+  a \meta{comma separated list of choices}.
+  These choices are typeset with one leading |=| and \refKey{/tcb/doc key choices separator}
+  as separator between every value. Long lists are broken automatically at a width
+  which is configured by \refKey{/tcb/doc key width} or \refKey{/tcb/doc key ratio}.\par
+  The star variant is for optional values and uses \refCom{colOpt}.
+  \begin{marker}
+  Usage of \refCom{docKeyChoices} outside the parameter list of a key
+  documentation is not intended and is not supported.
+  \end{marker}
+\begin{dispExample}
+\begin{docKey}[foo]{fooexam1}{\docKeyChoices{one,two,three}}
+    {no default, initially \texttt{one}}
+  Example for mandatory choices.
+\end{docKey}
+\end{dispExample}
+\begin{dispExample}
+\begin{docKey}[foo]{fooexam2}{\docKeyChoices*{
+  zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
+  thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty }}
+    {default \texttt{one}, initially \texttt{zero}}
+  Example for optional choices.
+\end{docKey}
+\end{dispExample}
+\begin{dispExample}
+\begin{docKey}[foo][doc key ratio=0.8]{fooexam3}{\docKeyChoices*{
+  zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
+  thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty }}
+    {default \texttt{one},\\ initially \texttt{zero}}
+\end{docKey}
+\end{dispExample}
+\begin{dispExample}
+\begin{docKey}[foo][doc key ratio=1.0]{fooexam4}{\docKeyChoices*{
+  zero,one,two,three,four,five,six,seven,eight, \\ nine,ten,eleven,twelve,
+  thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty }}
+    {default \texttt{one}, initially \texttt{zero}}
+\end{docKey}
+\end{dispExample}
+\end{docCommands}
+
+\clearpage
+
+\begin{docTcbKeys}[
+    doc parameter   = {=\meta{comma separated list of choices}},
+    doc description = {style, no default},
+  ]{
+    {
+      doc new         = {2025-09-25},
+      doc name        = doc key choices,
+    },
+    {
+      doc name        = doc key choices*,
+    },
+  }
+  These options are shortcuts for setting \refKey{/tcb/doc parameter} with
+  \refCom{docKeyChoices} or \refCom{docKeyChoices*} respectively, i.\,e.,
+  to have a \meta{comma separated list of choices}
+  inside the parameter list of \refEnv{docKeys}.
+\begin{dispExample}
+\begin{docKeys}[
+    doc keypath      = foo,
+    doc name         = fooexam5,
+    doc key choices* = {true,false},
+    doc description  = {default \texttt{true}, initially \texttt{true}},
+  ]{}
+\end{docKeys}
+\end{dispExample}
+\begin{dispExample}
+\begin{docKeys}[
+    doc keypath     = foo,
+    doc name        = fooexam6,
+    doc key choices = {
+      zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
+      thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty },
+    doc key ratio   = 0.6,
+    doc description = {no default, initially \texttt{zero}},
+  ]{}
+\end{docKeys}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+
+\begin{docTcbKeys}[
+    doc new         = {2025-09-25},
+    doc name        = doc key choices separator,
+    doc parameter   = {=\meta{separator}},
+    doc description = {no default, initially \texttt{\textbackslash textbar}},
+  ]{}
+  Sets the \meta{separator} sign which used for typsetting lists of choices
+  from \refCom{docKeyChoices}, \refKey{/tcb/doc key choices}, and friends.
+\begin{dispExample}
+\begin{docKeys}[
+    doc key choices separator = \textbullet,
+    doc keypath      = foo,
+    doc name         = fooexam7,
+    doc key choices* = {true,false,maybe,unlikely},
+    doc description  = {default \texttt{true}, initially \texttt{true}},
+  ]{}
+\end{docKeys}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+\begin{docTcbKeys}[
+    doc new         = {2025-09-25},
+    doc name        = doc key width,
+    doc parameter   = {=\meta{length}},
+    doc description = {no default, initially \texttt{0.7\textbackslash columnwidth}},
+  ]{}
+  The given \meta{length} is the maximal width of a box consisting of
+  key name, |=| sign, and a list of choices. See also \refKey{/tcb/doc key ratio}.
+\end{docTcbKeys}
+
+
+\begin{docTcbKeys}[
+    doc new         = {2025-09-25},
+    doc name        = doc key ratio,
+    doc parameter   = {=\meta{number}},
+    doc description = {style, initially \texttt{0.7}},
+  ]{}
+  The given rational \meta{number} should be in the range between |0.0| and |1.0|.
+  This option sets \refKey{/tcb/doc key width} to
+  \texttt{\meta{number}\textbackslash columnwidth}.
+  See examples of \refCom{docKeyChoices} and \refKey{/tcb/doc key choices}.
+\end{docTcbKeys}
+
+
+
+\clearpage
+%-------------------------------------------------------------------------------
 \subsection{Entry Content Option Keys}
 
 

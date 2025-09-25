@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.8.1pre2 (2025/09/24)
+%% The LaTeX package tcolorbox - version 6.9.0pre1 (2025/09/25)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.8.1pre2}
+\tcb@set@library@version{6.9.0pre1}
 
 \tcbuselibrary{listings,skins,external,raster}
 
@@ -200,6 +200,11 @@
   keywords bold/true/.code={\let\tcb@doc@bfseries\bfseries},
   keywords bold/false/.code={\let\tcb@doc@bfseries\mdseries},
   doc key prefix/.store in=\kvtcb@doc@keyprefix,
+  doc key width/.store in=\kvtcb@doc@keywidth,
+  doc key ratio/.style={doc key width=#1\columnwidth},
+  doc key choices separator/.store in=\kvtcb@doc@key@choices@separator,
+  doc key choices/.style={doc parameter={\docKeyChoices{#1}}},
+  doc key choices*/.style={doc parameter={\docKeyChoices*{#1}}},
 }
 
 
@@ -638,9 +643,32 @@
       }
   }
 
+\dim_new:N \l__tcobox_doc_key_wd_dim
+
+\NewDocumentCommand \docKeyChoices { s m }
+  {
+    \dim_compare:nNnF \l__tcobox_doc_key_wd_dim > { 0pt }
+      {
+        \tcb@warning{Negative~width~for~'docKeyChoices'.~Enlarge~'doc~key~ratio'!}
+      }
+    \IfBooleanTF{ #1 }{ \colOpt }{ \use:n }
+      {
+        =
+        \parbox[t]{\l__tcobox_doc_key_wd_dim}
+          {
+            \raggedright
+            \clist_use:nn {#2} {\kvtcb@doc@key@choices@separator\nolinebreak[2]}
+            \strut
+          }
+      }
+  }
+
 \cs_new:Npn \__tcobox_doc_head_key:
   {
-    \__tcobox_print_key:
+    \hbox_set:Nn \l__tcobox_tmpa_box { \__tcobox_print_key: }
+    \dim_set:Nn \l__tcobox_doc_key_wd_dim
+      { \kvtcb@doc@keywidth - \box_wd:N \l__tcobox_tmpa_box }
+    \hbox_unpack_drop:N \l__tcobox_tmpa_box
     \__tcobox_index_key:
     \tl_if_empty:NTF \kvtcb@doc@keypath
       {
@@ -1073,6 +1101,8 @@
   english language,
   keywords bold,
   doc key prefix={/},
+  doc key ratio=0.7,
+  doc key choices separator=\textbar,
   index key formatter,
   index keys formatter,
   ctan formatter,
