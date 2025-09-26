@@ -27,7 +27,7 @@ and this project adheres to
 ### Added
 - Libary `documentation`:
     - Macros `\docKeyChoices` and `\docKeyChoices*` for lists of choices with
-        Options `doc key width`, `doc key ratio`, `doc key choices separator`
+        Options `doc head left width`, `doc head left ratio`, `doc key choices separator`
         (issue #351 and issue #352)
     - Shortcut options `doc key choices` and `doc key choices*`
 
