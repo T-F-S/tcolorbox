@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.9.0pre2 (2025/09/26)
+%% The LaTeX package tcolorbox - version 6.9.0 (2025/11/28)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,8 +18,8 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2025/09/26 version 6.9.0pre2 text color boxes]
-\def\tcb@version{6.9.0pre2}
+\ProvidesPackage{tcolorbox}[2025/11/28 version 6.9.0 text color boxes]
+\def\tcb@version{6.9.0}
 
 %\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
@@ -69,6 +69,63 @@
 \tl_new:N \l__tcobox_tmpa_tl
 \tl_new:N \l__tcobox_tmpb_tl
 \ExplSyntaxOff
+
+
+% Tagging code by Ulrike Fischer
+
+\NewStructureName{tcb/box}
+\AssignStructureRole{tcb/box}{Sect}
+
+\NewTaggingSocket{tcb/box/begin}{0}
+\NewTaggingSocketPlug{tcb/box/begin}{default}
+  {\par\tagstructbegin{tag=\UseStructureName{tcb/box}}}
+\AssignTaggingSocketPlug{tcb/box/begin}{default}
+
+\NewTaggingSocket{tcb/box/end}{0}
+\NewTaggingSocketPlug{tcb/box/end}{default}
+  {\par\tagstructend}
+\AssignTaggingSocketPlug{tcb/box/end}{default}
+
+\NewStructureName{tcb/box/title}
+\AssignStructureRole{tcb/box/title}{Caption}
+
+\NewTaggingSocket{tcb/box/title}{0}
+\NewTaggingSocketPlug{tcb/box/title}{default}
+  {\AssignStructureRole{para/semantic}{\UseStructureName{tcb/box/title}}}
+\AssignTaggingSocketPlug{tcb/box/title}{default}
+
+\NewTaggingSocket{tcb/box/draw}{2}
+\NewTaggingSocketPlug{tcb/box/draw}{default}
+  {\tagpdfparaOff#2\par}
+\AssignTaggingSocketPlug{tcb/box/draw}{default}
+
+\NewTaggingSocket{tcb/box/init}{0}
+\NewTaggingSocketPlug{tcb/box/init}{default}
+   {\AssignTaggingSocketPlug{minipage/before}{noop}%
+    \AssignTaggingSocketPlug{minipage/after}{noop}}
+\AssignTaggingSocketPlug{tcb/box/init}{default}
+\AddToHook{env/tcolorbox/begin}%
+  {\UseTaggingSocket{tcb/box/init}}
+
+\NewTaggingSocket{tcb/box/upper}{0}
+\NewTaggingSocketPlug{tcb/box/upper}{default}
+  {\AssignTaggingSocketPlug{minipage/before}{tag/dflt}%
+   \AssignTaggingSocketPlug{minipage/after}{tag/dflt}}
+\AssignTaggingSocketPlug{tcb/box/upper}{default}
+
+\NewTaggingSocket{tcb/box/lower}{0}
+\NewTaggingSocketPlug{tcb/box/lower}{default}
+  {\AssignTaggingSocketPlug{minipage/before}{tag/dflt}%
+   \AssignTaggingSocketPlug{minipage/after}{tag/dflt}}
+\AssignTaggingSocketPlug{tcb/box/lower}{default}
+
+\ExplSyntaxOn
+\NewTaggingSocket{tcb/drawing/init}{0}
+\NewTaggingSocketPlug{tcb/drawing/init}{default}
+  {\tl_put_left:Nn\tcb@tikz@option@hook{artifact,}}
+\AssignTaggingSocketPlug{tcb/drawing/init}{default}
+\ExplSyntaxOff
+
 
 \def\tcb@info#1{\PackageInfo{tcolorbox}{#1}}
 \def\tcb@warning#1{\PackageWarning{tcolorbox}{#1}}
@@ -1121,10 +1178,16 @@
 \let\endtcb@savebox=\endtcb@lrbox
 
 \def\tcb@saveupperbox{%
-\begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}{tcbcolupper}\kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper}
+  \begin{tcb@savebox}{\tcb@upperbox}{\tcb@w@upper}{tcbcolupper}%
+  \UseTaggingSocket{tcb/box/upper}%
+  \kvtcb@fontupper\kvtcb@halignupper\tcb@insert@before@upper%
+}
 
 \def\tcb@savelowerbox{%
-\begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}{tcbcollower}\kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower}
+  \begin{tcb@savebox}{\tcb@lowerbox}{\tcb@w@lower}{tcbcollower}%
+  \UseTaggingSocket{tcb/box/lower}%
+  \kvtcb@fontlower\kvtcb@halignlower\tcb@insert@before@lower%
+}
 
 
 % counter for float
@@ -1164,7 +1227,12 @@
   \ifx\kvtcb@title\@empty\tcb@hasTitlefalse\tcb@specialtitle@hook\else%
     \tcb@hasTitletrue%
     \tcbdimto\tcb@w@title{\kvtcb@width-(\kvtcb@left@rule+\kvtcb@right@rule+(\kvtcb@boxsep)*2+\kvtcb@lefttitle+\kvtcb@righttitle)}%
-    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}\kvtcb@fonttitle\kvtcb@haligntitle\tcb@insert@before@title\kvtcb@title\tcb@insert@after@title\end{tcb@savebox}%
+    \begin{tcb@savebox}{\tcb@titlebox}{\tcb@w@title}{tcbcoltitle}%
+    \UseTaggingSocket{tcb/box/title}%
+    \kvtcb@fonttitle\kvtcb@haligntitle\tcb@insert@before@title%
+    \kvtcb@title%
+    \tcb@insert@after@title%
+    \end{tcb@savebox}%
   \fi%
 }
 
@@ -1281,6 +1349,7 @@
 
 
 \def\tcb@@capture@minipage{%
+  \UseTaggingSocket{tcb/box/begin}%
   \let\tcb@val@raisebase=\tcb@zpt%
   \tcb@set@@phantom%
   \tcb@set@@title%
@@ -1499,7 +1568,8 @@
 \def\tcb@endboxanddraw{%
   \tcb@insert@after@part%
   \end{tcb@savebox}%
-  \tcb@draw@color@box%
+  \UseTaggingSocket{tcb/box/draw}{}{\tcb@draw@color@box}%
+  \UseTaggingSocket{tcb/box/end}%
   \tcb@finalize@environment%
 }
 
@@ -2062,29 +2132,17 @@
 
 \exp_args_generate:n {nNo}
 
-\NewSocket{tagsupport/tcb/drawing/begin}{0}
-\NewSocket{tagsupport/tcb/drawing/end}{0}
-\NewSocketPlug{tagsupport/tcb/drawing/begin}{suspend}
-  {\tag_mc_end_push:\tag_mc_begin:n{artifact}}
-\NewSocketPlug{tagsupport/tcb/drawing/end}{resume}
-  {\tag_mc_end:\tag_mc_begin_pop:n{}}
-\AssignSocketPlug{tagsupport/tcb/drawing/begin}{suspend}
-\AssignSocketPlug{tagsupport/tcb/drawing/end}{resume}
-
 \NewDocumentEnvironment{ tcb@drawing }{ }
   {
     \use:c{ tcb@before@\tcb@split@state }
+    \UseTaggingSocket{tcb/drawing/init}
     \exp_args:NnNo \begin{tikzpicture}[\tcb@tikz@option@hook]
-    \UseTaggingSocket{tcb/drawing/begin}
-    \SuspendTagging{tcb/drawing}
     \tcb@tikz@begin@hook
     \tcb@bbdraw
     \tcb@apply@graph@patches
   }
   {
     \tcb@tikz@end@hook
-    \ResumeTagging{tcb/drawing}
-    \UseTaggingSocket{tcb/drawing/end}
     \end{tikzpicture}
     \use:c{ tcb@after@\tcb@split@state }
   }

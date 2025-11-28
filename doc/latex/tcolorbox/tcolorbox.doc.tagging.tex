@@ -1,0 +1,29 @@
+% !TeX root = tcolorbox.tex
+% include file of tcolorbox.tex (manual of the LaTeX package tcolorbox)
+\clearpage
+\section{Tagging}%
+\tcbset{external/prefix=external/tagging_}%
+
+The package is partially compatible with tagging.
+Thanks to Ulrike Fischer, the following works:
+
+\subsection{Supported}
+
+\begin{itemize}
+\item Basic |tcolorbox|es with \refKey{/tcb/capture} mode \docValue{minipage} (this is the standard case).\par
+  Capture modes \docValue{hbox} and \docValue{fitbox} are not supported yet.
+  The same is true for \refCom{tcbox} and \refCom{tcboxfit}.
+\item Upper part and lower part.
+\item Breakables |tcolorbox|es.
+\item Skins like \refKey{/tcb/enhanced}, \refKey{/tcb/bicolor}, etc.
+\end{itemize}
+
+\subsection{Limitations}
+\begin{itemize}
+\item The tagging code inserts additional |\par|'s before and after a |tcolorbox|.
+  This may (will) interact with \refKey{/tcb/before} and \refKey{/tcb/after} settings.
+  Especially, \refKey{/tcb/nobeforeafter} will not work as expected.
+\item \refEnv{tcbraster} cannot have more than one column, because of the
+  additional |\par|'s caused by tagging.
+\item Boxed titles will not be tagged.
+\end{itemize}

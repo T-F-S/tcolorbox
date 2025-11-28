@@ -1024,7 +1024,7 @@ This is a \textbf{tcolorbox}.
 
 
 \begin{docTcbKey}{boxrule}{=\meta{length}}{style, no default, initially \texttt{0.5mm}}
-  Sets all rules of the frame to \meta{length}, i.\,e., 
+  Sets all rules of the frame to \meta{length}, i.\,e.,
   \refKey{/tcb/toprule}, \refKey{/tcb/bottomrule}, \refKey{/tcb/leftrule},
   \refKey{/tcb/rightrule}, and \refKey{/tcb/titlerule}.
 \begin{exdispExample}{boxrule}
@@ -3769,6 +3769,9 @@ This is a \textbf{tcolorbox}.
 {\tcbusetemp}
 \end{docTcbKey}
 
+\begin{marker}
+All following vertical spread options are not suitable for breakable boxes!
+\end{marker}
 
 \begin{docTcbKey}[][doc new=2017-02-13]{move upwards}{\colOpt{=\meta{length}}}{default |0pt|, initially unset}
 Starts a new page with the box at the very top page border.
@@ -4526,7 +4529,8 @@ Click me to jump to Box B.
 
 \begin{docTcbKey}[][doc new=2017-02-10]{bookmark}{=\meta{text}}{no default, initially unset}
   Sets a PDF bookmark with the given \meta{text}, if the package \refPkg{bookmark} \cite{oberdiek:bookmark}
-  is loaded. This bookmark is set with an automated destination (the current box)
+  is loaded. Otherwise, this option is silently ignored.
+  This bookmark is set with an automated destination (the current box)
   and is set one level below the current bookmark level.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
 % \usepackage{bookmark}%
@@ -4543,6 +4547,8 @@ to see the bookmark.
 \begin{docTcbKey}[][doc new=2017-02-10]{bookmark*}{=\marg{options}\marg{text}}{no default, initially unset}
   Identical to \refKey{/tcb/bookmark}, but additional \meta{options}
   from the package \refPkg{bookmark} \cite{oberdiek:bookmark} can be given.
+  If the package \refPkg{bookmark} \cite{oberdiek:bookmark} is not loaded,
+  this option is silently ignored.
   \begin{dispExample*}{sbs,lefthand ratio=0.7}
 % \usepackage{bookmark}%
 \begin{tcolorbox}[colback=red!10,colframe=red!50!black,

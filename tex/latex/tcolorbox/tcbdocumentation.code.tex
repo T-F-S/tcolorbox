@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.9.0pre2 (2025/09/26)
+%% The LaTeX package tcolorbox - version 6.9.0 (2025/11/28)
 %% tcbdocumentation.code.tex: Code for LaTeX documentations
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.9.0pre2}
+\tcb@set@library@version{6.9.0}
 
 \tcbuselibrary{listings,skins,external,raster}
 
@@ -649,7 +649,7 @@
   {
     \dim_compare:nNnF \l__tcobox_doc_key_wd_dim > { 0pt }
       {
-        \tcb@warning{Non-positive~width~for~'docKeyChoices'.~Enlarge~'doc~key~ratio'!}
+        \tcb@warning{Non-positive~width~for~'docKeyChoices'.~Enlarge~'doc~head~left~ratio' or 'doc~head~left~width'!}
       }
     \IfBooleanTF{ #1 }{ \colOpt }{ \use:n }
       {

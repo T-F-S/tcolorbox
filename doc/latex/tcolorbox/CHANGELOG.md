@@ -22,20 +22,23 @@ and this project adheres to
 
 
 
-## [6.9.0] - xxxx-xx-xx
+## [6.9.0] - 2025-11-28
 
 ### Added
 - Libary `documentation`:
     - Macros `\docKeyChoices` and `\docKeyChoices*` for lists of choices with
         options `doc head left width`, `doc head left ratio`, `doc key choices separator`
         (issue #351 and issue #352)
-    - Shortcut options `doc key choices` and `doc key choices*`
+    - Shortcut options `doc key choices` and `doc key choices*`    
+- Documentation:
+    - New section 'Tagging'
 
 ### Changed
-
-### Deprecated
-
-### Removed
+- Tagging improvement for basic tcolorboxes (breakable and unbreakable)
+    thanks to Ulrike Fischer (issue #358)
+- Documentation: 
+    Use minted2 for production since minted v3 is currently broken with Python 3.14
+    (https://github.com/gpoore/minted/issues/463)
 
 ### Fixed
 - Documentation:
@@ -50,8 +53,9 @@ and this project adheres to
     - Add references to options line `run arara` (pull request #344)
     - Add general hooks intro for stackable options (issue #347)
     - Refine docs for `enhanced standard` and `enhanced standard jigsaw` (issue #350)
-
-### Security
+	- Add note that `bookmark` and `bookmark*` are silently ignored, if the bookmark 
+		package is not loaded (issue #355)
+    - Add note that vertical spread options are not suitable for breakable boxes (issue #357)
 
 
 
