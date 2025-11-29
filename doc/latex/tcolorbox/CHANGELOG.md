@@ -50,7 +50,7 @@ and this project adheres to
     - Replace several `xparse` leftovers (issue #341)
     - Remove `\interlineskip` from `tcolorbox-tutorial-poster.tex` (issue #353)
     - Correct some header comments (pull request #343)
-    - Add references to options line `run arara` (pull request #344)
+    - Add references to options like `run arara` (pull request #344)
     - Add general hooks intro for stackable options (issue #347)
     - Refine docs for `enhanced standard` and `enhanced standard jigsaw` (issue #350)
 	- Add note that `bookmark` and `bookmark*` are silently ignored, if the bookmark 
