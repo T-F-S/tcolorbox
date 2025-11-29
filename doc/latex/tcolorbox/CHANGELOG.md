@@ -17,6 +17,7 @@ and this project adheres to
 ### Removed
 
 ### Fixed
+- Library `documentation`: add missing spaces in a `\docKeyChoices` warning
 
 ### Security
 
