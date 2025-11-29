@@ -53,8 +53,8 @@ and this project adheres to
     - Add references to options like `run arara` (pull request #344)
     - Add general hooks intro for stackable options (issue #347)
     - Refine docs for `enhanced standard` and `enhanced standard jigsaw` (issue #350)
-	- Add note that `bookmark` and `bookmark*` are silently ignored, if the bookmark 
-		package is not loaded (issue #355)
+    - Add note that `bookmark` and `bookmark*` are silently ignored, if the bookmark 
+      package is not loaded (issue #355)
     - Add note that vertical spread options are not suitable for breakable boxes (issue #357)
 
 
