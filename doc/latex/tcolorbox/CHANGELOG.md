@@ -17,10 +17,34 @@ and this project adheres to
 ### Removed
 
 ### Fixed
-- Library `documentation`: add missing spaces in a `\docKeyChoices` warning
 
 ### Security
 
+
+
+## [6.10.0] - xxxx-xx-xx
+
+### Added
+- Documentation:
+    - Examples for `halign code` and warning at `halign` (issue #361)
+- Macro `\renewthetcbcounter` to allow redefinition of `\thetcbcounter`
+- Alias `counter within` for `number within`
+- Alias `counter within from` for `number within from`
+
+### Changed
+- Required LaTeX version bumped to 2025-06-01
+- Implementation for numbered boxes is partially rewritten using the L3 API
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Library `documentation`: add missing spaces in a `\docKeyChoices` warning (pull request #360)
+- Changelog typos corrected (pull request #359)
+- `\thetcbcounter` was not completely redefined using `\counterwithout` / `\counterwithin` (issue #362)
+
+### Security
 
 
 ## [6.9.0] - 2025-11-28

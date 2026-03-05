@@ -1,8 +1,8 @@
-%% The LaTeX package tcolorbox - version 6.9.0 (2025/11/28)
+%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
-%% Copyright (c) 2006-2025 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% Copyright (c) 2006-2026 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 %% -------------------------------------------------------------------------------------------
 %%
 %% This work may be distributed and/or modified under the
@@ -17,9 +17,9 @@
 %%
 %% This work consists of all files listed in README
 %%
-\NeedsTeXFormat{LaTeX2e}[2023-11-01]
-\ProvidesPackage{tcolorbox}[2025/11/28 version 6.9.0 text color boxes]
-\def\tcb@version{6.9.0}
+\NeedsTeXFormat{LaTeX2e}[2025-06-01]
+\ProvidesPackage{tcolorbox}[2026/03/05 version 6.10.0pre1 text color boxes]
+\def\tcb@version{6.10.0pre1}
 
 %\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
@@ -2316,8 +2316,10 @@
   no counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@no},
   reset counter on overlays/.is if=tcb@resetcounteronoverlays,
   %
-  number within/.store in=\kvtcb@new@numberwithin,
-  number within from/.style={number within=\tcbcounterof{#1}},
+  counter within/.store in=\kvtcb@new@counterwithin,
+  number within/.store in=\kvtcb@new@counterwithin,
+  counter within from/.style={counter within=\tcbcounterof{#1}},
+  number within from/.style={counter within=\tcbcounterof{#1}},
   number format/.store in=\kvtcb@new@format,
   number freestyle/.store in=\kvtcb@new@freestyle,
   %
@@ -2352,47 +2354,83 @@
     list inside=,list type=tcolorbox,init@hook@clear,reset counter on overlays=false},
 }
 
-\def\tcb@proc@counter@autoanduse#1{%
-  \let\tcb@tcbcounter@savetemp=\tcbcounter%
-  \letcs\tcbcounter{tcb@cnt@#1}%
-  \ifx\kvtcb@new@numberwithin\@empty%
-    \csxdef{the\tcbcounter}{\expandafter\noexpand\kvtcb@new@format{\tcbcounter}}%
-  \else%
-    \@addtoreset{\tcbcounter}{\kvtcb@new@numberwithin}%
-    \csxdef{the\tcbcounter}{\expandafter\noexpand\csname the\kvtcb@new@numberwithin\endcsname .\expandafter\noexpand\kvtcb@new@format{\tcbcounter}}%
-  \fi%
-  \ifx\kvtcb@new@freestyle\@empty%
-  \else%
-    \csxdef{the\tcbcounter}{\kvtcb@new@freestyle}%
-  \fi%
-  \global\csletcs{thetcb@cnt@#1}{the\tcbcounter}%
-  \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\stepcounter{\tcbcounter}\preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}}}%
-  \let\tcbcounter=\tcb@tcbcounter@savetemp%
+
+\ExplSyntaxOn
+
+\def \tcb@proc@counter@auto #1
+  {
+    \cs_if_exist:cT { c@tcb@cnt@#1 }
+      {
+        \tcb@error{Auto~counter~for~environment~'#1'~already~defined}{}
+      }
+    \newcounter { tcb@cnt@#1 }
+    \cs_gset_nopar:cpx { tcb@cnt@#1 }{ tcb@cnt@#1 }
+    \__tcobox_proc_counter_autoanduse:n{#1}
+  }
+
+\def \tcb@proc@counter@use #1
+  {
+    \cs_gset_nopar:cpx { tcb@cnt@#1 }{ \kvtcb@new@counter }
+    \__tcobox_proc_counter_autoanduse:n{#1}
+  }
+
+\cs_new_nopar:Npn \__tcobox_proc_counter_autoanduse:n #1
+  {
+    \group_begin:
+    \cs_set_eq:Nc \tcbcounter { tcb@cnt@#1 }
+    \tl_if_empty:NTF \kvtcb@new@counterwithin
+    {
+      \cs_gset_nopar:cpx { the\tcbcounter }{ \exp_not:o \kvtcb@new@format { \tcbcounter } }
+    }
+    {
+      \exp_args:NNo \counterwithin[ \kvtcb@new@format ]{ \tcbcounter }{ \kvtcb@new@counterwithin }
+    }
+    \tl_if_empty:NF \kvtcb@new@freestyle
+    {
+      \cs_gset_nopar:cpx { the\tcbcounter }{ \kvtcb@new@freestyle }
+    }
+    \group_end:
+    \__tcobox_proc_counter_addcounter:n { #1 }
+  }
+
+\def \tcb@proc@counter@from #1
+  {
+    \cs_gset_nopar:cpx { tcb@cnt@#1 }{ \kvtcb@new@counter }
+    \__tcobox_proc_counter_addcounter:n { #1 }
+  }
+
+
+\cs_new_nopar:Npn \__tcobox_proc_counter_addcounter:n #1
+{
+  \appto\tcb@new@colopt{,code={
+    \letcs\tcbcounter{tcb@cnt@#1}
+    \letcs\thetcbcounter{the\tcbcounter}
+    \stepcounter{\tcbcounter}
+    \preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}
+  }}
 }
 
-\def\tcb@proc@counter@auto#1{%
-  \ifcsdef{c@tcb@cnt@#1}
-    {\tcb@error{Auto counter for environment '#1' already defined}{}}
-    {}%
-  \newcounter{tcb@cnt@#1}%
-  \csxdef{tcb@cnt@#1}{tcb@cnt@#1}%
-  \tcb@proc@counter@autoanduse{#1}%
+\def \tcb@proc@counter@no #1
+{
+  \appto\tcb@new@colopt{,code={\let\tcbcounter=\@empty\let\thetcbcounter=\@empty}}
 }
 
-\def\tcb@proc@counter@use#1{%
-  \csxdef{tcb@cnt@#1}{\kvtcb@new@counter}%
-  \tcb@proc@counter@autoanduse{#1}%
-}
+\NewDocumentCommand \renewthetcbcounter { m m }
+  {
+    \group_begin:
+    \cs_if_exist:cTF { tcb@cnt@#1 }
+      {
+        \cs_set_eq:Nc \tcbcounter { tcb@cnt@#1 }
+        \cs_gset_nopar:cpx { the\tcbcounter }{ #2 }
+      }
+      {
+        \tcb@error{tcolorbox~'#1'~or~counter~for~'#1'~is~not~defined}{}
+      }
+    \group_end:
+  }
 
-\def\tcb@proc@counter@from#1{%
-  \csxdef{tcb@cnt@#1}{\kvtcb@new@counter}%
-  \global\csletcs{thetcb@cnt@#1}{the\kvtcb@new@counter}%
-  \appto\tcb@new@colopt{,code={\letcs\tcbcounter{tcb@cnt@#1}\letcs\thetcbcounter{thetcb@cnt@#1}\stepcounter{\tcbcounter}\preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}}}%
-}
+\ExplSyntaxOff
 
-\def\tcb@proc@counter@no#1{%
-  \appto\tcb@new@colopt{,code={\let\tcbcounter=\@empty\let\thetcbcounter=\@empty}}%
-}%
 
 \long\def\tcb@proc@options@init#1#2{%
   \tcbset{new/.cd,reset@new,#1}%
