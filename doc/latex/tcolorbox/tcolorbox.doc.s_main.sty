@@ -9,7 +9,7 @@
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[english]{babel}
-\RequirePackage{lmodern,parskip,array,ifthen,calc}
+\RequirePackage{lmodern,parskip,array,ifthen,calc,ragged2e}
 \RequirePackage{amsmath,amssymb}
 \RequirePackage[svgnames,table]{xcolor}
 
@@ -30,7 +30,6 @@
 \providecommand{\tcbpkgprefix}{}
 \RequirePackage{\tcbpkgprefix tcolorbox}
 
-\usepackage{minted}
 \tcbuselibrary{most,documentation}
 
 \tcbifexternal{}{%
@@ -79,6 +78,7 @@
 \tcbmakedocSubKeys{docTcbKeys}{tcb}
 \tcbmakedocSubKey{langTcbKey}{tcb/doclang}
 \tcbmakedocSubKey{newTcbKey}{tcb/new}
+\tcbmakedocSubKeys{newTcbKeys}{tcb/new}
 \tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
 \tcbmakedocSubKey{extTcbKey}{tcb/external}
 \tcbmakedocSubKey{vigTcbKey}{tcb/vig}
@@ -188,7 +188,7 @@
     tcblower,tcbox,tcboxfit,tcbset,tcbuselibrary,tcolorbox,tcbverbatimwrite,tcbsetforeverylayer,tcbsubtitle,
     tcolorboxenvironment,tcblistof,tcbstartrecording,tcbrecord,tcbstoprecording,tcbinputrecords,
     tcbpatcharcangular,tcbpatcharcround,tcbifoddpage,thetcolorboxnumber,thetcolorboxpage,
-    tcbheightfromgroup,tcbheightspace,tcbtextwidth,tcbtextheight,
+    tcbheightfromgroup,tcbheightspace,tcbtextwidth,tcbtextheight,renewthetcbcounter,
     % listings
     endtcblisting,newtcblisting,newtcbinputlisting,
     tcblisting,tcbinputlisting,tcbuselistingtext,tcbuselistinglisting,tcbusetemplisting,

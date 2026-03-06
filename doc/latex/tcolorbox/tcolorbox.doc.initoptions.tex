@@ -31,14 +31,19 @@ options \emph{after} \refPkg{hyperref} is loaded to avoid warnings about
 Counters assigned using the initialization options are administrated
 automatically. Especially, they are increased for each new box.
 
+
+\begin{docCommand}{tcbcounter}{}
+Real counter name of the current numbered box for possible use inside the box.
+\end{docCommand}
+
 \begin{docCommand}{thetcbcounter}{}
 Counter value of the current numbered box. It may be used inside the box,
 e.\,g.\ inside the title of
 the box. See \refKey{/tcb/new/auto counter} and following for examples.
 \end{docCommand}
 
-\begin{docCommand}{tcbcounter}{}
-Real counter name of the current numbered box for possible use inside the box.
+\begin{docCommand}[doc new=2025-07-21]{tcbcounterof}{\marg{tcolorbox}}
+Real counter name of a numbered \meta{tcolorbox}.
 \end{docCommand}
 
 \begin{docCommand}[doc new=2025-07-21]{thetcbcounterof}{\marg{tcolorbox}}
@@ -49,8 +54,18 @@ or a created box macro (by \refCom{newtcbox} and friends; here, the name is
 without the leading backslash of the macro).
 \end{docCommand}
 
-\begin{docCommand}[doc new=2025-07-21]{tcbcounterof}{\marg{tcolorbox}}
-Real counter name of a numbered \meta{tcolorbox}.
+\begin{docCommand}[doc new=2026-03-05]{renewthetcbcounter}{\marg{tcolorbox}\marg{code}}
+Redefines \refCom{thetcbcounter} for usage inside an already existing \meta{tcolorbox}.
+Most likely, this is only needed for quite exotic application scenarios.
+The \meta{code} is some formatting code which should contain \refCom{tcbcounter} to
+reference the automated counter. Since this \meta{code} is expanded, you have
+to secure each macro with |\noexpand| with \emph{exception} of \refCom{tcbcounter}.
+
+\begin{dispListing}
+\renewthetcbcounter{examplebox}{(Q/\noexpand\thesection/\noexpand\Alph{\tcbcounter})}
+\end{dispListing}
+
+Also see \refKey{/tcb/new/number freestyle}.
 \end{docCommand}
 
 
@@ -58,7 +73,7 @@ Real counter name of a numbered \meta{tcolorbox}.
 \begin{newTcbKey}{auto counter}{}{no value, initially unset}
 Creates a new counter automatically.
 With \refKey{/tcb/new/number format} and
-\refKey{/tcb/new/number within}, the appearance and behavior of the counter
+\refKey{/tcb/new/counter within}, the appearance and behavior of the counter
 can be changed. The counter value is referenced by \refCom{thetcbcounter}.
 
 \inputpreamblelisting{A}
@@ -77,7 +92,7 @@ The real counter name is \texttt{\tcbcounter}.
 \begin{newTcbKey}{use counter from}{=\meta{tcolorbox}}{no default, initially unset}
 Here, a counter from another \meta{tcolorbox} is reused.
 Note that the settings for \refKey{/tcb/new/number format} and
-\refKey{/tcb/new/number within} are inherited and cannot be changed.
+\refKey{/tcb/new/counter within} are inherited and cannot be changed.
 The counter value is referenced by \refCom{thetcbcounter}.
 
 \begin{dispExample}
@@ -99,7 +114,7 @@ The real counter name is \texttt{\tcbcounter}.
 \begin{newTcbKey}{use counter}{=\meta{counter}}{no default, initially unset}
 Here, an ordinary existing \LaTeX\ \meta{counter} is used for numbering.
 With \refKey{/tcb/new/number format} and
-\refKey{/tcb/new/number within}, the appearance and behavior of the counter
+\refKey{/tcb/new/counter within}, the appearance and behavior of the counter
 can be changed. The counter value is referenced by \refCom{thetcbcounter}.
 
 \begin{dispExample}
@@ -121,7 +136,7 @@ The real counter name is \texttt{\tcbcounter}.
 \begin{newTcbKey}[][doc new=2014-09-19]{use counter*}{=\meta{counter}}{no default, initially unset}
 An existing \LaTeX\ \meta{counter} is used for numbering. In contrast to
 \refKey{/tcb/new/use counter}, the options \refKey{/tcb/new/number format} and
-\refKey{/tcb/new/number within} are ignored. Use this for counters which
+\refKey{/tcb/new/counter within} are ignored. Use this for counters which
 are already configured outside the |tcolorbox| package, e.\,g.\ the standard
 |figure| counter.
 \end{newTcbKey}
@@ -142,23 +157,46 @@ Thereby, the counter will be the same on all slides of every frame.
 
 
 \clearpage
-\begin{newTcbKey}{number within}{=\meta{counter}}{no default, initially unset}
+\begin{newTcbKeys}[
+    doc parameter   = {=\meta{counter}},
+    doc description = {no default, initially unset},
+  ]{
+    {
+      doc new         = {2026-03-05},
+      doc name        = counter within,
+    },
+    {
+      doc name        = number within,
+    },
+  }
 The automatic counter is set to zero, if \meta{counter} is increased.
 Additionally, during output, the value of \meta{counter} is prepended to the value of
 the automatic counter.\par
 To prepend the automatic counter with the chapter number and to reset it
 with every new chapter, use:
 \begin{dispListing}
-number within=chapter
+counter within=chapter
 \end{dispListing}
-See \refKey{/tcb/new/use counter} for a complete example.
-\end{newTcbKey}
+See \refKey{/tcb/new/Crefname} for a complete example.
+\end{newTcbKeys}
 
 
-\begin{newTcbKey}[][doc new=2025-07-21]{number within from}{=\meta{tcolorbox}}{no default, initially unset}
-This is a shortcut for \refKey{/tcb/new/number within}|=|\refCom{tcbcounterof}\meta{tcolorbox},
+\begin{newTcbKeys}[
+    doc parameter   = {=\meta{tcolorbox}},
+    doc description = {no default, initially unset},
+  ]{
+    {
+      doc new         = {2026-03-05},
+      doc name        = counter within from,
+    },
+    {
+      doc new         = {2025-07-21},
+      doc name        = number within from,
+    },
+  }
+This is a shortcut for \refKey{/tcb/new/counter within}|=|\refCom{tcbcounterof}\meta{tcolorbox},
 i.\,e., the automatic counter is set to zero, if the counter of the referenced \meta{tcolorbox} is increased.
-\end{newTcbKey}
+\end{newTcbKeys}
 
 
 \begin{newTcbKey}{number format}{=\meta{format macro}}{no default, initially \texttt{\textbackslash arabic}}
@@ -174,8 +212,8 @@ See \refKey{/tcb/new/auto counter} for a complete example.
 
 \begin{newTcbKey}{number freestyle}{=\meta{code}}{no default, initially unset}
 Allows advanced control over the complete number format. This option overrules
-the format given by \refKey{/tcb/new/number within} and \refKey{/tcb/new/number format}.
-Nevertheless, you can combine it with \refKey{/tcb/new/number within} to
+the format given by \refKey{/tcb/new/counter within} and \refKey{/tcb/new/number format}.
+Nevertheless, you can combine it with \refKey{/tcb/new/counter within} to
 get the desired reset property.\par
 The \meta{code} is some formatting code which should contain \refCom{tcbcounter} to
 reference the automated counter. Since this \meta{code} is expanded, you have
@@ -191,13 +229,16 @@ also be referenced by |\thetcbcounter|.
 The real counter name is \texttt{\tcbcounter}.
 \end{phbox}
 \end{dispExample}
+
+If there is the need to set such a format \emph{after} the box is created,
+see \refCom{renewthetcbcounter}.
 \end{newTcbKey}
 
 \clearpage
 \begin{marker}
 The following options \refKey{/tcb/new/crefname} and \refKey{/tcb/new/Crefname}
 need to be set inside the preamble.
-Note that \refPkg{cleveref} had its last update in 2018 (as of 2025-06-04) and
+Note that \refPkg{cleveref} had its last update in 2018 (as of 2026-03-05) and
 had or has conflicts with recent \LaTeX\ kernels. \refPkg{zref-clever} is
 a possible alternative.
 \end{marker}
@@ -229,7 +270,7 @@ a possible alternative.
 \usepackage{varioref,cleveref}
 \usepackage{tcolorbox}
 
-\newtcolorbox[auto counter,number within=section,
+\newtcolorbox[auto counter,counter within=section,
   crefname={bluebox}{blueboxes}]%
   {mybluebox}[2][]{colback=blue!5!white,colframe=blue!75!black,fonttitle=\bfseries,
      title=Bluebox \thetcbcounter: #2,#1}

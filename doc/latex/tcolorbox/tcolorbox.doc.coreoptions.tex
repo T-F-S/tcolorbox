@@ -665,6 +665,7 @@ This is a \textbf{tcolorbox}.
   the corresponding |/tikz/align| settings, even if the implementation differs.
   \begin{itemize}
   \item\docValue{justify}: usual left and right justified type setting.
+    Actually, this setting does nothing.
   \item\docValue{left}: left border justification in analogy to plain \TeX.
   \item\docValue{flush left}: left border justification with |\raggedright| of \LaTeX.
   \item\docValue{right}: right border justification in analogy to plain \TeX.
@@ -677,6 +678,14 @@ This is a \textbf{tcolorbox}.
   the non-flush versions will often look more balanced but with more
   hyphenations.
   \refKey{/tcb/halign upper} is an alias for \refKey{/tcb/halign}.
+
+\enlargethispage*{10mm}
+\begin{marker}
+For nested boxes, \docValue{left}, \docValue{right}, \docValue{center} from an outer box
+destroy the justification \docValue{justify} from inner boxes, while
+\docValue{flush left}, \docValue{flush right}, \docValue{flush center}
+do not. For further justification options, see example at \refKey{/tcb/halign code} .
+\end{marker}
 
 \begin{exdispExample}{halign}
 \tcbset{colback=red!5!white,colframe=red!75!black,size=small,
@@ -724,10 +733,40 @@ This is a demonstration text for showing how line breaking works.
   If \refKey{/tcb/halign} resp. \refKey{/tcb/halign upper} is not flexible enough,
   \refKey{/tcb/halign code} resp. \refKey{/tcb/halign upper code} allows to set
   arbitrary \meta{code} to configure the horizontal alignment of the text content,
-  e.\,g.\ using alignments from specialized packages.
+  e.\,g.\ using alignments from specialized packages, e.\,g.\ \refPkg{ragged2e}.
+
+\begin{exdispExample}{halign_code}
+% \usepackage{ragged2e}
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,halign=center]
+  Some centered text.
+  \begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,width=5cm,
+      halign code=\noindent\justifying]
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  \end{tcolorbox}
+\end{tcolorbox}
+\end{exdispExample}
+
+\begin{exdispExample}{halign_code_2}
+% \usepackage{ragged2e}
+\tcbset{colback=red!5!white,colframe=red!75!black,size=small,
+  fonttitle=\bfseries,width=3.5cm,box align=top,
+  nobeforeafter}
+
+\begin{tcolorbox}[adjusted title=Centering,halign code=\Centering]
+This is a demonstration text for showing how line breaking works.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=RaggedRight,halign code=\RaggedRight]
+This is a demonstration text for showing how line breaking works.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=RaggedLeft,halign code=\RaggedLeft]
+This is a demonstration text for showing how line breaking works.
+\end{tcolorbox}
+\end{exdispExample}
+
 \end{docTcbKeys}
 
 
+\clearpage
 \begin{docTcbKey}[][doc new=2015-05-07]{halign lower}{=\meta{alignment}}{no default, initially \texttt{justify}}
   |halign lower| determines the horizontal \meta{alignment} of the lower part of the box.
   The feasible values for \meta{alignment} are the same as for \refKey{/tcb/halign}.
