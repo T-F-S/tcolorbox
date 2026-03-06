@@ -34,6 +34,9 @@ and this project adheres to
 ### Changed
 - Required LaTeX version bumped to 2025-06-01
 - Implementation for numbered boxes is partially rewritten using the L3 API
+- Documentation: 
+    Replace `minted2` with `minted` v3 for production since `minted` v3.8.0 has fixed incompatibility with Python 3.14
+    (https://github.com/gpoore/minted/issues/463)
 
 ### Deprecated
 
