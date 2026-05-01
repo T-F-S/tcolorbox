@@ -86,8 +86,10 @@
   \let\tcbbreak\tcb@@break%
   \iftcb@usecolorstack%
     \pdfcolSwitchStack{tcb@breakable}%
+    \color@begingroup%
+  \else%
+    \begingroup%
   \fi%
-  \color@begingroup%
   \textwidth\hsize%
   \columnwidth\hsize%
   \csname tcb@parboxrestore@\kvtcb@parbox\endcsname%
@@ -113,7 +115,7 @@
     \unvbox\@mpfootins%
   \fi%
   \@minipagefalse%
-  \color@endgroup}
+  \iftcb@usecolorstack\color@endgroup\else\endgroup\fi}
 
 % remaining height
 \def\tcb@comp@h@page{%
