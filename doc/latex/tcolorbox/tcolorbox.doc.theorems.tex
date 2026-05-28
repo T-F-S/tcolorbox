@@ -713,11 +713,11 @@ created by hand or using \refCom{newtcbtheorem}.
   ]
   {
     {
-      doc name = ams align upper,
-    },
-    {
       doc name    = ams align,
       doc updated = 2024-06-27,
+    },
+    {
+      doc name = ams align upper,
     }
   }
   Adds an |amsmath| |align| environment to the start and end
@@ -725,7 +725,7 @@ created by hand or using \refCom{newtcbtheorem}.
 \begin{dispExample}
 \begin{tcolorbox}[ams align,colback=yellow!10!white,colframe=red!50!black]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
-  \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
+  \int x^2 ~\text{d}x                    &= \frac13 x^3 + c.
 \end{tcolorbox}
 \end{dispExample}
 \begin{marker}
@@ -747,11 +747,11 @@ created by hand or using \refCom{newtcbtheorem}.
   ]
   {
     {
-      doc name = ams align* upper,
-    },
-    {
       doc name    = ams align*,
       doc updated = 2024-06-27,
+    },
+    {
+      doc name = ams align* upper,
     }
   }
   Adds an |amsmath| |align*| environment to the start and end
@@ -759,7 +759,7 @@ created by hand or using \refCom{newtcbtheorem}.
 \begin{dispExample}
 \begin{tcolorbox}[ams align*,colback=yellow!10!white,colframe=red!50!black]
   \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
-  \int x^2 ~\text{d}x                     &= \frac13 x^3 + c.
+  \int x^2 ~\text{d}x                    &= \frac13 x^3 + c.
 \end{tcolorbox}
 \end{dispExample}
 \begin{marker}
@@ -782,11 +782,11 @@ created by hand or using \refCom{newtcbtheorem}.
   ]
   {
     {
-      doc name = ams gather upper,
-    },
-    {
       doc name    = ams gather,
       doc updated = 2024-06-27,
+    },
+    {
+      doc name = ams gather upper,
     }
   }
   Adds an |amsmath| |gather| environment to the start and end
@@ -815,11 +815,11 @@ created by hand or using \refCom{newtcbtheorem}.
   ]
   {
     {
-      doc name = ams gather* upper,
-    },
-    {
       doc name    = ams gather*,
       doc updated = 2024-06-27,
+    },
+    {
+      doc name = ams gather* upper,
     }
   }
   Adds an |amsmath| |gather*| environment to the start and end
@@ -842,7 +842,105 @@ created by hand or using \refCom{newtcbtheorem}.
   of the lower part.
 \end{docTcbKey}
 
+
 \clearpage
+
+\begin{docTcbKey}[][doc new=2026-05-04]{ams subequations upper}{}{style, no value}
+  Adds an |amsmath| |subequations| environment to the start and end
+  of the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2026-05-04]{ams subequations lower}{}{style, no value}
+  Adds an |amsmath| |subequations| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+\begin{docTcbKey}[][doc new=2026-05-04]{ams subequations}{}{style, no value}
+  Adds an |amsmath| |subequations| environment to the start and end
+  of the upper \emph{and} lower part.
+\begin{dispExample}
+\begin{tcolorbox}[ams subequations,colback=yellow!10!white,colframe=red!50!black]
+  \begin{align}
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
+  \int x^2 ~\text{d}x                    &= \frac13 x^3 + c.
+  \end{align}
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKeys}[
+    doc parameter   = ,
+    doc description = {style, no value},
+  ]
+  {
+    {
+      doc name = ams subequations align,
+      doc new  = 2026-05-04,
+    },
+    {
+      doc name = ams subequations align upper,
+    }
+  }
+  Adds an |amsmath| |subequations| and an |align| environment to the start and end
+  of the upper part.
+\begin{dispExample}
+\begin{tcolorbox}[ams subequations align,
+    colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} &= \infty.\\
+  \int x^2 ~\text{d}x                    &= \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+\begin{marker}
+  Boxes with \refKey{/tcb/ams subequations align upper} or \refKey{/tcb/ams subequations align}
+  cannot have a lower part!
+  For a lower part, use \refKey{/tcb/ams nodisplayskip upper} instead.
+\end{marker}
+\end{docTcbKeys}
+
+\begin{docTcbKey}{ams subequations align lower}{}{style, no value}
+  Adds an |amsmath| |subequations| and an |align| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
+
+\clearpage
+
+
+\begin{docTcbKeys}[
+    doc parameter   = ,
+    doc description = {style, no value},
+  ]
+  {
+    {
+      doc name = ams subequations gather,
+      doc new  = 2026-05-04,
+    },
+    {
+      doc name = ams subequations gather upper,
+    }
+  }
+  Adds an |amsmath| |subequations| and a |gather| environment to the start and end
+  of the upper part.
+\begin{dispExample}
+\begin{tcolorbox}[ams subequations gather,
+    colback=yellow!10!white,colframe=red!50!black]
+  \sum\limits_{n=1}^{\infty} \frac{1}{n} = \infty.\\
+  \int x^2 ~\text{d}x                    = \frac13 x^3 + c.
+\end{tcolorbox}
+\end{dispExample}
+\begin{marker}
+  Boxes with \refKey{/tcb/ams subequations gather upper} or \refKey{/tcb/ams subequations gather}
+  cannot have a lower part!
+  For a lower part, use \refKey{/tcb/ams nodisplayskip upper} instead.
+\end{marker}
+\end{docTcbKeys}
+
+\begin{docTcbKey}{ams subequations gather lower}{}{style, no value}
+  Adds an |amsmath| |subequations| and a |gather| environment to the start and end
+  of the lower part.
+\end{docTcbKey}
+
 \begin{docTcbKey}{ams nodisplayskip upper}{}{style, no value}
   Neutralizes the |\abovedisplayskip| of a following |align| or |gather|
   environment for the upper part. Note that the text content has to
@@ -872,7 +970,8 @@ created by hand or using \refCom{newtcbtheorem}.
 \end{dispExample}
 \end{docTcbKey}
 
-\bigskip
+
+\clearpage
 New colored mathematical environments are easily created using
 \refCom{newtcolorbox}:
 

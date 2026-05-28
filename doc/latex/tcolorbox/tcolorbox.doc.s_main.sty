@@ -58,6 +58,8 @@
 \RequirePackage{zref-vario}
 \RequirePackage{zref-titleref}
 \zcsetup{cap}
+\zcRefTypeSetup{page}{cap=false}
+\zcRefTypeSetup{page}{Name-sg={page}, name-sg={page}}
 
 \tcbset{skin=enhanced,
   doc head={colback=yellow!10!white,interior style=fill},
@@ -77,6 +79,7 @@
 \tcbmakedocSubKey{docTcbKey}{tcb}
 \tcbmakedocSubKeys{docTcbKeys}{tcb}
 \tcbmakedocSubKey{langTcbKey}{tcb/doclang}
+\tcbmakedocSubKeys{langTcbKeys}{tcb/doclang}
 \tcbmakedocSubKey{newTcbKey}{tcb/new}
 \tcbmakedocSubKeys{newTcbKeys}{tcb/new}
 \tcbmakedocSubKey{boxTcbKey}{tcb/boxtitle}
@@ -209,8 +212,10 @@
     oarg,pbarg,
     refCom,refEnv,refKey,refPathOperation,refAux,refAuxcs,refPkg,
     sarg,
-    tcbmakedocSubKey,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
+    tcbmakedocSubKey,tcbmakedocSubKeys,tcbdocmarginnote,tcbdocnew,tcbdocupdated,
     docKeyChoices,docKeyChoices*,
+    tcbdocdescNoDefaultInit,tcbdocdescInitEmpty,tcbdocdescInit,
+    tcbdocdescDefault,tcbdocdescDefaultInitEmpty,tcbdocdescDefaultInit,
     % skins
     tcbincludegraphics,tcbincludepdf,pdfpages,imagepage,imagepath,imagename,
     tcbline,tcboxedtitleheight,tcboxedtitlewidth,

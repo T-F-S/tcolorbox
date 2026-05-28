@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcbtheorems.code.tex: Code for theorems in colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.10.0pre1}
+\tcb@set@library@version{6.10.0}
 
 \RequirePackage{amsmath}
 
@@ -95,21 +95,21 @@
 
 
 
-\cs_new:Npn \__tcobox_theo_title:nnn #1#2#3
+\cs_new_protected:Npn \__tcobox_theo_title:nnn #1#2#3
   {
     % format and save display name and number
     \bool_set_true:N \l__tcobox_theo_headempty_bool
     \tl_if_empty:nTF { #3 }
       {
         % no theorem title; insert name and number
-        \__tcobox_theo_format:nn{#1}{#2}
+        \__tcobox_theo_format:nn {#1} {#2}
         \l__tcobox_theo_terminatorsign_tl
       }
       {
         % box display name and number
         \hbox_set:Nn \l__tcobox_tmpa_box
           {
-            \__tcobox_theo_format:nn{#1}{#2}
+            \__tcobox_theo_format:nn {#1} {#2}
             \bool_if:NF \l__tcobox_theo_headempty_bool
               {
                 \l__tcobox_theo_separatorsign_tl
@@ -130,7 +130,7 @@
                 \hangindent \l__tcobox_tmpa_dim
                 \hangafter = 1
               \else:
-                \hangindent -\l__tcobox_tmpa_dim
+                \hangindent - \l__tcobox_tmpa_dim
                 \hangafter = -1
               \fi:
             \fi:
@@ -140,35 +140,35 @@
         \box_use_drop:N \l__tcobox_tmpa_box
         % insert formatted title
         \group_begin:
-          \__tcobox_theo_format_description:n{#3}
+          \__tcobox_theo_format_description:n {#3}
         \group_end:
         \l__tcobox_theo_terminatorsign_tl
       }
   }
 
 
-\NewDocumentCommand \__tcobox_new_tcbtheorem_x:w { m O{} m m +m m }
+\NewDocumentCommand \__tcobox_new_tcbtheorem_x:w { m O {} m m +m m }
   {
-    #1 [{auto~counter,#2}] {#3} { +O{} +o +m m }
+    #1 [ { auto~counter,#2 } ] {#3} { +O {} +o +m m }
       {
         #5,
-        title      = {\__tcobox_theo_title:nnn{#4}{\thetcbcounter}{##3}},
+        title      = { \__tcobox_theo_title:nnn {#4} { \thetcbcounter } {##3} },
         IfValueTF  = {##2}
           {
-            list~entry = {\protect\numberline{\thetcbcounter}##2},
+            list~entry = { \protect\numberline{\thetcbcounter} ##2 },
             nameref    = {##2},
           }
           {
-            list~entry = {\protect\numberline{\thetcbcounter}##3},
+            list~entry = { \protect\numberline{\thetcbcounter} ##3 },
             nameref    = {##3},
           },
-        theo@label = {#6}{##4},
+        theo@label = {#6} {##4},
         ##1
       }
-    #1 [{#2,no~counter,list~inside=}] {#3*} { +O{} +m }
+    #1 [ { #2,no~counter,list~inside= } ] { #3* } { +O {} +m }
       {
         #5,
-        title = {\__tcobox_theo_title:nnn{#4}{}{##2}},
+        title = { \__tcobox_theo_title:nnn {#4} {} {##2} },
         ##1
       }
   }
@@ -202,22 +202,22 @@
 
 \tcbset
   {
-    theo@label/.code~n~args = {2}
+    theo@label/.code~n~args = { 2 }
       {
         \tl_if_empty:nF { #2 }
           {
             \tcbset
               {
-                label                    = {#1\l__tcobox_theo_label_separator_tl#2},
-                tcb@theo@full@label@supp = {#1\l__tcobox_theo_label_separator_tl#2},
+                label                    = {#1 \l__tcobox_theo_label_separator_tl #2},
+                tcb@theo@full@label@supp = {#1 \l__tcobox_theo_label_separator_tl #2},
                 tcb@theo@label@supp      = {#2}
               }
           }
       },
-    theorem/.style~n~args = {4}
+    theorem/.style~n~args = { 4 }
       {
-        step~and~label={#2}{#4},
-        title={\__tcobox_theo_title:nnn{#1}{\cs:w the#2\cs_end:}{#3}}
+        step~and~label = {#2} {#4},
+        title = { \__tcobox_theo_title:nnn {#1} { \cs:w the#2 \cs_end: } {#3} }
       },
     theorem~name~and~number/.code =
       {
@@ -240,7 +240,7 @@
     label~separator/        .tl_set:N = \l__tcobox_theo_label_separator_tl,
     theorem~hanging~indent/ .tl_set:N = \l__tcobox_theo_hanging_indent_tl,
     theorem~hanging~indent/.default=auto,
-    description~delimiters/.code~n~args = {2}
+    description~delimiters/.code~n~args = { 2 }
       {
         \tl_set:Nn \l__tcobox_theo_description_delimiter_left_tl  { #1 }
         \tl_set:Nn \l__tcobox_theo_description_delimiter_right_tl { #2 }
@@ -275,8 +275,8 @@
           {
             \tcb@error
               {
-                Invalid~formatter~ "\tl_to_str:n {#1}" ~passed~to \MessageBreak
-                "\pgfkeyscurrentkey". \MessageBreak
+                Invalid~formatter~ " \tl_to_str:n {#1} " ~passed~to \MessageBreak
+                " \pgfkeyscurrentkey ". \MessageBreak
                 A~formatter~should~be~a~single~command~taking~one \MessageBreak
                 mandatory~argument
               }
@@ -316,18 +316,27 @@
   math/.style={math upper,math lower},%
   ams equation/.style={ams equation upper,ams equation lower},%
   ams equation*/.style={ams equation* upper,ams equation* lower},%
-  ams align upper/.style={before upper*=\tcb@hack@amsmath\align,after upper*=\endalign},%
+  ams align/.style={before upper*=\tcb@hack@amsmath\align,after upper*=\endalign},%
+  ams align upper/.style={ams align},%
   ams align lower/.style={before lower*=\tcb@hack@amsmath\align,after lower*=\endalign},%
-  ams align/.style={ams align upper},%
-  ams align* upper/.style={before upper*=\tcb@hack@amsmath\csname align*\endcsname,after upper*=\endalign},%
+  ams align*/.style={before upper*=\tcb@hack@amsmath\csname align*\endcsname,after upper*=\endalign},%
+  ams align* upper/.style={ams align*},%
   ams align* lower/.style={before lower*=\tcb@hack@amsmath\csname align*\endcsname,after lower*=\endalign},%
-  ams align*/.style={ams align* upper},%
-  ams gather upper/.style={before upper*=\tcb@hack@amsmath\gather,after upper*=\endgather},%
+  ams gather/.style={before upper*=\tcb@hack@amsmath\gather,after upper*=\endgather},%
+  ams gather upper/.style={ams gather},%
   ams gather lower/.style={before lower*=\tcb@hack@amsmath\gather,after lower*=\endgather},%
-  ams gather/.style={ams gather upper},%
-  ams gather* upper/.style={before upper*=\tcb@hack@amsmath\csname gather*\endcsname,after upper*=\endgather},%
+  ams gather*/.style={before upper*=\tcb@hack@amsmath\csname gather*\endcsname,after upper*=\endgather},%
+  ams gather* upper/.style={ams gather*},%
   ams gather* lower/.style={before lower*=\tcb@hack@amsmath\csname gather*\endcsname,after lower*=\endgather},%
-  ams gather*/.style={ams gather* upper},%
+  ams subequations upper/.style={before upper*=\tcb@hack@amsmath\subequations,after upper*=\endsubequations},%
+  ams subequations lower/.style={before lower*=\tcb@hack@amsmath\subequations,after lower*=\endsubequations},%
+  ams subequations/.style={ams subequations upper,ams subequations lower},%
+  ams subequations align/.style={before upper*=\tcb@hack@amsmath\subequations\align,after upper*=\endalign\endsubequations},%
+  ams subequations align upper/.style={ams subequations align},%
+  ams subequations align lower/.style={before lower*=\tcb@hack@amsmath\subequations\align,after lower*=\endalign\endsubequations},%
+  ams subequations gather/.style={before upper*=\tcb@hack@amsmath\subequations\gather,after upper*=\endgather\endsubequations},%
+  ams subequations gather upper/.style={ams subequations gather},%
+  ams subequations gather lower/.style={before lower*=\tcb@hack@amsmath\subequations\gather,after lower*=\endgather\endsubequations},%
   ams nodisplayskip upper/.style={before upper=\vskip-\abovedisplayskip},%
   ams nodisplayskip lower/.style={before lower=\vskip-\abovedisplayskip},%
   ams nodisplayskip/.style={ams nodisplayskip upper,ams nodisplayskip lower},%

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcbprocessing.code.tex: Code for conditional processing
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.10.0pre1}
+\tcb@set@library@version{6.10.0}
 
 \ExplSyntaxOn
 
@@ -44,8 +44,8 @@
     \__tcobox_proc_compute_hash:nn {#2} {#3}
     \int_case:nn {#1}
       {
-        {0} { \prg_return_true: }
-        {1}
+        { 0 } { \prg_return_true: }
+        { 1 }
           {
             \bool_if:NTF \l__tcobox_proc_hash_equal_bool
               {
@@ -61,7 +61,7 @@
                 \prg_return_true:
               }
           }
-        {2} { \prg_return_false: }
+        { 2 } { \prg_return_false: }
       }
   }
 

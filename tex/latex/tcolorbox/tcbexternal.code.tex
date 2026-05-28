@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcbexternal.code.tex: Code for externalization
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.10.0pre1}
+\tcb@set@library@version{6.10.0}
 
 \tcbuselibrary{pro@cessing}
 
@@ -79,7 +79,7 @@
         \iow_now:NV \g__tcobox_out_iow \tcbexternal@preclass
       }
     \iow_now:Ne \g__tcobox_out_iow
-        { \token_to_str:N \input {"\jobname.tex"} }
+        { \token_to_str:N \input { " \jobname .tex" } }
     \iow_close:N \g__tcobox_out_iow
     \int_step_inline:nn { \tcbexternal@runs }
       {

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcbskins.code.tex: Code for colorboxes with different skins
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.10.0pre1}
+\tcb@set@library@version{6.10.0}
 
 \RequirePackage{tikzfill.image}
 
@@ -1715,97 +1715,107 @@
 
 \cs_new:Npn \__tcobox_include_graphics:nn #1#2
   {
-    \includegraphics [{#1}] {#2}
+    \includegraphics [ {#1} ] {#2}
   }
-\cs_generate_variant:Nn \__tcobox_include_graphics:nn {en}
+\cs_generate_variant:Nn \__tcobox_include_graphics:nn { en }
 
-\cs_new:Npn \__tcobox_include_graphics:
+\cs_new_protected_nopar:Npn \__tcobox_include_graphics:
   {
     \tl_set_eq:NN \l__tcobox_graphics_options_tl \kvtcb@graphics@options
 
-    \int_compare:nNnT \kvtcb@graphics@orientation > {-1}
+    \int_compare:nNnT { \kvtcb@graphics@orientation } > { -1 }
       {
         \hbox_set:Nn \l__tcobox_tmpa_box
           {
-            \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl }{ \imagepath }
+            \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl } { \imagepath }
           }
         \if_case:w \kvtcb@graphics@orientation
-          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} < {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
+          \dim_compare:nNnT { \box_wd:N \l__tcobox_tmpa_box } < { \box_ht_plus_dp:N \l__tcobox_tmpa_box }
             {
-              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=90}
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl { ,angle=90 }
             }
         \or:
-          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} < {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
+          \dim_compare:nNnT { \box_wd:N \l__tcobox_tmpa_box } < { \box_ht_plus_dp:N \l__tcobox_tmpa_box }
             {
-              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=-90}
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl { ,angle=-90 }
             }
         \or:
-          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} > {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
+          \dim_compare:nNnT { \box_wd:N \l__tcobox_tmpa_box } > { \box_ht_plus_dp:N \l__tcobox_tmpa_box }
             {
-              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=90}
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl { ,angle=90 }
             }
         \or:
-          \dim_compare:nNnT {\box_wd:N\l__tcobox_tmpa_box} > {\box_ht_plus_dp:N \l__tcobox_tmpa_box}
+          \dim_compare:nNnT { \box_wd:N \l__tcobox_tmpa_box } > { \box_ht_plus_dp:N \l__tcobox_tmpa_box }
             {
-              \tl_put_right:Nn \l__tcobox_graphics_options_tl {,angle=-90}
+              \tl_put_right:Nn \l__tcobox_graphics_options_tl { ,angle=-90 }
             }
         \fi:
       }
 
-    \tl_if_eq:NnTF \kvtcb@capture {hbox}
+    \tl_if_eq:NnTF \kvtcb@capture { hbox }
       {
         \tcbox
           {
-            \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl }{ \imagepath }
+            \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl } { \imagepath }
           }
       }
       {
-        \legacy_if:nTF {tcb@fixedheight}
+        \legacy_if:nTF { tcb@fixedheight }
           {
-            \begin{tcolorbox}
-              \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth,height=\tcbtextheight,keepaspectratio }{ \imagepath }
-            \end{tcolorbox}
+            \begin{ tcolorbox }
+              \__tcobox_include_graphics:en
+                { \l__tcobox_graphics_options_tl,width=\linewidth,height=\tcbtextheight,keepaspectratio }
+                { \imagepath }
+            \end{ tcolorbox }
           }
           {
             \tl_if_empty:NTF \tcb@height@adjust
-            {
-              \begin{tcolorbox}
-                \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth }{ \imagepath }
-              \end{tcolorbox}
-            }{% height fill
-              \begin{tcolorbox}[
-                underlay=
-                {
-                  \begin{tcbclipinterior}
-                  \path[fill~zoom~image*={\l__tcobox_graphics_options_tl}{\imagepath}]
-                    ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]interior.south~west)~rectangle~
-                    ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]interior.north~east);
-                  \end{tcbclipinterior}
-                }]
-              \end{tcolorbox}
-            }
+              {
+                \begin{ tcolorbox }
+                  \__tcobox_include_graphics:en { \l__tcobox_graphics_options_tl,width=\linewidth } { \imagepath }
+                \end{ tcolorbox }
+              }
+              { % height fill
+                \begin{ tcolorbox }
+                  [
+                    underlay=
+                      {
+                        \begin{ tcbclipinterior }
+                        \path
+                          [
+                            fill~zoom~image* = { \l__tcobox_graphics_options_tl } { \imagepath }
+                          ]
+                          ([xshift=\kvtcb@boxsep+\kvtcb@leftupper,yshift=\kvtcb@boxsep+\kvtcb@bottom]
+                            interior.south~west)~rectangle~
+                          ([xshift=-\kvtcb@boxsep-\kvtcb@rightupper,yshift=-\kvtcb@boxsep-\kvtcb@top]
+                            interior.north~east);
+                        \end{ tcbclipinterior }
+                      }
+                  ]
+                \end{ tcolorbox }
+              }
           }
       }
   }
 
 
-\cs_new:Npn \__tcobox_include_graphics_preparefile:n #1
+\cs_new_protected:Npn \__tcobox_include_graphics_preparefile:n #1
   {
     \file_parse_full_name:nNNN {#1} \l__tcobox_tmpa_tl \imagename \l__tcobox_tmpb_tl
     \tl_put_right:NV \imagename \l__tcobox_tmpb_tl
     \tl_set_eq:NN \imagepath \imagename
     \tl_if_empty:NF \l__tcobox_tmpa_tl
       {
-        \tl_put_left:Nn \imagepath {/}
-        \tl_if_eq:NnF \l__tcobox_tmpa_tl {/}
+        \tl_put_left:Nn \imagepath { / }
+        \tl_if_eq:NnF \l__tcobox_tmpa_tl { / }
           {
             \tl_put_left:NV \imagepath \l__tcobox_tmpa_tl
           }
       }
     \tl_if_empty:NF \kvtcb@graphics@directory
       {
-        \tl_put_left:Nn \imagepath {/}
-        \tl_if_eq:NnF \kvtcb@graphics@directory {/}
+        \tl_put_left:Nn \imagepath { / }
+        \tl_if_eq:NnF \kvtcb@graphics@directory { / }
           {
             \tl_put_left:NV \imagepath \kvtcb@graphics@directory
           }
@@ -1827,19 +1837,26 @@
   }
 
 
-\NewDocumentCommand \tcbincludegraphics { +O{} m }
+\NewDocumentCommand \tcbincludegraphics { +O {} m }
   {
     \group_begin:
     \tcb@layer@pushup
-    \tcb@apply@box@options{enhanced,clip~upper=true,valign=center,center~upper,#1}
+    \tcb@apply@box@options
+      {
+        enhanced,
+        clip~upper = true,
+        valign     = center,
+        center~upper,
+        #1
+      }
     \__tcobox_include_graphics_preparefile:n {#2}
-    \cs_set:Npn \imagepage {1}
+    \cs_set:Npn \imagepage { 1 }
     \__tcobox_include_graphics:
     \group_end:
   }
 
 
-\NewDocumentCommand \tcbincludepdf { +O{} m }
+\NewDocumentCommand \tcbincludepdf { +O {} m }
   {
     \__tcobox_include_graphics_preparefile:n {#2}
     \tcb@set@pdfpages\pdfpages{\imagepath}
@@ -1847,8 +1864,15 @@
     {
       \group_begin:
       \tcb@layer@pushup
-      \tcb@apply@box@options{enhanced,clip~upper=true,valign=center,center~upper,#1}
-      \tl_put_right:Nn \kvtcb@graphics@options {,page=\imagepage}
+      \tcb@apply@box@options
+        {
+          enhanced,
+          clip~upper = true,
+          valign     = center,
+          center~upper,
+          #1
+        }
+      \tl_put_right:Nn \kvtcb@graphics@options { ,page= \imagepage }
       \__tcobox_include_graphics:
       \group_end:
     }
@@ -1858,7 +1882,7 @@
   {
     \cs_set:Npn \tcb@XeTeXLinkBox
       {
-        \setlength{\XeTeXLinkMargin}{0pt}
+        \setlength{ \XeTeXLinkMargin } { 0pt }
         \XeTeXLinkBox
       }
   }
@@ -1914,8 +1938,8 @@
 
 \ExplSyntaxOn
 
-\tl_new:N \l__tcobox_beamer_temporal_args
-\tl_new:N \l__tcobox_beamer_alt_args
+\tl_new:N \l__tcobox_beamer_temporal_args_tl
+\tl_new:N \l__tcobox_beamer_alt_args_tl
 
 \tcbset{
   only    /.code = { \__tcobox_beamer_only:w #1 },
@@ -1925,26 +1949,26 @@
   temporal/.code = { \__tcobox_beamer_temporal:w #1 },
   set~alt /.code =
     {
-      \tl_set:Nn \l__tcobox_beamer_alt_args { #1 }
+      \tl_set:Nn \l__tcobox_beamer_alt_args_tl { #1 }
     },
-  set~alt = {}{},
+  set~alt = {} {},
   use~alt /.code =
     {
       \use:e
         {
-          \__tcobox_beamer_alt:w \exp_not:n { #1 } \exp_not:o \l__tcobox_beamer_alt_args
+          \__tcobox_beamer_alt:w \exp_not:n { #1 } \exp_not:o \l__tcobox_beamer_alt_args_tl
         }
     },
   set~temporal /.code =
     {
-      \tl_set:Nn \l__tcobox_beamer_temporal_args { #1 }
+      \tl_set:Nn \l__tcobox_beamer_temporal_args_tl { #1 }
     },
-  set~temporal = {}{}{},
+  set~temporal = {} {} {},
   use~temporal /.code =
     {
       \use:e
         {
-          \__tcobox_beamer_temporal:w \exp_not:n { #1 } \exp_not:o \l__tcobox_beamer_temporal_args
+          \__tcobox_beamer_temporal:w \exp_not:n { #1 } \exp_not:o \l__tcobox_beamer_temporal_args_tl
         }
     },
 }
@@ -1956,22 +1980,22 @@
 
 \cs_new_protected:Npn \__tcobox_beamer_hide:w <#1>
   {
-    \only <#1> { \tcbset{beamer~hidden} }
+    \only <#1> { \tcbset{ beamer~hidden } }
   }
 
 \cs_new_protected:Npn \__tcobox_beamer_alert:w <#1>
   {
-    \only <#1> { \tcbset{beamer~alerted} }
+    \only <#1> { \tcbset{ beamer~alerted } }
   }
 
 \cs_new_protected:Npn \__tcobox_beamer_alt:w <#1>#2#3
   {
-    \alt <#1> { \tcbset{#2} }{ \tcbset{#3} }
+    \alt <#1> { \tcbset{#2} } { \tcbset{#3} }
   }
 
 \cs_new_protected:Npn \__tcobox_beamer_temporal:w <#1>#2#3#4
   {
-    \temporal <#1> { \tcbset{#2} }{ \tcbset{#3} }{ \tcbset{#4} }
+    \temporal <#1> { \tcbset{#2} } { \tcbset{#3} } { \tcbset{#4} }
   }
 
 \ExplSyntaxOff

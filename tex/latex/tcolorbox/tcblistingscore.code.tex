@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcblistingscore.code.tex: Auxiliary code for colorboxes with listings
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,13 +18,13 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.10.0pre1}
+\tcb@set@library@version{6.10.0}
 
 \tcbuselibrary{pro@cessing}
 
-\def\tcbuselistingtext@input{\input{\kvtcb@listingfile}}%
-\def\tcbuselistingtext{\tcbuselistingtext@input}%
-\def\tcbuselistingcomment{\kvtcb@listingcomment}%
+\def\tcbuselistingtext@input{\input{\kvtcb@listingfile}}
+\def\tcbuselistingtext{\tcbuselistingtext@input}
+\def\tcbuselistingcomment{\kvtcb@listingcomment}
 \def\tcb@listing@listing{\tcbuselistinglisting}
 
 \def\tcb@listing@listingAndOther{%
@@ -171,19 +171,19 @@
       {
         \sys_if_shell_restricted:T
           {
-            \tcb@warning{System~call~with~restricted~shell~escape~may~fail}
+            \tcb@warning{ System~call~with~restricted~shell~escape~may~fail }
           }
       }
       {
-        \tcb@error{You~must~invoke~LaTeX~with~the~-shell-escape~flag}
-          {Pass~the~-shell-escape~flag~to~LaTeX.}
+        \tcb@error{ You~must~invoke~LaTeX~with~the~-shell-escape~flag }
+          { Pass~the~-shell-escape~flag~to~LaTeX. }
       }
     \sys_shell_now:e {#1}
   }
 
 \tcbset
 {
-  run~system~command/.style={process~code={\__tcbox_run_system_command:n{#1}}},
+  run~system~command/.style = { process~code = { \__tcbox_run_system_command:n {#1} } },
 }
 
 \ExplSyntaxOff
@@ -298,20 +298,20 @@
 \ExplSyntaxOn
 
 
-\NewDocumentCommand \__tcobox_new_tcblisting:w { m +O{} >{\TrimSpaces} m o +o +m }
+\NewDocumentCommand \__tcobox_new_tcblisting:w { m +O {} > { \TrimSpaces } m o +o +m }
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
     \tl_if_novalue:nTF { #4 }
       {
-        #1 { #3 }{ \tcblisting{#6,options@for=#3} }{ \endtcblisting }
+        #1 { #3 } { \tcblisting{#6,options@for=#3} } { \endtcblisting }
       }
       {
         \tl_if_novalue:nTF { #5 }
         {
-          #1 { #3 }[ #4 ]{ \tcblisting{#6,options@for=#3} }{ \endtcblisting }
+          #1 { #3 } [ #4 ] { \tcblisting{#6,options@for=#3} } { \endtcblisting }
         }
         {
-          #1 { #3 }[ #4 ][ #5 ]{ \tcblisting{#6,options@for=#3} }{ \endtcblisting }
+          #1 { #3 } [ #4 ] [ #5 ] { \tcblisting{#6,options@for=#3} } { \endtcblisting }
         }
       }
   }
@@ -327,10 +327,10 @@
   }
 
 
-\NewDocumentCommand \__tcobox_new_TCBListing:w { m +O{} >{\TrimSpaces} m +m +m }
+\NewDocumentCommand \__tcobox_new_TCBListing:w { m +O {} > { \TrimSpaces } m +m +m }
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    #1 { #3 }{ #4 }{ \tcblisting{#5,options@for=#3} }{ \endtcblisting }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
+    #1 { #3 } { #4 } { \tcblisting{ #5,options@for=#3 } } { \endtcblisting }
   }
 \NewDocumentCommand \DeclareTCBListing { }
   {
@@ -356,22 +356,22 @@
 
 \NewDocumentCommand \__tcobox_new_tcbinputlisting_ii:w { m +m m o +o +m }
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
     \tl_if_novalue:nTF { #4 }
       {
-        \exp_args:Nc #1 { #3 }{ \tcbinputlisting{#6,options@for=#3} }
+        \exp_args:Nc #1 { #3 } { \tcbinputlisting{ #6,options@for=#3 } }
       }
       {
         \tl_if_novalue:nTF { #5 }
         {
-          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcbinputlisting{#6,options@for=#3} }
+          \exp_args:Nc #1 { #3 } [ #4 ] { \tcbinputlisting{ #6,options@for=#3 } }
         }
         {
-          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcbinputlisting{#6,options@for=#3} }
+          \exp_args:Nc #1 { #3 } [ #4 ] [ #5 ] { \tcbinputlisting{ #6,options@for=#3 } }
         }
       }
   }
-\NewDocumentCommand \__tcobox_new_tcbinputlisting_i:w { m +O{} m }
+\NewDocumentCommand \__tcobox_new_tcbinputlisting_i:w { m +O {} m }
   {
     \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_tcbinputlisting_ii:w #1 {#2} \l__tcobox_tmpa_tl
@@ -390,10 +390,10 @@
 
 \cs_new:Npn \__tcobox_new_TCBInputListing:Nnnnn #1#2#3#4#5
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbinputlisting{#5,options@for=#3} }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
+    \exp_args:Nc #1 { #3 } { #4 } { \tcbinputlisting{ #5,options@for=#3 } }
   }
-\NewDocumentCommand \__tcobox_new_TCBInputListing:w { m +O{} m }
+\NewDocumentCommand \__tcobox_new_TCBInputListing:w { m +O {} m }
   {
     \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TCBInputListing:Nnnnn #1 {#2} \l__tcobox_tmpa_tl

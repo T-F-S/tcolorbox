@@ -2,7 +2,7 @@
 % include file (style) of tcolorbox.tex (manual of the LaTeX package tcolorbox)
 
 \begin{tcbverbatimwrite}{\jobname_preamble_A.tex}
-\newtcolorbox[auto counter,number within=section]{pabox}[2][]{%
+\newtcolorbox[auto counter,counter within=section]{pabox}[2][]{%
   colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
   title=Examp.~\thetcbcounter: #2,#1}
 \end{tcbverbatimwrite}
@@ -37,7 +37,7 @@
 
 
 \newtcblisting{texexp}[1]{texexp,#1}
-\newtcblisting[auto counter,number within=section]{texexptitled}[3][]{%
+\newtcblisting[auto counter,counter within=section]{texexptitled}[3][]{%
   example={#2}{#3},#1}
 \newtcolorbox[use counter from=texexptitled]{texexptitledspec}[3][]{%
   example={#2}{#3},#1}
@@ -46,7 +46,7 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_E.tex}
-\newtcolorbox[auto counter,number within=section,list inside=exam]{texercise}[2][]{%
+\newtcolorbox[auto counter,counter within=section,list inside=exam]{texercise}[2][]{%
   texercisestyle,
   listing file={solutions/texercise\thetcbcounter.tex},
   label={exe:#2},
@@ -58,7 +58,7 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_F.tex}
-\NewTcbTheorem[number within=section]{mytheo}{My Theorem}%
+\NewTcbTheorem[counter within=section]{mytheo}{My Theorem}%
   {colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
 \end{tcbverbatimwrite}
 \input{\jobname_preamble_F.tex}
@@ -72,7 +72,7 @@
   theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
                colback=red!10!white,colframe=red!75!black},
 }
-\NewTcbTheorem[number within=subsection]{Definition}{Definition}%
+\NewTcbTheorem[counter within=subsection]{Definition}{Definition}%
   {defstyle,label type=definition}{def}
 \NewTcbTheorem[use counter from=Definition]{Theorem}{Theorem}%
   {theostyle,label type=theorem}{theo}
@@ -83,7 +83,7 @@
 
 
 \begin{tcbverbatimwrite}{\jobname_preamble_H.tex}
-\newtcolorbox[auto counter,number within=section,
+\newtcolorbox[auto counter,counter within=section,
   number freestyle={(Q/\noexpand\thesection/\noexpand\Alph{\tcbcounter})},
   ]{phbox}[2][]{%
   colback=yellow!15!white,colframe=blue!75!black,fonttitle=\bfseries,
@@ -122,7 +122,7 @@
 \begin{tcbverbatimwrite}{\jobname_preamble_L.tex}
 % \tcbuselibrary{skins}
 
-\NewTColorBox[auto counter,number within=section]{exercise}{+!O{}}{%
+\NewTColorBox[auto counter,counter within=section]{exercise}{+!O{}}{%
   enhanced,colframe=green!20!black,colback=yellow!10!white,coltitle=green!40!black,
   fonttitle=\bfseries,
   underlay={\begin{tcbclipinterior}

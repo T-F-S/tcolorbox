@@ -1,8 +1,8 @@
-# The LaTeX package tcolorbox - version 6.9.0 (2025/11/28)
+# The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 
 [![CTAN](https://img.shields.io/ctan/v/tcolorbox.svg)](https://www.ctan.org/pkg/tcolorbox)
 
-> Copyright (c) 2006-2025 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+> Copyright (c) 2006-2026 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
 
 > This work may be distributed and/or modified under the
 > conditions of the LaTeX Project Public License, either version 1.3c

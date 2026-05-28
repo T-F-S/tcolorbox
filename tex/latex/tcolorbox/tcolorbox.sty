@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcolorbox.sty: Text color boxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,10 +18,9 @@
 %% This work consists of all files listed in README
 %%
 \NeedsTeXFormat{LaTeX2e}[2025-06-01]
-\ProvidesPackage{tcolorbox}[2026/03/05 version 6.10.0pre1 text color boxes]
-\def\tcb@version{6.10.0pre1}
+\ProvidesPackage{tcolorbox}[2026/05/28 version 6.10.0 text color boxes]
+\def\tcb@version{6.10.0}
 
-%\RequirePackage{pgf}[2008/01/15]
 \RequirePackage{tikz}[2023/01/15]
 \RequirePackage{verbatim}[2003/08/22]
 \RequirePackage{environ}[2013/04/01]
@@ -43,7 +42,6 @@
 \newif\iftcb@fixedheight
 \newif\iftcb@ignorenobreak
 \newif\iftcb@checkpage
-\newif\iftcb@resetcounteronoverlays
 \newif\iftcb@wrap@environment
 \newif\iftcb@isbreakable
 
@@ -59,6 +57,7 @@
 \ExplSyntaxOn
 \bool_new:N \l__tcobox_prevent_init_overwrite_bool
 \bool_new:N \l__tcobox_savebox_construction_bool
+\bool_new:N \l__tcobox_reset_counter_on_overlays_bool
 \box_new:N \l__tcobox_tmpa_box
 \dim_new:N \l__tcobox_tmpa_dim
 \fp_new:N \l__tcobox_tmpa_fp
@@ -68,62 +67,76 @@
 \tl_new:N \l__tcobox_kv_labeltype_tl
 \tl_new:N \l__tcobox_tmpa_tl
 \tl_new:N \l__tcobox_tmpb_tl
-\ExplSyntaxOff
-
 
 % Tagging code by Ulrike Fischer
 
-\NewStructureName{tcb/box}
-\AssignStructureRole{tcb/box}{Sect}
+\NewStructureName{ tcb/box }
+\AssignStructureRole{ tcb/box } { Sect }
 
-\NewTaggingSocket{tcb/box/begin}{0}
-\NewTaggingSocketPlug{tcb/box/begin}{default}
-  {\par\tagstructbegin{tag=\UseStructureName{tcb/box}}}
-\AssignTaggingSocketPlug{tcb/box/begin}{default}
+\NewTaggingSocket{ tcb/box/begin } { 0 }
+\NewTaggingSocketPlug{ tcb/box/begin } { default }
+  {
+    \AssignTaggingSocketPlug{ minipage/before } { noop } %   moved from tcb/box/init  2026-05-26
+    \AssignTaggingSocketPlug{ minipage/after } { noop }  %   moved from tcb/box/init  2026-05-26
+    \par                                                 %   problematic, but necessary (?)
+    \tagstructbegin{ tag=\UseStructureName{ tcb/box } }
+  }
+\AssignTaggingSocketPlug{ tcb/box/begin } { default }
 
-\NewTaggingSocket{tcb/box/end}{0}
-\NewTaggingSocketPlug{tcb/box/end}{default}
-  {\par\tagstructend}
-\AssignTaggingSocketPlug{tcb/box/end}{default}
+\NewTaggingSocket{ tcb/box/end } { 0 }
+\NewTaggingSocketPlug{ tcb/box/end } { default }
+  {
+    \par          %   problematic, but necessary (?)
+    \tagstructend
+  }
+\AssignTaggingSocketPlug{ tcb/box/end } { default }
 
-\NewStructureName{tcb/box/title}
-\AssignStructureRole{tcb/box/title}{Caption}
+\NewStructureName{ tcb/box/title }
+\AssignStructureRole{ tcb/box/title } { Caption }
 
-\NewTaggingSocket{tcb/box/title}{0}
-\NewTaggingSocketPlug{tcb/box/title}{default}
-  {\AssignStructureRole{para/semantic}{\UseStructureName{tcb/box/title}}}
-\AssignTaggingSocketPlug{tcb/box/title}{default}
+\NewTaggingSocket{ tcb/box/title } { 0 }
+\NewTaggingSocketPlug{ tcb/box/title } { default }
+  {
+    \AssignStructureRole{ para/semantic } {\UseStructureName{ tcb/box/title }}
+  }
+\AssignTaggingSocketPlug{ tcb/box/title } { default }
 
-\NewTaggingSocket{tcb/box/draw}{2}
-\NewTaggingSocketPlug{tcb/box/draw}{default}
-  {\tagpdfparaOff#2\par}
-\AssignTaggingSocketPlug{tcb/box/draw}{default}
+\NewTaggingSocket{ tcb/box/draw } { 2 }
+\NewTaggingSocketPlug{ tcb/box/draw } { default }
+  {
+    \tagpdfparaOff#2\par
+  }
+\AssignTaggingSocketPlug{ tcb/box/draw } { default }
 
-\NewTaggingSocket{tcb/box/init}{0}
-\NewTaggingSocketPlug{tcb/box/init}{default}
-   {\AssignTaggingSocketPlug{minipage/before}{noop}%
-    \AssignTaggingSocketPlug{minipage/after}{noop}}
-\AssignTaggingSocketPlug{tcb/box/init}{default}
-\AddToHook{env/tcolorbox/begin}%
-  {\UseTaggingSocket{tcb/box/init}}
+%\NewTaggingSocket{tcb/box/init}{0}%  removed for https://github.com/latex3/tagging-project/issues/1114
+%\NewTaggingSocketPlug{tcb/box/init}{default}
+%   {\AssignTaggingSocketPlug{minipage/before}{noop}%  moved to tcb/box/begin  2026-05-26
+%    \AssignTaggingSocketPlug{minipage/after}{noop}}
+%\AssignTaggingSocketPlug{tcb/box/init}{default}
+%\AddToHook{env/tcolorbox/begin}%
+%  {\UseTaggingSocket{tcb/box/init}}
 
-\NewTaggingSocket{tcb/box/upper}{0}
-\NewTaggingSocketPlug{tcb/box/upper}{default}
-  {\AssignTaggingSocketPlug{minipage/before}{tag/dflt}%
-   \AssignTaggingSocketPlug{minipage/after}{tag/dflt}}
-\AssignTaggingSocketPlug{tcb/box/upper}{default}
+\NewTaggingSocket{ tcb/box/upper } { 0 }
+\NewTaggingSocketPlug{ tcb/box/upper } { default }
+  {
+    \AssignTaggingSocketPlug{ minipage/before } { tag/dflt }
+    \AssignTaggingSocketPlug{ minipage/after } { tag/dflt }
+  }
+\AssignTaggingSocketPlug{ tcb/box/upper } { default }
 
-\NewTaggingSocket{tcb/box/lower}{0}
-\NewTaggingSocketPlug{tcb/box/lower}{default}
-  {\AssignTaggingSocketPlug{minipage/before}{tag/dflt}%
-   \AssignTaggingSocketPlug{minipage/after}{tag/dflt}}
-\AssignTaggingSocketPlug{tcb/box/lower}{default}
+\NewTaggingSocket{ tcb/box/lower } { 0 }
+\NewTaggingSocketPlug{ tcb/box/lower } { default }
+  {
+    \AssignTaggingSocketPlug{ minipage/before } { tag/dflt }
+    \AssignTaggingSocketPlug{ minipage/after } { tag/dflt }
+  }
+\AssignTaggingSocketPlug{ tcb/box/lower } { default }
 
-\ExplSyntaxOn
-\NewTaggingSocket{tcb/drawing/init}{0}
-\NewTaggingSocketPlug{tcb/drawing/init}{default}
-  {\tl_put_left:Nn\tcb@tikz@option@hook{artifact,}}
-\AssignTaggingSocketPlug{tcb/drawing/init}{default}
+\NewTaggingSocket{ tcb/drawing/init } { 0 }
+\NewTaggingSocketPlug{ tcb/drawing/init } { default }
+  { \tl_put_left:Nn \tcb@tikz@option@hook{ artifact, } }
+\AssignTaggingSocketPlug{ tcb/drawing/init } { default }
+
 \ExplSyntaxOff
 
 
@@ -211,7 +224,10 @@
 
 \ExplSyntaxOn
 
-\pgfkeys{/handlers/.tl_set:N/.code=\pgfkeysalso{\pgfkeyscurrentpath/.code=\tl_set:Nn#1{##1}}}
+\pgfkeys
+  {
+    /handlers/.tl_set:N/.code = \pgfkeysalso{ \pgfkeyscurrentpath/.code = \tl_set:Nn #1{##1} },
+  }
 
 \ExplSyntaxOff
 
@@ -992,20 +1008,20 @@
   environment~upper / .value~required,
   environment~lower / .value~required,
   environment~title / .value~required,
-  environment~upper / .style = { __environment = {upper}{#1}{ } },
-  environment~lower / .style = { __environment = {lower}{#1}{ } },
-  environment~title / .style = { __environment = {title}{#1}{ } },
+  environment~upper / .style = { __environment = { upper } {#1} { } },
+  environment~lower / .style = { __environment = { lower } {#1} { } },
+  environment~title / .style = { __environment = { title } {#1} { } },
   environment~upper~args / .value~required,
   environment~lower~args / .value~required,
   environment~title~args / .value~required,
-  environment~upper~args / .style~n~args = { 2 }{ __environment = {upper}{#1}{#2} },
-  environment~lower~args / .style~n~args = { 2 }{ __environment = {lower}{#1}{#2} },
-  environment~title~args / .style~n~args = { 2 }{ __environment = {title}{#1}{#2} },
+  environment~upper~args / .style~n~args = { 2 } { __environment = { upper } {#1} {#2} },
+  environment~lower~args / .style~n~args = { 2 } { __environment = { lower } {#1} {#2} },
+  environment~title~args / .style~n~args = { 2 } { __environment = { title } {#1} {#2} },
 }
 
 
 \bool_new:N \g__tcobox_cleveref_loaded_bool
-\AddToHook{package/cleveref/after}
+\AddToHook{ package/cleveref/after }
   { \bool_gset_true:N \g__tcobox_cleveref_loaded_bool }
 
 
@@ -1019,7 +1035,7 @@
         \group_begin:
         \exp_args:NV \__tcobox_zcsetup_reftype:n \l__tcobox_kv_labeltype_tl
         \bool_if:NTF \g__tcobox_cleveref_loaded_bool
-          { \exp_last_unbraced:NNV \label[\l__tcobox_kv_labeltype_tl]{#1} }
+          { \exp_last_unbraced:NNV \label[ \l__tcobox_kv_labeltype_tl ] {#1} }
           { \label{#1} }
         \group_end:
       }
@@ -1045,23 +1061,23 @@
   {
     \cs_if_exist:NT \zcsetup
       {
-        \zcsetup { reftype={#1} }
+        \zcsetup { reftype = {#1} }
       }
   }
 
 
 \tcbset
   {
-    label          /.style = { phantom={\__tcobox_label:n{#1}} },
-    phantomlabel   /.style = { phantom={\cs_if_exist_use:N\phantomsection\__tcobox_label:n{#1}} },
-    step~and~label /.style~n~args = { 2 }{ phantom={\refstepcounter{#1}\__tcobox_label:n{#2}} },
+    label          /.style = { phantom = { \__tcobox_label:n {#1}} },
+    phantomlabel   /.style = { phantom = { \cs_if_exist_use:N \phantomsection \__tcobox_label:n {#1}} },
+    step~and~label /.style~n~args = { 2 } { phantom = { \refstepcounter{#1} \__tcobox_label:n {#2} } },
     nameref        /.code =
       {
         \tcb@gettitle{#1}
         \cs_if_exist:NT \zref@titleref@setcurrent { \zref@titleref@setcurrent{#1} }
       },
     label~type    / .store~in = \l__tcobox_kv_labeltype_tl,
-    no~label~type / .style    = { label~type=\q_nil },
+    no~label~type / .style    = { label~type = \q_nil },
     label~is~label/.code=
       {
         \cs_set_eq:NN \__tcobox_label:n \__tcobox_label_label:n
@@ -1070,29 +1086,30 @@
       {
         \cs_set_eq:NN \__tcobox_label:n \__tcobox_label_zlabel:n
       },
-    IfBlankTF/.code~n~args={3}{\tl_if_blank:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
-    IfBlankT/.code~n~args={2}{\tl_if_blank:nT{#1}{\pgfkeysalso{#2}}},
-    IfBlankF/.code~n~args={2}{\tl_if_blank:nF{#1}{\pgfkeysalso{#2}}},
-    IfEmptyTF/.code~n~args={3}{\tl_if_empty:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
-    IfEmptyT/.code~n~args={2}{\tl_if_empty:nT{#1}{\pgfkeysalso{#2}}},
-    IfEmptyF/.code~n~args={2}{\tl_if_empty:nF{#1}{\pgfkeysalso{#2}}},
-    IfNoValueTF/.code~n~args={3}{\tl_if_novalue:nTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
-    IfNoValueT/.code~n~args={2}{\tl_if_novalue:nT{#1}{\pgfkeysalso{#2}}},
-    IfNoValueF/.code~n~args={2}{\tl_if_novalue:nF{#1}{\pgfkeysalso{#2}}},
-    IfValueTF/.code~n~args={3}{\tl_if_novalue:nTF{#1}{\pgfkeysalso{#3}}{\pgfkeysalso{#2}}},
-    IfValueT/.code~n~args={2}{\tl_if_novalue:nF{#1}{\pgfkeysalso{#2}}},
-    IfValueF/.code~n~args={2}{\tl_if_novalue:nT{#1}{\pgfkeysalso{#2}}},
-    IfBooleanTF/.code~n~args={3}{\IfBooleanTF{#1}{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}},
-    IfBooleanT/.code~n~args={2}{\IfBooleanT{#1}{\pgfkeysalso{#2}}},
-    IfBooleanF/.code~n~args={2}{\IfBooleanF{#1}{\pgfkeysalso{#2}}},
+    IfBlankTF/.code~n~args   = { 3 } { \tl_if_blank:nTF   {#1} {\pgfkeysalso{#2}} {\pgfkeysalso{#3}}},
+    IfBlankT/.code~n~args    = { 2 } { \tl_if_blank:nT    {#1} {\pgfkeysalso{#2}}},
+    IfBlankF/.code~n~args    = { 2 } { \tl_if_blank:nF    {#1} {\pgfkeysalso{#2}}},
+    IfEmptyTF/.code~n~args   = { 3 } { \tl_if_empty:nTF   {#1} {\pgfkeysalso{#2}} {\pgfkeysalso{#3}}},
+    IfEmptyT/.code~n~args    = { 2 } { \tl_if_empty:nT    {#1} {\pgfkeysalso{#2}}},
+    IfEmptyF/.code~n~args    = { 2 } { \tl_if_empty:nF    {#1} {\pgfkeysalso{#2}}},
+    IfNoValueTF/.code~n~args = { 3 } { \tl_if_novalue:nTF {#1} {\pgfkeysalso{#2}} {\pgfkeysalso{#3}}},
+    IfNoValueT/.code~n~args  = { 2 } { \tl_if_novalue:nT  {#1} {\pgfkeysalso{#2}}},
+    IfNoValueF/.code~n~args  = { 2 } { \tl_if_novalue:nF  {#1} {\pgfkeysalso{#2}}},
+    IfValueTF/.code~n~args   = { 3 } { \tl_if_novalue:nTF {#1} {\pgfkeysalso{#3}} {\pgfkeysalso{#2}}},
+    IfValueT/.code~n~args    = { 2 } { \tl_if_novalue:nF  {#1} {\pgfkeysalso{#2}}},
+    IfValueF/.code~n~args    = { 2 } { \tl_if_novalue:nT  {#1} {\pgfkeysalso{#2}}},
+    IfBooleanTF/.code~n~args = { 3 } { \IfBooleanTF       {#1} {\pgfkeysalso{#2}} {\pgfkeysalso{#3}}},
+    IfBooleanT/.code~n~args  = { 2 } { \IfBooleanT        {#1} {\pgfkeysalso{#2}}},
+    IfBooleanF/.code~n~args  = { 2 } { \IfBooleanF        {#1} {\pgfkeysalso{#2}}},
   }
 
 
-\def\tcb@set@parbox@indent@{
-  \exp_args:Nne \hook_gput_next_code:nn {para/begin}
-     { \__tcobox_set_parbox_indent:n { \thetcolorboxnumber } }
-  \let\tcb@set@parbox@indent\@empty
-}
+\cs_new_protected_nopar:Npn \tcb@set@parbox@indent@
+  {
+    \exp_args:Nne \hook_gput_next_code:nn { para/begin }
+       { \__tcobox_set_parbox_indent:n { \thetcolorboxnumber } }
+    \cs_set_eq:NN \tcb@set@parbox@indent \@empty
+  }
 
 
 \cs_new_protected:Npn \__tcobox_set_parbox_indent:n #1
@@ -1109,7 +1126,7 @@
   }
 
 
-\def\tcb@set@savebox@construction@true
+\cs_new_protected_nopar:Npn \tcb@set@savebox@construction@true
   {
     \bool_set_true:N \l__tcobox_savebox_construction_bool
   }
@@ -1619,7 +1636,7 @@
 
 
 \ExplSyntaxOn
-\def\tcb@ch@fixed@spacesave
+\cs_new_protected_nopar:Npn \tcb@ch@fixed@spacesave
   {
     \fp_set:Nn \l__tcobox_tmpa_fp { \tcb@space+\tcbheightspace }
     \fp_compare:nTF { \l__tcobox_tmpa_fp < 0 }
@@ -1632,8 +1649,8 @@
             \fp_set:Nn \l__tcobox_tmpa_fp { \tcb@height }
           }
       }
-    \tcbdimto\tcb@space { \fp_to_dim:n { trunc(\l__tcobox_tmpa_fp,2) } }
-    \use:e { \exp_not:N\tcb@savespace{\thetcolorboxnumber}{\tcb@space} }
+    \tcbdimto\tcb@space { \fp_to_dim:n { trunc( \l__tcobox_tmpa_fp,2) } }
+    \exp_args:Nee \tcb@savespace { \thetcolorboxnumber } { \tcb@space }
     \tcbdimto\tcb@height@upper{\ht\tcb@upperbox+\dp\tcb@upperbox+\tcbheightspace}
     \let\tcbheightspace\tcb@zpt
     \iftcb@lowerspace
@@ -2130,21 +2147,21 @@
 
 \ExplSyntaxOn
 
-\exp_args_generate:n {nNo}
+\exp_args_generate:n { nNo }
 
-\NewDocumentEnvironment{ tcb@drawing }{ }
+\NewDocumentEnvironment{ tcb@drawing } { }
   {
-    \use:c{ tcb@before@\tcb@split@state }
-    \UseTaggingSocket{tcb/drawing/init}
-    \exp_args:NnNo \begin{tikzpicture}[\tcb@tikz@option@hook]
+    \use:c { tcb@before@ \tcb@split@state }
+    \UseTaggingSocket{ tcb/drawing/init }
+    \exp_args:NnNo \begin{ tikzpicture } [ { \tcb@tikz@option@hook } ]
     \tcb@tikz@begin@hook
     \tcb@bbdraw
     \tcb@apply@graph@patches
   }
   {
     \tcb@tikz@end@hook
-    \end{tikzpicture}
-    \use:c{ tcb@after@\tcb@split@state }
+    \end{ tikzpicture }
+    \use:c { tcb@after@ \tcb@split@state }
   }
 
 \ExplSyntaxOff
@@ -2314,8 +2331,6 @@
   auto counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@auto},
   use counter from/.code={\edef\kvtcb@new@counter{\csname tcb@cnt@#1\endcsname}\let\tcb@proc@counter=\tcb@proc@counter@from},
   no counter/.code={\let\tcb@proc@counter=\tcb@proc@counter@no},
-  reset counter on overlays/.is if=tcb@resetcounteronoverlays,
-  %
   counter within/.store in=\kvtcb@new@counterwithin,
   number within/.store in=\kvtcb@new@counterwithin,
   counter within from/.style={counter within=\tcbcounterof{#1}},
@@ -2357,62 +2372,86 @@
 
 \ExplSyntaxOn
 
-\def \tcb@proc@counter@auto #1
+\tcbset
+  {
+    new/.cd,
+    reset~counter~on~overlays/.is~choice,
+    reset~counter~on~overlays/true/.code  = \bool_set_true:N \l__tcobox_reset_counter_on_overlays_bool,
+    reset~counter~on~overlays/false/.code = \bool_set_false:N \l__tcobox_reset_counter_on_overlays_bool,
+    reset~counter~on~overlays/.default = true,
+  }
+
+
+\cs_new_protected_nopar:Npn \tcb@proc@counter@auto #1
   {
     \cs_if_exist:cT { c@tcb@cnt@#1 }
       {
-        \tcb@error{Auto~counter~for~environment~'#1'~already~defined}{}
+        \tcb@error{ Auto~counter~for~environment~'#1'~already~defined } {}
       }
     \newcounter { tcb@cnt@#1 }
-    \cs_gset_nopar:cpx { tcb@cnt@#1 }{ tcb@cnt@#1 }
-    \__tcobox_proc_counter_autoanduse:n{#1}
+    \cs_gset_nopar:cpe { tcb@cnt@#1 } { tcb@cnt@#1 }
+    \__tcobox_proc_counter_autoanduse:n {#1}
   }
 
-\def \tcb@proc@counter@use #1
+\cs_new_protected_nopar:Npn \tcb@proc@counter@use #1
   {
-    \cs_gset_nopar:cpx { tcb@cnt@#1 }{ \kvtcb@new@counter }
-    \__tcobox_proc_counter_autoanduse:n{#1}
+    \cs_gset_nopar:cpe { tcb@cnt@#1 } { \kvtcb@new@counter }
+    \__tcobox_proc_counter_autoanduse:n {#1}
   }
 
-\cs_new_nopar:Npn \__tcobox_proc_counter_autoanduse:n #1
+\cs_new_protected_nopar:Npn \__tcobox_proc_counter_autoanduse:n #1
   {
     \group_begin:
     \cs_set_eq:Nc \tcbcounter { tcb@cnt@#1 }
     \tl_if_empty:NTF \kvtcb@new@counterwithin
     {
-      \cs_gset_nopar:cpx { the\tcbcounter }{ \exp_not:o \kvtcb@new@format { \tcbcounter } }
+      \cs_gset_nopar:cpe { the\tcbcounter } { \exp_not:o \kvtcb@new@format { \tcbcounter } }
     }
     {
-      \exp_args:NNo \counterwithin[ \kvtcb@new@format ]{ \tcbcounter }{ \kvtcb@new@counterwithin }
+      \exp_args:NNo \counterwithin[ {\kvtcb@new@format} ] { \tcbcounter } { \kvtcb@new@counterwithin }
     }
     \tl_if_empty:NF \kvtcb@new@freestyle
     {
-      \cs_gset_nopar:cpx { the\tcbcounter }{ \kvtcb@new@freestyle }
+      \cs_gset_nopar:cpe { the\tcbcounter } { \kvtcb@new@freestyle }
     }
     \group_end:
     \__tcobox_proc_counter_addcounter:n { #1 }
   }
 
-\def \tcb@proc@counter@from #1
+\cs_new_protected_nopar:Npn \tcb@proc@counter@from #1
   {
-    \cs_gset_nopar:cpx { tcb@cnt@#1 }{ \kvtcb@new@counter }
+    \cs_gset_nopar:cpe { tcb@cnt@#1 } { \kvtcb@new@counter }
     \__tcobox_proc_counter_addcounter:n { #1 }
   }
 
 
-\cs_new_nopar:Npn \__tcobox_proc_counter_addcounter:n #1
+\cs_new_protected_nopar:Npn \__tcobox_proc_counter_addcounter:n #1
 {
-  \appto\tcb@new@colopt{,code={
-    \letcs\tcbcounter{tcb@cnt@#1}
-    \letcs\thetcbcounter{the\tcbcounter}
-    \stepcounter{\tcbcounter}
-    \preto\kvtcb@phantom{\addtocounter{\tcbcounter}{-1}\refstepcounter{\tcbcounter}}
-  }}
+  \appto\tcb@new@colopt
+    {
+      ,code =
+        {
+          \cs_set_eq:Nc \tcbcounter { tcb@cnt@#1 }
+          \cs_set_eq:Nc \thetcbcounter { the \tcbcounter }
+          \stepcounter{ \tcbcounter }
+          \preto\kvtcb@phantom
+            {
+              \addtocounter{ \tcbcounter } { -1 }
+              \refstepcounter { \tcbcounter }
+            }
+        }
+    }
 }
 
-\def \tcb@proc@counter@no #1
+\cs_new_protected_nopar:Npn \tcb@proc@counter@no #1
 {
-  \appto\tcb@new@colopt{,code={\let\tcbcounter=\@empty\let\thetcbcounter=\@empty}}
+  \appto\tcb@new@colopt
+    { ,code =
+        {
+          \cs_set_eq:NN \tcbcounter \@empty
+          \cs_set_eq:NN \thetcbcounter \@empty
+        }
+    }
 }
 
 \NewDocumentCommand \renewthetcbcounter { m m }
@@ -2421,38 +2460,41 @@
     \cs_if_exist:cTF { tcb@cnt@#1 }
       {
         \cs_set_eq:Nc \tcbcounter { tcb@cnt@#1 }
-        \cs_gset_nopar:cpx { the\tcbcounter }{ #2 }
+        \cs_gset_nopar:cpx { the\tcbcounter } { #2 }
       }
       {
-        \tcb@error{tcolorbox~'#1'~or~counter~for~'#1'~is~not~defined}{}
+        \tcb@error{ tcolorbox~'#1'~or~counter~for~'#1'~is~not~defined } {}
       }
     \group_end:
   }
 
-\ExplSyntaxOff
+
+\cs_new_protected:Npn \__tcobox_proc_options_init:nn #1#2
+  {
+    \tcbset{ new/.cd,reset@new,#1 }
+    \tcb@proc@counter{#2}
+    \bool_lazy_all:nT
+      {
+        { \l__tcobox_reset_counter_on_overlays_bool }
+        { \cs_if_exist_p:N \resetcounteronoverlays }
+        { \cs_if_exist_p:c { tcb@cnt@#2 } }
+      }
+      {
+        \exp_args:Nc \resetcounteronoverlays { tcb@cnt@#2 }
+      }
+    \tl_if_empty:NF \kvtcb@new@listof
+      {
+        \cs_set_nopar:cpe { tcb@lstof@#2 } { \kvtcb@new@listof }
+        \cs_set_nopar:cpe { tcb@lsttp@#2 } { \kvtcb@new@listtype }
+        \appto\tcb@new@colopt
+          {
+            ,add~to~list = { \csname tcb@lstof@#2\endcsname } { \csname tcb@lsttp@#2\endcsname }
+          }
+      }
+    \kvtcb@init@hook
+  }
 
 
-\long\def\tcb@proc@options@init#1#2{%
-  \tcbset{new/.cd,reset@new,#1}%
-  \tcb@proc@counter{#2}%
-  \iftcb@resetcounteronoverlays%
-    \ifcsname resetcounteronoverlays\endcsname%
-      \ifcsname tcb@cnt@#2\endcsname%
-        \resetcounteronoverlays{\csname tcb@cnt@#2\endcsname}%
-      \fi%
-    \fi%
-  \fi%
-  \ifx\kvtcb@new@listof\@empty%
-  \else%
-    \csedef{tcb@lstof@#2}{\kvtcb@new@listof}%
-    \csedef{tcb@lsttp@#2}{\kvtcb@new@listtype}%
-    \appto\tcb@new@colopt{,add to list={\csname tcb@lstof@#2\endcsname}{\csname tcb@lsttp@#2\endcsname}}%
-  \fi%
-  \kvtcb@init@hook%
-}%
-
-
-\ExplSyntaxOn
 
 \msg_new:nnn { tcolorbox } { invalid-box-counter }
   {
@@ -2519,27 +2561,27 @@
       {
         \edef\tcb@new@boxname{#2}
         \def\tcb@new@colopt{}
-        \tcb@proc@options@init{#1}{#2}
-        \preto\tcb@new@colopt{savedelimiter=#2}
+        \__tcobox_proc_options_init:nn {#1} {#2}
+        \preto\tcb@new@colopt{ savedelimiter=#2 }
         \exp_args:Nc \cs_set_eq:NN { tcb@opt@#2 } \tcb@new@colopt
       }
   }
 
 
-\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +O{} >{\TrimSpaces} m o +o +m }
+\NewDocumentCommand \__tcobox_new_tcolorbox:w { m +O {} > {\TrimSpaces} m o +o +m }
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
     \tl_if_novalue:nTF { #4 }
       {
-        #1 { #3 }{ \tcolorbox[{#6,options@for=#3}] }{ \endtcolorbox }
+        #1 { #3 } { \tcolorbox[ {#6,options@for = #3} ] } { \endtcolorbox }
       }
       {
         \tl_if_novalue:nTF { #5 }
         {
-          #1 { #3 }[ #4 ]{ \tcolorbox[{#6,options@for=#3}] }{ \endtcolorbox }
+          #1 { #3 } [ #4 ] { \tcolorbox[ {#6,options@for = #3} ] } { \endtcolorbox }
         }
         {
-          #1 { #3 }[ #4 ][ #5 ]{ \tcolorbox[{#6,options@for=#3}] }{ \endtcolorbox }
+          #1 { #3 } [ #4 ] [ #5 ] { \tcolorbox[ {#6,options@for=#3} ] } { \endtcolorbox }
         }
       }
   }
@@ -2555,10 +2597,10 @@
   }
 
 
-\NewDocumentCommand \__tcobox_new_TColorBox:w { m +O{} >{\TrimSpaces} m +m +m }
+\NewDocumentCommand \__tcobox_new_TColorBox:w { m +O {} > {\TrimSpaces} m +m +m }
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    #1 { #3 }{ #4 }{ \tcolorbox[{#5,options@for=#3}] }{ \endtcolorbox }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
+    #1 { #3 } { #4 } { \tcolorbox[ {#5,options@for=#3} ] } { \endtcolorbox }
   }
 \NewDocumentCommand \DeclareTColorBox { }
   {
@@ -2584,10 +2626,10 @@
 
 \cs_new:Npn \__tcobox_new_TotalTColorBox:Nnnnnn #1#2#3#4#5#6
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \begin{tcolorbox}[{#5,options@for=#3}]#6\end{tcolorbox} }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
+    \exp_args:Nc #1 { #3 } { #4 } { \begin{ tcolorbox } [ {#5,options@for=#3} ]#6\end{ tcolorbox } }
   }
-\NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +O{} m }
+\NewDocumentCommand \__tcobox_new_TotalTColorBox:w { m +O {} m }
   {
     \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TotalTColorBox:Nnnnnn #1 {#2} \l__tcobox_tmpa_tl
@@ -2616,22 +2658,22 @@
 
 \NewDocumentCommand \__tcobox_new_tcbox_ii:w { m +m m o +o +m }
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
     \tl_if_novalue:nTF { #4 }
       {
-        \exp_args:Nc #1 { #3 }{ \tcbox[{#6,options@for=#3}] }
+        \exp_args:Nc #1 { #3 } { \tcbox[ {#6,options@for=#3} ] }
       }
       {
         \tl_if_novalue:nTF { #5 }
         {
-          \exp_args:Nc #1 { #3 }[ #4 ]{ \tcbox[{#6,options@for=#3}] }
+          \exp_args:Nc #1 { #3 } [ #4 ] { \tcbox[ {#6,options@for=#3} ] }
         }
         {
-          \exp_args:Nc #1 { #3 }[ #4 ][ #5 ]{ \tcbox[{#6,options@for=#3}] }
+          \exp_args:Nc #1 { #3 } [ #4 ] [ #5 ] { \tcbox[ {#6,options@for=#3} ] }
         }
       }
   }
-\NewDocumentCommand \__tcobox_new_tcbox_i:w { m +O{} m }
+\NewDocumentCommand \__tcobox_new_tcbox_i:w { m +O {} m }
   {
     \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_tcbox_ii:w #1 {#2} \l__tcobox_tmpa_tl
@@ -2650,10 +2692,10 @@
 
 \cs_new:Npn \__tcobox_new_TCBox:Nnnnn #1#2#3#4#5
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[{#5,options@for=#3}] }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
+    \exp_args:Nc #1 { #3 } { #4 } { \tcbox[ {#5,options@for=#3} ] }
   }
-\NewDocumentCommand \__tcobox_new_TCBox:w { m +O{} m }
+\NewDocumentCommand \__tcobox_new_TCBox:w { m +O {} m }
   {
     \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TCBox:Nnnnn #1 {#2} \l__tcobox_tmpa_tl
@@ -2682,10 +2724,10 @@
 
 \cs_new:Npn \__tcobox_new_TotalTCBox:Nnnnnn #1#2#3#4#5#6
   {
-    \__tcobox_process_newtcolorbox:nn { #2 }{ #3 }
-    \exp_args:Nc #1 { #3 }{ #4 }{ \tcbox[{#5,options@for=#3}]{#6} }
+    \__tcobox_process_newtcolorbox:nn { #2 } { #3 }
+    \exp_args:Nc #1 { #3 } { #4 } { \tcbox[ {#5,options@for=#3} ] {#6} }
   }
-\NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +O{} m }
+\NewDocumentCommand \__tcobox_new_TotalTCBox:w { m +O {} m }
   {
     \__tcobox_set_backslash_removed:Nn \l__tcobox_tmpa_tl { #3 }
     \exp_args:NNnV \__tcobox_new_TotalTCBox:Nnnnnn #1 {#2} \l__tcobox_tmpa_tl
@@ -2713,64 +2755,65 @@
 
 \NewDocumentCommand \tcolorboxenvironment { m +m }
   {
-    \hook_gput_code:nnn{ env/#1/before }{ tcolorbox }
+    \hook_gput_code:nnn { env/#1/before } { tcolorbox }
       {
-        \begin{tcolorbox}
-          [{
+        \begin{ tcolorbox }
+          [ {
             savedelimiter = {#1},
             #2,
             wrap@environment,
-            code = \def\tcb@end@tcolorboxenvironment{\end{tcolorbox}}
-          }]
+            code = \cs_set_nopar:Npn \tcb@end@tcolorboxenvironment{\end{ tcolorbox }}
+          } ]
       }
-    \hook_gput_code:nnn{ env/#1/after }{ tcolorbox }
+    \hook_gput_code:nnn { env/#1/after } { tcolorbox }
       {
         \tcb@end@tcolorboxenvironment
       }
   }
 
-\DeclareTotalTCBox{ \tcboxverb }{ O{} v }{ verbatim,#1 }{ #2 }
+\DeclareTotalTCBox \tcboxverb { O {} v } { verbatim,#1 } { #2 }
 
-\DeclareTotalTColorBox{ \tcbsidebyside }{ +O{} +m +m }
+\DeclareTotalTColorBox \tcbsidebyside { +O {} +m +m }
   {
-    code = \long\def\tcb@sbs@text@left{#2}\long\def\tcb@sbs@text@right{#3},
+    code =
+      \cs_set:Npn \tcb@sbs@text@left  { #2 }   % noqa
+      \cs_set:Npn \tcb@sbs@text@right { #3 },  % noqa
     #1,
     sidebyside,
     sidebyside@switch,
     sidebyside@adapt@process
-  }{ \tcb@sbs@content }
-
-\ExplSyntaxOff
+  } { \tcb@sbs@content }
 
 
-\def\tcb@addcontentsline#1#2{%
-  \ifx\kvtcb@listentry\@empty%
-    \ifx\kvtcb@title\@empty%
-      \ifx\tcbtitletext\@empty%
-        \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}{\ignorespaces\kvtcb@savedelimiter}}%
-      \else%
-        \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}{\ignorespaces\tcbtitletext}}%
-      \fi%
-    \else%
-      \addcontentsline{#1}{#2}{\protect\numberline{\thetcbcounter}{\ignorespaces\kvtcb@title}}%
-    \fi%
-  \else%
-    \addcontentsline{#1}{#2}{\kvtcb@listentry}%
-  \fi%
-}
+\cs_new_protected:Npn \tcb@addcontentsline #1#2
+  {
+    \ifx\kvtcb@listentry\@empty
+      \ifx\kvtcb@title\@empty
+        \ifx\tcbtitletext\@empty
+          \addcontentsline{#1} {#2} { \protect\numberline{\thetcbcounter} {\ignorespaces\kvtcb@savedelimiter} }
+        \else
+          \addcontentsline{#1} {#2} { \protect\numberline{\thetcbcounter} {\ignorespaces\tcbtitletext} }
+        \fi
+      \else
+        \addcontentsline{#1} {#2} { \protect\numberline{\thetcbcounter} {\ignorespaces\kvtcb@title} }
+      \fi
+    \else
+      \addcontentsline{#1} {#2} { \kvtcb@listentry }
+    \fi
+  }
 
-\newcommand*\l@tcolorbox{\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand*\l@tcolorbox{ \@dottedtocline{ 1 } { 1.5em } { 2.3em } }
 
-\def\toclevel@tcolorbox{0}% for hyperref
+\def\toclevel@tcolorbox{ 0 } % for hyperref
 
-\ExplSyntaxOn
-\NewDocumentCommand{\tcblistof}{ O{\section} m o m }
+
+\NewDocumentCommand \tcblistof { O {\section} m o m }
   {
     \ifnum\c@tocdepth<1\relax
-      \tcb@warning{'tocdepth'~value~lower~than~1~for~'tcblistof'}
+      \tcb@warning{ 'tocdepth'~value~lower~than~1~for~'tcblistof' }
     \fi
-    \tl_set:Ne \l__tcobox_tmpa_tl {\tl_trim_spaces:n{#1}}
-    \str_if_eq:eeT { \str_range:Nnn \l__tcobox_tmpa_tl {2}{8} } { chapter }
+    \tl_set:Ne \l__tcobox_tmpa_tl { \tl_trim_spaces:n {#1} }
+    \str_if_eq:eeT { \str_range:Nnn \l__tcobox_tmpa_tl { 2 } { 8 } } { chapter }
       {
         \if@twocolumn
           \@restonecoltrue\onecolumn
@@ -2778,7 +2821,7 @@
           \@restonecolfalse
         \fi
       }
-    \str_if_eq:eeTF { \str_item:Nn \l__tcobox_tmpa_tl {-1} } { * }
+    \str_if_eq:eeTF { \str_item:Nn \l__tcobox_tmpa_tl { -1 } } { * }
       {
         #1{#4}
         \IfNoValueTF{#3}
@@ -2797,7 +2840,7 @@
             #1{#4}
           }
           {
-            #1[{#3}]{#4}
+            #1[ {#3} ] {#4}
           }
       }
     \@starttoc{#2}
@@ -2839,7 +2882,7 @@
 
 \ExplSyntaxOn
 
-\cs_new_nopar:Npn \__tcobox_verbatim_finish:
+\cs_new_protected_nopar:Npn \__tcobox_verbatim_finish:
   {
     \tl_set_rescan:Nne \l__tcobox_tmpa_tl
       {
@@ -2852,22 +2895,23 @@
       }
   }
 
-\tcbset{%
-  verbatim~ignore~indention~at~end/.is~choice,
-  verbatim~ignore~indention~at~end/true/.code=
-    {
-      \cs_set:Npn \tcb@set@verbatim@finish
-        {
-          \cs_set_eq:NN \verbatim@finish \__tcobox_verbatim_finish:
-        }
-    },
-  verbatim~ignore~indention~at~end/false/.code=
-    {
-      \cs_set_eq:NN \tcb@set@verbatim@finish \prg_do_nothing:
-    },
-  verbatim~ignore~indention~at~end/.default=true,
-  verbatim~ignore~indention~at~end
-}
+\tcbset
+  {
+    verbatim~ignore~indention~at~end/.is~choice,
+    verbatim~ignore~indention~at~end/true/.code=
+      {
+        \cs_set_protected:Npn \tcb@set@verbatim@finish
+          {
+            \cs_set_eq:NN \verbatim@finish \__tcobox_verbatim_finish:
+          }
+      },
+    verbatim~ignore~indention~at~end/false/.code=
+      {
+        \cs_set_eq:NN \tcb@set@verbatim@finish \prg_do_nothing:
+      },
+    verbatim~ignore~indention~at~end/.default=true,
+    verbatim~ignore~indention~at~end
+  }
 
 \ExplSyntaxOff
 
@@ -2924,7 +2968,7 @@
     \iow_now:Ne \g__tcobox_record_iow { #1 }
   }
 
-\NewDocumentCommand \tcbstartrecording { O{\jobname.records} }
+\NewDocumentCommand \tcbstartrecording { O { \jobname. records } }
   {
     \cs_set_eq:NN \tcbrecord \__tcobox_record:n
     \str_set:Ne \l__tcobox_record_file_str { #1 }
@@ -2938,17 +2982,17 @@
   }
 
 \tcbset{
-  record/.style={phantom={\tcbrecord{#1}}},
-  no~recording/.code={ \cs_set_eq:NN \tcbrecord \use_none:n },
+  record/.style = { phantom = {\tcbrecord{#1}} },
+  no~recording/.code = { \cs_set_eq:NN \tcbrecord \use_none:n },
   no~recording
 }
 
-\NewDocumentCommand \tcbinputrecords { O{\l__tcobox_record_file_str} }
+\NewDocumentCommand \tcbinputrecords { O { \l__tcobox_record_file_str } }
   {
     \file_if_exist_input:nF {#1}
       {
-        \tcb@error{record~file~`#1'~not~found}
-          {The~record~file~`#1'~was~not~found}
+        \tcb@error{ record~file~`#1'~not~found }
+          { The~record~file~`#1'~was~not~found }
       }
   }
 

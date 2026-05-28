@@ -22,7 +22,7 @@ and this project adheres to
 
 
 
-## [6.10.0] - xxxx-xx-xx
+## [6.10.0] - 2026-05-28
 
 ### Added
 - Documentation:
@@ -30,24 +30,43 @@ and this project adheres to
 - Macro `\renewthetcbcounter` to allow redefinition of `\thetcbcounter`
 - Alias `counter within` for `number within`
 - Alias `counter within from` for `number within from`
+- Library `theorems`:
+    - Options `ams subequations`, `ams subequations upper`, and `ams subequations lower` (issue #366)
+    - Options `ams subequations align`, `ams subequations align upper`, and `ams subequations align lower`
+    - Options `ams subequations gather`, `ams subequations gather upper`, and `ams subequations gather lower`
+- Library `documentation`:
+    - More semantic description in key documentation (issue #354)
+    - Options `doclang/default`, `doclang/initially`, `doclang/initiallyempty`, 
+        `doclang/nodefault`, `doclang/noinitially`
+    - `\tcbdocdescNoDefaultInit`, `\tcbdocdescInitEmpty`, `\tcbdocdescInit`,
+        `\tcbdocdescDefault`, `\tcbdocdescDefaultInitEmpty`, `\tcbdocdescDefaultInit`
+    - Options `doc description no default init`, `doc description init empty`, `doc description init`, 
+        `doc description default`, `doc description default init empty`, `doc description default init`
+    - List of choices inside `\docKeyChoices`, `doc key choices` now take options
+        `default`, `init`, `defaultinit`
+    - Options `doc parameter eq`, `doc parameter eq meta`, `doc parameter eq marg`,
+        `doc parameter eq meta*`, `doc parameter eq marg*`
+    - Options `doc parameter marg`, `doc parameter oarg`, `doc parameter marg marg`,
+        `doc parameter oarg marg`, `doc parameter marg oarg`
 
 ### Changed
 - Required LaTeX version bumped to 2025-06-01
+- Internal code changes
+- Tagging code adapted to fix https://github.com/latex3/tagging-project/issues/1114
 - Implementation for numbered boxes is partially rewritten using the L3 API
 - Documentation: 
     Replace `minted2` with `minted` v3 for production since `minted` v3.8.0 has fixed incompatibility with Python 3.14
     (https://github.com/gpoore/minted/issues/463)
-
-### Deprecated
-
-### Removed
+- Documentation:  Manually composed label references replaced by `\zvref` (where sensible, issue #348)
 
 ### Fixed
-- Library `documentation`: add missing spaces in a `\docKeyChoices` warning (pull request #360)
+- Library `documentation`: 
+    - Add missing spaces in a `\docKeyChoices` warning (pull request #360)
+    - Documentation for `index key formatter`, `index key formatters`, `page ref formatter`, `ctan formatter`
 - Changelog typos corrected (pull request #359)
 - `\thetcbcounter` was not completely redefined using `\counterwithout` / `\counterwithin` (issue #362)
+- Code style improved with explcheck (issue #235)
 
-### Security
 
 
 ## [6.9.0] - 2025-11-28

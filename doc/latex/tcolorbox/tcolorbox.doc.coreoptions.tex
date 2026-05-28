@@ -636,7 +636,7 @@ This is a \textbf{tcolorbox}.
 \bigskip
 \begin{marker}
   More color options are provided by using skins documented in
-  Section \ref{sec:skins} from page \pageref{sec:skins}.
+  \zvref{sec:skins}.
 \end{marker}
 
 
@@ -1078,7 +1078,7 @@ This is a \textbf{tcolorbox}.
 \bigskip
 \begin{marker}
   More options for drawing a \refKey{/tcb/borderline} are provided by using skins documented in
-  Section \ref{sec:skins} from page \pageref{sec:skins}.
+  \zvref{sec:skins}.
 \end{marker}
 
 
@@ -2836,7 +2836,7 @@ With an overlay, arbitrary \meta{graphical code} can be added to a
 drawn and \emph{before} the text content is drawn. Therefore, you can
 decorate the |tcolorbox| with your own extensions.
 Common special cases are \emph{watermarks} which are implemented using overlays.
-See Subsection \ref{subsec:watermarks} from page \pageref{subsec:watermarks} if
+See \zvref{subsec:watermarks} if
 you want to add \emph{watermarks}.
 \begin{marker}
 If you use the core package only, the \meta{graphical code} has to be
@@ -4406,9 +4406,8 @@ related operations which do not produce visible text.
 \item Since the \meta{code} is executed inside a \TeX\ group, only global
   operations can survive this group.
 \end{itemize}
-Examples for the |phantom| usage are given in Section \ref{listing:exercises}
-from page \pageref{listing:exercises}, e.\,g.\
-Example \ref{exe:tabular_example} on page \pageref{exe:tabular_example}.
+Examples for the |phantom| usage are given in \zvref{listing:exercises}, e.\,g.\
+Example~\ref{exe:tabular_example} on page~\pageref{exe:tabular_example}.
 \end{docTcbKey}
 
 \begin{docTcbKey}{nophantom}{}{no value, initially set}
@@ -4446,8 +4445,7 @@ The \meta{marker} is set as label text with |\label| for a reference with the |\
 if \refKey{/tcb/label is label} is active,
 or as label text with |\zlabel| for a reference with the |\zref| macro and similar,
 if \refKey{/tcb/label is zlabel} is active.
-Typically, this option is used for numbered boxes, see Subsection \ref{sec:numberedboxes}
-from page \pageref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
+Typically, this option is used for numbered boxes, see \zvref{sec:numberedboxes}, e.\,g.\ \refKey{/tcb/new/auto counter}.
 \end{docTcbKey}
 
 
@@ -4464,15 +4462,13 @@ This is not needed and should typically not be used for a numbered box.
 Shortcut for \refKey{/tcb/phantom}|={\refstepcounter{#1}}|. The given \meta{counter} is
 increased and ready for labelling. This option is not needed when
 using the convenient automated numbering introduced with version 2.40,
-see Subsection \ref{sec:numberedboxes}
-from page \pageref{sec:numberedboxes}.
+see \zvref{sec:numberedboxes}.
 \end{docTcbKey}
 
 \begin{docTcbKey}{step and label}{=\marg{counter}\marg{marker}}{no default, initially unset}
 Shortcut for using \refKey{/tcb/step} and \refKey{/tcb/label}. This option is not needed when
 using the convenient automated numbering introduced with version 2.40,
-see Subsection \ref{sec:numberedboxes}
-from page \pageref{sec:numberedboxes}.
+see \zvref{sec:numberedboxes}.
 \end{docTcbKey}
 
 
@@ -4857,8 +4853,7 @@ This option is useful for boxes in boxes where the inner box should not inherit
 the settings of the outer box.
 Note that for boxes inside boxes the |reset| is done automatically, if the
 standard settings of the package are used (v2.40 and above), see
-Section \ref{subsec:everybox} from page \pageref{subsec:everybox}.
-%See \refCom{tcbhighmath} for an example.
+\zvref{subsec:everybox}.
 \end{docTcbKey}
 
 

@@ -410,8 +410,7 @@ For example:
 \begin{dispListing}
 list inside=exam
 \end{dispListing}
-See Section \ref{listing:exercises} from page \pageref{listing:exercises}
-for a complete example.
+See \zvref{listing:exercises} for a complete example.
 \end{newTcbKey}
 
 
@@ -447,8 +446,7 @@ To display the list inside a subsection, use for example:
 \begin{dispListing}
 \tcblistof[\subsection]{exam}{List of Exercises}
 \end{dispListing}
-The result of the example is found as Subsection \ref{listofexercises} on
-page \pageref{listofexercises}.
+The result of the example is found as \zvref{listofexercises}.
 
 \medskip
 To apply the list similar to |\listoffigures| for a report or book, use for example:
@@ -478,15 +476,13 @@ which are typically reasonable in connection with lists of |tcolorbox|es.
 
 \begin{docTcbKey}{list entry}{=\meta{text}}{no default, initially unset}
 If the \flqq list of tcolorbox(es)\frqq\ feature described in
-%Subsection \ref{sec:listsof} from page \pageref{sec:listsof}
 the current subsection
 is used, this key
 describes the \meta{text} for an entry into the generated list, e.\,g.
 \begin{dispListing}
 list entry={\protect\numberline{\thetcbcounter}My beautiful Example}
 \end{dispListing}
-See Section \ref{listing:exercises} from page \pageref{listing:exercises}
-for a complete example.\par
+See \zvref{listing:exercises} for a complete example.\par
 If \refCom{thetcbcounter} is omitted, \refKey{/tcb/list entry} could be used for
 unnumbered boxes too.
 \begin{marker}
@@ -503,13 +499,11 @@ So, the following settings are identical:
 list text={My beautiful Example},
 list entry={\protect\numberline{\thetcbcounter}My beautiful Example}
 \end{dispListing}
-See Section \ref{listing:exercises} from page \pageref{listing:exercises}
-for a complete example.
+See \zvref{listing:exercises} for a complete example.
 \end{docTcbKey}
 
 \begin{docTcbKey}{add to list}{=\marg{list}\marg{type}}{no default, initially unset}
 If the \flqq list of tcolorbox(es)\frqq\ feature described in
-%Subsection \ref{sec:listsof} from page \pageref{sec:listsof}
 the current subsection
 is used, list entries are
 generated automatically. With this key, you can enforce an entry to the

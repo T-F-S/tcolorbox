@@ -157,7 +157,7 @@ For \refPkg{minted} \cite{poore:minted} support, load:
 \begin{dispExample}
 \begin{docEnvironments}[
     doc no index,   %  no index entries for this example
-    doc parameter = \oarg{options}\marg{title},
+    doc parameter oarg marg     = {options}{title},
     doclang/environment content = box content,
   ]
   {
@@ -195,7 +195,7 @@ For \refPkg{minted} \cite{poore:minted} support, load:
   It is automatically indexed and can be referenced with
   \refCom{refKey}\marg{name}.
 \begin{dispExample}
-\begin{docKey}[foo]{footitle}{=\meta{text}}{no default, initially empty}
+\begin{docKey}[foo]{footitle}{=\meta{text}}{\tcbdocdescDefaultInitEmpty}
   Creates a heading line with \meta{text} as content.
 \end{docKey}
 \end{dispExample}
@@ -220,23 +220,56 @@ For \refPkg{minted} \cite{poore:minted} support, load:
 \begin{dispExample}
 \begin{docKeys}[
     doc no index,   %  no index entries for this example
-    doc keypath   = mykeyroot,
-    doc parameter = {=\meta{length}},
+    doc keypath           = mykeyroot,
+    doc parameter eq meta = length,
   ]
   {
     {
-      doc name        = width,
-      doc description = initially \texttt{10cm},
+      doc name             = width,
+      doc description init = 10cm,
     },
     {
-      doc name        = height,
-      doc description = initially \texttt{7cm},
+      doc name             = height,
+      doc description init = 7cm,
     },
   }
   example
 \end{docKeys}
 \end{dispExample}
 \end{docEnvironment}
+
+
+\clearpage
+\begin{docCommands}
+  {
+    { doc name = tcbdocdescNoDefaultInit, doc parameter =, doc new=2026-05-26 },
+    { doc name = tcbdocdescInitEmpty },
+    { doc name = tcbdocdescInit, doc parameter = \marg{initial value} },
+    { doc name = tcbdocdescDefault, doc parameter = \marg{default value} },
+    { doc name = tcbdocdescDefaultInitEmpty, doc parameter = \marg{default value} },
+    { doc name = tcbdocdescDefaultInit, doc parameter = \marg{default value}\marg{initial value} },
+  }
+These macros insert standardized description texts in the input stream,
+especially intended for key documentation.
+Also see \refKey{/tcb/doc description no default init} and friends.
+
+\begin{dispExample}
+\tcbdocdescNoDefaultInit       \par
+\tcbdocdescInitEmpty           \par
+\tcbdocdescInit{a}             \par
+\tcbdocdescDefault{b}          \par
+\tcbdocdescDefaultInitEmpty{c} \par
+\tcbdocdescDefaultInit{e}{e}
+
+\begin{docKey}[foo]{footitle}{=\meta{text}}{\tcbdocdescInitEmpty}
+  Creates a heading line with \meta{text} as content.
+\end{docKey}
+
+\begin{docKey}[foo]{foosize}{\colOpt{=\meta{length}}}{\tcbdocdescDefaultInit{10cm}{3cm}}
+  Sets some size to \meta{length}.
+\end{docKey}
+\end{dispExample}
+\end{docCommands}
 
 
 \clearpage
@@ -293,11 +326,11 @@ For \refPkg{minted} \cite{poore:minted} support, load:
 
 
 \clearpage
-\begin{docCommands}[doc parameter=\oarg{options}\marg{name}]
+\begin{docCommands}[doc parameter oarg marg={options}{name}]
   {
     {
-      doc name = docValue,
-      doc updated=2020-04-23,
+      doc name    = docValue,
+      doc updated = 2020-04-23,
     },
     {
       doc name = docValue*,
@@ -314,7 +347,7 @@ A feasible value for \refKey{/foo/footitle} is \docValue*{foovalue}.
 
 
 
-\begin{docCommands}[doc parameter=\oarg{options}\marg{name}]
+\begin{docCommands}[doc parameter oarg marg={options}{name}]
   {
     {
       doc name    = docAuxCommand,
@@ -336,7 +369,7 @@ The macro \docAuxCommand{fooaux} holds some interesting data.
 
 
 
-\begin{docCommands}[doc parameter=\oarg{options}\marg{name}]
+\begin{docCommands}[doc parameter oarg marg={options}{name}]
   {
     {
       doc name    = docAuxEnvironment,
@@ -377,7 +410,7 @@ The key \docAuxKey[foo]{fooaux} holds some interesting data.
 
 
 
-\begin{docCommands}[doc parameter=\oarg{options}\marg{name}]
+\begin{docCommands}[doc parameter oarg marg={options}{name}]
   {
     {
       doc name    = docCounter,
@@ -398,7 +431,7 @@ The counter \docCounter{foocounter} can be used for computation.
 
 
 \clearpage
-\begin{docCommands}[doc parameter=\oarg{options}\marg{name}]
+\begin{docCommands}[doc parameter oarg marg={options}{name}]
   {
     {
       doc name    = docLength,
@@ -418,7 +451,7 @@ The length \docLength{foolength} can be used for computation.
 \end{docCommands}
 
 
-\begin{docCommands}[doc parameter=\oarg{options}\marg{name}]
+\begin{docCommands}[doc parameter oarg marg={options}{name}]
   {
     {
       doc name    = docColor,
@@ -579,11 +612,11 @@ heading line. Optionally, such a box can be split in an upper and a lower part.
 \begin{dispExample}
 \tcbmakedocSubKey{docFooKey}{foo}
 
-\begin{docFooKey}{foodummy}{=\meta{nothing}}{no default, initially empty}
+\begin{docFooKey}{foodummy}{=\meta{nothing}}{\tcbdocdescDefaultInitEmpty}
 Some key.
 \end{docFooKey}
 
-\begin{docFooKey*}{foo another dummy}{=\meta{nothing}}{no default, initially empty}
+\begin{docFooKey*}{foo another dummy}{=\meta{nothing}}{\tcbdocdescDefaultInitEmpty}
 Some key (not indexed).
 \end{docFooKey*}
 \end{dispExample}
@@ -600,8 +633,8 @@ Some key (not indexed).
 \tcbmakedocSubKeys{docFooKeys}{foo}
 
 \begin{docFooKeys}[
-    doc parameter   = {=\meta{nothing}},
-    doc description = {no default, initially empty},
+    doc parameter eq meta = nothing,
+    doc description init empty,
   ]
   {
     {
@@ -798,7 +831,7 @@ with another note.
   {
     {
       doc name = docKeyChoices,
-      doc new  = 2025-09-25,
+      doc new and updated = {2025-09-25}{2026-05-26},
     },
     {
       doc name = docKeyChoices*,
@@ -810,43 +843,49 @@ with another note.
   These choices are typeset with one leading |=| and \refKey{/tcb/doc key choices separator}
   as separator between every value. Long lists are broken automatically at a width
   which is configured by \refKey{/tcb/doc head left width} or \refKey{/tcb/doc head left ratio}.\par
-  The star variant is for optional values and uses \refCom{colOpt}.
+  The star variant is for optional values and uses \refCom{colOpt}.\par
+  Default and/or initial value for the description text can be marked inside the list by
+  \begin{itemize}
+  \item\docValue{default}\texttt{=}\meta{default value}
+  \item\docValue{init}\texttt{=}\meta{initial value}
+  \item\docValue{defaultinit}\texttt{=}\meta{default and initial value}
+  \end{itemize}
+  If these marks are used, the generated description text overwrites settings
+  from \refKey{/tcb/doc description} and \refEnv{docKey}, etc.
   \begin{marker}
   Usage of \refCom{docKeyChoices} outside the parameter list of a key
   documentation is not intended and is not supported.
   \end{marker}
 \begin{dispExample}
-\begin{docKey}[foo]{fooexam1}{\docKeyChoices{one,two,three}}
-    {no default, initially \texttt{one}}
+\begin{docKey}[foo]{fooexam1}{\docKeyChoices{init=one,two,three}}{}
   Example for mandatory choices.
 \end{docKey}
 \end{dispExample}
 \begin{dispExample}
 \begin{docKey}[foo]{fooexam2}{\docKeyChoices*{
-  zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
-  thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty }}
-    {default \texttt{one}, initially \texttt{zero}}
+  init=zero,default=one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
+  thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen,twenty }}{}
   Example for optional choices.
 \end{docKey}
 \end{dispExample}
 \begin{dispExample}
 \begin{docKey}[foo][doc head left ratio=0.8]{fooexam3}{\docKeyChoices*{
   zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
-  thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty }}
+  thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen,twenty }}
     {default \texttt{one},\\ initially \texttt{zero}}
 \end{docKey}
 \end{dispExample}
 \begin{dispExample}
 \begin{docKey}[foo][doc head left ratio=1.0]{fooexam4}{\docKeyChoices*{
-  zero,one,two,three,four,five,six,seven,eight, \\ nine,ten,eleven,twelve,
-  thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty }}
-    {default \texttt{one}, initially \texttt{zero}}
+  init=zero,default=one,two,three,four,five,six,seven,eight,
+  \\ nine,ten,eleven,twelve, thirteen,fourteen,fifteen,sixteen,
+  seventeen,eighteen,nineteen,twenty }}{}
 \end{docKey}
 \end{dispExample}
 \end{docCommands}
 
-\clearpage
-\enlargethispage*{10mm}
+%\clearpage
+%\enlargethispage*{10mm}
 
 \begin{docTcbKeys}[
     doc parameter   = {=\meta{comma separated list of choices}},
@@ -869,8 +908,7 @@ with another note.
 \begin{docKeys}[
     doc keypath      = foo,
     doc name         = fooexam5,
-    doc key choices* = {true,false},
-    doc description  = {default \texttt{true}, initially \texttt{true}},
+    doc key choices* = {defaultinit=true,false},
   ]{}
 \end{docKeys}
 \end{dispExample}
@@ -879,20 +917,21 @@ with another note.
     doc keypath     = foo,
     doc name        = fooexam6,
     doc key choices = {
-      zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
-      thirteen,fourteen,fiveteen,sixteen,seventeen,eightteen,nineteen,twenty },
+      init=zero,one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,
+      thirteen,fourteen,fifteen,sixteen,seventeen,eighteen,nineteen,twenty },
     doc head left ratio = 0.6,
-    doc description = {no default, initially \texttt{zero}},
   ]{}
 \end{docKeys}
 \end{dispExample}
 \end{docTcbKeys}
 
+\clearpage
+
 \begin{docTcbKeys}[
-    doc new         = {2025-09-25},
-    doc name        = doc key choices separator,
-    doc parameter   = {=\meta{separator}},
-    doc description = {no default, initially \texttt{\textbackslash textbar}},
+    doc new               = {2025-09-25},
+    doc name              = doc key choices separator,
+    doc parameter eq meta = separator,
+    doc description init  = \textbackslash textbar,
   ]{}
   Sets the \meta{separator} sign which used for typsetting lists of choices
   from \refCom{docKeyChoices}, \refKey{/tcb/doc key choices}, and friends.
@@ -901,8 +940,7 @@ with another note.
     doc key choices separator = \textbullet,
     doc keypath      = foo,
     doc name         = fooexam7,
-    doc key choices* = {true,false,maybe,unlikely},
-    doc description  = {default \texttt{true}, initially \texttt{true}},
+    doc key choices* = {defaultinit=true,false,maybe,unlikely},
   ]{}
 \end{docKeys}
 \end{dispExample}
@@ -910,10 +948,10 @@ with another note.
 
 
 \begin{docTcbKeys}[
-    doc new         = {2025-09-25},
-    doc name        = doc head left width,
-    doc parameter   = {=\meta{length}},
-    doc description = {no default, initially \texttt{0.7\textbackslash columnwidth}},
+    doc new               = {2025-09-25},
+    doc name              = doc head left width,
+    doc parameter eq meta = length,
+    doc description init  = 0.7\textbackslash columnwidth,
   ]{}
   The given \meta{length} is the maximal width of a box consisting of
   key name, |=| sign, and a list of choices. See also \refKey{/tcb/doc head left ratio}.
@@ -921,10 +959,10 @@ with another note.
 
 
 \begin{docTcbKeys}[
-    doc new         = {2025-09-25},
-    doc name        = doc head left ratio,
-    doc parameter   = {=\meta{number}},
-    doc description = {style, initially \texttt{0.7}},
+    doc new               = {2025-09-25},
+    doc name              = doc head left ratio,
+    doc parameter eq meta = number,
+    doc description init  = 0.7,
   ]{}
   The given rational \meta{number} should be in the range between |0.0| and |1.0|.
   This option sets \refKey{/tcb/doc head left width} to
@@ -939,7 +977,7 @@ with another note.
 \subsection{Entry Content Option Keys}
 
 
-\begin{docTcbKey}[][doc new={2020-04-22}]{doc name}{=\meta{name}}{no default, initially empty}
+\begin{docTcbKey}[][doc new={2020-04-22}]{doc name}{=\meta{name}}{\tcbdocdescInitEmpty}
   Sets the \meta{name} of the entry to document, i.\,e., the \meta{name} of the
   command, environment, key, etc. For \refEnv{docCommand}, \refEnv{docEnvironment}, etc.
   the \meta{name} is set by a mandatory parameter, but can also be set
@@ -958,7 +996,7 @@ with another note.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new={2020-04-22}]{doc parameter}{=\meta{parameters}}{no default, initially empty}
+\begin{docTcbKey}[][doc new={2020-04-22}]{doc parameter}{=\meta{parameters}}{\tcbdocdescInitEmpty}
   Sets the \meta{parameters} of the entry to document, i.\,e., the \meta{parameters} of the
   command, environment, key, etc. For \refEnv{docCommand}, \refEnv{docEnvironment}, etc.
   the \meta{parameters} is set by a mandatory option, but can also be set
@@ -975,18 +1013,98 @@ with another note.
 \end{docTcbKey}
 
 
+\begin{docTcbKeys}[doc description = style]
+  {
+    {
+      doc name              = doc parameter marg,
+      doc parameter eq meta = arg1,
+      doc new  = 2026-05-26
+    },
+    {
+      doc name              = doc parameter oarg,
+      doc parameter eq meta = arg1,
+    },
+    {
+      doc name         = doc parameter marg marg,
+      doc parameter eq = \marg{arg1}\marg{arg2},
+    },
+    {
+      doc name         = doc parameter oarg marg,
+      doc parameter eq = \marg{arg1}\marg{arg2},
+    },
+    {
+      doc name         = doc parameter marg oarg,
+      doc parameter eq = \marg{arg1}\marg{arg2},
+    }
+  }
+These shortcut styles set argument \meta{arg1} or \meta{arg1} and \meta{arg2}
+to \refKey{/tcb/doc parameter}.
 
-\begin{docTcbKey}[][doc new={2020-04-22}]{doc keypath}{=\meta{key path}}{no default, initially empty}
+\begin{dispExample}
+\begin{docCommands}[
+    doc no index,  %  no index entries for this example
+    doc name           = textbf,
+    doc parameter marg = text,
+  ] {}
+  Sets \meta{text} in bold face.
+\end{docCommands}
+\end{dispExample}
+\end{docTcbKeys}
+
+\clearpage
+
+\begin{docTcbKeys}[doc description = style]
+  {
+    {
+      doc name = doc parameter eq,
+      doc parameter eq meta = parameter,
+      doc new  = 2026-05-26
+    },
+    {
+      doc name = doc parameter eq meta,
+      doc parameter eq meta = arg,
+    },
+    {
+      doc name = doc parameter eq marg,
+      doc parameter eq meta = arg,
+    },
+    {
+      doc name = doc parameter eq meta*,
+      doc parameter eq meta = arg,
+    },
+    {
+      doc name = doc parameter eq marg*,
+      doc parameter eq meta = arg,
+    }
+  }
+These shortcut styles set \refKey{/tcb/doc parameter} to \enquote{\texttt{=}}
+followed by \meta{parameter} or \meta{arg} enclosed by \refCom{meta} or \refCom{marg}.\par
+The star variant is for optional values and uses \refCom{colOpt}.
+
+
+\begin{dispExample}
+\begin{docKeys}[
+    doc name              = /foo/footitle,
+    doc parameter eq meta = text,
+    doc description init empty
+  ]{}
+  Creates a heading line with \meta{text} as content.
+\end{docKeys}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+\begin{docTcbKey}[][doc new={2020-04-22}]{doc keypath}{=\meta{key path}}{\tcbdocdescInitEmpty}
   Sets the \meta{key path} of the key to document. For \refEnv{docKey}
   and \refEnv{docKey*} the \meta{key path}  is set by a specialized option,
   but can also be set by \refKey{/tcb/doc keypath}.
 \begin{dispExample}
 \begin{docKeys}[
     doc no index,  %  no index entries for this example
-    doc keypath     = tikz,
-    doc name        = fill,
-    doc parameter   = \colOpt{=\meta{color}},
-    doc description = default is scope's color setting,
+    doc keypath            = tikz,
+    doc name               = fill,
+    doc parameter eq meta* = color,
+    doc description        = default is scope's color setting,
   ] {}
   This option causes the path to be filled.
 \end{docKeys}
@@ -996,10 +1114,10 @@ with another note.
 \clearpage
 
 \begin{docTcbKeys}[
-    doc new         = {2023-12-01},
-    doc name        = doc key prefix,
-    doc parameter   = {=\meta{key prefix}},
-    doc description = {no default, initially |/|},
+    doc new               = {2023-12-01},
+    doc name              = doc key prefix,
+    doc parameter eq meta = key prefix,
+    doc description init  = |/|,
   ]{}
   Sets the \meta{key prefix} (root path) of the key to document.
   This prefix is prepended to \refKey{/tcb/doc keypath}, if
@@ -1011,11 +1129,11 @@ with another note.
 \begin{dispExample}
 \begin{docKeys}[
     doc no index,  %  no index entries for this example
-    doc key prefix  = ,
-    doc keypath     = tcobox,% module name
-    doc name        = my_l3_key,
-    doc parameter   = {=\meta{some value}},
-    doc description = example,
+    doc key prefix        = ,
+    doc keypath           = tcobox,% module name
+    doc name              = my_l3_key,
+    doc parameter eq meta = some value,
+    doc description       = example,
   ] {}
   Documentation of a key using |l3keys|.
 \end{docKeys}
@@ -1025,9 +1143,9 @@ with another note.
 
 
 \begin{docTcbKeys}[
-    doc new         = {2023-12-01},
-    doc parameter   = \colOpt{=\meta{macro}},
-    doc description = {no default, initially empty},
+    doc new                = {2023-12-01},
+    doc parameter eq meta* = macro,
+    doc description default init = {\cs{use:n}}{\cs{use:n}},
   ]{
     {
       doc name = index key formatter,
@@ -1061,11 +1179,11 @@ their standard behavior.
     index keys formatter=\myFormatExplkeysIndex
   ]{docFooExplkey}{fooexpl}
 
-\begin{docFooPgfkey}{foo pgf}{=\meta{name}}{no default, initially empty}
+\begin{docFooPgfkey}{foo pgf}{=\meta{name}}{\tcbdocdescInitEmpty}
   content
 \end{docFooPgfkey}
 
-\begin{docFooExplkey}{foo expl}{=\meta{name}}{no default, initially empty}
+\begin{docFooExplkey}{foo expl}{=\meta{name}}{\tcbdocdescInitEmpty}
   content
 \end{docFooExplkey}
 \end{dispExample}
@@ -1075,7 +1193,7 @@ their standard behavior.
 
 \clearpage
 
-\begin{docTcbKey}{doc description}{=\meta{description}}{no default, initially empty}
+\begin{docTcbKey}{doc description}{=\meta{description}}{\tcbdocdescInitEmpty}
   Sets a (short!) additional \meta{description} for
   \refEnv{docCommand}, \refEnv{docEnvironment}, or \refEnv{docPathOperation}.
   Such a description is
@@ -1092,8 +1210,58 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
 \end{marker}
 \end{docTcbKey}
 
+\begin{docTcbKeys}[doc description = style]
+  {
+    {
+      doc name = doc description no default init,
+      doc new  = 2026-05-26
+    },
+    {
+      doc name = doc description init empty,
+    },
+    {
+      doc name = doc description init,
+      doc parameter = {=\marg{initial value}}
+    },
+    {
+      doc name = doc description default,
+      doc parameter = {=\marg{default value}}
+    },
+    {
+      doc name = doc description default init empty,
+      doc parameter = {=\marg{default value}}
+    },
+    {
+      doc name = doc description default init,
+      doc parameter = {=\marg{default value}\marg{initial value}}
+    }
+  }
+These styles set standardized description texts to
+\refKey{/tcb/doc description}, see \refCom{tcbdocdescNoDefaultInit} and friends.
 
-\begin{docTcbKey}[][doc new={2019-09-18}]{doc label}{=\meta{text}}{no default, initially unset}
+\begin{dispExample}
+\begin{docKeys}[
+    doc name              = /foo/footitle,
+    doc parameter eq meta = text,
+    doc description init empty
+  ]{}
+  Creates a heading line with \meta{text} as content.
+\end{docKeys}
+
+\begin{docKeys}[
+    doc name                     = /foo/foosize,
+    doc parameter eq meta*       = length,
+    doc description default init = {10cm}{3cm}
+  ]{}
+  Sets some size to \meta{length}.
+\end{docKeys}
+\end{dispExample}
+\end{docTcbKeys}
+
+
+\clearpage
+
+\begin{docTcbKey}[][doc new={2019-09-18}]{doc label}{=\meta{text}}{\tcbdocdescNoDefaultInit}
   If used inside the option list of \refEnv{docCommand}, \refEnv{docEnvironment},
   \refEnv{docKey}, etc, then \meta{text} is used
   for labeling instead of the name of the definition.
@@ -1104,7 +1272,7 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2020-01-07}]{doc index}{=\meta{text}}{no default, initially unset}
+\begin{docTcbKey}[][doc new={2020-01-07}]{doc index}{=\meta{text}}{\tcbdocdescNoDefaultInit}
   If used inside the option list of \refEnv{docCommand}, \refEnv{docEnvironment},
   \refEnv{docKey}, etc, then \meta{text} is used
   for the index instead of the name of the definition.
@@ -1117,7 +1285,7 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new={2020-04-23}]{doc sort index}{=\meta{text}}{no default, initially unset}
+\begin{docTcbKey}[][doc new={2020-04-23}]{doc sort index}{=\meta{text}}{\tcbdocdescNoDefaultInit}
   If used inside the option list of \refEnv{docCommand}, \refEnv{docEnvironment},
   \refEnv{docKey}, etc, then \meta{text} is used
   as sort key for the index instead of the name of the definition.
@@ -1130,13 +1298,15 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
 \end{dispListing}
 \end{docTcbKey}
 
-\clearpage
 
-\begin{docTcbKey}{doc into index}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+\begin{docTcbKeys}[
+    doc name         = doc into index,
+    doc key choices* = {defaultinit=true,false},
+  ]{}
   If set to |false|, no index entries are written for the main documentation
   environments. The same effect is achieved by using e.\,g.\ \refEnv{docCommand*}
   instead of \refEnv{docCommand}.
-\end{docTcbKey}
+\end{docTcbKeys}
 
 
 \begin{docTcbKey}[][doc new={2020-04-22}]{doc no index}{}{style, initially unset}
@@ -1144,9 +1314,10 @@ hand side if too long. Linebreaks can be used inside the \meta{text}.
   environments. This is a shortcut for using \refKey{/tcb/doc into index}|=false|.
 \end{docTcbKey}
 
+\clearpage
 
 
-\begin{docTcbKey}[][doc new=2014-09-19]{doc marginnote}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2014-09-19]{doc marginnote}{=\meta{options}}{\tcbdocdescInitEmpty}
   Sets style \meta{options} for the displayed box of the \refCom{tcbdocmarginnote} command.
 \begin{dispExample}
 \tcbset{doc marginnote={colframe=blue!50!white,colback=blue!5!white}}%
@@ -1186,7 +1357,7 @@ Some command for something.
 \subsection{Entry Customization Option Keys}
 
 
-\begin{docTcbKey}{doc left}{=\meta{length}}{no default, initially |2em|}
+\begin{docTcbKey}{doc left}{=\meta{length}}{\tcbdocdescInit{2em}}
   Sets the left hand offset of the documentation texts from
   \refEnv{docCommand}, \refEnv{docEnvironment}, \refEnv{docKey}, etc, to \meta{length}.
 \begin{dispExample}
@@ -1197,7 +1368,7 @@ Some command for something.
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}{doc right}{=\meta{length}}{no default, initially |0em|}
+\begin{docTcbKey}{doc right}{=\meta{length}}{\tcbdocdescInit{0em}}
   Sets the right hand offset of the documentation texts from
   \refEnv{docCommand}, \refEnv{docEnvironment}, \refEnv{docKey}, etc, to \meta{length}.
 \begin{dispExample}
@@ -1208,7 +1379,7 @@ Some command for something.
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}{doc left indent}{=\meta{length}}{no default, initially |-2em|}
+\begin{docTcbKey}{doc left indent}{=\meta{length}}{\tcbdocdescInit{-2em}}
   Sets the left hand indent of documentation heads from
   \refEnv{docCommand}, \refEnv{docEnvironment}, \refEnv{docKey}, etc, to \meta{length}.
 \begin{dispExample}
@@ -1220,7 +1391,7 @@ Some command for something.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{doc right indent}{=\meta{length}}{no default, initially |0pt|}
+\begin{docTcbKey}{doc right indent}{=\meta{length}}{\tcbdocdescInit{0pt}}
   Sets the right hand indent of documentation heads from
   \refEnv{docCommand}, \refEnv{docEnvironment}, \refEnv{docKey}, etc, to \meta{length}.
 \begin{dispExample}
@@ -1241,10 +1412,10 @@ Options to the surrounding |tcbraster|s and the embedded
 
 
 \begin{docTcbKeys}[
-  doc name        = doc raster command,
-  doc parameter   = {=\meta{options}},
-  doc description = {no default, initially empty},
-  doc new         = 2020-04-24,
+  doc name              = doc raster command,
+  doc parameter eq meta = options,
+  doc description init empty,
+  doc new              = 2020-04-24,
 ]{}
   Sets \meta{options} for the surrounding \refEnv{tcbraster} of\\
   \refEnv{docCommand}, \refEnv{docCommand*}, and \refEnv{docCommands}.
@@ -1264,9 +1435,9 @@ The is an example text.
 
 
 \begin{docTcbKeys}[
-  doc name        = doc raster environment,
-  doc parameter   = {=\meta{options}},
-  doc description = {no default, initially empty},
+  doc name               = doc raster environment,
+  doc parameter eq meta = options,
+  doc description init empty,
   doc new         = 2020-04-24,
 ]{}
   Sets \meta{options} for the surrounding \refEnv{tcbraster} of\\
@@ -1276,8 +1447,8 @@ The is an example text.
 
 \begin{docTcbKeys}[
   doc name        = doc raster key,
-  doc parameter   = {=\meta{options}},
-  doc description = {no default, initially empty},
+  doc parameter eq meta = options,
+  doc description init empty,
   doc new         = 2020-04-24,
 ]{}
   Sets \meta{options} for the surrounding \refEnv{tcbraster} of\\
@@ -1287,8 +1458,8 @@ The is an example text.
 
 \begin{docTcbKeys}[
   doc name        = doc raster path,
-  doc parameter   = {=\meta{options}},
-  doc description = {no default, initially empty},
+  doc parameter eq meta = options,
+  doc description init empty,
   doc new         = 2020-04-24,
 ]{}
   Sets \meta{options} for the surrounding \refEnv{tcbraster} of\\
@@ -1298,8 +1469,8 @@ The is an example text.
 
 \begin{docTcbKeys}[
   doc name        = doc raster,
-  doc parameter   = {=\meta{options}},
-  doc description = {no default, initially empty},
+  doc parameter eq meta = options,
+  doc description init empty,
   doc new         = 2020-04-24,
 ]{}
   Shortcut for setting the same \meta{options} for
@@ -1308,7 +1479,7 @@ The is an example text.
 \end{docTcbKeys}
 
 
-\begin{docTcbKey}{doc head command}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}{doc head command}{=\meta{options}}{\tcbdocdescInitEmpty}
   Sets \meta{options} for the head line of
   \refEnv{docCommand}, \refEnv{docCommand*}, and \refEnv{docCommands}.
 \begin{dispExample}
@@ -1325,7 +1496,7 @@ The is an example text.
 
 \clearpage
 
-\begin{docTcbKey}{doc head environment}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}{doc head environment}{=\meta{options}}{\tcbdocdescInitEmpty}
   Sets \meta{options} for the head line of
   \refEnv{docEnvironment}, \refEnv{docEnvironment*}, and \refEnv{docEnvironments}.
 \begin{dispExample}
@@ -1338,7 +1509,7 @@ The is an example text.
 \end{dispExample}
 \end{docTcbKey}
 
-\begin{docTcbKey}{doc head key}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}{doc head key}{=\meta{options}}{\tcbdocdescInitEmpty}
   Sets \meta{options} for the head line of
   \refEnv{docKey}, \refEnv{docKey*}, and \refEnv{docKeys}.
 \begin{dispExample}
@@ -1352,7 +1523,7 @@ The is an example text.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2019-09-18]{doc head path}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2019-09-18]{doc head path}{=\meta{options}}{\tcbdocdescInitEmpty}
   Sets \meta{options} for the head line of
   \refEnv{docPathOperation}, \refEnv{docPathOperation*}, and \refEnv{docPathOperations}.
 \begin{dispExample}
@@ -1366,7 +1537,7 @@ The is an example text.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc updated=2019-09-18]{doc head}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}[][doc updated=2019-09-18]{doc head}{=\meta{options}}{\tcbdocdescInitEmpty}
   Shortcut for setting the same \meta{options} for
   \refKey{/tcb/doc head command}, \refKey{/tcb/doc head environment},
   \refKey{/tcb/doc head key}, and \refKey{/tcb/doc head path}.
@@ -1380,7 +1551,7 @@ The description texts of the main documentation environments \refEnv{docCommand}
 indention and |parskip=0pt|. This settings can overruled by using the following
 keys to insert code before (or after) the description texts.
 
-\begin{docTcbKey}[][doc new=2015-10-09]{before doc body command}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body command}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} before the description texts
   of \refEnv{docCommand} and \refEnv{docCommand*}.
 \begin{dispExample}
@@ -1397,7 +1568,7 @@ keys to insert code before (or after) the description texts.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2015-10-09]{after doc body command}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body command}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} after the description texts
   of \refEnv{docCommand} and \refEnv{docCommand*}.
 \begin{dispExample}
@@ -1413,56 +1584,51 @@ keys to insert code before (or after) the description texts.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2015-10-09]{before doc body environment}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body environment}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} before the description texts
   of \refEnv{docEnvironment} and \refEnv{docEnvironment*}.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2015-10-09]{after doc body environment}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body environment}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} after the description texts
   of \refEnv{docEnvironment} and \refEnv{docEnvironment*}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2015-10-09]{before doc body key}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2015-10-09]{before doc body key}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} before the description texts
   of \refEnv{docKey} and \refEnv{docKey*}.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2015-10-09]{after doc body key}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2015-10-09]{after doc body key}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} after the description texts
   of \refEnv{docKey} and \refEnv{docKey*}.
 \end{docTcbKey}
 
 \clearpage
 
-\begin{docTcbKey}[][doc new=2019-09-18]{before doc body path}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2019-09-18]{before doc body path}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} before the description texts
   of \refEnv{docPathOperation} and \refEnv{docPathOperation*}.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new=2019-09-18]{after doc body path}{=\meta{code}}{no default, initially empty}
+\begin{docTcbKey}[][doc new=2019-09-18]{after doc body path}{=\meta{code}}{\tcbdocdescInitEmpty}
   Executes \meta{code} after the description texts
   of \refEnv{docPathOperation} and \refEnv{docPathOperation*}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new and updated={2015-10-09}{2019-09-18}]{before doc body}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}[][doc new and updated={2015-10-09}{2019-09-18}]{before doc body}{=\meta{options}}{\tcbdocdescInitEmpty}
   Shortcut for setting the same \meta{options} for
   \refKey{/tcb/before doc body command}, \refKey{/tcb/before doc body environment},
   \refKey{/tcb/before doc body key}, and \refKey{/tcb/before doc body path}.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new and updated={2015-10-09}{2019-09-18}]{after doc body}{=\meta{options}}{no default, initially empty}
+\begin{docTcbKey}[][doc new and updated={2015-10-09}{2019-09-18}]{after doc body}{=\meta{options}}{\tcbdocdescInitEmpty}
   Shortcut for setting the same \meta{options} for
   \refKey{/tcb/after doc body command}, \refKey{/tcb/after doc body environment},
   \refKey{/tcb/after doc body key}, and \refKey{/tcb/after doc body path}.
 \end{docTcbKey}
-
-
-
-
-
 
 
 \clearpage
@@ -1526,7 +1692,7 @@ keys to insert code before (or after) the description texts.
 
 \clearpage
 
-\begin{docTcbKey}[][doc new=2017-04-25]{keywords bold}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+\begin{docTcbKey}[][doc new=2017-04-25]{keywords bold}{\docKeyChoices*{defaultinit=true,false}}{}
   Keyword used in \refEnv{docEnvironment}, \refEnv{docCommand}, etc. are printed
   boldface (or not). Since the typewriter font is used, the effect may be
   invisible with Computer Modern fonts or similar which do not
@@ -1544,10 +1710,10 @@ keys to insert code before (or after) the description texts.
 \begin{docTcbKeys}
   {
     {
-      doc name        = page ref formatter,
-      doc new         = {2024-03-13},
-      doc parameter   = \colOpt{=\meta{macro}},
-      doc description = {no default, initially \texttt{\textbackslash textsuperscript}},
+      doc name               = page ref formatter,
+      doc new                = {2024-03-13},
+      doc parameter eq meta* = macro,
+      doc description default init = {\cs{textsuperscript}}{\cs{textsuperscript}},
     }
   }
 Sets \meta{macro} as formatter for page references like the
@@ -1561,10 +1727,10 @@ in combination with the \refPkg{realscripts} package or just otherwise for user 
 \begin{docTcbKeys}
   {
     {
-      doc name        = ctan formatter,
-      doc new         = {2024-11-29},
-      doc parameter   = \colOpt{=\meta{macro}},
-      doc description = {no default, initially empty},
+      doc name               = ctan formatter,
+      doc new                = {2024-11-29},
+      doc parameter eq meta* = macro,
+      doc description default init = {\cs{use:n}}{\cs{use:n}},
     }
   }
 Sets \meta{macro} as formatter for the string CTAN inside \refCom{refPkg}.
@@ -1581,7 +1747,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 
 
-\begin{docTcbKey}[][doc new=2015-01-09]{index command}{=\meta{macro}}{no default, initially \cs{index}}
+\begin{docTcbKey}[][doc new=2015-01-09]{index command}{=\meta{macro}}{\tcbdocdescInit{\cs{index}}}
   Replaces the internally used \cs{index} macro by the given \meta{macro}.
   The \meta{macro} has to take one mandatory argument like \cs{index}.
   This option is mutually exclusive with \refKey{/tcb/index command name}.
@@ -1591,7 +1757,7 @@ Draw your own picture with help of the \refPkg{tikz} package.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}[][doc new=2015-01-09]{index command name}{=\meta{name}}{no default, initially unset}
+\begin{docTcbKey}[][doc new=2015-01-09]{index command name}{=\meta{name}}{\tcbdocdescNoDefaultInit}
   Replaces the internally used \cs{index} macro by
   \mbox{\cs{index}\texttt{[\meta{name}]}}, i.\,e.,
   \mbox{\cs{index}\texttt{\textbraceleft\ldots\textbraceright}} is replaced by
@@ -1605,8 +1771,9 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 \clearpage
 
-\begin{docTcbKey}{index format}{=\meta{format}}{no default, initially |pgf|}
-  Determines the basic \meta{format} of the generated index.
+\begin{docTcbKey}{index format}{%
+  \docKeyChoices*{pgfsection,pgfchapter,init=pgf,doc,off}}{}
+  Determines the basic format of the generated index.
   Feasible values are:
   \begin{itemize}
   \item\docValue{pgfsection}: The index is formatted like in the \refPkg{pgf} documentation (as a section).
@@ -1623,15 +1790,15 @@ Draw your own picture with help of the \refPkg{tikz} package.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{index actual}{=\meta{character}}{no default, initially |@|}
+\begin{docTcbKey}{index actual}{=\meta{character}}{\tcbdocdescInit{@}}
   Sets the character for \enquote{actual} in automatic indexing.
 \end{docTcbKey}
 
-\begin{docTcbKey}{index quote}{=\meta{character}}{no default, initially |"|}
+\begin{docTcbKey}{index quote}{=\meta{character}}{\tcbdocdescInit{|"|}}
   Sets the character for \enquote{quote} in automatic indexing.
 \end{docTcbKey}
 
-\begin{docTcbKey}{index level}{=\meta{character}}{no default, initially |!|}
+\begin{docTcbKey}{index level}{=\meta{character}}{\tcbdocdescInit{!}}
   Sets the character for \enquote{level} in automatic indexing.
 \end{docTcbKey}
 
@@ -1652,13 +1819,13 @@ Draw your own picture with help of the \refPkg{tikz} package.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{index annotate}{\colOpt{=true\textbar false}}{default |true|, initially |true|}
+\begin{docTcbKey}{index annotate}{\docKeyChoices*{defaultinit=true,false}}{}
   If set to |true|, the index entries are annotated with short descriptions
   given by \refKey{/tcb/doclang/environment}, \refKey{/tcb/doclang/key},
   and others.
 \end{docTcbKey}
 
-\begin{docTcbKey}{index colorize}{\colOpt{=true\textbar false}}{default |true|, initially |false|}
+\begin{docTcbKey}{index colorize}{\docKeyChoices*{default=true,init=false}}{}
   If set to |true|, the index entries colorized according to the color
   settings given by \refKey{/tcb/color environment}, \refKey{/tcb/color key},
   and others.
@@ -1666,9 +1833,8 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 
 \begin{docTcbKeys}[
-    doc new={2022-06-20},
-    doc parameter = {\colOpt{=true\textbar false}},
-    doc description = {default |true|, initially |true|}
+    doc new          = {2022-06-20},
+    doc key choices* = {defaultinit=true,false}
   ]
   {
     {
@@ -1722,55 +1888,55 @@ Draw your own picture with help of the \refPkg{tikz} package.
 
 \clearpage
 
-\begin{docTcbKey}{color command}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}{color command}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by macro definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}{color environment}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}{color environment}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by environment definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}{color key}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}{color key}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by key definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2019-09-18}]{color path}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}[][doc new={2019-09-18}]{color path}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by \tikzname\ path operation definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}{color value}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}{color value}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by value definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2015-01-08}]{color counter}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}[][doc new={2015-01-08}]{color counter}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by counter definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc new={2015-01-08}]{color length}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}[][doc new={2015-01-08}]{color length}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by length definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}{color color}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}{color color}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color used by color definitions.
 \end{docTcbKey}
 
-\begin{docTcbKey}[][doc updated={2019-09-18}]{color definition}{=\meta{color}}{no default, initially |Definition|}
+\begin{docTcbKey}[][doc updated={2019-09-18}]{color definition}{=\meta{color}}{\tcbdocdescInit{Definition}}
   Sets the highlight color for \refKey{/tcb/color command}, \refKey{/tcb/color environment},
   \refKey{/tcb/color key}, \refKey{/tcb/color path}, \refKey{/tcb/color value}, \refKey{/tcb/color counter},
   \refKey{/tcb/color length}, and \refKey{/tcb/color color}.
 \end{docTcbKey}
 
-\begin{docTcbKey}{color option}{=\meta{color}}{no default, initially |Option|}
+\begin{docTcbKey}{color option}{=\meta{color}}{\tcbdocdescInit{Option}}
   Sets the color used for optional arguments.
 \end{docTcbKey}
 
-\begin{docTcbKey}{color fade}{=\meta{color}}{no default, initially |Fade|}
+\begin{docTcbKey}{color fade}{=\meta{color}}{\tcbdocdescInit{Fade}}
   Sets the color used for faded text like \colFade{\textbackslash path}
   in \refEnv{docPathOperation}.
 \end{docTcbKey}
 
 
-\begin{docTcbKey}{color hyperlink}{=\meta{color}}{no default, initially |Hyperlink|}
+\begin{docTcbKey}{color hyperlink}{=\meta{color}}{\tcbdocdescInit{Hyperlink}}
   Sets the color for all hyper-links, i.\,e., all internal and external links.
 \end{docTcbKey}
 
@@ -1786,85 +1952,131 @@ The English language is predefined.
   Sets all language specific settings to English.
 \end{docTcbKey}
 
-\begin{langTcbKey}{color}{=\meta{text}}{no default, initially |color|}
+\begin{langTcbKey}{color}{=\meta{text}}{\tcbdocdescInit{color}}
   Text used in the index for colors.
 \end{langTcbKey}
 
-\begin{langTcbKey}{colors}{=\meta{text}}{no default, initially |Colors|}
+\begin{langTcbKey}{colors}{=\meta{text}}{\tcbdocdescInit{Colors}}
   Heading text in the index for colors.
 \end{langTcbKey}
 
-\begin{langTcbKey}[][doc new={2022-06-20}]{commands}{=\meta{text}}{no default, initially |Commands|}
+\begin{langTcbKey}[][doc new={2022-06-20}]{commands}{=\meta{text}}{\tcbdocdescInit{Commands}}
   Heading text in the index for commands.
 \end{langTcbKey}
 
-\begin{langTcbKey}[][doc new={2015-01-08}]{counter}{=\meta{text}}{no default, initially |counter|}
+\begin{langTcbKey}[][doc new={2015-01-08}]{counter}{=\meta{text}}{\tcbdocdescInit{counter}}
   Text used in the index for counters.
 \end{langTcbKey}
 
-\begin{langTcbKey}[][doc new={2015-01-08}]{counters}{=\meta{text}}{no default, initially |Counters|}
+\begin{langTcbKey}[][doc new={2015-01-08}]{counters}{=\meta{text}}{\tcbdocdescInit{Counters}}
   Heading text in the index for counters.
 \end{langTcbKey}
 
-\begin{langTcbKey}{environment}{=\meta{text}}{no default, initially |environment|}
+\begin{langTcbKeys}[
+    doc name              = default,
+    doc parameter eq meta = text,
+    doc description init  = default,
+    doc new               = 2026-05-26
+  ]{}
+  Text used for \refCom{tcbdocdescDefault} and friends.
+\end{langTcbKeys}
+
+\begin{langTcbKey}{environment}{=\meta{text}}{\tcbdocdescInit{environment}}
   Text used in the index for environments.
 \end{langTcbKey}
 
-\begin{langTcbKey}{environments}{=\meta{text}}{no default, initially |Environments|}
+\begin{langTcbKey}{environments}{=\meta{text}}{\tcbdocdescInit{Environments}}
   Heading text in the index for environments.
 \end{langTcbKey}
 
-\begin{langTcbKey}{environment content}{=\meta{text}}{no default, initially |environment content|}
+\begin{langTcbKey}{environment content}{=\meta{text}}{\tcbdocdescInit{environment content}}
   Text used in \refEnv{docEnvironment}.
 \end{langTcbKey}
 
-\begin{langTcbKey}{index}{=\meta{text}}{no default, initially |Index|}
+\begin{langTcbKey}{index}{=\meta{text}}{\tcbdocdescInit{Index}}
   Heading text for the index.
 \end{langTcbKey}
 
-\begin{langTcbKey}{key}{=\meta{text}}{no default, initially |key|}
+\begin{langTcbKeys}[
+    doc name              = initially,
+    doc parameter eq meta = text,
+    doc description init  = initially,
+    doc new               = 2026-05-26
+  ]{}
+  Text used for \refCom{tcbdocdescInit} and friends.
+\end{langTcbKeys}
+
+\begin{langTcbKeys}[
+    doc name              = initiallyempty,
+    doc parameter eq meta = text,
+    doc description init  = initially empty,
+    doc new               = 2026-05-26
+  ]{}
+  Text used for \refCom{tcbdocdescInitEmpty} and friends.
+\end{langTcbKeys}
+
+\begin{langTcbKey}{key}{=\meta{text}}{\tcbdocdescInit{key}}
   Text used in the index for keys.
 \end{langTcbKey}
 
-\begin{langTcbKey}{keys}{=\meta{text}}{no default, initially |Keys|}
+\begin{langTcbKey}{keys}{=\meta{text}}{\tcbdocdescInit{Keys}}
   Heading text used in the index for keys.
 \end{langTcbKey}
 
-\begin{langTcbKey}[][doc new={2015-01-08}]{length}{=\meta{text}}{no default, initially |length|}
+\begin{langTcbKey}[][doc new={2015-01-08}]{length}{=\meta{text}}{\tcbdocdescInit{length}}
   Text used in the index for lengths.
 \end{langTcbKey}
 
-\begin{langTcbKey}[][doc new={2015-01-08}]{lengths}{=\meta{text}}{no default, initially |Lengths|}
+\begin{langTcbKey}[][doc new={2015-01-08}]{lengths}{=\meta{text}}{\tcbdocdescInit{Lengths}}
   Heading text in the index for lengths.
 \end{langTcbKey}
 
-\begin{langTcbKey}[][doc new={2014-09-19}]{new}{=\meta{text}}{no default, initially |New|}
+\begin{langTcbKey}[][doc new={2014-09-19}]{new}{=\meta{text}}{\tcbdocdescInit{New}}
   Announcement text for new content.
-\end{langTcbKey}
-
-\begin{langTcbKey}[][doc new={2019-09-18}]{path}{=\meta{text}}{no default, initially |path operation|}
-  Text used in the index for path operations.
-\end{langTcbKey}
-
-\begin{langTcbKey}[][doc new={2019-09-18}]{paths}{=\meta{text}}{no default, initially |Path operations|}
-  Heading text in the index for path operations.
-\end{langTcbKey}
-
-\begin{langTcbKey}{pageshort}{=\meta{text}}{no default, initially |P.|}
-  Short text for page references.
-\end{langTcbKey}
-
-\begin{langTcbKey}[][doc new={2014-09-19}]{updated}{=\meta{text}}{no default, initially |Updated|}
-  Announcement text for updated content.
 \end{langTcbKey}
 
 \clearpage
 
-\begin{langTcbKey}{value}{=\meta{text}}{no default, initially |value|}
+\begin{langTcbKeys}[
+    doc name              = nodefault,
+    doc parameter eq meta = text,
+    doc description init  = no default,
+    doc new               = 2026-05-26
+  ]{}
+  Text used for \refCom{tcbdocdescNoDefaultInit} and friends.
+\end{langTcbKeys}
+
+\begin{langTcbKeys}[
+    doc name              = noinitially,
+    doc parameter eq meta = text,
+    doc description init  = initially unset,
+    doc new               = 2026-05-26
+  ]{}
+  Text used for \refCom{tcbdocdescNoDefaultInit} and friends.
+\end{langTcbKeys}
+
+\begin{langTcbKey}[][doc new={2019-09-18}]{path}{=\meta{text}}{\tcbdocdescInit{path operation}}
+  Text used in the index for path operations.
+\end{langTcbKey}
+
+\begin{langTcbKey}[][doc new={2019-09-18}]{paths}{=\meta{text}}{\tcbdocdescInit{Path operations}}
+  Heading text in the index for path operations.
+\end{langTcbKey}
+
+\begin{langTcbKey}{pageshort}{=\meta{text}}{\tcbdocdescInit{P.}}
+  Short text for page references.
+\end{langTcbKey}
+
+\begin{langTcbKey}[][doc new={2014-09-19}]{updated}{=\meta{text}}{\tcbdocdescInit{Updated}}
+  Announcement text for updated content.
+\end{langTcbKey}
+
+
+\begin{langTcbKey}{value}{=\meta{text}}{\tcbdocdescInit{value}}
   Text used in the index for values.
 \end{langTcbKey}
 
-\begin{langTcbKey}{values}{=\meta{text}}{no default, initially |Values|}
+\begin{langTcbKey}{values}{=\meta{text}}{\tcbdocdescInit{Values}}
   Heading text in the index for values.
 \end{langTcbKey}
 

@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0pre1 (2026/03/05)
+%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
 %% tcbminted.code.tex: Code for colorboxes with minted
 %%
 %% -------------------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
 %% This work consists of all files listed in README
 %%
 %\makeatletter
-\tcb@set@library@version{6.10.0pre1}
+\tcb@set@library@version{6.10.0}
 
 \RequirePackage{minted}[2021/12/24]
 
@@ -31,7 +31,7 @@
 
 \ExplSyntaxOn
 
-\cs_new_nopar:Npn \__tcobox_minted_input_listing:nnnn #1#2#3#4
+\cs_new_protected_nopar:Npn \__tcobox_minted_input_listing:nnnn #1#2#3#4
   {
     \tl_set:Nn \l__tcobox_tmpa_tl { \inputminted[#1 }
     \tl_if_empty:nF { #4 }
@@ -48,17 +48,17 @@
     \tl_put_right:Nn \l__tcobox_tmpa_tl { ] }
     \file_if_exist:nTF { \minted@outputdir #3 }
       {
-        \l__tcobox_tmpa_tl { #2 }{ \minted@outputdir #3 }
+        \l__tcobox_tmpa_tl { #2 } { \minted@outputdir #3 }
       }
       {
-        \l__tcobox_tmpa_tl { #2 }{ #3 }
+        \l__tcobox_tmpa_tl { #2 } { #3 }
       }
   }
 
-\cs_generate_variant:Nn \__tcobox_minted_input_listing:nnnn {VVVV}
+\cs_generate_variant:Nn \__tcobox_minted_input_listing:nnnn { VVVV }
 
 
-\cs_new_nopar:Npn \__tcbbox_minted_uselistinglisting:
+\cs_new_protected_nopar:Npn \__tcbbox_minted_uselistinglisting:
   {
     \__tcobox_minted_input_listing:VVVV
       \kvtcb@minted@options
@@ -68,7 +68,7 @@
   }
 
 
-\cs_new_nopar:Npn \__tcbbox_minted_usetemplisting:
+\cs_new_protected_nopar:Npn \__tcbbox_minted_usetemplisting:
   {
     \__tcobox_minted_input_listing:VVVV
       \kvtcb@minted@options
@@ -78,7 +78,7 @@
   }
 
 
-\cs_new_nopar:Npn \__tcbbox_minted_doc_usetemplisting:
+\cs_new_protected_nopar:Npn \__tcbbox_minted_doc_usetemplisting:
   {
     \__tcobox_minted_input_listing:VVVV
       \kvtcb@docmintoptions
