@@ -23,6 +23,62 @@
 \pdfcolInitStack{tcb@breakable}
 
 \newif\iftcb@usecolorstack
+\newif\iftcb@xetex@stack@needed
+\newif\iftcb@xetex@stack@initialized
+
+% xdvipdfmx (TeX Live 2021 or later) has a PDF-literal color stack.
+% Keep it private to the captured box; the surrounding document continues
+% to use the graphics driver's ordinary color specials. Stack 0 is not the
+% main stack reserved by the (x)dvipdfmx graphics drivers (which use 1).
+\ifdefined\XeTeXversion
+  % Initialize at shipout, even if the first captured box was discarded.
+  % Do not reserve a driver stack when the option has never been enabled.
+  \AddToHook{shipout/background}{%
+    \iftcb@xetex@stack@needed
+      \iftcb@xetex@stack@initialized\else
+        \special{pdfcolorstackinit 0 direct (0 g 0 G)}%
+        \global\tcb@xetex@stack@initializedtrue
+      \fi
+    \fi}%
+  \def\tcb@xetex@literal#1{%
+    \expandafter\tcb@xetex@literal@aux#1 \@nil}%
+  \def\tcb@xetex@literal@aux#1 #2\@nil{%
+    \csname tcb@xetex@literal@#1\endcsname{#2}}%
+  \def\tcb@xetex@literal@rgb#1{\edef\tcb@xetex@pdfcolor{#1 rg #1 RG}}%
+  \def\tcb@xetex@literal@cmyk#1{\edef\tcb@xetex@pdfcolor{#1 k #1 K}}%
+  \def\tcb@xetex@literal@gray#1{\edef\tcb@xetex@pdfcolor{#1 g #1 G}}%
+  \def\tcb@xetex@literal@Black#1{\def\tcb@xetex@pdfcolor{0 g 0 G}}%
+  \def\tcb@xetex@literal@#1{\tcb@xetex@literal@aux#1\@nil}%
+  \def\tcb@xetex@literal@hsb#1{\tcb@xetex@hsb#1\@nil}%
+  \def\tcb@xetex@hsb#1 #2 #3 \@nil{%
+    \convertcolorspec{hsb}{#1,#2,#3}{rgb}\tcb@xetex@rgb%
+    \expandafter\tcb@xetex@rgb@literal\tcb@xetex@rgb\@nil}%
+  \def\tcb@xetex@rgb@literal#1,#2,#3\@nil{%
+    \tcb@xetex@literal@rgb{#1 #2 #3}}%
+  \def\tcb@xetex@set@color{%
+    \tcb@xetex@literal\current@color%
+    \special{pdfcolorstack 0 push (\tcb@xetex@pdfcolor)}%
+    \aftergroup\reset@color}%
+  \def\tcb@xetex@reset@color{\special{pdfcolorstack 0 pop}}%
+  \def\tcb@xetex@current{\special{pdfcolorstack 0 current}}%
+  \def\tcb@xetex@switch{%
+    \let\set@color\tcb@xetex@set@color%
+    \let\reset@color\tcb@xetex@reset@color%
+    % Transformations and PGF pictures restore the driver's ordinary color.
+    % Reinsert the private stack's color after these scopes, not after every
+    % PGF scope (which would overwrite deliberately different fill/stroke).
+    \let\tcb@xetex@saved@Grot@end\Grot@end%
+    \def\Grot@end{\tcb@xetex@saved@Grot@end\tcb@xetex@current}%
+    \let\tcb@xetex@saved@Gscale@end\Gscale@end%
+    \def\Gscale@end{\tcb@xetex@saved@Gscale@end\tcb@xetex@current}%
+    \let\tcb@xetex@saved@clipbox\GPT@clipbox%
+    \def\GPT@clipbox##1{%
+      \tcb@xetex@saved@clipbox##1%
+      \setbox##1=\hbox{\unhbox##1\tcb@xetex@current}}%
+    \let\tcb@xetex@saved@endpgfpicture\endpgfpicture%
+    \def\endpgfpicture{\tcb@xetex@saved@endpgfpicture\tcb@xetex@current}%
+  }%
+\fi
 
 \let\tcb@parboxrestore@true=\tcb@parboxrestore
 \let\tcb@parboxrestore@false\tcb@parbox@false@settings
@@ -85,7 +141,11 @@
   \tcb@set@savebox@construction@true%
   \let\tcbbreak\tcb@@break%
   \iftcb@usecolorstack%
-    \pdfcolSwitchStack{tcb@breakable}%
+    \ifdefined\XeTeXversion
+      \tcb@xetex@switch%
+    \else
+      \pdfcolSwitchStack{tcb@breakable}%
+    \fi%
   \fi%
   \color@begingroup%
   \textwidth\hsize%
@@ -934,8 +994,13 @@
   \let\endtcb@savebox=\endtcb@vbox%
   \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable%
   \iftcb@usecolorstack%
-    \def\tcb@upperdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
-    \def\tcb@lowerdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
+    \ifdefined\XeTeXversion
+      \def\tcb@upperdraw@begin@hook{\color{tcbcolupper}\special{pdfcolorstack 0 current}}%
+      \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}\special{pdfcolorstack 0 current}}%
+    \else
+      \def\tcb@upperdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
+      \def\tcb@lowerdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
+    \fi%
   \else%
     \def\tcb@upperdraw@begin@hook{\color{tcbcolupper}}%
     \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}}%
@@ -1049,7 +1114,12 @@
   segmentation at break/.default=true,
   use color stack/.is choice,%
   use color stack/true/.code={%
-    \pdfcolIfStackExists{tcb@breakable}{\tcb@usecolorstacktrue}{\tcb@usecolorstackfalse}%
+    \ifdefined\XeTeXversion
+      \global\tcb@xetex@stack@neededtrue
+      \tcb@usecolorstacktrue%
+    \else
+      \pdfcolIfStackExists{tcb@breakable}{\tcb@usecolorstacktrue}{\tcb@usecolorstackfalse}%
+    \fi%
   },%
   use color stack/false/.code={\tcb@usecolorstackfalse},%
   use color stack/.default=true,%
