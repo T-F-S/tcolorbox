@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[paperwidth=140mm,paperheight=120mm,margin=12mm]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{iftex}
+\ifLuaTeX\ifdefined\WithLuaColor\usepackage{luacolor}\fi\fi
+\usepackage{lipsum,graphicx}
+\ifdefined\NoColorStack\tcbset{use color stack/.style={}}\fi
+\pagestyle{empty}
+% Repeat markers to force page breaks within paragraphs, including list items.
+\newcount\probecount
+\newcommand{\Probe}[1]{%
+  \begingroup
+  \probecount=0
+  \loop #1\space\advance\probecount by 1
+  \ifnum\probecount<80\repeat
+  \par\endgroup}
+\begin{document}
+BLACKOUTSIDE
+{\color{red}RED}
+\begin{tcolorbox}[enhanced,breakable,use color stack,colback=white,colframe=gray]
+BLACKQUESTION
+{\color{blue}\Probe{BLUE}\Probe{BLUE}
+\begin{itemize}\item \Probe{BLUE}\item \Probe{BLUE}\end{itemize}
+{\color{red}\Probe{RED}\Probe{RED}}
+\Probe{BLUE}
+\rotatebox{12}{BLUE}\ BLUE
+\scalebox{0.8}{BLUE}\ BLUE
+\resizebox{20mm}{!}{BLUE}\ BLUE
+\begin{tikzpicture}\node[red]{RED};\end{tikzpicture} BLUE
+\Probe{BLUE}
+$\mathrm{BLUE}+\mathrm{BLUE}=\mathrm{BLUE}$
+{\color[gray]{0.5}GRAY}
+{\color[cmyk]{1,0,0,0}CYAN}
+{\color[hsb]{0.1666667,1,1}YELLOW}
+BLUE}
+\Probe{BLACK}
+\end{tcolorbox}
+BLACKOUTSIDE
+\begin{tcolorbox}[breakable,use color stack,colupper=green,collower=red,colback=white]
+\Probe{GREEN}
+{\color{blue}\Probe{BLUE}\Probe{BLUE}}
+\Probe{GREEN}
+\tcblower
+\Probe{RED}
+{\color{blue}\Probe{BLUE}\Probe{BLUE}}
+\Probe{RED}
+\end{tcolorbox}
+BLACKOUTSIDE
+\begin{tcolorbox}[enhanced,breakable,use color stack,colback=white]
+{\color{blue}\Probe{BLUE}
+\begin{tcolorbox}[colupper=red,colback=white]RED\end{tcolorbox}
+BLUE\Probe{BLUE}}
+BLACK
+\end{tcolorbox}
+BLACKOUTSIDE
+\end{document}
