@@ -22,6 +22,25 @@ and this project adheres to
 
 
 
+## [6.10.1] - 2026-xx-xx
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Documentation:
+    Avoid `\enquote' in the documentation (issue #369)
+- Missing CTAN package properties reported (issue #368)
+
+### Security
+
+
+
 ## [6.10.0] - 2026-05-28
 
 ### Added
