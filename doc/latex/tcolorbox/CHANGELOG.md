@@ -22,9 +22,12 @@ and this project adheres to
 
 
 
-## [6.10.1] - 2026-xx-xx
+## [6.11.0] - 2026-xx-xx
 
 ### Added
+- Library `breakable`:
+    XeTeX support added to `use color stack` with xdvipdfmx color-stack specials
+    provided by prong879 (pull request #374, issue #375)
 
 ### Changed
 

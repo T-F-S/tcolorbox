@@ -1,4 +1,4 @@
-%% The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
+%% The LaTeX package tcolorbox - version 6.11.0pre1 (2026/11/11)
 %% tcbbreakable.code.tex: Code for breakable colorboxes
 %%
 %% -------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 %%
 %% This work consists of all files listed in README
 %%
-\tcb@set@library@version{6.10.0}
+\tcb@set@library@version{6.11.0pre1}
 
 \RequirePackage{pdfcol}
 \pdfcolInitStack{tcb@breakable}
@@ -26,6 +26,7 @@
 \newif\iftcb@xetex@stack@needed
 \newif\iftcb@xetex@stack@initialized
 
+% Provided by prong879:
 % xdvipdfmx (TeX Live 2021 or later) has a PDF-literal color stack.
 % Keep it private to the captured box; the surrounding document continues
 % to use the graphics driver's ordinary color specials. Stack 0 is not the
@@ -34,11 +35,11 @@
   % Initialize at shipout, even if the first captured box was discarded.
   % Do not reserve a driver stack when the option has never been enabled.
   \AddToHook{shipout/background}{%
-    \iftcb@xetex@stack@needed
-      \iftcb@xetex@stack@initialized\else
+    \iftcb@xetex@stack@needed%
+      \iftcb@xetex@stack@initialized\else%
         \special{pdfcolorstackinit 0 direct (0 g 0 G)}%
-        \global\tcb@xetex@stack@initializedtrue
-      \fi
+        \global\tcb@xetex@stack@initializedtrue%
+      \fi%
     \fi}%
   \def\tcb@xetex@literal#1{%
     \expandafter\tcb@xetex@literal@aux#1 \@nil}%
@@ -141,9 +142,9 @@
   \tcb@set@savebox@construction@true%
   \let\tcbbreak\tcb@@break%
   \iftcb@usecolorstack%
-    \ifdefined\XeTeXversion
+    \ifdefined\XeTeXversion%
       \tcb@xetex@switch%
-    \else
+    \else%
       \pdfcolSwitchStack{tcb@breakable}%
     \fi%
   \fi%
@@ -994,10 +995,10 @@
   \let\endtcb@savebox=\endtcb@vbox%
   \let\tcb@drawcolorbox=\tcb@drawcolorbox@breakable%
   \iftcb@usecolorstack%
-    \ifdefined\XeTeXversion
+    \ifdefined\XeTeXversion%
       \def\tcb@upperdraw@begin@hook{\color{tcbcolupper}\special{pdfcolorstack 0 current}}%
       \def\tcb@lowerdraw@begin@hook{\color{tcbcollower}\special{pdfcolorstack 0 current}}%
-    \else
+    \else%
       \def\tcb@upperdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
       \def\tcb@lowerdraw@begin@hook{\pdfcolSetCurrent{tcb@breakable}}%
     \fi%
@@ -1114,10 +1115,10 @@
   segmentation at break/.default=true,
   use color stack/.is choice,%
   use color stack/true/.code={%
-    \ifdefined\XeTeXversion
-      \global\tcb@xetex@stack@neededtrue
+    \ifdefined\XeTeXversion%
+      \global\tcb@xetex@stack@neededtrue%
       \tcb@usecolorstacktrue%
-    \else
+    \else%
       \pdfcolIfStackExists{tcb@breakable}{\tcb@usecolorstacktrue}{\tcb@usecolorstackfalse}%
     \fi%
   },%
