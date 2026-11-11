@@ -1,4 +1,4 @@
-# The LaTeX package tcolorbox - version 6.10.0 (2026/05/28)
+# The LaTeX package tcolorbox - version 6.11.0pre1 (2026/11/11)
 
 [![CTAN](https://img.shields.io/ctan/v/tcolorbox.svg)](https://www.ctan.org/pkg/tcolorbox)
 
